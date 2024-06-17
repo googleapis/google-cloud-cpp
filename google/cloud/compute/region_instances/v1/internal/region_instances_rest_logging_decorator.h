@@ -49,6 +49,12 @@ class RegionInstancesRestLogging : public RegionInstancesRestStub {
       google::cloud::cpp::compute::region_instances::v1::
           BulkInsertRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_instances::v1::
+          BulkInsertRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

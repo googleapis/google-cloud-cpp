@@ -80,6 +80,23 @@ DefaultBackendBucketsRestStub::AsyncAddSignedUrlKey(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultBackendBucketsRestStub::AddSignedUrlKey(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AddSignedUrlKeyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.signed_url_key_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendBuckets", "/", request.backend_bucket(), "/",
+                   "addSignedUrlKey"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncDeleteBackendBucket(
     CompletionQueue& cq,
@@ -112,6 +129,22 @@ DefaultBackendBucketsRestStub::AsyncDeleteBackendBucket(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultBackendBucketsRestStub::DeleteBackendBucket(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteBackendBucketRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendBuckets", "/", request.backend_bucket()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -148,6 +181,24 @@ DefaultBackendBucketsRestStub::AsyncDeleteSignedUrlKey(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultBackendBucketsRestStub::DeleteSignedUrlKey(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteSignedUrlKeyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendBuckets", "/", request.backend_bucket(), "/",
+                   "deleteSignedUrlKey"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("key_name", request.key_name()),
+           std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
@@ -216,6 +267,22 @@ DefaultBackendBucketsRestStub::AsyncInsertBackendBucket(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultBackendBucketsRestStub::InsertBackendBucket(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        InsertBackendBucketRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.backend_bucket_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendBuckets"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
 DefaultBackendBucketsRestStub::ListBackendBuckets(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -272,6 +339,22 @@ DefaultBackendBucketsRestStub::AsyncPatchBackendBucket(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultBackendBucketsRestStub::PatchBackendBucket(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        PatchBackendBucketRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.backend_bucket_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendBuckets", "/", request.backend_bucket()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultBackendBucketsRestStub::AsyncSetEdgeSecurityPolicy(
     CompletionQueue& cq,
@@ -306,6 +389,24 @@ DefaultBackendBucketsRestStub::AsyncSetEdgeSecurityPolicy(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultBackendBucketsRestStub::SetEdgeSecurityPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.security_policy_reference_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendBuckets", "/", request.backend_bucket(), "/",
+                   "setEdgeSecurityPolicy"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -374,6 +475,22 @@ DefaultBackendBucketsRestStub::AsyncUpdateBackendBucket(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultBackendBucketsRestStub::UpdateBackendBucket(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        UpdateBackendBucketRequest const& request) {
+  return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.backend_bucket_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "backendBuckets", "/", request.backend_bucket()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

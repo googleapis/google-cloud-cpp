@@ -114,6 +114,15 @@ CloudChannelServiceAuth::AsyncProvisionCloudIdentity(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::ProvisionCloudIdentity(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ProvisionCloudIdentity(context, options, request);
+}
+
 StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
 CloudChannelServiceAuth::ListEntitlements(
     grpc::ClientContext& context, Options const& options,
@@ -170,6 +179,15 @@ CloudChannelServiceAuth::AsyncCreateEntitlement(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::CreateEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEntitlement(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceAuth::AsyncChangeParameters(
     google::cloud::CompletionQueue& cq,
@@ -188,6 +206,15 @@ CloudChannelServiceAuth::AsyncChangeParameters(
         return child->AsyncChangeParameters(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::ChangeParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeParametersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ChangeParameters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -210,6 +237,15 @@ CloudChannelServiceAuth::AsyncChangeRenewalSettings(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::ChangeRenewalSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ChangeRenewalSettings(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceAuth::AsyncChangeOffer(
     google::cloud::CompletionQueue& cq,
@@ -228,6 +264,14 @@ CloudChannelServiceAuth::AsyncChangeOffer(
         return child->AsyncChangeOffer(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudChannelServiceAuth::ChangeOffer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeOfferRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ChangeOffer(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -250,6 +294,15 @@ CloudChannelServiceAuth::AsyncStartPaidService(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::StartPaidService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartPaidService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceAuth::AsyncSuspendEntitlement(
     google::cloud::CompletionQueue& cq,
@@ -268,6 +321,15 @@ CloudChannelServiceAuth::AsyncSuspendEntitlement(
         return child->AsyncSuspendEntitlement(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::SuspendEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SuspendEntitlement(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -290,6 +352,15 @@ CloudChannelServiceAuth::AsyncCancelEntitlement(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::CancelEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelEntitlement(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceAuth::AsyncActivateEntitlement(
     google::cloud::CompletionQueue& cq,
@@ -308,6 +379,15 @@ CloudChannelServiceAuth::AsyncActivateEntitlement(
         return child->AsyncActivateEntitlement(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::ActivateEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ActivateEntitlement(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -330,6 +410,15 @@ CloudChannelServiceAuth::AsyncTransferEntitlements(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::TransferEntitlements(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TransferEntitlements(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceAuth::AsyncTransferEntitlementsToGoogle(
     google::cloud::CompletionQueue& cq,
@@ -349,6 +438,16 @@ CloudChannelServiceAuth::AsyncTransferEntitlementsToGoogle(
         return child->AsyncTransferEntitlementsToGoogle(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceAuth::TransferEntitlementsToGoogle(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TransferEntitlementsToGoogle(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>

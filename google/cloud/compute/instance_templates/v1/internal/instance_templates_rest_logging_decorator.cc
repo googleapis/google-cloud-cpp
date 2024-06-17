@@ -69,6 +69,20 @@ InstanceTemplatesRestLogging::AsyncDeleteInstanceTemplate(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceTemplatesRestLogging::DeleteInstanceTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_templates::v1::
+        DeleteInstanceTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_templates::v1::
+                 DeleteInstanceTemplateRequest const& request) {
+        return child_->DeleteInstanceTemplate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
 InstanceTemplatesRestLogging::GetInstanceTemplate(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -115,6 +129,20 @@ InstanceTemplatesRestLogging::AsyncInsertInstanceTemplate(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceTemplatesRestLogging::InsertInstanceTemplate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instance_templates::v1::
+        InsertInstanceTemplateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::instance_templates::v1::
+                 InsertInstanceTemplateRequest const& request) {
+        return child_->InsertInstanceTemplate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplateList>

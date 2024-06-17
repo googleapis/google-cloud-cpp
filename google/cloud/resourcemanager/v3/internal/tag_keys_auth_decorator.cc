@@ -77,6 +77,14 @@ future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncCreateTagKey(
       });
 }
 
+StatusOr<google::longrunning::Operation> TagKeysAuth::CreateTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTagKey(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncUpdateTagKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -96,6 +104,14 @@ future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncUpdateTagKey(
       });
 }
 
+StatusOr<google::longrunning::Operation> TagKeysAuth::UpdateTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTagKey(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncDeleteTagKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -113,6 +129,14 @@ future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncDeleteTagKey(
         return child->AsyncDeleteTagKey(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TagKeysAuth::DeleteTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTagKey(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysAuth::GetIamPolicy(

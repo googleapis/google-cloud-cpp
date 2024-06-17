@@ -67,6 +67,14 @@ PoliciesAuth::AsyncCreatePolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation> PoliciesAuth::CreatePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::CreatePolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PoliciesAuth::AsyncUpdatePolicy(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +95,14 @@ PoliciesAuth::AsyncUpdatePolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation> PoliciesAuth::UpdatePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::UpdatePolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PoliciesAuth::AsyncDeletePolicy(
     google::cloud::CompletionQueue& cq,
@@ -105,6 +121,14 @@ PoliciesAuth::AsyncDeletePolicy(
         return child->AsyncDeletePolicy(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> PoliciesAuth::DeletePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::DeletePolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

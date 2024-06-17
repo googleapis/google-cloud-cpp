@@ -51,6 +51,14 @@ AutokeyAuth::AsyncCreateKeyHandle(
       });
 }
 
+StatusOr<google::longrunning::Operation> AutokeyAuth::CreateKeyHandle(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateKeyHandle(context, options, request);
+}
+
 StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyAuth::GetKeyHandle(
     grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetKeyHandleRequest const& request) {

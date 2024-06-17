@@ -53,6 +53,20 @@ OsConfigZonalServiceLogging::AsyncCreateOSPolicyAssignment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceLogging::CreateOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+                 request) {
+        return child_->CreateOSPolicyAssignment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceLogging::AsyncUpdateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +85,20 @@ OsConfigZonalServiceLogging::AsyncUpdateOSPolicyAssignment(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceLogging::UpdateOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+                 request) {
+        return child_->UpdateOSPolicyAssignment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -133,6 +161,20 @@ OsConfigZonalServiceLogging::AsyncDeleteOSPolicyAssignment(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceLogging::DeleteOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+                 request) {
+        return child_->DeleteOSPolicyAssignment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>

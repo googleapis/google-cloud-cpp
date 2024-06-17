@@ -52,6 +52,19 @@ NodeGroupControllerLogging::AsyncCreateNodeGroup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerLogging::CreateNodeGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+        return child_->CreateNodeGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NodeGroupControllerLogging::AsyncResizeNodeGroup(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +82,19 @@ NodeGroupControllerLogging::AsyncResizeNodeGroup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerLogging::ResizeNodeGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+        return child_->ResizeNodeGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>

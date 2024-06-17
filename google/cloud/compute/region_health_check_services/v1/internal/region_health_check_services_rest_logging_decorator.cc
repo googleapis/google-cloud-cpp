@@ -55,6 +55,20 @@ RegionHealthCheckServicesRestLogging::AsyncDeleteHealthCheckService(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthCheckServicesRestLogging::DeleteHealthCheckService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        DeleteHealthCheckServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_health_check_services::v1::
+                 DeleteHealthCheckServiceRequest const& request) {
+        return child_->DeleteHealthCheckService(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
 RegionHealthCheckServicesRestLogging::GetHealthCheckService(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -87,6 +101,20 @@ RegionHealthCheckServicesRestLogging::AsyncInsertHealthCheckService(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthCheckServicesRestLogging::InsertHealthCheckService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        InsertHealthCheckServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_health_check_services::v1::
+                 InsertHealthCheckServiceRequest const& request) {
+        return child_->InsertHealthCheckService(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckServicesList>
@@ -122,6 +150,20 @@ RegionHealthCheckServicesRestLogging::AsyncPatchHealthCheckService(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthCheckServicesRestLogging::PatchHealthCheckService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        PatchHealthCheckServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_health_check_services::v1::
+                 PatchHealthCheckServiceRequest const& request) {
+        return child_->PatchHealthCheckService(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

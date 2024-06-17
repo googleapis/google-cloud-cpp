@@ -76,11 +76,21 @@ class ConversationProfilesStub {
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncClearSuggestionFeatureConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request) = 0;
 
@@ -144,11 +154,21 @@ class DefaultConversationProfilesStub : public ConversationProfilesStub {
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncClearSuggestionFeatureConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request) override;
 

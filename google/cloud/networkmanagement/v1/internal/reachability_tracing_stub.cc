@@ -76,6 +76,21 @@ ReachabilityServiceTracingStub::AsyncCreateConnectivityTest(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceTracingStub::CreateConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkmanagement.v1.ReachabilityService",
+      "CreateConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateConnectivityTest(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +106,21 @@ ReachabilityServiceTracingStub::AsyncUpdateConnectivityTest(
   auto f = child_->AsyncUpdateConnectivityTest(cq, context, std::move(options),
                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceTracingStub::UpdateConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkmanagement.v1.ReachabilityService",
+      "UpdateConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateConnectivityTest(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,6 +140,20 @@ ReachabilityServiceTracingStub::AsyncRerunConnectivityTest(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceTracingStub::RerunConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkmanagement.v1.ReachabilityService",
+      "RerunConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RerunConnectivityTest(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
@@ -125,6 +169,21 @@ ReachabilityServiceTracingStub::AsyncDeleteConnectivityTest(
   auto f = child_->AsyncDeleteConnectivityTest(cq, context, std::move(options),
                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceTracingStub::DeleteConnectivityTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkmanagement.v1.ReachabilityService",
+      "DeleteConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteConnectivityTest(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

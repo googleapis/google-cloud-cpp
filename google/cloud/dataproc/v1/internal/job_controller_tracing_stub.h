@@ -47,6 +47,10 @@ class JobControllerTracingStub : public JobControllerStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
+
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetJobRequest const& request) override;

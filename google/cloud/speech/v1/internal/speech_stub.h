@@ -51,6 +51,11 @@ class SpeechStub {
       google::cloud::speech::v1::LongRunningRecognizeRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> LongRunningRecognize(
+      grpc::ClientContext& context, Options options,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const&
+          request) = 0;
+
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>
@@ -89,6 +94,11 @@ class DefaultSpeechStub : public SpeechStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> LongRunningRecognize(
+      grpc::ClientContext& context, Options options,
       google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
       override;
 

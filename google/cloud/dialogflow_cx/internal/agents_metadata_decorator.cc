@@ -96,6 +96,14 @@ AgentsMetadata::AsyncExportAgent(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> AgentsMetadata::ExportAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportAgent(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AgentsMetadata::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +114,14 @@ AgentsMetadata::AsyncRestoreAgent(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRestoreAgent(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> AgentsMetadata::RestoreAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RestoreAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>

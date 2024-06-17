@@ -93,6 +93,33 @@ RequestIdServiceMetadata::AsyncRenameFoo(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+RequestIdServiceMetadata::RenameFoo(
+    grpc::ClientContext& context,
+    Options options,
+    google::test::requestid::v1::RenameFooRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* parent_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::requestid::v1::RenameFooRequest>{
+      "parent=", {
+      {[](google::test::requestid::v1::RenameFooRequest const& request) -> std::string const& {
+        return request.name();
+      },
+      std::regex{"(projects/[^/]+/parents/[^/]+)/.*", std::regex::optimize}},
+      }};
+  }();
+  parent_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->RenameFoo(context, options, request);
+}
+
 StatusOr<google::test::requestid::v1::ListFoosResponse>
 RequestIdServiceMetadata::ListFoos(
     grpc::ClientContext& context,

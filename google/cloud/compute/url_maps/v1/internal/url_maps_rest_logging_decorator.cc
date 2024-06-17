@@ -69,6 +69,21 @@ UrlMapsRestLogging::AsyncDeleteUrlMap(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestLogging::DeleteUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
+              request) {
+        return child_->DeleteUrlMap(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::UrlMap> UrlMapsRestLogging::GetUrlMap(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
@@ -103,6 +118,21 @@ UrlMapsRestLogging::AsyncInsertUrlMap(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestLogging::InsertUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
+              request) {
+        return child_->InsertUrlMap(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestLogging::AsyncInvalidateCache(
     CompletionQueue& cq,
@@ -121,6 +151,20 @@ UrlMapsRestLogging::AsyncInvalidateCache(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestLogging::InvalidateCache(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::url_maps::v1::
+                 InvalidateCacheRequest const& request) {
+        return child_->InvalidateCache(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapList>
@@ -159,6 +203,21 @@ UrlMapsRestLogging::AsyncPatchUrlMap(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestLogging::PatchUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
+              request) {
+        return child_->PatchUrlMap(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestLogging::AsyncUpdateUrlMap(
     CompletionQueue& cq,
@@ -178,6 +237,21 @@ UrlMapsRestLogging::AsyncUpdateUrlMap(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsRestLogging::UpdateUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
+              request) {
+        return child_->UpdateUrlMap(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>

@@ -50,6 +50,15 @@ InstancesRestMetadata::AsyncAddAccessConfig(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::AddAccessConfig(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddAccessConfig(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncAddResourcePolicies(
     CompletionQueue& cq,
@@ -60,6 +69,15 @@ InstancesRestMetadata::AsyncAddResourcePolicies(
   SetMetadata(*rest_context, *options);
   return child_->AsyncAddResourcePolicies(cq, std::move(rest_context),
                                           std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::AddResourcePolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        AddResourcePoliciesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AddResourcePolicies(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceAggregatedList>
@@ -83,6 +101,15 @@ InstancesRestMetadata::AsyncAttachDisk(
                                  std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::AttachDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AttachDisk(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncBulkInsert(
     CompletionQueue& cq,
@@ -93,6 +120,15 @@ InstancesRestMetadata::AsyncBulkInsert(
   SetMetadata(*rest_context, *options);
   return child_->AsyncBulkInsert(cq, std::move(rest_context),
                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::BulkInsert(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->BulkInsert(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -107,6 +143,15 @@ InstancesRestMetadata::AsyncDeleteInstance(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::DeleteInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteInstance(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncDeleteAccessConfig(
     CompletionQueue& cq,
@@ -119,6 +164,15 @@ InstancesRestMetadata::AsyncDeleteAccessConfig(
                                          std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::DeleteAccessConfig(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteAccessConfig(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncDetachDisk(
     CompletionQueue& cq,
@@ -129,6 +183,15 @@ InstancesRestMetadata::AsyncDetachDisk(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDetachDisk(cq, std::move(rest_context),
                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::DetachDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DetachDisk(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Instance>
@@ -207,6 +270,15 @@ InstancesRestMetadata::AsyncInsertInstance(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::InsertInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertInstance(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceList>
 InstancesRestMetadata::ListInstances(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -237,6 +309,15 @@ InstancesRestMetadata::AsyncPerformMaintenance(
                                          std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::PerformMaintenance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PerformMaintenance(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncRemoveResourcePolicies(
     CompletionQueue& cq,
@@ -247,6 +328,15 @@ InstancesRestMetadata::AsyncRemoveResourcePolicies(
   SetMetadata(*rest_context, *options);
   return child_->AsyncRemoveResourcePolicies(cq, std::move(rest_context),
                                              std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::RemoveResourcePolicies(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        RemoveResourcePoliciesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->RemoveResourcePolicies(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -260,6 +350,14 @@ InstancesRestMetadata::AsyncReset(
                             request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::Reset(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Reset(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncResume(
     CompletionQueue& cq,
@@ -269,6 +367,14 @@ InstancesRestMetadata::AsyncResume(
   SetMetadata(*rest_context, *options);
   return child_->AsyncResume(cq, std::move(rest_context), std::move(options),
                              request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::Resume(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Resume(rest_context, options, request);
 }
 
 Status InstancesRestMetadata::SendDiagnosticInterrupt(
@@ -291,6 +397,15 @@ InstancesRestMetadata::AsyncSetDeletionProtection(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetDeletionProtection(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        SetDeletionProtectionRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetDeletionProtection(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetDiskAutoDelete(
     CompletionQueue& cq,
@@ -301,6 +416,15 @@ InstancesRestMetadata::AsyncSetDiskAutoDelete(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetDiskAutoDelete(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetDiskAutoDelete(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetDiskAutoDelete(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -324,6 +448,15 @@ InstancesRestMetadata::AsyncSetLabels(
                                 request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetMachineResources(
     CompletionQueue& cq,
@@ -334,6 +467,15 @@ InstancesRestMetadata::AsyncSetMachineResources(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetMachineResources(cq, std::move(rest_context),
                                           std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetMachineResources(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        SetMachineResourcesRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetMachineResources(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -348,6 +490,15 @@ InstancesRestMetadata::AsyncSetMachineType(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetMachineType(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetMachineType(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetMetadata(
     CompletionQueue& cq,
@@ -358,6 +509,15 @@ InstancesRestMetadata::AsyncSetMetadata(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetMetadata(cq, std::move(rest_context),
                                   std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetMetadata(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetMetadata(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -372,6 +532,15 @@ InstancesRestMetadata::AsyncSetMinCpuPlatform(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetMinCpuPlatform(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetMinCpuPlatform(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetName(
     CompletionQueue& cq,
@@ -381,6 +550,14 @@ InstancesRestMetadata::AsyncSetName(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetName(cq, std::move(rest_context), std::move(options),
                               request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetName(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetName(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -395,6 +572,15 @@ InstancesRestMetadata::AsyncSetScheduling(
                                     std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetScheduling(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetScheduling(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetSecurityPolicy(
     CompletionQueue& cq,
@@ -405,6 +591,15 @@ InstancesRestMetadata::AsyncSetSecurityPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetSecurityPolicy(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetSecurityPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -419,6 +614,15 @@ InstancesRestMetadata::AsyncSetServiceAccount(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetServiceAccount(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetServiceAccount(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetShieldedInstanceIntegrityPolicy(
     CompletionQueue& cq,
@@ -431,6 +635,16 @@ InstancesRestMetadata::AsyncSetShieldedInstanceIntegrityPolicy(
       cq, std::move(rest_context), std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetShieldedInstanceIntegrityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        SetShieldedInstanceIntegrityPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetShieldedInstanceIntegrityPolicy(rest_context, options,
+                                                    request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSetTags(
     CompletionQueue& cq,
@@ -440,6 +654,14 @@ InstancesRestMetadata::AsyncSetTags(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetTags(cq, std::move(rest_context), std::move(options),
                               request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SetTags(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetTags(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -454,6 +676,15 @@ InstancesRestMetadata::AsyncSimulateMaintenanceEvent(
                                                std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::SimulateMaintenanceEvent(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        SimulateMaintenanceEventRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SimulateMaintenanceEvent(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncStart(
     CompletionQueue& cq,
@@ -463,6 +694,14 @@ InstancesRestMetadata::AsyncStart(
   SetMetadata(*rest_context, *options);
   return child_->AsyncStart(cq, std::move(rest_context), std::move(options),
                             request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::Start(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Start(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -477,6 +716,15 @@ InstancesRestMetadata::AsyncStartWithEncryptionKey(
                                              std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::StartWithEncryptionKey(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        StartWithEncryptionKeyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->StartWithEncryptionKey(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncStop(
     CompletionQueue& cq,
@@ -488,6 +736,14 @@ InstancesRestMetadata::AsyncStop(
                            request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::Stop(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Stop(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncSuspend(
     CompletionQueue& cq,
@@ -497,6 +753,14 @@ InstancesRestMetadata::AsyncSuspend(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSuspend(cq, std::move(rest_context), std::move(options),
                               request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::Suspend(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Suspend(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -520,6 +784,15 @@ InstancesRestMetadata::AsyncUpdateInstance(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::UpdateInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateInstance(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncUpdateAccessConfig(
     CompletionQueue& cq,
@@ -530,6 +803,15 @@ InstancesRestMetadata::AsyncUpdateAccessConfig(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateAccessConfig(cq, std::move(rest_context),
                                          std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::UpdateAccessConfig(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateAccessConfig(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -544,6 +826,15 @@ InstancesRestMetadata::AsyncUpdateDisplayDevice(
                                           std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::UpdateDisplayDevice(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        UpdateDisplayDeviceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateDisplayDevice(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncUpdateNetworkInterface(
     CompletionQueue& cq,
@@ -556,6 +847,15 @@ InstancesRestMetadata::AsyncUpdateNetworkInterface(
                                              std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::UpdateNetworkInterface(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        UpdateNetworkInterfaceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateNetworkInterface(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesRestMetadata::AsyncUpdateShieldedInstanceConfig(
     CompletionQueue& cq,
@@ -566,6 +866,15 @@ InstancesRestMetadata::AsyncUpdateShieldedInstanceConfig(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateShieldedInstanceConfig(cq, std::move(rest_context),
                                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstancesRestMetadata::UpdateShieldedInstanceConfig(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::instances::v1::
+        UpdateShieldedInstanceConfigRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateShieldedInstanceConfig(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

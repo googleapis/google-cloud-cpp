@@ -53,6 +53,11 @@ class DomainMappingsTracingStub : public DomainMappingsStub {
       google::appengine::v1::CreateDomainMappingRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDomainMapping(
+      grpc::ClientContext& context, Options options,
+      google::appengine::v1::CreateDomainMappingRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDomainMapping(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -60,10 +65,20 @@ class DomainMappingsTracingStub : public DomainMappingsStub {
       google::appengine::v1::UpdateDomainMappingRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateDomainMapping(
+      grpc::ClientContext& context, Options options,
+      google::appengine::v1::UpdateDomainMappingRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDomainMapping(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DeleteDomainMappingRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDomainMapping(
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::DeleteDomainMappingRequest const& request)
       override;
 

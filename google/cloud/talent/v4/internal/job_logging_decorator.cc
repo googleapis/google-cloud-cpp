@@ -62,6 +62,17 @@ JobServiceLogging::AsyncBatchCreateJobs(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> JobServiceLogging::BatchCreateJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
+        return child_->BatchCreateJobs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::talent::v4::Job> JobServiceLogging::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetJobRequest const& request) {
@@ -102,6 +113,17 @@ JobServiceLogging::AsyncBatchUpdateJobs(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> JobServiceLogging::BatchUpdateJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
+        return child_->BatchUpdateJobs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 Status JobServiceLogging::DeleteJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteJobRequest const& request) {
@@ -129,6 +151,17 @@ JobServiceLogging::AsyncBatchDeleteJobs(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> JobServiceLogging::BatchDeleteJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
+        return child_->BatchDeleteJobs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::talent::v4::ListJobsResponse>

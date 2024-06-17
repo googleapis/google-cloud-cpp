@@ -147,6 +147,11 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
       google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
 )""");
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  StatusOr<$response_type$> $method_name$(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, $request_type$ const& request) override;
+)""");
     } else {
       if (IsResponseTypeEmpty(method)) {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
@@ -275,6 +280,20 @@ $metadata_rest_class_name$::Async$method_name$(
       cq, std::move(rest_context), std::move(options), request);
 }
 )""");
+
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<$response_type$>
+$metadata_rest_class_name$::$method_name$(
+    rest_internal::RestContext& rest_context,
+    Options const& options, $request_type$ const& request) {
+)""");
+      CcPrintMethod(method, __FILE__, __LINE__,
+                    SetMetadataText(method, kReference, "options"));
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return child_->$method_name$(rest_context, options, request);
+}
+)""");
+
     } else {
       if (IsResponseTypeEmpty(method)) {
         CcPrintMethod(method, __FILE__, __LINE__, R"""(

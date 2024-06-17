@@ -72,10 +72,20 @@ class EdgeNetworkTracingStub : public EdgeNetworkStub {
       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateNetwork(
+      grpc::ClientContext& context, Options options,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNetwork(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteNetwork(
+      grpc::ClientContext& context, Options options,
       google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request)
       override;
 
@@ -95,6 +105,11 @@ class EdgeNetworkTracingStub : public EdgeNetworkStub {
       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSubnet(
+      grpc::ClientContext& context, Options options,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSubnet(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -102,10 +117,20 @@ class EdgeNetworkTracingStub : public EdgeNetworkStub {
       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateSubnet(
+      grpc::ClientContext& context, Options options,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSubnet(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteSubnet(
+      grpc::ClientContext& context, Options options,
       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request)
       override;
 
@@ -146,11 +171,21 @@ class EdgeNetworkTracingStub : public EdgeNetworkStub {
       google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteInterconnectAttachment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
+      grpc::ClientContext& context, Options options,
       google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
           request) override;
 
@@ -175,6 +210,11 @@ class EdgeNetworkTracingStub : public EdgeNetworkStub {
       google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateRouter(
+      grpc::ClientContext& context, Options options,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRouter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -182,10 +222,20 @@ class EdgeNetworkTracingStub : public EdgeNetworkStub {
       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateRouter(
+      grpc::ClientContext& context, Options options,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRouter(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteRouter(
+      grpc::ClientContext& context, Options options,
       google::cloud::edgenetwork::v1::DeleteRouterRequest const& request)
       override;
 

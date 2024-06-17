@@ -78,6 +78,18 @@ VersionsLogging::AsyncCreateVersion(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VersionsLogging::CreateVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::CreateVersionRequest const&
+                 request) {
+        return child_->CreateVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsLogging::UpdateVersion(
     grpc::ClientContext& context, Options const& options,
@@ -120,6 +132,18 @@ VersionsLogging::AsyncLoadVersion(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VersionsLogging::LoadVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::LoadVersionRequest const&
+                 request) {
+        return child_->LoadVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>

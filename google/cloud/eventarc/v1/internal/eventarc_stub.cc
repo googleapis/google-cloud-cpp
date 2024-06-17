@@ -72,6 +72,17 @@ DefaultEventarcStub::AsyncCreateTrigger(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::CreateTrigger(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTrigger(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEventarcStub::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +101,17 @@ DefaultEventarcStub::AsyncUpdateTrigger(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::UpdateTrigger(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTrigger(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEventarcStub::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +128,17 @@ DefaultEventarcStub::AsyncDeleteTrigger(
         return grpc_stub_->AsyncDeleteTrigger(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::DeleteTrigger(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTrigger(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel> DefaultEventarcStub::GetChannel(
@@ -149,6 +182,17 @@ DefaultEventarcStub::AsyncCreateChannel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::CreateChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEventarcStub::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +211,17 @@ DefaultEventarcStub::AsyncUpdateChannel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::UpdateChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEventarcStub::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
@@ -183,6 +238,17 @@ DefaultEventarcStub::AsyncDeleteChannel(
         return grpc_stub_->AsyncDeleteChannel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultEventarcStub::DeleteChannel(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteChannel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider>
@@ -254,6 +320,20 @@ DefaultEventarcStub::AsyncCreateChannelConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEventarcStub::CreateChannelConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateChannelConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEventarcStub::AsyncDeleteChannelConnection(
     google::cloud::CompletionQueue& cq,
@@ -272,6 +352,20 @@ DefaultEventarcStub::AsyncDeleteChannelConnection(
         return grpc_stub_->AsyncDeleteChannelConnection(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEventarcStub::DeleteChannelConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteChannelConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>

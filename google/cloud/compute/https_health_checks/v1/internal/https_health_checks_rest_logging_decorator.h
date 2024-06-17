@@ -50,6 +50,12 @@ class HttpsHealthChecksRestLogging : public HttpsHealthChecksRestStub {
       google::cloud::cpp::compute::https_health_checks::v1::
           DeleteHttpsHealthCheckRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpsHealthCheck(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::https_health_checks::v1::
+          DeleteHttpsHealthCheckRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
   GetHttpsHealthCheck(google::cloud::rest_internal::RestContext& rest_context,
                       Options const& options,
@@ -61,6 +67,12 @@ class HttpsHealthChecksRestLogging : public HttpsHealthChecksRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::https_health_checks::v1::
+          InsertHttpsHealthCheckRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpsHealthCheck(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::https_health_checks::v1::
           InsertHttpsHealthCheckRequest const& request) override;
 
@@ -79,11 +91,23 @@ class HttpsHealthChecksRestLogging : public HttpsHealthChecksRestStub {
       google::cloud::cpp::compute::https_health_checks::v1::
           PatchHttpsHealthCheckRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpsHealthCheck(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::https_health_checks::v1::
+          PatchHttpsHealthCheckRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateHttpsHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::https_health_checks::v1::
+          UpdateHttpsHealthCheckRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpsHealthCheck(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::https_health_checks::v1::
           UpdateHttpsHealthCheckRequest const& request) override;
 

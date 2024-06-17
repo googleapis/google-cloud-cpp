@@ -55,6 +55,12 @@ class NodeTemplatesRestMetadata : public NodeTemplatesRestStub {
       google::cloud::cpp::compute::node_templates::v1::
           DeleteNodeTemplateRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::node_templates::v1::
+          DeleteNodeTemplateRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -72,6 +78,12 @@ class NodeTemplatesRestMetadata : public NodeTemplatesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::node_templates::v1::
+          InsertNodeTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_templates::v1::
           InsertNodeTemplateRequest const& request) override;
 

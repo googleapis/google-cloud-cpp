@@ -45,10 +45,20 @@ class EngineServiceStub {
       google::cloud::discoveryengine::v1::CreateEngineRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateEngine(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateEngineRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEngine(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteEngine(
+      grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::DeleteEngineRequest const&
           request) = 0;
 
@@ -96,10 +106,20 @@ class DefaultEngineServiceStub : public EngineServiceStub {
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateEngine(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEngine(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteEngine(
+      grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
       override;
 

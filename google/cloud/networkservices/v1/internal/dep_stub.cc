@@ -78,6 +78,20 @@ DefaultDepServiceStub::AsyncCreateLbTrafficExtension(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDepServiceStub::CreateLbTrafficExtension(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateLbTrafficExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDepServiceStub::AsyncUpdateLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +112,20 @@ DefaultDepServiceStub::AsyncUpdateLbTrafficExtension(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDepServiceStub::UpdateLbTrafficExtension(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateLbTrafficExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDepServiceStub::AsyncDeleteLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
@@ -116,6 +144,20 @@ DefaultDepServiceStub::AsyncDeleteLbTrafficExtension(
         return grpc_stub_->AsyncDeleteLbTrafficExtension(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDepServiceStub::DeleteLbTrafficExtension(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteLbTrafficExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse>
@@ -164,6 +206,20 @@ DefaultDepServiceStub::AsyncCreateLbRouteExtension(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDepServiceStub::CreateLbRouteExtension(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateLbRouteExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDepServiceStub::AsyncUpdateLbRouteExtension(
     google::cloud::CompletionQueue& cq,
@@ -184,6 +240,20 @@ DefaultDepServiceStub::AsyncUpdateLbRouteExtension(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDepServiceStub::UpdateLbRouteExtension(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateLbRouteExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDepServiceStub::AsyncDeleteLbRouteExtension(
     google::cloud::CompletionQueue& cq,
@@ -202,6 +272,20 @@ DefaultDepServiceStub::AsyncDeleteLbRouteExtension(
         return grpc_stub_->AsyncDeleteLbRouteExtension(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDepServiceStub::DeleteLbRouteExtension(
+    grpc::ClientContext& context, Options,
+    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteLbRouteExtension(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

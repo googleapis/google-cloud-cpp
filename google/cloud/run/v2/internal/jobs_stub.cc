@@ -48,6 +48,17 @@ DefaultJobsStub::AsyncCreateJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultJobsStub::CreateJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::run::v2::CreateJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::run::v2::Job> DefaultJobsStub::GetJob(
     grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::GetJobRequest const& request) {
@@ -87,6 +98,17 @@ DefaultJobsStub::AsyncUpdateJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultJobsStub::UpdateJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::run::v2::UpdateJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobsStub::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
@@ -104,6 +126,17 @@ DefaultJobsStub::AsyncDeleteJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultJobsStub::DeleteJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::run::v2::DeleteJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>> DefaultJobsStub::AsyncRunJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -118,6 +151,17 @@ future<StatusOr<google::longrunning::Operation>> DefaultJobsStub::AsyncRunJob(
         return grpc_stub_->AsyncRunJob(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultJobsStub::RunJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::run::v2::RunJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy> DefaultJobsStub::GetIamPolicy(

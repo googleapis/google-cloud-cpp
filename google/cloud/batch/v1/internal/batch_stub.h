@@ -52,6 +52,10 @@ class BatchServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::batch::v1::DeleteJobRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::batch::v1::DeleteJobRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::batch::v1::ListJobsResponse> ListJobs(
       grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::ListJobsRequest const& request) = 0;
@@ -98,6 +102,10 @@ class DefaultBatchServiceStub : public BatchServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::batch::v1::DeleteJobRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::ListJobsResponse> ListJobs(

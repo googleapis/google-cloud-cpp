@@ -59,6 +59,14 @@ JobServiceAuth::AsyncBatchCreateJobs(
       });
 }
 
+StatusOr<google::longrunning::Operation> JobServiceAuth::BatchCreateJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCreateJobs(context, options, request);
+}
+
 StatusOr<google::cloud::talent::v4::Job> JobServiceAuth::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetJobRequest const& request) {
@@ -95,6 +103,14 @@ JobServiceAuth::AsyncBatchUpdateJobs(
       });
 }
 
+StatusOr<google::longrunning::Operation> JobServiceAuth::BatchUpdateJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchUpdateJobs(context, options, request);
+}
+
 Status JobServiceAuth::DeleteJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteJobRequest const& request) {
@@ -121,6 +137,14 @@ JobServiceAuth::AsyncBatchDeleteJobs(
         return child->AsyncBatchDeleteJobs(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> JobServiceAuth::BatchDeleteJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchDeleteJobs(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::ListJobsResponse> JobServiceAuth::ListJobs(

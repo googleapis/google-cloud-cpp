@@ -92,6 +92,14 @@ IntentsAuth::AsyncImportIntents(
       });
 }
 
+StatusOr<google::longrunning::Operation> IntentsAuth::ImportIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportIntents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IntentsAuth::AsyncExportIntents(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +118,14 @@ IntentsAuth::AsyncExportIntents(
         return child->AsyncExportIntents(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> IntentsAuth::ExportIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportIntents(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> IntentsAuth::AsyncGetOperation(

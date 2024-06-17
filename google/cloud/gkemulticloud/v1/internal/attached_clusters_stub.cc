@@ -52,6 +52,19 @@ DefaultAttachedClustersStub::AsyncCreateAttachedCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAttachedClustersStub::CreateAttachedCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAttachedCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAttachedClustersStub::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -73,6 +86,19 @@ DefaultAttachedClustersStub::AsyncUpdateAttachedCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAttachedClustersStub::UpdateAttachedCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAttachedCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAttachedClustersStub::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +118,19 @@ DefaultAttachedClustersStub::AsyncImportAttachedCluster(
         return grpc_stub_->AsyncImportAttachedCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAttachedClustersStub::ImportAttachedCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportAttachedCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -139,6 +178,19 @@ DefaultAttachedClustersStub::AsyncDeleteAttachedCluster(
         return grpc_stub_->AsyncDeleteAttachedCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAttachedClustersStub::DeleteAttachedCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAttachedCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

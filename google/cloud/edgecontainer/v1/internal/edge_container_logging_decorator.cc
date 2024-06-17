@@ -78,6 +78,18 @@ EdgeContainerLogging::AsyncCreateCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerLogging::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::CreateClusterRequest const&
+                 request) {
+        return child_->CreateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +107,18 @@ EdgeContainerLogging::AsyncUpdateCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerLogging::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::UpdateClusterRequest const&
+                 request) {
+        return child_->UpdateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -116,6 +140,18 @@ EdgeContainerLogging::AsyncUpgradeCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerLogging::UpgradeCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::UpgradeClusterRequest const&
+                 request) {
+        return child_->UpgradeCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -133,6 +169,18 @@ EdgeContainerLogging::AsyncDeleteCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerLogging::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::DeleteClusterRequest const&
+                 request) {
+        return child_->DeleteCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -208,6 +256,18 @@ EdgeContainerLogging::AsyncCreateNodePool(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerLogging::CreateNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::CreateNodePoolRequest const&
+                 request) {
+        return child_->CreateNodePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
@@ -227,6 +287,18 @@ EdgeContainerLogging::AsyncUpdateNodePool(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerLogging::UpdateNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::UpdateNodePoolRequest const&
+                 request) {
+        return child_->UpdateNodePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
@@ -244,6 +316,18 @@ EdgeContainerLogging::AsyncDeleteNodePool(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerLogging::DeleteNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::DeleteNodePoolRequest const&
+                 request) {
+        return child_->DeleteNodePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
@@ -319,6 +403,20 @@ EdgeContainerLogging::AsyncCreateVpnConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerLogging::CreateVpnConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+                 request) {
+        return child_->CreateVpnConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
@@ -337,6 +435,20 @@ EdgeContainerLogging::AsyncDeleteVpnConnection(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+EdgeContainerLogging::DeleteVpnConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+                 request) {
+        return child_->DeleteVpnConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ServerConfig>

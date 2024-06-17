@@ -50,6 +50,17 @@ DefaultSpeechStub::AsyncCreateRecognizer(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::CreateRecognizer(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::CreateRecognizerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRecognizer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
 DefaultSpeechStub::ListRecognizers(
     grpc::ClientContext& context, Options const&,
@@ -92,6 +103,17 @@ DefaultSpeechStub::AsyncUpdateRecognizer(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::UpdateRecognizer(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateRecognizer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpeechStub::AsyncDeleteRecognizer(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +130,17 @@ DefaultSpeechStub::AsyncDeleteRecognizer(
         return grpc_stub_->AsyncDeleteRecognizer(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::DeleteRecognizer(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRecognizer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -127,6 +160,17 @@ DefaultSpeechStub::AsyncUndeleteRecognizer(
         return grpc_stub_->AsyncUndeleteRecognizer(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::UndeleteRecognizer(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeleteRecognizer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse>
@@ -175,6 +219,17 @@ DefaultSpeechStub::AsyncBatchRecognize(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::BatchRecognize(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::BatchRecognizeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchRecognize(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::speech::v2::Config> DefaultSpeechStub::GetConfig(
     grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::GetConfigRequest const& request) {
@@ -213,6 +268,17 @@ DefaultSpeechStub::AsyncCreateCustomClass(
         return grpc_stub_->AsyncCreateCustomClass(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::CreateCustomClass(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::CreateCustomClassRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCustomClass(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
@@ -257,6 +323,17 @@ DefaultSpeechStub::AsyncUpdateCustomClass(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::UpdateCustomClass(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateCustomClass(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpeechStub::AsyncDeleteCustomClass(
     google::cloud::CompletionQueue& cq,
@@ -273,6 +350,17 @@ DefaultSpeechStub::AsyncDeleteCustomClass(
         return grpc_stub_->AsyncDeleteCustomClass(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::DeleteCustomClass(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCustomClass(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -294,6 +382,17 @@ DefaultSpeechStub::AsyncUndeleteCustomClass(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::UndeleteCustomClass(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeleteCustomClass(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpeechStub::AsyncCreatePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -310,6 +409,17 @@ DefaultSpeechStub::AsyncCreatePhraseSet(
         return grpc_stub_->AsyncCreatePhraseSet(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::CreatePhraseSet(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreatePhraseSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
@@ -353,6 +463,17 @@ DefaultSpeechStub::AsyncUpdatePhraseSet(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::UpdatePhraseSet(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdatePhraseSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpeechStub::AsyncDeletePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -371,6 +492,17 @@ DefaultSpeechStub::AsyncDeletePhraseSet(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::DeletePhraseSet(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeletePhraseSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpeechStub::AsyncUndeletePhraseSet(
     google::cloud::CompletionQueue& cq,
@@ -387,6 +519,17 @@ DefaultSpeechStub::AsyncUndeletePhraseSet(
         return grpc_stub_->AsyncUndeletePhraseSet(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultSpeechStub::UndeletePhraseSet(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeletePhraseSet(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

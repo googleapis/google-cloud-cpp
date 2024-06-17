@@ -76,6 +76,18 @@ WorkflowsLogging::AsyncCreateWorkflow(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsLogging::CreateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+        return child_->CreateWorkflow(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsLogging::AsyncDeleteWorkflow(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +107,18 @@ WorkflowsLogging::AsyncDeleteWorkflow(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsLogging::DeleteWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+        return child_->DeleteWorkflow(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsLogging::AsyncUpdateWorkflow(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +136,18 @@ WorkflowsLogging::AsyncUpdateWorkflow(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> WorkflowsLogging::UpdateWorkflow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+        return child_->UpdateWorkflow(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

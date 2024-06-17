@@ -179,6 +179,11 @@ class DataCatalogMetadata : public DataCatalogStub {
       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ReconcileTags(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
+      override;
+
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
@@ -204,6 +209,11 @@ class DataCatalogMetadata : public DataCatalogStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ImportEntries(
+      grpc::ClientContext& context, Options options,
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
       override;
 

@@ -82,6 +82,23 @@ DefaultRegionTargetHttpProxiesRestStub::AsyncDeleteTargetHttpProxy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionTargetHttpProxiesRestStub::DeleteTargetHttpProxy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_target_http_proxies::v1::
+        DeleteTargetHttpProxyRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "targetHttpProxies", "/",
+                   request.target_http_proxy()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
 DefaultRegionTargetHttpProxiesRestStub::GetTargetHttpProxy(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -130,6 +147,22 @@ DefaultRegionTargetHttpProxiesRestStub::AsyncInsertTargetHttpProxy(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionTargetHttpProxiesRestStub::InsertTargetHttpProxy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_target_http_proxies::v1::
+        InsertTargetHttpProxyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.target_http_proxy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "targetHttpProxies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
@@ -188,6 +221,23 @@ DefaultRegionTargetHttpProxiesRestStub::AsyncSetUrlMap(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionTargetHttpProxiesRestStub::SetUrlMap(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_target_http_proxies::v1::
+        SetUrlMapRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.url_map_reference_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "targetHttpProxies", "/",
+                   request.target_http_proxy(), "/", "setUrlMap"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

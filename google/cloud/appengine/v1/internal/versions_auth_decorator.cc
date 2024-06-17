@@ -68,6 +68,14 @@ VersionsAuth::AsyncCreateVersion(
       });
 }
 
+StatusOr<google::longrunning::Operation> VersionsAuth::CreateVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VersionsAuth::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +96,14 @@ VersionsAuth::AsyncUpdateVersion(
       });
 }
 
+StatusOr<google::longrunning::Operation> VersionsAuth::UpdateVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VersionsAuth::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +122,14 @@ VersionsAuth::AsyncDeleteVersion(
         return child->AsyncDeleteVersion(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> VersionsAuth::DeleteVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteVersion(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

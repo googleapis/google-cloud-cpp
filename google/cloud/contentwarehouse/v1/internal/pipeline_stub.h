@@ -45,6 +45,11 @@ class PipelineServiceStub {
       google::cloud::contentwarehouse::v1::RunPipelineRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> RunPipeline(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -72,6 +77,11 @@ class DefaultPipelineServiceStub : public PipelineServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RunPipeline(
+      grpc::ClientContext& context, Options options,
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
       override;
 

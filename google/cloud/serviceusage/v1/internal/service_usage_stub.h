@@ -44,10 +44,18 @@ class ServiceUsageStub {
       google::cloud::internal::ImmutableOptions options,
       google::api::serviceusage::v1::EnableServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> EnableService(
+      grpc::ClientContext& context, Options options,
+      google::api::serviceusage::v1::EnableServiceRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDisableService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::api::serviceusage::v1::DisableServiceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DisableService(
+      grpc::ClientContext& context, Options options,
       google::api::serviceusage::v1::DisableServiceRequest const& request) = 0;
 
   virtual StatusOr<google::api::serviceusage::v1::Service> GetService(
@@ -64,6 +72,11 @@ class ServiceUsageStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::api::serviceusage::v1::BatchEnableServicesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> BatchEnableServices(
+      grpc::ClientContext& context, Options options,
       google::api::serviceusage::v1::BatchEnableServicesRequest const&
           request) = 0;
 
@@ -102,10 +115,20 @@ class DefaultServiceUsageStub : public ServiceUsageStub {
       google::api::serviceusage::v1::EnableServiceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> EnableService(
+      grpc::ClientContext& context, Options options,
+      google::api::serviceusage::v1::EnableServiceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDisableService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::api::serviceusage::v1::DisableServiceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DisableService(
+      grpc::ClientContext& context, Options options,
       google::api::serviceusage::v1::DisableServiceRequest const& request)
       override;
 
@@ -122,6 +145,11 @@ class DefaultServiceUsageStub : public ServiceUsageStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchEnableServices(
+      grpc::ClientContext& context, Options options,
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
       override;
 

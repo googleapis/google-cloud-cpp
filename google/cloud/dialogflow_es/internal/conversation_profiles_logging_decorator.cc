@@ -126,6 +126,20 @@ ConversationProfilesLogging::AsyncSetSuggestionFeatureConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationProfilesLogging::SetSuggestionFeatureConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 SetSuggestionFeatureConfigRequest const& request) {
+        return child_->SetSuggestionFeatureConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesLogging::AsyncClearSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
@@ -144,6 +158,20 @@ ConversationProfilesLogging::AsyncClearSuggestionFeatureConfig(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationProfilesLogging::ClearSuggestionFeatureConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 ClearSuggestionFeatureConfigRequest const& request) {
+        return child_->ClearSuggestionFeatureConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

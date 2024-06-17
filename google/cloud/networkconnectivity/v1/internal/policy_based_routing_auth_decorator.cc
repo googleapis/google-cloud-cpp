@@ -72,6 +72,16 @@ PolicyBasedRoutingServiceAuth::AsyncCreatePolicyBasedRoute(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceAuth::CreatePolicyBasedRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePolicyBasedRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PolicyBasedRoutingServiceAuth::AsyncDeletePolicyBasedRoute(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +101,16 @@ PolicyBasedRoutingServiceAuth::AsyncDeletePolicyBasedRoute(
         return child->AsyncDeletePolicyBasedRoute(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceAuth::DeletePolicyBasedRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePolicyBasedRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

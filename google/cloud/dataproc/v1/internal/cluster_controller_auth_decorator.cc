@@ -51,6 +51,14 @@ ClusterControllerAuth::AsyncCreateCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> ClusterControllerAuth::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerAuth::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +77,14 @@ ClusterControllerAuth::AsyncUpdateCluster(
         return child->AsyncUpdateCluster(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ClusterControllerAuth::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -91,6 +107,14 @@ ClusterControllerAuth::AsyncStopCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> ClusterControllerAuth::StopCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::StopClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerAuth::AsyncStartCluster(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +135,14 @@ ClusterControllerAuth::AsyncStartCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> ClusterControllerAuth::StartCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::StartClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerAuth::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -129,6 +161,14 @@ ClusterControllerAuth::AsyncDeleteCluster(
         return child->AsyncDeleteCluster(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ClusterControllerAuth::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCluster(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
@@ -167,6 +207,14 @@ ClusterControllerAuth::AsyncDiagnoseCluster(
         return child->AsyncDiagnoseCluster(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ClusterControllerAuth::DiagnoseCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DiagnoseCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

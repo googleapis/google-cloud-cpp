@@ -68,6 +68,19 @@ SecurityCenterLogging::AsyncBulkMuteFindings(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+SecurityCenterLogging::BulkMuteFindings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
+                 request) {
+        return child_->BulkMuteFindings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
 SecurityCenterLogging::CreateBigQueryExport(
     grpc::ClientContext& context, Options const& options,

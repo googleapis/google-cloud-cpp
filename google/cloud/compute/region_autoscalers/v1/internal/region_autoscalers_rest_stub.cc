@@ -80,6 +80,23 @@ DefaultRegionAutoscalersRestStub::AsyncDeleteAutoscaler(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionAutoscalersRestStub::DeleteAutoscaler(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        DeleteAutoscalerRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers", "/",
+                   request.autoscaler()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 DefaultRegionAutoscalersRestStub::GetAutoscaler(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -127,6 +144,22 @@ DefaultRegionAutoscalersRestStub::AsyncInsertAutoscaler(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionAutoscalersRestStub::InsertAutoscaler(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        InsertAutoscalerRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.autoscaler_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RegionAutoscalerList>
@@ -186,6 +219,23 @@ DefaultRegionAutoscalersRestStub::AsyncPatchAutoscaler(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionAutoscalersRestStub::PatchAutoscaler(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        PatchAutoscalerRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.autoscaler_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("autoscaler", request.autoscaler()),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionAutoscalersRestStub::AsyncUpdateAutoscaler(
     CompletionQueue& cq,
@@ -219,6 +269,23 @@ DefaultRegionAutoscalersRestStub::AsyncUpdateAutoscaler(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionAutoscalersRestStub::UpdateAutoscaler(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_autoscalers::v1::
+        UpdateAutoscalerRequest const& request) {
+  return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.autoscaler_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "autoscalers"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("autoscaler", request.autoscaler()),
+           std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

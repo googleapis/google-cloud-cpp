@@ -53,6 +53,11 @@ class SecurityCenterLogging : public SecurityCenterStub {
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
+      override;
+
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
   CreateBigQueryExport(
       grpc::ClientContext& context, Options const& options,

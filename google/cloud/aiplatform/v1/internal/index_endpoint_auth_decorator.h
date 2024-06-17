@@ -46,6 +46,11 @@ class IndexEndpointServiceAuth : public IndexEndpointServiceStub {
       google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> GetIndexEndpoint(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request)
@@ -69,10 +74,20 @@ class IndexEndpointServiceAuth : public IndexEndpointServiceStub {
       google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeployIndex(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeployIndexRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeployIndex(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeployIndexRequest const& request)
       override;
 
@@ -83,10 +98,20 @@ class IndexEndpointServiceAuth : public IndexEndpointServiceStub {
       google::cloud::aiplatform::v1::UndeployIndexRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UndeployIndex(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UndeployIndexRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncMutateDeployedIndex(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> MutateDeployedIndex(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request)
       override;
 

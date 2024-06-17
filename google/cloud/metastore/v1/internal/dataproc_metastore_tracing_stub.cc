@@ -69,6 +69,18 @@ DataprocMetastoreTracingStub::AsyncCreateService(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "CreateService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateService(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreTracingStub::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +95,18 @@ DataprocMetastoreTracingStub::AsyncUpdateService(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "UpdateService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateService(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreTracingStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +119,18 @@ DataprocMetastoreTracingStub::AsyncDeleteService(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteService(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "DeleteService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteService(context, options, request));
 }
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
@@ -136,6 +172,18 @@ DataprocMetastoreTracingStub::AsyncCreateMetadataImport(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::CreateMetadataImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "CreateMetadataImport");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateMetadataImport(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreTracingStub::AsyncUpdateMetadataImport(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +197,18 @@ DataprocMetastoreTracingStub::AsyncUpdateMetadataImport(
   auto f = child_->AsyncUpdateMetadataImport(cq, context, std::move(options),
                                              request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::UpdateMetadataImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "UpdateMetadataImport");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateMetadataImport(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -166,6 +226,18 @@ DataprocMetastoreTracingStub::AsyncExportMetadata(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::ExportMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::ExportMetadataRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "ExportMetadata");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportMetadata(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreTracingStub::AsyncRestoreService(
     google::cloud::CompletionQueue& cq,
@@ -179,6 +251,18 @@ DataprocMetastoreTracingStub::AsyncRestoreService(
   auto f =
       child_->AsyncRestoreService(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::RestoreService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::RestoreServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "RestoreService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RestoreService(context, options, request));
 }
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
@@ -219,6 +303,18 @@ DataprocMetastoreTracingStub::AsyncCreateBackup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "CreateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateBackup(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreTracingStub::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -233,6 +329,18 @@ DataprocMetastoreTracingStub::AsyncDeleteBackup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteBackupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "DeleteBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBackup(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreTracingStub::AsyncQueryMetadata(
     google::cloud::CompletionQueue& cq,
@@ -245,6 +353,18 @@ DataprocMetastoreTracingStub::AsyncQueryMetadata(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncQueryMetadata(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::QueryMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "QueryMetadata");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->QueryMetadata(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -262,6 +382,18 @@ DataprocMetastoreTracingStub::AsyncMoveTableToDatabase(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::MoveTableToDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.metastore.v1.DataprocMetastore", "MoveTableToDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->MoveTableToDatabase(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreTracingStub::AsyncAlterMetadataResourceLocation(
     google::cloud::CompletionQueue& cq,
@@ -277,6 +409,21 @@ DataprocMetastoreTracingStub::AsyncAlterMetadataResourceLocation(
   auto f = child_->AsyncAlterMetadataResourceLocation(
       cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreTracingStub::AlterMetadataResourceLocation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.metastore.v1.DataprocMetastore",
+                             "AlterMetadataResourceLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->AlterMetadataResourceLocation(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

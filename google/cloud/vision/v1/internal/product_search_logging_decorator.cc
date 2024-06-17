@@ -262,6 +262,19 @@ ProductSearchLogging::AsyncImportProductSets(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductSearchLogging::ImportProductSets(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+        return child_->ImportProductSets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchLogging::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
@@ -278,6 +291,17 @@ ProductSearchLogging::AsyncPurgeProducts(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ProductSearchLogging::PurgeProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::PurgeProductsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vision::v1::PurgeProductsRequest const& request) {
+        return child_->PurgeProducts(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

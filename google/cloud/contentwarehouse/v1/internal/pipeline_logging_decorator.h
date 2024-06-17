@@ -46,6 +46,11 @@ class PipelineServiceLogging : public PipelineServiceStub {
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RunPipeline(
+      grpc::ClientContext& context, Options options,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

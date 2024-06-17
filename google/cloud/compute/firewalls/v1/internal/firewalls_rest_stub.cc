@@ -79,6 +79,22 @@ DefaultFirewallsRestStub::AsyncDeleteFirewall(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultFirewallsRestStub::DeleteFirewall(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewalls", "/", request.firewall()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
 DefaultFirewallsRestStub::GetFirewall(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -124,6 +140,22 @@ DefaultFirewallsRestStub::AsyncInsertFirewall(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultFirewallsRestStub::InsertFirewall(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewalls"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallList>
@@ -181,6 +213,22 @@ DefaultFirewallsRestStub::AsyncPatchFirewall(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultFirewallsRestStub::PatchFirewall(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+        request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewalls", "/", request.firewall()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultFirewallsRestStub::AsyncUpdateFirewall(
     CompletionQueue& cq,
@@ -213,6 +261,22 @@ DefaultFirewallsRestStub::AsyncUpdateFirewall(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultFirewallsRestStub::UpdateFirewall(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
+        request) {
+  return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewalls", "/", request.firewall()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

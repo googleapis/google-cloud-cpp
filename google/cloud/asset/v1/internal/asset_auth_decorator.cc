@@ -51,6 +51,14 @@ AssetServiceAuth::AsyncExportAssets(
       });
 }
 
+StatusOr<google::longrunning::Operation> AssetServiceAuth::ExportAssets(
+    grpc::ClientContext& context, Options options,
+    google::cloud::asset::v1::ExportAssetsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportAssets(context, options, request);
+}
+
 StatusOr<google::cloud::asset::v1::ListAssetsResponse>
 AssetServiceAuth::ListAssets(
     grpc::ClientContext& context, Options const& options,
@@ -156,6 +164,16 @@ AssetServiceAuth::AsyncAnalyzeIamPolicyLongrunning(
         return child->AsyncAnalyzeIamPolicyLongrunning(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AssetServiceAuth::AnalyzeIamPolicyLongrunning(
+    grpc::ClientContext& context, Options options,
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AnalyzeIamPolicyLongrunning(context, options, request);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>

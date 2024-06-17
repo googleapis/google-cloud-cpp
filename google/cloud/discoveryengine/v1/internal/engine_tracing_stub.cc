@@ -45,6 +45,17 @@ EngineServiceTracingStub::AsyncCreateEngine(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> EngineServiceTracingStub::CreateEngine(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.EngineService", "CreateEngine");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateEngine(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EngineServiceTracingStub::AsyncDeleteEngine(
     google::cloud::CompletionQueue& cq,
@@ -57,6 +68,17 @@ EngineServiceTracingStub::AsyncDeleteEngine(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteEngine(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> EngineServiceTracingStub::DeleteEngine(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.EngineService", "DeleteEngine");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEngine(context, options, request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>

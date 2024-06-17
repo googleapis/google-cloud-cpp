@@ -96,6 +96,18 @@ TranslationServiceTracingStub::AsyncBatchTranslateText(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingStub::BatchTranslateText(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.translation.v3.TranslationService", "BatchTranslateText");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->BatchTranslateText(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncBatchTranslateDocument(
     google::cloud::CompletionQueue& cq,
@@ -113,6 +125,21 @@ TranslationServiceTracingStub::AsyncBatchTranslateDocument(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingStub::BatchTranslateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.translation.v3.TranslationService",
+                             "BatchTranslateDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchTranslateDocument(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +153,18 @@ TranslationServiceTracingStub::AsyncCreateGlossary(
   auto f =
       child_->AsyncCreateGlossary(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingStub::CreateGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateGlossaryRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.translation.v3.TranslationService", "CreateGlossary");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateGlossary(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
@@ -165,6 +204,18 @@ TranslationServiceTracingStub::AsyncDeleteGlossary(
   auto f =
       child_->AsyncDeleteGlossary(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceTracingStub::DeleteGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.translation.v3.TranslationService", "DeleteGlossary");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteGlossary(context, options, request));
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>

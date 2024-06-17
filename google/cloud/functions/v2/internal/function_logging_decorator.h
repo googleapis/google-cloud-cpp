@@ -55,6 +55,11 @@ class FunctionServiceLogging : public FunctionServiceStub {
       google::cloud::functions::v2::CreateFunctionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateFunction(
+      grpc::ClientContext& context, Options options,
+      google::cloud::functions::v2::CreateFunctionRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFunction(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -62,10 +67,20 @@ class FunctionServiceLogging : public FunctionServiceStub {
       google::cloud::functions::v2::UpdateFunctionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateFunction(
+      grpc::ClientContext& context, Options options,
+      google::cloud::functions::v2::UpdateFunctionRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFunction(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::functions::v2::DeleteFunctionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFunction(
+      grpc::ClientContext& context, Options options,
       google::cloud::functions::v2::DeleteFunctionRequest const& request)
       override;
 

@@ -54,6 +54,14 @@ AwsClustersMetadata::AsyncCreateAwsCluster(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> AwsClustersMetadata::CreateAwsCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAwsCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncUpdateAwsCluster(
     google::cloud::CompletionQueue& cq,
@@ -65,6 +73,15 @@ AwsClustersMetadata::AsyncUpdateAwsCluster(
                            internal::UrlEncode(request.aws_cluster().name())));
   return child_->AsyncUpdateAwsCluster(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersMetadata::UpdateAwsCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("aws_cluster.name=",
+                           internal::UrlEncode(request.aws_cluster().name())));
+  return child_->UpdateAwsCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
@@ -95,6 +112,14 @@ AwsClustersMetadata::AsyncDeleteAwsCluster(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAwsCluster(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersMetadata::DeleteAwsCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAwsCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
@@ -131,6 +156,14 @@ AwsClustersMetadata::AsyncCreateAwsNodePool(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> AwsClustersMetadata::CreateAwsNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAwsNodePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncUpdateAwsNodePool(
     google::cloud::CompletionQueue& cq,
@@ -145,6 +178,16 @@ AwsClustersMetadata::AsyncUpdateAwsNodePool(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> AwsClustersMetadata::UpdateAwsNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("aws_node_pool.name=",
+                   internal::UrlEncode(request.aws_node_pool().name())));
+  return child_->UpdateAwsNodePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncRollbackAwsNodePoolUpdate(
     google::cloud::CompletionQueue& cq,
@@ -156,6 +199,16 @@ AwsClustersMetadata::AsyncRollbackAwsNodePoolUpdate(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRollbackAwsNodePoolUpdate(cq, std::move(context),
                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AwsClustersMetadata::RollbackAwsNodePoolUpdate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RollbackAwsNodePoolUpdate(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -186,6 +239,14 @@ AwsClustersMetadata::AsyncDeleteAwsNodePool(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAwsNodePool(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersMetadata::DeleteAwsNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAwsNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>

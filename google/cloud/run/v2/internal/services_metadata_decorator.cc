@@ -75,6 +75,33 @@ ServicesMetadata::AsyncCreateService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> ServicesMetadata::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CreateServiceRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::CreateServiceRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::CreateServiceRequest const& request)
+                 -> std::string const& { return request.parent(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->CreateService(context, options, request);
+}
+
 StatusOr<google::cloud::run::v2::Service> ServicesMetadata::GetService(
     grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetServiceRequest const& request) {
@@ -161,6 +188,33 @@ ServicesMetadata::AsyncUpdateService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> ServicesMetadata::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::UpdateServiceRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::UpdateServiceRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::UpdateServiceRequest const& request)
+                 -> std::string const& { return request.service().name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->UpdateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -190,6 +244,33 @@ ServicesMetadata::AsyncDeleteService(
   }
   return child_->AsyncDeleteService(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> ServicesMetadata::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteServiceRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(1);
+
+  static auto* location_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::cloud::run::v2::DeleteServiceRequest>{
+        "location=",
+        {
+            {[](google::cloud::run::v2::DeleteServiceRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"projects/[^/]+/locations/([^/]+)/.*",
+                        std::regex::optimize}},
+        }};
+  }();
+  location_matcher->AppendParam(request, params);
+
+  if (params.empty()) {
+    SetMetadata(context, options);
+  } else {
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
+  }
+  return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ServicesMetadata::GetIamPolicy(

@@ -85,6 +85,26 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncAddAssociation(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::AddAssociation(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddAssociationRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_policy_association_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "addAssociation"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("replace_existing_association",
+                          request.replace_existing_association() ? "1" : "0"),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkFirewallPoliciesRestStub::AsyncAddRule(
     CompletionQueue& cq,
@@ -124,6 +144,27 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncAddRule(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::AddRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddRuleRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_policy_rule_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "addRule"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("max_priority",
+                          std::to_string(request.max_priority())),
+           std::make_pair("min_priority",
+                          std::to_string(request.min_priority())),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkFirewallPoliciesRestStub::AsyncCloneRules(
     CompletionQueue& cq,
@@ -160,6 +201,25 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncCloneRules(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::CloneRules(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        CloneRulesRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "cloneRules"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("source_firewall_policy",
+                          request.source_firewall_policy())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkFirewallPoliciesRestStub::AsyncDeleteFirewallPolicy(
     CompletionQueue& cq,
@@ -192,6 +252,22 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncDeleteFirewallPolicy(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::DeleteFirewallPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        DeleteFirewallPolicyRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -296,6 +372,22 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncInsertFirewallPolicy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::InsertFirewallPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        InsertFirewallPolicyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_policy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
 DefaultNetworkFirewallPoliciesRestStub::ListNetworkFirewallPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -353,6 +445,22 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncPatchFirewallPolicy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::PatchFirewallPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchFirewallPolicyRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_policy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkFirewallPoliciesRestStub::AsyncPatchRule(
     CompletionQueue& cq,
@@ -388,6 +496,24 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncPatchRule(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::PatchRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchRuleRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.firewall_policy_rule_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "patchRule"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("priority", std::to_string(request.priority())),
+           std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -426,6 +552,24 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncRemoveAssociation(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::RemoveAssociation(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemoveAssociationRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "removeAssociation"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("name", request.name()),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkFirewallPoliciesRestStub::AsyncRemoveRule(
     CompletionQueue& cq,
@@ -460,6 +604,24 @@ DefaultNetworkFirewallPoliciesRestStub::AsyncRemoveRule(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkFirewallPoliciesRestStub::RemoveRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemoveRuleRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "firewallPolicies", "/", request.firewall_policy(), "/",
+                   "removeRule"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("priority", std::to_string(request.priority())),
+           std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

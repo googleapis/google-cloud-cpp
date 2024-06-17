@@ -69,6 +69,15 @@ DataprocMetastoreFederationAuth::AsyncCreateFederation(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationAuth::CreateFederation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateFederationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFederation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationAuth::AsyncUpdateFederation(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +98,15 @@ DataprocMetastoreFederationAuth::AsyncUpdateFederation(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationAuth::UpdateFederation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFederation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationAuth::AsyncDeleteFederation(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +125,15 @@ DataprocMetastoreFederationAuth::AsyncDeleteFederation(
         return child->AsyncDeleteFederation(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationAuth::DeleteFederation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFederation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

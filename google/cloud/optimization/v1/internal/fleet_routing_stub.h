@@ -51,6 +51,11 @@ class FleetRoutingStub {
       google::cloud::optimization::v1::BatchOptimizeToursRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> BatchOptimizeTours(
+      grpc::ClientContext& context, Options options,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -83,6 +88,11 @@ class DefaultFleetRoutingStub : public FleetRoutingStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchOptimizeTours(
+      grpc::ClientContext& context, Options options,
       google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
       override;
 

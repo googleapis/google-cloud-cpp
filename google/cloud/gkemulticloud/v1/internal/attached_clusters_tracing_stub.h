@@ -45,6 +45,11 @@ class AttachedClustersTracingStub : public AttachedClustersStub {
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateAttachedCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAttachedCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -52,10 +57,20 @@ class AttachedClustersTracingStub : public AttachedClustersStub {
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportAttachedCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ImportAttachedCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request) override;
 
@@ -75,6 +90,11 @@ class AttachedClustersTracingStub : public AttachedClustersStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request) override;
 

@@ -53,6 +53,16 @@ RapidMigrationAssessmentAuth::AsyncCreateCollector(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentAuth::CreateCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCollector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentAuth::AsyncCreateAnnotation(
     google::cloud::CompletionQueue& cq,
@@ -72,6 +82,16 @@ RapidMigrationAssessmentAuth::AsyncCreateAnnotation(
         return child->AsyncCreateAnnotation(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentAuth::CreateAnnotation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAnnotation(context, options, request);
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
@@ -125,6 +145,16 @@ RapidMigrationAssessmentAuth::AsyncUpdateCollector(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentAuth::UpdateCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCollector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentAuth::AsyncDeleteCollector(
     google::cloud::CompletionQueue& cq,
@@ -144,6 +174,16 @@ RapidMigrationAssessmentAuth::AsyncDeleteCollector(
         return child->AsyncDeleteCollector(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentAuth::DeleteCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCollector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -167,6 +207,16 @@ RapidMigrationAssessmentAuth::AsyncResumeCollector(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentAuth::ResumeCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ResumeCollector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentAuth::AsyncRegisterCollector(
     google::cloud::CompletionQueue& cq,
@@ -188,6 +238,16 @@ RapidMigrationAssessmentAuth::AsyncRegisterCollector(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentAuth::RegisterCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RegisterCollector(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentAuth::AsyncPauseCollector(
     google::cloud::CompletionQueue& cq,
@@ -207,6 +267,16 @@ RapidMigrationAssessmentAuth::AsyncPauseCollector(
         return child->AsyncPauseCollector(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentAuth::PauseCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PauseCollector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -72,6 +72,17 @@ DefaultRevisionsStub::AsyncDeleteRevision(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultRevisionsStub::DeleteRevision(
+    grpc::ClientContext& context, Options,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRevision(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultRevisionsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

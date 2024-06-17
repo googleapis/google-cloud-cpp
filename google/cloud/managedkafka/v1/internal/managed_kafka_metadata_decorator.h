@@ -56,6 +56,11 @@ class ManagedKafkaMetadata : public ManagedKafkaStub {
       google::cloud::managedkafka::v1::CreateClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::managedkafka::v1::CreateClusterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -63,10 +68,20 @@ class ManagedKafkaMetadata : public ManagedKafkaStub {
       google::cloud::managedkafka::v1::UpdateClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      grpc::ClientContext& context, Options options,
+      google::cloud::managedkafka::v1::UpdateClusterRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCluster(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::managedkafka::v1::DeleteClusterRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      grpc::ClientContext& context, Options options,
       google::cloud::managedkafka::v1::DeleteClusterRequest const& request)
       override;
 

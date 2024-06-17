@@ -70,6 +70,15 @@ UserEventServiceAuth::AsyncImportUserEvents(
       });
 }
 
+StatusOr<google::longrunning::Operation> UserEventServiceAuth::ImportUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportUserEvents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

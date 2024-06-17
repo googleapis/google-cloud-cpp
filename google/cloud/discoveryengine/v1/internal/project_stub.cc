@@ -51,6 +51,19 @@ DefaultProjectServiceStub::AsyncProvisionProject(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultProjectServiceStub::ProvisionProject(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ProvisionProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

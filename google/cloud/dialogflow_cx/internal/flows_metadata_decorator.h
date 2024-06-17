@@ -70,6 +70,11 @@ class FlowsMetadata : public FlowsStub {
       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> TrainFlow(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request)
+      override;
+
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   ValidateFlow(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::ValidateFlowRequest const&
@@ -88,10 +93,20 @@ class FlowsMetadata : public FlowsStub {
       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ImportFlow(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportFlow(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ExportFlow(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request)
       override;
 

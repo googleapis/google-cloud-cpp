@@ -78,6 +78,23 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateDatabase) {
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(GoldenThingAdminAuthDecoratorTest, CreateDatabase) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, CreateDatabase)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto under_test = GoldenThingAdminAuth(MakeTypicalMockAuth(), mock);
+  google::test::admin::database::v1::CreateDatabaseRequest request;
+  grpc::ClientContext ctx;
+  auto auth_failure = under_test.CreateDatabase(ctx, Options{}, request);
+  EXPECT_THAT(ctx.credentials(), IsNull());
+  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+
+  auto auth_success = under_test.CreateDatabase(ctx, Options{}, request);
+  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
+  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+}
+
 TEST(GoldenThingAdminAuthDecoratorTest, GetDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetDatabase)
@@ -111,6 +128,23 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncUpdateDatabaseDdl) {
       cq, std::make_shared<grpc::ClientContext>(),
       internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(GoldenThingAdminAuthDecoratorTest, UpdateDatabaseDdl) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, UpdateDatabaseDdl)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto under_test = GoldenThingAdminAuth(MakeTypicalMockAuth(), mock);
+  google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
+  grpc::ClientContext ctx;
+  auto auth_failure = under_test.UpdateDatabaseDdl(ctx, Options{}, request);
+  EXPECT_THAT(ctx.credentials(), IsNull());
+  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+
+  auto auth_success = under_test.UpdateDatabaseDdl(ctx, Options{}, request);
+  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
+  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenThingAdminAuthDecoratorTest, DropDatabase) {
@@ -216,6 +250,23 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateBackup) {
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(GoldenThingAdminAuthDecoratorTest, CreateBackup) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, CreateBackup)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto under_test = GoldenThingAdminAuth(MakeTypicalMockAuth(), mock);
+  google::test::admin::database::v1::CreateBackupRequest request;
+  grpc::ClientContext ctx;
+  auto auth_failure = under_test.CreateBackup(ctx, Options{}, request);
+  EXPECT_THAT(ctx.credentials(), IsNull());
+  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+
+  auto auth_success = under_test.CreateBackup(ctx, Options{}, request);
+  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
+  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
+}
+
 TEST(GoldenThingAdminAuthDecoratorTest, GetBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, GetBackup)
@@ -300,6 +351,23 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncRestoreDatabase) {
       cq, std::make_shared<grpc::ClientContext>(),
       internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(GoldenThingAdminAuthDecoratorTest, RestoreDatabase) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, RestoreDatabase)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto under_test = GoldenThingAdminAuth(MakeTypicalMockAuth(), mock);
+  google::test::admin::database::v1::RestoreDatabaseRequest request;
+  grpc::ClientContext ctx;
+  auto auth_failure = under_test.RestoreDatabase(ctx, Options{}, request);
+  EXPECT_THAT(ctx.credentials(), IsNull());
+  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
+
+  auto auth_success = under_test.RestoreDatabase(ctx, Options{}, request);
+  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
+  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenThingAdminAuthDecoratorTest, ListDatabaseOperations) {

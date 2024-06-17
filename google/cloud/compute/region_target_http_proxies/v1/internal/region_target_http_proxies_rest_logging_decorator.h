@@ -52,6 +52,12 @@ class RegionTargetHttpProxiesRestLogging
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           DeleteTargetHttpProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_target_http_proxies::v1::
+          DeleteTargetHttpProxyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -66,6 +72,12 @@ class RegionTargetHttpProxiesRestLogging
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           InsertTargetHttpProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_target_http_proxies::v1::
+          InsertTargetHttpProxyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
   ListRegionTargetHttpProxies(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -77,6 +89,12 @@ class RegionTargetHttpProxiesRestLogging
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_target_http_proxies::v1::
+          SetUrlMapRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           SetUrlMapRequest const& request) override;
 

@@ -51,6 +51,15 @@ AnalyticsServiceAuth::AsyncExportAnalyticsMetrics(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceAuth::ExportAnalyticsMetrics(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportAnalyticsMetrics(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

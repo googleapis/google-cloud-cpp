@@ -57,6 +57,11 @@ class AppHubTracingStub : public AppHubStub {
       google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+          request) override;
+
   StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
   GetServiceProjectAttachment(
       grpc::ClientContext& context, Options const& options,
@@ -68,6 +73,11 @@ class AppHubTracingStub : public AppHubStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
           request) override;
 
@@ -104,6 +114,10 @@ class AppHubTracingStub : public AppHubStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apphub::v1::CreateServiceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::CreateServiceRequest const& request) override;
+
   StatusOr<google::cloud::apphub::v1::Service> GetService(
       grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::GetServiceRequest const& request) override;
@@ -114,10 +128,18 @@ class AppHubTracingStub : public AppHubStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apphub::v1::UpdateServiceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::UpdateServiceRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::DeleteServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteService(
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::DeleteServiceRequest const& request) override;
 
   StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
@@ -147,6 +169,10 @@ class AppHubTracingStub : public AppHubStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apphub::v1::CreateWorkloadRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateWorkload(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::CreateWorkloadRequest const& request) override;
+
   StatusOr<google::cloud::apphub::v1::Workload> GetWorkload(
       grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::GetWorkloadRequest const& request) override;
@@ -157,10 +183,18 @@ class AppHubTracingStub : public AppHubStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateWorkload(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::UpdateWorkloadRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkload(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::DeleteWorkloadRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteWorkload(
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request) override;
 
   StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
@@ -175,6 +209,11 @@ class AppHubTracingStub : public AppHubStub {
       google::cloud::apphub::v1::CreateApplicationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateApplication(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::CreateApplicationRequest const& request)
+      override;
+
   StatusOr<google::cloud::apphub::v1::Application> GetApplication(
       grpc::ClientContext& context, Options const& options,
       google::cloud::apphub::v1::GetApplicationRequest const& request) override;
@@ -186,10 +225,20 @@ class AppHubTracingStub : public AppHubStub {
       google::cloud::apphub::v1::UpdateApplicationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateApplication(
+      grpc::ClientContext& context, Options options,
+      google::cloud::apphub::v1::UpdateApplicationRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteApplication(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::apphub::v1::DeleteApplicationRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteApplication(
+      grpc::ClientContext& context, Options options,
       google::cloud::apphub::v1::DeleteApplicationRequest const& request)
       override;
 

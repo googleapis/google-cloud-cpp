@@ -45,6 +45,18 @@ SessionControllerTracingStub::AsyncCreateSession(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerTracingStub::CreateSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.SessionController", "CreateSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateSession(context, options, request));
+}
+
 StatusOr<google::cloud::dataproc::v1::Session>
 SessionControllerTracingStub::GetSession(
     grpc::ClientContext& context, Options const& options,
@@ -84,6 +96,18 @@ SessionControllerTracingStub::AsyncTerminateSession(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerTracingStub::TerminateSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.SessionController", "TerminateSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->TerminateSession(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerTracingStub::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
@@ -96,6 +120,18 @@ SessionControllerTracingStub::AsyncDeleteSession(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteSession(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+SessionControllerTracingStub::DeleteSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.SessionController", "DeleteSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSession(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

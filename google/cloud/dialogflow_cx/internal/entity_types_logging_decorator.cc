@@ -117,6 +117,19 @@ EntityTypesLogging::AsyncExportEntityTypes(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EntityTypesLogging::ExportEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+                 request) {
+        return child_->ExportEntityTypes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesLogging::AsyncImportEntityTypes(
     google::cloud::CompletionQueue& cq,
@@ -135,6 +148,19 @@ EntityTypesLogging::AsyncImportEntityTypes(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EntityTypesLogging::ImportEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+                 request) {
+        return child_->ImportEntityTypes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

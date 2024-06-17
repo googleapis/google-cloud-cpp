@@ -55,6 +55,20 @@ RegionNetworkEndpointGroupsRestLogging::AsyncAttachNetworkEndpoints(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkEndpointGroupsRestLogging::AttachNetworkEndpoints(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        AttachNetworkEndpointsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+                 AttachNetworkEndpointsRequest const& request) {
+        return child_->AttachNetworkEndpoints(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsRestLogging::AsyncDeleteNetworkEndpointGroup(
     CompletionQueue& cq,
@@ -75,6 +89,21 @@ RegionNetworkEndpointGroupsRestLogging::AsyncDeleteNetworkEndpointGroup(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkEndpointGroupsRestLogging::DeleteNetworkEndpointGroup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        DeleteNetworkEndpointGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+                 DeleteNetworkEndpointGroupRequest const& request) {
+        return child_->DeleteNetworkEndpointGroup(rest_context, options,
+                                                  request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkEndpointGroupsRestLogging::AsyncDetachNetworkEndpoints(
     CompletionQueue& cq,
@@ -93,6 +122,20 @@ RegionNetworkEndpointGroupsRestLogging::AsyncDetachNetworkEndpoints(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkEndpointGroupsRestLogging::DetachNetworkEndpoints(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        DetachNetworkEndpointsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+                 DetachNetworkEndpointsRequest const& request) {
+        return child_->DetachNetworkEndpoints(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -127,6 +170,21 @@ RegionNetworkEndpointGroupsRestLogging::AsyncInsertNetworkEndpointGroup(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkEndpointGroupsRestLogging::InsertNetworkEndpointGroup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+        InsertNetworkEndpointGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+                 InsertNetworkEndpointGroupRequest const& request) {
+        return child_->InsertNetworkEndpointGroup(rest_context, options,
+                                                  request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>

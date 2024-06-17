@@ -48,11 +48,21 @@ class OsConfigZonalServiceMetadata : public OsConfigZonalServiceStub {
       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
+      grpc::ClientContext& context, Options options,
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request) override;
 
@@ -79,6 +89,11 @@ class OsConfigZonalServiceMetadata : public OsConfigZonalServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
+      grpc::ClientContext& context, Options options,
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request) override;
 

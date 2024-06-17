@@ -53,16 +53,28 @@ class PoliciesMetadata : public PoliciesStub {
       google::cloud::internal::ImmutableOptions options,
       google::iam::v2::CreatePolicyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreatePolicy(
+      grpc::ClientContext& context, Options options,
+      google::iam::v2::CreatePolicyRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdatePolicy(
+      grpc::ClientContext& context, Options options,
+      google::iam::v2::UpdatePolicyRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::iam::v2::DeletePolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeletePolicy(
+      grpc::ClientContext& context, Options options,
       google::iam::v2::DeletePolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

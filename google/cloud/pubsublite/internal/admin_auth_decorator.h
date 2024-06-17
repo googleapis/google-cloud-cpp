@@ -105,6 +105,11 @@ class AdminServiceAuth : public AdminServiceStub {
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> SeekSubscription(
+      grpc::ClientContext& context, Options options,
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request)
+      override;
+
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
       grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CreateReservationRequest const& request)

@@ -87,6 +87,17 @@ DefaultTagKeysStub::AsyncCreateTagKey(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultTagKeysStub::CreateTagKey(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTagKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncUpdateTagKey(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +117,17 @@ DefaultTagKeysStub::AsyncUpdateTagKey(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultTagKeysStub::UpdateTagKey(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTagKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncDeleteTagKey(
     google::cloud::CompletionQueue& cq,
@@ -123,6 +145,17 @@ DefaultTagKeysStub::AsyncDeleteTagKey(
         return grpc_stub_->AsyncDeleteTagKey(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultTagKeysStub::DeleteTagKey(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTagKey(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::GetIamPolicy(

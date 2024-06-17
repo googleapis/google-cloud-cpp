@@ -87,6 +87,14 @@ WebRiskServiceMetadata::AsyncSubmitUri(
                                 request);
 }
 
+StatusOr<google::longrunning::Operation> WebRiskServiceMetadata::SubmitUri(
+    grpc::ClientContext& context, Options options,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->SubmitUri(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WebRiskServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -51,6 +51,15 @@ AssuredWorkloadsServiceAuth::AsyncCreateWorkload(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AssuredWorkloadsServiceAuth::CreateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateWorkload(context, options, request);
+}
+
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceAuth::UpdateWorkload(
     grpc::ClientContext& context, Options const& options,

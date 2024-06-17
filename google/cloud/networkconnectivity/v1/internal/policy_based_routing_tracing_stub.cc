@@ -76,6 +76,21 @@ PolicyBasedRoutingServiceTracingStub::AsyncCreatePolicyBasedRoute(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceTracingStub::CreatePolicyBasedRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
+      "CreatePolicyBasedRoute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreatePolicyBasedRoute(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PolicyBasedRoutingServiceTracingStub::AsyncDeletePolicyBasedRoute(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +106,21 @@ PolicyBasedRoutingServiceTracingStub::AsyncDeletePolicyBasedRoute(
   auto f = child_->AsyncDeletePolicyBasedRoute(cq, context, std::move(options),
                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceTracingStub::DeletePolicyBasedRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.PolicyBasedRoutingService",
+      "DeletePolicyBasedRoute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeletePolicyBasedRoute(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

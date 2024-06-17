@@ -81,6 +81,11 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
       google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
 )""");
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  StatusOr<$response_type$> $method_name$(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, $request_type$ const& request) override;
+)""");
     } else {
       if (IsResponseTypeEmpty(method)) {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
@@ -203,6 +208,23 @@ $logging_rest_class_name$::Async$method_name$(
       tracing_options_);
 }
 )""");
+
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<$response_type$>
+$logging_rest_class_name$::$method_name$(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    $request_type$ const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             $request_type$ const& request) {
+        return child_->$method_name$(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+)""");
+
     } else {
       if (IsResponseTypeEmpty(method)) {
         CcPrintMethod(method, __FILE__, __LINE__, R"""(

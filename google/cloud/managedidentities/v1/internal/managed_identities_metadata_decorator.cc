@@ -55,6 +55,16 @@ ManagedIdentitiesServiceMetadata::AsyncCreateMicrosoftAdDomain(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceMetadata::CreateMicrosoftAdDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMicrosoftAdDomain(context, options, request);
+}
+
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceMetadata::ResetAdminPassword(
     grpc::ClientContext& context, Options const& options,
@@ -96,6 +106,16 @@ ManagedIdentitiesServiceMetadata::AsyncUpdateDomain(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceMetadata::UpdateDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("domain.name=",
+                           internal::UrlEncode(request.domain().name())));
+  return child_->UpdateDomain(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceMetadata::AsyncDeleteDomain(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +128,15 @@ ManagedIdentitiesServiceMetadata::AsyncDeleteDomain(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceMetadata::DeleteDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDomain(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceMetadata::AsyncAttachTrust(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +147,15 @@ ManagedIdentitiesServiceMetadata::AsyncAttachTrust(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncAttachTrust(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceMetadata::AttachTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AttachTrust(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -133,6 +171,16 @@ ManagedIdentitiesServiceMetadata::AsyncReconfigureTrust(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceMetadata::ReconfigureTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ReconfigureTrust(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceMetadata::AsyncDetachTrust(
     google::cloud::CompletionQueue& cq,
@@ -145,6 +193,15 @@ ManagedIdentitiesServiceMetadata::AsyncDetachTrust(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceMetadata::DetachTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DetachTrust(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceMetadata::AsyncValidateTrust(
     google::cloud::CompletionQueue& cq,
@@ -155,6 +212,15 @@ ManagedIdentitiesServiceMetadata::AsyncValidateTrust(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncValidateTrust(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceMetadata::ValidateTrust(
+    grpc::ClientContext& context, Options options,
+    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ValidateTrust(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

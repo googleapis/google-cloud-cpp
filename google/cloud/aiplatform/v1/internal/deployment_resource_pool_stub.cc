@@ -53,6 +53,20 @@ DefaultDeploymentResourcePoolServiceStub::AsyncCreateDeploymentResourcePool(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDeploymentResourcePoolServiceStub::CreateDeploymentResourcePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateDeploymentResourcePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DefaultDeploymentResourcePoolServiceStub::GetDeploymentResourcePool(
     grpc::ClientContext& context, Options const&,
@@ -100,6 +114,20 @@ DefaultDeploymentResourcePoolServiceStub::AsyncDeleteDeploymentResourcePool(
                                                              cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDeploymentResourcePoolServiceStub::DeleteDeploymentResourcePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteDeploymentResourcePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

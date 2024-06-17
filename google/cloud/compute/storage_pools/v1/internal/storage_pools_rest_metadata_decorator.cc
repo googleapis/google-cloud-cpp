@@ -59,6 +59,15 @@ StoragePoolsRestMetadata::AsyncDeleteStoragePool(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsRestMetadata::DeleteStoragePool(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::storage_pools::v1::
+        DeleteStoragePoolRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteStoragePool(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
 StoragePoolsRestMetadata::GetStoragePool(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -87,6 +96,15 @@ StoragePoolsRestMetadata::AsyncInsertStoragePool(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertStoragePool(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsRestMetadata::InsertStoragePool(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::storage_pools::v1::
+        InsertStoragePoolRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertStoragePool(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolList>
@@ -135,6 +153,15 @@ StoragePoolsRestMetadata::AsyncUpdateStoragePool(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateStoragePool(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsRestMetadata::UpdateStoragePool(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::storage_pools::v1::
+        UpdateStoragePoolRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateStoragePool(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

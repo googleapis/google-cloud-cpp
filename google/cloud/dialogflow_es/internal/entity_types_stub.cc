@@ -110,6 +110,20 @@ DefaultEntityTypesStub::AsyncBatchUpdateEntityTypes(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEntityTypesStub::BatchUpdateEntityTypes(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BatchUpdateEntityTypes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEntityTypesStub::AsyncBatchDeleteEntityTypes(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +142,20 @@ DefaultEntityTypesStub::AsyncBatchDeleteEntityTypes(
         return grpc_stub_->AsyncBatchDeleteEntityTypes(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEntityTypesStub::BatchDeleteEntityTypes(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BatchDeleteEntityTypes(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -149,6 +177,18 @@ DefaultEntityTypesStub::AsyncBatchCreateEntities(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEntityTypesStub::BatchCreateEntities(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchCreateEntities(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEntityTypesStub::AsyncBatchUpdateEntities(
     google::cloud::CompletionQueue& cq,
@@ -168,6 +208,18 @@ DefaultEntityTypesStub::AsyncBatchUpdateEntities(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEntityTypesStub::BatchUpdateEntities(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchUpdateEntities(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEntityTypesStub::AsyncBatchDeleteEntities(
     google::cloud::CompletionQueue& cq,
@@ -185,6 +237,18 @@ DefaultEntityTypesStub::AsyncBatchDeleteEntities(
         return grpc_stub_->AsyncBatchDeleteEntities(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEntityTypesStub::BatchDeleteEntities(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchDeleteEntities(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -51,6 +51,14 @@ PipelineServiceAuth::AsyncRunPipeline(
       });
 }
 
+StatusOr<google::longrunning::Operation> PipelineServiceAuth::RunPipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunPipeline(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

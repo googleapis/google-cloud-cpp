@@ -81,6 +81,24 @@ DefaultInstanceGroupsRestStub::AsyncAddInstances(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstanceGroupsRestStub::AddInstances(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instance_groups_add_instances_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instanceGroups", "/",
+                   request.instance_group(), "/", "addInstances"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
 DefaultInstanceGroupsRestStub::AggregatedListInstanceGroups(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -141,6 +159,23 @@ DefaultInstanceGroupsRestStub::AsyncDeleteInstanceGroup(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstanceGroupsRestStub::DeleteInstanceGroup(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        DeleteInstanceGroupRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instanceGroups", "/",
+                   request.instance_group()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
 DefaultInstanceGroupsRestStub::GetInstanceGroup(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -189,6 +224,22 @@ DefaultInstanceGroupsRestStub::AsyncInsertInstanceGroup(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstanceGroupsRestStub::InsertInstanceGroup(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        InsertInstanceGroupRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.instance_group_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instanceGroups"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupList>
@@ -273,6 +324,24 @@ DefaultInstanceGroupsRestStub::AsyncRemoveInstances(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstanceGroupsRestStub::RemoveInstances(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        RemoveInstancesRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instance_groups_remove_instances_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instanceGroups", "/",
+                   request.instance_group(), "/", "removeInstances"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInstanceGroupsRestStub::AsyncSetNamedPorts(
     CompletionQueue& cq,
@@ -308,6 +377,24 @@ DefaultInstanceGroupsRestStub::AsyncSetNamedPorts(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInstanceGroupsRestStub::SetNamedPorts(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::instance_groups::v1::
+        SetNamedPortsRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.instance_groups_set_named_ports_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "zones", "/",
+                   request.zone(), "/", "instanceGroups", "/",
+                   request.instance_group(), "/", "setNamedPorts"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

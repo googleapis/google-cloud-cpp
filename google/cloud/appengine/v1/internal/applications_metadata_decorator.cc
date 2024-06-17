@@ -62,6 +62,14 @@ ApplicationsMetadata::AsyncCreateApplication(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ApplicationsMetadata::CreateApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateApplicationRequest const& request) {
+  SetMetadata(context, options);
+  return child_->CreateApplication(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsMetadata::AsyncUpdateApplication(
     google::cloud::CompletionQueue& cq,
@@ -74,6 +82,15 @@ ApplicationsMetadata::AsyncUpdateApplication(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ApplicationsMetadata::UpdateApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateApplicationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateApplication(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsMetadata::AsyncRepairApplication(
     google::cloud::CompletionQueue& cq,
@@ -84,6 +101,15 @@ ApplicationsMetadata::AsyncRepairApplication(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRepairApplication(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ApplicationsMetadata::RepairApplication(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::RepairApplicationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RepairApplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

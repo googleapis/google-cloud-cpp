@@ -66,6 +66,18 @@ SpeechLogging::AsyncLongRunningRecognize(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> SpeechLogging::LongRunningRecognize(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::speech::v1::LongRunningRecognizeRequest const&
+                 request) {
+        return child_->LongRunningRecognize(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>

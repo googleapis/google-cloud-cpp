@@ -83,6 +83,20 @@ InstanceAdminRestLogging::AsyncCreateInstanceConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestLogging::CreateInstanceConfig(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::instance::v1::
+                 CreateInstanceConfigRequest const& request) {
+        return child_->CreateInstanceConfig(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestLogging::AsyncUpdateInstanceConfig(
     CompletionQueue& cq,
@@ -101,6 +115,20 @@ InstanceAdminRestLogging::AsyncUpdateInstanceConfig(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestLogging::UpdateInstanceConfig(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::instance::v1::
+                 UpdateInstanceConfigRequest const& request) {
+        return child_->UpdateInstanceConfig(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 Status InstanceAdminRestLogging::DeleteInstanceConfig(
@@ -192,6 +220,20 @@ InstanceAdminRestLogging::AsyncCreateInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestLogging::CreateInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::instance::v1::CreateInstanceRequest const&
+                 request) {
+        return child_->CreateInstance(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestLogging::AsyncUpdateInstance(
     CompletionQueue& cq,
@@ -210,6 +252,20 @@ InstanceAdminRestLogging::AsyncUpdateInstance(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestLogging::UpdateInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+                 request) {
+        return child_->UpdateInstance(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 Status InstanceAdminRestLogging::DeleteInstance(
@@ -293,6 +349,20 @@ InstanceAdminRestLogging::AsyncCreateInstancePartition(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestLogging::CreateInstancePartition(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::instance::v1::
+                 CreateInstancePartitionRequest const& request) {
+        return child_->CreateInstancePartition(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 Status InstanceAdminRestLogging::DeleteInstancePartition(
     rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
@@ -324,6 +394,20 @@ InstanceAdminRestLogging::AsyncUpdateInstancePartition(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestLogging::UpdateInstancePartition(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::instance::v1::
+                 UpdateInstancePartitionRequest const& request) {
+        return child_->UpdateInstancePartition(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::admin::instance::v1::

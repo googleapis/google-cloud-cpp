@@ -158,6 +158,20 @@ ArtifactRegistryTracingStub::AsyncImportAptArtifacts(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::ImportAptArtifacts(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "ImportAptArtifacts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ImportAptArtifacts(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -173,6 +187,20 @@ ArtifactRegistryTracingStub::AsyncImportYumArtifacts(
   auto f =
       child_->AsyncImportYumArtifacts(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::ImportYumArtifacts(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "ImportYumArtifacts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ImportYumArtifacts(context, options, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
@@ -219,6 +247,20 @@ ArtifactRegistryTracingStub::AsyncCreateRepository(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::CreateRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "CreateRepository");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateRepository(context, options, request));
+}
+
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryTracingStub::UpdateRepository(
     grpc::ClientContext& context, Options const& options,
@@ -248,6 +290,20 @@ ArtifactRegistryTracingStub::AsyncDeleteRepository(
   auto f =
       child_->AsyncDeleteRepository(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::DeleteRepository(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "DeleteRepository");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteRepository(context, options, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
@@ -290,6 +346,19 @@ ArtifactRegistryTracingStub::AsyncDeletePackage(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::DeletePackage(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeletePackage");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeletePackage(context, options, request));
+}
+
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
 ArtifactRegistryTracingStub::ListVersions(
     grpc::ClientContext& context, Options const& options,
@@ -330,6 +399,19 @@ ArtifactRegistryTracingStub::AsyncDeleteVersion(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::DeleteVersion(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeleteVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteVersion(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncBatchDeleteVersions(
     google::cloud::CompletionQueue& cq,
@@ -345,6 +427,20 @@ ArtifactRegistryTracingStub::AsyncBatchDeleteVersions(
   auto f = child_->AsyncBatchDeleteVersions(cq, context, std::move(options),
                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingStub::BatchDeleteVersions(
+    grpc::ClientContext& context, Options options,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "BatchDeleteVersions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->BatchDeleteVersions(context, options, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>

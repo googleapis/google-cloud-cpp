@@ -50,6 +50,18 @@ DefaultEndpointServiceStub::AsyncCreateEndpoint(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEndpointServiceStub::CreateEndpoint(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 DefaultEndpointServiceStub::GetEndpoint(
     grpc::ClientContext& context, Options const&,
@@ -105,6 +117,18 @@ DefaultEndpointServiceStub::AsyncDeleteEndpoint(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEndpointServiceStub::DeleteEndpoint(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEndpoint(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEndpointServiceStub::AsyncDeployModel(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +145,18 @@ DefaultEndpointServiceStub::AsyncDeployModel(
         return grpc_stub_->AsyncDeployModel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEndpointServiceStub::DeployModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeployModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeployModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -141,6 +177,18 @@ DefaultEndpointServiceStub::AsyncUndeployModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEndpointServiceStub::UndeployModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeployModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEndpointServiceStub::AsyncMutateDeployedModel(
     google::cloud::CompletionQueue& cq,
@@ -158,6 +206,18 @@ DefaultEndpointServiceStub::AsyncMutateDeployedModel(
         return grpc_stub_->AsyncMutateDeployedModel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEndpointServiceStub::MutateDeployedModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MutateDeployedModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

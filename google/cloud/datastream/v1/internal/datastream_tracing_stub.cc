@@ -73,6 +73,20 @@ DatastreamTracingStub::AsyncCreateConnectionProfile(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamTracingStub::CreateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "CreateConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateConnectionProfile(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamTracingStub::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +103,20 @@ DatastreamTracingStub::AsyncUpdateConnectionProfile(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamTracingStub::UpdateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "UpdateConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateConnectionProfile(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamTracingStub::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +131,20 @@ DatastreamTracingStub::AsyncDeleteConnectionProfile(
   auto f = child_->AsyncDeleteConnectionProfile(cq, context, std::move(options),
                                                 request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamTracingStub::DeleteConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "DeleteConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteConnectionProfile(context, options, request));
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
@@ -157,6 +199,17 @@ DatastreamTracingStub::AsyncCreateStream(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> DatastreamTracingStub::CreateStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateStreamRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "CreateStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateStream(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamTracingStub::AsyncUpdateStream(
     google::cloud::CompletionQueue& cq,
@@ -171,6 +224,17 @@ DatastreamTracingStub::AsyncUpdateStream(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> DatastreamTracingStub::UpdateStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::UpdateStreamRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "UpdateStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateStream(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamTracingStub::AsyncDeleteStream(
     google::cloud::CompletionQueue& cq,
@@ -183,6 +247,17 @@ DatastreamTracingStub::AsyncDeleteStream(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteStream(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> DatastreamTracingStub::DeleteStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteStreamRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "DeleteStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteStream(context, options, request));
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
@@ -273,6 +348,20 @@ DatastreamTracingStub::AsyncCreatePrivateConnection(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamTracingStub::CreatePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "CreatePrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreatePrivateConnection(context, options, request));
+}
+
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
 DatastreamTracingStub::GetPrivateConnection(
     grpc::ClientContext& context, Options const& options,
@@ -315,6 +404,20 @@ DatastreamTracingStub::AsyncDeletePrivateConnection(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamTracingStub::DeletePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "DeletePrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeletePrivateConnection(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamTracingStub::AsyncCreateRoute(
     google::cloud::CompletionQueue& cq,
@@ -327,6 +430,17 @@ DatastreamTracingStub::AsyncCreateRoute(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateRoute(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> DatastreamTracingStub::CreateRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateRouteRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "CreateRoute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateRoute(context, options, request));
 }
 
 StatusOr<google::cloud::datastream::v1::Route> DatastreamTracingStub::GetRoute(
@@ -364,6 +478,17 @@ DatastreamTracingStub::AsyncDeleteRoute(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteRoute(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> DatastreamTracingStub::DeleteRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteRouteRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "DeleteRoute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteRoute(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

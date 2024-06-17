@@ -69,10 +69,20 @@ class IntentsMetadata : public IntentsStub {
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchUpdateIntents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteIntents(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteIntents(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request)
       override;
 

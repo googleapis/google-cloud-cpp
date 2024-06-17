@@ -57,6 +57,12 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -91,6 +97,12 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::RouterList> ListRouters(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -101,6 +113,12 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request) override;
 
@@ -115,6 +133,12 @@ class RoutersRestLogging : public RoutersRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request) override;
 

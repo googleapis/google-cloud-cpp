@@ -75,6 +75,17 @@ DefaultDomainsStub::AsyncRegisterDomain(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDomainsStub::RegisterDomain(
+    grpc::ClientContext& context, Options,
+    google::cloud::domains::v1::RegisterDomainRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RegisterDomain(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
 DefaultDomainsStub::RetrieveTransferParameters(
     grpc::ClientContext& context, Options const&,
@@ -105,6 +116,17 @@ DefaultDomainsStub::AsyncTransferDomain(
         return grpc_stub_->AsyncTransferDomain(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDomainsStub::TransferDomain(
+    grpc::ClientContext& context, Options,
+    google::cloud::domains::v1::TransferDomainRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->TransferDomain(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
@@ -150,6 +172,17 @@ DefaultDomainsStub::AsyncUpdateRegistration(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDomainsStub::UpdateRegistration(
+    grpc::ClientContext& context, Options,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateRegistration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncConfigureManagementSettings(
     google::cloud::CompletionQueue& cq,
@@ -172,6 +205,20 @@ DefaultDomainsStub::AsyncConfigureManagementSettings(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDomainsStub::ConfigureManagementSettings(
+    grpc::ClientContext& context, Options,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ConfigureManagementSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncConfigureDnsSettings(
     google::cloud::CompletionQueue& cq,
@@ -189,6 +236,18 @@ DefaultDomainsStub::AsyncConfigureDnsSettings(
         return grpc_stub_->AsyncConfigureDnsSettings(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDomainsStub::ConfigureDnsSettings(
+    grpc::ClientContext& context, Options,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ConfigureDnsSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -211,6 +270,20 @@ DefaultDomainsStub::AsyncConfigureContactSettings(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDomainsStub::ConfigureContactSettings(
+    grpc::ClientContext& context, Options,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ConfigureContactSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncExportRegistration(
     google::cloud::CompletionQueue& cq,
@@ -230,6 +303,17 @@ DefaultDomainsStub::AsyncExportRegistration(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDomainsStub::ExportRegistration(
+    grpc::ClientContext& context, Options,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportRegistration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncDeleteRegistration(
     google::cloud::CompletionQueue& cq,
@@ -247,6 +331,17 @@ DefaultDomainsStub::AsyncDeleteRegistration(
         return grpc_stub_->AsyncDeleteRegistration(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDomainsStub::DeleteRegistration(
+    grpc::ClientContext& context, Options,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRegistration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>

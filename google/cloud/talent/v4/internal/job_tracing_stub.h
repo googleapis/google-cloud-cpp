@@ -48,6 +48,11 @@ class JobServiceTracingStub : public JobServiceStub {
       google::cloud::talent::v4::BatchCreateJobsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchCreateJobs(
+      grpc::ClientContext& context, Options options,
+      google::cloud::talent::v4::BatchCreateJobsRequest const& request)
+      override;
+
   StatusOr<google::cloud::talent::v4::Job> GetJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetJobRequest const& request) override;
@@ -63,6 +68,11 @@ class JobServiceTracingStub : public JobServiceStub {
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchUpdateJobs(
+      grpc::ClientContext& context, Options options,
+      google::cloud::talent::v4::BatchUpdateJobsRequest const& request)
+      override;
+
   Status DeleteJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteJobRequest const& request) override;
@@ -71,6 +81,11 @@ class JobServiceTracingStub : public JobServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::talent::v4::BatchDeleteJobsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteJobs(
+      grpc::ClientContext& context, Options options,
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request)
       override;
 

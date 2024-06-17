@@ -51,6 +51,17 @@ DataplexServiceLogging::AsyncCreateLake(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::CreateLake(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+        return child_->CreateLake(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncUpdateLake(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +80,17 @@ DataplexServiceLogging::AsyncUpdateLake(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::UpdateLake(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+        return child_->UpdateLake(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncDeleteLake(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +107,17 @@ DataplexServiceLogging::AsyncDeleteLake(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::DeleteLake(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+        return child_->DeleteLake(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListLakesResponse>
@@ -141,6 +174,17 @@ DataplexServiceLogging::AsyncCreateZone(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::CreateZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+        return child_->CreateZone(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncUpdateZone(
     google::cloud::CompletionQueue& cq,
@@ -159,6 +203,17 @@ DataplexServiceLogging::AsyncUpdateZone(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::UpdateZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+        return child_->UpdateZone(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncDeleteZone(
     google::cloud::CompletionQueue& cq,
@@ -175,6 +230,17 @@ DataplexServiceLogging::AsyncDeleteZone(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::DeleteZone(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+        return child_->DeleteZone(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListZonesResponse>
@@ -231,6 +297,17 @@ DataplexServiceLogging::AsyncCreateAsset(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::CreateAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+        return child_->CreateAsset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncUpdateAsset(
     google::cloud::CompletionQueue& cq,
@@ -249,6 +326,17 @@ DataplexServiceLogging::AsyncUpdateAsset(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::UpdateAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+        return child_->UpdateAsset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
@@ -265,6 +353,17 @@ DataplexServiceLogging::AsyncDeleteAsset(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::DeleteAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+        return child_->DeleteAsset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAssetsResponse>
@@ -321,6 +420,17 @@ DataplexServiceLogging::AsyncCreateTask(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::CreateTask(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+        return child_->CreateTask(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncUpdateTask(
     google::cloud::CompletionQueue& cq,
@@ -339,6 +449,17 @@ DataplexServiceLogging::AsyncUpdateTask(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::UpdateTask(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+        return child_->UpdateTask(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncDeleteTask(
     google::cloud::CompletionQueue& cq,
@@ -355,6 +476,17 @@ DataplexServiceLogging::AsyncDeleteTask(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceLogging::DeleteTask(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+        return child_->DeleteTask(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListTasksResponse>
@@ -445,6 +577,19 @@ DataplexServiceLogging::AsyncCreateEnvironment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceLogging::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateEnvironmentRequest const&
+                 request) {
+        return child_->CreateEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -464,6 +609,19 @@ DataplexServiceLogging::AsyncUpdateEnvironment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceLogging::UpdateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::UpdateEnvironmentRequest const&
+                 request) {
+        return child_->UpdateEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceLogging::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -481,6 +639,19 @@ DataplexServiceLogging::AsyncDeleteEnvironment(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataplexServiceLogging::DeleteEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::DeleteEnvironmentRequest const&
+                 request) {
+        return child_->DeleteEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>

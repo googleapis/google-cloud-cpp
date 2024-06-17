@@ -74,6 +74,17 @@ DefaultManagedKafkaStub::AsyncCreateCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultManagedKafkaStub::CreateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedKafkaStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +104,17 @@ DefaultManagedKafkaStub::AsyncUpdateCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultManagedKafkaStub::UpdateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedKafkaStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +132,17 @@ DefaultManagedKafkaStub::AsyncDeleteCluster(
         return grpc_stub_->AsyncDeleteCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultManagedKafkaStub::DeleteCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::managedkafka::v1::ListTopicsResponse>

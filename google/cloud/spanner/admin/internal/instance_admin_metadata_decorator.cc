@@ -75,6 +75,16 @@ InstanceAdminMetadata::AsyncCreateInstanceConfig(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminMetadata::CreateInstanceConfig(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstanceConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncUpdateInstanceConfig(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +98,18 @@ InstanceAdminMetadata::AsyncUpdateInstanceConfig(
                    internal::UrlEncode(request.instance_config().name())));
   return child_->AsyncUpdateInstanceConfig(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminMetadata::UpdateInstanceConfig(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("instance_config.name=",
+                   internal::UrlEncode(request.instance_config().name())));
+  return child_->UpdateInstanceConfig(context, options, request);
 }
 
 Status InstanceAdminMetadata::DeleteInstanceConfig(
@@ -151,6 +173,15 @@ InstanceAdminMetadata::AsyncCreateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> InstanceAdminMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -163,6 +194,16 @@ InstanceAdminMetadata::AsyncUpdateInstance(
                            internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminMetadata::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->UpdateInstance(context, options, request);
 }
 
 Status InstanceAdminMetadata::DeleteInstance(
@@ -225,6 +266,16 @@ InstanceAdminMetadata::AsyncCreateInstancePartition(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminMetadata::CreateInstancePartition(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstancePartition(context, options, request);
+}
+
 Status InstanceAdminMetadata::DeleteInstancePartition(
     grpc::ClientContext& context, Options const& options,
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
@@ -247,6 +298,18 @@ InstanceAdminMetadata::AsyncUpdateInstancePartition(
                    internal::UrlEncode(request.instance_partition().name())));
   return child_->AsyncUpdateInstancePartition(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminMetadata::UpdateInstancePartition(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("instance_partition.name=",
+                   internal::UrlEncode(request.instance_partition().name())));
+  return child_->UpdateInstancePartition(context, options, request);
 }
 
 StatusOr<google::spanner::admin::instance::v1::

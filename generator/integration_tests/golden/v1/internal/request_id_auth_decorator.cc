@@ -59,6 +59,16 @@ RequestIdServiceAuth::AsyncRenameFoo(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+RequestIdServiceAuth::RenameFoo(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::requestid::v1::RenameFooRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RenameFoo(context, options, request);
+}
+
 StatusOr<google::test::requestid::v1::ListFoosResponse> RequestIdServiceAuth::ListFoos(
     grpc::ClientContext& context,
     Options const& options,

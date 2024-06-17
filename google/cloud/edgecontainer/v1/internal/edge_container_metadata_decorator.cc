@@ -72,6 +72,14 @@ EdgeContainerMetadata::AsyncCreateCluster(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerMetadata::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +91,15 @@ EdgeContainerMetadata::AsyncUpdateCluster(
                            internal::UrlEncode(request.cluster().name())));
   return child_->AsyncUpdateCluster(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerMetadata::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("cluster.name=",
+                           internal::UrlEncode(request.cluster().name())));
+  return child_->UpdateCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -97,6 +114,14 @@ EdgeContainerMetadata::AsyncUpgradeCluster(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerMetadata::UpgradeCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpgradeCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +132,14 @@ EdgeContainerMetadata::AsyncDeleteCluster(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCluster(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerMetadata::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCluster(context, options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -159,6 +192,14 @@ EdgeContainerMetadata::AsyncCreateNodePool(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerMetadata::CreateNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateNodePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
@@ -172,6 +213,15 @@ EdgeContainerMetadata::AsyncUpdateNodePool(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerMetadata::UpdateNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("node_pool.name=",
+                           internal::UrlEncode(request.node_pool().name())));
+  return child_->UpdateNodePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
@@ -182,6 +232,14 @@ EdgeContainerMetadata::AsyncDeleteNodePool(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteNodePool(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerMetadata::DeleteNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
@@ -234,6 +292,16 @@ EdgeContainerMetadata::AsyncCreateVpnConnection(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerMetadata::CreateVpnConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateVpnConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
@@ -245,6 +313,16 @@ EdgeContainerMetadata::AsyncDeleteVpnConnection(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteVpnConnection(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+EdgeContainerMetadata::DeleteVpnConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteVpnConnection(context, options, request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ServerConfig>

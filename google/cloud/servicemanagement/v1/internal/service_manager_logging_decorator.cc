@@ -78,6 +78,18 @@ ServiceManagerLogging::AsyncCreateService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerLogging::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::CreateServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::servicemanagement::v1::CreateServiceRequest const&
+                 request) {
+        return child_->CreateService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerLogging::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +109,18 @@ ServiceManagerLogging::AsyncDeleteService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerLogging::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::servicemanagement::v1::DeleteServiceRequest const&
+                 request) {
+        return child_->DeleteService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerLogging::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +138,18 @@ ServiceManagerLogging::AsyncUndeleteService(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ServiceManagerLogging::UndeleteService(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::servicemanagement::v1::UndeleteServiceRequest const&
+                 request) {
+        return child_->UndeleteService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
@@ -179,6 +215,21 @@ ServiceManagerLogging::AsyncSubmitConfigSource(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ServiceManagerLogging::SubmitConfigSource(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+              request) {
+        return child_->SubmitConfigSource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 ServiceManagerLogging::ListServiceRollouts(
     grpc::ClientContext& context, Options const& options,
@@ -227,6 +278,21 @@ ServiceManagerLogging::AsyncCreateServiceRollout(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceManagerLogging::CreateServiceRollout(
+    grpc::ClientContext& context, Options options,
+    google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+              request) {
+        return child_->CreateServiceRollout(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>

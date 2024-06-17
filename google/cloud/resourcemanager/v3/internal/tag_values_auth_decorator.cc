@@ -79,6 +79,14 @@ TagValuesAuth::AsyncCreateTagValue(
       });
 }
 
+StatusOr<google::longrunning::Operation> TagValuesAuth::CreateTagValue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTagValue(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagValuesAuth::AsyncUpdateTagValue(
     google::cloud::CompletionQueue& cq,
@@ -99,6 +107,14 @@ TagValuesAuth::AsyncUpdateTagValue(
       });
 }
 
+StatusOr<google::longrunning::Operation> TagValuesAuth::UpdateTagValue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTagValue(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagValuesAuth::AsyncDeleteTagValue(
     google::cloud::CompletionQueue& cq,
@@ -117,6 +133,14 @@ TagValuesAuth::AsyncDeleteTagValue(
         return child->AsyncDeleteTagValue(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TagValuesAuth::DeleteTagValue(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTagValue(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagValuesAuth::GetIamPolicy(

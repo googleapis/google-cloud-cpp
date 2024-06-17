@@ -100,6 +100,15 @@ EntityTypesMetadata::AsyncExportEntityTypes(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> EntityTypesMetadata::ExportEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ExportEntityTypes(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesMetadata::AsyncImportEntityTypes(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +120,15 @@ EntityTypesMetadata::AsyncImportEntityTypes(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportEntityTypes(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> EntityTypesMetadata::ImportEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportEntityTypes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

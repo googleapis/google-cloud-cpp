@@ -78,6 +78,22 @@ DefaultRoutesRestStub::AsyncDeleteRoute(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRoutesRestStub::DeleteRoute(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "routes", "/", request.route()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Route>
 DefaultRoutesRestStub::GetRoute(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -122,6 +138,22 @@ DefaultRoutesRestStub::AsyncInsertRoute(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRoutesRestStub::InsertRoute(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.route_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "routes"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouteList>

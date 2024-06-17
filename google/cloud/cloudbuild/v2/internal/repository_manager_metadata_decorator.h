@@ -47,6 +47,11 @@ class RepositoryManagerMetadata : public RepositoryManagerStub {
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
+      override;
+
   StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
       grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::GetConnectionRequest const& request)
@@ -65,10 +70,20 @@ class RepositoryManagerMetadata : public RepositoryManagerStub {
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      grpc::ClientContext& context, Options options,
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
       override;
 
@@ -79,10 +94,20 @@ class RepositoryManagerMetadata : public RepositoryManagerStub {
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateRepositories(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateRepositories(
+      grpc::ClientContext& context, Options options,
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request) override;
 
@@ -101,6 +126,11 @@ class RepositoryManagerMetadata : public RepositoryManagerStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      grpc::ClientContext& context, Options options,
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
       override;
 

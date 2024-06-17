@@ -51,6 +51,14 @@ BackupForGKEAuth::AsyncCreateBackupPlan(
       });
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::CreateBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackupPlan(context, options, request);
+}
+
 StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
 BackupForGKEAuth::ListBackupPlans(
     grpc::ClientContext& context, Options const& options,
@@ -89,6 +97,14 @@ BackupForGKEAuth::AsyncUpdateBackupPlan(
       });
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::UpdateBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBackupPlan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEAuth::AsyncDeleteBackupPlan(
     google::cloud::CompletionQueue& cq,
@@ -109,6 +125,14 @@ BackupForGKEAuth::AsyncDeleteBackupPlan(
       });
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::DeleteBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackupPlan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEAuth::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
@@ -127,6 +151,14 @@ BackupForGKEAuth::AsyncCreateBackup(
         return child->AsyncCreateBackup(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackup(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse>
@@ -166,6 +198,14 @@ BackupForGKEAuth::AsyncUpdateBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEAuth::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -184,6 +224,14 @@ BackupForGKEAuth::AsyncDeleteBackup(
         return child->AsyncDeleteBackup(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
@@ -224,6 +272,14 @@ BackupForGKEAuth::AsyncCreateRestorePlan(
       });
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::CreateRestorePlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRestorePlan(context, options, request);
+}
+
 StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
 BackupForGKEAuth::ListRestorePlans(
     grpc::ClientContext& context, Options const& options,
@@ -262,6 +318,14 @@ BackupForGKEAuth::AsyncUpdateRestorePlan(
       });
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::UpdateRestorePlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRestorePlan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEAuth::AsyncDeleteRestorePlan(
     google::cloud::CompletionQueue& cq,
@@ -282,6 +346,14 @@ BackupForGKEAuth::AsyncDeleteRestorePlan(
       });
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::DeleteRestorePlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRestorePlan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEAuth::AsyncCreateRestore(
     google::cloud::CompletionQueue& cq,
@@ -300,6 +372,14 @@ BackupForGKEAuth::AsyncCreateRestore(
         return child->AsyncCreateRestore(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::CreateRestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRestore(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse>
@@ -339,6 +419,14 @@ BackupForGKEAuth::AsyncUpdateRestore(
       });
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::UpdateRestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRestore(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEAuth::AsyncDeleteRestore(
     google::cloud::CompletionQueue& cq,
@@ -357,6 +445,14 @@ BackupForGKEAuth::AsyncDeleteRestore(
         return child->AsyncDeleteRestore(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEAuth::DeleteRestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRestore(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>

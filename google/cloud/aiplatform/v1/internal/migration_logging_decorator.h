@@ -52,6 +52,11 @@ class MigrationServiceLogging : public MigrationServiceStub {
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> BatchMigrateResources(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

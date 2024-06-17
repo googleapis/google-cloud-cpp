@@ -52,10 +52,20 @@ class TagBindingsMetadata : public TagBindingsStub {
       google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateTagBinding(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTagBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteTagBinding(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
           request) override;
 

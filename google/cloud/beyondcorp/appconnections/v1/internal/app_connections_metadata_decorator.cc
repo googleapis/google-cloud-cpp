@@ -77,6 +77,16 @@ AppConnectionsServiceMetadata::AsyncCreateAppConnection(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceMetadata::CreateAppConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnections::v1::
+        CreateAppConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAppConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceMetadata::AsyncUpdateAppConnection(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +102,18 @@ AppConnectionsServiceMetadata::AsyncUpdateAppConnection(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceMetadata::UpdateAppConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnections::v1::
+        UpdateAppConnectionRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("app_connection.name=",
+                   internal::UrlEncode(request.app_connection().name())));
+  return child_->UpdateAppConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceMetadata::AsyncDeleteAppConnection(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +125,16 @@ AppConnectionsServiceMetadata::AsyncDeleteAppConnection(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAppConnection(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceMetadata::DeleteAppConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnections::v1::
+        DeleteAppConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAppConnection(context, options, request);
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::

@@ -61,6 +61,16 @@ CompletionServiceAuth::AsyncImportSuggestionDenyListEntries(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceAuth::ImportSuggestionDenyListEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportSuggestionDenyListEntries(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceAuth::AsyncPurgeSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,
@@ -80,6 +90,16 @@ CompletionServiceAuth::AsyncPurgeSuggestionDenyListEntries(
         return child->AsyncPurgeSuggestionDenyListEntries(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceAuth::PurgeSuggestionDenyListEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PurgeSuggestionDenyListEntries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

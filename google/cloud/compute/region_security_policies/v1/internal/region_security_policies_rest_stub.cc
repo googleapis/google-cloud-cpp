@@ -83,6 +83,23 @@ DefaultRegionSecurityPoliciesRestStub::AsyncAddRule(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionSecurityPoliciesRestStub::AddRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        AddRuleRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.security_policy_rule_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "securityPolicies", "/",
+                   request.security_policy(), "/", "addRule"),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair(
+          "validate_only", request.validate_only() ? "1" : "0")}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
     CompletionQueue& cq,
@@ -116,6 +133,23 @@ DefaultRegionSecurityPoliciesRestStub::AsyncDeleteSecurityPolicy(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionSecurityPoliciesRestStub::DeleteSecurityPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        DeleteSecurityPolicyRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "securityPolicies", "/",
+                   request.security_policy()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -188,6 +222,24 @@ DefaultRegionSecurityPoliciesRestStub::AsyncInsertSecurityPolicy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionSecurityPoliciesRestStub::InsertSecurityPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        InsertSecurityPolicyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.security_policy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "securityPolicies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("validate_only",
+                          request.validate_only() ? "1" : "0")}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
 DefaultRegionSecurityPoliciesRestStub::ListRegionSecurityPolicies(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -247,6 +299,24 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchSecurityPolicy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionSecurityPoliciesRestStub::PatchSecurityPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchSecurityPolicyRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.security_policy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "securityPolicies", "/",
+                   request.security_policy()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("update_mask", request.update_mask())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionSecurityPoliciesRestStub::AsyncPatchRule(
     CompletionQueue& cq,
@@ -287,6 +357,26 @@ DefaultRegionSecurityPoliciesRestStub::AsyncPatchRule(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionSecurityPoliciesRestStub::PatchRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchRuleRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.security_policy_rule_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "securityPolicies", "/",
+                   request.security_policy(), "/", "patchRule"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("priority", std::to_string(request.priority())),
+           std::make_pair("update_mask", request.update_mask()),
+           std::make_pair("validate_only",
+                          request.validate_only() ? "1" : "0")}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultRegionSecurityPoliciesRestStub::AsyncRemoveRule(
     CompletionQueue& cq,
@@ -320,6 +410,23 @@ DefaultRegionSecurityPoliciesRestStub::AsyncRemoveRule(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionSecurityPoliciesRestStub::RemoveRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        RemoveRuleRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "securityPolicies", "/",
+                   request.security_policy(), "/", "removeRule"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("priority", std::to_string(request.priority()))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

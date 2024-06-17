@@ -71,6 +71,15 @@ AccessContextManagerAuth::AsyncCreateAccessPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::CreateAccessPolicy(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAccessPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncUpdateAccessPolicy(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +101,16 @@ AccessContextManagerAuth::AsyncUpdateAccessPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::UpdateAccessPolicy(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAccessPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncDeleteAccessPolicy(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +130,16 @@ AccessContextManagerAuth::AsyncDeleteAccessPolicy(
         return child->AsyncDeleteAccessPolicy(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::DeleteAccessPolicy(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAccessPolicy(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
@@ -154,6 +183,16 @@ AccessContextManagerAuth::AsyncCreateAccessLevel(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::CreateAccessLevel(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAccessLevel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncUpdateAccessLevel(
     google::cloud::CompletionQueue& cq,
@@ -173,6 +212,16 @@ AccessContextManagerAuth::AsyncUpdateAccessLevel(
         return child->AsyncUpdateAccessLevel(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::UpdateAccessLevel(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAccessLevel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -196,6 +245,16 @@ AccessContextManagerAuth::AsyncDeleteAccessLevel(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::DeleteAccessLevel(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAccessLevel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncReplaceAccessLevels(
     google::cloud::CompletionQueue& cq,
@@ -215,6 +274,16 @@ AccessContextManagerAuth::AsyncReplaceAccessLevels(
         return child->AsyncReplaceAccessLevels(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::ReplaceAccessLevels(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        ReplaceAccessLevelsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReplaceAccessLevels(context, options, request);
 }
 
 StatusOr<
@@ -259,6 +328,16 @@ AccessContextManagerAuth::AsyncCreateServicePerimeter(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::CreateServicePerimeter(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        CreateServicePerimeterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateServicePerimeter(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncUpdateServicePerimeter(
     google::cloud::CompletionQueue& cq,
@@ -278,6 +357,16 @@ AccessContextManagerAuth::AsyncUpdateServicePerimeter(
         return child->AsyncUpdateServicePerimeter(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::UpdateServicePerimeter(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        UpdateServicePerimeterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateServicePerimeter(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -301,6 +390,16 @@ AccessContextManagerAuth::AsyncDeleteServicePerimeter(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::DeleteServicePerimeter(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        DeleteServicePerimeterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteServicePerimeter(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncReplaceServicePerimeters(
     google::cloud::CompletionQueue& cq,
@@ -322,6 +421,16 @@ AccessContextManagerAuth::AsyncReplaceServicePerimeters(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::ReplaceServicePerimeters(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        ReplaceServicePerimetersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReplaceServicePerimeters(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncCommitServicePerimeters(
     google::cloud::CompletionQueue& cq,
@@ -341,6 +450,16 @@ AccessContextManagerAuth::AsyncCommitServicePerimeters(
         return child->AsyncCommitServicePerimeters(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::CommitServicePerimeters(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        CommitServicePerimetersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CommitServicePerimeters(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::
@@ -385,6 +504,16 @@ AccessContextManagerAuth::AsyncCreateGcpUserAccessBinding(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::CreateGcpUserAccessBinding(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        CreateGcpUserAccessBindingRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGcpUserAccessBinding(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncUpdateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
@@ -406,6 +535,16 @@ AccessContextManagerAuth::AsyncUpdateGcpUserAccessBinding(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::UpdateGcpUserAccessBinding(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        UpdateGcpUserAccessBindingRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGcpUserAccessBinding(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncDeleteGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
@@ -425,6 +564,16 @@ AccessContextManagerAuth::AsyncDeleteGcpUserAccessBinding(
         return child->AsyncDeleteGcpUserAccessBinding(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerAuth::DeleteGcpUserAccessBinding(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        DeleteGcpUserAccessBindingRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGcpUserAccessBinding(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerAuth::SetIamPolicy(

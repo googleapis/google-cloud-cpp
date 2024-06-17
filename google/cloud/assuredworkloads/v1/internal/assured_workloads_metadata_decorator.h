@@ -47,6 +47,11 @@ class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateWorkload(
+      grpc::ClientContext& context, Options options,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
+      override;
+
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(
       grpc::ClientContext& context, Options const& options,
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request)

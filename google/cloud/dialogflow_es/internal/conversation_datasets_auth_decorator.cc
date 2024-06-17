@@ -52,6 +52,16 @@ ConversationDatasetsAuth::AsyncCreateConversationDataset(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationDatasetsAuth::CreateConversationDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConversationDataset(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsAuth::GetConversationDataset(
     grpc::ClientContext& context, Options const& options,
@@ -93,6 +103,16 @@ ConversationDatasetsAuth::AsyncDeleteConversationDataset(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationDatasetsAuth::DeleteConversationDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConversationDataset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsAuth::AsyncImportConversationData(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +132,16 @@ ConversationDatasetsAuth::AsyncImportConversationData(
         return child->AsyncImportConversationData(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationDatasetsAuth::ImportConversationData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportConversationData(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

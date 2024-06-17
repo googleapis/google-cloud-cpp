@@ -96,6 +96,14 @@ TestCasesAuth::AsyncRunTestCase(
       });
 }
 
+StatusOr<google::longrunning::Operation> TestCasesAuth::RunTestCase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunTestCase(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
@@ -115,6 +123,15 @@ TestCasesAuth::AsyncBatchRunTestCases(
         return child->AsyncBatchRunTestCases(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TestCasesAuth::BatchRunTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchRunTestCases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -147,6 +164,14 @@ TestCasesAuth::AsyncImportTestCases(
       });
 }
 
+StatusOr<google::longrunning::Operation> TestCasesAuth::ImportTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportTestCases(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TestCasesAuth::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
@@ -165,6 +190,14 @@ TestCasesAuth::AsyncExportTestCases(
         return child->AsyncExportTestCases(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TestCasesAuth::ExportTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportTestCases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>

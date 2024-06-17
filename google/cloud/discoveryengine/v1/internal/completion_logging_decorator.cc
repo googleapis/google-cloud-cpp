@@ -66,6 +66,21 @@ CompletionServiceLogging::AsyncImportSuggestionDenyListEntries(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceLogging::ImportSuggestionDenyListEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 ImportSuggestionDenyListEntriesRequest const& request) {
+        return child_->ImportSuggestionDenyListEntries(context, options,
+                                                       request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceLogging::AsyncPurgeSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,
@@ -84,6 +99,21 @@ CompletionServiceLogging::AsyncPurgeSuggestionDenyListEntries(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceLogging::PurgeSuggestionDenyListEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 PurgeSuggestionDenyListEntriesRequest const& request) {
+        return child_->PurgeSuggestionDenyListEntries(context, options,
+                                                      request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

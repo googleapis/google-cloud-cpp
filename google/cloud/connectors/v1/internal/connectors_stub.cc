@@ -74,6 +74,18 @@ DefaultConnectorsStub::AsyncCreateConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultConnectorsStub::CreateConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +105,18 @@ DefaultConnectorsStub::AsyncUpdateConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultConnectorsStub::UpdateConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +134,18 @@ DefaultConnectorsStub::AsyncDeleteConnection(
         return grpc_stub_->AsyncDeleteConnection(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConnectorsStub::DeleteConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
@@ -218,6 +254,20 @@ DefaultConnectorsStub::AsyncRefreshConnectionSchemaMetadata(
                                                                 request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConnectorsStub::RefreshConnectionSchemaMetadata(
+    grpc::ClientContext& context, Options,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RefreshConnectionSchemaMetadata(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>

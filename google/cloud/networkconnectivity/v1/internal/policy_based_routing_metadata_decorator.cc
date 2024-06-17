@@ -75,6 +75,16 @@ PolicyBasedRoutingServiceMetadata::AsyncCreatePolicyBasedRoute(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceMetadata::CreatePolicyBasedRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreatePolicyBasedRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PolicyBasedRoutingServiceMetadata::AsyncDeletePolicyBasedRoute(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +96,16 @@ PolicyBasedRoutingServiceMetadata::AsyncDeletePolicyBasedRoute(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePolicyBasedRoute(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceMetadata::DeletePolicyBasedRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeletePolicyBasedRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

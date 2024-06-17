@@ -48,6 +48,20 @@ AttachedClustersTracingStub::AsyncCreateAttachedCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersTracingStub::CreateAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkemulticloud.v1.AttachedClusters",
+                             "CreateAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateAttachedCluster(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersTracingStub::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -65,6 +79,20 @@ AttachedClustersTracingStub::AsyncUpdateAttachedCluster(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersTracingStub::UpdateAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkemulticloud.v1.AttachedClusters",
+                             "UpdateAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateAttachedCluster(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersTracingStub::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -80,6 +108,20 @@ AttachedClustersTracingStub::AsyncImportAttachedCluster(
   auto f = child_->AsyncImportAttachedCluster(cq, context, std::move(options),
                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersTracingStub::ImportAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkemulticloud.v1.AttachedClusters",
+                             "ImportAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ImportAttachedCluster(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -123,6 +165,20 @@ AttachedClustersTracingStub::AsyncDeleteAttachedCluster(
   auto f = child_->AsyncDeleteAttachedCluster(cq, context, std::move(options),
                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersTracingStub::DeleteAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkemulticloud.v1.AttachedClusters",
+                             "DeleteAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteAttachedCluster(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

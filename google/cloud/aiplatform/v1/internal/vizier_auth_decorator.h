@@ -69,6 +69,11 @@ class VizierServiceAuth : public VizierServiceStub {
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> SuggestTrials(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::SuggestTrialsRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateTrialRequest const& request)
@@ -101,6 +106,11 @@ class VizierServiceAuth : public VizierServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
           request) override;
 

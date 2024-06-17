@@ -57,6 +57,18 @@ PredictionServiceTracingStub::AsyncBatchPredict(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+PredictionServiceTracingStub::BatchPredict(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::BatchPredictRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.PredictionService",
+                                     "BatchPredict");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->BatchPredict(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PredictionServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

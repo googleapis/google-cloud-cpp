@@ -49,6 +49,18 @@ DefaultCloudChannelReportsServiceStub::AsyncRunReportJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelReportsServiceStub::RunReportJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::RunReportJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunReportJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
 DefaultCloudChannelReportsServiceStub::FetchReportResults(
     grpc::ClientContext& context, Options const&,

@@ -55,10 +55,20 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::CreateMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::CreateMigrationJobRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMigrationJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateMigrationJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request)
       override;
 
@@ -69,10 +79,20 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStartMigrationJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::StartMigrationJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StartMigrationJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request)
       override;
 
@@ -83,10 +103,20 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> StopMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::StopMigrationJobRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncResumeMigrationJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ResumeMigrationJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request)
       override;
 
@@ -97,6 +127,11 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> PromoteMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncVerifyMigrationJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -104,10 +139,20 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> VerifyMigrationJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRestartMigrationJob(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::RestartMigrationJobRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RestartMigrationJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::RestartMigrationJobRequest const& request)
       override;
 
@@ -139,10 +184,20 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateConnectionProfile(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
           request) override;
 
@@ -153,10 +208,20 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePrivateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
           request) override;
 
@@ -175,6 +240,11 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
           request) override;
 
@@ -198,6 +268,11 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConversionWorkspace(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateConversionWorkspace(
       google::cloud::CompletionQueue& cq,
@@ -206,11 +281,21 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateConversionWorkspace(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteConversionWorkspace(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteConversionWorkspace(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request) override;
 
@@ -241,10 +326,20 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> SeedConversionWorkspace(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportMappingRules(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ImportMappingRules(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::ImportMappingRulesRequest const& request)
       override;
 
@@ -256,11 +351,21 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ConvertConversionWorkspace(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncCommitConversionWorkspace(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CommitConversionWorkspace(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
           request) override;
 
@@ -272,11 +377,21 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> RollbackConversionWorkspace(
+      grpc::ClientContext& context, Options options,
+      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncApplyConversionWorkspace(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ApplyConversionWorkspace(
+      grpc::ClientContext& context, Options options,
       google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
           request) override;
 

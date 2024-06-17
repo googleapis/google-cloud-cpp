@@ -69,6 +69,14 @@ DataprocMetastoreAuth::AsyncCreateService(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreAuth::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreAuth::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +97,14 @@ DataprocMetastoreAuth::AsyncUpdateService(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreAuth::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreAuth::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +123,14 @@ DataprocMetastoreAuth::AsyncDeleteService(
         return child->AsyncDeleteService(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataprocMetastoreAuth::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
@@ -147,6 +171,15 @@ DataprocMetastoreAuth::AsyncCreateMetadataImport(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreAuth::CreateMetadataImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMetadataImport(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreAuth::AsyncUpdateMetadataImport(
     google::cloud::CompletionQueue& cq,
@@ -165,6 +198,15 @@ DataprocMetastoreAuth::AsyncUpdateMetadataImport(
         return child->AsyncUpdateMetadataImport(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreAuth::UpdateMetadataImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateMetadataImport(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -187,6 +229,14 @@ DataprocMetastoreAuth::AsyncExportMetadata(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreAuth::ExportMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::ExportMetadataRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportMetadata(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreAuth::AsyncRestoreService(
     google::cloud::CompletionQueue& cq,
@@ -205,6 +255,14 @@ DataprocMetastoreAuth::AsyncRestoreService(
         return child->AsyncRestoreService(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataprocMetastoreAuth::RestoreService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::RestoreServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestoreService(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
@@ -244,6 +302,14 @@ DataprocMetastoreAuth::AsyncCreateBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreAuth::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreAuth::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -262,6 +328,14 @@ DataprocMetastoreAuth::AsyncDeleteBackup(
         return child->AsyncDeleteBackup(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataprocMetastoreAuth::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -284,6 +358,14 @@ DataprocMetastoreAuth::AsyncQueryMetadata(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreAuth::QueryMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->QueryMetadata(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreAuth::AsyncMoveTableToDatabase(
     google::cloud::CompletionQueue& cq,
@@ -302,6 +384,15 @@ DataprocMetastoreAuth::AsyncMoveTableToDatabase(
         return child->AsyncMoveTableToDatabase(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreAuth::MoveTableToDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MoveTableToDatabase(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -323,6 +414,16 @@ DataprocMetastoreAuth::AsyncAlterMetadataResourceLocation(
         return child->AsyncAlterMetadataResourceLocation(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreAuth::AlterMetadataResourceLocation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AlterMetadataResourceLocation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

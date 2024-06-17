@@ -50,11 +50,25 @@ class InstanceGroupManagerResizeRequestsRestMetadata
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           CancelRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Cancel(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+          CancelRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteInstanceGroupManagerResizeRequest(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+          DeleteInstanceGroupManagerResizeRequestRequest const& request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceGroupManagerResizeRequest(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           DeleteInstanceGroupManagerResizeRequestRequest const& request)
       override;
@@ -71,6 +85,14 @@ class InstanceGroupManagerResizeRequestsRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+          InsertInstanceGroupManagerResizeRequestRequest const& request)
+      override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceGroupManagerResizeRequest(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           InsertInstanceGroupManagerResizeRequestRequest const& request)
       override;

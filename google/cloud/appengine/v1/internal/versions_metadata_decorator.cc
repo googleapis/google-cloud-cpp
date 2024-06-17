@@ -71,6 +71,14 @@ VersionsMetadata::AsyncCreateVersion(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> VersionsMetadata::CreateVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +91,14 @@ VersionsMetadata::AsyncUpdateVersion(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> VersionsMetadata::UpdateVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +109,14 @@ VersionsMetadata::AsyncDeleteVersion(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteVersion(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> VersionsMetadata::DeleteVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteVersion(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

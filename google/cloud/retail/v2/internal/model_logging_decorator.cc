@@ -51,6 +51,17 @@ ModelServiceLogging::AsyncCreateModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceLogging::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::CreateModelRequest const& request) {
+        return child_->CreateModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::retail::v2::Model> ModelServiceLogging::GetModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetModelRequest const& request) {
@@ -134,6 +145,17 @@ ModelServiceLogging::AsyncTuneModel(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceLogging::TuneModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::TuneModelRequest const& request) {
+        return child_->TuneModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

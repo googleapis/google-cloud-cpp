@@ -59,6 +59,14 @@ SimulatorAuth::AsyncCreateReplay(
       });
 }
 
+StatusOr<google::longrunning::Operation> SimulatorAuth::CreateReplay(
+    grpc::ClientContext& context, Options options,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateReplay(context, options, request);
+}
+
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 SimulatorAuth::ListReplayResults(
     grpc::ClientContext& context, Options const& options,

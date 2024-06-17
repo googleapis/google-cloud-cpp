@@ -85,6 +85,14 @@ GkeHubAuth::AsyncCreateMembership(
       });
 }
 
+StatusOr<google::longrunning::Operation> GkeHubAuth::CreateMembership(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMembership(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -102,6 +110,14 @@ future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncCreateFeature(
         return child->AsyncCreateFeature(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> GkeHubAuth::CreateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFeature(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -124,6 +140,14 @@ GkeHubAuth::AsyncDeleteMembership(
       });
 }
 
+StatusOr<google::longrunning::Operation> GkeHubAuth::DeleteMembership(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMembership(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -141,6 +165,14 @@ future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncDeleteFeature(
         return child->AsyncDeleteFeature(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> GkeHubAuth::DeleteFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFeature(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -163,6 +195,14 @@ GkeHubAuth::AsyncUpdateMembership(
       });
 }
 
+StatusOr<google::longrunning::Operation> GkeHubAuth::UpdateMembership(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateMembership(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncUpdateFeature(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -180,6 +220,14 @@ future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncUpdateFeature(
         return child->AsyncUpdateFeature(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> GkeHubAuth::UpdateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFeature(context, options, request);
 }
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>

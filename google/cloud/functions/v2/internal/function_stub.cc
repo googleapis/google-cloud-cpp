@@ -73,6 +73,18 @@ DefaultFunctionServiceStub::AsyncCreateFunction(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultFunctionServiceStub::CreateFunction(
+    grpc::ClientContext& context, Options,
+    google::cloud::functions::v2::CreateFunctionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultFunctionServiceStub::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +103,18 @@ DefaultFunctionServiceStub::AsyncUpdateFunction(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultFunctionServiceStub::UpdateFunction(
+    grpc::ClientContext& context, Options,
+    google::cloud::functions::v2::UpdateFunctionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultFunctionServiceStub::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +131,18 @@ DefaultFunctionServiceStub::AsyncDeleteFunction(
         return grpc_stub_->AsyncDeleteFunction(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultFunctionServiceStub::DeleteFunction(
+    grpc::ClientContext& context, Options,
+    google::cloud::functions::v2::DeleteFunctionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>

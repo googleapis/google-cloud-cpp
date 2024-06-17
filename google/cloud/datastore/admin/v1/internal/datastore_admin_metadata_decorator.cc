@@ -55,6 +55,15 @@ DatastoreAdminMetadata::AsyncExportEntities(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> DatastoreAdminMetadata::ExportEntities(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+  return child_->ExportEntities(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminMetadata::AsyncImportEntities(
     google::cloud::CompletionQueue& cq,
@@ -66,6 +75,15 @@ DatastoreAdminMetadata::AsyncImportEntities(
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
   return child_->AsyncImportEntities(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> DatastoreAdminMetadata::ImportEntities(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+  return child_->ImportEntities(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -81,6 +99,15 @@ DatastoreAdminMetadata::AsyncCreateIndex(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> DatastoreAdminMetadata::CreateIndex(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::CreateIndexRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
+  return child_->CreateIndex(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminMetadata::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +120,16 @@ DatastoreAdminMetadata::AsyncDeleteIndex(
                    "&", "index_id=", internal::UrlEncode(request.index_id())));
   return child_->AsyncDeleteIndex(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> DatastoreAdminMetadata::DeleteIndex(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::DeleteIndexRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
+                   "&", "index_id=", internal::UrlEncode(request.index_id())));
+  return child_->DeleteIndex(context, options, request);
 }
 
 StatusOr<google::datastore::admin::v1::Index> DatastoreAdminMetadata::GetIndex(

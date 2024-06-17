@@ -52,6 +52,15 @@ RegionSslCertificatesRestMetadata::AsyncDeleteSslCertificate(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslCertificatesRestMetadata::DeleteSslCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_ssl_certificates::v1::
+        DeleteSslCertificateRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteSslCertificate(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
 RegionSslCertificatesRestMetadata::GetSslCertificate(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -71,6 +80,15 @@ RegionSslCertificatesRestMetadata::AsyncInsertSslCertificate(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertSslCertificate(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslCertificatesRestMetadata::InsertSslCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_ssl_certificates::v1::
+        InsertSslCertificateRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertSslCertificate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>

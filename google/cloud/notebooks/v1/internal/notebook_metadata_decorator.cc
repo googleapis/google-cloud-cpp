@@ -72,6 +72,15 @@ NotebookServiceMetadata::AsyncCreateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::CreateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncRegisterInstance(
     google::cloud::CompletionQueue& cq,
@@ -82,6 +91,15 @@ NotebookServiceMetadata::AsyncRegisterInstance(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncRegisterInstance(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::RegisterInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::RegisterInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RegisterInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -97,6 +115,16 @@ NotebookServiceMetadata::AsyncSetInstanceAccelerator(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::SetInstanceAccelerator(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SetInstanceAccelerator(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncSetInstanceMachineType(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +138,16 @@ NotebookServiceMetadata::AsyncSetInstanceMachineType(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::SetInstanceMachineType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SetInstanceMachineType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncUpdateInstanceConfig(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +158,15 @@ NotebookServiceMetadata::AsyncUpdateInstanceConfig(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpdateInstanceConfig(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::UpdateInstanceConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::UpdateInstanceConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateInstanceConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -135,6 +182,16 @@ NotebookServiceMetadata::AsyncUpdateShieldedInstanceConfig(
                                                    std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::UpdateShieldedInstanceConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateShieldedInstanceConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncSetInstanceLabels(
     google::cloud::CompletionQueue& cq,
@@ -145,6 +202,15 @@ NotebookServiceMetadata::AsyncSetInstanceLabels(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncSetInstanceLabels(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::SetInstanceLabels(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SetInstanceLabels(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
@@ -169,6 +235,15 @@ NotebookServiceMetadata::AsyncDeleteInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncStartInstance(
     google::cloud::CompletionQueue& cq,
@@ -179,6 +254,14 @@ NotebookServiceMetadata::AsyncStartInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStartInstance(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> NotebookServiceMetadata::StartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::StartInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -193,6 +276,14 @@ NotebookServiceMetadata::AsyncStopInstance(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> NotebookServiceMetadata::StopInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::StopInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StopInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncResetInstance(
     google::cloud::CompletionQueue& cq,
@@ -205,6 +296,14 @@ NotebookServiceMetadata::AsyncResetInstance(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> NotebookServiceMetadata::ResetInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::ResetInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ResetInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncReportInstanceInfo(
     google::cloud::CompletionQueue& cq,
@@ -215,6 +314,15 @@ NotebookServiceMetadata::AsyncReportInstanceInfo(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncReportInstanceInfo(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::ReportInstanceInfo(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ReportInstanceInfo(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
@@ -248,6 +356,15 @@ NotebookServiceMetadata::AsyncUpgradeInstance(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::UpgradeInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::UpgradeInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpgradeInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncRollbackInstance(
     google::cloud::CompletionQueue& cq,
@@ -258,6 +375,15 @@ NotebookServiceMetadata::AsyncRollbackInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRollbackInstance(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::RollbackInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::RollbackInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RollbackInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -272,6 +398,15 @@ NotebookServiceMetadata::AsyncDiagnoseInstance(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::DiagnoseInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DiagnoseInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncUpgradeInstanceInternal(
     google::cloud::CompletionQueue& cq,
@@ -283,6 +418,16 @@ NotebookServiceMetadata::AsyncUpgradeInstanceInternal(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUpgradeInstanceInternal(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::UpgradeInstanceInternal(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpgradeInstanceInternal(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::ListEnvironmentsResponse>
@@ -315,6 +460,15 @@ NotebookServiceMetadata::AsyncCreateEnvironment(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::CreateEnvironmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEnvironment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -325,6 +479,15 @@ NotebookServiceMetadata::AsyncDeleteEnvironment(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEnvironment(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::DeleteEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse>
@@ -357,6 +520,15 @@ NotebookServiceMetadata::AsyncDeleteSchedule(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::DeleteSchedule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::DeleteScheduleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSchedule(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncCreateSchedule(
     google::cloud::CompletionQueue& cq,
@@ -369,6 +541,15 @@ NotebookServiceMetadata::AsyncCreateSchedule(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::CreateSchedule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::CreateScheduleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSchedule(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncTriggerSchedule(
     google::cloud::CompletionQueue& cq,
@@ -379,6 +560,15 @@ NotebookServiceMetadata::AsyncTriggerSchedule(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncTriggerSchedule(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::TriggerSchedule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::TriggerScheduleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->TriggerSchedule(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse>
@@ -411,6 +601,15 @@ NotebookServiceMetadata::AsyncDeleteExecution(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::DeleteExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::DeleteExecutionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteExecution(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncCreateExecution(
     google::cloud::CompletionQueue& cq,
@@ -421,6 +620,15 @@ NotebookServiceMetadata::AsyncCreateExecution(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateExecution(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceMetadata::CreateExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::notebooks::v1::CreateExecutionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateExecution(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

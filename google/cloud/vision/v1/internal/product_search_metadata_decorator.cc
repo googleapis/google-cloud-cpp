@@ -204,6 +204,15 @@ ProductSearchMetadata::AsyncImportProductSets(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductSearchMetadata::ImportProductSets(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportProductSets(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchMetadata::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
@@ -214,6 +223,14 @@ ProductSearchMetadata::AsyncPurgeProducts(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeProducts(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> ProductSearchMetadata::PurgeProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::PurgeProductsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeProducts(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

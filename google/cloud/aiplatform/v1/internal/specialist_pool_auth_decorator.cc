@@ -51,6 +51,15 @@ SpecialistPoolServiceAuth::AsyncCreateSpecialistPool(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceAuth::CreateSpecialistPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSpecialistPool(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceAuth::GetSpecialistPool(
     grpc::ClientContext& context, Options const& options,
@@ -89,6 +98,15 @@ SpecialistPoolServiceAuth::AsyncDeleteSpecialistPool(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceAuth::DeleteSpecialistPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSpecialistPool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SpecialistPoolServiceAuth::AsyncUpdateSpecialistPool(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +125,15 @@ SpecialistPoolServiceAuth::AsyncUpdateSpecialistPool(
         return child->AsyncUpdateSpecialistPool(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceAuth::UpdateSpecialistPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSpecialistPool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

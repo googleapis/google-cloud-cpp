@@ -132,6 +132,19 @@ CloudChannelServiceTracingStub::AsyncProvisionCloudIdentity(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::ProvisionCloudIdentity(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "ProvisionCloudIdentity");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ProvisionCloudIdentity(context, options, request));
+}
+
 StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
 CloudChannelServiceTracingStub::ListEntitlements(
     grpc::ClientContext& context, Options const& options,
@@ -196,6 +209,18 @@ CloudChannelServiceTracingStub::AsyncCreateEntitlement(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::CreateEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "CreateEntitlement");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateEntitlement(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceTracingStub::AsyncChangeParameters(
     google::cloud::CompletionQueue& cq,
@@ -209,6 +234,18 @@ CloudChannelServiceTracingStub::AsyncChangeParameters(
   auto f =
       child_->AsyncChangeParameters(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::ChangeParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeParametersRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "ChangeParameters");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ChangeParameters(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -226,6 +263,18 @@ CloudChannelServiceTracingStub::AsyncChangeRenewalSettings(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::ChangeRenewalSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "ChangeRenewalSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ChangeRenewalSettings(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceTracingStub::AsyncChangeOffer(
     google::cloud::CompletionQueue& cq,
@@ -238,6 +287,18 @@ CloudChannelServiceTracingStub::AsyncChangeOffer(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncChangeOffer(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::ChangeOffer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ChangeOfferRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "ChangeOffer");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ChangeOffer(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -255,6 +316,18 @@ CloudChannelServiceTracingStub::AsyncStartPaidService(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::StartPaidService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "StartPaidService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->StartPaidService(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceTracingStub::AsyncSuspendEntitlement(
     google::cloud::CompletionQueue& cq,
@@ -268,6 +341,18 @@ CloudChannelServiceTracingStub::AsyncSuspendEntitlement(
   auto f =
       child_->AsyncSuspendEntitlement(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::SuspendEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "SuspendEntitlement");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->SuspendEntitlement(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -285,6 +370,18 @@ CloudChannelServiceTracingStub::AsyncCancelEntitlement(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::CancelEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "CancelEntitlement");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CancelEntitlement(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceTracingStub::AsyncActivateEntitlement(
     google::cloud::CompletionQueue& cq,
@@ -298,6 +395,18 @@ CloudChannelServiceTracingStub::AsyncActivateEntitlement(
   auto f = child_->AsyncActivateEntitlement(cq, context, std::move(options),
                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::ActivateEntitlement(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "ActivateEntitlement");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ActivateEntitlement(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -315,6 +424,18 @@ CloudChannelServiceTracingStub::AsyncTransferEntitlements(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::TransferEntitlements(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "TransferEntitlements");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->TransferEntitlements(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceTracingStub::AsyncTransferEntitlementsToGoogle(
     google::cloud::CompletionQueue& cq,
@@ -330,6 +451,21 @@ CloudChannelServiceTracingStub::AsyncTransferEntitlementsToGoogle(
   auto f = child_->AsyncTransferEntitlementsToGoogle(
       cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceTracingStub::TransferEntitlementsToGoogle(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.channel.v1.CloudChannelService",
+                             "TransferEntitlementsToGoogle");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->TransferEntitlementsToGoogle(context, options, request));
 }
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>

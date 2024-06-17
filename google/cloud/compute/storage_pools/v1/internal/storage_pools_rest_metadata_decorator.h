@@ -54,6 +54,12 @@ class StoragePoolsRestMetadata : public StoragePoolsRestStub {
       google::cloud::cpp::compute::storage_pools::v1::
           DeleteStoragePoolRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          DeleteStoragePoolRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -71,6 +77,12 @@ class StoragePoolsRestMetadata : public StoragePoolsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          InsertStoragePoolRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::storage_pools::v1::
           InsertStoragePoolRequest const& request) override;
 
@@ -103,6 +115,12 @@ class StoragePoolsRestMetadata : public StoragePoolsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::storage_pools::v1::
+          UpdateStoragePoolRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::storage_pools::v1::
           UpdateStoragePoolRequest const& request) override;
 

@@ -51,6 +51,17 @@ IndexServiceLogging::AsyncCreateIndex(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> IndexServiceLogging::CreateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
+        return child_->CreateIndex(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceLogging::GetIndex(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
@@ -92,6 +103,17 @@ IndexServiceLogging::AsyncUpdateIndex(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> IndexServiceLogging::UpdateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
+        return child_->UpdateIndex(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IndexServiceLogging::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +130,17 @@ IndexServiceLogging::AsyncDeleteIndex(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> IndexServiceLogging::DeleteIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
+        return child_->DeleteIndex(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>

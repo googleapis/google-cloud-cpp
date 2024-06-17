@@ -71,6 +71,16 @@ SecureSourceManagerAuth::AsyncCreateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerAuth::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +100,16 @@ SecureSourceManagerAuth::AsyncDeleteInstance(
         return child->AsyncDeleteInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstance(context, options, request);
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::ListRepositoriesResponse>
@@ -133,6 +153,16 @@ SecureSourceManagerAuth::AsyncCreateRepository(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::CreateRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRepository(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerAuth::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
@@ -152,6 +182,16 @@ SecureSourceManagerAuth::AsyncDeleteRepository(
         return child->AsyncDeleteRepository(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerAuth::DeleteRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRepository(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecureSourceManagerAuth::GetIamPolicyRepo(

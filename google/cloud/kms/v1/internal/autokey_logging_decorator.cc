@@ -51,6 +51,17 @@ AutokeyLogging::AsyncCreateKeyHandle(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AutokeyLogging::CreateKeyHandle(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+        return child_->CreateKeyHandle(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyLogging::GetKeyHandle(
     grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetKeyHandleRequest const& request) {

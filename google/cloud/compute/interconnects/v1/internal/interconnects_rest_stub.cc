@@ -79,6 +79,22 @@ DefaultInterconnectsRestStub::AsyncDeleteInterconnect(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInterconnectsRestStub::DeleteInterconnect(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::
+        DeleteInterconnectRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "interconnects", "/", request.interconnect()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
 DefaultInterconnectsRestStub::GetInterconnect(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -158,6 +174,22 @@ DefaultInterconnectsRestStub::AsyncInsertInterconnect(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInterconnectsRestStub::InsertInterconnect(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::
+        InsertInterconnectRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.interconnect_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "interconnects"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InterconnectList>
 DefaultInterconnectsRestStub::ListInterconnects(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -213,6 +245,22 @@ DefaultInterconnectsRestStub::AsyncPatchInterconnect(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInterconnectsRestStub::PatchInterconnect(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::
+        PatchInterconnectRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.interconnect_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "interconnects", "/", request.interconnect()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInterconnectsRestStub::AsyncSetLabels(
     CompletionQueue& cq,
@@ -244,6 +292,21 @@ DefaultInterconnectsRestStub::AsyncSetLabels(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInterconnectsRestStub::SetLabels(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.global_set_labels_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "interconnects", "/", request.resource(), "/", "setLabels"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

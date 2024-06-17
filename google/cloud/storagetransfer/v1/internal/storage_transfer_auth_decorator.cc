@@ -114,6 +114,15 @@ StorageTransferServiceAuth::AsyncRunTransferJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+StorageTransferServiceAuth::RunTransferJob(
+    grpc::ClientContext& context, Options options,
+    google::storagetransfer::v1::RunTransferJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunTransferJob(context, options, request);
+}
+
 Status StorageTransferServiceAuth::DeleteTransferJob(
     grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {

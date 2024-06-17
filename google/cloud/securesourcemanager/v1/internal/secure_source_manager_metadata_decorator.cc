@@ -74,6 +74,16 @@ SecureSourceManagerMetadata::AsyncCreateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +95,16 @@ SecureSourceManagerMetadata::AsyncDeleteInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInstance(context, options, request);
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::ListRepositoriesResponse>
@@ -120,6 +140,16 @@ SecureSourceManagerMetadata::AsyncCreateRepository(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::CreateRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateRepository(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecureSourceManagerMetadata::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
@@ -131,6 +161,16 @@ SecureSourceManagerMetadata::AsyncDeleteRepository(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRepository(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerMetadata::DeleteRepository(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRepository(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecureSourceManagerMetadata::GetIamPolicyRepo(

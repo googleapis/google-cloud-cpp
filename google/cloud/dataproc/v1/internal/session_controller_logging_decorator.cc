@@ -51,6 +51,18 @@ SessionControllerLogging::AsyncCreateSession(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerLogging::CreateSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+        return child_->CreateSession(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dataproc::v1::Session>
 SessionControllerLogging::GetSession(
     grpc::ClientContext& context, Options const& options,
@@ -94,6 +106,19 @@ SessionControllerLogging::AsyncTerminateSession(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerLogging::TerminateSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+        return child_->TerminateSession(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerLogging::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +135,18 @@ SessionControllerLogging::AsyncDeleteSession(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SessionControllerLogging::DeleteSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+        return child_->DeleteSession(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

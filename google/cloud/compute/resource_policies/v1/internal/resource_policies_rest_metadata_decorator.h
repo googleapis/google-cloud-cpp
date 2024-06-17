@@ -55,6 +55,12 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
       google::cloud::cpp::compute::resource_policies::v1::
           DeleteResourcePolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::resource_policies::v1::
+          DeleteResourcePolicyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -75,6 +81,12 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
       google::cloud::cpp::compute::resource_policies::v1::
           InsertResourcePolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::resource_policies::v1::
+          InsertResourcePolicyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
   ListResourcePolicies(google::cloud::rest_internal::RestContext& rest_context,
                        Options const& options,
@@ -86,6 +98,12 @@ class ResourcePoliciesRestMetadata : public ResourcePoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::resource_policies::v1::
+          PatchResourcePolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::resource_policies::v1::
           PatchResourcePolicyRequest const& request) override;
 

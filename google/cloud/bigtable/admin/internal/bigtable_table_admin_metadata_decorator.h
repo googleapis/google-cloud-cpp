@@ -58,6 +58,10 @@ class BigtableTableAdminMetadata : public BigtableTableAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::UpdateTableRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateTable(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UpdateTableRequest const& request) override;
+
   Status DeleteTable(
       grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::DeleteTableRequest const& request) override;
@@ -69,10 +73,20 @@ class BigtableTableAdminMetadata : public BigtableTableAdminStub {
       google::bigtable::admin::v2::UndeleteTableRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UndeleteTable(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::UndeleteTableRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAuthorizedView(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateAuthorizedView(
+      grpc::ClientContext& context, Options options,
       google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
       override;
 
@@ -91,6 +105,11 @@ class BigtableTableAdminMetadata : public BigtableTableAdminStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
+      grpc::ClientContext& context, Options options,
       google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
       override;
 
@@ -125,6 +144,10 @@ class BigtableTableAdminMetadata : public BigtableTableAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::CreateBackupRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::CreateBackupRequest const& request) override;
+
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
       grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::GetBackupRequest const& request) override;
@@ -147,10 +170,18 @@ class BigtableTableAdminMetadata : public BigtableTableAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> RestoreTable(
+      grpc::ClientContext& context, Options options,
+      google::bigtable::admin::v2::RestoreTableRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCopyBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CopyBackupRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CopyBackup(
+      grpc::ClientContext& context, Options options,
       google::bigtable::admin::v2::CopyBackupRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

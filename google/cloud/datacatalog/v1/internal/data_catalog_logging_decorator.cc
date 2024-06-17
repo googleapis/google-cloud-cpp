@@ -397,6 +397,18 @@ DataCatalogLogging::AsyncReconcileTags(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataCatalogLogging::ReconcileTags(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+        return child_->ReconcileTags(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogLogging::StarEntry(
     grpc::ClientContext& context, Options const& options,
@@ -473,6 +485,18 @@ DataCatalogLogging::AsyncImportEntries(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataCatalogLogging::ImportEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+        return child_->ImportEntries(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

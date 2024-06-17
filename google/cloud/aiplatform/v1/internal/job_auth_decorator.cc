@@ -77,6 +77,14 @@ JobServiceAuth::AsyncDeleteCustomJob(
       });
 }
 
+StatusOr<google::longrunning::Operation> JobServiceAuth::DeleteCustomJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCustomJob(context, options, request);
+}
+
 Status JobServiceAuth::CancelCustomJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
@@ -132,6 +140,15 @@ JobServiceAuth::AsyncDeleteDataLabelingJob(
         return child->AsyncDeleteDataLabelingJob(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> JobServiceAuth::DeleteDataLabelingJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDataLabelingJob(context, options, request);
 }
 
 Status JobServiceAuth::CancelDataLabelingJob(
@@ -194,6 +211,16 @@ JobServiceAuth::AsyncDeleteHyperparameterTuningJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceAuth::DeleteHyperparameterTuningJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteHyperparameterTuningJob(context, options, request);
+}
+
 Status JobServiceAuth::CancelHyperparameterTuningJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
@@ -246,6 +273,14 @@ JobServiceAuth::AsyncDeleteNasJob(
         return child->AsyncDeleteNasJob(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> JobServiceAuth::DeleteNasJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteNasJob(context, options, request);
 }
 
 Status JobServiceAuth::CancelNasJob(
@@ -325,6 +360,16 @@ JobServiceAuth::AsyncDeleteBatchPredictionJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceAuth::DeleteBatchPredictionJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBatchPredictionJob(context, options, request);
+}
+
 Status JobServiceAuth::CancelBatchPredictionJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
@@ -398,6 +443,16 @@ JobServiceAuth::AsyncUpdateModelDeploymentMonitoringJob(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceAuth::UpdateModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::
+        UpdateModelDeploymentMonitoringJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateModelDeploymentMonitoringJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 JobServiceAuth::AsyncDeleteModelDeploymentMonitoringJob(
     google::cloud::CompletionQueue& cq,
@@ -417,6 +472,16 @@ JobServiceAuth::AsyncDeleteModelDeploymentMonitoringJob(
         return child->AsyncDeleteModelDeploymentMonitoringJob(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceAuth::DeleteModelDeploymentMonitoringJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::
+        DeleteModelDeploymentMonitoringJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteModelDeploymentMonitoringJob(context, options, request);
 }
 
 Status JobServiceAuth::PauseModelDeploymentMonitoringJob(

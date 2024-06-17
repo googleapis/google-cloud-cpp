@@ -52,6 +52,16 @@ AttachedClustersAuth::AsyncCreateAttachedCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersAuth::CreateAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAttachedCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersAuth::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -73,6 +83,16 @@ AttachedClustersAuth::AsyncUpdateAttachedCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersAuth::UpdateAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAttachedCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersAuth::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +112,16 @@ AttachedClustersAuth::AsyncImportAttachedCluster(
         return child->AsyncImportAttachedCluster(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersAuth::ImportAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportAttachedCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -133,6 +163,16 @@ AttachedClustersAuth::AsyncDeleteAttachedCluster(
         return child->AsyncDeleteAttachedCluster(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersAuth::DeleteAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAttachedCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

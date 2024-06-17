@@ -44,6 +44,17 @@ ApiKeysTracingStub::AsyncCreateKey(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysTracingStub::CreateKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::CreateKeyRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "CreateKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateKey(context, options, request));
+}
+
 StatusOr<google::api::apikeys::v2::ListKeysResponse>
 ApiKeysTracingStub::ListKeys(
     grpc::ClientContext& context, Options const& options,
@@ -92,6 +103,17 @@ ApiKeysTracingStub::AsyncUpdateKey(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysTracingStub::UpdateKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "UpdateKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateKey(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +128,17 @@ ApiKeysTracingStub::AsyncDeleteKey(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysTracingStub::DeleteKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "DeleteKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteKey(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +151,17 @@ ApiKeysTracingStub::AsyncUndeleteKey(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUndeleteKey(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ApiKeysTracingStub::UndeleteKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "UndeleteKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UndeleteKey(context, options, request));
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>

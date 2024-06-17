@@ -74,6 +74,17 @@ RevisionsLogging::AsyncDeleteRevision(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> RevisionsLogging::DeleteRevision(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::DeleteRevisionRequest const& request) {
+        return child_->DeleteRevision(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RevisionsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

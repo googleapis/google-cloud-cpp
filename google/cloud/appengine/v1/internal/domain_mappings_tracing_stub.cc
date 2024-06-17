@@ -70,6 +70,18 @@ DomainMappingsTracingStub::AsyncCreateDomainMapping(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsTracingStub::CreateDomainMapping(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "CreateDomainMapping");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateDomainMapping(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsTracingStub::AsyncUpdateDomainMapping(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +97,18 @@ DomainMappingsTracingStub::AsyncUpdateDomainMapping(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsTracingStub::UpdateDomainMapping(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "UpdateDomainMapping");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateDomainMapping(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsTracingStub::AsyncDeleteDomainMapping(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +122,18 @@ DomainMappingsTracingStub::AsyncDeleteDomainMapping(
   auto f = child_->AsyncDeleteDomainMapping(cq, context, std::move(options),
                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DomainMappingsTracingStub::DeleteDomainMapping(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "DeleteDomainMapping");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteDomainMapping(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

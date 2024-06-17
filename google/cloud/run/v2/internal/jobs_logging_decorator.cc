@@ -50,6 +50,17 @@ future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncCreateJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> JobsLogging::CreateJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CreateJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::CreateJobRequest const& request) {
+        return child_->CreateJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::run::v2::Job> JobsLogging::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetJobRequest const& request) {
@@ -89,6 +100,17 @@ future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncUpdateJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> JobsLogging::UpdateJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::UpdateJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::UpdateJobRequest const& request) {
+        return child_->UpdateJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -106,6 +128,17 @@ future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncDeleteJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> JobsLogging::DeleteJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::DeleteJobRequest const& request) {
+        return child_->DeleteJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncRunJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -121,6 +154,17 @@ future<StatusOr<google::longrunning::Operation>> JobsLogging::AsyncRunJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> JobsLogging::RunJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::RunJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::RunJobRequest const& request) {
+        return child_->RunJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> JobsLogging::GetIamPolicy(

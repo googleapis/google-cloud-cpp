@@ -50,6 +50,18 @@ DefaultSpecialistPoolServiceStub::AsyncCreateSpecialistPool(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSpecialistPoolServiceStub::CreateSpecialistPool(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSpecialistPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 DefaultSpecialistPoolServiceStub::GetSpecialistPool(
     grpc::ClientContext& context, Options const&,
@@ -93,6 +105,18 @@ DefaultSpecialistPoolServiceStub::AsyncDeleteSpecialistPool(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSpecialistPoolServiceStub::DeleteSpecialistPool(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSpecialistPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSpecialistPoolServiceStub::AsyncUpdateSpecialistPool(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +134,18 @@ DefaultSpecialistPoolServiceStub::AsyncUpdateSpecialistPool(
         return grpc_stub_->AsyncUpdateSpecialistPool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSpecialistPoolServiceStub::UpdateSpecialistPool(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSpecialistPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -61,6 +61,18 @@ DefaultApplicationsStub::AsyncCreateApplication(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultApplicationsStub::CreateApplication(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::CreateApplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateApplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApplicationsStub::AsyncUpdateApplication(
     google::cloud::CompletionQueue& cq,
@@ -79,6 +91,18 @@ DefaultApplicationsStub::AsyncUpdateApplication(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultApplicationsStub::UpdateApplication(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::UpdateApplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateApplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultApplicationsStub::AsyncRepairApplication(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +119,18 @@ DefaultApplicationsStub::AsyncRepairApplication(
         return grpc_stub_->AsyncRepairApplication(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultApplicationsStub::RepairApplication(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::RepairApplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RepairApplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -75,6 +75,19 @@ AccessContextManagerTracingStub::AsyncCreateAccessPolicy(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::CreateAccessPolicy(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "CreateAccessPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateAccessPolicy(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncUpdateAccessPolicy(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +105,20 @@ AccessContextManagerTracingStub::AsyncUpdateAccessPolicy(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::UpdateAccessPolicy(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "UpdateAccessPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateAccessPolicy(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncDeleteAccessPolicy(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +134,20 @@ AccessContextManagerTracingStub::AsyncDeleteAccessPolicy(
   auto f =
       child_->AsyncDeleteAccessPolicy(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::DeleteAccessPolicy(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "DeleteAccessPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteAccessPolicy(context, options, request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
@@ -154,6 +195,20 @@ AccessContextManagerTracingStub::AsyncCreateAccessLevel(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::CreateAccessLevel(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "CreateAccessLevel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateAccessLevel(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncUpdateAccessLevel(
     google::cloud::CompletionQueue& cq,
@@ -169,6 +224,20 @@ AccessContextManagerTracingStub::AsyncUpdateAccessLevel(
   auto f =
       child_->AsyncUpdateAccessLevel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::UpdateAccessLevel(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "UpdateAccessLevel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateAccessLevel(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -188,6 +257,20 @@ AccessContextManagerTracingStub::AsyncDeleteAccessLevel(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::DeleteAccessLevel(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "DeleteAccessLevel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteAccessLevel(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncReplaceAccessLevels(
     google::cloud::CompletionQueue& cq,
@@ -203,6 +286,20 @@ AccessContextManagerTracingStub::AsyncReplaceAccessLevels(
   auto f = child_->AsyncReplaceAccessLevels(cq, context, std::move(options),
                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::ReplaceAccessLevels(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        ReplaceAccessLevelsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "ReplaceAccessLevels");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ReplaceAccessLevels(context, options, request));
 }
 
 StatusOr<
@@ -251,6 +348,21 @@ AccessContextManagerTracingStub::AsyncCreateServicePerimeter(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::CreateServicePerimeter(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        CreateServicePerimeterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "CreateServicePerimeter");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateServicePerimeter(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncUpdateServicePerimeter(
     google::cloud::CompletionQueue& cq,
@@ -266,6 +378,21 @@ AccessContextManagerTracingStub::AsyncUpdateServicePerimeter(
   auto f = child_->AsyncUpdateServicePerimeter(cq, context, std::move(options),
                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::UpdateServicePerimeter(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        UpdateServicePerimeterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "UpdateServicePerimeter");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateServicePerimeter(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -285,6 +412,21 @@ AccessContextManagerTracingStub::AsyncDeleteServicePerimeter(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::DeleteServicePerimeter(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        DeleteServicePerimeterRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "DeleteServicePerimeter");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteServicePerimeter(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncReplaceServicePerimeters(
     google::cloud::CompletionQueue& cq,
@@ -302,6 +444,21 @@ AccessContextManagerTracingStub::AsyncReplaceServicePerimeters(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::ReplaceServicePerimeters(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        ReplaceServicePerimetersRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "ReplaceServicePerimeters");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ReplaceServicePerimeters(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncCommitServicePerimeters(
     google::cloud::CompletionQueue& cq,
@@ -317,6 +474,21 @@ AccessContextManagerTracingStub::AsyncCommitServicePerimeters(
   auto f = child_->AsyncCommitServicePerimeters(cq, context, std::move(options),
                                                 request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::CommitServicePerimeters(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        CommitServicePerimetersRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "CommitServicePerimeters");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CommitServicePerimeters(context, options, request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::
@@ -367,6 +539,21 @@ AccessContextManagerTracingStub::AsyncCreateGcpUserAccessBinding(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::CreateGcpUserAccessBinding(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        CreateGcpUserAccessBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "CreateGcpUserAccessBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateGcpUserAccessBinding(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncUpdateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
@@ -384,6 +571,21 @@ AccessContextManagerTracingStub::AsyncUpdateGcpUserAccessBinding(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::UpdateGcpUserAccessBinding(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        UpdateGcpUserAccessBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "UpdateGcpUserAccessBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateGcpUserAccessBinding(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncDeleteGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
@@ -399,6 +601,21 @@ AccessContextManagerTracingStub::AsyncDeleteGcpUserAccessBinding(
   auto f = child_->AsyncDeleteGcpUserAccessBinding(cq, context,
                                                    std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+AccessContextManagerTracingStub::DeleteGcpUserAccessBinding(
+    grpc::ClientContext& context, Options options,
+    google::identity::accesscontextmanager::v1::
+        DeleteGcpUserAccessBindingRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.identity.accesscontextmanager.v1.AccessContextManager",
+      "DeleteGcpUserAccessBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteGcpUserAccessBinding(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerTracingStub::SetIamPolicy(

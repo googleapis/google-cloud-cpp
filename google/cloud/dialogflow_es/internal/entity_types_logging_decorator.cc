@@ -117,6 +117,20 @@ EntityTypesLogging::AsyncBatchUpdateEntityTypes(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesLogging::BatchUpdateEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+                 request) {
+        return child_->BatchUpdateEntityTypes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesLogging::AsyncBatchDeleteEntityTypes(
     google::cloud::CompletionQueue& cq,
@@ -135,6 +149,20 @@ EntityTypesLogging::AsyncBatchDeleteEntityTypes(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesLogging::BatchDeleteEntityTypes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+                 request) {
+        return child_->BatchDeleteEntityTypes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -156,6 +184,19 @@ EntityTypesLogging::AsyncBatchCreateEntities(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesLogging::BatchCreateEntities(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&
+                 request) {
+        return child_->BatchCreateEntities(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesLogging::AsyncBatchUpdateEntities(
     google::cloud::CompletionQueue& cq,
@@ -175,6 +216,19 @@ EntityTypesLogging::AsyncBatchUpdateEntities(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesLogging::BatchUpdateEntities(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&
+                 request) {
+        return child_->BatchUpdateEntities(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesLogging::AsyncBatchDeleteEntities(
     google::cloud::CompletionQueue& cq,
@@ -192,6 +246,19 @@ EntityTypesLogging::AsyncBatchDeleteEntities(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesLogging::BatchDeleteEntities(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&
+                 request) {
+        return child_->BatchDeleteEntities(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

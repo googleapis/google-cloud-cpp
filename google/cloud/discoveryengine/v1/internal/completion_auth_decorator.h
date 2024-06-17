@@ -52,11 +52,21 @@ class CompletionServiceAuth : public CompletionServiceStub {
       google::cloud::discoveryengine::v1::
           ImportSuggestionDenyListEntriesRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncPurgeSuggestionDenyListEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
+      grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request) override;
 

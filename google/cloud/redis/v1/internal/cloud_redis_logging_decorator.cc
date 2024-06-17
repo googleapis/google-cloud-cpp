@@ -87,6 +87,17 @@ CloudRedisLogging::AsyncCreateInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisLogging::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::CreateInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::CreateInstanceRequest const& request) {
+        return child_->CreateInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisLogging::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +114,17 @@ CloudRedisLogging::AsyncUpdateInstance(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisLogging::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::UpdateInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::UpdateInstanceRequest const& request) {
+        return child_->UpdateInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -123,6 +145,17 @@ CloudRedisLogging::AsyncUpgradeInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisLogging::UpgradeInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
+        return child_->UpgradeInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisLogging::AsyncImportInstance(
     google::cloud::CompletionQueue& cq,
@@ -139,6 +172,17 @@ CloudRedisLogging::AsyncImportInstance(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisLogging::ImportInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::ImportInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::ImportInstanceRequest const& request) {
+        return child_->ImportInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -159,6 +203,17 @@ CloudRedisLogging::AsyncExportInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisLogging::ExportInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::ExportInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::ExportInstanceRequest const& request) {
+        return child_->ExportInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisLogging::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
@@ -175,6 +230,17 @@ CloudRedisLogging::AsyncFailoverInstance(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisLogging::FailoverInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::FailoverInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::FailoverInstanceRequest const& request) {
+        return child_->FailoverInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -195,6 +261,17 @@ CloudRedisLogging::AsyncDeleteInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisLogging::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::DeleteInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::DeleteInstanceRequest const& request) {
+        return child_->DeleteInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisLogging::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
@@ -212,6 +289,19 @@ CloudRedisLogging::AsyncRescheduleMaintenance(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisLogging::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return child_->RescheduleMaintenance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

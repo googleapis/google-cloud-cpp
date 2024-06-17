@@ -296,6 +296,14 @@ DataCatalogMetadata::AsyncReconcileTags(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> DataCatalogMetadata::ReconcileTags(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ReconcileTags(context, options, request);
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogMetadata::StarEntry(
     grpc::ClientContext& context, Options const& options,
@@ -352,6 +360,14 @@ DataCatalogMetadata::AsyncImportEntries(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportEntries(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> DataCatalogMetadata::ImportEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportEntries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

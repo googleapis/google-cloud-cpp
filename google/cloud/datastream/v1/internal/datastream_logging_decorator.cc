@@ -81,6 +81,21 @@ DatastreamLogging::AsyncCreateConnectionProfile(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamLogging::CreateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+              request) {
+        return child_->CreateConnectionProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamLogging::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -102,6 +117,21 @@ DatastreamLogging::AsyncUpdateConnectionProfile(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamLogging::UpdateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+              request) {
+        return child_->UpdateConnectionProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamLogging::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +151,21 @@ DatastreamLogging::AsyncDeleteConnectionProfile(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamLogging::DeleteConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+              request) {
+        return child_->DeleteConnectionProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
@@ -180,6 +225,18 @@ DatastreamLogging::AsyncCreateStream(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamLogging::CreateStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateStreamRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::CreateStreamRequest const& request) {
+        return child_->CreateStream(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamLogging::AsyncUpdateStream(
     google::cloud::CompletionQueue& cq,
@@ -199,6 +256,18 @@ DatastreamLogging::AsyncUpdateStream(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamLogging::UpdateStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::UpdateStreamRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::UpdateStreamRequest const& request) {
+        return child_->UpdateStream(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamLogging::AsyncDeleteStream(
     google::cloud::CompletionQueue& cq,
@@ -216,6 +285,18 @@ DatastreamLogging::AsyncDeleteStream(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamLogging::DeleteStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteStreamRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::DeleteStreamRequest const& request) {
+        return child_->DeleteStream(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
@@ -317,6 +398,21 @@ DatastreamLogging::AsyncCreatePrivateConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamLogging::CreatePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+              request) {
+        return child_->CreatePrivateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
 DatastreamLogging::GetPrivateConnection(
     grpc::ClientContext& context, Options const& options,
@@ -365,6 +461,21 @@ DatastreamLogging::AsyncDeletePrivateConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamLogging::DeletePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+              request) {
+        return child_->DeletePrivateConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamLogging::AsyncCreateRoute(
     google::cloud::CompletionQueue& cq,
@@ -381,6 +492,17 @@ DatastreamLogging::AsyncCreateRoute(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamLogging::CreateRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateRouteRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datastream::v1::CreateRouteRequest const& request) {
+        return child_->CreateRoute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::Route> DatastreamLogging::GetRoute(
@@ -422,6 +544,17 @@ DatastreamLogging::AsyncDeleteRoute(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamLogging::DeleteRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteRouteRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datastream::v1::DeleteRouteRequest const& request) {
+        return child_->DeleteRoute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

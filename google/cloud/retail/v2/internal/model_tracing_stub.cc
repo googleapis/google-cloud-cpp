@@ -45,6 +45,17 @@ ModelServiceTracingStub::AsyncCreateModel(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceTracingStub::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ModelService",
+                                     "CreateModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateModel(context, options, request));
+}
+
 StatusOr<google::cloud::retail::v2::Model> ModelServiceTracingStub::GetModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetModelRequest const& request) {
@@ -124,6 +135,17 @@ ModelServiceTracingStub::AsyncTuneModel(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncTuneModel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceTracingStub::TuneModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ModelService",
+                                     "TuneModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->TuneModel(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

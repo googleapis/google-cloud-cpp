@@ -61,6 +61,15 @@ TargetVpnGatewaysRestMetadata::AsyncDeleteTargetVpnGateway(
                                              std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetVpnGatewaysRestMetadata::DeleteTargetVpnGateway(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        DeleteTargetVpnGatewayRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteTargetVpnGateway(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
 TargetVpnGatewaysRestMetadata::GetTargetVpnGateway(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -82,6 +91,15 @@ TargetVpnGatewaysRestMetadata::AsyncInsertTargetVpnGateway(
                                              std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetVpnGatewaysRestMetadata::InsertTargetVpnGateway(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        InsertTargetVpnGatewayRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertTargetVpnGateway(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList>
 TargetVpnGatewaysRestMetadata::ListTargetVpnGateways(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -101,6 +119,15 @@ TargetVpnGatewaysRestMetadata::AsyncSetLabels(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetVpnGatewaysRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_vpn_gateways::v1::
+        SetLabelsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

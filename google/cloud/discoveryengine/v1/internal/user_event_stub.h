@@ -57,6 +57,11 @@ class UserEventServiceStub {
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ImportUserEvents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -94,6 +99,11 @@ class DefaultUserEventServiceStub : public UserEventServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ImportUserEvents(
+      grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
           request) override;
 

@@ -105,6 +105,23 @@ DefaultForwardingRulesRestStub::AsyncDeleteForwardingRule(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultForwardingRulesRestStub::DeleteForwardingRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        DeleteForwardingRuleRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "forwardingRules", "/",
+                   request.forwarding_rule()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
 DefaultForwardingRulesRestStub::GetForwardingRule(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -153,6 +170,22 @@ DefaultForwardingRulesRestStub::AsyncInsertForwardingRule(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultForwardingRulesRestStub::InsertForwardingRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        InsertForwardingRuleRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.forwarding_rule_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "forwardingRules"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
@@ -212,6 +245,23 @@ DefaultForwardingRulesRestStub::AsyncPatchForwardingRule(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultForwardingRulesRestStub::PatchForwardingRule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        PatchForwardingRuleRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.forwarding_rule_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "forwardingRules", "/",
+                   request.forwarding_rule()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultForwardingRulesRestStub::AsyncSetLabels(
     CompletionQueue& cq,
@@ -248,6 +298,24 @@ DefaultForwardingRulesRestStub::AsyncSetLabels(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultForwardingRulesRestStub::SetLabels(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.region_set_labels_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "forwardingRules", "/",
+                   request.resource(), "/", "setLabels"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultForwardingRulesRestStub::AsyncSetTarget(
     CompletionQueue& cq,
@@ -282,6 +350,23 @@ DefaultForwardingRulesRestStub::AsyncSetTarget(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultForwardingRulesRestStub::SetTarget(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.target_reference_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "forwardingRules", "/",
+                   request.forwarding_rule(), "/", "setTarget"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

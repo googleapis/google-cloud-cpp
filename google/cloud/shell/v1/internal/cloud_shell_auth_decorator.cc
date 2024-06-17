@@ -60,6 +60,15 @@ CloudShellServiceAuth::AsyncStartEnvironment(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudShellServiceAuth::StartEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartEnvironment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceAuth::AsyncAuthorizeEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -78,6 +87,15 @@ CloudShellServiceAuth::AsyncAuthorizeEnvironment(
         return child->AsyncAuthorizeEnvironment(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudShellServiceAuth::AuthorizeEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AuthorizeEnvironment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -100,6 +118,14 @@ CloudShellServiceAuth::AsyncAddPublicKey(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudShellServiceAuth::AddPublicKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AddPublicKey(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceAuth::AsyncRemovePublicKey(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +144,14 @@ CloudShellServiceAuth::AsyncRemovePublicKey(
         return child->AsyncRemovePublicKey(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudShellServiceAuth::RemovePublicKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RemovePublicKey(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

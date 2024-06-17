@@ -105,6 +105,17 @@ DefaultFlowsStub::AsyncTrainFlow(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultFlowsStub::TrainFlow(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->TrainFlow(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 DefaultFlowsStub::ValidateFlow(
     grpc::ClientContext& context, Options const&,
@@ -150,6 +161,17 @@ DefaultFlowsStub::AsyncImportFlow(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultFlowsStub::ImportFlow(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportFlow(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultFlowsStub::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +189,17 @@ DefaultFlowsStub::AsyncExportFlow(
         return grpc_stub_->AsyncExportFlow(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultFlowsStub::ExportFlow(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportFlow(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

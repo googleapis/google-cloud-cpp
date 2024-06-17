@@ -54,6 +54,15 @@ AnalyticsServiceMetadata::AsyncExportAnalyticsMetrics(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceMetadata::ExportAnalyticsMetrics(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("catalog=", internal::UrlEncode(request.catalog())));
+  return child_->ExportAnalyticsMetrics(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

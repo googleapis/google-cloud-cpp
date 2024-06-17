@@ -50,6 +50,11 @@ class DatabaseAdminTracingStub : public DatabaseAdminStub {
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDatabase(
+      grpc::ClientContext& context, Options options,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request) override;
+
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       grpc::ClientContext& context, Options const& options,
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
@@ -62,10 +67,20 @@ class DatabaseAdminTracingStub : public DatabaseAdminStub {
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateDatabase(
+      grpc::ClientContext& context, Options options,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      grpc::ClientContext& context, Options options,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) override;
 
@@ -99,10 +114,20 @@ class DatabaseAdminTracingStub : public DatabaseAdminStub {
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      grpc::ClientContext& context, Options options,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCopyBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CopyBackup(
+      grpc::ClientContext& context, Options options,
       google::spanner::admin::database::v1::CopyBackupRequest const& request)
       override;
 
@@ -130,6 +155,11 @@ class DatabaseAdminTracingStub : public DatabaseAdminStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      grpc::ClientContext& context, Options options,
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request) override;
 

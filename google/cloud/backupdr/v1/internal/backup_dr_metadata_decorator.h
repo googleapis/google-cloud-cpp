@@ -57,10 +57,20 @@ class BackupDRMetadata : public BackupDRStub {
       google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateManagementServer(
+      grpc::ClientContext& context, Options options,
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteManagementServer(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteManagementServer(
+      grpc::ClientContext& context, Options options,
       google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
       override;
 

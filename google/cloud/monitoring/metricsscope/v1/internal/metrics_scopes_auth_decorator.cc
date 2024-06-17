@@ -73,6 +73,16 @@ MetricsScopesAuth::AsyncCreateMonitoredProject(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+MetricsScopesAuth::CreateMonitoredProject(
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMonitoredProject(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesAuth::AsyncDeleteMonitoredProject(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +102,16 @@ MetricsScopesAuth::AsyncDeleteMonitoredProject(
         return child->AsyncDeleteMonitoredProject(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+MetricsScopesAuth::DeleteMonitoredProject(
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMonitoredProject(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

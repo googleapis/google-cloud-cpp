@@ -63,6 +63,15 @@ DocumentProcessorServiceMetadata::AsyncBatchProcessDocuments(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::BatchProcessDocuments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::BatchProcessRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->BatchProcessDocuments(context, options, request);
+}
+
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DocumentProcessorServiceMetadata::FetchProcessorTypes(
     grpc::ClientContext& context, Options const& options,
@@ -121,6 +130,16 @@ DocumentProcessorServiceMetadata::AsyncTrainProcessorVersion(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::TrainProcessorVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->TrainProcessorVersion(context, options, request);
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceMetadata::GetProcessorVersion(
     grpc::ClientContext& context, Options const& options,
@@ -153,6 +172,16 @@ DocumentProcessorServiceMetadata::AsyncDeleteProcessorVersion(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::DeleteProcessorVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteProcessorVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceMetadata::AsyncDeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
@@ -166,6 +195,16 @@ DocumentProcessorServiceMetadata::AsyncDeployProcessorVersion(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::DeployProcessorVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeployProcessorVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceMetadata::AsyncUndeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
@@ -177,6 +216,16 @@ DocumentProcessorServiceMetadata::AsyncUndeployProcessorVersion(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeployProcessorVersion(cq, std::move(context),
                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::UndeployProcessorVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UndeployProcessorVersion(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
@@ -200,6 +249,15 @@ DocumentProcessorServiceMetadata::AsyncDeleteProcessor(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::DeleteProcessor(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteProcessor(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceMetadata::AsyncEnableProcessor(
     google::cloud::CompletionQueue& cq,
@@ -212,6 +270,15 @@ DocumentProcessorServiceMetadata::AsyncEnableProcessor(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::EnableProcessor(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->EnableProcessor(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceMetadata::AsyncDisableProcessor(
     google::cloud::CompletionQueue& cq,
@@ -222,6 +289,15 @@ DocumentProcessorServiceMetadata::AsyncDisableProcessor(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDisableProcessor(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::DisableProcessor(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DisableProcessor(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -238,6 +314,17 @@ DocumentProcessorServiceMetadata::AsyncSetDefaultProcessorVersion(
                                                  std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::SetDefaultProcessorVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("processor=", internal::UrlEncode(request.processor())));
+  return child_->SetDefaultProcessorVersion(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceMetadata::AsyncReviewDocument(
     google::cloud::CompletionQueue& cq,
@@ -249,6 +336,16 @@ DocumentProcessorServiceMetadata::AsyncReviewDocument(
                            internal::UrlEncode(request.human_review_config())));
   return child_->AsyncReviewDocument(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::ReviewDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("human_review_config=",
+                           internal::UrlEncode(request.human_review_config())));
+  return child_->ReviewDocument(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -263,6 +360,17 @@ DocumentProcessorServiceMetadata::AsyncEvaluateProcessorVersion(
                            internal::UrlEncode(request.processor_version())));
   return child_->AsyncEvaluateProcessorVersion(cq, std::move(context),
                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceMetadata::EvaluateProcessorVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("processor_version=",
+                           internal::UrlEncode(request.processor_version())));
+  return child_->EvaluateProcessorVersion(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::Evaluation>

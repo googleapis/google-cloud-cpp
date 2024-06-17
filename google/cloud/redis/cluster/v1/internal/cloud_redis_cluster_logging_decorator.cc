@@ -78,6 +78,19 @@ CloudRedisClusterLogging::AsyncUpdateCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterLogging::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::UpdateClusterRequest const&
+                 request) {
+        return child_->UpdateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterLogging::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +110,19 @@ CloudRedisClusterLogging::AsyncDeleteCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterLogging::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::DeleteClusterRequest const&
+                 request) {
+        return child_->DeleteCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisClusterLogging::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +140,19 @@ CloudRedisClusterLogging::AsyncCreateCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterLogging::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::cluster::v1::CreateClusterRequest const&
+                 request) {
+        return child_->CreateCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>

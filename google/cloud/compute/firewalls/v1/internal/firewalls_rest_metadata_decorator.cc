@@ -50,6 +50,15 @@ FirewallsRestMetadata::AsyncDeleteFirewall(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsRestMetadata::DeleteFirewall(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteFirewall(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
 FirewallsRestMetadata::GetFirewall(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -69,6 +78,15 @@ FirewallsRestMetadata::AsyncInsertFirewall(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertFirewall(cq, std::move(rest_context),
                                      std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsRestMetadata::InsertFirewall(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertFirewall(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallList>
@@ -92,6 +110,15 @@ FirewallsRestMetadata::AsyncPatchFirewall(
                                     std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsRestMetadata::PatchFirewall(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchFirewall(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestMetadata::AsyncUpdateFirewall(
     CompletionQueue& cq,
@@ -102,6 +129,15 @@ FirewallsRestMetadata::AsyncUpdateFirewall(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateFirewall(cq, std::move(rest_context),
                                      std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsRestMetadata::UpdateFirewall(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateFirewall(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

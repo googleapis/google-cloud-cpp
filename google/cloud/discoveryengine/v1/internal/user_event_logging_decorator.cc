@@ -79,6 +79,20 @@ UserEventServiceLogging::AsyncImportUserEvents(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceLogging::ImportUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+                 request) {
+        return child_->ImportUserEvents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

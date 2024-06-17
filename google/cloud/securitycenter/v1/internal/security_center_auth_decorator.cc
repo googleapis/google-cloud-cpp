@@ -51,6 +51,14 @@ SecurityCenterAuth::AsyncBulkMuteFindings(
       });
 }
 
+StatusOr<google::longrunning::Operation> SecurityCenterAuth::BulkMuteFindings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BulkMuteFindings(context, options, request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterAuth::CreateSecurityHealthAnalyticsCustomModule(
     grpc::ClientContext& context, Options const& options,
@@ -326,6 +334,15 @@ SecurityCenterAuth::AsyncRunAssetDiscovery(
         return child->AsyncRunAssetDiscovery(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> SecurityCenterAuth::RunAssetDiscovery(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunAssetDiscovery(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>

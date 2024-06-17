@@ -52,6 +52,19 @@ DefaultConsumerProcurementServiceStub::AsyncPlaceOrder(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultConsumerProcurementServiceStub::PlaceOrder(
+    grpc::ClientContext& context, Options,
+    google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PlaceOrder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 DefaultConsumerProcurementServiceStub::GetOrder(
     grpc::ClientContext& context, Options const&,

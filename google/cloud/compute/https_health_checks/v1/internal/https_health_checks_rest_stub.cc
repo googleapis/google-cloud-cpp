@@ -80,6 +80,22 @@ DefaultHttpsHealthChecksRestStub::AsyncDeleteHttpsHealthCheck(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultHttpsHealthChecksRestStub::DeleteHttpsHealthCheck(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::https_health_checks::v1::
+        DeleteHttpsHealthCheckRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "httpsHealthChecks", "/", request.https_health_check()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
 DefaultHttpsHealthChecksRestStub::GetHttpsHealthCheck(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -126,6 +142,22 @@ DefaultHttpsHealthChecksRestStub::AsyncInsertHttpsHealthCheck(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultHttpsHealthChecksRestStub::InsertHttpsHealthCheck(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::https_health_checks::v1::
+        InsertHttpsHealthCheckRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.https_health_check_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "httpsHealthChecks"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheckList>
@@ -185,6 +217,22 @@ DefaultHttpsHealthChecksRestStub::AsyncPatchHttpsHealthCheck(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultHttpsHealthChecksRestStub::PatchHttpsHealthCheck(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::https_health_checks::v1::
+        PatchHttpsHealthCheckRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.https_health_check_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "httpsHealthChecks", "/", request.https_health_check()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultHttpsHealthChecksRestStub::AsyncUpdateHttpsHealthCheck(
     CompletionQueue& cq,
@@ -218,6 +266,22 @@ DefaultHttpsHealthChecksRestStub::AsyncUpdateHttpsHealthCheck(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultHttpsHealthChecksRestStub::UpdateHttpsHealthCheck(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::https_health_checks::v1::
+        UpdateHttpsHealthCheckRequest const& request) {
+  return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.https_health_check_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "httpsHealthChecks", "/", request.https_health_check()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

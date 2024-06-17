@@ -74,6 +74,17 @@ BareMetalSolutionMetadata::AsyncUpdateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->UpdateInstance(context, options, request);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionMetadata::RenameInstance(
     grpc::ClientContext& context, Options const& options,
@@ -96,6 +107,15 @@ BareMetalSolutionMetadata::AsyncResetInstance(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::ResetInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ResetInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncStartInstance(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +128,15 @@ BareMetalSolutionMetadata::AsyncStartInstance(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::StartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncStopInstance(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +147,15 @@ BareMetalSolutionMetadata::AsyncStopInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStopInstance(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::StopInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StopInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -133,6 +171,16 @@ BareMetalSolutionMetadata::AsyncEnableInteractiveSerialConsole(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::EnableInteractiveSerialConsole(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::
+        EnableInteractiveSerialConsoleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->EnableInteractiveSerialConsole(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncDisableInteractiveSerialConsole(
     google::cloud::CompletionQueue& cq,
@@ -146,6 +194,16 @@ BareMetalSolutionMetadata::AsyncDisableInteractiveSerialConsole(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::DisableInteractiveSerialConsole(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::
+        DisableInteractiveSerialConsoleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DisableInteractiveSerialConsole(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncDetachLun(
     google::cloud::CompletionQueue& cq,
@@ -157,6 +215,15 @@ BareMetalSolutionMetadata::AsyncDetachLun(
       absl::StrCat("instance=", internal::UrlEncode(request.instance())));
   return child_->AsyncDetachLun(cq, std::move(context), std::move(options),
                                 request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionMetadata::DetachLun(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  return child_->DetachLun(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
@@ -216,6 +283,16 @@ BareMetalSolutionMetadata::AsyncUpdateVolume(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::UpdateVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("volume.name=",
+                           internal::UrlEncode(request.volume().name())));
+  return child_->UpdateVolume(context, options, request);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionMetadata::RenameVolume(
     grpc::ClientContext& context, Options const& options,
@@ -237,6 +314,14 @@ BareMetalSolutionMetadata::AsyncEvictVolume(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionMetadata::EvictVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->EvictVolume(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncResizeVolume(
     google::cloud::CompletionQueue& cq,
@@ -247,6 +332,15 @@ BareMetalSolutionMetadata::AsyncResizeVolume(
               absl::StrCat("volume=", internal::UrlEncode(request.volume())));
   return child_->AsyncResizeVolume(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::ResizeVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("volume=", internal::UrlEncode(request.volume())));
+  return child_->ResizeVolume(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
@@ -291,6 +385,16 @@ BareMetalSolutionMetadata::AsyncUpdateNetwork(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::UpdateNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("network.name=",
+                           internal::UrlEncode(request.network().name())));
+  return child_->UpdateNetwork(context, options, request);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionMetadata::CreateVolumeSnapshot(
     grpc::ClientContext& context, Options const& options,
@@ -313,6 +417,17 @@ BareMetalSolutionMetadata::AsyncRestoreVolumeSnapshot(
                            internal::UrlEncode(request.volume_snapshot())));
   return child_->AsyncRestoreVolumeSnapshot(cq, std::move(context),
                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::RestoreVolumeSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("volume_snapshot=",
+                           internal::UrlEncode(request.volume_snapshot())));
+  return child_->RestoreVolumeSnapshot(context, options, request);
 }
 
 Status BareMetalSolutionMetadata::DeleteVolumeSnapshot(
@@ -374,6 +489,14 @@ BareMetalSolutionMetadata::AsyncEvictLun(
                                request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionMetadata::EvictLun(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->EvictLun(context, options, request);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionMetadata::GetNfsShare(
     grpc::ClientContext& context, Options const& options,
@@ -406,6 +529,17 @@ BareMetalSolutionMetadata::AsyncUpdateNfsShare(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::UpdateNfsShare(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("nfs_share.name=",
+                           internal::UrlEncode(request.nfs_share().name())));
+  return child_->UpdateNfsShare(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncCreateNfsShare(
     google::cloud::CompletionQueue& cq,
@@ -417,6 +551,16 @@ BareMetalSolutionMetadata::AsyncCreateNfsShare(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateNfsShare(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::CreateNfsShare(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateNfsShare(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
@@ -440,6 +584,16 @@ BareMetalSolutionMetadata::AsyncDeleteNfsShare(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteNfsShare(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionMetadata::DeleteNfsShare(
+    grpc::ClientContext& context, Options options,
+    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteNfsShare(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>

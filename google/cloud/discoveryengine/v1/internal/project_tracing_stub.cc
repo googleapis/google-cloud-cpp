@@ -47,6 +47,19 @@ ProjectServiceTracingStub::AsyncProvisionProject(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ProjectServiceTracingStub::ProvisionProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.ProjectService", "ProvisionProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ProvisionProject(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

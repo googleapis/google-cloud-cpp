@@ -57,6 +57,18 @@ JobControllerTracingStub::AsyncSubmitJobAsOperation(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+JobControllerTracingStub::SubmitJobAsOperation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.JobController",
+                                     "SubmitJobAsOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->SubmitJobAsOperation(context, options, request));
+}
+
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerTracingStub::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetJobRequest const& request) {

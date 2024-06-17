@@ -54,6 +54,15 @@ TensorboardServiceMetadata::AsyncCreateTensorboard(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+TensorboardServiceMetadata::CreateTensorboard(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTensorboard(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
 TensorboardServiceMetadata::GetTensorboard(
     grpc::ClientContext& context, Options const& options,
@@ -76,6 +85,16 @@ TensorboardServiceMetadata::AsyncUpdateTensorboard(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+TensorboardServiceMetadata::UpdateTensorboard(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("tensorboard.name=",
+                           internal::UrlEncode(request.tensorboard().name())));
+  return child_->UpdateTensorboard(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
 TensorboardServiceMetadata::ListTensorboards(
     grpc::ClientContext& context, Options const& options,
@@ -95,6 +114,15 @@ TensorboardServiceMetadata::AsyncDeleteTensorboard(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTensorboard(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+TensorboardServiceMetadata::DeleteTensorboard(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTensorboard(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
@@ -172,6 +200,16 @@ TensorboardServiceMetadata::AsyncDeleteTensorboardExperiment(
                                                   std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+TensorboardServiceMetadata::DeleteTensorboardExperiment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTensorboardExperiment(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceMetadata::CreateTensorboardRun(
     grpc::ClientContext& context, Options const& options,
@@ -230,6 +268,15 @@ TensorboardServiceMetadata::AsyncDeleteTensorboardRun(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTensorboardRun(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+TensorboardServiceMetadata::DeleteTensorboardRun(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTensorboardRun(context, options, request);
 }
 
 StatusOr<
@@ -296,6 +343,16 @@ TensorboardServiceMetadata::AsyncDeleteTensorboardTimeSeries(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTensorboardTimeSeries(cq, std::move(context),
                                                   std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+TensorboardServiceMetadata::DeleteTensorboardTimeSeries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTensorboardTimeSeries(context, options, request);
 }
 
 StatusOr<

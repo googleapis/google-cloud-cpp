@@ -158,6 +158,19 @@ MigrationCenterLogging::AsyncCreateImportJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::CreateImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::CreateImportJobRequest const&
+                 request) {
+        return child_->CreateImportJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::migrationcenter::v1::ListImportJobsResponse>
 MigrationCenterLogging::ListImportJobs(
     grpc::ClientContext& context, Options const& options,
@@ -203,6 +216,19 @@ MigrationCenterLogging::AsyncDeleteImportJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::DeleteImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::DeleteImportJobRequest const&
+                 request) {
+        return child_->DeleteImportJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncUpdateImportJob(
     google::cloud::CompletionQueue& cq,
@@ -220,6 +246,19 @@ MigrationCenterLogging::AsyncUpdateImportJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::UpdateImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::UpdateImportJobRequest const&
+                 request) {
+        return child_->UpdateImportJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -242,6 +281,20 @@ MigrationCenterLogging::AsyncValidateImportJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::ValidateImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+                 request) {
+        return child_->ValidateImportJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncRunImportJob(
     google::cloud::CompletionQueue& cq,
@@ -259,6 +312,18 @@ MigrationCenterLogging::AsyncRunImportJob(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::RunImportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::RunImportJobRequest const&
+                 request) {
+        return child_->RunImportJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
@@ -311,6 +376,21 @@ MigrationCenterLogging::AsyncCreateImportDataFile(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::CreateImportDataFile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+              request) {
+        return child_->CreateImportDataFile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncDeleteImportDataFile(
     google::cloud::CompletionQueue& cq,
@@ -330,6 +410,21 @@ MigrationCenterLogging::AsyncDeleteImportDataFile(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::DeleteImportDataFile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+              request) {
+        return child_->DeleteImportDataFile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListGroupsResponse>
@@ -377,6 +472,18 @@ MigrationCenterLogging::AsyncCreateGroup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::CreateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::CreateGroupRequest const&
+                 request) {
+        return child_->CreateGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncUpdateGroup(
     google::cloud::CompletionQueue& cq,
@@ -396,6 +503,18 @@ MigrationCenterLogging::AsyncUpdateGroup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::UpdateGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::UpdateGroupRequest const&
+                 request) {
+        return child_->UpdateGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncDeleteGroup(
     google::cloud::CompletionQueue& cq,
@@ -413,6 +532,18 @@ MigrationCenterLogging::AsyncDeleteGroup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::DeleteGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::DeleteGroupRequest const&
+                 request) {
+        return child_->DeleteGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -435,6 +566,20 @@ MigrationCenterLogging::AsyncAddAssetsToGroup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::AddAssetsToGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+                 request) {
+        return child_->AddAssetsToGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncRemoveAssetsFromGroup(
     google::cloud::CompletionQueue& cq,
@@ -453,6 +598,20 @@ MigrationCenterLogging::AsyncRemoveAssetsFromGroup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::RemoveAssetsFromGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::
+                 RemoveAssetsFromGroupRequest const& request) {
+        return child_->RemoveAssetsFromGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListErrorFramesResponse>
@@ -526,6 +685,18 @@ MigrationCenterLogging::AsyncCreateSource(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::CreateSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::CreateSourceRequest const&
+                 request) {
+        return child_->CreateSource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncUpdateSource(
     google::cloud::CompletionQueue& cq,
@@ -545,6 +716,18 @@ MigrationCenterLogging::AsyncUpdateSource(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::UpdateSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::UpdateSourceRequest const&
+                 request) {
+        return child_->UpdateSource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncDeleteSource(
     google::cloud::CompletionQueue& cq,
@@ -562,6 +745,18 @@ MigrationCenterLogging::AsyncDeleteSource(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::DeleteSource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::DeleteSourceRequest const&
+                 request) {
+        return child_->DeleteSource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListPreferenceSetsResponse>
@@ -614,6 +809,21 @@ MigrationCenterLogging::AsyncCreatePreferenceSet(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::CreatePreferenceSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+              request) {
+        return child_->CreatePreferenceSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncUpdatePreferenceSet(
     google::cloud::CompletionQueue& cq,
@@ -635,6 +845,21 @@ MigrationCenterLogging::AsyncUpdatePreferenceSet(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::UpdatePreferenceSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+              request) {
+        return child_->UpdatePreferenceSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncDeletePreferenceSet(
     google::cloud::CompletionQueue& cq,
@@ -654,6 +879,21 @@ MigrationCenterLogging::AsyncDeletePreferenceSet(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::DeletePreferenceSet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+              request) {
+        return child_->DeletePreferenceSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Settings>
@@ -688,6 +928,18 @@ MigrationCenterLogging::AsyncUpdateSettings(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::UpdateSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::UpdateSettingsRequest const&
+                 request) {
+        return child_->UpdateSettings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncCreateReportConfig(
     google::cloud::CompletionQueue& cq,
@@ -707,6 +959,21 @@ MigrationCenterLogging::AsyncCreateReportConfig(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::CreateReportConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+              request) {
+        return child_->CreateReportConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
@@ -757,6 +1024,21 @@ MigrationCenterLogging::AsyncDeleteReportConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterLogging::DeleteReportConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+              request) {
+        return child_->DeleteReportConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterLogging::AsyncCreateReport(
     google::cloud::CompletionQueue& cq,
@@ -774,6 +1056,18 @@ MigrationCenterLogging::AsyncCreateReport(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::CreateReport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::CreateReportRequest const&
+                 request) {
+        return child_->CreateReport(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Report>
@@ -819,6 +1113,18 @@ MigrationCenterLogging::AsyncDeleteReport(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterLogging::DeleteReport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::migrationcenter::v1::DeleteReportRequest const&
+                 request) {
+        return child_->DeleteReport(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

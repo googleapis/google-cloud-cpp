@@ -60,6 +60,14 @@ ScheduleServiceAuth::AsyncDeleteSchedule(
       });
 }
 
+StatusOr<google::longrunning::Operation> ScheduleServiceAuth::DeleteSchedule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSchedule(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceAuth::GetSchedule(
     grpc::ClientContext& context, Options const& options,

@@ -46,10 +46,20 @@ class DatastoreAdminAuth : public DatastoreAdminStub {
       google::datastore::admin::v1::ExportEntitiesRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ExportEntities(
+      grpc::ClientContext& context, Options options,
+      google::datastore::admin::v1::ExportEntitiesRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportEntities(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::datastore::admin::v1::ImportEntitiesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ImportEntities(
+      grpc::ClientContext& context, Options options,
       google::datastore::admin::v1::ImportEntitiesRequest const& request)
       override;
 
@@ -59,10 +69,18 @@ class DatastoreAdminAuth : public DatastoreAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateIndex(
+      grpc::ClientContext& context, Options options,
+      google::datastore::admin::v1::CreateIndexRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteIndex(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::datastore::admin::v1::DeleteIndexRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteIndex(
+      grpc::ClientContext& context, Options options,
       google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
   StatusOr<google::datastore::admin::v1::Index> GetIndex(

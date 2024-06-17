@@ -50,6 +50,12 @@ class RegionInstanceTemplatesRestMetadata
       google::cloud::cpp::compute::region_instance_templates::v1::
           DeleteInstanceTemplateRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_instance_templates::v1::
+          DeleteInstanceTemplateRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
   GetInstanceTemplate(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -62,6 +68,12 @@ class RegionInstanceTemplatesRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_instance_templates::v1::
+          InsertInstanceTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_instance_templates::v1::
           InsertInstanceTemplateRequest const& request) override;
 

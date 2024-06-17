@@ -69,6 +69,15 @@ DomainMappingsAuth::AsyncCreateDomainMapping(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsAuth::CreateDomainMapping(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDomainMapping(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsAuth::AsyncUpdateDomainMapping(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +98,15 @@ DomainMappingsAuth::AsyncUpdateDomainMapping(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsAuth::UpdateDomainMapping(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDomainMapping(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsAuth::AsyncDeleteDomainMapping(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +125,15 @@ DomainMappingsAuth::AsyncDeleteDomainMapping(
         return child->AsyncDeleteDomainMapping(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DomainMappingsAuth::DeleteDomainMapping(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDomainMapping(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

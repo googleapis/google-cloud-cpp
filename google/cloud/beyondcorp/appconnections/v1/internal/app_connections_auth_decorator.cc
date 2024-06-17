@@ -74,6 +74,16 @@ AppConnectionsServiceAuth::AsyncCreateAppConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceAuth::CreateAppConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnections::v1::
+        CreateAppConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAppConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceAuth::AsyncUpdateAppConnection(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +105,16 @@ AppConnectionsServiceAuth::AsyncUpdateAppConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceAuth::UpdateAppConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnections::v1::
+        UpdateAppConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAppConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceAuth::AsyncDeleteAppConnection(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +134,16 @@ AppConnectionsServiceAuth::AsyncDeleteAppConnection(
         return child->AsyncDeleteAppConnection(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceAuth::DeleteAppConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnections::v1::
+        DeleteAppConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAppConnection(context, options, request);
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::

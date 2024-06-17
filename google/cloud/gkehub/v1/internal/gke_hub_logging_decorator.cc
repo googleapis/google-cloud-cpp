@@ -98,6 +98,18 @@ GkeHubLogging::AsyncCreateMembership(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> GkeHubLogging::CreateMembership(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+        return child_->CreateMembership(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 GkeHubLogging::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +126,17 @@ GkeHubLogging::AsyncCreateFeature(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubLogging::CreateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+        return child_->CreateFeature(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -135,6 +158,18 @@ GkeHubLogging::AsyncDeleteMembership(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> GkeHubLogging::DeleteMembership(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+        return child_->DeleteMembership(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 GkeHubLogging::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
@@ -151,6 +186,17 @@ GkeHubLogging::AsyncDeleteFeature(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubLogging::DeleteFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+        return child_->DeleteFeature(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -172,6 +218,18 @@ GkeHubLogging::AsyncUpdateMembership(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> GkeHubLogging::UpdateMembership(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+        return child_->UpdateMembership(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 GkeHubLogging::AsyncUpdateFeature(
     google::cloud::CompletionQueue& cq,
@@ -188,6 +246,17 @@ GkeHubLogging::AsyncUpdateFeature(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubLogging::UpdateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+        return child_->UpdateFeature(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>

@@ -44,16 +44,28 @@ class DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateLakeRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateLake(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateLakeRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateLake(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateLakeRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateLake(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateLakeRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteLake(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteLakeRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteLake(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteLakeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::ListLakesResponse> ListLakes(
@@ -75,16 +87,28 @@ class DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateZoneRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateZone(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateZoneRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateZone(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateZoneRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateZone(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateZoneRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteZone(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteZoneRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteZone(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteZoneRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::ListZonesResponse> ListZones(
@@ -106,16 +130,28 @@ class DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateAssetRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateAsset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateAssetRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateAsset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateAssetRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateAsset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateAssetRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteAsset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteAssetRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAsset(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteAssetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::ListAssetsResponse> ListAssets(
@@ -137,16 +173,28 @@ class DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateTaskRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateTask(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateTaskRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateTask(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateTaskRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateTask(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateTaskRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteTask(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteTaskRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTask(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteTaskRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::ListTasksResponse> ListTasks(
@@ -180,6 +228,10 @@ class DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateEnvironment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateEnvironment(
       google::cloud::CompletionQueue& cq,
@@ -187,11 +239,19 @@ class DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
@@ -237,16 +297,28 @@ class DefaultDataplexServiceStub : public DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateLakeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateLake(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateLakeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateLake(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateLakeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateLake(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateLakeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteLake(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteLakeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteLake(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteLakeRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListLakesResponse> ListLakes(
@@ -268,16 +340,28 @@ class DefaultDataplexServiceStub : public DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateZoneRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateZone(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateZoneRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateZone(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateZoneRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateZone(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateZoneRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteZone(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteZoneRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteZone(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteZoneRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListZonesResponse> ListZones(
@@ -299,16 +383,28 @@ class DefaultDataplexServiceStub : public DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateAssetRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateAsset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateAssetRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAsset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateAssetRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateAsset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateAssetRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAsset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteAssetRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAsset(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteAssetRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListAssetsResponse> ListAssets(
@@ -330,16 +426,28 @@ class DefaultDataplexServiceStub : public DataplexServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::CreateTaskRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateTask(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateTaskRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTask(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataplex::v1::UpdateTaskRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateTask(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateTaskRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTask(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteTaskRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteTask(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteTaskRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListTasksResponse> ListTasks(
@@ -373,6 +481,11 @@ class DefaultDataplexServiceStub : public DataplexServiceStub {
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateEnvironment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -380,10 +493,20 @@ class DefaultDataplexServiceStub : public DataplexServiceStub {
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEnvironment(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
       override;
 

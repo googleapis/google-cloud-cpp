@@ -80,6 +80,22 @@ DefaultTargetSslProxiesRestStub::AsyncDeleteTargetSslProxy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetSslProxiesRestStub::DeleteTargetSslProxy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        DeleteTargetSslProxyRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetSslProxies", "/", request.target_ssl_proxy()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
 DefaultTargetSslProxiesRestStub::GetTargetSslProxy(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -126,6 +142,22 @@ DefaultTargetSslProxiesRestStub::AsyncInsertTargetSslProxy(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetSslProxiesRestStub::InsertTargetSslProxy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        InsertTargetSslProxyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.target_ssl_proxy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetSslProxies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxyList>
@@ -188,6 +220,24 @@ DefaultTargetSslProxiesRestStub::AsyncSetBackendService(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetSslProxiesRestStub::SetBackendService(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetBackendServiceRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.target_ssl_proxies_set_backend_service_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetSslProxies", "/", request.target_ssl_proxy(), "/",
+                   "setBackendService"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncSetCertificateMap(
     CompletionQueue& cq,
@@ -226,6 +276,24 @@ DefaultTargetSslProxiesRestStub::AsyncSetCertificateMap(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetSslProxiesRestStub::SetCertificateMap(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetCertificateMapRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.target_ssl_proxies_set_certificate_map_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetSslProxies", "/", request.target_ssl_proxy(), "/",
+                   "setCertificateMap"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncSetProxyHeader(
     CompletionQueue& cq,
@@ -260,6 +328,24 @@ DefaultTargetSslProxiesRestStub::AsyncSetProxyHeader(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetSslProxiesRestStub::SetProxyHeader(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetProxyHeaderRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.target_ssl_proxies_set_proxy_header_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetSslProxies", "/", request.target_ssl_proxy(), "/",
+                   "setProxyHeader"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -300,6 +386,24 @@ DefaultTargetSslProxiesRestStub::AsyncSetSslCertificates(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetSslProxiesRestStub::SetSslCertificates(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetSslCertificatesRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.target_ssl_proxies_set_ssl_certificates_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetSslProxies", "/", request.target_ssl_proxy(), "/",
+                   "setSslCertificates"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetSslProxiesRestStub::AsyncSetSslPolicy(
     CompletionQueue& cq,
@@ -333,6 +437,23 @@ DefaultTargetSslProxiesRestStub::AsyncSetSslPolicy(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetSslProxiesRestStub::SetSslPolicy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetSslPolicyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.ssl_policy_reference_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetSslProxies", "/", request.target_ssl_proxy(), "/",
+                   "setSslPolicy"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -43,6 +43,10 @@ class AssetServiceTracingStub : public AssetServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> ExportAssets(
+      grpc::ClientContext& context, Options options,
+      google::cloud::asset::v1::ExportAssetsRequest const& request) override;
+
   StatusOr<google::cloud::asset::v1::ListAssetsResponse> ListAssets(
       grpc::ClientContext& context, Options const& options,
       google::cloud::asset::v1::ListAssetsRequest const& request) override;
@@ -94,6 +98,11 @@ class AssetServiceTracingStub : public AssetServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
+      grpc::ClientContext& context, Options options,
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
           request) override;
 

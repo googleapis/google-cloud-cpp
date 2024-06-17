@@ -46,6 +46,11 @@ class ProjectServiceMetadata : public ProjectServiceStub {
       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ProvisionProject(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

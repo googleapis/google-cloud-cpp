@@ -51,6 +51,14 @@ DatastoreAdminAuth::AsyncExportEntities(
       });
 }
 
+StatusOr<google::longrunning::Operation> DatastoreAdminAuth::ExportEntities(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportEntities(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminAuth::AsyncImportEntities(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +77,14 @@ DatastoreAdminAuth::AsyncImportEntities(
         return child->AsyncImportEntities(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DatastoreAdminAuth::ImportEntities(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportEntities(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -91,6 +107,14 @@ DatastoreAdminAuth::AsyncCreateIndex(
       });
 }
 
+StatusOr<google::longrunning::Operation> DatastoreAdminAuth::CreateIndex(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::CreateIndexRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateIndex(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminAuth::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
@@ -109,6 +133,14 @@ DatastoreAdminAuth::AsyncDeleteIndex(
         return child->AsyncDeleteIndex(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DatastoreAdminAuth::DeleteIndex(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::DeleteIndexRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteIndex(context, options, request);
 }
 
 StatusOr<google::datastore::admin::v1::Index> DatastoreAdminAuth::GetIndex(

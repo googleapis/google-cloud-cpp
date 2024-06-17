@@ -52,6 +52,16 @@ PersistentResourceServiceAuth::AsyncCreatePersistentResource(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceAuth::CreatePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePersistentResource(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
 PersistentResourceServiceAuth::GetPersistentResource(
     grpc::ClientContext& context, Options const& options,
@@ -93,6 +103,16 @@ PersistentResourceServiceAuth::AsyncDeletePersistentResource(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceAuth::DeletePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePersistentResource(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PersistentResourceServiceAuth::AsyncUpdatePersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +134,16 @@ PersistentResourceServiceAuth::AsyncUpdatePersistentResource(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceAuth::UpdatePersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePersistentResource(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PersistentResourceServiceAuth::AsyncRebootPersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -133,6 +163,16 @@ PersistentResourceServiceAuth::AsyncRebootPersistentResource(
         return child->AsyncRebootPersistentResource(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceAuth::RebootPersistentResource(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RebootPersistentResource(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

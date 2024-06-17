@@ -75,6 +75,14 @@ DomainsMetadata::AsyncRegisterDomain(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> DomainsMetadata::RegisterDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::RegisterDomainRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RegisterDomain(context, options, request);
+}
+
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
 DomainsMetadata::RetrieveTransferParameters(
     grpc::ClientContext& context, Options const& options,
@@ -96,6 +104,14 @@ DomainsMetadata::AsyncTransferDomain(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncTransferDomain(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> DomainsMetadata::TransferDomain(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::TransferDomainRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->TransferDomain(context, options, request);
 }
 
 StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
@@ -129,6 +145,15 @@ DomainsMetadata::AsyncUpdateRegistration(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> DomainsMetadata::UpdateRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("registration.name=",
+                           internal::UrlEncode(request.registration().name())));
+  return child_->UpdateRegistration(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainsMetadata::AsyncConfigureManagementSettings(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +168,17 @@ DomainsMetadata::AsyncConfigureManagementSettings(
                                                   std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainsMetadata::ConfigureManagementSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("registration=",
+                           internal::UrlEncode(request.registration())));
+  return child_->ConfigureManagementSettings(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainsMetadata::AsyncConfigureDnsSettings(
     google::cloud::CompletionQueue& cq,
@@ -154,6 +190,15 @@ DomainsMetadata::AsyncConfigureDnsSettings(
                            internal::UrlEncode(request.registration())));
   return child_->AsyncConfigureDnsSettings(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> DomainsMetadata::ConfigureDnsSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("registration=",
+                           internal::UrlEncode(request.registration())));
+  return child_->ConfigureDnsSettings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -170,6 +215,17 @@ DomainsMetadata::AsyncConfigureContactSettings(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainsMetadata::ConfigureContactSettings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("registration=",
+                           internal::UrlEncode(request.registration())));
+  return child_->ConfigureContactSettings(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainsMetadata::AsyncExportRegistration(
     google::cloud::CompletionQueue& cq,
@@ -182,6 +238,14 @@ DomainsMetadata::AsyncExportRegistration(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> DomainsMetadata::ExportRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportRegistration(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DomainsMetadata::AsyncDeleteRegistration(
     google::cloud::CompletionQueue& cq,
@@ -192,6 +256,14 @@ DomainsMetadata::AsyncDeleteRegistration(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRegistration(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> DomainsMetadata::DeleteRegistration(
+    grpc::ClientContext& context, Options options,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRegistration(context, options, request);
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>

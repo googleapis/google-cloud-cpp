@@ -104,6 +104,18 @@ ProductServiceTracingStub::AsyncPurgeProducts(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceTracingStub::PurgeProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "PurgeProducts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->PurgeProducts(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceTracingStub::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
@@ -119,6 +131,18 @@ ProductServiceTracingStub::AsyncImportProducts(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceTracingStub::ImportProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportProductsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "ImportProducts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ImportProducts(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceTracingStub::AsyncSetInventory(
     google::cloud::CompletionQueue& cq,
@@ -131,6 +155,18 @@ ProductServiceTracingStub::AsyncSetInventory(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncSetInventory(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceTracingStub::SetInventory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::SetInventoryRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "SetInventory");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->SetInventory(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -148,6 +184,18 @@ ProductServiceTracingStub::AsyncAddFulfillmentPlaces(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceTracingStub::AddFulfillmentPlaces(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "AddFulfillmentPlaces");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->AddFulfillmentPlaces(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceTracingStub::AsyncRemoveFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
@@ -161,6 +209,19 @@ ProductServiceTracingStub::AsyncRemoveFulfillmentPlaces(
   auto f = child_->AsyncRemoveFulfillmentPlaces(cq, context, std::move(options),
                                                 request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceTracingStub::RemoveFulfillmentPlaces(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "RemoveFulfillmentPlaces");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->RemoveFulfillmentPlaces(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -178,6 +239,18 @@ ProductServiceTracingStub::AsyncAddLocalInventories(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceTracingStub::AddLocalInventories(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "AddLocalInventories");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->AddLocalInventories(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceTracingStub::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
@@ -191,6 +264,19 @@ ProductServiceTracingStub::AsyncRemoveLocalInventories(
   auto f = child_->AsyncRemoveLocalInventories(cq, context, std::move(options),
                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceTracingStub::RemoveLocalInventories(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "RemoveLocalInventories");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->RemoveLocalInventories(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

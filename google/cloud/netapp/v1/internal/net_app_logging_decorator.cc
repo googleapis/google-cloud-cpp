@@ -65,6 +65,18 @@ NetAppLogging::AsyncCreateStoragePool(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateStoragePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
+        return child_->CreateStoragePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::netapp::v1::StoragePool> NetAppLogging::GetStoragePool(
     grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
@@ -95,6 +107,18 @@ NetAppLogging::AsyncUpdateStoragePool(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateStoragePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
+        return child_->UpdateStoragePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncDeleteStoragePool(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +136,18 @@ NetAppLogging::AsyncDeleteStoragePool(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteStoragePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
+        return child_->DeleteStoragePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
@@ -155,6 +191,17 @@ NetAppLogging::AsyncCreateVolume(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateVolumeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateVolumeRequest const& request) {
+        return child_->CreateVolume(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncUpdateVolume(
     google::cloud::CompletionQueue& cq,
@@ -171,6 +218,17 @@ NetAppLogging::AsyncUpdateVolume(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
+        return child_->UpdateVolume(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -191,6 +249,17 @@ NetAppLogging::AsyncDeleteVolume(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
+        return child_->DeleteVolume(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncRevertVolume(
     google::cloud::CompletionQueue& cq,
@@ -207,6 +276,17 @@ NetAppLogging::AsyncRevertVolume(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::RevertVolume(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::RevertVolumeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::RevertVolumeRequest const& request) {
+        return child_->RevertVolume(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
@@ -250,6 +330,17 @@ NetAppLogging::AsyncCreateSnapshot(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
+        return child_->CreateSnapshot(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncDeleteSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -268,6 +359,17 @@ NetAppLogging::AsyncDeleteSnapshot(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
+        return child_->DeleteSnapshot(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncUpdateSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -284,6 +386,17 @@ NetAppLogging::AsyncUpdateSnapshot(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
+        return child_->UpdateSnapshot(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
@@ -331,6 +444,18 @@ NetAppLogging::AsyncCreateActiveDirectory(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateActiveDirectory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateActiveDirectoryRequest const&
+                 request) {
+        return child_->CreateActiveDirectory(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncUpdateActiveDirectory(
     google::cloud::CompletionQueue& cq,
@@ -350,6 +475,18 @@ NetAppLogging::AsyncUpdateActiveDirectory(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateActiveDirectory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateActiveDirectoryRequest const&
+                 request) {
+        return child_->UpdateActiveDirectory(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncDeleteActiveDirectory(
     google::cloud::CompletionQueue& cq,
@@ -367,6 +504,18 @@ NetAppLogging::AsyncDeleteActiveDirectory(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteActiveDirectory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteActiveDirectoryRequest const&
+                 request) {
+        return child_->DeleteActiveDirectory(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
@@ -399,6 +548,17 @@ NetAppLogging::AsyncCreateKmsConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateKmsConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
+        return child_->CreateKmsConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::netapp::v1::KmsConfig> NetAppLogging::GetKmsConfig(
     grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
@@ -428,6 +588,17 @@ NetAppLogging::AsyncUpdateKmsConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateKmsConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
+        return child_->UpdateKmsConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncEncryptVolumes(
     google::cloud::CompletionQueue& cq,
@@ -444,6 +615,17 @@ NetAppLogging::AsyncEncryptVolumes(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::EncryptVolumes(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
+        return child_->EncryptVolumes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
@@ -474,6 +656,17 @@ NetAppLogging::AsyncDeleteKmsConfig(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteKmsConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
+        return child_->DeleteKmsConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
@@ -519,6 +712,18 @@ NetAppLogging::AsyncCreateReplication(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::CreateReplicationRequest const& request) {
+        return child_->CreateReplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncDeleteReplication(
     google::cloud::CompletionQueue& cq,
@@ -536,6 +741,18 @@ NetAppLogging::AsyncDeleteReplication(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
+        return child_->DeleteReplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -557,6 +774,18 @@ NetAppLogging::AsyncUpdateReplication(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
+        return child_->UpdateReplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncStopReplication(
     google::cloud::CompletionQueue& cq,
@@ -573,6 +802,17 @@ NetAppLogging::AsyncStopReplication(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::StopReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::StopReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::StopReplicationRequest const& request) {
+        return child_->StopReplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -592,6 +832,18 @@ NetAppLogging::AsyncResumeReplication(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::ResumeReplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
+        return child_->ResumeReplication(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -615,6 +867,21 @@ NetAppLogging::AsyncReverseReplicationDirection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppLogging::ReverseReplicationDirection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
+              request) {
+        return child_->ReverseReplicationDirection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncCreateBackupVault(
     google::cloud::CompletionQueue& cq,
@@ -632,6 +899,18 @@ NetAppLogging::AsyncCreateBackupVault(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+        return child_->CreateBackupVault(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::BackupVault> NetAppLogging::GetBackupVault(
@@ -677,6 +956,18 @@ NetAppLogging::AsyncUpdateBackupVault(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+        return child_->UpdateBackupVault(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncDeleteBackupVault(
     google::cloud::CompletionQueue& cq,
@@ -696,6 +987,18 @@ NetAppLogging::AsyncDeleteBackupVault(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteBackupVault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+        return child_->DeleteBackupVault(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
@@ -712,6 +1015,17 @@ NetAppLogging::AsyncCreateBackup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateBackupRequest const& request) {
+        return child_->CreateBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::Backup> NetAppLogging::GetBackup(
@@ -755,6 +1069,17 @@ NetAppLogging::AsyncDeleteBackup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+        return child_->DeleteBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
@@ -771,6 +1096,17 @@ NetAppLogging::AsyncUpdateBackup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+        return child_->UpdateBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -790,6 +1126,18 @@ NetAppLogging::AsyncCreateBackupPolicy(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::CreateBackupPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+        return child_->CreateBackupPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy>
@@ -836,6 +1184,18 @@ NetAppLogging::AsyncUpdateBackupPolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> NetAppLogging::UpdateBackupPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+        return child_->UpdateBackupPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetAppLogging::AsyncDeleteBackupPolicy(
     google::cloud::CompletionQueue& cq,
@@ -853,6 +1213,18 @@ NetAppLogging::AsyncDeleteBackupPolicy(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> NetAppLogging::DeleteBackupPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+        return child_->DeleteBackupPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

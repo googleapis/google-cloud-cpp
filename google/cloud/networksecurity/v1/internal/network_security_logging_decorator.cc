@@ -81,6 +81,20 @@ NetworkSecurityLogging::AsyncCreateAuthorizationPolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityLogging::CreateAuthorizationPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networksecurity::v1::
+                 CreateAuthorizationPolicyRequest const& request) {
+        return child_->CreateAuthorizationPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityLogging::AsyncUpdateAuthorizationPolicy(
     google::cloud::CompletionQueue& cq,
@@ -101,6 +115,20 @@ NetworkSecurityLogging::AsyncUpdateAuthorizationPolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityLogging::UpdateAuthorizationPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networksecurity::v1::
+                 UpdateAuthorizationPolicyRequest const& request) {
+        return child_->UpdateAuthorizationPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityLogging::AsyncDeleteAuthorizationPolicy(
     google::cloud::CompletionQueue& cq,
@@ -119,6 +147,20 @@ NetworkSecurityLogging::AsyncDeleteAuthorizationPolicy(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityLogging::DeleteAuthorizationPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networksecurity::v1::
+                 DeleteAuthorizationPolicyRequest const& request) {
+        return child_->DeleteAuthorizationPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
@@ -170,6 +212,20 @@ NetworkSecurityLogging::AsyncCreateServerTlsPolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityLogging::CreateServerTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networksecurity::v1::
+                 CreateServerTlsPolicyRequest const& request) {
+        return child_->CreateServerTlsPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityLogging::AsyncUpdateServerTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -190,6 +246,20 @@ NetworkSecurityLogging::AsyncUpdateServerTlsPolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityLogging::UpdateServerTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networksecurity::v1::
+                 UpdateServerTlsPolicyRequest const& request) {
+        return child_->UpdateServerTlsPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityLogging::AsyncDeleteServerTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -208,6 +278,20 @@ NetworkSecurityLogging::AsyncDeleteServerTlsPolicy(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityLogging::DeleteServerTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networksecurity::v1::
+                 DeleteServerTlsPolicyRequest const& request) {
+        return child_->DeleteServerTlsPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
@@ -259,6 +343,20 @@ NetworkSecurityLogging::AsyncCreateClientTlsPolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityLogging::CreateClientTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networksecurity::v1::
+                 CreateClientTlsPolicyRequest const& request) {
+        return child_->CreateClientTlsPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityLogging::AsyncUpdateClientTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -279,6 +377,20 @@ NetworkSecurityLogging::AsyncUpdateClientTlsPolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkSecurityLogging::UpdateClientTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networksecurity::v1::
+                 UpdateClientTlsPolicyRequest const& request) {
+        return child_->UpdateClientTlsPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkSecurityLogging::AsyncDeleteClientTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -297,6 +409,20 @@ NetworkSecurityLogging::AsyncDeleteClientTlsPolicy(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkSecurityLogging::DeleteClientTlsPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networksecurity::v1::
+                 DeleteClientTlsPolicyRequest const& request) {
+        return child_->DeleteClientTlsPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

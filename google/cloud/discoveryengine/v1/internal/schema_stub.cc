@@ -74,6 +74,17 @@ DefaultSchemaServiceStub::AsyncCreateSchema(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSchemaServiceStub::CreateSchema(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSchemaServiceStub::AsyncUpdateSchema(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +104,17 @@ DefaultSchemaServiceStub::AsyncUpdateSchema(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultSchemaServiceStub::UpdateSchema(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSchemaServiceStub::AsyncDeleteSchema(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +132,17 @@ DefaultSchemaServiceStub::AsyncDeleteSchema(
         return grpc_stub_->AsyncDeleteSchema(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultSchemaServiceStub::DeleteSchema(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSchema(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

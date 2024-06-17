@@ -84,6 +84,17 @@ DefaultCloudRedisStub::AsyncCreateInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::CreateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::CreateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -100,6 +111,17 @@ DefaultCloudRedisStub::AsyncUpdateInstance(
         return grpc_stub_->AsyncUpdateInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::UpdateInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::UpdateInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,6 +142,17 @@ DefaultCloudRedisStub::AsyncUpgradeInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::UpgradeInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpgradeInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncImportInstance(
     google::cloud::CompletionQueue& cq,
@@ -136,6 +169,17 @@ DefaultCloudRedisStub::AsyncImportInstance(
         return grpc_stub_->AsyncImportInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::ImportInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::ImportInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -156,6 +200,17 @@ DefaultCloudRedisStub::AsyncExportInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::ExportInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::ExportInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
@@ -172,6 +227,18 @@ DefaultCloudRedisStub::AsyncFailoverInstance(
         return grpc_stub_->AsyncFailoverInstance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisStub::FailoverInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::FailoverInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->FailoverInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -192,6 +259,17 @@ DefaultCloudRedisStub::AsyncDeleteInstance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudRedisStub::DeleteInstance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::DeleteInstanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteInstance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
@@ -209,6 +287,18 @@ DefaultCloudRedisStub::AsyncRescheduleMaintenance(
         return grpc_stub_->AsyncRescheduleMaintenance(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudRedisStub::RescheduleMaintenance(
+    grpc::ClientContext& context, Options,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RescheduleMaintenance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

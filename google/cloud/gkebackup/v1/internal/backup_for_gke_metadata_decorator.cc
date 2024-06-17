@@ -54,6 +54,14 @@ BackupForGKEMetadata::AsyncCreateBackupPlan(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEMetadata::CreateBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackupPlan(context, options, request);
+}
+
 StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
 BackupForGKEMetadata::ListBackupPlans(
     grpc::ClientContext& context, Options const& options,
@@ -85,6 +93,15 @@ BackupForGKEMetadata::AsyncUpdateBackupPlan(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEMetadata::UpdateBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("backup_plan.name=",
+                           internal::UrlEncode(request.backup_plan().name())));
+  return child_->UpdateBackupPlan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEMetadata::AsyncDeleteBackupPlan(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +114,14 @@ BackupForGKEMetadata::AsyncDeleteBackupPlan(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEMetadata::DeleteBackupPlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackupPlan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +132,14 @@ BackupForGKEMetadata::AsyncCreateBackup(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateBackup(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEMetadata::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackup(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse>
@@ -139,6 +172,15 @@ BackupForGKEMetadata::AsyncUpdateBackup(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEMetadata::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("backup.name=",
+                           internal::UrlEncode(request.backup().name())));
+  return child_->UpdateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEMetadata::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +191,14 @@ BackupForGKEMetadata::AsyncDeleteBackup(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteBackup(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEMetadata::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
@@ -179,6 +229,15 @@ BackupForGKEMetadata::AsyncCreateRestorePlan(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateRestorePlan(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::CreateRestorePlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateRestorePlan(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
@@ -212,6 +271,16 @@ BackupForGKEMetadata::AsyncUpdateRestorePlan(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::UpdateRestorePlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("restore_plan.name=",
+                           internal::UrlEncode(request.restore_plan().name())));
+  return child_->UpdateRestorePlan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEMetadata::AsyncDeleteRestorePlan(
     google::cloud::CompletionQueue& cq,
@@ -224,6 +293,15 @@ BackupForGKEMetadata::AsyncDeleteRestorePlan(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+BackupForGKEMetadata::DeleteRestorePlan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRestorePlan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEMetadata::AsyncCreateRestore(
     google::cloud::CompletionQueue& cq,
@@ -234,6 +312,14 @@ BackupForGKEMetadata::AsyncCreateRestore(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateRestore(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEMetadata::CreateRestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateRestore(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse>
@@ -267,6 +353,15 @@ BackupForGKEMetadata::AsyncUpdateRestore(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEMetadata::UpdateRestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("restore.name=",
+                           internal::UrlEncode(request.restore().name())));
+  return child_->UpdateRestore(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupForGKEMetadata::AsyncDeleteRestore(
     google::cloud::CompletionQueue& cq,
@@ -277,6 +372,14 @@ BackupForGKEMetadata::AsyncDeleteRestore(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRestore(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEMetadata::DeleteRestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRestore(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>

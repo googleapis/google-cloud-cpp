@@ -118,6 +118,18 @@ TestCasesLogging::AsyncRunTestCase(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TestCasesLogging::RunTestCase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&
+                 request) {
+        return child_->RunTestCase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TestCasesLogging::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
@@ -136,6 +148,19 @@ TestCasesLogging::AsyncBatchRunTestCases(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TestCasesLogging::BatchRunTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+                 request) {
+        return child_->BatchRunTestCases(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -171,6 +196,18 @@ TestCasesLogging::AsyncImportTestCases(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TestCasesLogging::ImportTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
+                 request) {
+        return child_->ImportTestCases(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TestCasesLogging::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
@@ -188,6 +225,18 @@ TestCasesLogging::AsyncExportTestCases(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TestCasesLogging::ExportTestCases(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
+                 request) {
+        return child_->ExportTestCases(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>

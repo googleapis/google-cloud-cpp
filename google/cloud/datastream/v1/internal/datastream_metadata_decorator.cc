@@ -74,6 +74,16 @@ DatastreamMetadata::AsyncCreateConnectionProfile(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::CreateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConnectionProfile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +99,18 @@ DatastreamMetadata::AsyncUpdateConnectionProfile(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::UpdateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("connection_profile.name=",
+                   internal::UrlEncode(request.connection_profile().name())));
+  return child_->UpdateConnectionProfile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -100,6 +122,16 @@ DatastreamMetadata::AsyncDeleteConnectionProfile(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConnectionProfile(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::DeleteConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConnectionProfile(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
@@ -141,6 +173,14 @@ DatastreamMetadata::AsyncCreateStream(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamMetadata::CreateStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateStreamRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateStream(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncUpdateStream(
     google::cloud::CompletionQueue& cq,
@@ -154,6 +194,15 @@ DatastreamMetadata::AsyncUpdateStream(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamMetadata::UpdateStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::UpdateStreamRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("stream.name=",
+                           internal::UrlEncode(request.stream().name())));
+  return child_->UpdateStream(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncDeleteStream(
     google::cloud::CompletionQueue& cq,
@@ -164,6 +213,14 @@ DatastreamMetadata::AsyncDeleteStream(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteStream(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamMetadata::DeleteStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteStreamRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteStream(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
@@ -233,6 +290,16 @@ DatastreamMetadata::AsyncCreatePrivateConnection(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::CreatePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreatePrivateConnection(context, options, request);
+}
+
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
 DatastreamMetadata::GetPrivateConnection(
     grpc::ClientContext& context, Options const& options,
@@ -265,6 +332,16 @@ DatastreamMetadata::AsyncDeletePrivateConnection(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamMetadata::DeletePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeletePrivateConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncCreateRoute(
     google::cloud::CompletionQueue& cq,
@@ -275,6 +352,14 @@ DatastreamMetadata::AsyncCreateRoute(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateRoute(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamMetadata::CreateRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateRoute(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::Route> DatastreamMetadata::GetRoute(
@@ -304,6 +389,14 @@ DatastreamMetadata::AsyncDeleteRoute(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteRoute(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamMetadata::DeleteRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteRouteRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

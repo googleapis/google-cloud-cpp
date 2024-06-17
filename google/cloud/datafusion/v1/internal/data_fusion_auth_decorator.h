@@ -62,10 +62,20 @@ class DataFusionAuth : public DataFusionStub {
       google::cloud::datafusion::v1::CreateInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request)
       override;
 
@@ -76,10 +86,20 @@ class DataFusionAuth : public DataFusionStub {
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRestartInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RestartInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::datafusion::v1::RestartInstanceRequest const& request)
       override;
 

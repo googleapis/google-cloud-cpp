@@ -54,6 +54,21 @@ AttachedClustersLogging::AsyncCreateAttachedCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersLogging::CreateAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+              request) {
+        return child_->CreateAttachedCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -75,6 +90,21 @@ AttachedClustersLogging::AsyncUpdateAttachedCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersLogging::UpdateAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+              request) {
+        return child_->UpdateAttachedCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
@@ -94,6 +124,21 @@ AttachedClustersLogging::AsyncImportAttachedCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersLogging::ImportAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+              request) {
+        return child_->ImportAttachedCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -144,6 +189,21 @@ AttachedClustersLogging::AsyncDeleteAttachedCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersLogging::DeleteAttachedCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+              request) {
+        return child_->DeleteAttachedCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

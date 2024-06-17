@@ -73,6 +73,16 @@ UserEventServiceMetadata::AsyncImportUserEvents(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceMetadata::ImportUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportUserEvents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

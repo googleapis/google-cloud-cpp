@@ -60,6 +60,14 @@ SpeechAuth::AsyncLongRunningRecognize(
       });
 }
 
+StatusOr<google::longrunning::Operation> SpeechAuth::LongRunningRecognize(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->LongRunningRecognize(context, options, request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>

@@ -54,6 +54,15 @@ MetadataServiceMetadata::AsyncCreateMetadataStore(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceMetadata::CreateMetadataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMetadataStore(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
 MetadataServiceMetadata::GetMetadataStore(
     grpc::ClientContext& context, Options const& options,
@@ -82,6 +91,15 @@ MetadataServiceMetadata::AsyncDeleteMetadataStore(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteMetadataStore(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceMetadata::DeleteMetadataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMetadataStore(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
@@ -133,6 +151,15 @@ MetadataServiceMetadata::AsyncDeleteArtifact(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceMetadata::DeleteArtifact(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteArtifact(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncPurgeArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +170,15 @@ MetadataServiceMetadata::AsyncPurgeArtifacts(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeArtifacts(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceMetadata::PurgeArtifacts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeArtifacts(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
@@ -194,6 +230,14 @@ MetadataServiceMetadata::AsyncDeleteContext(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> MetadataServiceMetadata::DeleteContext(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteContext(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncPurgeContexts(
     google::cloud::CompletionQueue& cq,
@@ -204,6 +248,14 @@ MetadataServiceMetadata::AsyncPurgeContexts(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeContexts(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> MetadataServiceMetadata::PurgeContexts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeContexts(context, options, request);
 }
 
 StatusOr<
@@ -295,6 +347,15 @@ MetadataServiceMetadata::AsyncDeleteExecution(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceMetadata::DeleteExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteExecution(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncPurgeExecutions(
     google::cloud::CompletionQueue& cq,
@@ -305,6 +366,15 @@ MetadataServiceMetadata::AsyncPurgeExecutions(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeExecutions(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceMetadata::PurgeExecutions(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeExecutions(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>

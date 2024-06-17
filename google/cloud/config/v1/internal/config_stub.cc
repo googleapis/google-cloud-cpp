@@ -73,6 +73,17 @@ DefaultConfigStub::AsyncCreateDeployment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultConfigStub::CreateDeployment(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::CreateDeploymentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncUpdateDeployment(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +102,17 @@ DefaultConfigStub::AsyncUpdateDeployment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultConfigStub::UpdateDeployment(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::UpdateDeploymentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncDeleteDeployment(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +129,17 @@ DefaultConfigStub::AsyncDeleteDeployment(
         return grpc_stub_->AsyncDeleteDeployment(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultConfigStub::DeleteDeployment(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::DeleteDeploymentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
@@ -223,6 +256,17 @@ DefaultConfigStub::AsyncLockDeployment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultConfigStub::LockDeployment(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::LockDeploymentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->LockDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigStub::AsyncUnlockDeployment(
     google::cloud::CompletionQueue& cq,
@@ -239,6 +283,17 @@ DefaultConfigStub::AsyncUnlockDeployment(
         return grpc_stub_->AsyncUnlockDeployment(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultConfigStub::UnlockDeployment(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::UnlockDeploymentRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UnlockDeployment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> DefaultConfigStub::ExportLockInfo(
@@ -268,6 +323,17 @@ DefaultConfigStub::AsyncCreatePreview(
         return grpc_stub_->AsyncCreatePreview(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultConfigStub::CreatePreview(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::CreatePreviewRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreatePreview(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::config::v1::Preview> DefaultConfigStub::GetPreview(
@@ -309,6 +375,17 @@ DefaultConfigStub::AsyncDeletePreview(
         return grpc_stub_->AsyncDeletePreview(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultConfigStub::DeletePreview(
+    grpc::ClientContext& context, Options,
+    google::cloud::config::v1::DeletePreviewRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeletePreview(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>

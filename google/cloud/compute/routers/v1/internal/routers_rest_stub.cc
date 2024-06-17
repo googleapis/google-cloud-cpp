@@ -105,6 +105,22 @@ DefaultRoutersRestStub::AsyncDeleteRouter(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRoutersRestStub::DeleteRouter(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "routers", "/", request.router()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Router>
 DefaultRoutersRestStub::GetRouter(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -208,6 +224,22 @@ DefaultRoutersRestStub::AsyncInsertRouter(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRoutersRestStub::InsertRouter(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.router_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "routers"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
 DefaultRoutersRestStub::ListRouters(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -263,6 +295,22 @@ DefaultRoutersRestStub::AsyncPatchRouter(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRoutersRestStub::PatchRouter(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+        request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.router_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "routers", "/", request.router()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
 DefaultRoutersRestStub::Preview(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -310,6 +358,22 @@ DefaultRoutersRestStub::AsyncUpdateRouter(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRoutersRestStub::UpdateRouter(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+        request) {
+  return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.router_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "routers", "/", request.router()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

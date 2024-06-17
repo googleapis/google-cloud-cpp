@@ -74,6 +74,18 @@ DefaultDataprocMetastoreFederationStub::AsyncCreateFederation(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreFederationStub::CreateFederation(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::CreateFederationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateFederation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreFederationStub::AsyncUpdateFederation(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +105,18 @@ DefaultDataprocMetastoreFederationStub::AsyncUpdateFederation(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreFederationStub::UpdateFederation(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateFederation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreFederationStub::AsyncDeleteFederation(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +134,18 @@ DefaultDataprocMetastoreFederationStub::AsyncDeleteFederation(
         return grpc_stub_->AsyncDeleteFederation(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreFederationStub::DeleteFederation(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFederation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

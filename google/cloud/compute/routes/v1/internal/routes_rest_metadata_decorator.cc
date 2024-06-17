@@ -50,6 +50,15 @@ RoutesRestMetadata::AsyncDeleteRoute(
                                   std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutesRestMetadata::DeleteRoute(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteRoute(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Route> RoutesRestMetadata::GetRoute(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) {
@@ -67,6 +76,15 @@ RoutesRestMetadata::AsyncInsertRoute(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertRoute(cq, std::move(rest_context),
                                   std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutesRestMetadata::InsertRoute(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertRoute(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouteList>

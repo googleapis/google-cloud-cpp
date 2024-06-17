@@ -78,6 +78,14 @@ DataFusionAuth::AsyncCreateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataFusionAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataFusionAuth::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -96,6 +104,14 @@ DataFusionAuth::AsyncDeleteInstance(
         return child->AsyncDeleteInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataFusionAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -118,6 +134,14 @@ DataFusionAuth::AsyncUpdateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataFusionAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataFusionAuth::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
@@ -136,6 +160,14 @@ DataFusionAuth::AsyncRestartInstance(
         return child->AsyncRestartInstance(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataFusionAuth::RestartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestartInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

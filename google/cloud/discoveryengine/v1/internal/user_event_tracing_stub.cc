@@ -71,6 +71,19 @@ UserEventServiceTracingStub::AsyncImportUserEvents(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceTracingStub::ImportUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.UserEventService", "ImportUserEvents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ImportUserEvents(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

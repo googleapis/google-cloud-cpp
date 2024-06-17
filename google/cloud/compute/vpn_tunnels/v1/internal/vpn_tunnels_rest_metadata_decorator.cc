@@ -59,6 +59,15 @@ VpnTunnelsRestMetadata::AsyncDeleteVpnTunnel(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsRestMetadata::DeleteVpnTunnel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteVpnTunnel(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
 VpnTunnelsRestMetadata::GetVpnTunnel(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -80,6 +89,15 @@ VpnTunnelsRestMetadata::AsyncInsertVpnTunnel(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsRestMetadata::InsertVpnTunnel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertVpnTunnel(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList>
 VpnTunnelsRestMetadata::ListVpnTunnels(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -99,6 +117,15 @@ VpnTunnelsRestMetadata::AsyncSetLabels(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

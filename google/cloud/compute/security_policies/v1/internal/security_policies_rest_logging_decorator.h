@@ -49,6 +49,12 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
       google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
   AggregatedListSecurityPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -61,6 +67,12 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::security_policies::v1::
+          DeleteSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::security_policies::v1::
           DeleteSecurityPolicyRequest const& request) override;
 
@@ -81,6 +93,12 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::security_policies::v1::
+          InsertSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::security_policies::v1::
           InsertSecurityPolicyRequest const& request) override;
 
@@ -106,10 +124,22 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
       google::cloud::cpp::compute::security_policies::v1::
           PatchSecurityPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchSecurityPolicyRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchRule(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::security_policies::v1::
           PatchRuleRequest const& request) override;
 
@@ -120,10 +150,22 @@ class SecurityPoliciesRestLogging : public SecurityPoliciesRestStub {
       google::cloud::cpp::compute::security_policies::v1::
           RemoveRuleRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::security_policies::v1::
+          RemoveRuleRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::security_policies::v1::
+          SetLabelsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::security_policies::v1::
           SetLabelsRequest const& request) override;
 

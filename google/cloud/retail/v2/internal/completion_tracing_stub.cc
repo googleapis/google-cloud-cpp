@@ -58,6 +58,18 @@ CompletionServiceTracingStub::AsyncImportCompletionData(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceTracingStub::ImportCompletionData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CompletionService",
+                                     "ImportCompletionData");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ImportCompletionData(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

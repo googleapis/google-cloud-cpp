@@ -55,6 +55,20 @@ RegionTargetHttpProxiesRestLogging::AsyncDeleteTargetHttpProxy(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpProxiesRestLogging::DeleteTargetHttpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_http_proxies::v1::
+        DeleteTargetHttpProxyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_target_http_proxies::v1::
+                 DeleteTargetHttpProxyRequest const& request) {
+        return child_->DeleteTargetHttpProxy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
 RegionTargetHttpProxiesRestLogging::GetTargetHttpProxy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -87,6 +101,20 @@ RegionTargetHttpProxiesRestLogging::AsyncInsertTargetHttpProxy(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpProxiesRestLogging::InsertTargetHttpProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_http_proxies::v1::
+        InsertTargetHttpProxyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_target_http_proxies::v1::
+                 InsertTargetHttpProxyRequest const& request) {
+        return child_->InsertTargetHttpProxy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxyList>
@@ -122,6 +150,20 @@ RegionTargetHttpProxiesRestLogging::AsyncSetUrlMap(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpProxiesRestLogging::SetUrlMap(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_target_http_proxies::v1::
+        SetUrlMapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_target_http_proxies::v1::
+                 SetUrlMapRequest const& request) {
+        return child_->SetUrlMap(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

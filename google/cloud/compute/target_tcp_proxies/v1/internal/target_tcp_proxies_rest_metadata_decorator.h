@@ -55,6 +55,12 @@ class TargetTcpProxiesRestMetadata : public TargetTcpProxiesRestStub {
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           DeleteTargetTcpProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          DeleteTargetTcpProxyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -66,6 +72,12 @@ class TargetTcpProxiesRestMetadata : public TargetTcpProxiesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          InsertTargetTcpProxyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           InsertTargetTcpProxyRequest const& request) override;
 
@@ -83,11 +95,23 @@ class TargetTcpProxiesRestMetadata : public TargetTcpProxiesRestStub {
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          SetBackendServiceRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetProxyHeader(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          SetProxyHeaderRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetProxyHeaderRequest const& request) override;
 

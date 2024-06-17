@@ -53,6 +53,11 @@ class WorkflowsTracingStub : public WorkflowsStub {
       google::cloud::workflows::v1::CreateWorkflowRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateWorkflow(
+      grpc::ClientContext& context, Options options,
+      google::cloud::workflows::v1::CreateWorkflowRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteWorkflow(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -60,10 +65,20 @@ class WorkflowsTracingStub : public WorkflowsStub {
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteWorkflow(
+      grpc::ClientContext& context, Options options,
+      google::cloud::workflows::v1::DeleteWorkflowRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkflow(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateWorkflow(
+      grpc::ClientContext& context, Options options,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
       override;
 

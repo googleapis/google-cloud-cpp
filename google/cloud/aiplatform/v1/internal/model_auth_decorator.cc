@@ -51,6 +51,14 @@ ModelServiceAuth::AsyncUploadModel(
       });
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceAuth::UploadModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UploadModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UploadModel(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceAuth::GetModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelRequest const& request) {
@@ -106,6 +114,16 @@ ModelServiceAuth::AsyncUpdateExplanationDataset(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceAuth::UpdateExplanationDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateExplanationDataset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceAuth::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +144,14 @@ ModelServiceAuth::AsyncDeleteModel(
       });
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceAuth::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceAuth::AsyncDeleteModelVersion(
     google::cloud::CompletionQueue& cq,
@@ -144,6 +170,14 @@ ModelServiceAuth::AsyncDeleteModelVersion(
         return child->AsyncDeleteModelVersion(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceAuth::DeleteModelVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteModelVersion(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
@@ -175,6 +209,14 @@ ModelServiceAuth::AsyncExportModel(
       });
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceAuth::ExportModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceAuth::AsyncCopyModel(
     google::cloud::CompletionQueue& cq,
@@ -193,6 +235,14 @@ ModelServiceAuth::AsyncCopyModel(
         return child->AsyncCopyModel(cq, *std::move(context),
                                      std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceAuth::CopyModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CopyModelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CopyModel(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>

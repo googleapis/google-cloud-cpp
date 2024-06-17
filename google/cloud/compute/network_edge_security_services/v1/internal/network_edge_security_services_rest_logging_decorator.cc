@@ -73,6 +73,21 @@ NetworkEdgeSecurityServicesRestLogging::AsyncDeleteNetworkEdgeSecurityService(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesRestLogging::DeleteNetworkEdgeSecurityService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        DeleteNetworkEdgeSecurityServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_edge_security_services::v1::
+                 DeleteNetworkEdgeSecurityServiceRequest const& request) {
+        return child_->DeleteNetworkEdgeSecurityService(rest_context, options,
+                                                        request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
 NetworkEdgeSecurityServicesRestLogging::GetNetworkEdgeSecurityService(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -108,6 +123,21 @@ NetworkEdgeSecurityServicesRestLogging::AsyncInsertNetworkEdgeSecurityService(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesRestLogging::InsertNetworkEdgeSecurityService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        InsertNetworkEdgeSecurityServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_edge_security_services::v1::
+                 InsertNetworkEdgeSecurityServiceRequest const& request) {
+        return child_->InsertNetworkEdgeSecurityService(rest_context, options,
+                                                        request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesRestLogging::AsyncPatchNetworkEdgeSecurityService(
     CompletionQueue& cq,
@@ -126,6 +156,21 @@ NetworkEdgeSecurityServicesRestLogging::AsyncPatchNetworkEdgeSecurityService(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesRestLogging::PatchNetworkEdgeSecurityService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        PatchNetworkEdgeSecurityServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_edge_security_services::v1::
+                 PatchNetworkEdgeSecurityServiceRequest const& request) {
+        return child_->PatchNetworkEdgeSecurityService(rest_context, options,
+                                                       request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

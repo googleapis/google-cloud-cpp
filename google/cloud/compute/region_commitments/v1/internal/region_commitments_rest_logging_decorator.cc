@@ -83,6 +83,20 @@ RegionCommitmentsRestLogging::AsyncInsertCommitment(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionCommitmentsRestLogging::InsertCommitment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertCommitmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_commitments::v1::
+                 InsertCommitmentRequest const& request) {
+        return child_->InsertCommitment(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
 RegionCommitmentsRestLogging::ListRegionCommitments(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -115,6 +129,20 @@ RegionCommitmentsRestLogging::AsyncUpdateCommitment(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionCommitmentsRestLogging::UpdateCommitment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateCommitmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::region_commitments::v1::
+                 UpdateCommitmentRequest const& request) {
+        return child_->UpdateCommitment(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

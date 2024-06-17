@@ -69,6 +69,15 @@ CloudFunctionsServiceAuth::AsyncCreateFunction(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceAuth::CreateFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFunction(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceAuth::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +98,15 @@ CloudFunctionsServiceAuth::AsyncUpdateFunction(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceAuth::UpdateFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFunction(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceAuth::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +125,15 @@ CloudFunctionsServiceAuth::AsyncDeleteFunction(
         return child->AsyncDeleteFunction(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceAuth::DeleteFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFunction(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>

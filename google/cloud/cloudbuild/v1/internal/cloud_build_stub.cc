@@ -50,6 +50,17 @@ DefaultCloudBuildStub::AsyncCreateBuild(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudBuildStub::CreateBuild(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBuild(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::devtools::cloudbuild::v1::Build>
 DefaultCloudBuildStub::GetBuild(
     grpc::ClientContext& context, Options const&,
@@ -104,6 +115,17 @@ DefaultCloudBuildStub::AsyncRetryBuild(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudBuildStub::RetryBuild(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RetryBuild(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncApproveBuild(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +143,17 @@ DefaultCloudBuildStub::AsyncApproveBuild(
         return grpc_stub_->AsyncApproveBuild(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultCloudBuildStub::ApproveBuild(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ApproveBuild(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
@@ -204,6 +237,17 @@ DefaultCloudBuildStub::AsyncRunBuildTrigger(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudBuildStub::RunBuildTrigger(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunBuildTrigger(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 DefaultCloudBuildStub::ReceiveTriggerWebhook(
     grpc::ClientContext& context, Options const&,
@@ -234,6 +278,18 @@ DefaultCloudBuildStub::AsyncCreateWorkerPool(
         return grpc_stub_->AsyncCreateWorkerPool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudBuildStub::CreateWorkerPool(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateWorkerPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
@@ -267,6 +323,18 @@ DefaultCloudBuildStub::AsyncDeleteWorkerPool(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudBuildStub::DeleteWorkerPool(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteWorkerPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudBuildStub::AsyncUpdateWorkerPool(
     google::cloud::CompletionQueue& cq,
@@ -284,6 +352,18 @@ DefaultCloudBuildStub::AsyncUpdateWorkerPool(
         return grpc_stub_->AsyncUpdateWorkerPool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudBuildStub::UpdateWorkerPool(
+    grpc::ClientContext& context, Options,
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateWorkerPool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>

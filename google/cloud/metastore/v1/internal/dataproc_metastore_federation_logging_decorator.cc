@@ -78,6 +78,19 @@ DataprocMetastoreFederationLogging::AsyncCreateFederation(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationLogging::CreateFederation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateFederationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::CreateFederationRequest const&
+                 request) {
+        return child_->CreateFederation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationLogging::AsyncUpdateFederation(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +110,19 @@ DataprocMetastoreFederationLogging::AsyncUpdateFederation(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationLogging::UpdateFederation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::UpdateFederationRequest const&
+                 request) {
+        return child_->UpdateFederation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationLogging::AsyncDeleteFederation(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +140,19 @@ DataprocMetastoreFederationLogging::AsyncDeleteFederation(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationLogging::DeleteFederation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::DeleteFederationRequest const&
+                 request) {
+        return child_->DeleteFederation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

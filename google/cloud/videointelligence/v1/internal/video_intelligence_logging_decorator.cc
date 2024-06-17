@@ -52,6 +52,19 @@ VideoIntelligenceServiceLogging::AsyncAnnotateVideo(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoIntelligenceServiceLogging::AnnotateVideo(
+    grpc::ClientContext& context, Options options,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::videointelligence::v1::AnnotateVideoRequest const&
+                 request) {
+        return child_->AnnotateVideo(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoIntelligenceServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

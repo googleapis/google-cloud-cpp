@@ -53,10 +53,18 @@ class InstancesAuth : public InstancesStub {
       google::cloud::internal::ImmutableOptions options,
       google::appengine::v1::DeleteInstanceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      grpc::ClientContext& context, Options options,
+      google::appengine::v1::DeleteInstanceRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDebugInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::appengine::v1::DebugInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DebugInstance(
+      grpc::ClientContext& context, Options options,
       google::appengine::v1::DebugInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

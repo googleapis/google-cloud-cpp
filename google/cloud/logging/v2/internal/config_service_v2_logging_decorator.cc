@@ -74,6 +74,18 @@ ConfigServiceV2Logging::AsyncCreateBucketAsync(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Logging::CreateBucketAsync(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CreateBucketRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::CreateBucketRequest const& request) {
+        return child_->CreateBucketAsync(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Logging::AsyncUpdateBucketAsync(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +102,18 @@ ConfigServiceV2Logging::AsyncUpdateBucketAsync(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Logging::UpdateBucketAsync(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::UpdateBucketRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::UpdateBucketRequest const& request) {
+        return child_->UpdateBucketAsync(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Logging::CreateBucket(
@@ -266,6 +290,17 @@ ConfigServiceV2Logging::AsyncCreateLink(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ConfigServiceV2Logging::CreateLink(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CreateLinkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::CreateLinkRequest const& request) {
+        return child_->CreateLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigServiceV2Logging::AsyncDeleteLink(
     google::cloud::CompletionQueue& cq,
@@ -282,6 +317,17 @@ ConfigServiceV2Logging::AsyncDeleteLink(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Logging::DeleteLink(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::DeleteLinkRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::DeleteLinkRequest const& request) {
+        return child_->DeleteLink(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::logging::v2::ListLinksResponse>
@@ -428,6 +474,17 @@ ConfigServiceV2Logging::AsyncCopyLogEntries(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Logging::CopyLogEntries(
+    grpc::ClientContext& context, Options options,
+    google::logging::v2::CopyLogEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::CopyLogEntriesRequest const& request) {
+        return child_->CopyLogEntries(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

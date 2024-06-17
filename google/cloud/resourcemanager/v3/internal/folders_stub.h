@@ -59,10 +59,20 @@ class FoldersStub {
       google::cloud::resourcemanager::v3::CreateFolderRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateFolder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateFolderRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateFolder(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateFolder(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::UpdateFolderRequest const&
           request) = 0;
 
@@ -72,6 +82,10 @@ class FoldersStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> MoveFolder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -79,10 +93,20 @@ class FoldersStub {
       google::cloud::resourcemanager::v3::DeleteFolderRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteFolder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUndeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UndeleteFolder(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
           request) = 0;
 
@@ -144,10 +168,20 @@ class DefaultFoldersStub : public FoldersStub {
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateFolder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFolder(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateFolder(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
       override;
 
@@ -158,6 +192,11 @@ class DefaultFoldersStub : public FoldersStub {
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> MoveFolder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -165,10 +204,20 @@ class DefaultFoldersStub : public FoldersStub {
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteFolder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteFolder(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UndeleteFolder(
+      grpc::ClientContext& context, Options options,
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
       override;
 

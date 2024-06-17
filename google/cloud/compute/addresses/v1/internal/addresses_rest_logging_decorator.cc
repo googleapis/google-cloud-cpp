@@ -68,6 +68,20 @@ AddressesRestLogging::AsyncDeleteAddress(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AddressesRestLogging::DeleteAddress(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::addresses::v1::
+                 DeleteAddressRequest const& request) {
+        return child_->DeleteAddress(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Address>
 AddressesRestLogging::GetAddress(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -103,6 +117,20 @@ AddressesRestLogging::AsyncInsertAddress(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AddressesRestLogging::InsertAddress(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::addresses::v1::
+                 InsertAddressRequest const& request) {
+        return child_->InsertAddress(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::AddressList>
 AddressesRestLogging::ListAddresses(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -136,6 +164,18 @@ AddressesRestLogging::AsyncMove(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation> AddressesRestLogging::Move(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::addresses::v1::MoveRequest const&
+                 request) {
+        return child_->Move(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesRestLogging::AsyncSetLabels(
     CompletionQueue& cq,
@@ -154,6 +194,20 @@ AddressesRestLogging::AsyncSetLabels(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AddressesRestLogging::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+                 request) {
+        return child_->SetLabels(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

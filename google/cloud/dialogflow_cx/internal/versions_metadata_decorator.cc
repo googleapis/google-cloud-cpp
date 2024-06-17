@@ -72,6 +72,14 @@ VersionsMetadata::AsyncCreateVersion(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> VersionsMetadata::CreateVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateVersion(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsMetadata::UpdateVersion(
     grpc::ClientContext& context, Options const& options,
@@ -100,6 +108,14 @@ VersionsMetadata::AsyncLoadVersion(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncLoadVersion(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> VersionsMetadata::LoadVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->LoadVersion(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>

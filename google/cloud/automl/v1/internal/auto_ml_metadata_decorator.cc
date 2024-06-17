@@ -54,6 +54,14 @@ AutoMlMetadata::AsyncCreateDataset(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlMetadata::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::CreateDatasetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDataset(context, options, request);
+}
+
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlMetadata::GetDataset(
     grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
@@ -92,6 +100,14 @@ AutoMlMetadata::AsyncDeleteDataset(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlMetadata::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDataset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncImportData(
     google::cloud::CompletionQueue& cq,
@@ -104,6 +120,14 @@ AutoMlMetadata::AsyncImportData(
                                  request);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlMetadata::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::ImportDataRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ImportData(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncExportData(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +138,14 @@ AutoMlMetadata::AsyncExportData(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncExportData(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> AutoMlMetadata::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::ExportDataRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportData(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
@@ -135,6 +167,14 @@ AutoMlMetadata::AsyncCreateModel(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateModel(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> AutoMlMetadata::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::CreateModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateModel(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlMetadata::GetModel(
@@ -166,6 +206,14 @@ AutoMlMetadata::AsyncDeleteModel(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlMetadata::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::DeleteModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteModel(context, options, request);
+}
+
 StatusOr<google::cloud::automl::v1::Model> AutoMlMetadata::UpdateModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
@@ -187,6 +235,14 @@ AutoMlMetadata::AsyncDeployModel(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlMetadata::DeployModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::DeployModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeployModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
@@ -199,6 +255,14 @@ AutoMlMetadata::AsyncUndeployModel(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlMetadata::UndeployModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::UndeployModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UndeployModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
@@ -209,6 +273,14 @@ AutoMlMetadata::AsyncExportModel(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncExportModel(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> AutoMlMetadata::ExportModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::ExportModelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ExportModel(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>

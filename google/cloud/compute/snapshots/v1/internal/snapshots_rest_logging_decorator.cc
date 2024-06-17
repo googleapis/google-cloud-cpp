@@ -54,6 +54,20 @@ SnapshotsRestLogging::AsyncDeleteSnapshot(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsRestLogging::DeleteSnapshot(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::snapshots::v1::
+                 DeleteSnapshotRequest const& request) {
+        return child_->DeleteSnapshot(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
 SnapshotsRestLogging::GetSnapshot(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -104,6 +118,20 @@ SnapshotsRestLogging::AsyncInsertSnapshot(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsRestLogging::InsertSnapshot(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::snapshots::v1::
+                 InsertSnapshotRequest const& request) {
+        return child_->InsertSnapshot(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SnapshotList>
 SnapshotsRestLogging::ListSnapshots(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -151,6 +179,20 @@ SnapshotsRestLogging::AsyncSetLabels(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsRestLogging::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+                 request) {
+        return child_->SetLabels(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

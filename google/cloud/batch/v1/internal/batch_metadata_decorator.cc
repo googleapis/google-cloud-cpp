@@ -70,6 +70,14 @@ BatchServiceMetadata::AsyncDeleteJob(
                                 request);
 }
 
+StatusOr<google::longrunning::Operation> BatchServiceMetadata::DeleteJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::batch::v1::DeleteJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteJob(context, options, request);
+}
+
 StatusOr<google::cloud::batch::v1::ListJobsResponse>
 BatchServiceMetadata::ListJobs(
     grpc::ClientContext& context, Options const& options,

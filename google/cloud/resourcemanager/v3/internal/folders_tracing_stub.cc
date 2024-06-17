@@ -80,6 +80,17 @@ FoldersTracingStub::AsyncCreateFolder(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> FoldersTracingStub::CreateFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
+                                     "CreateFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateFolder(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FoldersTracingStub::AsyncUpdateFolder(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +103,17 @@ FoldersTracingStub::AsyncUpdateFolder(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateFolder(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> FoldersTracingStub::UpdateFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
+                                     "UpdateFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateFolder(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,6 +130,17 @@ FoldersTracingStub::AsyncMoveFolder(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> FoldersTracingStub::MoveFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
+                                     "MoveFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->MoveFolder(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FoldersTracingStub::AsyncDeleteFolder(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +153,17 @@ FoldersTracingStub::AsyncDeleteFolder(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteFolder(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> FoldersTracingStub::DeleteFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
+                                     "DeleteFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFolder(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -135,6 +179,17 @@ FoldersTracingStub::AsyncUndeleteFolder(
   auto f =
       child_->AsyncUndeleteFolder(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> FoldersTracingStub::UndeleteFolder(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Folders",
+                                     "UndeleteFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UndeleteFolder(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> FoldersTracingStub::GetIamPolicy(

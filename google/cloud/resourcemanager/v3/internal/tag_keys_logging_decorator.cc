@@ -92,6 +92,18 @@ TagKeysLogging::AsyncCreateTagKey(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TagKeysLogging::CreateTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateTagKeyRequest const&
+                 request) {
+        return child_->CreateTagKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagKeysLogging::AsyncUpdateTagKey(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +123,18 @@ TagKeysLogging::AsyncUpdateTagKey(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TagKeysLogging::UpdateTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&
+                 request) {
+        return child_->UpdateTagKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagKeysLogging::AsyncDeleteTagKey(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +152,18 @@ TagKeysLogging::AsyncDeleteTagKey(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TagKeysLogging::DeleteTagKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&
+                 request) {
+        return child_->DeleteTagKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysLogging::GetIamPolicy(

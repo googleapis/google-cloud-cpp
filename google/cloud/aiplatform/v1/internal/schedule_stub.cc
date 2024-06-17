@@ -62,6 +62,18 @@ DefaultScheduleServiceStub::AsyncDeleteSchedule(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultScheduleServiceStub::DeleteSchedule(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 DefaultScheduleServiceStub::GetSchedule(
     grpc::ClientContext& context, Options const&,

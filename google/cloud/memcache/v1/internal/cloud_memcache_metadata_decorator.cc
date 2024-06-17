@@ -72,6 +72,14 @@ CloudMemcacheMetadata::AsyncCreateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> CloudMemcacheMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +91,15 @@ CloudMemcacheMetadata::AsyncUpdateInstance(
                            internal::UrlEncode(request.instance().name())));
   return child_->AsyncUpdateInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> CloudMemcacheMetadata::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->UpdateInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -97,6 +114,15 @@ CloudMemcacheMetadata::AsyncUpdateParameters(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudMemcacheMetadata::UpdateParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateParameters(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +133,14 @@ CloudMemcacheMetadata::AsyncDeleteInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> CloudMemcacheMetadata::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -121,6 +155,14 @@ CloudMemcacheMetadata::AsyncApplyParameters(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> CloudMemcacheMetadata::ApplyParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ApplyParameters(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
@@ -132,6 +174,16 @@ CloudMemcacheMetadata::AsyncRescheduleMaintenance(
       absl::StrCat("instance=", internal::UrlEncode(request.instance())));
   return child_->AsyncRescheduleMaintenance(cq, std::move(context),
                                             std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudMemcacheMetadata::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("instance=", internal::UrlEncode(request.instance())));
+  return child_->RescheduleMaintenance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

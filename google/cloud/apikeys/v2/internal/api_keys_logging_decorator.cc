@@ -50,6 +50,17 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncCreateKey(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysLogging::CreateKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::CreateKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::apikeys::v2::CreateKeyRequest const& request) {
+        return child_->CreateKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysLogging::ListKeys(
     grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
@@ -101,6 +112,17 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncUpdateKey(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ApiKeysLogging::UpdateKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::apikeys::v2::UpdateKeyRequest const& request) {
+        return child_->UpdateKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -116,6 +138,17 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncDeleteKey(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ApiKeysLogging::DeleteKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::apikeys::v2::DeleteKeyRequest const& request) {
+        return child_->DeleteKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -134,6 +167,17 @@ ApiKeysLogging::AsyncUndeleteKey(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ApiKeysLogging::UndeleteKey(
+    grpc::ClientContext& context, Options options,
+    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+        return child_->UndeleteKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysLogging::LookupKey(

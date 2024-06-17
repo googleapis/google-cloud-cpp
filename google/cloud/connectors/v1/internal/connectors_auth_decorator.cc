@@ -69,6 +69,14 @@ ConnectorsAuth::AsyncCreateConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation> ConnectorsAuth::CreateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsAuth::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +97,14 @@ ConnectorsAuth::AsyncUpdateConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation> ConnectorsAuth::UpdateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsAuth::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +123,14 @@ ConnectorsAuth::AsyncDeleteConnection(
         return child->AsyncDeleteConnection(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ConnectorsAuth::DeleteConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConnection(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
@@ -191,6 +215,16 @@ ConnectorsAuth::AsyncRefreshConnectionSchemaMetadata(
         return child->AsyncRefreshConnectionSchemaMetadata(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ConnectorsAuth::RefreshConnectionSchemaMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RefreshConnectionSchemaMetadata(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>

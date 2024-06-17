@@ -75,6 +75,16 @@ MetricsScopesMetadata::AsyncCreateMonitoredProject(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+MetricsScopesMetadata::CreateMonitoredProject(
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMonitoredProject(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesMetadata::AsyncDeleteMonitoredProject(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +96,16 @@ MetricsScopesMetadata::AsyncDeleteMonitoredProject(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteMonitoredProject(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+MetricsScopesMetadata::DeleteMonitoredProject(
+    grpc::ClientContext& context, Options options,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMonitoredProject(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

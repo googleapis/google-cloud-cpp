@@ -136,6 +136,18 @@ DefaultStorageTransferServiceStub::AsyncRunTransferJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultStorageTransferServiceStub::RunTransferJob(
+    grpc::ClientContext& context, Options,
+    google::storagetransfer::v1::RunTransferJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunTransferJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultStorageTransferServiceStub::DeleteTransferJob(
     grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {

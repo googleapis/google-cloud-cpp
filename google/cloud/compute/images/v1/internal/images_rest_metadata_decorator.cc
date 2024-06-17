@@ -50,6 +50,15 @@ ImagesRestMetadata::AsyncDeleteImage(
                                   std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestMetadata::DeleteImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteImage(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestMetadata::AsyncDeprecate(
     CompletionQueue& cq,
@@ -59,6 +68,14 @@ ImagesRestMetadata::AsyncDeprecate(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeprecate(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestMetadata::Deprecate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->Deprecate(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image> ImagesRestMetadata::GetImage(
@@ -98,6 +115,15 @@ ImagesRestMetadata::AsyncInsertImage(
                                   std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestMetadata::InsertImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertImage(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ImageList>
 ImagesRestMetadata::ListImages(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -115,6 +141,14 @@ ImagesRestMetadata::AsyncPatchImage(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchImage(cq, std::move(rest_context),
                                  std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestMetadata::PatchImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchImage(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -135,6 +169,14 @@ ImagesRestMetadata::AsyncSetLabels(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

@@ -50,6 +50,14 @@ future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncCreateJob(
       });
 }
 
+StatusOr<google::longrunning::Operation> JobsAuth::CreateJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CreateJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateJob(context, options, request);
+}
+
 StatusOr<google::cloud::run::v2::Job> JobsAuth::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetJobRequest const& request) {
@@ -85,6 +93,14 @@ future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncUpdateJob(
       });
 }
 
+StatusOr<google::longrunning::Operation> JobsAuth::UpdateJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::UpdateJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -104,6 +120,14 @@ future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncDeleteJob(
       });
 }
 
+StatusOr<google::longrunning::Operation> JobsAuth::DeleteJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncRunJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -121,6 +145,14 @@ future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncRunJob(
         return child->AsyncRunJob(cq, *std::move(context), std::move(options),
                                   request);
       });
+}
+
+StatusOr<google::longrunning::Operation> JobsAuth::RunJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::RunJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RunJob(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> JobsAuth::GetIamPolicy(

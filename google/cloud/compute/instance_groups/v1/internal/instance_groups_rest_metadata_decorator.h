@@ -48,6 +48,12 @@ class InstanceGroupsRestMetadata : public InstanceGroupsRestStub {
       google::cloud::cpp::compute::instance_groups::v1::
           AddInstancesRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::
+          AddInstancesRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupAggregatedList>
   AggregatedListInstanceGroups(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -63,6 +69,12 @@ class InstanceGroupsRestMetadata : public InstanceGroupsRestStub {
       google::cloud::cpp::compute::instance_groups::v1::
           DeleteInstanceGroupRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::
+          DeleteInstanceGroupRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -74,6 +86,12 @@ class InstanceGroupsRestMetadata : public InstanceGroupsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_groups::v1::
+          InsertInstanceGroupRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_groups::v1::
           InsertInstanceGroupRequest const& request) override;
 
@@ -97,11 +115,23 @@ class InstanceGroupsRestMetadata : public InstanceGroupsRestStub {
       google::cloud::cpp::compute::instance_groups::v1::
           RemoveInstancesRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::instance_groups::v1::
+          RemoveInstancesRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetNamedPorts(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::instance_groups::v1::
+          SetNamedPortsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::instance_groups::v1::
           SetNamedPortsRequest const& request) override;
 

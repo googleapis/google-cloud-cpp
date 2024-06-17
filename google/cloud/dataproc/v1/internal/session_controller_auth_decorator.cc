@@ -51,6 +51,14 @@ SessionControllerAuth::AsyncCreateSession(
       });
 }
 
+StatusOr<google::longrunning::Operation> SessionControllerAuth::CreateSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSession(context, options, request);
+}
+
 StatusOr<google::cloud::dataproc::v1::Session>
 SessionControllerAuth::GetSession(
     grpc::ClientContext& context, Options const& options,
@@ -89,6 +97,15 @@ SessionControllerAuth::AsyncTerminateSession(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerAuth::TerminateSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TerminateSession(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SessionControllerAuth::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +124,14 @@ SessionControllerAuth::AsyncDeleteSession(
         return child->AsyncDeleteSession(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> SessionControllerAuth::DeleteSession(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSession(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

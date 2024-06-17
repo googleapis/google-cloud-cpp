@@ -62,6 +62,11 @@ class PipelineServiceTracingStub : public PipelineServiceStub {
       google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+          request) override;
+
   Status CancelTrainingPipeline(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
@@ -89,10 +94,20 @@ class PipelineServiceTracingStub : public PipelineServiceStub {
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeletePipelineJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeletePipelineJobs(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
           request) override;
 
@@ -105,6 +120,11 @@ class PipelineServiceTracingStub : public PipelineServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
           request) override;
 

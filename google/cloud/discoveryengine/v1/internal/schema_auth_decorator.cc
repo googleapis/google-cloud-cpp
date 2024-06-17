@@ -69,6 +69,14 @@ SchemaServiceAuth::AsyncCreateSchema(
       });
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceAuth::CreateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSchema(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceAuth::AsyncUpdateSchema(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +97,14 @@ SchemaServiceAuth::AsyncUpdateSchema(
       });
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceAuth::UpdateSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSchema(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SchemaServiceAuth::AsyncDeleteSchema(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +123,14 @@ SchemaServiceAuth::AsyncDeleteSchema(
         return child->AsyncDeleteSchema(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> SchemaServiceAuth::DeleteSchema(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSchema(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

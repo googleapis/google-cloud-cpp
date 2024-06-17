@@ -72,6 +72,15 @@ DataprocMetastoreFederationMetadata::AsyncCreateFederation(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationMetadata::CreateFederation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateFederationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFederation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationMetadata::AsyncUpdateFederation(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +94,16 @@ DataprocMetastoreFederationMetadata::AsyncUpdateFederation(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationMetadata::UpdateFederation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("federation.name=",
+                           internal::UrlEncode(request.federation().name())));
+  return child_->UpdateFederation(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreFederationMetadata::AsyncDeleteFederation(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +114,15 @@ DataprocMetastoreFederationMetadata::AsyncDeleteFederation(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteFederation(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationMetadata::DeleteFederation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFederation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

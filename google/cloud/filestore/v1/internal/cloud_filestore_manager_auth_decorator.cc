@@ -69,6 +69,15 @@ CloudFilestoreManagerAuth::AsyncCreateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +96,15 @@ CloudFilestoreManagerAuth::AsyncUpdateInstance(
         return child->AsyncUpdateInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,6 +127,15 @@ CloudFilestoreManagerAuth::AsyncRestoreInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::RestoreInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestoreInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncRevertInstance(
     google::cloud::CompletionQueue& cq,
@@ -129,6 +156,15 @@ CloudFilestoreManagerAuth::AsyncRevertInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::RevertInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::RevertInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RevertInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -147,6 +183,15 @@ CloudFilestoreManagerAuth::AsyncDeleteInstance(
         return child->AsyncDeleteInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstance(context, options, request);
 }
 
 StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
@@ -187,6 +232,15 @@ CloudFilestoreManagerAuth::AsyncCreateSnapshot(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::CreateSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSnapshot(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncDeleteSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -207,6 +261,15 @@ CloudFilestoreManagerAuth::AsyncDeleteSnapshot(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::DeleteSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSnapshot(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncUpdateSnapshot(
     google::cloud::CompletionQueue& cq,
@@ -225,6 +288,15 @@ CloudFilestoreManagerAuth::AsyncUpdateSnapshot(
         return child->AsyncUpdateSnapshot(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::UpdateSnapshot(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSnapshot(context, options, request);
 }
 
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
@@ -265,6 +337,15 @@ CloudFilestoreManagerAuth::AsyncCreateBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::CreateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -285,6 +366,15 @@ CloudFilestoreManagerAuth::AsyncDeleteBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::DeleteBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFilestoreManagerAuth::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
@@ -303,6 +393,15 @@ CloudFilestoreManagerAuth::AsyncUpdateBackup(
         return child->AsyncUpdateBackup(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerAuth::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::filestore::v1::UpdateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

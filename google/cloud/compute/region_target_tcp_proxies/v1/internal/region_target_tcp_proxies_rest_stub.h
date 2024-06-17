@@ -46,6 +46,12 @@ class RegionTargetTcpProxiesRestStub {
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           DeleteTargetTcpProxyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetTcpProxy(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::region_target_tcp_proxies::
+                           v1::DeleteTargetTcpProxyRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
   GetTargetTcpProxy(google::cloud::rest_internal::RestContext& rest_context,
                     Options const& options,
@@ -59,6 +65,12 @@ class RegionTargetTcpProxiesRestStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           InsertTargetTcpProxyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetTcpProxy(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::region_target_tcp_proxies::
+                           v1::InsertTargetTcpProxyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
   ListRegionTargetTcpProxies(
@@ -101,6 +113,12 @@ class DefaultRegionTargetTcpProxiesRestStub
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           DeleteTargetTcpProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+          DeleteTargetTcpProxyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -112,6 +130,12 @@ class DefaultRegionTargetTcpProxiesRestStub
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+          InsertTargetTcpProxyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           InsertTargetTcpProxyRequest const& request) override;
 

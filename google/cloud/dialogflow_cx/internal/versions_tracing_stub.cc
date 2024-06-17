@@ -68,6 +68,17 @@ VersionsTracingStub::AsyncCreateVersion(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> VersionsTracingStub::CreateVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Versions",
+                                     "CreateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateVersion(context, options, request));
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsTracingStub::UpdateVersion(
     grpc::ClientContext& context, Options const& options,
@@ -103,6 +114,17 @@ VersionsTracingStub::AsyncLoadVersion(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncLoadVersion(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> VersionsTracingStub::LoadVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Versions",
+                                     "LoadVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->LoadVersion(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>

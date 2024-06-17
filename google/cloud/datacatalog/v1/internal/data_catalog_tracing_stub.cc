@@ -372,6 +372,17 @@ DataCatalogTracingStub::AsyncReconcileTags(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> DataCatalogTracingStub::ReconcileTags(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
+                                     "ReconcileTags");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ReconcileTags(context, options, request));
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogTracingStub::StarEntry(
     grpc::ClientContext& context, Options const& options,
@@ -442,6 +453,17 @@ DataCatalogTracingStub::AsyncImportEntries(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncImportEntries(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> DataCatalogTracingStub::ImportEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.datacatalog.v1.DataCatalog",
+                                     "ImportEntries");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ImportEntries(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

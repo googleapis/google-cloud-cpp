@@ -52,6 +52,10 @@ class UserEventServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::retail::v2::PurgeUserEventsRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::PurgeUserEventsRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncImportUserEvents(
       google::cloud::CompletionQueue& cq,
@@ -59,11 +63,19 @@ class UserEventServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::retail::v2::ImportUserEventsRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ImportUserEvents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::ImportUserEventsRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncRejoinUserEvents(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::RejoinUserEventsRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> RejoinUserEvents(
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::RejoinUserEventsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -105,6 +117,11 @@ class DefaultUserEventServiceStub : public UserEventServiceStub {
       google::cloud::retail::v2::PurgeUserEventsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::PurgeUserEventsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportUserEvents(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -112,10 +129,20 @@ class DefaultUserEventServiceStub : public UserEventServiceStub {
       google::cloud::retail::v2::ImportUserEventsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ImportUserEvents(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::ImportUserEventsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRejoinUserEvents(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::retail::v2::RejoinUserEventsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> RejoinUserEvents(
+      grpc::ClientContext& context, Options options,
       google::cloud::retail::v2::RejoinUserEventsRequest const& request)
       override;
 

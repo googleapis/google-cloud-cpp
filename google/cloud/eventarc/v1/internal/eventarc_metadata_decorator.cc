@@ -71,6 +71,14 @@ EventarcMetadata::AsyncCreateTrigger(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> EventarcMetadata::CreateTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateTrigger(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
@@ -84,6 +92,15 @@ EventarcMetadata::AsyncUpdateTrigger(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> EventarcMetadata::UpdateTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("trigger.name=",
+                           internal::UrlEncode(request.trigger().name())));
+  return child_->UpdateTrigger(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
@@ -94,6 +111,14 @@ EventarcMetadata::AsyncDeleteTrigger(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteTrigger(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> EventarcMetadata::DeleteTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteTrigger(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel> EventarcMetadata::GetChannel(
@@ -125,6 +150,14 @@ EventarcMetadata::AsyncCreateChannel(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> EventarcMetadata::CreateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
@@ -138,6 +171,15 @@ EventarcMetadata::AsyncUpdateChannel(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> EventarcMetadata::UpdateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("channel.name=",
+                           internal::UrlEncode(request.channel().name())));
+  return child_->UpdateChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
@@ -148,6 +190,14 @@ EventarcMetadata::AsyncDeleteChannel(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteChannel(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> EventarcMetadata::DeleteChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteChannel(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider> EventarcMetadata::GetProvider(
@@ -198,6 +248,16 @@ EventarcMetadata::AsyncCreateChannelConnection(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcMetadata::CreateChannelConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateChannelConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncDeleteChannelConnection(
     google::cloud::CompletionQueue& cq,
@@ -209,6 +269,16 @@ EventarcMetadata::AsyncDeleteChannelConnection(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteChannelConnection(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+EventarcMetadata::DeleteChannelConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteChannelConnection(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>

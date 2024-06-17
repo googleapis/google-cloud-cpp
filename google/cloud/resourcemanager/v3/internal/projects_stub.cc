@@ -86,6 +86,17 @@ DefaultProjectsStub::AsyncCreateProject(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultProjectsStub::CreateProject(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncUpdateProject(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +114,17 @@ DefaultProjectsStub::AsyncUpdateProject(
         return grpc_stub_->AsyncUpdateProject(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultProjectsStub::UpdateProject(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -124,6 +146,17 @@ DefaultProjectsStub::AsyncMoveProject(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultProjectsStub::MoveProject(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MoveProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncDeleteProject(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +176,17 @@ DefaultProjectsStub::AsyncDeleteProject(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultProjectsStub::DeleteProject(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncUndeleteProject(
     google::cloud::CompletionQueue& cq,
@@ -160,6 +204,17 @@ DefaultProjectsStub::AsyncUndeleteProject(
         return grpc_stub_->AsyncUndeleteProject(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultProjectsStub::UndeleteProject(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeleteProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy> DefaultProjectsStub::GetIamPolicy(

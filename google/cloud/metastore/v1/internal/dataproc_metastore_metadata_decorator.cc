@@ -72,6 +72,15 @@ DataprocMetastoreMetadata::AsyncCreateService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreMetadata::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +94,16 @@ DataprocMetastoreMetadata::AsyncUpdateService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("service.name=",
+                           internal::UrlEncode(request.service().name())));
+  return child_->UpdateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +114,15 @@ DataprocMetastoreMetadata::AsyncDeleteService(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteService(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
@@ -127,6 +155,15 @@ DataprocMetastoreMetadata::AsyncCreateMetadataImport(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::CreateMetadataImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMetadataImport(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreMetadata::AsyncUpdateMetadataImport(
     google::cloud::CompletionQueue& cq,
@@ -141,6 +178,17 @@ DataprocMetastoreMetadata::AsyncUpdateMetadataImport(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::UpdateMetadataImport(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("metadata_import.name=",
+                   internal::UrlEncode(request.metadata_import().name())));
+  return child_->UpdateMetadataImport(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreMetadata::AsyncExportMetadata(
     google::cloud::CompletionQueue& cq,
@@ -153,6 +201,15 @@ DataprocMetastoreMetadata::AsyncExportMetadata(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::ExportMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::ExportMetadataRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
+  return child_->ExportMetadata(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreMetadata::AsyncRestoreService(
     google::cloud::CompletionQueue& cq,
@@ -163,6 +220,15 @@ DataprocMetastoreMetadata::AsyncRestoreService(
               absl::StrCat("service=", internal::UrlEncode(request.service())));
   return child_->AsyncRestoreService(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::RestoreService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::RestoreServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
+  return child_->RestoreService(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
@@ -195,6 +261,15 @@ DataprocMetastoreMetadata::AsyncCreateBackup(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::CreateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreMetadata::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -205,6 +280,15 @@ DataprocMetastoreMetadata::AsyncDeleteBackup(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteBackup(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::DeleteBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -219,6 +303,15 @@ DataprocMetastoreMetadata::AsyncQueryMetadata(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::QueryMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
+  return child_->QueryMetadata(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataprocMetastoreMetadata::AsyncMoveTableToDatabase(
     google::cloud::CompletionQueue& cq,
@@ -229,6 +322,15 @@ DataprocMetastoreMetadata::AsyncMoveTableToDatabase(
               absl::StrCat("service=", internal::UrlEncode(request.service())));
   return child_->AsyncMoveTableToDatabase(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::MoveTableToDatabase(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
+  return child_->MoveTableToDatabase(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -242,6 +344,16 @@ DataprocMetastoreMetadata::AsyncAlterMetadataResourceLocation(
               absl::StrCat("service=", internal::UrlEncode(request.service())));
   return child_->AsyncAlterMetadataResourceLocation(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreMetadata::AlterMetadataResourceLocation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("service=", internal::UrlEncode(request.service())));
+  return child_->AlterMetadataResourceLocation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -50,6 +50,15 @@ ProjectsRestMetadata::AsyncDisableXpnHost(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::DisableXpnHost(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DisableXpnHost(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestMetadata::AsyncDisableXpnResource(
     CompletionQueue& cq,
@@ -60,6 +69,15 @@ ProjectsRestMetadata::AsyncDisableXpnResource(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDisableXpnResource(cq, std::move(rest_context),
                                          std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::DisableXpnResource(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DisableXpnResource(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -74,6 +92,15 @@ ProjectsRestMetadata::AsyncEnableXpnHost(
                                     std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::EnableXpnHost(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->EnableXpnHost(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestMetadata::AsyncEnableXpnResource(
     CompletionQueue& cq,
@@ -84,6 +111,15 @@ ProjectsRestMetadata::AsyncEnableXpnResource(
   SetMetadata(*rest_context, *options);
   return child_->AsyncEnableXpnResource(cq, std::move(rest_context),
                                         std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::EnableXpnResource(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->EnableXpnResource(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
@@ -133,6 +169,14 @@ ProjectsRestMetadata::AsyncMoveDisk(
                                request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::MoveDisk(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->MoveDisk(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestMetadata::AsyncMoveInstance(
     CompletionQueue& cq,
@@ -143,6 +187,15 @@ ProjectsRestMetadata::AsyncMoveInstance(
   SetMetadata(*rest_context, *options);
   return child_->AsyncMoveInstance(cq, std::move(rest_context),
                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::MoveInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->MoveInstance(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -157,6 +210,15 @@ ProjectsRestMetadata::AsyncSetCloudArmorTier(
                                         std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::SetCloudArmorTier(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetCloudArmorTier(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestMetadata::AsyncSetCommonInstanceMetadata(
     CompletionQueue& cq,
@@ -167,6 +229,15 @@ ProjectsRestMetadata::AsyncSetCommonInstanceMetadata(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetCommonInstanceMetadata(cq, std::move(rest_context),
                                                 std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::SetCommonInstanceMetadata(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::
+        SetCommonInstanceMetadataRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetCommonInstanceMetadata(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -181,6 +252,15 @@ ProjectsRestMetadata::AsyncSetDefaultNetworkTier(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::SetDefaultNetworkTier(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::
+        SetDefaultNetworkTierRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetDefaultNetworkTier(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestMetadata::AsyncSetUsageExportBucket(
     CompletionQueue& cq,
@@ -191,6 +271,15 @@ ProjectsRestMetadata::AsyncSetUsageExportBucket(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetUsageExportBucket(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsRestMetadata::SetUsageExportBucket(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::projects::v1::
+        SetUsageExportBucketRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetUsageExportBucket(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

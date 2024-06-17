@@ -54,6 +54,20 @@ FirewallsRestLogging::AsyncDeleteFirewall(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsRestLogging::DeleteFirewall(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 DeleteFirewallRequest const& request) {
+        return child_->DeleteFirewall(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
 FirewallsRestLogging::GetFirewall(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -87,6 +101,20 @@ FirewallsRestLogging::AsyncInsertFirewall(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsRestLogging::InsertFirewall(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 InsertFirewallRequest const& request) {
+        return child_->InsertFirewall(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallList>
@@ -123,6 +151,20 @@ FirewallsRestLogging::AsyncPatchFirewall(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsRestLogging::PatchFirewall(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 PatchFirewallRequest const& request) {
+        return child_->PatchFirewall(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestLogging::AsyncUpdateFirewall(
     CompletionQueue& cq,
@@ -141,6 +183,20 @@ FirewallsRestLogging::AsyncUpdateFirewall(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsRestLogging::UpdateFirewall(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::firewalls::v1::
+                 UpdateFirewallRequest const& request) {
+        return child_->UpdateFirewall(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

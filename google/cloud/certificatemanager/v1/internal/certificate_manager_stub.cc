@@ -78,6 +78,19 @@ DefaultCertificateManagerStub::AsyncCreateCertificate(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::CreateCertificate(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::CreateCertificateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCertificate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncUpdateCertificate(
     google::cloud::CompletionQueue& cq,
@@ -99,6 +112,19 @@ DefaultCertificateManagerStub::AsyncUpdateCertificate(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::UpdateCertificate(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateCertificate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncDeleteCertificate(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +144,19 @@ DefaultCertificateManagerStub::AsyncDeleteCertificate(
         return grpc_stub_->AsyncDeleteCertificate(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::DeleteCertificate(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCertificate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificateMapsResponse>
@@ -166,6 +205,19 @@ DefaultCertificateManagerStub::AsyncCreateCertificateMap(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::CreateCertificateMap(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCertificateMap(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncUpdateCertificateMap(
     google::cloud::CompletionQueue& cq,
@@ -186,6 +238,19 @@ DefaultCertificateManagerStub::AsyncUpdateCertificateMap(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::UpdateCertificateMap(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateCertificateMap(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncDeleteCertificateMap(
     google::cloud::CompletionQueue& cq,
@@ -204,6 +269,19 @@ DefaultCertificateManagerStub::AsyncDeleteCertificateMap(
         return grpc_stub_->AsyncDeleteCertificateMap(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::DeleteCertificateMap(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCertificateMap(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<
@@ -256,6 +334,20 @@ DefaultCertificateManagerStub::AsyncCreateCertificateMapEntry(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::CreateCertificateMapEntry(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::
+        CreateCertificateMapEntryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateCertificateMapEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncUpdateCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
@@ -276,6 +368,20 @@ DefaultCertificateManagerStub::AsyncUpdateCertificateMapEntry(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::UpdateCertificateMapEntry(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateMapEntryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateCertificateMapEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncDeleteCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
@@ -294,6 +400,20 @@ DefaultCertificateManagerStub::AsyncDeleteCertificateMapEntry(
         return grpc_stub_->AsyncDeleteCertificateMapEntry(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::DeleteCertificateMapEntry(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::
+        DeleteCertificateMapEntryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteCertificateMapEntry(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse>
@@ -342,6 +462,20 @@ DefaultCertificateManagerStub::AsyncCreateDnsAuthorization(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::CreateDnsAuthorization(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateDnsAuthorization(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncUpdateDnsAuthorization(
     google::cloud::CompletionQueue& cq,
@@ -362,6 +496,20 @@ DefaultCertificateManagerStub::AsyncUpdateDnsAuthorization(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::UpdateDnsAuthorization(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateDnsAuthorization(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncDeleteDnsAuthorization(
     google::cloud::CompletionQueue& cq,
@@ -380,6 +528,20 @@ DefaultCertificateManagerStub::AsyncDeleteDnsAuthorization(
         return grpc_stub_->AsyncDeleteDnsAuthorization(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::DeleteDnsAuthorization(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteDnsAuthorization(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::certificatemanager::v1::
@@ -433,6 +595,20 @@ DefaultCertificateManagerStub::AsyncCreateCertificateIssuanceConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::CreateCertificateIssuanceConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::
+        CreateCertificateIssuanceConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateCertificateIssuanceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncDeleteCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
@@ -452,6 +628,20 @@ DefaultCertificateManagerStub::AsyncDeleteCertificateIssuanceConfig(
                                                                 request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::DeleteCertificateIssuanceConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::
+        DeleteCertificateIssuanceConfigRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteCertificateIssuanceConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::certificatemanager::v1::ListTrustConfigsResponse>
@@ -501,6 +691,19 @@ DefaultCertificateManagerStub::AsyncCreateTrustConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::CreateTrustConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTrustConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncUpdateTrustConfig(
     google::cloud::CompletionQueue& cq,
@@ -522,6 +725,19 @@ DefaultCertificateManagerStub::AsyncUpdateTrustConfig(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::UpdateTrustConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTrustConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCertificateManagerStub::AsyncDeleteTrustConfig(
     google::cloud::CompletionQueue& cq,
@@ -541,6 +757,19 @@ DefaultCertificateManagerStub::AsyncDeleteTrustConfig(
         return grpc_stub_->AsyncDeleteTrustConfig(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCertificateManagerStub::DeleteTrustConfig(
+    grpc::ClientContext& context, Options,
+    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTrustConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -50,6 +50,12 @@ class RegionNetworkEndpointGroupsRestMetadata
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AttachNetworkEndpoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          AttachNetworkEndpointsRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
@@ -58,11 +64,24 @@ class RegionNetworkEndpointGroupsRestMetadata
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNetworkEndpointGroup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          DeleteNetworkEndpointGroupRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDetachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          DetachNetworkEndpointsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DetachNetworkEndpoints(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request) override;
 
@@ -78,6 +97,13 @@ class RegionNetworkEndpointGroupsRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_network_endpoint_groups::v1::
+          InsertNetworkEndpointGroupRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNetworkEndpointGroup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           InsertNetworkEndpointGroupRequest const& request) override;
 

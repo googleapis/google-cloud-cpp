@@ -112,10 +112,20 @@ class AnalyticsHubServiceMetadata : public AnalyticsHubServiceStub {
       google::cloud::bigquery::analyticshub::v1::
           SubscribeDataExchangeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> SubscribeDataExchange(
+      grpc::ClientContext& context, Options options,
+      google::cloud::bigquery::analyticshub::v1::
+          SubscribeDataExchangeRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRefreshSubscription(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::bigquery::analyticshub::v1::
+          RefreshSubscriptionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RefreshSubscription(
+      grpc::ClientContext& context, Options options,
       google::cloud::bigquery::analyticshub::v1::
           RefreshSubscriptionRequest const& request) override;
 
@@ -148,6 +158,11 @@ class AnalyticsHubServiceMetadata : public AnalyticsHubServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteSubscriptionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteSubscription(
+      grpc::ClientContext& context, Options options,
       google::cloud::bigquery::analyticshub::v1::
           DeleteSubscriptionRequest const& request) override;
 

@@ -51,6 +51,14 @@ TagHoldsAuth::AsyncCreateTagHold(
       });
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsAuth::CreateTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTagHold(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TagHoldsAuth::AsyncDeleteTagHold(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +77,14 @@ TagHoldsAuth::AsyncDeleteTagHold(
         return child->AsyncDeleteTagHold(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TagHoldsAuth::DeleteTagHold(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTagHold(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>

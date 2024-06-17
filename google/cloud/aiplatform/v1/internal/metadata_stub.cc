@@ -50,6 +50,18 @@ DefaultMetadataServiceStub::AsyncCreateMetadataStore(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultMetadataServiceStub::CreateMetadataStore(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateMetadataStore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
 DefaultMetadataServiceStub::GetMetadataStore(
     grpc::ClientContext& context, Options const&,
@@ -91,6 +103,18 @@ DefaultMetadataServiceStub::AsyncDeleteMetadataStore(
         return grpc_stub_->AsyncDeleteMetadataStore(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMetadataServiceStub::DeleteMetadataStore(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteMetadataStore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
@@ -160,6 +184,18 @@ DefaultMetadataServiceStub::AsyncDeleteArtifact(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultMetadataServiceStub::DeleteArtifact(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteArtifact(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncPurgeArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -177,6 +213,18 @@ DefaultMetadataServiceStub::AsyncPurgeArtifacts(
         return grpc_stub_->AsyncPurgeArtifacts(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMetadataServiceStub::PurgeArtifacts(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PurgeArtifacts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
@@ -245,6 +293,18 @@ DefaultMetadataServiceStub::AsyncDeleteContext(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultMetadataServiceStub::DeleteContext(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteContext(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncPurgeContexts(
     google::cloud::CompletionQueue& cq,
@@ -261,6 +321,18 @@ DefaultMetadataServiceStub::AsyncPurgeContexts(
         return grpc_stub_->AsyncPurgeContexts(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMetadataServiceStub::PurgeContexts(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PurgeContexts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<
@@ -385,6 +457,18 @@ DefaultMetadataServiceStub::AsyncDeleteExecution(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultMetadataServiceStub::DeleteExecution(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteExecution(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncPurgeExecutions(
     google::cloud::CompletionQueue& cq,
@@ -402,6 +486,18 @@ DefaultMetadataServiceStub::AsyncPurgeExecutions(
         return grpc_stub_->AsyncPurgeExecutions(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMetadataServiceStub::PurgeExecutions(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PurgeExecutions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>

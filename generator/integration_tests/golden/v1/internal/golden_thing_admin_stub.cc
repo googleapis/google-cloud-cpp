@@ -61,6 +61,20 @@ DefaultGoldenThingAdminStub::AsyncCreateDatabase(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultGoldenThingAdminStub::CreateDatabase(
+      grpc::ClientContext& context,
+      Options,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateDatabase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 StatusOr<google::test::admin::database::v1::Database>
 DefaultGoldenThingAdminStub::GetDatabase(
   grpc::ClientContext& context, Options const&,
@@ -89,6 +103,20 @@ DefaultGoldenThingAdminStub::AsyncUpdateDatabaseDdl(
         return grpc_stub_->AsyncUpdateDatabaseDdl(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGoldenThingAdminStub::UpdateDatabaseDdl(
+      grpc::ClientContext& context,
+      Options,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->UpdateDatabaseDdl(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 Status
@@ -173,6 +201,20 @@ DefaultGoldenThingAdminStub::AsyncCreateBackup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultGoldenThingAdminStub::CreateBackup(
+      grpc::ClientContext& context,
+      Options,
+      google::test::admin::database::v1::CreateBackupRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->CreateBackup(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 StatusOr<google::test::admin::database::v1::Backup>
 DefaultGoldenThingAdminStub::GetBackup(
   grpc::ClientContext& context, Options const&,
@@ -242,6 +284,20 @@ DefaultGoldenThingAdminStub::AsyncRestoreDatabase(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultGoldenThingAdminStub::RestoreDatabase(
+      grpc::ClientContext& context,
+      Options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->RestoreDatabase(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 DefaultGoldenThingAdminStub::ListDatabaseOperations(
   grpc::ClientContext& context, Options const&,
@@ -283,6 +339,20 @@ DefaultGoldenThingAdminStub::AsyncLongRunningWithoutRouting(
         return grpc_stub_->AsyncLongRunningWithoutRouting(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultGoldenThingAdminStub::LongRunningWithoutRouting(
+      grpc::ClientContext& context,
+      Options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+    google::longrunning::Operation response;
+    auto status =
+        grpc_stub_->LongRunningWithoutRouting(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

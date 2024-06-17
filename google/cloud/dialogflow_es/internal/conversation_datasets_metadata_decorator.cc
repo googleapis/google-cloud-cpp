@@ -55,6 +55,16 @@ ConversationDatasetsMetadata::AsyncCreateConversationDataset(
                                                 std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationDatasetsMetadata::CreateConversationDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConversationDataset(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsMetadata::GetConversationDataset(
     grpc::ClientContext& context, Options const& options,
@@ -88,6 +98,16 @@ ConversationDatasetsMetadata::AsyncDeleteConversationDataset(
                                                 std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationDatasetsMetadata::DeleteConversationDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConversationDataset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsMetadata::AsyncImportConversationData(
     google::cloud::CompletionQueue& cq,
@@ -99,6 +119,16 @@ ConversationDatasetsMetadata::AsyncImportConversationData(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncImportConversationData(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationDatasetsMetadata::ImportConversationData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ImportConversationData(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

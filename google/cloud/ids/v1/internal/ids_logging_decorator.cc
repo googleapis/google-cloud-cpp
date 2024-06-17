@@ -74,6 +74,17 @@ IDSLogging::AsyncCreateEndpoint(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> IDSLogging::CreateEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::ids::v1::CreateEndpointRequest const& request) {
+        return child_->CreateEndpoint(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IDSLogging::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +101,17 @@ IDSLogging::AsyncDeleteEndpoint(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> IDSLogging::DeleteEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+        return child_->DeleteEndpoint(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>> IDSLogging::AsyncGetOperation(

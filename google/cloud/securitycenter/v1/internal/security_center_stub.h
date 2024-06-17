@@ -46,6 +46,11 @@ class SecurityCenterStub {
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
+          request) = 0;
+
   virtual StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   CreateSecurityHealthAnalyticsCustomModule(
@@ -207,6 +212,11 @@ class SecurityCenterStub {
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> RunAssetDiscovery(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
       grpc::ClientContext& context, Options const& options,
       google::cloud::securitycenter::v1::SetFindingStateRequest const&
@@ -331,6 +341,11 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      grpc::ClientContext& context, Options options,
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
       override;
 
@@ -491,6 +506,11 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RunAssetDiscovery(
+      grpc::ClientContext& context, Options options,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request) override;
 

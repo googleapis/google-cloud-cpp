@@ -72,6 +72,16 @@ NetworkServicesAuth::AsyncCreateEndpointPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesAuth::CreateEndpointPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEndpointPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncUpdateEndpointPolicy(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +103,16 @@ NetworkServicesAuth::AsyncUpdateEndpointPolicy(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesAuth::UpdateEndpointPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEndpointPolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncDeleteEndpointPolicy(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +132,16 @@ NetworkServicesAuth::AsyncDeleteEndpointPolicy(
         return child->AsyncDeleteEndpointPolicy(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesAuth::DeleteEndpointPolicy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEndpointPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
@@ -152,6 +182,14 @@ NetworkServicesAuth::AsyncCreateGateway(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::CreateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateGatewayRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
@@ -172,6 +210,14 @@ NetworkServicesAuth::AsyncUpdateGateway(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::UpdateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
@@ -190,6 +236,14 @@ NetworkServicesAuth::AsyncDeleteGateway(
         return child->AsyncDeleteGateway(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::DeleteGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGateway(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse>
@@ -230,6 +284,14 @@ NetworkServicesAuth::AsyncCreateGrpcRoute(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::CreateGrpcRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGrpcRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncUpdateGrpcRoute(
     google::cloud::CompletionQueue& cq,
@@ -250,6 +312,14 @@ NetworkServicesAuth::AsyncUpdateGrpcRoute(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::UpdateGrpcRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGrpcRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncDeleteGrpcRoute(
     google::cloud::CompletionQueue& cq,
@@ -268,6 +338,14 @@ NetworkServicesAuth::AsyncDeleteGrpcRoute(
         return child->AsyncDeleteGrpcRoute(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::DeleteGrpcRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGrpcRoute(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse>
@@ -308,6 +386,14 @@ NetworkServicesAuth::AsyncCreateHttpRoute(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::CreateHttpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateHttpRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncUpdateHttpRoute(
     google::cloud::CompletionQueue& cq,
@@ -328,6 +414,14 @@ NetworkServicesAuth::AsyncUpdateHttpRoute(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::UpdateHttpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateHttpRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncDeleteHttpRoute(
     google::cloud::CompletionQueue& cq,
@@ -346,6 +440,14 @@ NetworkServicesAuth::AsyncDeleteHttpRoute(
         return child->AsyncDeleteHttpRoute(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::DeleteHttpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteHttpRoute(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse>
@@ -386,6 +488,14 @@ NetworkServicesAuth::AsyncCreateTcpRoute(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::CreateTcpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTcpRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncUpdateTcpRoute(
     google::cloud::CompletionQueue& cq,
@@ -406,6 +516,14 @@ NetworkServicesAuth::AsyncUpdateTcpRoute(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::UpdateTcpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTcpRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncDeleteTcpRoute(
     google::cloud::CompletionQueue& cq,
@@ -424,6 +542,14 @@ NetworkServicesAuth::AsyncDeleteTcpRoute(
         return child->AsyncDeleteTcpRoute(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::DeleteTcpRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTcpRoute(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse>
@@ -464,6 +590,14 @@ NetworkServicesAuth::AsyncCreateTlsRoute(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::CreateTlsRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTlsRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncUpdateTlsRoute(
     google::cloud::CompletionQueue& cq,
@@ -484,6 +618,14 @@ NetworkServicesAuth::AsyncUpdateTlsRoute(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::UpdateTlsRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTlsRoute(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncDeleteTlsRoute(
     google::cloud::CompletionQueue& cq,
@@ -502,6 +644,14 @@ NetworkServicesAuth::AsyncDeleteTlsRoute(
         return child->AsyncDeleteTlsRoute(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::DeleteTlsRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTlsRoute(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse>
@@ -545,6 +695,16 @@ NetworkServicesAuth::AsyncCreateServiceBinding(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesAuth::CreateServiceBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateServiceBinding(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncDeleteServiceBinding(
     google::cloud::CompletionQueue& cq,
@@ -564,6 +724,16 @@ NetworkServicesAuth::AsyncDeleteServiceBinding(
         return child->AsyncDeleteServiceBinding(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesAuth::DeleteServiceBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteServiceBinding(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListMeshesResponse>
@@ -603,6 +773,14 @@ NetworkServicesAuth::AsyncCreateMesh(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::CreateMesh(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateMeshRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMesh(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncUpdateMesh(
     google::cloud::CompletionQueue& cq,
@@ -623,6 +801,14 @@ NetworkServicesAuth::AsyncUpdateMesh(
       });
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::UpdateMesh(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateMesh(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NetworkServicesAuth::AsyncDeleteMesh(
     google::cloud::CompletionQueue& cq,
@@ -641,6 +827,14 @@ NetworkServicesAuth::AsyncDeleteMesh(
         return child->AsyncDeleteMesh(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> NetworkServicesAuth::DeleteMesh(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMesh(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

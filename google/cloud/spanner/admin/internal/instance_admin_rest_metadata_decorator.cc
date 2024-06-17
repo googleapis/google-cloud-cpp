@@ -68,6 +68,15 @@ InstanceAdminRestMetadata::AsyncCreateInstanceConfig(
                                            std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestMetadata::CreateInstanceConfig(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->CreateInstanceConfig(rest_context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestMetadata::AsyncUpdateInstanceConfig(
     CompletionQueue& cq,
@@ -78,6 +87,15 @@ InstanceAdminRestMetadata::AsyncUpdateInstanceConfig(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateInstanceConfig(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestMetadata::UpdateInstanceConfig(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateInstanceConfig(rest_context, options, request);
 }
 
 Status InstanceAdminRestMetadata::DeleteInstanceConfig(
@@ -135,6 +153,15 @@ InstanceAdminRestMetadata::AsyncCreateInstance(
                                      std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestMetadata::CreateInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->CreateInstance(rest_context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestMetadata::AsyncUpdateInstance(
     CompletionQueue& cq,
@@ -145,6 +172,15 @@ InstanceAdminRestMetadata::AsyncUpdateInstance(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateInstance(cq, std::move(rest_context),
                                      std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestMetadata::UpdateInstance(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateInstance(rest_context, options, request);
 }
 
 Status InstanceAdminRestMetadata::DeleteInstance(
@@ -198,6 +234,15 @@ InstanceAdminRestMetadata::AsyncCreateInstancePartition(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestMetadata::CreateInstancePartition(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->CreateInstancePartition(rest_context, options, request);
+}
+
 Status InstanceAdminRestMetadata::DeleteInstancePartition(
     rest_internal::RestContext& rest_context, Options const& options,
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
@@ -216,6 +261,15 @@ InstanceAdminRestMetadata::AsyncUpdateInstancePartition(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateInstancePartition(cq, std::move(rest_context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminRestMetadata::UpdateInstancePartition(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateInstancePartition(rest_context, options, request);
 }
 
 StatusOr<google::spanner::admin::instance::v1::

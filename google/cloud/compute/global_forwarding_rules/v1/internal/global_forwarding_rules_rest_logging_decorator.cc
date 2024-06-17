@@ -55,6 +55,20 @@ GlobalForwardingRulesRestLogging::AsyncDeleteForwardingRule(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalForwardingRulesRestLogging::DeleteForwardingRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_forwarding_rules::v1::
+        DeleteForwardingRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::global_forwarding_rules::v1::
+                 DeleteForwardingRuleRequest const& request) {
+        return child_->DeleteForwardingRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
 GlobalForwardingRulesRestLogging::GetForwardingRule(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -87,6 +101,20 @@ GlobalForwardingRulesRestLogging::AsyncInsertForwardingRule(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalForwardingRulesRestLogging::InsertForwardingRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_forwarding_rules::v1::
+        InsertForwardingRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::global_forwarding_rules::v1::
+                 InsertForwardingRuleRequest const& request) {
+        return child_->InsertForwardingRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
@@ -124,6 +152,20 @@ GlobalForwardingRulesRestLogging::AsyncPatchForwardingRule(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalForwardingRulesRestLogging::PatchForwardingRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_forwarding_rules::v1::
+        PatchForwardingRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::global_forwarding_rules::v1::
+                 PatchForwardingRuleRequest const& request) {
+        return child_->PatchForwardingRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesRestLogging::AsyncSetLabels(
     CompletionQueue& cq,
@@ -144,6 +186,20 @@ GlobalForwardingRulesRestLogging::AsyncSetLabels(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalForwardingRulesRestLogging::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_forwarding_rules::v1::
+        SetLabelsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::global_forwarding_rules::v1::
+                 SetLabelsRequest const& request) {
+        return child_->SetLabels(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesRestLogging::AsyncSetTarget(
     CompletionQueue& cq,
@@ -162,6 +218,20 @@ GlobalForwardingRulesRestLogging::AsyncSetTarget(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalForwardingRulesRestLogging::SetTarget(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::global_forwarding_rules::v1::
+        SetTargetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::global_forwarding_rules::v1::
+                 SetTargetRequest const& request) {
+        return child_->SetTarget(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

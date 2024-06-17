@@ -122,6 +122,21 @@ ConversationProfilesTracingStub::AsyncSetSuggestionFeatureConfig(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationProfilesTracingStub::SetSuggestionFeatureConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationProfiles",
+                             "SetSuggestionFeatureConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->SetSuggestionFeatureConfig(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesTracingStub::AsyncClearSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
@@ -137,6 +152,21 @@ ConversationProfilesTracingStub::AsyncClearSuggestionFeatureConfig(
   auto f = child_->AsyncClearSuggestionFeatureConfig(
       cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationProfilesTracingStub::ClearSuggestionFeatureConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationProfiles",
+                             "ClearSuggestionFeatureConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ClearSuggestionFeatureConfig(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

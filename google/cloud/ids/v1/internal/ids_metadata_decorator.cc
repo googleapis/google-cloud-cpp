@@ -70,6 +70,14 @@ IDSMetadata::AsyncCreateEndpoint(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> IDSMetadata::CreateEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEndpoint(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IDSMetadata::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
@@ -80,6 +88,14 @@ IDSMetadata::AsyncDeleteEndpoint(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEndpoint(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> IDSMetadata::DeleteEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEndpoint(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> IDSMetadata::AsyncGetOperation(

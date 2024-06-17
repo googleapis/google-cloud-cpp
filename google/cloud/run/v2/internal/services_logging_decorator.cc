@@ -51,6 +51,17 @@ ServicesLogging::AsyncCreateService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ServicesLogging::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CreateServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::CreateServiceRequest const& request) {
+        return child_->CreateService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::run::v2::Service> ServicesLogging::GetService(
     grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetServiceRequest const& request) {
@@ -92,6 +103,17 @@ ServicesLogging::AsyncUpdateService(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ServicesLogging::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::UpdateServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::UpdateServiceRequest const& request) {
+        return child_->UpdateService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServicesLogging::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +130,17 @@ ServicesLogging::AsyncDeleteService(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ServicesLogging::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteServiceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::DeleteServiceRequest const& request) {
+        return child_->DeleteService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> ServicesLogging::GetIamPolicy(

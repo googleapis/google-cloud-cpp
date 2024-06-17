@@ -58,6 +58,18 @@ SpeechTracingStub::AsyncLongRunningRecognize(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+SpeechTracingStub::LongRunningRecognize(
+    grpc::ClientContext& context, Options options,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.speech.v1.Speech",
+                                     "LongRunningRecognize");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->LongRunningRecognize(context, options, request));
+}
+
 std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>

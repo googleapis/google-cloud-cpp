@@ -68,6 +68,17 @@ RevisionsTracingStub::AsyncDeleteRevision(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> RevisionsTracingStub::DeleteRevision(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "DeleteRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteRevision(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RevisionsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

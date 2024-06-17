@@ -109,6 +109,17 @@ ProductServiceLogging::AsyncPurgeProducts(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ProductServiceLogging::PurgeProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::PurgeProductsRequest const& request) {
+        return child_->PurgeProducts(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
@@ -127,6 +138,17 @@ ProductServiceLogging::AsyncImportProducts(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ProductServiceLogging::ImportProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportProductsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::ImportProductsRequest const& request) {
+        return child_->ImportProducts(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncSetInventory(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +165,17 @@ ProductServiceLogging::AsyncSetInventory(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ProductServiceLogging::SetInventory(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::SetInventoryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::SetInventoryRequest const& request) {
+        return child_->SetInventory(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -164,6 +197,19 @@ ProductServiceLogging::AsyncAddFulfillmentPlaces(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceLogging::AddFulfillmentPlaces(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::AddFulfillmentPlacesRequest const&
+                 request) {
+        return child_->AddFulfillmentPlaces(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncRemoveFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
@@ -181,6 +227,19 @@ ProductServiceLogging::AsyncRemoveFulfillmentPlaces(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceLogging::RemoveFulfillmentPlaces(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
+                 request) {
+        return child_->RemoveFulfillmentPlaces(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -202,6 +261,19 @@ ProductServiceLogging::AsyncAddLocalInventories(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceLogging::AddLocalInventories(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::AddLocalInventoriesRequest const&
+                 request) {
+        return child_->AddLocalInventories(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
@@ -219,6 +291,19 @@ ProductServiceLogging::AsyncRemoveLocalInventories(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceLogging::RemoveLocalInventories(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::RemoveLocalInventoriesRequest const&
+                 request) {
+        return child_->RemoveLocalInventories(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

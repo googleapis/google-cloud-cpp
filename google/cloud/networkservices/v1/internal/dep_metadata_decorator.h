@@ -59,6 +59,11 @@ class DepServiceMetadata : public DepServiceStub {
       google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateLbTrafficExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateLbTrafficExtension(
       google::cloud::CompletionQueue& cq,
@@ -67,11 +72,21 @@ class DepServiceMetadata : public DepServiceStub {
       google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateLbTrafficExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteLbTrafficExtension(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteLbTrafficExtension(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
           request) override;
 
@@ -94,6 +109,11 @@ class DepServiceMetadata : public DepServiceStub {
       google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateLbRouteExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateLbRouteExtension(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -101,10 +121,20 @@ class DepServiceMetadata : public DepServiceStub {
       google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateLbRouteExtension(
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteLbRouteExtension(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
+      grpc::ClientContext& context, Options options,
       google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
           request) override;
 

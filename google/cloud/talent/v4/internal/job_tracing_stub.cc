@@ -57,6 +57,17 @@ JobServiceTracingStub::AsyncBatchCreateJobs(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> JobServiceTracingStub::BatchCreateJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.JobService",
+                                     "BatchCreateJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->BatchCreateJobs(context, options, request));
+}
+
 StatusOr<google::cloud::talent::v4::Job> JobServiceTracingStub::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetJobRequest const& request) {
@@ -94,6 +105,17 @@ JobServiceTracingStub::AsyncBatchUpdateJobs(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> JobServiceTracingStub::BatchUpdateJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.JobService",
+                                     "BatchUpdateJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->BatchUpdateJobs(context, options, request));
+}
+
 Status JobServiceTracingStub::DeleteJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteJobRequest const& request) {
@@ -118,6 +140,17 @@ JobServiceTracingStub::AsyncBatchDeleteJobs(
   auto f =
       child_->AsyncBatchDeleteJobs(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> JobServiceTracingStub::BatchDeleteJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.JobService",
+                                     "BatchDeleteJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->BatchDeleteJobs(context, options, request));
 }
 
 StatusOr<google::cloud::talent::v4::ListJobsResponse>

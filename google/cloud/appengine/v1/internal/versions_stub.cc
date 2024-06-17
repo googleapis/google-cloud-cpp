@@ -71,6 +71,17 @@ DefaultVersionsStub::AsyncCreateVersion(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVersionsStub::CreateVersion(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::CreateVersionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVersionsStub::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +99,17 @@ DefaultVersionsStub::AsyncUpdateVersion(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVersionsStub::UpdateVersion(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::UpdateVersionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVersionsStub::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +125,17 @@ DefaultVersionsStub::AsyncDeleteVersion(
         return grpc_stub_->AsyncDeleteVersion(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultVersionsStub::DeleteVersion(
+    grpc::ClientContext& context, Options,
+    google::appengine::v1::DeleteVersionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteVersion(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -52,6 +52,20 @@ DefaultPersistentResourceServiceStub::AsyncCreatePersistentResource(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultPersistentResourceServiceStub::CreatePersistentResource(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreatePersistentResource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
 DefaultPersistentResourceServiceStub::GetPersistentResource(
     grpc::ClientContext& context, Options const&,
@@ -100,6 +114,20 @@ DefaultPersistentResourceServiceStub::AsyncDeletePersistentResource(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultPersistentResourceServiceStub::DeletePersistentResource(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeletePersistentResource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultPersistentResourceServiceStub::AsyncUpdatePersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +149,20 @@ DefaultPersistentResourceServiceStub::AsyncUpdatePersistentResource(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultPersistentResourceServiceStub::UpdatePersistentResource(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdatePersistentResource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultPersistentResourceServiceStub::AsyncRebootPersistentResource(
     google::cloud::CompletionQueue& cq,
@@ -140,6 +182,20 @@ DefaultPersistentResourceServiceStub::AsyncRebootPersistentResource(
         return grpc_stub_->AsyncRebootPersistentResource(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultPersistentResourceServiceStub::RebootPersistentResource(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RebootPersistentResource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

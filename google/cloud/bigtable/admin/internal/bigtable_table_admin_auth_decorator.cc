@@ -77,6 +77,14 @@ BigtableTableAdminAuth::AsyncUpdateTable(
       });
 }
 
+StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::UpdateTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTable(context, options, request);
+}
+
 Status BigtableTableAdminAuth::DeleteTable(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
@@ -105,6 +113,14 @@ BigtableTableAdminAuth::AsyncUndeleteTable(
       });
 }
 
+StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::UndeleteTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeleteTable(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminAuth::AsyncCreateAuthorizedView(
     google::cloud::CompletionQueue& cq,
@@ -123,6 +139,15 @@ BigtableTableAdminAuth::AsyncCreateAuthorizedView(
         return child->AsyncCreateAuthorizedView(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::CreateAuthorizedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAuthorizedView(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
@@ -161,6 +186,15 @@ BigtableTableAdminAuth::AsyncUpdateAuthorizedView(
         return child->AsyncUpdateAuthorizedView(cq, *std::move(context),
                                                 std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminAuth::UpdateAuthorizedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAuthorizedView(context, options, request);
 }
 
 Status BigtableTableAdminAuth::DeleteAuthorizedView(
@@ -227,6 +261,14 @@ BigtableTableAdminAuth::AsyncCreateBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackup(context, options, request);
+}
+
 StatusOr<google::bigtable::admin::v2::Backup> BigtableTableAdminAuth::GetBackup(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
@@ -281,6 +323,14 @@ BigtableTableAdminAuth::AsyncRestoreTable(
       });
 }
 
+StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::RestoreTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::RestoreTableRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestoreTable(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminAuth::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -299,6 +349,14 @@ BigtableTableAdminAuth::AsyncCopyBackup(
         return child->AsyncCopyBackup(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> BigtableTableAdminAuth::CopyBackup(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CopyBackup(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminAuth::GetIamPolicy(

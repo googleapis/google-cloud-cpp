@@ -106,6 +106,22 @@ DefaultTargetTcpProxiesRestStub::AsyncDeleteTargetTcpProxy(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetTcpProxiesRestStub::DeleteTargetTcpProxy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        DeleteTargetTcpProxyRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetTcpProxies", "/", request.target_tcp_proxy()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
 DefaultTargetTcpProxiesRestStub::GetTargetTcpProxy(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -152,6 +168,22 @@ DefaultTargetTcpProxiesRestStub::AsyncInsertTargetTcpProxy(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetTcpProxiesRestStub::InsertTargetTcpProxy(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        InsertTargetTcpProxyRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.target_tcp_proxy_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetTcpProxies"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
@@ -214,6 +246,24 @@ DefaultTargetTcpProxiesRestStub::AsyncSetBackendService(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetTcpProxiesRestStub::SetBackendService(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        SetBackendServiceRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.target_tcp_proxies_set_backend_service_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetTcpProxies", "/", request.target_tcp_proxy(), "/",
+                   "setBackendService"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultTargetTcpProxiesRestStub::AsyncSetProxyHeader(
     CompletionQueue& cq,
@@ -248,6 +298,24 @@ DefaultTargetTcpProxiesRestStub::AsyncSetProxyHeader(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultTargetTcpProxiesRestStub::SetProxyHeader(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        SetProxyHeaderRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.target_tcp_proxies_set_proxy_header_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "targetTcpProxies", "/", request.target_tcp_proxy(), "/",
+                   "setProxyHeader"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

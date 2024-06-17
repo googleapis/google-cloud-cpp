@@ -44,6 +44,11 @@ class IndexServiceTracingStub : public IndexServiceStub {
       google::cloud::aiplatform::v1::CreateIndexRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateIndex(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateIndexRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetIndexRequest const& request) override;
@@ -60,10 +65,20 @@ class IndexServiceTracingStub : public IndexServiceStub {
       google::cloud::aiplatform::v1::UpdateIndexRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateIndex(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateIndexRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteIndex(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteIndexRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteIndex(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteIndexRequest const& request)
       override;
 

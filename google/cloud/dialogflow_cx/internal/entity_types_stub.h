@@ -74,11 +74,21 @@ class EntityTypesStub {
       google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ExportEntityTypes(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncImportEntityTypes(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ImportEntityTypes(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
           request) = 0;
 
@@ -138,10 +148,20 @@ class DefaultEntityTypesStub : public EntityTypesStub {
       google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ExportEntityTypes(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportEntityTypes(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> ImportEntityTypes(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
           request) override;
 

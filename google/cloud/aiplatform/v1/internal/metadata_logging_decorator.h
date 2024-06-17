@@ -46,6 +46,11 @@ class MetadataServiceLogging : public MetadataServiceStub {
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateMetadataStore(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::MetadataStore> GetMetadataStore(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request)
@@ -61,6 +66,11 @@ class MetadataServiceLogging : public MetadataServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteMetadataStore(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request)
       override;
 
@@ -91,10 +101,20 @@ class MetadataServiceLogging : public MetadataServiceStub {
       google::cloud::aiplatform::v1::DeleteArtifactRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteArtifact(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeArtifacts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PurgeArtifacts(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request)
       override;
 
@@ -124,10 +144,20 @@ class MetadataServiceLogging : public MetadataServiceStub {
       google::cloud::aiplatform::v1::DeleteContextRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteContext(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeContexts(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PurgeContexts(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::PurgeContextsRequest const& request)
       override;
 
@@ -183,10 +213,20 @@ class MetadataServiceLogging : public MetadataServiceStub {
       google::cloud::aiplatform::v1::DeleteExecutionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeExecutions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PurgeExecutions(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request)
       override;
 

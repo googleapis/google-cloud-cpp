@@ -49,6 +49,18 @@ DefaultClusterControllerStub::AsyncCreateCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultClusterControllerStub::CreateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::CreateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -65,6 +77,18 @@ DefaultClusterControllerStub::AsyncUpdateCluster(
         return grpc_stub_->AsyncUpdateCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultClusterControllerStub::UpdateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -85,6 +109,18 @@ DefaultClusterControllerStub::AsyncStopCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultClusterControllerStub::StopCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::StopClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StopCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncStartCluster(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +139,18 @@ DefaultClusterControllerStub::AsyncStartCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultClusterControllerStub::StartCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::StartClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -119,6 +167,18 @@ DefaultClusterControllerStub::AsyncDeleteCluster(
         return grpc_stub_->AsyncDeleteCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultClusterControllerStub::DeleteCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
@@ -161,6 +221,18 @@ DefaultClusterControllerStub::AsyncDiagnoseCluster(
         return grpc_stub_->AsyncDiagnoseCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultClusterControllerStub::DiagnoseCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DiagnoseCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

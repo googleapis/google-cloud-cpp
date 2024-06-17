@@ -64,6 +64,15 @@ DatabaseAdminMetadata::AsyncCreateDatabase(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::CreateDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDatabase(context, options, request);
+}
+
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminMetadata::GetDatabase(
     grpc::ClientContext& context, Options const& options,
@@ -87,6 +96,16 @@ DatabaseAdminMetadata::AsyncUpdateDatabase(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::UpdateDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("database.name=",
+                           internal::UrlEncode(request.database().name())));
+  return child_->UpdateDatabase(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
@@ -99,6 +118,17 @@ DatabaseAdminMetadata::AsyncUpdateDatabaseDdl(
       absl::StrCat("database=", internal::UrlEncode(request.database())));
   return child_->AsyncUpdateDatabaseDdl(cq, std::move(context),
                                         std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatabaseAdminMetadata::UpdateDatabaseDdl(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("database=", internal::UrlEncode(request.database())));
+  return child_->UpdateDatabaseDdl(context, options, request);
 }
 
 Status DatabaseAdminMetadata::DropDatabase(
@@ -161,6 +191,14 @@ DatabaseAdminMetadata::AsyncCreateBackup(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -171,6 +209,14 @@ DatabaseAdminMetadata::AsyncCopyBackup(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCopyBackup(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::CopyBackup(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CopyBackup(context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -220,6 +266,15 @@ DatabaseAdminMetadata::AsyncRestoreDatabase(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncRestoreDatabase(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::RestoreDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RestoreDatabase(context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>

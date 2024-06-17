@@ -60,6 +60,21 @@ CompletionServiceTracingStub::AsyncImportSuggestionDenyListEntries(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceTracingStub::ImportSuggestionDenyListEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.CompletionService",
+      "ImportSuggestionDenyListEntries");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ImportSuggestionDenyListEntries(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceTracingStub::AsyncPurgeSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,
@@ -75,6 +90,21 @@ CompletionServiceTracingStub::AsyncPurgeSuggestionDenyListEntries(
   auto f = child_->AsyncPurgeSuggestionDenyListEntries(
       cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceTracingStub::PurgeSuggestionDenyListEntries(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.CompletionService",
+      "PurgeSuggestionDenyListEntries");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->PurgeSuggestionDenyListEntries(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

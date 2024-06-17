@@ -51,6 +51,14 @@ BatchControllerAuth::AsyncCreateBatch(
       });
 }
 
+StatusOr<google::longrunning::Operation> BatchControllerAuth::CreateBatch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBatch(context, options, request);
+}
+
 StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerAuth::GetBatch(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {

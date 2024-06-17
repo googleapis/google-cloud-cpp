@@ -95,6 +95,23 @@ DefaultSnapshotSettingsRestStub::AsyncPatchSnapshotSettings(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultSnapshotSettingsRestStub::PatchSnapshotSettings(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        PatchSnapshotSettingsRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.snapshot_settings_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "snapshotSettings"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("update_mask", request.update_mask())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSnapshotSettingsRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

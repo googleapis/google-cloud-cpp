@@ -54,6 +54,15 @@ AzureClustersMetadata::AsyncCreateAzureClient(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AzureClustersMetadata::CreateAzureClient(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAzureClient(context, options, request);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersMetadata::GetAzureClient(
     grpc::ClientContext& context, Options const& options,
@@ -84,6 +93,15 @@ AzureClustersMetadata::AsyncDeleteAzureClient(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AzureClustersMetadata::DeleteAzureClient(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAzureClient(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncCreateAzureCluster(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +113,16 @@ AzureClustersMetadata::AsyncCreateAzureCluster(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAzureCluster(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AzureClustersMetadata::CreateAzureCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAzureCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,6 +138,18 @@ AzureClustersMetadata::AsyncUpdateAzureCluster(
                    internal::UrlEncode(request.azure_cluster().name())));
   return child_->AsyncUpdateAzureCluster(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AzureClustersMetadata::UpdateAzureCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("azure_cluster.name=",
+                   internal::UrlEncode(request.azure_cluster().name())));
+  return child_->UpdateAzureCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
@@ -141,6 +181,16 @@ AzureClustersMetadata::AsyncDeleteAzureCluster(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAzureCluster(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AzureClustersMetadata::DeleteAzureCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAzureCluster(context, options, request);
 }
 
 StatusOr<
@@ -179,6 +229,16 @@ AzureClustersMetadata::AsyncCreateAzureNodePool(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AzureClustersMetadata::CreateAzureNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAzureNodePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncUpdateAzureNodePool(
     google::cloud::CompletionQueue& cq,
@@ -192,6 +252,18 @@ AzureClustersMetadata::AsyncUpdateAzureNodePool(
                    internal::UrlEncode(request.azure_node_pool().name())));
   return child_->AsyncUpdateAzureNodePool(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AzureClustersMetadata::UpdateAzureNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("azure_node_pool.name=",
+                   internal::UrlEncode(request.azure_node_pool().name())));
+  return child_->UpdateAzureNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
@@ -224,6 +296,16 @@ AzureClustersMetadata::AsyncDeleteAzureNodePool(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAzureNodePool(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AzureClustersMetadata::DeleteAzureNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAzureNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>

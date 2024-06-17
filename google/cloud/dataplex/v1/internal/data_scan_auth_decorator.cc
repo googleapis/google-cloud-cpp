@@ -51,6 +51,14 @@ DataScanServiceAuth::AsyncCreateDataScan(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataScanServiceAuth::CreateDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDataScan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceAuth::AsyncUpdateDataScan(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +79,14 @@ DataScanServiceAuth::AsyncUpdateDataScan(
       });
 }
 
+StatusOr<google::longrunning::Operation> DataScanServiceAuth::UpdateDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDataScan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceAuth::AsyncDeleteDataScan(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +105,14 @@ DataScanServiceAuth::AsyncDeleteDataScan(
         return child->AsyncDeleteDataScan(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DataScanServiceAuth::DeleteDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteDataScan(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::DataScan>

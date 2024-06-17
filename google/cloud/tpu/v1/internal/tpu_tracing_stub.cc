@@ -63,6 +63,16 @@ TpuTracingStub::AsyncCreateNode(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> TpuTracingStub::CreateNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::CreateNodeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "CreateNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateNode(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TpuTracingStub::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
@@ -74,6 +84,16 @@ TpuTracingStub::AsyncDeleteNode(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteNode(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> TpuTracingStub::DeleteNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::DeleteNodeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "DeleteNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteNode(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -89,6 +109,16 @@ TpuTracingStub::AsyncReimageNode(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> TpuTracingStub::ReimageNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::ReimageNodeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "ReimageNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ReimageNode(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStopNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -101,6 +131,16 @@ future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStopNode(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> TpuTracingStub::StopNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::StopNodeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "StopNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->StopNode(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -111,6 +151,16 @@ future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStartNode(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncStartNode(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> TpuTracingStub::StartNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::StartNodeRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.tpu.v1.Tpu", "StartNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->StartNode(context, options, request));
 }
 
 StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>

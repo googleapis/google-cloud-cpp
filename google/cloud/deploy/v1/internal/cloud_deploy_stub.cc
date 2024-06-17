@@ -74,6 +74,19 @@ DefaultCloudDeployStub::AsyncCreateDeliveryPipeline(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::CreateDeliveryPipeline(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateDeliveryPipeline(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncUpdateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +106,19 @@ DefaultCloudDeployStub::AsyncUpdateDeliveryPipeline(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::UpdateDeliveryPipeline(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateDeliveryPipeline(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncDeleteDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +136,19 @@ DefaultCloudDeployStub::AsyncDeleteDeliveryPipeline(
         return grpc_stub_->AsyncDeleteDeliveryPipeline(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::DeleteDeliveryPipeline(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteDeliveryPipeline(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::deploy::v1::ListTargetsResponse>
@@ -165,6 +204,17 @@ DefaultCloudDeployStub::AsyncCreateTarget(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudDeployStub::CreateTarget(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::CreateTargetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTarget(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncUpdateTarget(
     google::cloud::CompletionQueue& cq,
@@ -183,6 +233,17 @@ DefaultCloudDeployStub::AsyncUpdateTarget(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudDeployStub::UpdateTarget(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::UpdateTargetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTarget(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncDeleteTarget(
     google::cloud::CompletionQueue& cq,
@@ -199,6 +260,17 @@ DefaultCloudDeployStub::AsyncDeleteTarget(
         return grpc_stub_->AsyncDeleteTarget(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultCloudDeployStub::DeleteTarget(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::DeleteTargetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTarget(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
@@ -244,6 +316,19 @@ DefaultCloudDeployStub::AsyncCreateCustomTargetType(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::CreateCustomTargetType(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateCustomTargetType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncUpdateCustomTargetType(
     google::cloud::CompletionQueue& cq,
@@ -263,6 +348,19 @@ DefaultCloudDeployStub::AsyncUpdateCustomTargetType(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::UpdateCustomTargetType(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateCustomTargetType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncDeleteCustomTargetType(
     google::cloud::CompletionQueue& cq,
@@ -280,6 +378,19 @@ DefaultCloudDeployStub::AsyncDeleteCustomTargetType(
         return grpc_stub_->AsyncDeleteCustomTargetType(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::DeleteCustomTargetType(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteCustomTargetType(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
@@ -321,6 +432,17 @@ DefaultCloudDeployStub::AsyncCreateRelease(
         return grpc_stub_->AsyncCreateRelease(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultCloudDeployStub::CreateRelease(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::CreateReleaseRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRelease(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
@@ -412,6 +534,17 @@ DefaultCloudDeployStub::AsyncCreateRollout(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultCloudDeployStub::CreateRollout(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::CreateRolloutRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRollout(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
 DefaultCloudDeployStub::IgnoreJob(
     grpc::ClientContext& context, Options const&,
@@ -500,6 +633,18 @@ DefaultCloudDeployStub::AsyncCreateAutomation(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::CreateAutomation(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::CreateAutomationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAutomation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncUpdateAutomation(
     google::cloud::CompletionQueue& cq,
@@ -518,6 +663,18 @@ DefaultCloudDeployStub::AsyncUpdateAutomation(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::UpdateAutomation(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAutomation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncDeleteAutomation(
     google::cloud::CompletionQueue& cq,
@@ -534,6 +691,18 @@ DefaultCloudDeployStub::AsyncDeleteAutomation(
         return grpc_stub_->AsyncDeleteAutomation(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudDeployStub::DeleteAutomation(
+    grpc::ClientContext& context, Options,
+    google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAutomation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::deploy::v1::Automation>

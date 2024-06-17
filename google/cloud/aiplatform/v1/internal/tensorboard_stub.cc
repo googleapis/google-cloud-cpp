@@ -50,6 +50,18 @@ DefaultTensorboardServiceStub::AsyncCreateTensorboard(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultTensorboardServiceStub::CreateTensorboard(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTensorboard(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
 DefaultTensorboardServiceStub::GetTensorboard(
     grpc::ClientContext& context, Options const&,
@@ -81,6 +93,18 @@ DefaultTensorboardServiceStub::AsyncUpdateTensorboard(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultTensorboardServiceStub::UpdateTensorboard(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTensorboard(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
 DefaultTensorboardServiceStub::ListTensorboards(
     grpc::ClientContext& context, Options const&,
@@ -110,6 +134,18 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboard(
         return grpc_stub_->AsyncDeleteTensorboard(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTensorboardServiceStub::DeleteTensorboard(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTensorboard(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
@@ -213,6 +249,20 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboardExperiment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultTensorboardServiceStub::DeleteTensorboardExperiment(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteTensorboardExperiment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 DefaultTensorboardServiceStub::CreateTensorboardRun(
     grpc::ClientContext& context, Options const&,
@@ -292,6 +342,18 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboardRun(
         return grpc_stub_->AsyncDeleteTensorboardRun(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTensorboardServiceStub::DeleteTensorboardRun(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTensorboardRun(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<
@@ -385,6 +447,20 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboardTimeSeries(
                                                             cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTensorboardServiceStub::DeleteTensorboardTimeSeries(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteTensorboardTimeSeries(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<

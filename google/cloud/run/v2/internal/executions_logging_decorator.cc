@@ -74,6 +74,17 @@ ExecutionsLogging::AsyncDeleteExecution(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ExecutionsLogging::DeleteExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::DeleteExecutionRequest const& request) {
+        return child_->DeleteExecution(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsLogging::AsyncCancelExecution(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +101,17 @@ ExecutionsLogging::AsyncCancelExecution(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ExecutionsLogging::CancelExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::CancelExecutionRequest const& request) {
+        return child_->CancelExecution(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -57,6 +57,12 @@ class ServiceAttachmentsRestLogging : public ServiceAttachmentsRestStub {
       google::cloud::cpp::compute::service_attachments::v1::
           DeleteServiceAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::service_attachments::v1::
+          DeleteServiceAttachmentRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
   GetServiceAttachment(google::cloud::rest_internal::RestContext& rest_context,
                        Options const& options,
@@ -77,6 +83,12 @@ class ServiceAttachmentsRestLogging : public ServiceAttachmentsRestStub {
       google::cloud::cpp::compute::service_attachments::v1::
           InsertServiceAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::service_attachments::v1::
+          InsertServiceAttachmentRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
   ListServiceAttachments(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -89,6 +101,12 @@ class ServiceAttachmentsRestLogging : public ServiceAttachmentsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::service_attachments::v1::
+          PatchServiceAttachmentRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::service_attachments::v1::
           PatchServiceAttachmentRequest const& request) override;
 

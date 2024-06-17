@@ -54,6 +54,15 @@ AssuredWorkloadsServiceMetadata::AsyncCreateWorkload(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+AssuredWorkloadsServiceMetadata::CreateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateWorkload(context, options, request);
+}
+
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceMetadata::UpdateWorkload(
     grpc::ClientContext& context, Options const& options,

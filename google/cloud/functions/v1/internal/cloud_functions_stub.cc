@@ -73,6 +73,18 @@ DefaultCloudFunctionsServiceStub::AsyncCreateFunction(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudFunctionsServiceStub::CreateFunction(
+    grpc::ClientContext& context, Options,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFunctionsServiceStub::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +103,18 @@ DefaultCloudFunctionsServiceStub::AsyncUpdateFunction(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudFunctionsServiceStub::UpdateFunction(
+    grpc::ClientContext& context, Options,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFunctionsServiceStub::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +131,18 @@ DefaultCloudFunctionsServiceStub::AsyncDeleteFunction(
         return grpc_stub_->AsyncDeleteFunction(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudFunctionsServiceStub::DeleteFunction(
+    grpc::ClientContext& context, Options,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFunction(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>

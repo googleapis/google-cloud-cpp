@@ -72,10 +72,20 @@ class DocumentServiceMetadata : public DocumentServiceStub {
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ImportDocuments(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeDocuments(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> PurgeDocuments(
+      grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
       override;
 

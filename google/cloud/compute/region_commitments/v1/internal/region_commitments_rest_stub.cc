@@ -121,6 +121,22 @@ DefaultRegionCommitmentsRestStub::AsyncInsertCommitment(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionCommitmentsRestStub::InsertCommitment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertCommitmentRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.commitment_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "commitments"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::CommitmentList>
 DefaultRegionCommitmentsRestStub::ListRegionCommitments(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -176,6 +192,25 @@ DefaultRegionCommitmentsRestStub::AsyncUpdateCommitment(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionCommitmentsRestStub::UpdateCommitment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateCommitmentRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.commitment_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "commitments", "/",
+                   request.commitment()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("paths", request.paths()),
+           std::make_pair("request_id", request.request_id()),
+           std::make_pair("update_mask", request.update_mask())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

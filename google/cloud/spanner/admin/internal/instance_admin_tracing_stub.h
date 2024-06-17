@@ -56,10 +56,20 @@ class InstanceAdminTracingStub : public InstanceAdminStub {
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      grpc::ClientContext& context, Options options,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      grpc::ClientContext& context, Options options,
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request) override;
 
@@ -99,10 +109,20 @@ class InstanceAdminTracingStub : public InstanceAdminStub {
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context, Options options,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context, Options options,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request) override;
 
@@ -136,6 +156,11 @@ class InstanceAdminTracingStub : public InstanceAdminStub {
       google::spanner::admin::instance::v1::
           CreateInstancePartitionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      grpc::ClientContext& context, Options options,
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request) override;
+
   Status DeleteInstancePartition(
       grpc::ClientContext& context, Options const& options,
       google::spanner::admin::instance::v1::
@@ -145,6 +170,11 @@ class InstanceAdminTracingStub : public InstanceAdminStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      grpc::ClientContext& context, Options options,
       google::spanner::admin::instance::v1::
           UpdateInstancePartitionRequest const& request) override;
 

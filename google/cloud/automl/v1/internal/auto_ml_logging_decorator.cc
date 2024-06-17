@@ -51,6 +51,17 @@ AutoMlLogging::AsyncCreateDataset(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlLogging::CreateDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::CreateDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::automl::v1::CreateDatasetRequest const& request) {
+        return child_->CreateDataset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlLogging::GetDataset(
     grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
@@ -103,6 +114,17 @@ AutoMlLogging::AsyncDeleteDataset(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlLogging::DeleteDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+        return child_->DeleteDataset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> AutoMlLogging::AsyncImportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -120,6 +142,17 @@ future<StatusOr<google::longrunning::Operation>> AutoMlLogging::AsyncImportData(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlLogging::ImportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::ImportDataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::automl::v1::ImportDataRequest const& request) {
+        return child_->ImportData(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> AutoMlLogging::AsyncExportData(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -135,6 +168,17 @@ future<StatusOr<google::longrunning::Operation>> AutoMlLogging::AsyncExportData(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AutoMlLogging::ExportData(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::ExportDataRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::automl::v1::ExportDataRequest const& request) {
+        return child_->ExportData(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
@@ -166,6 +210,17 @@ AutoMlLogging::AsyncCreateModel(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AutoMlLogging::CreateModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::CreateModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::automl::v1::CreateModelRequest const& request) {
+        return child_->CreateModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlLogging::GetModel(
@@ -209,6 +264,17 @@ AutoMlLogging::AsyncDeleteModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlLogging::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::DeleteModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::automl::v1::DeleteModelRequest const& request) {
+        return child_->DeleteModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::automl::v1::Model> AutoMlLogging::UpdateModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
@@ -238,6 +304,17 @@ AutoMlLogging::AsyncDeployModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlLogging::DeployModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::DeployModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::automl::v1::DeployModelRequest const& request) {
+        return child_->DeployModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
@@ -256,6 +333,17 @@ AutoMlLogging::AsyncUndeployModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AutoMlLogging::UndeployModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::UndeployModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::automl::v1::UndeployModelRequest const& request) {
+        return child_->UndeployModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
@@ -272,6 +360,17 @@ AutoMlLogging::AsyncExportModel(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> AutoMlLogging::ExportModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::ExportModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::automl::v1::ExportModelRequest const& request) {
+        return child_->ExportModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>

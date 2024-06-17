@@ -63,6 +63,18 @@ CloudShellServiceLogging::AsyncStartEnvironment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudShellServiceLogging::StartEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+        return child_->StartEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceLogging::AsyncAuthorizeEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -80,6 +92,19 @@ CloudShellServiceLogging::AsyncAuthorizeEnvironment(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudShellServiceLogging::AuthorizeEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::shell::v1::AuthorizeEnvironmentRequest const&
+                 request) {
+        return child_->AuthorizeEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -100,6 +125,17 @@ CloudShellServiceLogging::AsyncAddPublicKey(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CloudShellServiceLogging::AddPublicKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+        return child_->AddPublicKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceLogging::AsyncRemovePublicKey(
     google::cloud::CompletionQueue& cq,
@@ -116,6 +152,18 @@ CloudShellServiceLogging::AsyncRemovePublicKey(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudShellServiceLogging::RemovePublicKey(
+    grpc::ClientContext& context, Options options,
+    google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+        return child_->RemovePublicKey(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

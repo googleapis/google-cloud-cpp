@@ -49,6 +49,17 @@ DefaultModelServiceStub::AsyncCreateModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultModelServiceStub::CreateModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::GetModel(
     grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::GetModelRequest const& request) {
@@ -131,6 +142,17 @@ DefaultModelServiceStub::AsyncTuneModel(
         return grpc_stub_->AsyncTuneModel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultModelServiceStub::TuneModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->TuneModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

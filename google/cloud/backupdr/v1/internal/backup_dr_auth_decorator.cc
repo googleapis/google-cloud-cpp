@@ -69,6 +69,14 @@ BackupDRAuth::AsyncCreateManagementServer(
       });
 }
 
+StatusOr<google::longrunning::Operation> BackupDRAuth::CreateManagementServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateManagementServer(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupDRAuth::AsyncDeleteManagementServer(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +95,14 @@ BackupDRAuth::AsyncDeleteManagementServer(
         return child->AsyncDeleteManagementServer(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> BackupDRAuth::DeleteManagementServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteManagementServer(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

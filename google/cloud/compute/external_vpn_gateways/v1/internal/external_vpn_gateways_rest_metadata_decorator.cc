@@ -52,6 +52,15 @@ ExternalVpnGatewaysRestMetadata::AsyncDeleteExternalVpnGateway(
                                                std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ExternalVpnGatewaysRestMetadata::DeleteExternalVpnGateway(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::external_vpn_gateways::v1::
+        DeleteExternalVpnGatewayRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteExternalVpnGateway(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
 ExternalVpnGatewaysRestMetadata::GetExternalVpnGateway(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -73,6 +82,15 @@ ExternalVpnGatewaysRestMetadata::AsyncInsertExternalVpnGateway(
                                                std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ExternalVpnGatewaysRestMetadata::InsertExternalVpnGateway(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::external_vpn_gateways::v1::
+        InsertExternalVpnGatewayRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertExternalVpnGateway(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGatewayList>
 ExternalVpnGatewaysRestMetadata::ListExternalVpnGateways(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -92,6 +110,15 @@ ExternalVpnGatewaysRestMetadata::AsyncSetLabels(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ExternalVpnGatewaysRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::external_vpn_gateways::v1::
+        SetLabelsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

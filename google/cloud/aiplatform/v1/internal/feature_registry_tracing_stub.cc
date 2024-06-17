@@ -47,6 +47,19 @@ FeatureRegistryServiceTracingStub::AsyncCreateFeatureGroup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceTracingStub::CreateFeatureGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureRegistryService",
+      "CreateFeatureGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateFeatureGroup(context, options, request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
 FeatureRegistryServiceTracingStub::GetFeatureGroup(
     grpc::ClientContext& context, Options const& options,
@@ -87,6 +100,19 @@ FeatureRegistryServiceTracingStub::AsyncUpdateFeatureGroup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceTracingStub::UpdateFeatureGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureRegistryService",
+      "UpdateFeatureGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateFeatureGroup(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceTracingStub::AsyncDeleteFeatureGroup(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +129,19 @@ FeatureRegistryServiceTracingStub::AsyncDeleteFeatureGroup(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceTracingStub::DeleteFeatureGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureRegistryService",
+      "DeleteFeatureGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteFeatureGroup(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceTracingStub::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
@@ -115,6 +154,18 @@ FeatureRegistryServiceTracingStub::AsyncCreateFeature(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateFeature(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceTracingStub::CreateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureRegistryService", "CreateFeature");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateFeature(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
@@ -155,6 +206,18 @@ FeatureRegistryServiceTracingStub::AsyncUpdateFeature(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceTracingStub::UpdateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureRegistryService", "UpdateFeature");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateFeature(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureRegistryServiceTracingStub::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +230,18 @@ FeatureRegistryServiceTracingStub::AsyncDeleteFeature(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteFeature(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureRegistryServiceTracingStub::DeleteFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.FeatureRegistryService", "DeleteFeature");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFeature(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

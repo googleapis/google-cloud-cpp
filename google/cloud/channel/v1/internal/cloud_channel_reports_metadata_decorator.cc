@@ -54,6 +54,15 @@ CloudChannelReportsServiceMetadata::AsyncRunReportJob(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelReportsServiceMetadata::RunReportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::RunReportJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RunReportJob(context, options, request);
+}
+
 StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
 CloudChannelReportsServiceMetadata::FetchReportResults(
     grpc::ClientContext& context, Options const& options,

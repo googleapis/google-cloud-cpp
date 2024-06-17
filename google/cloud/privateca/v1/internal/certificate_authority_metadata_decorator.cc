@@ -106,6 +106,16 @@ CertificateAuthorityServiceMetadata::AsyncActivateCertificateAuthority(
                                                    std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::ActivateCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        ActivateCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ActivateCertificateAuthority(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncCreateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
@@ -117,6 +127,16 @@ CertificateAuthorityServiceMetadata::AsyncCreateCertificateAuthority(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateCertificateAuthority(cq, std::move(context),
                                                  std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::CreateCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        CreateCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCertificateAuthority(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -132,6 +152,16 @@ CertificateAuthorityServiceMetadata::AsyncDisableCertificateAuthority(
                                                   std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::DisableCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        DisableCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DisableCertificateAuthority(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncEnableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +173,16 @@ CertificateAuthorityServiceMetadata::AsyncEnableCertificateAuthority(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncEnableCertificateAuthority(cq, std::move(context),
                                                  std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::EnableCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        EnableCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->EnableCertificateAuthority(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::
@@ -190,6 +230,16 @@ CertificateAuthorityServiceMetadata::AsyncUndeleteCertificateAuthority(
                                                    std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::UndeleteCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UndeleteCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UndeleteCertificateAuthority(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
@@ -201,6 +251,16 @@ CertificateAuthorityServiceMetadata::AsyncDeleteCertificateAuthority(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCertificateAuthority(cq, std::move(context),
                                                  std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::DeleteCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        DeleteCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCertificateAuthority(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -218,6 +278,18 @@ CertificateAuthorityServiceMetadata::AsyncUpdateCertificateAuthority(
                                                  std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::UpdateCertificateAuthority(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UpdateCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat(
+                  "certificate_authority.name=",
+                  internal::UrlEncode(request.certificate_authority().name())));
+  return child_->UpdateCertificateAuthority(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncCreateCaPool(
     google::cloud::CompletionQueue& cq,
@@ -229,6 +301,16 @@ CertificateAuthorityServiceMetadata::AsyncCreateCaPool(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateCaPool(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::CreateCaPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::CreateCaPoolRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCaPool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -243,6 +325,17 @@ CertificateAuthorityServiceMetadata::AsyncUpdateCaPool(
                            internal::UrlEncode(request.ca_pool().name())));
   return child_->AsyncUpdateCaPool(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::UpdateCaPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("ca_pool.name=",
+                           internal::UrlEncode(request.ca_pool().name())));
+  return child_->UpdateCaPool(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
@@ -274,6 +367,16 @@ CertificateAuthorityServiceMetadata::AsyncDeleteCaPool(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCaPool(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::DeleteCaPool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCaPool(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
@@ -322,6 +425,18 @@ CertificateAuthorityServiceMetadata::AsyncUpdateCertificateRevocationList(
       cq, std::move(context), std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::UpdateCertificateRevocationList(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UpdateCertificateRevocationListRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("certificate_revocation_list.name=",
+                           internal::UrlEncode(
+                               request.certificate_revocation_list().name())));
+  return child_->UpdateCertificateRevocationList(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncCreateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
@@ -335,6 +450,16 @@ CertificateAuthorityServiceMetadata::AsyncCreateCertificateTemplate(
                                                 std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::CreateCertificateTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        CreateCertificateTemplateRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCertificateTemplate(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDeleteCertificateTemplate(
     google::cloud::CompletionQueue& cq,
@@ -346,6 +471,16 @@ CertificateAuthorityServiceMetadata::AsyncDeleteCertificateTemplate(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCertificateTemplate(cq, std::move(context),
                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::DeleteCertificateTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        DeleteCertificateTemplateRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCertificateTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -382,6 +517,18 @@ CertificateAuthorityServiceMetadata::AsyncUpdateCertificateTemplate(
                    internal::UrlEncode(request.certificate_template().name())));
   return child_->AsyncUpdateCertificateTemplate(cq, std::move(context),
                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateAuthorityServiceMetadata::UpdateCertificateTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::security::privateca::v1::
+        UpdateCertificateTemplateRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("certificate_template.name=",
+                   internal::UrlEncode(request.certificate_template().name())));
+  return child_->UpdateCertificateTemplate(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

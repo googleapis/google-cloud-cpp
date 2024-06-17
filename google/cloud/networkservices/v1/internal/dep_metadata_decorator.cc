@@ -75,6 +75,16 @@ DepServiceMetadata::AsyncCreateLbTrafficExtension(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::CreateLbTrafficExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateLbTrafficExtension(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceMetadata::AsyncUpdateLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
@@ -90,6 +100,18 @@ DepServiceMetadata::AsyncUpdateLbTrafficExtension(
                                                std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::UpdateLbTrafficExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("lb_traffic_extension.name=",
+                   internal::UrlEncode(request.lb_traffic_extension().name())));
+  return child_->UpdateLbTrafficExtension(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceMetadata::AsyncDeleteLbTrafficExtension(
     google::cloud::CompletionQueue& cq,
@@ -101,6 +123,16 @@ DepServiceMetadata::AsyncDeleteLbTrafficExtension(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteLbTrafficExtension(cq, std::move(context),
                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::DeleteLbTrafficExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteLbTrafficExtension(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse>
@@ -136,6 +168,16 @@ DepServiceMetadata::AsyncCreateLbRouteExtension(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::CreateLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateLbRouteExtension(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceMetadata::AsyncUpdateLbRouteExtension(
     google::cloud::CompletionQueue& cq,
@@ -151,6 +193,18 @@ DepServiceMetadata::AsyncUpdateLbRouteExtension(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::UpdateLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("lb_route_extension.name=",
+                   internal::UrlEncode(request.lb_route_extension().name())));
+  return child_->UpdateLbRouteExtension(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DepServiceMetadata::AsyncDeleteLbRouteExtension(
     google::cloud::CompletionQueue& cq,
@@ -162,6 +216,16 @@ DepServiceMetadata::AsyncDeleteLbRouteExtension(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteLbRouteExtension(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DepServiceMetadata::DeleteLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteLbRouteExtension(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

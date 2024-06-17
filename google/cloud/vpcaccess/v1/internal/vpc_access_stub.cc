@@ -50,6 +50,18 @@ DefaultVpcAccessServiceStub::AsyncCreateConnector(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVpcAccessServiceStub::CreateConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 DefaultVpcAccessServiceStub::GetConnector(
     grpc::ClientContext& context, Options const&,
@@ -91,6 +103,18 @@ DefaultVpcAccessServiceStub::AsyncDeleteConnector(
         return grpc_stub_->AsyncDeleteConnector(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVpcAccessServiceStub::DeleteConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -45,6 +45,10 @@ class CloudChannelReportsServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::channel::v1::RunReportJobRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> RunReportJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::channel::v1::RunReportJobRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
   FetchReportResults(
       grpc::ClientContext& context, Options const& options,
@@ -82,6 +86,10 @@ class DefaultCloudChannelReportsServiceStub
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::channel::v1::RunReportJobRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RunReportJob(
+      grpc::ClientContext& context, Options options,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>

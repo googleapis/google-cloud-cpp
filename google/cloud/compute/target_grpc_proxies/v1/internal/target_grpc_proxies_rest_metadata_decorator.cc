@@ -51,6 +51,15 @@ TargetGrpcProxiesRestMetadata::AsyncDeleteTargetGrpcProxy(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetGrpcProxiesRestMetadata::DeleteTargetGrpcProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        DeleteTargetGrpcProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteTargetGrpcProxy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
 TargetGrpcProxiesRestMetadata::GetTargetGrpcProxy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -72,6 +81,15 @@ TargetGrpcProxiesRestMetadata::AsyncInsertTargetGrpcProxy(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetGrpcProxiesRestMetadata::InsertTargetGrpcProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        InsertTargetGrpcProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertTargetGrpcProxy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList>
 TargetGrpcProxiesRestMetadata::ListTargetGrpcProxies(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -91,6 +109,15 @@ TargetGrpcProxiesRestMetadata::AsyncPatchTargetGrpcProxy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchTargetGrpcProxy(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetGrpcProxiesRestMetadata::PatchTargetGrpcProxy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        PatchTargetGrpcProxyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchTargetGrpcProxy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

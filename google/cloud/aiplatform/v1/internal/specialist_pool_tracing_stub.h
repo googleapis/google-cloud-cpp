@@ -45,6 +45,11 @@ class SpecialistPoolServiceTracingStub : public SpecialistPoolServiceStub {
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSpecialistPool(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request)
@@ -63,10 +68,20 @@ class SpecialistPoolServiceTracingStub : public SpecialistPoolServiceStub {
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSpecialistPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
       override;
 

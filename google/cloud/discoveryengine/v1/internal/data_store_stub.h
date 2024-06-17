@@ -45,6 +45,11 @@ class DataStoreServiceStub {
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateDataStore(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetDataStoreRequest const&
@@ -60,6 +65,11 @@ class DataStoreServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDataStore(
+      grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
           request) = 0;
 
@@ -99,6 +109,11 @@ class DefaultDataStoreServiceStub : public DataStoreServiceStub {
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDataStore(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request)
+      override;
+
   StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
       grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetDataStoreRequest const& request)
@@ -114,6 +129,11 @@ class DefaultDataStoreServiceStub : public DataStoreServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataStore(
+      grpc::ClientContext& context, Options options,
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request)
       override;
 

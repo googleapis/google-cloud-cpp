@@ -71,6 +71,18 @@ DefaultConfigServiceV2Stub::AsyncCreateBucketAsync(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultConfigServiceV2Stub::CreateBucketAsync(
+    grpc::ClientContext& context, Options,
+    google::logging::v2::CreateBucketRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBucketAsync(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigServiceV2Stub::AsyncUpdateBucketAsync(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +98,18 @@ DefaultConfigServiceV2Stub::AsyncUpdateBucketAsync(
         return grpc_stub_->AsyncUpdateBucketAsync(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConfigServiceV2Stub::UpdateBucketAsync(
+    grpc::ClientContext& context, Options,
+    google::logging::v2::UpdateBucketRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBucketAsync(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::logging::v2::LogBucket>
@@ -263,6 +287,17 @@ DefaultConfigServiceV2Stub::AsyncCreateLink(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultConfigServiceV2Stub::CreateLink(
+    grpc::ClientContext& context, Options,
+    google::logging::v2::CreateLinkRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultConfigServiceV2Stub::AsyncDeleteLink(
     google::cloud::CompletionQueue& cq,
@@ -278,6 +313,17 @@ DefaultConfigServiceV2Stub::AsyncDeleteLink(
         return grpc_stub_->AsyncDeleteLink(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultConfigServiceV2Stub::DeleteLink(
+    grpc::ClientContext& context, Options,
+    google::logging::v2::DeleteLinkRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteLink(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::logging::v2::ListLinksResponse>
@@ -424,6 +470,18 @@ DefaultConfigServiceV2Stub::AsyncCopyLogEntries(
         return grpc_stub_->AsyncCopyLogEntries(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultConfigServiceV2Stub::CopyLogEntries(
+    grpc::ClientContext& context, Options,
+    google::logging::v2::CopyLogEntriesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CopyLogEntries(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

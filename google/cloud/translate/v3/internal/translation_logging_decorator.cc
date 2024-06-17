@@ -105,6 +105,19 @@ TranslationServiceLogging::AsyncBatchTranslateText(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceLogging::BatchTranslateText(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::BatchTranslateTextRequest const&
+                 request) {
+        return child_->BatchTranslateText(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceLogging::AsyncBatchTranslateDocument(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +139,21 @@ TranslationServiceLogging::AsyncBatchTranslateDocument(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceLogging::BatchTranslateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+              request) {
+        return child_->BatchTranslateDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceLogging::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +171,19 @@ TranslationServiceLogging::AsyncCreateGlossary(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceLogging::CreateGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateGlossaryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::CreateGlossaryRequest const&
+                 request) {
+        return child_->CreateGlossary(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
@@ -188,6 +229,19 @@ TranslationServiceLogging::AsyncDeleteGlossary(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceLogging::DeleteGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::DeleteGlossaryRequest const&
+                 request) {
+        return child_->DeleteGlossary(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>

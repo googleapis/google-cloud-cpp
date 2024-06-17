@@ -91,6 +91,15 @@ TranslationServiceMetadata::AsyncBatchTranslateText(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceMetadata::BatchTranslateText(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchTranslateText(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceMetadata::AsyncBatchTranslateDocument(
     google::cloud::CompletionQueue& cq,
@@ -104,6 +113,16 @@ TranslationServiceMetadata::AsyncBatchTranslateDocument(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceMetadata::BatchTranslateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchTranslateDocument(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceMetadata::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +133,15 @@ TranslationServiceMetadata::AsyncCreateGlossary(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateGlossary(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceMetadata::CreateGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateGlossaryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateGlossary(context, options, request);
 }
 
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
@@ -144,6 +172,15 @@ TranslationServiceMetadata::AsyncDeleteGlossary(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteGlossary(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceMetadata::DeleteGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteGlossary(context, options, request);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>

@@ -49,6 +49,11 @@ class CompletionServiceTracingStub : public CompletionServiceStub {
       google::cloud::retail::v2::ImportCompletionDataRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ImportCompletionData(
+      grpc::ClientContext& context, Options options,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

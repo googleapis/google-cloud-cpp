@@ -76,6 +76,18 @@ DocumentsLogging::AsyncCreateDocument(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DocumentsLogging::CreateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
+        return child_->CreateDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentsLogging::AsyncImportDocuments(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +105,18 @@ DocumentsLogging::AsyncImportDocuments(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DocumentsLogging::ImportDocuments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::ImportDocumentsRequest const&
+                 request) {
+        return child_->ImportDocuments(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -114,6 +138,18 @@ DocumentsLogging::AsyncDeleteDocument(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DocumentsLogging::DeleteDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
+        return child_->DeleteDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentsLogging::AsyncUpdateDocument(
     google::cloud::CompletionQueue& cq,
@@ -131,6 +167,18 @@ DocumentsLogging::AsyncUpdateDocument(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DocumentsLogging::UpdateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
+        return child_->UpdateDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -152,6 +200,18 @@ DocumentsLogging::AsyncReloadDocument(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DocumentsLogging::ReloadDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
+        return child_->ReloadDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentsLogging::AsyncExportDocument(
     google::cloud::CompletionQueue& cq,
@@ -169,6 +229,18 @@ DocumentsLogging::AsyncExportDocument(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DocumentsLogging::ExportDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
+        return child_->ExportDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

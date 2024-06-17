@@ -83,6 +83,23 @@ DefaultRegionNotificationEndpointsRestStub::AsyncDeleteNotificationEndpoint(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionNotificationEndpointsRestStub::DeleteNotificationEndpoint(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        DeleteNotificationEndpointRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "notificationEndpoints", "/",
+                   request.notification_endpoint()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
 DefaultRegionNotificationEndpointsRestStub::GetNotificationEndpoint(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -132,6 +149,22 @@ DefaultRegionNotificationEndpointsRestStub::AsyncInsertNotificationEndpoint(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultRegionNotificationEndpointsRestStub::InsertNotificationEndpoint(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        InsertNotificationEndpointRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.notification_endpoint_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "notificationEndpoints"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpointList>

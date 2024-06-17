@@ -91,6 +91,14 @@ future<StatusOr<google::longrunning::Operation>> FlowsAuth::AsyncTrainFlow(
       });
 }
 
+StatusOr<google::longrunning::Operation> FlowsAuth::TrainFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TrainFlow(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsAuth::ValidateFlow(
     grpc::ClientContext& context, Options const& options,
@@ -129,6 +137,14 @@ future<StatusOr<google::longrunning::Operation>> FlowsAuth::AsyncImportFlow(
       });
 }
 
+StatusOr<google::longrunning::Operation> FlowsAuth::ImportFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportFlow(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> FlowsAuth::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -146,6 +162,14 @@ future<StatusOr<google::longrunning::Operation>> FlowsAuth::AsyncExportFlow(
         return child->AsyncExportFlow(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> FlowsAuth::ExportFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportFlow(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> FlowsAuth::AsyncGetOperation(

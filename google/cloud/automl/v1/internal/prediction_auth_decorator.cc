@@ -60,6 +60,14 @@ PredictionServiceAuth::AsyncBatchPredict(
       });
 }
 
+StatusOr<google::longrunning::Operation> PredictionServiceAuth::BatchPredict(
+    grpc::ClientContext& context, Options options,
+    google::cloud::automl::v1::BatchPredictRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchPredict(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PredictionServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

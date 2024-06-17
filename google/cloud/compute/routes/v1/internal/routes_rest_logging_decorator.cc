@@ -54,6 +54,20 @@ RoutesRestLogging::AsyncDeleteRoute(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutesRestLogging::DeleteRoute(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+                 request) {
+        return child_->DeleteRoute(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Route> RoutesRestLogging::GetRoute(
     rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) {
@@ -84,6 +98,20 @@ RoutesRestLogging::AsyncInsertRoute(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutesRestLogging::InsertRoute(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+                 request) {
+        return child_->InsertRoute(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RouteList>

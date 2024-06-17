@@ -54,6 +54,15 @@ BigtableInstanceAdminMetadata::AsyncCreateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstance(context, options, request);
+}
+
 StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminMetadata::GetInstance(
     grpc::ClientContext& context, Options const& options,
@@ -94,6 +103,16 @@ BigtableInstanceAdminMetadata::AsyncPartialUpdateInstance(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::PartialUpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->PartialUpdateInstance(context, options, request);
+}
+
 Status BigtableInstanceAdminMetadata::DeleteInstance(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
@@ -112,6 +131,15 @@ BigtableInstanceAdminMetadata::AsyncCreateCluster(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateCluster(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCluster(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
@@ -144,6 +172,15 @@ BigtableInstanceAdminMetadata::AsyncUpdateCluster(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::Cluster const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UpdateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncPartialUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -155,6 +192,16 @@ BigtableInstanceAdminMetadata::AsyncPartialUpdateCluster(
                            internal::UrlEncode(request.cluster().name())));
   return child_->AsyncPartialUpdateCluster(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::PartialUpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("cluster.name=",
+                           internal::UrlEncode(request.cluster().name())));
+  return child_->PartialUpdateCluster(context, options, request);
 }
 
 Status BigtableInstanceAdminMetadata::DeleteCluster(
@@ -203,6 +250,16 @@ BigtableInstanceAdminMetadata::AsyncUpdateAppProfile(
                            internal::UrlEncode(request.app_profile().name())));
   return child_->AsyncUpdateAppProfile(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminMetadata::UpdateAppProfile(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("app_profile.name=",
+                           internal::UrlEncode(request.app_profile().name())));
+  return child_->UpdateAppProfile(context, options, request);
 }
 
 Status BigtableInstanceAdminMetadata::DeleteAppProfile(

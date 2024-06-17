@@ -69,6 +69,20 @@ SslCertificatesRestLogging::AsyncDeleteSslCertificate(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslCertificatesRestLogging::DeleteSslCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_certificates::v1::
+        DeleteSslCertificateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::ssl_certificates::v1::
+                 DeleteSslCertificateRequest const& request) {
+        return child_->DeleteSslCertificate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
 SslCertificatesRestLogging::GetSslCertificate(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -101,6 +115,20 @@ SslCertificatesRestLogging::AsyncInsertSslCertificate(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslCertificatesRestLogging::InsertSslCertificate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::ssl_certificates::v1::
+        InsertSslCertificateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::ssl_certificates::v1::
+                 InsertSslCertificateRequest const& request) {
+        return child_->InsertSslCertificate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificateList>

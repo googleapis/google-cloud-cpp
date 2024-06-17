@@ -68,6 +68,14 @@ CloudMemcacheAuth::AsyncCreateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudMemcacheAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheAuth::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +94,14 @@ CloudMemcacheAuth::AsyncUpdateInstance(
         return child->AsyncUpdateInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudMemcacheAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,6 +124,14 @@ CloudMemcacheAuth::AsyncUpdateParameters(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudMemcacheAuth::UpdateParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateParameters(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheAuth::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +150,14 @@ CloudMemcacheAuth::AsyncDeleteInstance(
         return child->AsyncDeleteInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudMemcacheAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -148,6 +180,14 @@ CloudMemcacheAuth::AsyncApplyParameters(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudMemcacheAuth::ApplyParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ApplyParameters(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheAuth::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
@@ -166,6 +206,15 @@ CloudMemcacheAuth::AsyncRescheduleMaintenance(
         return child->AsyncRescheduleMaintenance(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+CloudMemcacheAuth::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RescheduleMaintenance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

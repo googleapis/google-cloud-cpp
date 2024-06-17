@@ -56,10 +56,20 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::CreateInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::CreateInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::UpdateInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::filestore::v1::UpdateInstanceRequest const& request)
       override;
 
@@ -70,6 +80,11 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::RestoreInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RestoreInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::RestoreInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRevertInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -77,10 +92,20 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::RevertInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RevertInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::RevertInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::DeleteInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::filestore::v1::DeleteInstanceRequest const& request)
       override;
 
@@ -100,6 +125,11 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::CreateSnapshotRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSnapshot(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSnapshot(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -107,10 +137,20 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::DeleteSnapshotRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteSnapshot(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSnapshot(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateSnapshot(
+      grpc::ClientContext& context, Options options,
       google::cloud::filestore::v1::UpdateSnapshotRequest const& request)
       override;
 
@@ -129,6 +169,11 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::CreateBackupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::CreateBackupRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -136,10 +181,20 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::DeleteBackupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::filestore::v1::DeleteBackupRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::filestore::v1::UpdateBackupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateBackup(
+      grpc::ClientContext& context, Options options,
       google::cloud::filestore::v1::UpdateBackupRequest const& request)
       override;
 

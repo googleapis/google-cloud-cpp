@@ -54,6 +54,15 @@ DataScanServiceMetadata::AsyncCreateDataScan(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataScanServiceMetadata::CreateDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDataScan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceMetadata::AsyncUpdateDataScan(
     google::cloud::CompletionQueue& cq,
@@ -67,6 +76,16 @@ DataScanServiceMetadata::AsyncUpdateDataScan(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataScanServiceMetadata::UpdateDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("data_scan.name=",
+                           internal::UrlEncode(request.data_scan().name())));
+  return child_->UpdateDataScan(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataScanServiceMetadata::AsyncDeleteDataScan(
     google::cloud::CompletionQueue& cq,
@@ -77,6 +96,15 @@ DataScanServiceMetadata::AsyncDeleteDataScan(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDataScan(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataScanServiceMetadata::DeleteDataScan(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDataScan(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::DataScan>

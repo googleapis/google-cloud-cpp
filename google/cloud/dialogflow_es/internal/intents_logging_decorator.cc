@@ -111,6 +111,18 @@ IntentsLogging::AsyncBatchUpdateIntents(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> IntentsLogging::BatchUpdateIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&
+                 request) {
+        return child_->BatchUpdateIntents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IntentsLogging::AsyncBatchDeleteIntents(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +140,18 @@ IntentsLogging::AsyncBatchDeleteIntents(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> IntentsLogging::BatchDeleteIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&
+                 request) {
+        return child_->BatchDeleteIntents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

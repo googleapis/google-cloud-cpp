@@ -107,6 +107,23 @@ DefaultNetworkAttachmentsRestStub::AsyncDeleteNetworkAttachment(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkAttachmentsRestStub::DeleteNetworkAttachment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::
+        DeleteNetworkAttachmentRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "networkAttachments", "/",
+                   request.network_attachment()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
 DefaultNetworkAttachmentsRestStub::GetNetworkAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -175,6 +192,22 @@ DefaultNetworkAttachmentsRestStub::AsyncInsertNetworkAttachment(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkAttachmentsRestStub::InsertNetworkAttachment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::
+        InsertNetworkAttachmentRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.network_attachment_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "networkAttachments"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
 DefaultNetworkAttachmentsRestStub::ListNetworkAttachments(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -231,6 +264,23 @@ DefaultNetworkAttachmentsRestStub::AsyncPatchNetworkAttachment(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultNetworkAttachmentsRestStub::PatchNetworkAttachment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.network_attachment_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "networkAttachments", "/",
+                   request.network_attachment()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

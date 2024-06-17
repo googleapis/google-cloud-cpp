@@ -56,6 +56,11 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+          request) override;
+
   StatusOr<google::cloud::baremetalsolution::v2::Instance> RenameInstance(
       grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
@@ -68,6 +73,11 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ResetInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStartInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -75,10 +85,20 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::StartInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> StartInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStopInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StopInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request)
       override;
 
@@ -90,6 +110,11 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::
           EnableInteractiveSerialConsoleRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> EnableInteractiveSerialConsole(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>>
   AsyncDisableInteractiveSerialConsole(
       google::cloud::CompletionQueue& cq,
@@ -98,10 +123,20 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::
           DisableInteractiveSerialConsoleRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DisableInteractiveSerialConsole(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDetachLun(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::baremetalsolution::v2::DetachLunRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DetachLun(
+      grpc::ClientContext& context, Options options,
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request)
       override;
 
@@ -137,6 +172,11 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateVolume(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request)
+      override;
+
   StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
       grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request)
@@ -149,10 +189,20 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> EvictVolume(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncResizeVolume(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ResizeVolume(
+      grpc::ClientContext& context, Options options,
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request)
       override;
 
@@ -179,6 +229,11 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateNetwork(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request)
+      override;
+
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
   CreateVolumeSnapshot(
       grpc::ClientContext& context, Options const& options,
@@ -189,6 +244,11 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> RestoreVolumeSnapshot(
+      grpc::ClientContext& context, Options options,
       google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
           request) override;
 
@@ -226,6 +286,11 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::EvictLunRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> EvictLun(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::EvictLunRequest const& request)
+      override;
+
   StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
       grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request)
@@ -244,10 +309,20 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateNfsShare(
+      grpc::ClientContext& context, Options options,
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNfsShare(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateNfsShare(
+      grpc::ClientContext& context, Options options,
       google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
           request) override;
 
@@ -260,6 +335,11 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNfsShare(
+      grpc::ClientContext& context, Options options,
       google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
           request) override;
 

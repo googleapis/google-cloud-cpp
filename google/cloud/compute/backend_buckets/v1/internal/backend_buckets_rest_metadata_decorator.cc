@@ -51,6 +51,15 @@ BackendBucketsRestMetadata::AsyncAddSignedUrlKey(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsRestMetadata::AddSignedUrlKey(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AddSignedUrlKeyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->AddSignedUrlKey(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsRestMetadata::AsyncDeleteBackendBucket(
     CompletionQueue& cq,
@@ -63,6 +72,15 @@ BackendBucketsRestMetadata::AsyncDeleteBackendBucket(
                                           std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsRestMetadata::DeleteBackendBucket(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteBackendBucketRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteBackendBucket(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsRestMetadata::AsyncDeleteSignedUrlKey(
     CompletionQueue& cq,
@@ -73,6 +91,15 @@ BackendBucketsRestMetadata::AsyncDeleteSignedUrlKey(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeleteSignedUrlKey(cq, std::move(rest_context),
                                          std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsRestMetadata::DeleteSignedUrlKey(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteSignedUrlKeyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteSignedUrlKey(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
@@ -105,6 +132,15 @@ BackendBucketsRestMetadata::AsyncInsertBackendBucket(
                                           std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsRestMetadata::InsertBackendBucket(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        InsertBackendBucketRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertBackendBucket(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendBucketList>
 BackendBucketsRestMetadata::ListBackendBuckets(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -126,6 +162,15 @@ BackendBucketsRestMetadata::AsyncPatchBackendBucket(
                                          std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsRestMetadata::PatchBackendBucket(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        PatchBackendBucketRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchBackendBucket(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsRestMetadata::AsyncSetEdgeSecurityPolicy(
     CompletionQueue& cq,
@@ -136,6 +181,15 @@ BackendBucketsRestMetadata::AsyncSetEdgeSecurityPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetEdgeSecurityPolicy(cq, std::move(rest_context),
                                             std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsRestMetadata::SetEdgeSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->SetEdgeSecurityPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -166,6 +220,15 @@ BackendBucketsRestMetadata::AsyncUpdateBackendBucket(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateBackendBucket(cq, std::move(rest_context),
                                           std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsRestMetadata::UpdateBackendBucket(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        UpdateBackendBucketRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateBackendBucket(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

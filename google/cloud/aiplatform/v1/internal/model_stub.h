@@ -44,6 +44,10 @@ class ModelServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::UploadModelRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UploadModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UploadModelRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelRequest const& request) = 0;
@@ -71,10 +75,19 @@ class ModelServiceStub {
       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteModelRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteModel(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteModelRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -82,6 +95,11 @@ class ModelServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteModelVersion(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const&
           request) = 0;
 
@@ -96,10 +114,18 @@ class ModelServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::aiplatform::v1::ExportModelRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> ExportModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::ExportModelRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCopyModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CopyModelRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CopyModel(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CopyModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
@@ -177,6 +203,11 @@ class DefaultModelServiceStub : public ModelServiceStub {
       google::cloud::aiplatform::v1::UploadModelRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UploadModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UploadModelRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelRequest const& request) override;
@@ -204,6 +235,11 @@ class DefaultModelServiceStub : public ModelServiceStub {
       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -211,10 +247,20 @@ class DefaultModelServiceStub : public ModelServiceStub {
       google::cloud::aiplatform::v1::DeleteModelRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteModelRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteModelVersion(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteModelVersion(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request)
       override;
 
@@ -230,10 +276,19 @@ class DefaultModelServiceStub : public ModelServiceStub {
       google::cloud::aiplatform::v1::ExportModelRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ExportModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::ExportModelRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCopyModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CopyModel(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>

@@ -70,6 +70,18 @@ CloudFunctionsServiceTracingStub::AsyncCreateFunction(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingStub::CreateFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "CreateFunction");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateFunction(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceTracingStub::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +97,18 @@ CloudFunctionsServiceTracingStub::AsyncUpdateFunction(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingStub::UpdateFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "UpdateFunction");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateFunction(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceTracingStub::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +122,18 @@ CloudFunctionsServiceTracingStub::AsyncDeleteFunction(
   auto f =
       child_->AsyncDeleteFunction(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingStub::DeleteFunction(
+    grpc::ClientContext& context, Options options,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.functions.v1.CloudFunctionsService", "DeleteFunction");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteFunction(context, options, request));
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>

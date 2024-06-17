@@ -98,6 +98,14 @@ IntentsMetadata::AsyncImportIntents(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> IntentsMetadata::ImportIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportIntents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IntentsMetadata::AsyncExportIntents(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +116,14 @@ IntentsMetadata::AsyncExportIntents(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncExportIntents(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> IntentsMetadata::ExportIntents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ExportIntents(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

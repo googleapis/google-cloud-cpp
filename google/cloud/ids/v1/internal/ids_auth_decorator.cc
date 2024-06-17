@@ -66,6 +66,14 @@ future<StatusOr<google::longrunning::Operation>> IDSAuth::AsyncCreateEndpoint(
       });
 }
 
+StatusOr<google::longrunning::Operation> IDSAuth::CreateEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEndpoint(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> IDSAuth::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -83,6 +91,14 @@ future<StatusOr<google::longrunning::Operation>> IDSAuth::AsyncDeleteEndpoint(
         return child->AsyncDeleteEndpoint(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> IDSAuth::DeleteEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEndpoint(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> IDSAuth::AsyncGetOperation(

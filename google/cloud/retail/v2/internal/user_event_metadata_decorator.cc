@@ -71,6 +71,15 @@ UserEventServiceMetadata::AsyncPurgeUserEvents(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceMetadata::PurgeUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeUserEvents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceMetadata::AsyncImportUserEvents(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +92,15 @@ UserEventServiceMetadata::AsyncImportUserEvents(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceMetadata::ImportUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ImportUserEventsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportUserEvents(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceMetadata::AsyncRejoinUserEvents(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +111,15 @@ UserEventServiceMetadata::AsyncRejoinUserEvents(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncRejoinUserEvents(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+UserEventServiceMetadata::RejoinUserEvents(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RejoinUserEvents(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

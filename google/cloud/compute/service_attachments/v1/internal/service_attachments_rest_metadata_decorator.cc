@@ -61,6 +61,15 @@ ServiceAttachmentsRestMetadata::AsyncDeleteServiceAttachment(
                                               std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsRestMetadata::DeleteServiceAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        DeleteServiceAttachmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteServiceAttachment(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
 ServiceAttachmentsRestMetadata::GetServiceAttachment(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -91,6 +100,15 @@ ServiceAttachmentsRestMetadata::AsyncInsertServiceAttachment(
                                               std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsRestMetadata::InsertServiceAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        InsertServiceAttachmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertServiceAttachment(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachmentList>
 ServiceAttachmentsRestMetadata::ListServiceAttachments(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -110,6 +128,15 @@ ServiceAttachmentsRestMetadata::AsyncPatchServiceAttachment(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchServiceAttachment(cq, std::move(rest_context),
                                              std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsRestMetadata::PatchServiceAttachment(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::service_attachments::v1::
+        PatchServiceAttachmentRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchServiceAttachment(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

@@ -54,6 +54,14 @@ AutokeyMetadata::AsyncCreateKeyHandle(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> AutokeyMetadata::CreateKeyHandle(
+    grpc::ClientContext& context, Options options,
+    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateKeyHandle(context, options, request);
+}
+
 StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyMetadata::GetKeyHandle(
     grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetKeyHandleRequest const& request) {

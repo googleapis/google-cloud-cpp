@@ -110,6 +110,17 @@ DefaultTestCasesStub::AsyncRunTestCase(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultTestCasesStub::RunTestCase(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RunTestCase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +139,19 @@ DefaultTestCasesStub::AsyncBatchRunTestCases(
         return grpc_stub_->AsyncBatchRunTestCases(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTestCasesStub::BatchRunTestCases(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchRunTestCases(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -162,6 +186,17 @@ DefaultTestCasesStub::AsyncImportTestCases(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultTestCasesStub::ImportTestCases(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportTestCases(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
@@ -179,6 +214,17 @@ DefaultTestCasesStub::AsyncExportTestCases(
         return grpc_stub_->AsyncExportTestCases(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultTestCasesStub::ExportTestCases(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportTestCases(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>

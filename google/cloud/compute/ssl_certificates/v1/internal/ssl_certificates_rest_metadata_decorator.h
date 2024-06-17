@@ -55,6 +55,12 @@ class SslCertificatesRestMetadata : public SslCertificatesRestStub {
       google::cloud::cpp::compute::ssl_certificates::v1::
           DeleteSslCertificateRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificate(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          DeleteSslCertificateRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -66,6 +72,12 @@ class SslCertificatesRestMetadata : public SslCertificatesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          InsertSslCertificateRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificate(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::ssl_certificates::v1::
           InsertSslCertificateRequest const& request) override;
 

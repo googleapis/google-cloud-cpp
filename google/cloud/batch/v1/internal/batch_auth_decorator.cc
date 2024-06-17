@@ -67,6 +67,14 @@ BatchServiceAuth::AsyncDeleteJob(
       });
 }
 
+StatusOr<google::longrunning::Operation> BatchServiceAuth::DeleteJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::batch::v1::DeleteJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteJob(context, options, request);
+}
+
 StatusOr<google::cloud::batch::v1::ListJobsResponse> BatchServiceAuth::ListJobs(
     grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::ListJobsRequest const& request) {

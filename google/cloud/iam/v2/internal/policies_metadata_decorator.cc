@@ -70,6 +70,14 @@ PoliciesMetadata::AsyncCreatePolicy(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesMetadata::CreatePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::CreatePolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreatePolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PoliciesMetadata::AsyncUpdatePolicy(
     google::cloud::CompletionQueue& cq,
@@ -83,6 +91,15 @@ PoliciesMetadata::AsyncUpdatePolicy(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesMetadata::UpdatePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::UpdatePolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("policy.name=",
+                           internal::UrlEncode(request.policy().name())));
+  return child_->UpdatePolicy(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PoliciesMetadata::AsyncDeletePolicy(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +110,14 @@ PoliciesMetadata::AsyncDeletePolicy(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePolicy(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> PoliciesMetadata::DeletePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::DeletePolicyRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeletePolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

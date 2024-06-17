@@ -108,6 +108,18 @@ DefaultProductServiceStub::AsyncPurgeProducts(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultProductServiceStub::PurgeProducts(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PurgeProducts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +138,18 @@ DefaultProductServiceStub::AsyncImportProducts(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultProductServiceStub::ImportProducts(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::ImportProductsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportProducts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncSetInventory(
     google::cloud::CompletionQueue& cq,
@@ -142,6 +166,18 @@ DefaultProductServiceStub::AsyncSetInventory(
         return grpc_stub_->AsyncSetInventory(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultProductServiceStub::SetInventory(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::SetInventoryRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SetInventory(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -163,6 +199,18 @@ DefaultProductServiceStub::AsyncAddFulfillmentPlaces(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultProductServiceStub::AddFulfillmentPlaces(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AddFulfillmentPlaces(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncRemoveFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
@@ -180,6 +228,19 @@ DefaultProductServiceStub::AsyncRemoveFulfillmentPlaces(
         return grpc_stub_->AsyncRemoveFulfillmentPlaces(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultProductServiceStub::RemoveFulfillmentPlaces(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RemoveFulfillmentPlaces(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -201,6 +262,18 @@ DefaultProductServiceStub::AsyncAddLocalInventories(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultProductServiceStub::AddLocalInventories(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AddLocalInventories(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
@@ -218,6 +291,19 @@ DefaultProductServiceStub::AsyncRemoveLocalInventories(
         return grpc_stub_->AsyncRemoveLocalInventories(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultProductServiceStub::RemoveLocalInventories(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RemoveLocalInventories(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

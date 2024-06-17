@@ -83,6 +83,20 @@ WorkstationsLogging::AsyncCreateWorkstationCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::CreateWorkstationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::
+                 CreateWorkstationClusterRequest const& request) {
+        return child_->CreateWorkstationCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncUpdateWorkstationCluster(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +117,20 @@ WorkstationsLogging::AsyncUpdateWorkstationCluster(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::UpdateWorkstationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::
+                 UpdateWorkstationClusterRequest const& request) {
+        return child_->UpdateWorkstationCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncDeleteWorkstationCluster(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +149,20 @@ WorkstationsLogging::AsyncDeleteWorkstationCluster(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::DeleteWorkstationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::
+                 DeleteWorkstationClusterRequest const& request) {
+        return child_->DeleteWorkstationCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -187,6 +229,21 @@ WorkstationsLogging::AsyncCreateWorkstationConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::CreateWorkstationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+              request) {
+        return child_->CreateWorkstationConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncUpdateWorkstationConfig(
     google::cloud::CompletionQueue& cq,
@@ -208,6 +265,21 @@ WorkstationsLogging::AsyncUpdateWorkstationConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::UpdateWorkstationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+              request) {
+        return child_->UpdateWorkstationConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncDeleteWorkstationConfig(
     google::cloud::CompletionQueue& cq,
@@ -227,6 +299,21 @@ WorkstationsLogging::AsyncDeleteWorkstationConfig(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsLogging::DeleteWorkstationConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+              request) {
+        return child_->DeleteWorkstationConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::workstations::v1::Workstation>
@@ -289,6 +376,18 @@ WorkstationsLogging::AsyncCreateWorkstation(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsLogging::CreateWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::CreateWorkstationRequest const&
+                 request) {
+        return child_->CreateWorkstation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncUpdateWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -306,6 +405,18 @@ WorkstationsLogging::AsyncUpdateWorkstation(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsLogging::UpdateWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::UpdateWorkstationRequest const&
+                 request) {
+        return child_->UpdateWorkstation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -327,6 +438,18 @@ WorkstationsLogging::AsyncDeleteWorkstation(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsLogging::DeleteWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::DeleteWorkstationRequest const&
+                 request) {
+        return child_->DeleteWorkstation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncStartWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -346,6 +469,18 @@ WorkstationsLogging::AsyncStartWorkstation(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsLogging::StartWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::StartWorkstationRequest const&
+                 request) {
+        return child_->StartWorkstation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsLogging::AsyncStopWorkstation(
     google::cloud::CompletionQueue& cq,
@@ -363,6 +498,18 @@ WorkstationsLogging::AsyncStopWorkstation(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsLogging::StopWorkstation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::StopWorkstationRequest const&
+                 request) {
+        return child_->StopWorkstation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>

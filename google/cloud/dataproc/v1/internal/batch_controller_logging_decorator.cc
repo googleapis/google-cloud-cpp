@@ -51,6 +51,17 @@ BatchControllerLogging::AsyncCreateBatch(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> BatchControllerLogging::CreateBatch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+        return child_->CreateBatch(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerLogging::GetBatch(
     grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {

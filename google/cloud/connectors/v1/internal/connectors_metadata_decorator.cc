@@ -72,6 +72,14 @@ ConnectorsMetadata::AsyncCreateConnection(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> ConnectorsMetadata::CreateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsMetadata::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +93,15 @@ ConnectorsMetadata::AsyncUpdateConnection(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> ConnectorsMetadata::UpdateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("connection.name=",
+                           internal::UrlEncode(request.connection().name())));
+  return child_->UpdateConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsMetadata::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +112,14 @@ ConnectorsMetadata::AsyncDeleteConnection(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConnection(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> ConnectorsMetadata::DeleteConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConnection(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
@@ -173,6 +198,16 @@ ConnectorsMetadata::AsyncRefreshConnectionSchemaMetadata(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRefreshConnectionSchemaMetadata(
       cq, std::move(context), std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConnectorsMetadata::RefreshConnectionSchemaMetadata(
+    grpc::ClientContext& context, Options options,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RefreshConnectionSchemaMetadata(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>

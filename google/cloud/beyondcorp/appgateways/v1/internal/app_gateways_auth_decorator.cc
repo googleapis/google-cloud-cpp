@@ -72,6 +72,16 @@ AppGatewaysServiceAuth::AsyncCreateAppGateway(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceAuth::CreateAppGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAppGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceAuth::AsyncDeleteAppGateway(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +101,16 @@ AppGatewaysServiceAuth::AsyncDeleteAppGateway(
         return child->AsyncDeleteAppGateway(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceAuth::DeleteAppGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAppGateway(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

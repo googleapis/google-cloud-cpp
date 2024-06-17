@@ -67,6 +67,17 @@ BatchServiceTracingStub::AsyncDeleteJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> BatchServiceTracingStub::DeleteJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::batch::v1::DeleteJobRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "DeleteJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteJob(context, options, request));
+}
+
 StatusOr<google::cloud::batch::v1::ListJobsResponse>
 BatchServiceTracingStub::ListJobs(
     grpc::ClientContext& context, Options const& options,

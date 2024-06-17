@@ -46,6 +46,11 @@ class CatalogServiceAuth : public CatalogServiceStub {
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateEntryType(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateEntryTypeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEntryType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -53,10 +58,20 @@ class CatalogServiceAuth : public CatalogServiceStub {
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateEntryType(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntryType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteEntryType(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request)
       override;
 
@@ -76,6 +91,11 @@ class CatalogServiceAuth : public CatalogServiceStub {
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAspectType(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateAspectTypeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAspectType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -83,10 +103,20 @@ class CatalogServiceAuth : public CatalogServiceStub {
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateAspectType(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAspectType(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteAspectType(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request)
       override;
 
@@ -107,6 +137,11 @@ class CatalogServiceAuth : public CatalogServiceStub {
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateEntryGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::CreateEntryGroupRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEntryGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -114,10 +149,20 @@ class CatalogServiceAuth : public CatalogServiceStub {
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateEntryGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEntryGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteEntryGroup(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request)
       override;
 

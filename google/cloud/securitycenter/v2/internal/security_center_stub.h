@@ -53,6 +53,11 @@ class SecurityCenterStub {
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      grpc::ClientContext& context, Options options,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
   CreateBigQueryExport(
       grpc::ClientContext& context, Options const& options,
@@ -296,6 +301,11 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      grpc::ClientContext& context, Options options,
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
       override;
 

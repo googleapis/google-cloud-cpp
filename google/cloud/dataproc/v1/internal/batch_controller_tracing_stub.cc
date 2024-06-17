@@ -45,6 +45,18 @@ BatchControllerTracingStub::AsyncCreateBatch(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+BatchControllerTracingStub::CreateBatch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
+                                     "CreateBatch");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateBatch(context, options, request));
+}
+
 StatusOr<google::cloud::dataproc::v1::Batch>
 BatchControllerTracingStub::GetBatch(
     grpc::ClientContext& context, Options const& options,

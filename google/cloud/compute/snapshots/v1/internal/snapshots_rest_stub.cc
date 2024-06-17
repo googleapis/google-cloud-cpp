@@ -79,6 +79,22 @@ DefaultSnapshotsRestStub::AsyncDeleteSnapshot(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultSnapshotsRestStub::DeleteSnapshot(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "snapshots", "/", request.snapshot()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
 DefaultSnapshotsRestStub::GetSnapshot(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -141,6 +157,22 @@ DefaultSnapshotsRestStub::AsyncInsertSnapshot(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultSnapshotsRestStub::InsertSnapshot(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.snapshot_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "snapshots"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SnapshotList>
@@ -210,6 +242,21 @@ DefaultSnapshotsRestStub::AsyncSetLabels(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultSnapshotsRestStub::SetLabels(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.global_set_labels_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "snapshots", "/", request.resource(), "/", "setLabels"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

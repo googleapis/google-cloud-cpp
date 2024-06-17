@@ -67,6 +67,20 @@ DatabaseAdminRestLogging::AsyncCreateDatabase(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DatabaseAdminRestLogging::CreateDatabase(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::CreateDatabaseRequest const&
+                 request) {
+        return child_->CreateDatabase(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminRestLogging::GetDatabase(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -100,6 +114,20 @@ DatabaseAdminRestLogging::AsyncUpdateDatabase(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DatabaseAdminRestLogging::UpdateDatabase(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+                 request) {
+        return child_->UpdateDatabase(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncUpdateDatabaseDdl(
     CompletionQueue& cq,
@@ -119,6 +147,21 @@ DatabaseAdminRestLogging::AsyncUpdateDatabaseDdl(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DatabaseAdminRestLogging::UpdateDatabaseDdl(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+              request) {
+        return child_->UpdateDatabaseDdl(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 Status DatabaseAdminRestLogging::DropDatabase(
@@ -200,6 +243,18 @@ DatabaseAdminRestLogging::AsyncCreateBackup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminRestLogging::CreateBackup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::CreateBackupRequest const&
+                 request) {
+        return child_->CreateBackup(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncCopyBackup(
     CompletionQueue& cq,
@@ -217,6 +272,18 @@ DatabaseAdminRestLogging::AsyncCopyBackup(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminRestLogging::CopyBackup(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::CopyBackupRequest const&
+                 request) {
+        return child_->CopyBackup(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -288,6 +355,20 @@ DatabaseAdminRestLogging::AsyncRestoreDatabase(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DatabaseAdminRestLogging::RestoreDatabase(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+                 request) {
+        return child_->RestoreDatabase(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>

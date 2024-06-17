@@ -86,6 +86,26 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultGlobalNetworkEndpointGroupsRestStub::AttachNetworkEndpoints(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        AttachNetworkEndpointsRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request
+          .global_network_endpoint_groups_attach_endpoints_request_resource(),
+      false,
+      absl::StrCat(
+          "/", "compute", "/",
+          rest_internal::DetermineApiVersion("v1", options), "/", "projects",
+          "/", request.project(), "/", "global", "/", "networkEndpointGroups",
+          "/", request.network_endpoint_group(), "/", "attachNetworkEndpoints"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
     CompletionQueue& cq,
@@ -118,6 +138,23 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultGlobalNetworkEndpointGroupsRestStub::DeleteNetworkEndpointGroup(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        DeleteNetworkEndpointGroupRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "networkEndpointGroups", "/",
+                   request.network_endpoint_group()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -156,6 +193,26 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultGlobalNetworkEndpointGroupsRestStub::DetachNetworkEndpoints(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        DetachNetworkEndpointsRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request
+          .global_network_endpoint_groups_detach_endpoints_request_resource(),
+      false,
+      absl::StrCat(
+          "/", "compute", "/",
+          rest_internal::DetermineApiVersion("v1", options), "/", "projects",
+          "/", request.project(), "/", "global", "/", "networkEndpointGroups",
+          "/", request.network_endpoint_group(), "/", "detachNetworkEndpoints"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -206,6 +263,22 @@ DefaultGlobalNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultGlobalNetworkEndpointGroupsRestStub::InsertNetworkEndpointGroup(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        InsertNetworkEndpointGroupRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.network_endpoint_group_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "global", "/",
+                   "networkEndpointGroups"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>

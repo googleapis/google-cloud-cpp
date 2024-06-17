@@ -46,6 +46,18 @@ SecurityCenterTracingStub::AsyncBulkMuteFindings(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+SecurityCenterTracingStub::BulkMuteFindings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securitycenter.v1.SecurityCenter", "BulkMuteFindings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->BulkMuteFindings(context, options, request));
+}
+
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterTracingStub::CreateSecurityHealthAnalyticsCustomModule(
     grpc::ClientContext& context, Options const& options,
@@ -412,6 +424,19 @@ SecurityCenterTracingStub::AsyncRunAssetDiscovery(
   auto f =
       child_->AsyncRunAssetDiscovery(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+SecurityCenterTracingStub::RunAssetDiscovery(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.securitycenter.v1.SecurityCenter", "RunAssetDiscovery");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RunAssetDiscovery(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>

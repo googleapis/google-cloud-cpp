@@ -67,6 +67,15 @@ SecurityCenterMetadata::AsyncBulkMuteFindings(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+SecurityCenterMetadata::BulkMuteFindings(
+    grpc::ClientContext& context, Options options,
+    google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BulkMuteFindings(context, options, request);
+}
+
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
 SecurityCenterMetadata::CreateBigQueryExport(
     grpc::ClientContext& context, Options const& options,

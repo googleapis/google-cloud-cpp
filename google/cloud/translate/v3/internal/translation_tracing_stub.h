@@ -67,6 +67,11 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
       google::cloud::translation::v3::BatchTranslateTextRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchTranslateText(
+      grpc::ClientContext& context, Options options,
+      google::cloud::translation::v3::BatchTranslateTextRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchTranslateDocument(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -74,10 +79,20 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> BatchTranslateDocument(
+      grpc::ClientContext& context, Options options,
+      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGlossary(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::translation::v3::CreateGlossaryRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateGlossary(
+      grpc::ClientContext& context, Options options,
       google::cloud::translation::v3::CreateGlossaryRequest const& request)
       override;
 
@@ -95,6 +110,11 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::translation::v3::DeleteGlossaryRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteGlossary(
+      grpc::ClientContext& context, Options options,
       google::cloud::translation::v3::DeleteGlossaryRequest const& request)
       override;
 

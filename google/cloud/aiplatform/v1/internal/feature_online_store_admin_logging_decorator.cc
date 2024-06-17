@@ -54,6 +54,21 @@ FeatureOnlineStoreAdminServiceLogging::AsyncCreateFeatureOnlineStore(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceLogging::CreateFeatureOnlineStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+              request) {
+        return child_->CreateFeatureOnlineStore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
 FeatureOnlineStoreAdminServiceLogging::GetFeatureOnlineStore(
     grpc::ClientContext& context, Options const& options,
@@ -104,6 +119,21 @@ FeatureOnlineStoreAdminServiceLogging::AsyncUpdateFeatureOnlineStore(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceLogging::UpdateFeatureOnlineStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+              request) {
+        return child_->UpdateFeatureOnlineStore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceLogging::AsyncDeleteFeatureOnlineStore(
     google::cloud::CompletionQueue& cq,
@@ -125,6 +155,21 @@ FeatureOnlineStoreAdminServiceLogging::AsyncDeleteFeatureOnlineStore(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceLogging::DeleteFeatureOnlineStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+              request) {
+        return child_->DeleteFeatureOnlineStore(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceLogging::AsyncCreateFeatureView(
     google::cloud::CompletionQueue& cq,
@@ -142,6 +187,19 @@ FeatureOnlineStoreAdminServiceLogging::AsyncCreateFeatureView(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceLogging::CreateFeatureView(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CreateFeatureViewRequest const&
+                 request) {
+        return child_->CreateFeatureView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
@@ -189,6 +247,19 @@ FeatureOnlineStoreAdminServiceLogging::AsyncUpdateFeatureView(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceLogging::UpdateFeatureView(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::UpdateFeatureViewRequest const&
+                 request) {
+        return child_->UpdateFeatureView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceLogging::AsyncDeleteFeatureView(
     google::cloud::CompletionQueue& cq,
@@ -206,6 +277,19 @@ FeatureOnlineStoreAdminServiceLogging::AsyncDeleteFeatureView(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceLogging::DeleteFeatureView(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteFeatureViewRequest const&
+                 request) {
+        return child_->DeleteFeatureView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>

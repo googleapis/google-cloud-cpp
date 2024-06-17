@@ -63,6 +63,18 @@ DefaultSpeechStub::AsyncLongRunningRecognize(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSpeechStub::LongRunningRecognize(
+    grpc::ClientContext& context, Options,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->LongRunningRecognize(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>

@@ -55,6 +55,20 @@ NetworkFirewallPoliciesRestLogging::AsyncAddAssociation(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::AddAssociation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddAssociationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 AddAssociationRequest const& request) {
+        return child_->AddAssociation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestLogging::AsyncAddRule(
     CompletionQueue& cq,
@@ -73,6 +87,20 @@ NetworkFirewallPoliciesRestLogging::AsyncAddRule(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::AddRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        AddRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 AddRuleRequest const& request) {
+        return child_->AddRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -95,6 +123,20 @@ NetworkFirewallPoliciesRestLogging::AsyncCloneRules(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::CloneRules(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        CloneRulesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 CloneRulesRequest const& request) {
+        return child_->CloneRules(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestLogging::AsyncDeleteFirewallPolicy(
     CompletionQueue& cq,
@@ -113,6 +155,20 @@ NetworkFirewallPoliciesRestLogging::AsyncDeleteFirewallPolicy(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::DeleteFirewallPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        DeleteFirewallPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 DeleteFirewallPolicyRequest const& request) {
+        return child_->DeleteFirewallPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -191,6 +247,20 @@ NetworkFirewallPoliciesRestLogging::AsyncInsertFirewallPolicy(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::InsertFirewallPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        InsertFirewallPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 InsertFirewallPolicyRequest const& request) {
+        return child_->InsertFirewallPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicyList>
 NetworkFirewallPoliciesRestLogging::ListNetworkFirewallPolicies(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -226,6 +296,20 @@ NetworkFirewallPoliciesRestLogging::AsyncPatchFirewallPolicy(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::PatchFirewallPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchFirewallPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 PatchFirewallPolicyRequest const& request) {
+        return child_->PatchFirewallPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestLogging::AsyncPatchRule(
     CompletionQueue& cq,
@@ -244,6 +328,20 @@ NetworkFirewallPoliciesRestLogging::AsyncPatchRule(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::PatchRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        PatchRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 PatchRuleRequest const& request) {
+        return child_->PatchRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -266,6 +364,20 @@ NetworkFirewallPoliciesRestLogging::AsyncRemoveAssociation(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::RemoveAssociation(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemoveAssociationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 RemoveAssociationRequest const& request) {
+        return child_->RemoveAssociation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesRestLogging::AsyncRemoveRule(
     CompletionQueue& cq,
@@ -284,6 +396,20 @@ NetworkFirewallPoliciesRestLogging::AsyncRemoveRule(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkFirewallPoliciesRestLogging::RemoveRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::network_firewall_policies::v1::
+        RemoveRuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::network_firewall_policies::v1::
+                 RemoveRuleRequest const& request) {
+        return child_->RemoveRule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

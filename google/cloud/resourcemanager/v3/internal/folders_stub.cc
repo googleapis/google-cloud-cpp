@@ -86,6 +86,17 @@ DefaultFoldersStub::AsyncCreateFolder(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultFoldersStub::CreateFolder(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncUpdateFolder(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +114,17 @@ DefaultFoldersStub::AsyncUpdateFolder(
         return grpc_stub_->AsyncUpdateFolder(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultFoldersStub::UpdateFolder(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -124,6 +146,17 @@ DefaultFoldersStub::AsyncMoveFolder(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultFoldersStub::MoveFolder(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MoveFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncDeleteFolder(
     google::cloud::CompletionQueue& cq,
@@ -143,6 +176,17 @@ DefaultFoldersStub::AsyncDeleteFolder(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultFoldersStub::DeleteFolder(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncUndeleteFolder(
     google::cloud::CompletionQueue& cq,
@@ -160,6 +204,17 @@ DefaultFoldersStub::AsyncUndeleteFolder(
         return grpc_stub_->AsyncUndeleteFolder(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultFoldersStub::UndeleteFolder(
+    grpc::ClientContext& context, Options,
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeleteFolder(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy> DefaultFoldersStub::GetIamPolicy(

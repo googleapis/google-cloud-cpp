@@ -75,6 +75,18 @@ HubServiceLogging::AsyncCreateHub(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> HubServiceLogging::CreateHub(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::CreateHubRequest const&
+                 request) {
+        return child_->CreateHub(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncUpdateHub(
     google::cloud::CompletionQueue& cq,
@@ -94,6 +106,18 @@ HubServiceLogging::AsyncUpdateHub(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> HubServiceLogging::UpdateHub(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::UpdateHubRequest const&
+                 request) {
+        return child_->UpdateHub(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncDeleteHub(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +135,18 @@ HubServiceLogging::AsyncDeleteHub(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceLogging::DeleteHub(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::DeleteHubRequest const&
+                 request) {
+        return child_->DeleteHub(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
@@ -172,6 +208,18 @@ HubServiceLogging::AsyncCreateSpoke(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> HubServiceLogging::CreateSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
+                 request) {
+        return child_->CreateSpoke(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncUpdateSpoke(
     google::cloud::CompletionQueue& cq,
@@ -189,6 +237,18 @@ HubServiceLogging::AsyncUpdateSpoke(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceLogging::UpdateSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
+                 request) {
+        return child_->UpdateSpoke(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -212,6 +272,20 @@ HubServiceLogging::AsyncRejectHubSpoke(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> HubServiceLogging::RejectHubSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+              request) {
+        return child_->RejectHubSpoke(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncAcceptHubSpoke(
     google::cloud::CompletionQueue& cq,
@@ -233,6 +307,20 @@ HubServiceLogging::AsyncAcceptHubSpoke(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> HubServiceLogging::AcceptHubSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+              request) {
+        return child_->AcceptHubSpoke(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
@@ -250,6 +338,18 @@ HubServiceLogging::AsyncDeleteSpoke(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> HubServiceLogging::DeleteSpoke(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
+                 request) {
+        return child_->DeleteSpoke(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::RouteTable>

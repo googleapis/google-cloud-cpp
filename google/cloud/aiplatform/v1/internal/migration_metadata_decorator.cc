@@ -65,6 +65,16 @@ MigrationServiceMetadata::AsyncBatchMigrateResources(
                                             std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationServiceMetadata::BatchMigrateResources(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchMigrateResources(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MigrationServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

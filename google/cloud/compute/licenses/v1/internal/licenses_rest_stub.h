@@ -45,6 +45,12 @@ class LicensesRestStub {
       google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -62,6 +68,12 @@ class LicensesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request) = 0;
 
@@ -117,6 +129,12 @@ class DefaultLicensesRestStub : public LicensesRestStub {
       google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -134,6 +152,12 @@ class DefaultLicensesRestStub : public LicensesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request) override;
 

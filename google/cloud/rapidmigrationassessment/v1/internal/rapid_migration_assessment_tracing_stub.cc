@@ -49,6 +49,20 @@ RapidMigrationAssessmentTracingStub::AsyncCreateCollector(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingStub::CreateCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
+      "CreateCollector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateCollector(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncCreateAnnotation(
     google::cloud::CompletionQueue& cq,
@@ -64,6 +78,20 @@ RapidMigrationAssessmentTracingStub::AsyncCreateAnnotation(
   auto f =
       child_->AsyncCreateAnnotation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingStub::CreateAnnotation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
+      "CreateAnnotation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateAnnotation(context, options, request));
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
@@ -125,6 +153,20 @@ RapidMigrationAssessmentTracingStub::AsyncUpdateCollector(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingStub::UpdateCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
+      "UpdateCollector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCollector(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncDeleteCollector(
     google::cloud::CompletionQueue& cq,
@@ -140,6 +182,20 @@ RapidMigrationAssessmentTracingStub::AsyncDeleteCollector(
   auto f =
       child_->AsyncDeleteCollector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingStub::DeleteCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
+      "DeleteCollector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCollector(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -159,6 +215,20 @@ RapidMigrationAssessmentTracingStub::AsyncResumeCollector(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingStub::ResumeCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
+      "ResumeCollector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ResumeCollector(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncRegisterCollector(
     google::cloud::CompletionQueue& cq,
@@ -176,6 +246,20 @@ RapidMigrationAssessmentTracingStub::AsyncRegisterCollector(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingStub::RegisterCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
+      "RegisterCollector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->RegisterCollector(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncPauseCollector(
     google::cloud::CompletionQueue& cq,
@@ -191,6 +275,20 @@ RapidMigrationAssessmentTracingStub::AsyncPauseCollector(
   auto f =
       child_->AsyncPauseCollector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingStub::PauseCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.rapidmigrationassessment.v1.RapidMigrationAssessment",
+      "PauseCollector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->PauseCollector(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

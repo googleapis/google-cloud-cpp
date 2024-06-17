@@ -53,6 +53,12 @@ class TargetTcpProxiesRestStub {
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           DeleteTargetTcpProxyRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetTcpProxy(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::target_tcp_proxies::v1::
+                           DeleteTargetTcpProxyRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
   GetTargetTcpProxy(google::cloud::rest_internal::RestContext& rest_context,
                     Options const& options,
@@ -66,6 +72,12 @@ class TargetTcpProxiesRestStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           InsertTargetTcpProxyRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetTcpProxy(google::cloud::rest_internal::RestContext& rest_context,
+                       Options const& options,
+                       google::cloud::cpp::compute::target_tcp_proxies::v1::
+                           InsertTargetTcpProxyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxyList>
   ListTargetTcpProxies(google::cloud::rest_internal::RestContext& rest_context,
@@ -81,11 +93,23 @@ class TargetTcpProxiesRestStub {
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetBackendServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetBackendService(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::compute::target_tcp_proxies::v1::
+                        SetBackendServiceRequest const& request) = 0;
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetProxyHeader(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          SetProxyHeaderRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetProxyHeaderRequest const& request) = 0;
 
@@ -129,6 +153,12 @@ class DefaultTargetTcpProxiesRestStub : public TargetTcpProxiesRestStub {
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           DeleteTargetTcpProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          DeleteTargetTcpProxyRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy> GetTargetTcpProxy(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -140,6 +170,12 @@ class DefaultTargetTcpProxiesRestStub : public TargetTcpProxiesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          InsertTargetTcpProxyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           InsertTargetTcpProxyRequest const& request) override;
 
@@ -157,11 +193,23 @@ class DefaultTargetTcpProxiesRestStub : public TargetTcpProxiesRestStub {
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          SetBackendServiceRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetProxyHeader(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::target_tcp_proxies::v1::
+          SetProxyHeaderRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetProxyHeaderRequest const& request) override;
 

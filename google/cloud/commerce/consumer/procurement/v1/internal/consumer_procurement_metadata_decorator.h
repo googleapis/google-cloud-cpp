@@ -49,6 +49,11 @@ class ConsumerProcurementServiceMetadata
       google::cloud::commerce::consumer::procurement::v1::
           PlaceOrderRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> PlaceOrder(
+      grpc::ClientContext& context, Options options,
+      google::cloud::commerce::consumer::procurement::v1::
+          PlaceOrderRequest const& request) override;
+
   StatusOr<google::cloud::commerce::consumer::procurement::v1::Order> GetOrder(
       grpc::ClientContext& context, Options const& options,
       google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&

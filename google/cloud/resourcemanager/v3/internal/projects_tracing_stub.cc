@@ -80,6 +80,17 @@ ProjectsTracingStub::AsyncCreateProject(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ProjectsTracingStub::CreateProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "CreateProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateProject(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectsTracingStub::AsyncUpdateProject(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +103,17 @@ ProjectsTracingStub::AsyncUpdateProject(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncUpdateProject(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ProjectsTracingStub::UpdateProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "UpdateProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateProject(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,6 +130,17 @@ ProjectsTracingStub::AsyncMoveProject(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ProjectsTracingStub::MoveProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "MoveProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->MoveProject(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProjectsTracingStub::AsyncDeleteProject(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +153,17 @@ ProjectsTracingStub::AsyncDeleteProject(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteProject(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ProjectsTracingStub::DeleteProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "DeleteProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteProject(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -135,6 +179,17 @@ ProjectsTracingStub::AsyncUndeleteProject(
   auto f =
       child_->AsyncUndeleteProject(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ProjectsTracingStub::UndeleteProject(
+    grpc::ClientContext& context, Options options,
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "UndeleteProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UndeleteProject(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsTracingStub::GetIamPolicy(

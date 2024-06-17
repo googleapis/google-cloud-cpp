@@ -71,6 +71,14 @@ AlloyDBAdminMetadata::AsyncCreateCluster(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -82,6 +90,15 @@ AlloyDBAdminMetadata::AsyncUpdateCluster(
                            internal::UrlEncode(request.cluster().name())));
   return child_->AsyncUpdateCluster(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("cluster.name=",
+                           internal::UrlEncode(request.cluster().name())));
+  return child_->UpdateCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,6 +113,14 @@ AlloyDBAdminMetadata::AsyncDeleteCluster(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncPromoteCluster(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +131,14 @@ AlloyDBAdminMetadata::AsyncPromoteCluster(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncPromoteCluster(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::PromoteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->PromoteCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,6 +153,14 @@ AlloyDBAdminMetadata::AsyncRestoreCluster(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::RestoreCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RestoreCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncCreateSecondaryCluster(
     google::cloud::CompletionQueue& cq,
@@ -130,6 +171,15 @@ AlloyDBAdminMetadata::AsyncCreateSecondaryCluster(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateSecondaryCluster(cq, std::move(context),
                                              std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminMetadata::CreateSecondaryCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSecondaryCluster(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
@@ -162,6 +212,14 @@ AlloyDBAdminMetadata::AsyncCreateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncCreateSecondaryInstance(
     google::cloud::CompletionQueue& cq,
@@ -174,6 +232,15 @@ AlloyDBAdminMetadata::AsyncCreateSecondaryInstance(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminMetadata::CreateSecondaryInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateSecondaryInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncBatchCreateInstances(
     google::cloud::CompletionQueue& cq,
@@ -184,6 +251,15 @@ AlloyDBAdminMetadata::AsyncBatchCreateInstances(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchCreateInstances(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AlloyDBAdminMetadata::BatchCreateInstances(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchCreateInstances(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -199,6 +275,15 @@ AlloyDBAdminMetadata::AsyncUpdateInstance(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("instance.name=",
+                           internal::UrlEncode(request.instance().name())));
+  return child_->UpdateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -209,6 +294,14 @@ AlloyDBAdminMetadata::AsyncDeleteInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteInstance(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -223,6 +316,14 @@ AlloyDBAdminMetadata::AsyncFailoverInstance(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::FailoverInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->FailoverInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncInjectFault(
     google::cloud::CompletionQueue& cq,
@@ -235,6 +336,14 @@ AlloyDBAdminMetadata::AsyncInjectFault(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::InjectFault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->InjectFault(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
@@ -245,6 +354,14 @@ AlloyDBAdminMetadata::AsyncRestartInstance(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRestartInstance(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::RestartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RestartInstance(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
@@ -276,6 +393,14 @@ AlloyDBAdminMetadata::AsyncCreateBackup(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
@@ -289,6 +414,15 @@ AlloyDBAdminMetadata::AsyncUpdateBackup(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("backup.name=",
+                           internal::UrlEncode(request.backup().name())));
+  return child_->UpdateBackup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -299,6 +433,14 @@ AlloyDBAdminMetadata::AsyncDeleteBackup(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteBackup(cq, std::move(context), std::move(options),
                                    request);
+}
+
+StatusOr<google::longrunning::Operation> AlloyDBAdminMetadata::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>

@@ -50,6 +50,15 @@ NetworksRestMetadata::AsyncAddPeering(
                                  std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestMetadata::AddPeering(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddPeering(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestMetadata::AsyncDeleteNetwork(
     CompletionQueue& cq,
@@ -60,6 +69,15 @@ NetworksRestMetadata::AsyncDeleteNetwork(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeleteNetwork(cq, std::move(rest_context),
                                     std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestMetadata::DeleteNetwork(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteNetwork(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Network>
@@ -92,6 +110,15 @@ NetworksRestMetadata::AsyncInsertNetwork(
                                     std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestMetadata::InsertNetwork(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertNetwork(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NetworkList>
 NetworksRestMetadata::ListNetworks(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -122,6 +149,15 @@ NetworksRestMetadata::AsyncPatchNetwork(
                                    std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestMetadata::PatchNetwork(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchNetwork(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestMetadata::AsyncRemovePeering(
     CompletionQueue& cq,
@@ -132,6 +168,15 @@ NetworksRestMetadata::AsyncRemovePeering(
   SetMetadata(*rest_context, *options);
   return child_->AsyncRemovePeering(cq, std::move(rest_context),
                                     std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestMetadata::RemovePeering(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->RemovePeering(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -146,6 +191,15 @@ NetworksRestMetadata::AsyncSwitchToCustomMode(
                                          std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestMetadata::SwitchToCustomMode(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SwitchToCustomMode(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestMetadata::AsyncUpdatePeering(
     CompletionQueue& cq,
@@ -156,6 +210,15 @@ NetworksRestMetadata::AsyncUpdatePeering(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdatePeering(cq, std::move(rest_context),
                                     std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksRestMetadata::UpdatePeering(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdatePeering(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -83,6 +83,14 @@ future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncTrainAgent(
       });
 }
 
+StatusOr<google::longrunning::Operation> AgentsAuth::TrainAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TrainAgent(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncExportAgent(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -100,6 +108,14 @@ future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncExportAgent(
         return child->AsyncExportAgent(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AgentsAuth::ExportAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportAgent(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncImportAgent(
@@ -121,6 +137,14 @@ future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncImportAgent(
       });
 }
 
+StatusOr<google::longrunning::Operation> AgentsAuth::ImportAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportAgent(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -138,6 +162,14 @@ future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncRestoreAgent(
         return child->AsyncRestoreAgent(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AgentsAuth::RestoreAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestoreAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ValidationResult>

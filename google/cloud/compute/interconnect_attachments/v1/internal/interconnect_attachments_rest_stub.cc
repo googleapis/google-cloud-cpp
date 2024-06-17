@@ -108,6 +108,23 @@ DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachment(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInterconnectAttachmentsRestStub::DeleteInterconnectAttachment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        DeleteInterconnectAttachmentRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "interconnectAttachments", "/",
+                   request.interconnect_attachment()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
 DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachment(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -159,6 +176,25 @@ DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachment(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInterconnectAttachmentsRestStub::InsertInterconnectAttachment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        InsertInterconnectAttachmentRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.interconnect_attachment_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "interconnectAttachments"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id()),
+           std::make_pair("validate_only",
+                          request.validate_only() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentList>
@@ -219,6 +255,24 @@ DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachment(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInterconnectAttachmentsRestStub::PatchInterconnectAttachment(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        PatchInterconnectAttachmentRequest const& request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.interconnect_attachment_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "interconnectAttachments", "/",
+                   request.interconnect_attachment()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultInterconnectAttachmentsRestStub::AsyncSetLabels(
     CompletionQueue& cq,
@@ -253,6 +307,24 @@ DefaultInterconnectAttachmentsRestStub::AsyncSetLabels(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultInterconnectAttachmentsRestStub::SetLabels(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        SetLabelsRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.region_set_labels_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "interconnectAttachments", "/",
+                   request.resource(), "/", "setLabels"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

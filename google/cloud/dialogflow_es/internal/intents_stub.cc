@@ -108,6 +108,17 @@ DefaultIntentsStub::AsyncBatchUpdateIntents(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultIntentsStub::BatchUpdateIntents(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchUpdateIntents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultIntentsStub::AsyncBatchDeleteIntents(
     google::cloud::CompletionQueue& cq,
@@ -125,6 +136,17 @@ DefaultIntentsStub::AsyncBatchDeleteIntents(
         return grpc_stub_->AsyncBatchDeleteIntents(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultIntentsStub::BatchDeleteIntents(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchDeleteIntents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

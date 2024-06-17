@@ -73,6 +73,17 @@ DefaultVmMigrationStub::AsyncCreateSource(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::CreateSource(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncUpdateSource(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +102,17 @@ DefaultVmMigrationStub::AsyncUpdateSource(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::UpdateSource(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteSource(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +129,17 @@ DefaultVmMigrationStub::AsyncDeleteSource(
         return grpc_stub_->AsyncDeleteSource(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::DeleteSource(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
@@ -169,6 +202,20 @@ DefaultVmMigrationStub::AsyncCreateUtilizationReport(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CreateUtilizationReport(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateUtilizationReport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteUtilizationReport(
     google::cloud::CompletionQueue& cq,
@@ -188,6 +235,20 @@ DefaultVmMigrationStub::AsyncDeleteUtilizationReport(
         return grpc_stub_->AsyncDeleteUtilizationReport(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::DeleteUtilizationReport(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteUtilizationReport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
@@ -238,6 +299,20 @@ DefaultVmMigrationStub::AsyncCreateDatacenterConnector(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CreateDatacenterConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateDatacenterConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteDatacenterConnector(
     google::cloud::CompletionQueue& cq,
@@ -256,6 +331,20 @@ DefaultVmMigrationStub::AsyncDeleteDatacenterConnector(
         return grpc_stub_->AsyncDeleteDatacenterConnector(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::DeleteDatacenterConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteDatacenterConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -277,6 +366,18 @@ DefaultVmMigrationStub::AsyncUpgradeAppliance(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::UpgradeAppliance(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpgradeAppliance(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCreateMigratingVm(
     google::cloud::CompletionQueue& cq,
@@ -294,6 +395,18 @@ DefaultVmMigrationStub::AsyncCreateMigratingVm(
         return grpc_stub_->AsyncCreateMigratingVm(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CreateMigratingVm(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateMigratingVm(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
@@ -339,6 +452,18 @@ DefaultVmMigrationStub::AsyncUpdateMigratingVm(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::UpdateMigratingVm(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateMigratingVm(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteMigratingVm(
     google::cloud::CompletionQueue& cq,
@@ -356,6 +481,18 @@ DefaultVmMigrationStub::AsyncDeleteMigratingVm(
         return grpc_stub_->AsyncDeleteMigratingVm(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::DeleteMigratingVm(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteMigratingVm(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -377,6 +514,17 @@ DefaultVmMigrationStub::AsyncStartMigration(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::StartMigration(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartMigration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncResumeMigration(
     google::cloud::CompletionQueue& cq,
@@ -394,6 +542,18 @@ DefaultVmMigrationStub::AsyncResumeMigration(
         return grpc_stub_->AsyncResumeMigration(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::ResumeMigration(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ResumeMigration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -415,6 +575,17 @@ DefaultVmMigrationStub::AsyncPauseMigration(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::PauseMigration(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PauseMigration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncFinalizeMigration(
     google::cloud::CompletionQueue& cq,
@@ -432,6 +603,18 @@ DefaultVmMigrationStub::AsyncFinalizeMigration(
         return grpc_stub_->AsyncFinalizeMigration(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::FinalizeMigration(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->FinalizeMigration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -453,6 +636,17 @@ DefaultVmMigrationStub::AsyncCreateCloneJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::CreateCloneJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCloneJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCancelCloneJob(
     google::cloud::CompletionQueue& cq,
@@ -470,6 +664,17 @@ DefaultVmMigrationStub::AsyncCancelCloneJob(
         return grpc_stub_->AsyncCancelCloneJob(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::CancelCloneJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CancelCloneJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse>
@@ -515,6 +720,18 @@ DefaultVmMigrationStub::AsyncCreateCutoverJob(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CreateCutoverJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCutoverJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCancelCutoverJob(
     google::cloud::CompletionQueue& cq,
@@ -532,6 +749,18 @@ DefaultVmMigrationStub::AsyncCancelCutoverJob(
         return grpc_stub_->AsyncCancelCutoverJob(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CancelCutoverJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CancelCutoverJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
@@ -600,6 +829,17 @@ DefaultVmMigrationStub::AsyncCreateGroup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::CreateGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncUpdateGroup(
     google::cloud::CompletionQueue& cq,
@@ -618,6 +858,17 @@ DefaultVmMigrationStub::AsyncUpdateGroup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::UpdateGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteGroup(
     google::cloud::CompletionQueue& cq,
@@ -634,6 +885,17 @@ DefaultVmMigrationStub::AsyncDeleteGroup(
         return grpc_stub_->AsyncDeleteGroup(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultVmMigrationStub::DeleteGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -655,6 +917,18 @@ DefaultVmMigrationStub::AsyncAddGroupMigration(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::AddGroupMigration(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->AddGroupMigration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncRemoveGroupMigration(
     google::cloud::CompletionQueue& cq,
@@ -673,6 +947,19 @@ DefaultVmMigrationStub::AsyncRemoveGroupMigration(
         return grpc_stub_->AsyncRemoveGroupMigration(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::RemoveGroupMigration(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RemoveGroupMigration(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
@@ -718,6 +1005,18 @@ DefaultVmMigrationStub::AsyncCreateTargetProject(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::CreateTargetProject(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTargetProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncUpdateTargetProject(
     google::cloud::CompletionQueue& cq,
@@ -737,6 +1036,18 @@ DefaultVmMigrationStub::AsyncUpdateTargetProject(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::UpdateTargetProject(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTargetProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteTargetProject(
     google::cloud::CompletionQueue& cq,
@@ -754,6 +1065,18 @@ DefaultVmMigrationStub::AsyncDeleteTargetProject(
         return grpc_stub_->AsyncDeleteTargetProject(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultVmMigrationStub::DeleteTargetProject(
+    grpc::ClientContext& context, Options,
+    google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTargetProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>

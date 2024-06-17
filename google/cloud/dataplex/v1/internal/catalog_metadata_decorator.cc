@@ -54,6 +54,15 @@ CatalogServiceMetadata::AsyncCreateEntryType(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::CreateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEntryType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceMetadata::AsyncUpdateEntryType(
     google::cloud::CompletionQueue& cq,
@@ -67,6 +76,16 @@ CatalogServiceMetadata::AsyncUpdateEntryType(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::UpdateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("entry_type.name=",
+                           internal::UrlEncode(request.entry_type().name())));
+  return child_->UpdateEntryType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceMetadata::AsyncDeleteEntryType(
     google::cloud::CompletionQueue& cq,
@@ -77,6 +96,15 @@ CatalogServiceMetadata::AsyncDeleteEntryType(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEntryType(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::DeleteEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEntryType(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse>
@@ -109,6 +137,15 @@ CatalogServiceMetadata::AsyncCreateAspectType(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::CreateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAspectType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceMetadata::AsyncUpdateAspectType(
     google::cloud::CompletionQueue& cq,
@@ -122,6 +159,16 @@ CatalogServiceMetadata::AsyncUpdateAspectType(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::UpdateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("aspect_type.name=",
+                           internal::UrlEncode(request.aspect_type().name())));
+  return child_->UpdateAspectType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceMetadata::AsyncDeleteAspectType(
     google::cloud::CompletionQueue& cq,
@@ -132,6 +179,15 @@ CatalogServiceMetadata::AsyncDeleteAspectType(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAspectType(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::DeleteAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAspectType(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse>
@@ -164,6 +220,15 @@ CatalogServiceMetadata::AsyncCreateEntryGroup(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::CreateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEntryGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceMetadata::AsyncUpdateEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -177,6 +242,16 @@ CatalogServiceMetadata::AsyncUpdateEntryGroup(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::UpdateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("entry_group.name=",
+                           internal::UrlEncode(request.entry_group().name())));
+  return child_->UpdateEntryGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceMetadata::AsyncDeleteEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -187,6 +262,15 @@ CatalogServiceMetadata::AsyncDeleteEntryGroup(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEntryGroup(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CatalogServiceMetadata::DeleteEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEntryGroup(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse>

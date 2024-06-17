@@ -43,6 +43,10 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::automl::v1::CreateDatasetRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::automl::v1::CreateDatasetRequest const& request) override;
+
   StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
       grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::GetDatasetRequest const& request) override;
@@ -61,16 +65,28 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      grpc::ClientContext& context, Options options,
+      google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportData(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::automl::v1::ImportDataRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> ImportData(
+      grpc::ClientContext& context, Options options,
+      google::cloud::automl::v1::ImportDataRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportData(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::automl::v1::ExportDataRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ExportData(
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
@@ -82,6 +98,10 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::automl::v1::CreateModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateModel(
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::CreateModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::Model> GetModel(
@@ -98,6 +118,10 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::automl::v1::DeleteModelRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::automl::v1::DeleteModelRequest const& request) override;
+
   StatusOr<google::cloud::automl::v1::Model> UpdateModel(
       grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::UpdateModelRequest const& request) override;
@@ -108,16 +132,28 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::automl::v1::DeployModelRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeployModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::automl::v1::DeployModelRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUndeployModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::automl::v1::UndeployModelRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      grpc::ClientContext& context, Options options,
+      google::cloud::automl::v1::UndeployModelRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportModel(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::automl::v1::ExportModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ExportModel(
+      grpc::ClientContext& context, Options options,
       google::cloud::automl::v1::ExportModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(

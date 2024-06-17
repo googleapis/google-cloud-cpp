@@ -103,6 +103,14 @@ EdgeNetworkAuth::AsyncCreateNetwork(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::CreateNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateNetwork(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncDeleteNetwork(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +129,14 @@ EdgeNetworkAuth::AsyncDeleteNetwork(
         return child->AsyncDeleteNetwork(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::DeleteNetwork(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteNetwork(context, options, request);
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse>
@@ -160,6 +176,14 @@ EdgeNetworkAuth::AsyncCreateSubnet(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::CreateSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSubnet(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncUpdateSubnet(
     google::cloud::CompletionQueue& cq,
@@ -180,6 +204,14 @@ EdgeNetworkAuth::AsyncUpdateSubnet(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::UpdateSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateSubnet(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncDeleteSubnet(
     google::cloud::CompletionQueue& cq,
@@ -198,6 +230,14 @@ EdgeNetworkAuth::AsyncDeleteSubnet(
         return child->AsyncDeleteSubnet(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::DeleteSubnet(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSubnet(context, options, request);
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
@@ -269,6 +309,16 @@ EdgeNetworkAuth::AsyncCreateInterconnectAttachment(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeNetworkAuth::CreateInterconnectAttachment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInterconnectAttachment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncDeleteInterconnectAttachment(
     google::cloud::CompletionQueue& cq,
@@ -288,6 +338,16 @@ EdgeNetworkAuth::AsyncDeleteInterconnectAttachment(
         return child->AsyncDeleteInterconnectAttachment(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+EdgeNetworkAuth::DeleteInterconnectAttachment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInterconnectAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse>
@@ -336,6 +396,14 @@ EdgeNetworkAuth::AsyncCreateRouter(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::CreateRouter(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRouter(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncUpdateRouter(
     google::cloud::CompletionQueue& cq,
@@ -356,6 +424,14 @@ EdgeNetworkAuth::AsyncUpdateRouter(
       });
 }
 
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::UpdateRouter(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateRouter(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EdgeNetworkAuth::AsyncDeleteRouter(
     google::cloud::CompletionQueue& cq,
@@ -374,6 +450,14 @@ EdgeNetworkAuth::AsyncDeleteRouter(
         return child->AsyncDeleteRouter(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EdgeNetworkAuth::DeleteRouter(
+    grpc::ClientContext& context, Options options,
+    google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRouter(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

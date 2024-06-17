@@ -51,6 +51,18 @@ CloudChannelReportsServiceLogging::AsyncRunReportJob(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelReportsServiceLogging::RunReportJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::channel::v1::RunReportJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::RunReportJobRequest const& request) {
+        return child_->RunReportJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
 CloudChannelReportsServiceLogging::FetchReportResults(
     grpc::ClientContext& context, Options const& options,

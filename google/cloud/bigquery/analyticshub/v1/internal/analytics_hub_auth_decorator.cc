@@ -171,6 +171,16 @@ AnalyticsHubServiceAuth::AsyncSubscribeDataExchange(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceAuth::SubscribeDataExchange(
+    grpc::ClientContext& context, Options options,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SubscribeDataExchange(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceAuth::AsyncRefreshSubscription(
     google::cloud::CompletionQueue& cq,
@@ -190,6 +200,16 @@ AnalyticsHubServiceAuth::AsyncRefreshSubscription(
         return child->AsyncRefreshSubscription(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceAuth::RefreshSubscription(
+    grpc::ClientContext& context, Options options,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RefreshSubscription(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -252,6 +272,16 @@ AnalyticsHubServiceAuth::AsyncDeleteSubscription(
         return child->AsyncDeleteSubscription(cq, *std::move(context),
                                               std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceAuth::DeleteSubscription(
+    grpc::ClientContext& context, Options options,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSubscription(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceAuth::GetIamPolicy(

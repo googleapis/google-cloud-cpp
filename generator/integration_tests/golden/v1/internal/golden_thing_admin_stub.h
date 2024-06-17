@@ -50,6 +50,11 @@ class GoldenThingAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
+
   virtual StatusOr<google::test::admin::database::v1::Database> GetDatabase(
       grpc::ClientContext& context,
       Options const& options,
@@ -59,6 +64,11 @@ class GoldenThingAdminStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      grpc::ClientContext& context,
+      Options options,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
 
   virtual Status DropDatabase(
@@ -92,6 +102,11 @@ class GoldenThingAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
+
   virtual StatusOr<google::test::admin::database::v1::Backup> GetBackup(
       grpc::ClientContext& context,
       Options const& options,
@@ -118,6 +133,11 @@ class GoldenThingAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> RestoreDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
+
   virtual StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
       grpc::ClientContext& context,
       Options const& options,
@@ -132,6 +152,11 @@ class GoldenThingAdminStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> LongRunningWithoutRouting(
+      grpc::ClientContext& context,
+      Options options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 
   virtual future<StatusOr<google::test::admin::database::v1::Database>>
@@ -180,6 +205,11 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
+
   StatusOr<google::test::admin::database::v1::Database> GetDatabase(
       grpc::ClientContext& context,
       Options const& options,
@@ -189,6 +219,11 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      grpc::ClientContext& context,
+      Options options,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   Status DropDatabase(
@@ -222,6 +257,11 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateBackupRequest const& request) override;
+
   StatusOr<google::test::admin::database::v1::Backup> GetBackup(
       grpc::ClientContext& context,
       Options const& options,
@@ -248,6 +288,11 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
+
   StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
       grpc::ClientContext& context,
       Options const& options,
@@ -262,6 +307,11 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> LongRunningWithoutRouting(
+      grpc::ClientContext& context,
+      Options options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(

@@ -51,11 +51,24 @@ class PublicAdvertisedPrefixesRestLogging
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           AnnounceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Announce(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          AnnounceRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncDeletePublicAdvertisedPrefix(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          DeletePublicAdvertisedPrefixRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePublicAdvertisedPrefix(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           DeletePublicAdvertisedPrefixRequest const& request) override;
 
@@ -74,6 +87,13 @@ class PublicAdvertisedPrefixesRestLogging
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           InsertPublicAdvertisedPrefixRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertPublicAdvertisedPrefix(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          InsertPublicAdvertisedPrefixRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefixList>
   ListPublicAdvertisedPrefixes(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -89,10 +109,23 @@ class PublicAdvertisedPrefixesRestLogging
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           PatchPublicAdvertisedPrefixRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPublicAdvertisedPrefix(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          PatchPublicAdvertisedPrefixRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncWithdraw(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::public_advertised_prefixes::v1::
+          WithdrawRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Withdraw(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           WithdrawRequest const& request) override;
 

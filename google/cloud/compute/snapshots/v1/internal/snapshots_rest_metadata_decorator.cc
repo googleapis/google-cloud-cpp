@@ -50,6 +50,15 @@ SnapshotsRestMetadata::AsyncDeleteSnapshot(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsRestMetadata::DeleteSnapshot(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteSnapshot(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
 SnapshotsRestMetadata::GetSnapshot(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -80,6 +89,15 @@ SnapshotsRestMetadata::AsyncInsertSnapshot(
                                      std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsRestMetadata::InsertSnapshot(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertSnapshot(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SnapshotList>
 SnapshotsRestMetadata::ListSnapshots(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -108,6 +126,15 @@ SnapshotsRestMetadata::AsyncSetLabels(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

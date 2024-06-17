@@ -119,6 +119,18 @@ DefaultLineageStub::AsyncDeleteProcess(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultLineageStub::DeleteProcess(
+    grpc::ClientContext& context, Options,
+    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteProcess(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 DefaultLineageStub::CreateRun(
     grpc::ClientContext& context, Options const&,
@@ -184,6 +196,17 @@ DefaultLineageStub::AsyncDeleteRun(
         return grpc_stub_->AsyncDeleteRun(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultLineageStub::DeleteRun(
+    grpc::ClientContext& context, Options,
+    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRun(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>

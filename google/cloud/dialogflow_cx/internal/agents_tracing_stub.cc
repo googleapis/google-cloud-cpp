@@ -102,6 +102,17 @@ AgentsTracingStub::AsyncExportAgent(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> AgentsTracingStub::ExportAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
+                                     "ExportAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportAgent(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AgentsTracingStub::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +125,17 @@ AgentsTracingStub::AsyncRestoreAgent(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRestoreAgent(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> AgentsTracingStub::RestoreAgent(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
+                                     "RestoreAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RestoreAgent(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>

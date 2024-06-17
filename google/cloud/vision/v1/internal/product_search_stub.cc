@@ -252,6 +252,18 @@ DefaultProductSearchStub::AsyncImportProductSets(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultProductSearchStub::ImportProductSets(
+    grpc::ClientContext& context, Options,
+    google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportProductSets(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductSearchStub::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
@@ -268,6 +280,18 @@ DefaultProductSearchStub::AsyncPurgeProducts(
         return grpc_stub_->AsyncPurgeProducts(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultProductSearchStub::PurgeProducts(
+    grpc::ClientContext& context, Options,
+    google::cloud::vision::v1::PurgeProductsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->PurgeProducts(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

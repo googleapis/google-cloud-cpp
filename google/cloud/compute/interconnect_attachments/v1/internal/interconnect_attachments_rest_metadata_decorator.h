@@ -58,6 +58,13 @@ class InterconnectAttachmentsRestMetadata
       google::cloud::cpp::compute::interconnect_attachments::v1::
           DeleteInterconnectAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInterconnectAttachment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          DeleteInterconnectAttachmentRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
   GetInterconnectAttachment(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -70,6 +77,13 @@ class InterconnectAttachmentsRestMetadata
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          InsertInterconnectAttachmentRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInterconnectAttachment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           InsertInterconnectAttachmentRequest const& request) override;
 
@@ -88,11 +102,24 @@ class InterconnectAttachmentsRestMetadata
       google::cloud::cpp::compute::interconnect_attachments::v1::
           PatchInterconnectAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInterconnectAttachment(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          PatchInterconnectAttachmentRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          SetLabelsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           SetLabelsRequest const& request) override;
 

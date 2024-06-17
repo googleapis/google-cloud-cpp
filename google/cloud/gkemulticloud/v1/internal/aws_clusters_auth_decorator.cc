@@ -51,6 +51,14 @@ AwsClustersAuth::AsyncCreateAwsCluster(
       });
 }
 
+StatusOr<google::longrunning::Operation> AwsClustersAuth::CreateAwsCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAwsCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersAuth::AsyncUpdateAwsCluster(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +77,14 @@ AwsClustersAuth::AsyncUpdateAwsCluster(
         return child->AsyncUpdateAwsCluster(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersAuth::UpdateAwsCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAwsCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
@@ -107,6 +123,14 @@ AwsClustersAuth::AsyncDeleteAwsCluster(
         return child->AsyncDeleteAwsCluster(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersAuth::DeleteAwsCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAwsCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
@@ -149,6 +173,14 @@ AwsClustersAuth::AsyncCreateAwsNodePool(
       });
 }
 
+StatusOr<google::longrunning::Operation> AwsClustersAuth::CreateAwsNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAwsNodePool(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersAuth::AsyncUpdateAwsNodePool(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +199,14 @@ AwsClustersAuth::AsyncUpdateAwsNodePool(
         return child->AsyncUpdateAwsNodePool(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersAuth::UpdateAwsNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAwsNodePool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -188,6 +228,16 @@ AwsClustersAuth::AsyncRollbackAwsNodePoolUpdate(
         return child->AsyncRollbackAwsNodePoolUpdate(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AwsClustersAuth::RollbackAwsNodePoolUpdate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RollbackAwsNodePoolUpdate(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -226,6 +276,14 @@ AwsClustersAuth::AsyncDeleteAwsNodePool(
         return child->AsyncDeleteAwsNodePool(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AwsClustersAuth::DeleteAwsNodePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAwsNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>

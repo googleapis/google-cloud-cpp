@@ -54,6 +54,15 @@ FeaturestoreServiceMetadata::AsyncCreateFeaturestore(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::CreateFeaturestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFeaturestore(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
 FeaturestoreServiceMetadata::GetFeaturestore(
     grpc::ClientContext& context, Options const& options,
@@ -85,6 +94,16 @@ FeaturestoreServiceMetadata::AsyncUpdateFeaturestore(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::UpdateFeaturestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("featurestore.name=",
+                           internal::UrlEncode(request.featurestore().name())));
+  return child_->UpdateFeaturestore(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceMetadata::AsyncDeleteFeaturestore(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +116,15 @@ FeaturestoreServiceMetadata::AsyncDeleteFeaturestore(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::DeleteFeaturestore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFeaturestore(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceMetadata::AsyncCreateEntityType(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +135,15 @@ FeaturestoreServiceMetadata::AsyncCreateEntityType(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateEntityType(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::CreateEntityType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
@@ -149,6 +186,15 @@ FeaturestoreServiceMetadata::AsyncDeleteEntityType(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::DeleteEntityType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEntityType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceMetadata::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
@@ -161,6 +207,15 @@ FeaturestoreServiceMetadata::AsyncCreateFeature(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::CreateFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateFeature(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceMetadata::AsyncBatchCreateFeatures(
     google::cloud::CompletionQueue& cq,
@@ -171,6 +226,15 @@ FeaturestoreServiceMetadata::AsyncBatchCreateFeatures(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchCreateFeatures(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::BatchCreateFeatures(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchCreateFeatures(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
@@ -213,6 +277,15 @@ FeaturestoreServiceMetadata::AsyncDeleteFeature(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::DeleteFeature(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFeature(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceMetadata::AsyncImportFeatureValues(
     google::cloud::CompletionQueue& cq,
@@ -224,6 +297,16 @@ FeaturestoreServiceMetadata::AsyncImportFeatureValues(
       absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
   return child_->AsyncImportFeatureValues(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::ImportFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
+  return child_->ImportFeatureValues(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -240,6 +323,17 @@ FeaturestoreServiceMetadata::AsyncBatchReadFeatureValues(
                                              std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::BatchReadFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("featurestore=",
+                           internal::UrlEncode(request.featurestore())));
+  return child_->BatchReadFeatureValues(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceMetadata::AsyncExportFeatureValues(
     google::cloud::CompletionQueue& cq,
@@ -253,6 +347,16 @@ FeaturestoreServiceMetadata::AsyncExportFeatureValues(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::ExportFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
+  return child_->ExportFeatureValues(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeaturestoreServiceMetadata::AsyncDeleteFeatureValues(
     google::cloud::CompletionQueue& cq,
@@ -264,6 +368,16 @@ FeaturestoreServiceMetadata::AsyncDeleteFeatureValues(
       absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
   return child_->AsyncDeleteFeatureValues(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeaturestoreServiceMetadata::DeleteFeatureValues(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("entity_type=", internal::UrlEncode(request.entity_type())));
+  return child_->DeleteFeatureValues(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>

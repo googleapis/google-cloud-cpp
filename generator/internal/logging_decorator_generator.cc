@@ -222,6 +222,22 @@ $logging_class_name$::Async$method_name$(
       tracing_options_);
 }
 )""");
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<google::longrunning::Operation>
+$logging_class_name$::$method_name$(
+      grpc::ClientContext& context,
+      Options options,
+      $request_type$ const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             $request_type$ const& request) {
+        return child_->$method_name$(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+)""");
+
       continue;
     }
     if (IsStreamingRead(method)) {

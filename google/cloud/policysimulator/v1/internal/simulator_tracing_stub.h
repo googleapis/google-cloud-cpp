@@ -49,6 +49,11 @@ class SimulatorTracingStub : public SimulatorStub {
       google::cloud::policysimulator::v1::CreateReplayRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateReplay(
+      grpc::ClientContext& context, Options options,
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
+      override;
+
   StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
   ListReplayResults(
       grpc::ClientContext& context, Options const& options,

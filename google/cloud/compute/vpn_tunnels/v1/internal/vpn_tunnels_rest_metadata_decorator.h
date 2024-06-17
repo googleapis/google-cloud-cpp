@@ -54,6 +54,12 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
       google::cloud::cpp::compute::vpn_tunnels::v1::
           DeleteVpnTunnelRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnel(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          DeleteVpnTunnelRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -68,6 +74,12 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
       google::cloud::cpp::compute::vpn_tunnels::v1::
           InsertVpnTunnelRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnel(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          InsertVpnTunnelRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnelList> ListVpnTunnels(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -79,6 +91,12 @@ class VpnTunnelsRestMetadata : public VpnTunnelsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
           request) override;
 

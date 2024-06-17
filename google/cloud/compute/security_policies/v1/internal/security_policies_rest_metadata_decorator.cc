@@ -51,6 +51,15 @@ SecurityPoliciesRestMetadata::AsyncAddRule(
                               request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SecurityPoliciesRestMetadata::AddRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->AddRule(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SecurityPoliciesAggregatedList>
 SecurityPoliciesRestMetadata::AggregatedListSecurityPolicies(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -70,6 +79,15 @@ SecurityPoliciesRestMetadata::AsyncDeleteSecurityPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncDeleteSecurityPolicy(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SecurityPoliciesRestMetadata::DeleteSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::security_policies::v1::
+        DeleteSecurityPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteSecurityPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -100,6 +118,15 @@ SecurityPoliciesRestMetadata::AsyncInsertSecurityPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertSecurityPolicy(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SecurityPoliciesRestMetadata::InsertSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::security_policies::v1::
+        InsertSecurityPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertSecurityPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicyList>
@@ -134,6 +161,15 @@ SecurityPoliciesRestMetadata::AsyncPatchSecurityPolicy(
                                           std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SecurityPoliciesRestMetadata::PatchSecurityPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::security_policies::v1::
+        PatchSecurityPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchSecurityPolicy(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesRestMetadata::AsyncPatchRule(
     CompletionQueue& cq,
@@ -144,6 +180,15 @@ SecurityPoliciesRestMetadata::AsyncPatchRule(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchRule(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SecurityPoliciesRestMetadata::PatchRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::security_policies::v1::PatchRuleRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchRule(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -158,6 +203,15 @@ SecurityPoliciesRestMetadata::AsyncRemoveRule(
                                  std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SecurityPoliciesRestMetadata::RemoveRule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::security_policies::v1::RemoveRuleRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->RemoveRule(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesRestMetadata::AsyncSetLabels(
     CompletionQueue& cq,
@@ -168,6 +222,15 @@ SecurityPoliciesRestMetadata::AsyncSetLabels(
   SetMetadata(*rest_context, *options);
   return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
                                 request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SecurityPoliciesRestMetadata::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::security_policies::v1::SetLabelsRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->SetLabels(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

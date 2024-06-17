@@ -45,6 +45,11 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
       google::cloud::aiplatform::v1::CreateTensorboardRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateTensorboard(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::Tensorboard> GetTensorboard(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request)
@@ -57,6 +62,11 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateTensorboard(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
   ListTensorboards(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListTensorboardsRequest const&
@@ -66,6 +76,11 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTensorboard(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
       override;
 
@@ -113,6 +128,11 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
       google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+          request) override;
+
   StatusOr<google::cloud::aiplatform::v1::TensorboardRun> CreateTensorboardRun(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request)
@@ -144,6 +164,11 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request)
       override;
 
@@ -183,6 +208,11 @@ class TensorboardServiceTracingStub : public TensorboardServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
           request) override;
 

@@ -46,6 +46,11 @@ class VpcAccessServiceLogging : public VpcAccessServiceStub {
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateConnector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
+      override;
+
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
       grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
@@ -60,6 +65,11 @@ class VpcAccessServiceLogging : public VpcAccessServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnector(
+      grpc::ClientContext& context, Options options,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
       override;
 

@@ -60,6 +60,15 @@ ResourcePoliciesRestMetadata::AsyncDeleteResourcePolicy(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesRestMetadata::DeleteResourcePolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        DeleteResourcePolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteResourcePolicy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
 ResourcePoliciesRestMetadata::GetResourcePolicy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -90,6 +99,15 @@ ResourcePoliciesRestMetadata::AsyncInsertResourcePolicy(
                                            std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesRestMetadata::InsertResourcePolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        InsertResourcePolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertResourcePolicy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
 ResourcePoliciesRestMetadata::ListResourcePolicies(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -109,6 +127,15 @@ ResourcePoliciesRestMetadata::AsyncPatchResourcePolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchResourcePolicy(cq, std::move(rest_context),
                                           std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesRestMetadata::PatchResourcePolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchResourcePolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

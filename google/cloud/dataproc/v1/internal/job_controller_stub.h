@@ -49,6 +49,10 @@ class JobControllerStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dataproc::v1::SubmitJobRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::dataproc::v1::Job> GetJob(
       grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetJobRequest const& request) = 0;
@@ -99,6 +103,10 @@ class DefaultJobControllerStub : public JobControllerStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
+      grpc::ClientContext& context, Options options,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(

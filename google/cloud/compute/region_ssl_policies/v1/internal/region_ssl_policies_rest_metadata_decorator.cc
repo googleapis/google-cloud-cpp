@@ -51,6 +51,15 @@ RegionSslPoliciesRestMetadata::AsyncDeleteSslPolicy(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesRestMetadata::DeleteSslPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        DeleteSslPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteSslPolicy(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
 RegionSslPoliciesRestMetadata::GetSslPolicy(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -70,6 +79,15 @@ RegionSslPoliciesRestMetadata::AsyncInsertSslPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertSslPolicy(cq, std::move(rest_context),
                                       std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesRestMetadata::InsertSslPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        InsertSslPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertSslPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
@@ -101,6 +119,15 @@ RegionSslPoliciesRestMetadata::AsyncPatchSslPolicy(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchSslPolicy(cq, std::move(rest_context),
                                      std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesRestMetadata::PatchSslPolicy(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        PatchSslPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchSslPolicy(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

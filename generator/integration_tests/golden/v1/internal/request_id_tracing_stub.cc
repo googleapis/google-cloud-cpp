@@ -57,6 +57,19 @@ RequestIdServiceTracingStub::AsyncRenameFoo(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+RequestIdServiceTracingStub::RenameFoo(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::requestid::v1::RenameFooRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.requestid.v1.RequestIdService", "RenameFoo");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RenameFoo(context, options, request));
+}
+
 StatusOr<google::test::requestid::v1::ListFoosResponse> RequestIdServiceTracingStub::ListFoos(
     grpc::ClientContext& context,
     Options const& options,

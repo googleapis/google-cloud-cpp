@@ -46,6 +46,11 @@ class CloudBuildMetadata : public CloudBuildStub {
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateBuild(
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::CreateBuildRequest const& request)
+      override;
+
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
       grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::GetBuildRequest const& request)
@@ -68,10 +73,20 @@ class CloudBuildMetadata : public CloudBuildStub {
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RetryBuild(
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::RetryBuildRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncApproveBuild(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ApproveBuild(
+      grpc::ClientContext& context, Options options,
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request)
       override;
 
@@ -108,6 +123,11 @@ class CloudBuildMetadata : public CloudBuildStub {
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RunBuildTrigger(
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request)
+      override;
+
   StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
   ReceiveTriggerWebhook(
       grpc::ClientContext& context, Options const& options,
@@ -118,6 +138,11 @@ class CloudBuildMetadata : public CloudBuildStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateWorkerPool(
+      grpc::ClientContext& context, Options options,
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request)
       override;
 
@@ -133,10 +158,20 @@ class CloudBuildMetadata : public CloudBuildStub {
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteWorkerPool(
+      grpc::ClientContext& context, Options options,
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateWorkerPool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateWorkerPool(
+      grpc::ClientContext& context, Options options,
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request)
       override;
 

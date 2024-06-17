@@ -45,6 +45,17 @@ ModelServiceTracingStub::AsyncUploadModel(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceTracingStub::UploadModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UploadModelRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
+                                     "UploadModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UploadModel(context, options, request));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceTracingStub::GetModel(
     grpc::ClientContext& context, Options const& options,
@@ -109,6 +120,20 @@ ModelServiceTracingStub::AsyncUpdateExplanationDataset(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingStub::UpdateExplanationDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
+                                     "UpdateExplanationDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateExplanationDataset(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceTracingStub::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +146,17 @@ ModelServiceTracingStub::AsyncDeleteModel(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteModel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceTracingStub::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
+                                     "DeleteModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteModel(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -136,6 +172,18 @@ ModelServiceTracingStub::AsyncDeleteModelVersion(
   auto f =
       child_->AsyncDeleteModelVersion(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingStub::DeleteModelVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
+                                     "DeleteModelVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteModelVersion(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
@@ -164,6 +212,17 @@ ModelServiceTracingStub::AsyncExportModel(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceTracingStub::ExportModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportModelRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
+                                     "ExportModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportModel(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceTracingStub::AsyncCopyModel(
     google::cloud::CompletionQueue& cq,
@@ -176,6 +235,17 @@ ModelServiceTracingStub::AsyncCopyModel(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCopyModel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceTracingStub::CopyModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CopyModelRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelService",
+                                     "CopyModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CopyModel(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>

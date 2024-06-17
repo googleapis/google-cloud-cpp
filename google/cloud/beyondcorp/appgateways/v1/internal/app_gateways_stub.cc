@@ -77,6 +77,19 @@ DefaultAppGatewaysServiceStub::AsyncCreateAppGateway(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAppGatewaysServiceStub::CreateAppGateway(
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAppGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppGatewaysServiceStub::AsyncDeleteAppGateway(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +108,19 @@ DefaultAppGatewaysServiceStub::AsyncDeleteAppGateway(
         return grpc_stub_->AsyncDeleteAppGateway(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAppGatewaysServiceStub::DeleteAppGateway(
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAppGateway(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -58,10 +58,20 @@ class MetricsScopesAuth : public MetricsScopesStub {
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateMonitoredProject(
+      grpc::ClientContext& context, Options options,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMonitoredProject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
+      grpc::ClientContext& context, Options options,
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request) override;
 

@@ -67,6 +67,20 @@ GoldenThingAdminLogging::AsyncCreateDatabase(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminLogging::CreateDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+        return child_->CreateDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminLogging::GetDatabase(
     grpc::ClientContext& context,
@@ -97,6 +111,20 @@ GoldenThingAdminLogging::AsyncUpdateDatabaseDdl(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminLogging::UpdateDatabaseDdl(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+        return child_->UpdateDatabaseDdl(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status
@@ -187,6 +215,20 @@ GoldenThingAdminLogging::AsyncCreateBackup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminLogging::CreateBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::test::admin::database::v1::CreateBackupRequest const& request) {
+        return child_->CreateBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminLogging::GetBackup(
     grpc::ClientContext& context,
@@ -261,6 +303,20 @@ GoldenThingAdminLogging::AsyncRestoreDatabase(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminLogging::RestoreDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+        return child_->RestoreDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 GoldenThingAdminLogging::ListDatabaseOperations(
     grpc::ClientContext& context,
@@ -305,6 +361,20 @@ GoldenThingAdminLogging::AsyncLongRunningWithoutRouting(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminLogging::LongRunningWithoutRouting(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+        return child_->LongRunningWithoutRouting(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

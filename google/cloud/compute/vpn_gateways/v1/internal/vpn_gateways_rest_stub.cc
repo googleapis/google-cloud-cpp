@@ -105,6 +105,23 @@ DefaultVpnGatewaysRestStub::AsyncDeleteVpnGateway(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultVpnGatewaysRestStub::DeleteVpnGateway(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::
+        DeleteVpnGatewayRequest const& request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "vpnGateways", "/",
+                   request.vpn_gateway()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
 DefaultVpnGatewaysRestStub::GetVpnGateway(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -170,6 +187,22 @@ DefaultVpnGatewaysRestStub::AsyncInsertVpnGateway(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultVpnGatewaysRestStub::InsertVpnGateway(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::
+        InsertVpnGatewayRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.vpn_gateway_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "vpnGateways"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VpnGatewayList>
 DefaultVpnGatewaysRestStub::ListVpnGateways(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -225,6 +258,24 @@ DefaultVpnGatewaysRestStub::AsyncSetLabels(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultVpnGatewaysRestStub::SetLabels(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.region_set_labels_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "vpnGateways", "/",
+                   request.resource(), "/", "setLabels"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

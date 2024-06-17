@@ -72,6 +72,16 @@ AppHubAuth::AsyncCreateServiceProjectAttachment(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubAuth::CreateServiceProjectAttachment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateServiceProjectAttachment(context, options, request);
+}
+
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
 AppHubAuth::GetServiceProjectAttachment(
     grpc::ClientContext& context, Options const& options,
@@ -101,6 +111,16 @@ AppHubAuth::AsyncDeleteServiceProjectAttachment(
         return child->AsyncDeleteServiceProjectAttachment(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+AppHubAuth::DeleteServiceProjectAttachment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteServiceProjectAttachment(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -168,6 +188,14 @@ future<StatusOr<google::longrunning::Operation>> AppHubAuth::AsyncCreateService(
       });
 }
 
+StatusOr<google::longrunning::Operation> AppHubAuth::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateService(context, options, request);
+}
+
 StatusOr<google::cloud::apphub::v1::Service> AppHubAuth::GetService(
     grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetServiceRequest const& request) {
@@ -195,6 +223,14 @@ future<StatusOr<google::longrunning::Operation>> AppHubAuth::AsyncUpdateService(
       });
 }
 
+StatusOr<google::longrunning::Operation> AppHubAuth::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> AppHubAuth::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -212,6 +248,14 @@ future<StatusOr<google::longrunning::Operation>> AppHubAuth::AsyncDeleteService(
         return child->AsyncDeleteService(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AppHubAuth::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
@@ -270,6 +314,14 @@ AppHubAuth::AsyncCreateWorkload(
       });
 }
 
+StatusOr<google::longrunning::Operation> AppHubAuth::CreateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateWorkload(context, options, request);
+}
+
 StatusOr<google::cloud::apphub::v1::Workload> AppHubAuth::GetWorkload(
     grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetWorkloadRequest const& request) {
@@ -298,6 +350,14 @@ AppHubAuth::AsyncUpdateWorkload(
       });
 }
 
+StatusOr<google::longrunning::Operation> AppHubAuth::UpdateWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateWorkload(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppHubAuth::AsyncDeleteWorkload(
     google::cloud::CompletionQueue& cq,
@@ -316,6 +376,14 @@ AppHubAuth::AsyncDeleteWorkload(
         return child->AsyncDeleteWorkload(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AppHubAuth::DeleteWorkload(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteWorkload(context, options, request);
 }
 
 StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
@@ -347,6 +415,14 @@ AppHubAuth::AsyncCreateApplication(
       });
 }
 
+StatusOr<google::longrunning::Operation> AppHubAuth::CreateApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateApplication(context, options, request);
+}
+
 StatusOr<google::cloud::apphub::v1::Application> AppHubAuth::GetApplication(
     grpc::ClientContext& context, Options const& options,
     google::cloud::apphub::v1::GetApplicationRequest const& request) {
@@ -375,6 +451,14 @@ AppHubAuth::AsyncUpdateApplication(
       });
 }
 
+StatusOr<google::longrunning::Operation> AppHubAuth::UpdateApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateApplication(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppHubAuth::AsyncDeleteApplication(
     google::cloud::CompletionQueue& cq,
@@ -393,6 +477,14 @@ AppHubAuth::AsyncDeleteApplication(
         return child->AsyncDeleteApplication(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> AppHubAuth::DeleteApplication(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteApplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AppHubAuth::AsyncGetOperation(

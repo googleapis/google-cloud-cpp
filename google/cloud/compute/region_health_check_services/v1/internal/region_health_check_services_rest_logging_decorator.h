@@ -52,6 +52,12 @@ class RegionHealthCheckServicesRestLogging
       google::cloud::cpp::compute::region_health_check_services::v1::
           DeleteHealthCheckServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthCheckService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          DeleteHealthCheckServiceRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
   GetHealthCheckService(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -67,6 +73,12 @@ class RegionHealthCheckServicesRestLogging
       google::cloud::cpp::compute::region_health_check_services::v1::
           InsertHealthCheckServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthCheckService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          InsertHealthCheckServiceRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckServicesList>
   ListRegionHealthCheckServices(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -79,6 +91,12 @@ class RegionHealthCheckServicesRestLogging
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          PatchHealthCheckServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheckService(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_health_check_services::v1::
           PatchHealthCheckServiceRequest const& request) override;
 

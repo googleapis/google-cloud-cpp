@@ -52,6 +52,16 @@ FeatureOnlineStoreAdminServiceAuth::AsyncCreateFeatureOnlineStore(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceAuth::CreateFeatureOnlineStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFeatureOnlineStore(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
 FeatureOnlineStoreAdminServiceAuth::GetFeatureOnlineStore(
     grpc::ClientContext& context, Options const& options,
@@ -93,6 +103,16 @@ FeatureOnlineStoreAdminServiceAuth::AsyncUpdateFeatureOnlineStore(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceAuth::UpdateFeatureOnlineStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFeatureOnlineStore(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceAuth::AsyncDeleteFeatureOnlineStore(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +134,16 @@ FeatureOnlineStoreAdminServiceAuth::AsyncDeleteFeatureOnlineStore(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceAuth::DeleteFeatureOnlineStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFeatureOnlineStore(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceAuth::AsyncCreateFeatureView(
     google::cloud::CompletionQueue& cq,
@@ -132,6 +162,15 @@ FeatureOnlineStoreAdminServiceAuth::AsyncCreateFeatureView(
         return child->AsyncCreateFeatureView(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceAuth::CreateFeatureView(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateFeatureView(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
@@ -172,6 +211,15 @@ FeatureOnlineStoreAdminServiceAuth::AsyncUpdateFeatureView(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceAuth::UpdateFeatureView(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateFeatureView(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FeatureOnlineStoreAdminServiceAuth::AsyncDeleteFeatureView(
     google::cloud::CompletionQueue& cq,
@@ -190,6 +238,15 @@ FeatureOnlineStoreAdminServiceAuth::AsyncDeleteFeatureView(
         return child->AsyncDeleteFeatureView(cq, *std::move(context),
                                              std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceAuth::DeleteFeatureView(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFeatureView(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>

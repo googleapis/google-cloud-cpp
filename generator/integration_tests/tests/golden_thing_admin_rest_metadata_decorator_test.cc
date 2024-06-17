@@ -221,6 +221,30 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateDatabase) {
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
+TEST(ThingAdminRestMetadataDecoratorTest, CreateDatabase) {
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  EXPECT_CALL(*mock, CreateDatabase)
+      .WillOnce(
+          [](rest_internal::RestContext& context, Options const&,
+             google::test::admin::database::v1::CreateDatabaseRequest const&) {
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
+            EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
+            return TransientError();
+          });
+
+  GoldenThingAdminRestMetadata stub(mock);
+  rest_internal::RestContext context;
+  google::test::admin::database::v1::CreateDatabaseRequest request;
+  request.set_parent("projects/my_project/instances/my_instance");
+  auto status = stub.CreateDatabase(context, Options{}, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
 TEST(ThingAdminRestMetadataDecoratorTest, AsyncUpdateDatabaseDdl) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
@@ -247,6 +271,31 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncUpdateDatabaseDdl) {
   auto status = stub.AsyncUpdateDatabaseDdl(
       cq, std::move(context), internal::MakeImmutableOptions({}), request);
   EXPECT_EQ(TransientError(), status.get().status());
+}
+
+TEST(ThingAdminRestMetadataDecoratorTest, UpdateDatabaseDdl) {
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  EXPECT_CALL(*mock, UpdateDatabaseDdl)
+      .WillOnce([](rest_internal::RestContext& context, Options const&,
+                   google::test::admin::database::v1::
+                       UpdateDatabaseDdlRequest const&) {
+        EXPECT_THAT(
+            context.GetHeader("x-goog-api-client"),
+            Contains(google::cloud::internal::GeneratedLibClientHeader()));
+        EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
+        EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
+        EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
+        EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
+        return TransientError();
+      });
+
+  GoldenThingAdminRestMetadata stub(mock);
+  rest_internal::RestContext context;
+  google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
+  request.set_database(
+      "projects/my_project/instances/my_instance/databases/my_database");
+  auto status = stub.UpdateDatabaseDdl(context, Options{}, request);
+  EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingMatch) {
@@ -430,6 +479,30 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateBackup) {
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
+TEST(ThingAdminRestMetadataDecoratorTest, CreateBackup) {
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  EXPECT_CALL(*mock, CreateBackup)
+      .WillOnce(
+          [](rest_internal::RestContext& context, Options const&,
+             google::test::admin::database::v1::CreateBackupRequest const&) {
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
+            EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
+            return TransientError();
+          });
+
+  GoldenThingAdminRestMetadata stub(mock);
+  rest_internal::RestContext context;
+  google::test::admin::database::v1::CreateBackupRequest request;
+  request.set_parent("projects/my_project/instances/my_instance");
+  auto status = stub.CreateBackup(context, Options{}, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
 TEST(ThingAdminRestMetadataDecoratorTest, GetBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, GetBackup)
@@ -553,6 +626,30 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncRestoreDatabase) {
   auto status = stub.AsyncRestoreDatabase(
       cq, std::move(context), internal::MakeImmutableOptions({}), request);
   EXPECT_EQ(TransientError(), status.get().status());
+}
+
+TEST(ThingAdminRestMetadataDecoratorTest, RestoreDatabase) {
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  EXPECT_CALL(*mock, RestoreDatabase)
+      .WillOnce(
+          [](rest_internal::RestContext& context, Options const&,
+             google::test::admin::database::v1::RestoreDatabaseRequest const&) {
+            EXPECT_THAT(
+                context.GetHeader("x-goog-api-client"),
+                Contains(google::cloud::internal::GeneratedLibClientHeader()));
+            EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
+            EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
+            return TransientError();
+          });
+
+  GoldenThingAdminRestMetadata stub(mock);
+  rest_internal::RestContext context;
+  google::test::admin::database::v1::RestoreDatabaseRequest request;
+  request.set_parent("projects/my_project/instances/my_instance");
+  auto status = stub.RestoreDatabase(context, Options{}, request);
+  EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, ListDatabaseOperations) {

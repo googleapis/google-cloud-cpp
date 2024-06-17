@@ -74,6 +74,18 @@ DefaultEdgeContainerStub::AsyncCreateCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEdgeContainerStub::CreateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +103,18 @@ DefaultEdgeContainerStub::AsyncUpdateCluster(
         return grpc_stub_->AsyncUpdateCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEdgeContainerStub::UpdateCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,6 +136,18 @@ DefaultEdgeContainerStub::AsyncUpgradeCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEdgeContainerStub::UpgradeCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpgradeCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
@@ -129,6 +165,18 @@ DefaultEdgeContainerStub::AsyncDeleteCluster(
         return grpc_stub_->AsyncDeleteCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEdgeContainerStub::DeleteCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -201,6 +249,18 @@ DefaultEdgeContainerStub::AsyncCreateNodePool(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEdgeContainerStub::CreateNodePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateNodePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
@@ -220,6 +280,18 @@ DefaultEdgeContainerStub::AsyncUpdateNodePool(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEdgeContainerStub::UpdateNodePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateNodePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
@@ -237,6 +309,18 @@ DefaultEdgeContainerStub::AsyncDeleteNodePool(
         return grpc_stub_->AsyncDeleteNodePool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEdgeContainerStub::DeleteNodePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteNodePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
@@ -308,6 +392,19 @@ DefaultEdgeContainerStub::AsyncCreateVpnConnection(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultEdgeContainerStub::CreateVpnConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateVpnConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
@@ -326,6 +423,19 @@ DefaultEdgeContainerStub::AsyncDeleteVpnConnection(
         return grpc_stub_->AsyncDeleteVpnConnection(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultEdgeContainerStub::DeleteVpnConnection(
+    grpc::ClientContext& context, Options,
+    google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteVpnConnection(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ServerConfig>

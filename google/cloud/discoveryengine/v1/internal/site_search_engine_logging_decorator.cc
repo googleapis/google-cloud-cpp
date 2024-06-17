@@ -68,6 +68,20 @@ SiteSearchEngineServiceLogging::AsyncCreateTargetSite(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::CreateTargetSite(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+                 request) {
+        return child_->CreateTargetSite(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncBatchCreateTargetSites(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +100,20 @@ SiteSearchEngineServiceLogging::AsyncBatchCreateTargetSites(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::BatchCreateTargetSites(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 BatchCreateTargetSitesRequest const& request) {
+        return child_->BatchCreateTargetSites(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
@@ -121,6 +149,20 @@ SiteSearchEngineServiceLogging::AsyncUpdateTargetSite(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::UpdateTargetSite(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+                 request) {
+        return child_->UpdateTargetSite(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncDeleteTargetSite(
     google::cloud::CompletionQueue& cq,
@@ -139,6 +181,20 @@ SiteSearchEngineServiceLogging::AsyncDeleteTargetSite(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::DeleteTargetSite(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+                 request) {
+        return child_->DeleteTargetSite(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse>
@@ -174,6 +230,20 @@ SiteSearchEngineServiceLogging::AsyncEnableAdvancedSiteSearch(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::EnableAdvancedSiteSearch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 EnableAdvancedSiteSearchRequest const& request) {
+        return child_->EnableAdvancedSiteSearch(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncDisableAdvancedSiteSearch(
     google::cloud::CompletionQueue& cq,
@@ -192,6 +262,20 @@ SiteSearchEngineServiceLogging::AsyncDisableAdvancedSiteSearch(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::DisableAdvancedSiteSearch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 DisableAdvancedSiteSearchRequest const& request) {
+        return child_->DisableAdvancedSiteSearch(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -213,6 +297,19 @@ SiteSearchEngineServiceLogging::AsyncRecrawlUris(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::RecrawlUris(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::RecrawlUrisRequest const&
+                 request) {
+        return child_->RecrawlUris(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceLogging::AsyncBatchVerifyTargetSites(
     google::cloud::CompletionQueue& cq,
@@ -231,6 +328,20 @@ SiteSearchEngineServiceLogging::AsyncBatchVerifyTargetSites(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceLogging::BatchVerifyTargetSites(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 BatchVerifyTargetSitesRequest const& request) {
+        return child_->BatchVerifyTargetSites(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<

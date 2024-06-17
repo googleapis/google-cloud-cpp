@@ -97,6 +97,17 @@ StorageControlLogging::AsyncRenameFolder(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> StorageControlLogging::RenameFolder(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::RenameFolderRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::RenameFolderRequest const& request) {
+        return child_->RenameFolder(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlLogging::GetStorageLayout(
     grpc::ClientContext& context, Options const& options,

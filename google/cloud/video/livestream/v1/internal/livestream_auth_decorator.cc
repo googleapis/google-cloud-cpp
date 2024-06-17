@@ -51,6 +51,14 @@ LivestreamServiceAuth::AsyncCreateChannel(
       });
 }
 
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::CreateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateChannel(context, options, request);
+}
+
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 LivestreamServiceAuth::ListChannels(
     grpc::ClientContext& context, Options const& options,
@@ -89,6 +97,14 @@ LivestreamServiceAuth::AsyncDeleteChannel(
       });
 }
 
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::DeleteChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceAuth::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +123,14 @@ LivestreamServiceAuth::AsyncUpdateChannel(
         return child->AsyncUpdateChannel(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::UpdateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateChannel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -129,6 +153,14 @@ LivestreamServiceAuth::AsyncStartChannel(
       });
 }
 
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::StartChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StartChannelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceAuth::AsyncStopChannel(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +181,14 @@ LivestreamServiceAuth::AsyncStopChannel(
       });
 }
 
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::StopChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StopChannelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceAuth::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +207,14 @@ LivestreamServiceAuth::AsyncCreateInput(
         return child->AsyncCreateInput(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::CreateInput(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateInputRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInput(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
@@ -207,6 +255,14 @@ LivestreamServiceAuth::AsyncDeleteInput(
       });
 }
 
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::DeleteInput(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInput(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceAuth::AsyncUpdateInput(
     google::cloud::CompletionQueue& cq,
@@ -225,6 +281,14 @@ LivestreamServiceAuth::AsyncUpdateInput(
         return child->AsyncUpdateInput(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::UpdateInput(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInput(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
@@ -282,6 +346,14 @@ LivestreamServiceAuth::AsyncCreateAsset(
       });
 }
 
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::CreateAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAsset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceAuth::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
@@ -300,6 +372,14 @@ LivestreamServiceAuth::AsyncDeleteAsset(
         return child->AsyncDeleteAsset(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::DeleteAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAsset(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
@@ -347,6 +427,14 @@ LivestreamServiceAuth::AsyncUpdatePool(
         return child->AsyncUpdatePool(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::UpdatePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdatePool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

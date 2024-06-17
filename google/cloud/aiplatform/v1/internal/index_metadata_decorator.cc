@@ -54,6 +54,14 @@ IndexServiceMetadata::AsyncCreateIndex(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> IndexServiceMetadata::CreateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateIndex(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceMetadata::GetIndex(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
@@ -84,6 +92,15 @@ IndexServiceMetadata::AsyncUpdateIndex(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> IndexServiceMetadata::UpdateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("index.name=", internal::UrlEncode(request.index().name())));
+  return child_->UpdateIndex(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IndexServiceMetadata::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
@@ -94,6 +111,14 @@ IndexServiceMetadata::AsyncDeleteIndex(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteIndex(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> IndexServiceMetadata::DeleteIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteIndex(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>

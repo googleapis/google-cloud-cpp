@@ -60,6 +60,17 @@ DefaultJobServiceStub::AsyncBatchCreateJobs(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultJobServiceStub::BatchCreateJobs(
+    grpc::ClientContext& context, Options,
+    google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchCreateJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::talent::v4::Job> DefaultJobServiceStub::GetJob(
     grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::GetJobRequest const& request) {
@@ -100,6 +111,17 @@ DefaultJobServiceStub::AsyncBatchUpdateJobs(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultJobServiceStub::BatchUpdateJobs(
+    grpc::ClientContext& context, Options,
+    google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchUpdateJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultJobServiceStub::DeleteJob(
     grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::DeleteJobRequest const& request) {
@@ -127,6 +149,17 @@ DefaultJobServiceStub::AsyncBatchDeleteJobs(
         return grpc_stub_->AsyncBatchDeleteJobs(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultJobServiceStub::BatchDeleteJobs(
+    grpc::ClientContext& context, Options,
+    google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchDeleteJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::talent::v4::ListJobsResponse>

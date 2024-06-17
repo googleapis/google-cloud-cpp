@@ -63,6 +63,19 @@ DefaultDatabaseAdminStub::AsyncCreateDatabase(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDatabaseAdminStub::CreateDatabase(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::spanner::admin::database::v1::Database>
 DefaultDatabaseAdminStub::GetDatabase(
     grpc::ClientContext& context, Options const&,
@@ -95,6 +108,19 @@ DefaultDatabaseAdminStub::AsyncUpdateDatabase(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDatabaseAdminStub::UpdateDatabase(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
@@ -114,6 +140,19 @@ DefaultDatabaseAdminStub::AsyncUpdateDatabaseDdl(
         return grpc_stub_->AsyncUpdateDatabaseDdl(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDatabaseAdminStub::UpdateDatabaseDdl(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateDatabaseDdl(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 Status DefaultDatabaseAdminStub::DropDatabase(
@@ -193,6 +232,17 @@ DefaultDatabaseAdminStub::AsyncCreateBackup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultDatabaseAdminStub::CreateBackup(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -210,6 +260,17 @@ DefaultDatabaseAdminStub::AsyncCopyBackup(
         return grpc_stub_->AsyncCopyBackup(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultDatabaseAdminStub::CopyBackup(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CopyBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -277,6 +338,19 @@ DefaultDatabaseAdminStub::AsyncRestoreDatabase(
         return grpc_stub_->AsyncRestoreDatabase(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDatabaseAdminStub::RestoreDatabase(
+    grpc::ClientContext& context, Options,
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestoreDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>

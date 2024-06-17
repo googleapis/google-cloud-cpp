@@ -77,6 +77,14 @@ CloudRedisAuth::AsyncCreateInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::CreateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisAuth::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +103,14 @@ CloudRedisAuth::AsyncUpdateInstance(
         return child->AsyncUpdateInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::UpdateInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -117,6 +133,14 @@ CloudRedisAuth::AsyncUpgradeInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisAuth::UpgradeInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpgradeInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisAuth::AsyncImportInstance(
     google::cloud::CompletionQueue& cq,
@@ -135,6 +159,14 @@ CloudRedisAuth::AsyncImportInstance(
         return child->AsyncImportInstance(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisAuth::ImportInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::ImportInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -157,6 +189,14 @@ CloudRedisAuth::AsyncExportInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisAuth::ExportInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::ExportInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ExportInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisAuth::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
@@ -175,6 +215,14 @@ CloudRedisAuth::AsyncFailoverInstance(
         return child->AsyncFailoverInstance(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisAuth::FailoverInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::FailoverInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->FailoverInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -197,6 +245,14 @@ CloudRedisAuth::AsyncDeleteInstance(
       });
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::DeleteInstanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstance(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisAuth::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
@@ -215,6 +271,14 @@ CloudRedisAuth::AsyncRescheduleMaintenance(
         return child->AsyncRescheduleMaintenance(cq, *std::move(context),
                                                  std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisAuth::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RescheduleMaintenance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

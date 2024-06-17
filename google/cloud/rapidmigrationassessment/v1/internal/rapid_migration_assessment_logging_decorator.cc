@@ -54,6 +54,20 @@ RapidMigrationAssessmentLogging::AsyncCreateCollector(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentLogging::CreateCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 CreateCollectorRequest const& request) {
+        return child_->CreateCollector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentLogging::AsyncCreateAnnotation(
     google::cloud::CompletionQueue& cq,
@@ -72,6 +86,20 @@ RapidMigrationAssessmentLogging::AsyncCreateAnnotation(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentLogging::CreateAnnotation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 CreateAnnotationRequest const& request) {
+        return child_->CreateAnnotation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
@@ -136,6 +164,20 @@ RapidMigrationAssessmentLogging::AsyncUpdateCollector(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentLogging::UpdateCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 UpdateCollectorRequest const& request) {
+        return child_->UpdateCollector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentLogging::AsyncDeleteCollector(
     google::cloud::CompletionQueue& cq,
@@ -154,6 +196,20 @@ RapidMigrationAssessmentLogging::AsyncDeleteCollector(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentLogging::DeleteCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 DeleteCollectorRequest const& request) {
+        return child_->DeleteCollector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -176,6 +232,20 @@ RapidMigrationAssessmentLogging::AsyncResumeCollector(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentLogging::ResumeCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 ResumeCollectorRequest const& request) {
+        return child_->ResumeCollector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentLogging::AsyncRegisterCollector(
     google::cloud::CompletionQueue& cq,
@@ -196,6 +266,20 @@ RapidMigrationAssessmentLogging::AsyncRegisterCollector(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentLogging::RegisterCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 RegisterCollectorRequest const& request) {
+        return child_->RegisterCollector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentLogging::AsyncPauseCollector(
     google::cloud::CompletionQueue& cq,
@@ -214,6 +298,20 @@ RapidMigrationAssessmentLogging::AsyncPauseCollector(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentLogging::PauseCollector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 PauseCollectorRequest const& request) {
+        return child_->PauseCollector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

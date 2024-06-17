@@ -64,6 +64,19 @@ DefaultSiteSearchEngineServiceStub::AsyncCreateTargetSite(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::CreateTargetSite(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateTargetSite(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSiteSearchEngineServiceStub::AsyncBatchCreateTargetSites(
     google::cloud::CompletionQueue& cq,
@@ -82,6 +95,20 @@ DefaultSiteSearchEngineServiceStub::AsyncBatchCreateTargetSites(
         return grpc_stub_->AsyncBatchCreateTargetSites(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::BatchCreateTargetSites(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BatchCreateTargetSites(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
@@ -116,6 +143,19 @@ DefaultSiteSearchEngineServiceStub::AsyncUpdateTargetSite(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::UpdateTargetSite(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateTargetSite(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSiteSearchEngineServiceStub::AsyncDeleteTargetSite(
     google::cloud::CompletionQueue& cq,
@@ -134,6 +174,19 @@ DefaultSiteSearchEngineServiceStub::AsyncDeleteTargetSite(
         return grpc_stub_->AsyncDeleteTargetSite(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::DeleteTargetSite(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteTargetSite(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse>
@@ -168,6 +221,20 @@ DefaultSiteSearchEngineServiceStub::AsyncEnableAdvancedSiteSearch(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::EnableAdvancedSiteSearch(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->EnableAdvancedSiteSearch(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSiteSearchEngineServiceStub::AsyncDisableAdvancedSiteSearch(
     google::cloud::CompletionQueue& cq,
@@ -186,6 +253,20 @@ DefaultSiteSearchEngineServiceStub::AsyncDisableAdvancedSiteSearch(
         return grpc_stub_->AsyncDisableAdvancedSiteSearch(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::DisableAdvancedSiteSearch(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DisableAdvancedSiteSearch(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -207,6 +288,18 @@ DefaultSiteSearchEngineServiceStub::AsyncRecrawlUris(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::RecrawlUris(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RecrawlUris(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultSiteSearchEngineServiceStub::AsyncBatchVerifyTargetSites(
     google::cloud::CompletionQueue& cq,
@@ -225,6 +318,20 @@ DefaultSiteSearchEngineServiceStub::AsyncBatchVerifyTargetSites(
         return grpc_stub_->AsyncBatchVerifyTargetSites(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultSiteSearchEngineServiceStub::BatchVerifyTargetSites(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->BatchVerifyTargetSites(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<

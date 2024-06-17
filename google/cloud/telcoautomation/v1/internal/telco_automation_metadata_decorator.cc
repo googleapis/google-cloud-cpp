@@ -75,6 +75,16 @@ TelcoAutomationMetadata::AsyncCreateOrchestrationCluster(
                                                  std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationMetadata::CreateOrchestrationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateOrchestrationCluster(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationMetadata::AsyncDeleteOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +96,16 @@ TelcoAutomationMetadata::AsyncDeleteOrchestrationCluster(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteOrchestrationCluster(cq, std::move(context),
                                                  std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationMetadata::DeleteOrchestrationCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteOrchestrationCluster(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
@@ -118,6 +138,14 @@ TelcoAutomationMetadata::AsyncCreateEdgeSlm(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> TelcoAutomationMetadata::CreateEdgeSlm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateEdgeSlm(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationMetadata::AsyncDeleteEdgeSlm(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +156,14 @@ TelcoAutomationMetadata::AsyncDeleteEdgeSlm(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteEdgeSlm(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> TelcoAutomationMetadata::DeleteEdgeSlm(
+    grpc::ClientContext& context, Options options,
+    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteEdgeSlm(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>

@@ -67,6 +67,17 @@ VersionsTracingStub::AsyncCreateVersion(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> VersionsTracingStub::CreateVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateVersionRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Versions", "CreateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateVersion(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
@@ -81,6 +92,17 @@ VersionsTracingStub::AsyncUpdateVersion(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> VersionsTracingStub::UpdateVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateVersionRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Versions", "UpdateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateVersion(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +115,17 @@ VersionsTracingStub::AsyncDeleteVersion(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteVersion(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> VersionsTracingStub::DeleteVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteVersionRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Versions", "DeleteVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteVersion(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

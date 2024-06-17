@@ -71,6 +71,16 @@ DatastreamAuth::AsyncCreateConnectionProfile(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamAuth::CreateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConnectionProfile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamAuth::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +102,16 @@ DatastreamAuth::AsyncUpdateConnectionProfile(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamAuth::UpdateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateConnectionProfile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamAuth::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -111,6 +131,16 @@ DatastreamAuth::AsyncDeleteConnectionProfile(
         return child->AsyncDeleteConnectionProfile(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamAuth::DeleteConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConnectionProfile(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
@@ -160,6 +190,14 @@ DatastreamAuth::AsyncCreateStream(
       });
 }
 
+StatusOr<google::longrunning::Operation> DatastreamAuth::CreateStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateStreamRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateStream(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamAuth::AsyncUpdateStream(
     google::cloud::CompletionQueue& cq,
@@ -180,6 +218,14 @@ DatastreamAuth::AsyncUpdateStream(
       });
 }
 
+StatusOr<google::longrunning::Operation> DatastreamAuth::UpdateStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::UpdateStreamRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateStream(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamAuth::AsyncDeleteStream(
     google::cloud::CompletionQueue& cq,
@@ -198,6 +244,14 @@ DatastreamAuth::AsyncDeleteStream(
         return child->AsyncDeleteStream(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DatastreamAuth::DeleteStream(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteStreamRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteStream(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
@@ -275,6 +329,16 @@ DatastreamAuth::AsyncCreatePrivateConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamAuth::CreatePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreatePrivateConnection(context, options, request);
+}
+
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
 DatastreamAuth::GetPrivateConnection(
     grpc::ClientContext& context, Options const& options,
@@ -315,6 +379,16 @@ DatastreamAuth::AsyncDeletePrivateConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamAuth::DeletePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeletePrivateConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastreamAuth::AsyncCreateRoute(
     google::cloud::CompletionQueue& cq,
@@ -333,6 +407,14 @@ DatastreamAuth::AsyncCreateRoute(
         return child->AsyncCreateRoute(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DatastreamAuth::CreateRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::CreateRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateRoute(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::Route> DatastreamAuth::GetRoute(
@@ -370,6 +452,14 @@ DatastreamAuth::AsyncDeleteRoute(
         return child->AsyncDeleteRoute(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> DatastreamAuth::DeleteRoute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datastream::v1::DeleteRouteRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

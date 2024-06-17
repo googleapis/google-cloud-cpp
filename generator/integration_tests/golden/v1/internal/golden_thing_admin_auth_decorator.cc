@@ -59,6 +59,16 @@ GoldenThingAdminAuth::AsyncCreateDatabase(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminAuth::CreateDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateDatabase(context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::Database> GoldenThingAdminAuth::GetDatabase(
     grpc::ClientContext& context,
     Options const& options,
@@ -85,6 +95,16 @@ GoldenThingAdminAuth::AsyncUpdateDatabaseDdl(
         return child->AsyncUpdateDatabaseDdl(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminAuth::UpdateDatabaseDdl(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateDatabaseDdl(context, options, request);
 }
 
 Status GoldenThingAdminAuth::DropDatabase(
@@ -151,6 +171,16 @@ GoldenThingAdminAuth::AsyncCreateBackup(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminAuth::CreateBackup(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::CreateBackupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackup(context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminAuth::GetBackup(
     grpc::ClientContext& context,
     Options const& options,
@@ -206,6 +236,16 @@ GoldenThingAdminAuth::AsyncRestoreDatabase(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminAuth::RestoreDatabase(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestoreDatabase(context, options, request);
+}
+
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> GoldenThingAdminAuth::ListDatabaseOperations(
     grpc::ClientContext& context,
     Options const& options,
@@ -241,6 +281,16 @@ GoldenThingAdminAuth::AsyncLongRunningWithoutRouting(
         return child->AsyncLongRunningWithoutRouting(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminAuth::LongRunningWithoutRouting(
+      grpc::ClientContext& context,
+      Options options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->LongRunningWithoutRouting(context, options, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

@@ -71,6 +71,14 @@ ConfigMetadata::AsyncCreateDeployment(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigMetadata::CreateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::CreateDeploymentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateDeployment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigMetadata::AsyncUpdateDeployment(
     google::cloud::CompletionQueue& cq,
@@ -84,6 +92,15 @@ ConfigMetadata::AsyncUpdateDeployment(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigMetadata::UpdateDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UpdateDeploymentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("deployment.name=",
+                           internal::UrlEncode(request.deployment().name())));
+  return child_->UpdateDeployment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigMetadata::AsyncDeleteDeployment(
     google::cloud::CompletionQueue& cq,
@@ -94,6 +111,14 @@ ConfigMetadata::AsyncDeleteDeployment(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteDeployment(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigMetadata::DeleteDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeleteDeploymentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
@@ -177,6 +202,14 @@ ConfigMetadata::AsyncLockDeployment(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigMetadata::LockDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::LockDeploymentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->LockDeployment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConfigMetadata::AsyncUnlockDeployment(
     google::cloud::CompletionQueue& cq,
@@ -187,6 +220,14 @@ ConfigMetadata::AsyncUnlockDeployment(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUnlockDeployment(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigMetadata::UnlockDeployment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::UnlockDeploymentRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UnlockDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> ConfigMetadata::ExportLockInfo(
@@ -207,6 +248,14 @@ ConfigMetadata::AsyncCreatePreview(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreatePreview(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigMetadata::CreatePreview(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::CreatePreviewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreatePreview(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Preview> ConfigMetadata::GetPreview(
@@ -236,6 +285,14 @@ ConfigMetadata::AsyncDeletePreview(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePreview(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigMetadata::DeletePreview(
+    grpc::ClientContext& context, Options options,
+    google::cloud::config::v1::DeletePreviewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeletePreview(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>

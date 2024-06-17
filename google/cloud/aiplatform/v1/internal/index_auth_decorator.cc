@@ -51,6 +51,14 @@ IndexServiceAuth::AsyncCreateIndex(
       });
 }
 
+StatusOr<google::longrunning::Operation> IndexServiceAuth::CreateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateIndex(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceAuth::GetIndex(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
@@ -88,6 +96,14 @@ IndexServiceAuth::AsyncUpdateIndex(
       });
 }
 
+StatusOr<google::longrunning::Operation> IndexServiceAuth::UpdateIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateIndex(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IndexServiceAuth::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +122,14 @@ IndexServiceAuth::AsyncDeleteIndex(
         return child->AsyncDeleteIndex(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> IndexServiceAuth::DeleteIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteIndex(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>

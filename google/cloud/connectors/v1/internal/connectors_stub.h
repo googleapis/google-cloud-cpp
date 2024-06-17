@@ -55,6 +55,11 @@ class ConnectorsStub {
       google::cloud::connectors::v1::CreateConnectionRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::connectors::v1::CreateConnectionRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateConnection(
       google::cloud::CompletionQueue& cq,
@@ -63,11 +68,21 @@ class ConnectorsStub {
       google::cloud::connectors::v1::UpdateConnectionRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::connectors::v1::UpdateConnectionRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::connectors::v1::DeleteConnectionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteConnection(
+      grpc::ClientContext& context, Options options,
       google::cloud::connectors::v1::DeleteConnectionRequest const&
           request) = 0;
 
@@ -112,6 +127,12 @@ class ConnectorsStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation>
+  RefreshConnectionSchemaMetadata(
+      grpc::ClientContext& context, Options options,
       google::cloud::connectors::v1::
           RefreshConnectionSchemaMetadataRequest const& request) = 0;
 
@@ -178,6 +199,11 @@ class DefaultConnectorsStub : public ConnectorsStub {
       google::cloud::connectors::v1::CreateConnectionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::connectors::v1::CreateConnectionRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -185,10 +211,20 @@ class DefaultConnectorsStub : public ConnectorsStub {
       google::cloud::connectors::v1::UpdateConnectionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      grpc::ClientContext& context, Options options,
+      google::cloud::connectors::v1::UpdateConnectionRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnection(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::connectors::v1::DeleteConnectionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      grpc::ClientContext& context, Options options,
       google::cloud::connectors::v1::DeleteConnectionRequest const& request)
       override;
 
@@ -234,6 +270,11 @@ class DefaultConnectorsStub : public ConnectorsStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
+      grpc::ClientContext& context, Options options,
       google::cloud::connectors::v1::
           RefreshConnectionSchemaMetadataRequest const& request) override;
 

@@ -70,6 +70,20 @@ PublicDelegatedPrefixesRestLogging::AsyncAnnounce(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesRestLogging::Announce(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        AnnounceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                 AnnounceRequest const& request) {
+        return child_->Announce(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesRestLogging::AsyncDeletePublicDelegatedPrefix(
     CompletionQueue& cq,
@@ -88,6 +102,21 @@ PublicDelegatedPrefixesRestLogging::AsyncDeletePublicDelegatedPrefix(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesRestLogging::DeletePublicDelegatedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        DeletePublicDelegatedPrefixRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                 DeletePublicDelegatedPrefixRequest const& request) {
+        return child_->DeletePublicDelegatedPrefix(rest_context, options,
+                                                   request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -122,6 +151,21 @@ PublicDelegatedPrefixesRestLogging::AsyncInsertPublicDelegatedPrefix(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesRestLogging::InsertPublicDelegatedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        InsertPublicDelegatedPrefixRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                 InsertPublicDelegatedPrefixRequest const& request) {
+        return child_->InsertPublicDelegatedPrefix(rest_context, options,
+                                                   request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
@@ -159,6 +203,21 @@ PublicDelegatedPrefixesRestLogging::AsyncPatchPublicDelegatedPrefix(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesRestLogging::PatchPublicDelegatedPrefix(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        PatchPublicDelegatedPrefixRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                 PatchPublicDelegatedPrefixRequest const& request) {
+        return child_->PatchPublicDelegatedPrefix(rest_context, options,
+                                                  request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesRestLogging::AsyncWithdraw(
     CompletionQueue& cq,
@@ -177,6 +236,20 @@ PublicDelegatedPrefixesRestLogging::AsyncWithdraw(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesRestLogging::Withdraw(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        WithdrawRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                 WithdrawRequest const& request) {
+        return child_->Withdraw(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

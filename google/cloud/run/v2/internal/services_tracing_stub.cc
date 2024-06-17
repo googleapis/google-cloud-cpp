@@ -44,6 +44,17 @@ ServicesTracingStub::AsyncCreateService(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ServicesTracingStub::CreateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CreateServiceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Services", "CreateService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateService(context, options, request));
+}
+
 StatusOr<google::cloud::run::v2::Service> ServicesTracingStub::GetService(
     grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetServiceRequest const& request) {
@@ -81,6 +92,17 @@ ServicesTracingStub::AsyncUpdateService(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> ServicesTracingStub::UpdateService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::UpdateServiceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Services", "UpdateService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateService(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServicesTracingStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +115,17 @@ ServicesTracingStub::AsyncDeleteService(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteService(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> ServicesTracingStub::DeleteService(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteServiceRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Services", "DeleteService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteService(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> ServicesTracingStub::GetIamPolicy(

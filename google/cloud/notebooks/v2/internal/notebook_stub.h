@@ -53,10 +53,18 @@ class NotebookServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::notebooks::v2::CreateInstanceRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::CreateInstanceRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v2::UpdateInstanceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v2::UpdateInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
@@ -65,10 +73,18 @@ class NotebookServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::notebooks::v2::DeleteInstanceRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::DeleteInstanceRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStartInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v2::StartInstanceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> StartInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v2::StartInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncStopInstance(
@@ -77,10 +93,18 @@ class NotebookServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::notebooks::v2::StopInstanceRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> StopInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::StopInstanceRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncResetInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v2::ResetInstanceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> ResetInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v2::ResetInstanceRequest const& request) = 0;
 
   virtual StatusOr<
@@ -96,6 +120,10 @@ class NotebookServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpgradeInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncRollbackInstance(
       google::cloud::CompletionQueue& cq,
@@ -103,11 +131,19 @@ class NotebookServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::notebooks::v2::RollbackInstanceRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> RollbackInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::RollbackInstanceRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDiagnoseInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DiagnoseInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -149,10 +185,20 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       google::cloud::notebooks::v2::CreateInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::CreateInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v2::UpdateInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v2::UpdateInstanceRequest const& request)
       override;
 
@@ -163,10 +209,20 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       google::cloud::notebooks::v2::DeleteInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::DeleteInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncStartInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v2::StartInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> StartInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v2::StartInstanceRequest const& request)
       override;
 
@@ -177,10 +233,20 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       google::cloud::notebooks::v2::StopInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> StopInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::StopInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncResetInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v2::ResetInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> ResetInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v2::ResetInstanceRequest const& request)
       override;
 
@@ -197,6 +263,11 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       google::cloud::notebooks::v2::UpgradeInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpgradeInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncRollbackInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -204,10 +275,20 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       google::cloud::notebooks::v2::RollbackInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RollbackInstance(
+      grpc::ClientContext& context, Options options,
+      google::cloud::notebooks::v2::RollbackInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseInstance(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DiagnoseInstance(
+      grpc::ClientContext& context, Options options,
       google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request)
       override;
 

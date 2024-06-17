@@ -63,10 +63,22 @@ class InstanceAdminRestLogging : public InstanceAdminRestStub {
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request) override;
 
@@ -111,10 +123,22 @@ class InstanceAdminRestLogging : public InstanceAdminRestStub {
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request) override;
 
@@ -153,6 +177,12 @@ class InstanceAdminRestLogging : public InstanceAdminRestStub {
       google::spanner::admin::instance::v1::
           CreateInstancePartitionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request) override;
+
   Status DeleteInstancePartition(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -163,6 +193,12 @@ class InstanceAdminRestLogging : public InstanceAdminRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::spanner::admin::instance::v1::
           UpdateInstancePartitionRequest const& request) override;
 

@@ -52,6 +52,19 @@ VpcAccessServiceLogging::AsyncCreateConnector(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceLogging::CreateConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+        return child_->CreateConnector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceLogging::GetConnector(
     grpc::ClientContext& context, Options const& options,
@@ -94,6 +107,19 @@ VpcAccessServiceLogging::AsyncDeleteConnector(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceLogging::DeleteConnector(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+        return child_->DeleteConnector(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

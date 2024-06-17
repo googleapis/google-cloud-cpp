@@ -79,6 +79,19 @@ EnvironmentsLogging::AsyncCreateEnvironment(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::CreateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+                 request) {
+        return child_->CreateEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsLogging::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +110,19 @@ EnvironmentsLogging::AsyncUpdateEnvironment(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::UpdateEnvironment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+                 request) {
+        return child_->UpdateEnvironment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status EnvironmentsLogging::DeleteEnvironment(
@@ -146,6 +172,19 @@ EnvironmentsLogging::AsyncRunContinuousTest(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::RunContinuousTest(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+                 request) {
+        return child_->RunContinuousTest(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
 EnvironmentsLogging::ListContinuousTestResults(
     grpc::ClientContext& context, Options const& options,
@@ -177,6 +216,18 @@ EnvironmentsLogging::AsyncDeployFlow(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EnvironmentsLogging::DeployFlow(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+        return child_->DeployFlow(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

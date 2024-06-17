@@ -62,6 +62,18 @@ DefaultFleetRoutingStub::AsyncBatchOptimizeTours(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultFleetRoutingStub::BatchOptimizeTours(
+    grpc::ClientContext& context, Options,
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BatchOptimizeTours(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultFleetRoutingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

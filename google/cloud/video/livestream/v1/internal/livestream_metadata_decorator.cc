@@ -54,6 +54,15 @@ LivestreamServiceMetadata::AsyncCreateChannel(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+LivestreamServiceMetadata::CreateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateChannel(context, options, request);
+}
+
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 LivestreamServiceMetadata::ListChannels(
     grpc::ClientContext& context, Options const& options,
@@ -84,6 +93,15 @@ LivestreamServiceMetadata::AsyncDeleteChannel(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+LivestreamServiceMetadata::DeleteChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +113,16 @@ LivestreamServiceMetadata::AsyncUpdateChannel(
                            internal::UrlEncode(request.channel().name())));
   return child_->AsyncUpdateChannel(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceMetadata::UpdateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("channel.name=",
+                           internal::UrlEncode(request.channel().name())));
+  return child_->UpdateChannel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,6 +137,15 @@ LivestreamServiceMetadata::AsyncStartChannel(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+LivestreamServiceMetadata::StartChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StartChannelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncStopChannel(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +158,14 @@ LivestreamServiceMetadata::AsyncStopChannel(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::StopChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::StopChannelRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StopChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
@@ -131,6 +176,14 @@ LivestreamServiceMetadata::AsyncCreateInput(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateInput(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::CreateInput(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateInputRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateInput(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
@@ -163,6 +216,14 @@ LivestreamServiceMetadata::AsyncDeleteInput(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::DeleteInput(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInput(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncUpdateInput(
     google::cloud::CompletionQueue& cq,
@@ -174,6 +235,15 @@ LivestreamServiceMetadata::AsyncUpdateInput(
       absl::StrCat("input.name=", internal::UrlEncode(request.input().name())));
   return child_->AsyncUpdateInput(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::UpdateInput(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("input.name=", internal::UrlEncode(request.input().name())));
+  return child_->UpdateInput(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
@@ -223,6 +293,14 @@ LivestreamServiceMetadata::AsyncCreateAsset(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::CreateAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAsset(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
@@ -233,6 +311,14 @@ LivestreamServiceMetadata::AsyncDeleteAsset(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAsset(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::DeleteAsset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAsset(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
@@ -273,6 +359,15 @@ LivestreamServiceMetadata::AsyncUpdatePool(
       absl::StrCat("pool.name=", internal::UrlEncode(request.pool().name())));
   return child_->AsyncUpdatePool(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::UpdatePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("pool.name=", internal::UrlEncode(request.pool().name())));
+  return child_->UpdatePool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

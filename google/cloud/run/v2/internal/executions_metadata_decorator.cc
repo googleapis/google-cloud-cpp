@@ -71,6 +71,14 @@ ExecutionsMetadata::AsyncDeleteExecution(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation> ExecutionsMetadata::DeleteExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteExecution(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ExecutionsMetadata::AsyncCancelExecution(
     google::cloud::CompletionQueue& cq,
@@ -81,6 +89,14 @@ ExecutionsMetadata::AsyncCancelExecution(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCancelExecution(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation> ExecutionsMetadata::CancelExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CancelExecution(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

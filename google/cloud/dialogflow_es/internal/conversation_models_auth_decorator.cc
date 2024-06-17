@@ -52,6 +52,16 @@ ConversationModelsAuth::AsyncCreateConversationModel(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsAuth::CreateConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConversationModel(context, options, request);
+}
+
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsAuth::GetConversationModel(
     grpc::ClientContext& context, Options const& options,
@@ -92,6 +102,16 @@ ConversationModelsAuth::AsyncDeleteConversationModel(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsAuth::DeleteConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteConversationModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsAuth::AsyncDeployConversationModel(
     google::cloud::CompletionQueue& cq,
@@ -113,6 +133,16 @@ ConversationModelsAuth::AsyncDeployConversationModel(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsAuth::DeployConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeployConversationModel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsAuth::AsyncUndeployConversationModel(
     google::cloud::CompletionQueue& cq,
@@ -132,6 +162,16 @@ ConversationModelsAuth::AsyncUndeployConversationModel(
         return child->AsyncUndeployConversationModel(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsAuth::UndeployConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeployConversationModel(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -174,6 +214,16 @@ ConversationModelsAuth::AsyncCreateConversationModelEvaluation(
         return child->AsyncCreateConversationModelEvaluation(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsAuth::CreateConversationModelEvaluation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::
+        CreateConversationModelEvaluationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateConversationModelEvaluation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

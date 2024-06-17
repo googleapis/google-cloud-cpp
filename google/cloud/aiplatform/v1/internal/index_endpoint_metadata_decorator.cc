@@ -54,6 +54,15 @@ IndexEndpointServiceMetadata::AsyncCreateIndexEndpoint(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceMetadata::CreateIndexEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateIndexEndpoint(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceMetadata::GetIndexEndpoint(
     grpc::ClientContext& context, Options const& options,
@@ -95,6 +104,15 @@ IndexEndpointServiceMetadata::AsyncDeleteIndexEndpoint(
                                           std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceMetadata::DeleteIndexEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteIndexEndpoint(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IndexEndpointServiceMetadata::AsyncDeployIndex(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +124,16 @@ IndexEndpointServiceMetadata::AsyncDeployIndex(
                            internal::UrlEncode(request.index_endpoint())));
   return child_->AsyncDeployIndex(cq, std::move(context), std::move(options),
                                   request);
+}
+
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceMetadata::DeployIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("index_endpoint=",
+                           internal::UrlEncode(request.index_endpoint())));
+  return child_->DeployIndex(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -121,6 +149,16 @@ IndexEndpointServiceMetadata::AsyncUndeployIndex(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceMetadata::UndeployIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("index_endpoint=",
+                           internal::UrlEncode(request.index_endpoint())));
+  return child_->UndeployIndex(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IndexEndpointServiceMetadata::AsyncMutateDeployedIndex(
     google::cloud::CompletionQueue& cq,
@@ -132,6 +170,16 @@ IndexEndpointServiceMetadata::AsyncMutateDeployedIndex(
                            internal::UrlEncode(request.index_endpoint())));
   return child_->AsyncMutateDeployedIndex(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceMetadata::MutateDeployedIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("index_endpoint=",
+                           internal::UrlEncode(request.index_endpoint())));
+  return child_->MutateDeployedIndex(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

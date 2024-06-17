@@ -60,6 +60,15 @@ PacketMirroringsRestMetadata::AsyncDeletePacketMirroring(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PacketMirroringsRestMetadata::DeletePacketMirroring(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        DeletePacketMirroringRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeletePacketMirroring(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
 PacketMirroringsRestMetadata::GetPacketMirroring(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -81,6 +90,15 @@ PacketMirroringsRestMetadata::AsyncInsertPacketMirroring(
                                             std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PacketMirroringsRestMetadata::InsertPacketMirroring(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        InsertPacketMirroringRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertPacketMirroring(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList>
 PacketMirroringsRestMetadata::ListPacketMirrorings(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -100,6 +118,15 @@ PacketMirroringsRestMetadata::AsyncPatchPacketMirroring(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchPacketMirroring(cq, std::move(rest_context),
                                            std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PacketMirroringsRestMetadata::PatchPacketMirroring(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::packet_mirrorings::v1::
+        PatchPacketMirroringRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchPacketMirroring(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

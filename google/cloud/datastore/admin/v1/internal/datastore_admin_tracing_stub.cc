@@ -46,6 +46,18 @@ DatastoreAdminTracingStub::AsyncExportEntities(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+DatastoreAdminTracingStub::ExportEntities(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
+                                     "ExportEntities");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ExportEntities(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminTracingStub::AsyncImportEntities(
     google::cloud::CompletionQueue& cq,
@@ -59,6 +71,18 @@ DatastoreAdminTracingStub::AsyncImportEntities(
   auto f =
       child_->AsyncImportEntities(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+DatastoreAdminTracingStub::ImportEntities(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
+                                     "ImportEntities");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ImportEntities(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -75,6 +99,17 @@ DatastoreAdminTracingStub::AsyncCreateIndex(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> DatastoreAdminTracingStub::CreateIndex(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::CreateIndexRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
+                                     "CreateIndex");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateIndex(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatastoreAdminTracingStub::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
@@ -87,6 +122,17 @@ DatastoreAdminTracingStub::AsyncDeleteIndex(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteIndex(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> DatastoreAdminTracingStub::DeleteIndex(
+    grpc::ClientContext& context, Options options,
+    google::datastore::admin::v1::DeleteIndexRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
+                                     "DeleteIndex");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteIndex(context, options, request));
 }
 
 StatusOr<google::datastore::admin::v1::Index>

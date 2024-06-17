@@ -65,6 +65,18 @@ ScheduleServiceLogging::AsyncDeleteSchedule(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ScheduleServiceLogging::DeleteSchedule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+        return child_->DeleteSchedule(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceLogging::GetSchedule(
     grpc::ClientContext& context, Options const& options,

@@ -79,6 +79,19 @@ DefaultAppConnectorsServiceStub::AsyncCreateAppConnector(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAppConnectorsServiceStub::CreateAppConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAppConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppConnectorsServiceStub::AsyncUpdateAppConnector(
     google::cloud::CompletionQueue& cq,
@@ -97,6 +110,19 @@ DefaultAppConnectorsServiceStub::AsyncUpdateAppConnector(
         return grpc_stub_->AsyncUpdateAppConnector(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAppConnectorsServiceStub::UpdateAppConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAppConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -119,6 +145,19 @@ DefaultAppConnectorsServiceStub::AsyncDeleteAppConnector(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAppConnectorsServiceStub::DeleteAppConnector(
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAppConnector(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppConnectorsServiceStub::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,
@@ -137,6 +176,19 @@ DefaultAppConnectorsServiceStub::AsyncReportStatus(
         return grpc_stub_->AsyncReportStatus(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAppConnectorsServiceStub::ReportStatus(
+    grpc::ClientContext& context, Options,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ReportStatus(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

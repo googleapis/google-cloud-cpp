@@ -69,6 +69,20 @@ StoragePoolsRestLogging::AsyncDeleteStoragePool(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsRestLogging::DeleteStoragePool(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::storage_pools::v1::
+        DeleteStoragePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::storage_pools::v1::
+                 DeleteStoragePoolRequest const& request) {
+        return child_->DeleteStoragePool(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
 StoragePoolsRestLogging::GetStoragePool(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -115,6 +129,20 @@ StoragePoolsRestLogging::AsyncInsertStoragePool(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsRestLogging::InsertStoragePool(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::storage_pools::v1::
+        InsertStoragePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::storage_pools::v1::
+                 InsertStoragePoolRequest const& request) {
+        return child_->InsertStoragePool(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolList>
@@ -191,6 +219,20 @@ StoragePoolsRestLogging::AsyncUpdateStoragePool(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsRestLogging::UpdateStoragePool(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::storage_pools::v1::
+        UpdateStoragePoolRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::storage_pools::v1::
+                 UpdateStoragePoolRequest const& request) {
+        return child_->UpdateStoragePool(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

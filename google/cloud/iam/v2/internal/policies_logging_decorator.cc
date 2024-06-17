@@ -73,6 +73,17 @@ PoliciesLogging::AsyncCreatePolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesLogging::CreatePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::CreatePolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v2::CreatePolicyRequest const& request) {
+        return child_->CreatePolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PoliciesLogging::AsyncUpdatePolicy(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +102,17 @@ PoliciesLogging::AsyncUpdatePolicy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesLogging::UpdatePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::UpdatePolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v2::UpdatePolicyRequest const& request) {
+        return child_->UpdatePolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PoliciesLogging::AsyncDeletePolicy(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +129,17 @@ PoliciesLogging::AsyncDeletePolicy(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> PoliciesLogging::DeletePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::DeletePolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v2::DeletePolicyRequest const& request) {
+        return child_->DeletePolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

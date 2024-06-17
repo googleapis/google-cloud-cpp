@@ -55,6 +55,12 @@ class PacketMirroringsRestMetadata : public PacketMirroringsRestStub {
       google::cloud::cpp::compute::packet_mirrorings::v1::
           DeletePacketMirroringRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirroring(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          DeletePacketMirroringRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroring> GetPacketMirroring(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -69,6 +75,12 @@ class PacketMirroringsRestMetadata : public PacketMirroringsRestStub {
       google::cloud::cpp::compute::packet_mirrorings::v1::
           InsertPacketMirroringRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirroring(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          InsertPacketMirroringRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroringList>
   ListPacketMirrorings(google::cloud::rest_internal::RestContext& rest_context,
                        Options const& options,
@@ -80,6 +92,12 @@ class PacketMirroringsRestMetadata : public PacketMirroringsRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          PatchPacketMirroringRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirroring(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::packet_mirrorings::v1::
           PatchPacketMirroringRequest const& request) override;
 

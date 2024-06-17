@@ -78,6 +78,19 @@ BackupDRLogging::AsyncCreateManagementServer(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+BackupDRLogging::CreateManagementServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::CreateManagementServerRequest const&
+                 request) {
+        return child_->CreateManagementServer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BackupDRLogging::AsyncDeleteManagementServer(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +108,19 @@ BackupDRLogging::AsyncDeleteManagementServer(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRLogging::DeleteManagementServer(
+    grpc::ClientContext& context, Options options,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::DeleteManagementServerRequest const&
+                 request) {
+        return child_->DeleteManagementServer(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

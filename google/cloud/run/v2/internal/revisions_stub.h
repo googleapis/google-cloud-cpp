@@ -52,6 +52,10 @@ class RevisionsStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::DeleteRevisionRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> DeleteRevision(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::DeleteRevisionRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -86,6 +90,10 @@ class DefaultRevisionsStub : public RevisionsStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::run::v2::DeleteRevisionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteRevision(
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

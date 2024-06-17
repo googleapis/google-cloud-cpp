@@ -59,6 +59,15 @@ RoutersRestMetadata::AsyncDeleteRouter(
                                    std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::DeleteRouter(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteRouter(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Router>
 RoutersRestMetadata::GetRouter(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -106,6 +115,15 @@ RoutersRestMetadata::AsyncInsertRouter(
                                    std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::InsertRouter(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertRouter(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RouterList>
 RoutersRestMetadata::ListRouters(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -127,6 +145,15 @@ RoutersRestMetadata::AsyncPatchRouter(
                                   std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::PatchRouter(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchRouter(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
 RoutersRestMetadata::Preview(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -145,6 +172,15 @@ RoutersRestMetadata::AsyncUpdateRouter(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateRouter(cq, std::move(rest_context),
                                    std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersRestMetadata::UpdateRouter(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateRouter(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

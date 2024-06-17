@@ -50,6 +50,18 @@ DefaultBackupForGKEStub::AsyncCreateBackupPlan(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::CreateBackupPlan(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackupPlan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
 DefaultBackupForGKEStub::ListBackupPlans(
     grpc::ClientContext& context, Options const&,
@@ -93,6 +105,18 @@ DefaultBackupForGKEStub::AsyncUpdateBackupPlan(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::UpdateBackupPlan(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackupPlan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupForGKEStub::AsyncDeleteBackupPlan(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +136,18 @@ DefaultBackupForGKEStub::AsyncDeleteBackupPlan(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::DeleteBackupPlan(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackupPlan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupForGKEStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
@@ -128,6 +164,17 @@ DefaultBackupForGKEStub::AsyncCreateBackup(
         return grpc_stub_->AsyncCreateBackup(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultBackupForGKEStub::CreateBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse>
@@ -172,6 +219,17 @@ DefaultBackupForGKEStub::AsyncUpdateBackup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultBackupForGKEStub::UpdateBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupForGKEStub::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -188,6 +246,17 @@ DefaultBackupForGKEStub::AsyncDeleteBackup(
         return grpc_stub_->AsyncDeleteBackup(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultBackupForGKEStub::DeleteBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
@@ -233,6 +302,18 @@ DefaultBackupForGKEStub::AsyncCreateRestorePlan(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::CreateRestorePlan(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRestorePlan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
 DefaultBackupForGKEStub::ListRestorePlans(
     grpc::ClientContext& context, Options const&,
@@ -276,6 +357,18 @@ DefaultBackupForGKEStub::AsyncUpdateRestorePlan(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::UpdateRestorePlan(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateRestorePlan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupForGKEStub::AsyncDeleteRestorePlan(
     google::cloud::CompletionQueue& cq,
@@ -295,6 +388,18 @@ DefaultBackupForGKEStub::AsyncDeleteRestorePlan(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBackupForGKEStub::DeleteRestorePlan(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRestorePlan(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupForGKEStub::AsyncCreateRestore(
     google::cloud::CompletionQueue& cq,
@@ -311,6 +416,17 @@ DefaultBackupForGKEStub::AsyncCreateRestore(
         return grpc_stub_->AsyncCreateRestore(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultBackupForGKEStub::CreateRestore(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateRestore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse>
@@ -355,6 +471,17 @@ DefaultBackupForGKEStub::AsyncUpdateRestore(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultBackupForGKEStub::UpdateRestore(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateRestore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupForGKEStub::AsyncDeleteRestore(
     google::cloud::CompletionQueue& cq,
@@ -371,6 +498,17 @@ DefaultBackupForGKEStub::AsyncDeleteRestore(
         return grpc_stub_->AsyncDeleteRestore(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultBackupForGKEStub::DeleteRestore(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteRestore(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>

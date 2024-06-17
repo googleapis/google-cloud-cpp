@@ -76,6 +76,18 @@ CloudMemcacheLogging::AsyncCreateInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CloudMemcacheLogging::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+        return child_->CreateInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheLogging::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +105,18 @@ CloudMemcacheLogging::AsyncUpdateInstance(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudMemcacheLogging::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+        return child_->UpdateInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -114,6 +138,18 @@ CloudMemcacheLogging::AsyncUpdateParameters(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CloudMemcacheLogging::UpdateParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+        return child_->UpdateParameters(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheLogging::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -131,6 +167,18 @@ CloudMemcacheLogging::AsyncDeleteInstance(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> CloudMemcacheLogging::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+        return child_->DeleteInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -152,6 +200,18 @@ CloudMemcacheLogging::AsyncApplyParameters(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> CloudMemcacheLogging::ApplyParameters(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+        return child_->ApplyParameters(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheLogging::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
@@ -169,6 +229,19 @@ CloudMemcacheLogging::AsyncRescheduleMaintenance(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudMemcacheLogging::RescheduleMaintenance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return child_->RescheduleMaintenance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

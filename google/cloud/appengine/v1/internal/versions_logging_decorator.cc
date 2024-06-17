@@ -74,6 +74,17 @@ VersionsLogging::AsyncCreateVersion(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VersionsLogging::CreateVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::CreateVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::CreateVersionRequest const& request) {
+        return child_->CreateVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VersionsLogging::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +103,17 @@ VersionsLogging::AsyncUpdateVersion(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VersionsLogging::UpdateVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::UpdateVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::UpdateVersionRequest const& request) {
+        return child_->UpdateVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VersionsLogging::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +130,17 @@ VersionsLogging::AsyncDeleteVersion(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> VersionsLogging::DeleteVersion(
+    grpc::ClientContext& context, Options options,
+    google::appengine::v1::DeleteVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::DeleteVersionRequest const& request) {
+        return child_->DeleteVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

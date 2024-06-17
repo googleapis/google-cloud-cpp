@@ -52,6 +52,16 @@ OsConfigZonalServiceAuth::AsyncCreateOSPolicyAssignment(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceAuth::CreateOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateOSPolicyAssignment(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceAuth::AsyncUpdateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +81,16 @@ OsConfigZonalServiceAuth::AsyncUpdateOSPolicyAssignment(
         return child->AsyncUpdateOSPolicyAssignment(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceAuth::UpdateOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateOSPolicyAssignment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -121,6 +141,16 @@ OsConfigZonalServiceAuth::AsyncDeleteOSPolicyAssignment(
         return child->AsyncDeleteOSPolicyAssignment(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceAuth::DeleteOSPolicyAssignment(
+    grpc::ClientContext& context, Options options,
+    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteOSPolicyAssignment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>

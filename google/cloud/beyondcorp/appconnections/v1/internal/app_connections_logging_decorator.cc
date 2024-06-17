@@ -83,6 +83,20 @@ AppConnectionsServiceLogging::AsyncCreateAppConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceLogging::CreateAppConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnections::v1::
+        CreateAppConnectionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appconnections::v1::
+                 CreateAppConnectionRequest const& request) {
+        return child_->CreateAppConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceLogging::AsyncUpdateAppConnection(
     google::cloud::CompletionQueue& cq,
@@ -103,6 +117,20 @@ AppConnectionsServiceLogging::AsyncUpdateAppConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceLogging::UpdateAppConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnections::v1::
+        UpdateAppConnectionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appconnections::v1::
+                 UpdateAppConnectionRequest const& request) {
+        return child_->UpdateAppConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceLogging::AsyncDeleteAppConnection(
     google::cloud::CompletionQueue& cq,
@@ -121,6 +149,20 @@ AppConnectionsServiceLogging::AsyncDeleteAppConnection(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceLogging::DeleteAppConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appconnections::v1::
+        DeleteAppConnectionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appconnections::v1::
+                 DeleteAppConnectionRequest const& request) {
+        return child_->DeleteAppConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::

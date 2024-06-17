@@ -50,6 +50,18 @@ DefaultAwsClustersStub::AsyncCreateAwsCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAwsClustersStub::CreateAwsCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAwsCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAwsClustersStub::AsyncUpdateAwsCluster(
     google::cloud::CompletionQueue& cq,
@@ -67,6 +79,18 @@ DefaultAwsClustersStub::AsyncUpdateAwsCluster(
         return grpc_stub_->AsyncUpdateAwsCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAwsClustersStub::UpdateAwsCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAwsCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
@@ -110,6 +134,18 @@ DefaultAwsClustersStub::AsyncDeleteAwsCluster(
         return grpc_stub_->AsyncDeleteAwsCluster(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAwsClustersStub::DeleteAwsCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAwsCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
@@ -160,6 +196,18 @@ DefaultAwsClustersStub::AsyncCreateAwsNodePool(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAwsClustersStub::CreateAwsNodePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateAwsNodePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAwsClustersStub::AsyncUpdateAwsNodePool(
     google::cloud::CompletionQueue& cq,
@@ -177,6 +225,18 @@ DefaultAwsClustersStub::AsyncUpdateAwsNodePool(
         return grpc_stub_->AsyncUpdateAwsNodePool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAwsClustersStub::UpdateAwsNodePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateAwsNodePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -197,6 +257,20 @@ DefaultAwsClustersStub::AsyncRollbackAwsNodePoolUpdate(
         return grpc_stub_->AsyncRollbackAwsNodePoolUpdate(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAwsClustersStub::RollbackAwsNodePoolUpdate(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->RollbackAwsNodePoolUpdate(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -240,6 +314,18 @@ DefaultAwsClustersStub::AsyncDeleteAwsNodePool(
         return grpc_stub_->AsyncDeleteAwsNodePool(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAwsClustersStub::DeleteAwsNodePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteAwsNodePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>

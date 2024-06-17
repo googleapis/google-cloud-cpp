@@ -63,6 +63,14 @@ SimulatorMetadata::AsyncCreateReplay(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation> SimulatorMetadata::CreateReplay(
+    grpc::ClientContext& context, Options options,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateReplay(context, options, request);
+}
+
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 SimulatorMetadata::ListReplayResults(
     grpc::ClientContext& context, Options const& options,

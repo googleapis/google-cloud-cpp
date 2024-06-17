@@ -105,6 +105,23 @@ DefaultSubnetworksRestStub::AsyncDeleteSubnetwork(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultSubnetworksRestStub::DeleteSubnetwork(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::DeleteSubnetworkRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "subnetworks", "/",
+                   request.subnetwork()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultSubnetworksRestStub::AsyncExpandIpCidrRange(
     CompletionQueue& cq,
@@ -140,6 +157,24 @@ DefaultSubnetworksRestStub::AsyncExpandIpCidrRange(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultSubnetworksRestStub::ExpandIpCidrRange(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::
+        ExpandIpCidrRangeRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.subnetworks_expand_ip_cidr_range_request_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "subnetworks", "/",
+                   request.subnetwork(), "/", "expandIpCidrRange"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Subnetwork>
@@ -207,6 +242,22 @@ DefaultSubnetworksRestStub::AsyncInsertSubnetwork(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultSubnetworksRestStub::InsertSubnetwork(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::InsertSubnetworkRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.subnetwork_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "subnetworks"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SubnetworkList>
@@ -289,6 +340,25 @@ DefaultSubnetworksRestStub::AsyncPatchSubnetwork(
   });
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultSubnetworksRestStub::PatchSubnetwork(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::PatchSubnetworkRequest const&
+        request) {
+  return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context, request.subnetwork_resource(), false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "subnetworks", "/",
+                   request.subnetwork()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("drain_timeout_seconds",
+                          std::to_string(request.drain_timeout_seconds())),
+           std::make_pair("request_id", request.request_id())}));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 DefaultSubnetworksRestStub::SetIamPolicy(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -340,6 +410,25 @@ DefaultSubnetworksRestStub::AsyncSetPrivateIpGoogleAccess(
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
   });
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+DefaultSubnetworksRestStub::SetPrivateIpGoogleAccess(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::compute::subnetworks::v1::
+        SetPrivateIpGoogleAccessRequest const& request) {
+  return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
+      *service_, rest_context,
+      request.subnetworks_set_private_ip_google_access_request_resource(),
+      false,
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "projects", "/", request.project(), "/", "regions", "/",
+                   request.region(), "/", "subnetworks", "/",
+                   request.subnetwork(), "/", "setPrivateIpGoogleAccess"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("request_id", request.request_id())}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

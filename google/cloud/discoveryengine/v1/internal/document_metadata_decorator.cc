@@ -99,6 +99,15 @@ DocumentServiceMetadata::AsyncImportDocuments(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentServiceMetadata::ImportDocuments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportDocuments(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentServiceMetadata::AsyncPurgeDocuments(
     google::cloud::CompletionQueue& cq,
@@ -109,6 +118,15 @@ DocumentServiceMetadata::AsyncPurgeDocuments(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncPurgeDocuments(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentServiceMetadata::PurgeDocuments(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeDocuments(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

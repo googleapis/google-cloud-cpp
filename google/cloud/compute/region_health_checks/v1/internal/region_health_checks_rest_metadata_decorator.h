@@ -49,6 +49,12 @@ class RegionHealthChecksRestMetadata : public RegionHealthChecksRestStub {
       google::cloud::cpp::compute::region_health_checks::v1::
           DeleteHealthCheckRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthCheck(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_health_checks::v1::
+          DeleteHealthCheckRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -60,6 +66,12 @@ class RegionHealthChecksRestMetadata : public RegionHealthChecksRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_health_checks::v1::
+          InsertHealthCheckRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthCheck(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_health_checks::v1::
           InsertHealthCheckRequest const& request) override;
 
@@ -78,11 +90,23 @@ class RegionHealthChecksRestMetadata : public RegionHealthChecksRestStub {
       google::cloud::cpp::compute::region_health_checks::v1::
           PatchHealthCheckRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheck(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::region_health_checks::v1::
+          PatchHealthCheckRequest const& request) override;
+
   google::cloud::future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncUpdateHealthCheck(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::region_health_checks::v1::
+          UpdateHealthCheckRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHealthCheck(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::region_health_checks::v1::
           UpdateHealthCheckRequest const& request) override;
 

@@ -49,6 +49,17 @@ DefaultAutoMlStub::AsyncCreateDataset(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAutoMlStub::CreateDataset(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::CreateDatasetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::automl::v1::Dataset> DefaultAutoMlStub::GetDataset(
     grpc::ClientContext& context, Options const&,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
@@ -101,6 +112,17 @@ DefaultAutoMlStub::AsyncDeleteDataset(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAutoMlStub::DeleteDataset(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteDataset(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncImportData(
     google::cloud::CompletionQueue& cq,
@@ -119,6 +141,17 @@ DefaultAutoMlStub::AsyncImportData(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAutoMlStub::ImportData(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::ImportDataRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportData(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncExportData(
     google::cloud::CompletionQueue& cq,
@@ -135,6 +168,17 @@ DefaultAutoMlStub::AsyncExportData(
         return grpc_stub_->AsyncExportData(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAutoMlStub::ExportData(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::ExportDataRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportData(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
@@ -165,6 +209,17 @@ DefaultAutoMlStub::AsyncCreateModel(
         return grpc_stub_->AsyncCreateModel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAutoMlStub::CreateModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::CreateModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::automl::v1::Model> DefaultAutoMlStub::GetModel(
@@ -208,6 +263,17 @@ DefaultAutoMlStub::AsyncDeleteModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAutoMlStub::DeleteModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::DeleteModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::automl::v1::Model> DefaultAutoMlStub::UpdateModel(
     grpc::ClientContext& context, Options const&,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
@@ -237,6 +303,17 @@ DefaultAutoMlStub::AsyncDeployModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAutoMlStub::DeployModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::DeployModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeployModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
@@ -255,6 +332,17 @@ DefaultAutoMlStub::AsyncUndeployModel(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAutoMlStub::UndeployModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::UndeployModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeployModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAutoMlStub::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
@@ -271,6 +359,17 @@ DefaultAutoMlStub::AsyncExportModel(
         return grpc_stub_->AsyncExportModel(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAutoMlStub::ExportModel(
+    grpc::ClientContext& context, Options,
+    google::cloud::automl::v1::ExportModelRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportModel(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>

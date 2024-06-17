@@ -75,6 +75,16 @@ AppGatewaysServiceMetadata::AsyncCreateAppGateway(
                                        std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceMetadata::CreateAppGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAppGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceMetadata::AsyncDeleteAppGateway(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +96,16 @@ AppGatewaysServiceMetadata::AsyncDeleteAppGateway(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteAppGateway(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceMetadata::DeleteAppGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAppGateway(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

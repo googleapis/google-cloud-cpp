@@ -51,6 +51,15 @@ IndexEndpointServiceAuth::AsyncCreateIndexEndpoint(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceAuth::CreateIndexEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateIndexEndpoint(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceAuth::GetIndexEndpoint(
     grpc::ClientContext& context, Options const& options,
@@ -98,6 +107,15 @@ IndexEndpointServiceAuth::AsyncDeleteIndexEndpoint(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceAuth::DeleteIndexEndpoint(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteIndexEndpoint(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IndexEndpointServiceAuth::AsyncDeployIndex(
     google::cloud::CompletionQueue& cq,
@@ -116,6 +134,14 @@ IndexEndpointServiceAuth::AsyncDeployIndex(
         return child->AsyncDeployIndex(cq, *std::move(context),
                                        std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> IndexEndpointServiceAuth::DeployIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeployIndex(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -138,6 +164,15 @@ IndexEndpointServiceAuth::AsyncUndeployIndex(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceAuth::UndeployIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UndeployIndex(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 IndexEndpointServiceAuth::AsyncMutateDeployedIndex(
     google::cloud::CompletionQueue& cq,
@@ -156,6 +191,15 @@ IndexEndpointServiceAuth::AsyncMutateDeployedIndex(
         return child->AsyncMutateDeployedIndex(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceAuth::MutateDeployedIndex(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->MutateDeployedIndex(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

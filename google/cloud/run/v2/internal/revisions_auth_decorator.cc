@@ -68,6 +68,14 @@ RevisionsAuth::AsyncDeleteRevision(
       });
 }
 
+StatusOr<google::longrunning::Operation> RevisionsAuth::DeleteRevision(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteRevision(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 RevisionsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

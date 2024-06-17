@@ -122,6 +122,12 @@ Status StubGenerator::GenerateHeader() {
       google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) = 0;
 )""");
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual StatusOr<google::longrunning::Operation> $method_name$(
+      grpc::ClientContext& context,
+      Options options,
+      $request_type$ const& request) = 0;
+)""");
       continue;
     }
     if (IsStreamingRead(method)) {
@@ -362,6 +368,23 @@ Default$stub_class_name$::Async$method_name$(
       request, std::move(context));
 }
 )""");
+
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<google::longrunning::Operation>
+Default$stub_class_name$::$method_name$(
+      grpc::ClientContext& context,
+      Options,
+      $request_type$ const& request) {
+    $response_type$ response;
+    auto status =
+        grpc_stub_->$method_name$(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+)""");
+
       continue;
     }
     if (IsStreamingRead(method)) {

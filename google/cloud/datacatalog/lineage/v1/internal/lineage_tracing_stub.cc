@@ -112,6 +112,18 @@ LineageTracingStub::AsyncDeleteProcess(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> LineageTracingStub::DeleteProcess(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.lineage.v1.Lineage", "DeleteProcess");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteProcess(context, options, request));
+}
+
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageTracingStub::CreateRun(
     grpc::ClientContext& context, Options const& options,
@@ -172,6 +184,17 @@ LineageTracingStub::AsyncDeleteRun(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteRun(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> LineageTracingStub::DeleteRun(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.lineage.v1.Lineage", "DeleteRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteRun(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>

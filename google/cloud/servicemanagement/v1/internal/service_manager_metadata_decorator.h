@@ -56,6 +56,11 @@ class ServiceManagerMetadata : public ServiceManagerStub {
       google::api::servicemanagement::v1::CreateServiceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateService(
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::CreateServiceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -63,10 +68,20 @@ class ServiceManagerMetadata : public ServiceManagerStub {
       google::api::servicemanagement::v1::DeleteServiceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteService(
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::DeleteServiceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> UndeleteService(
+      grpc::ClientContext& context, Options options,
       google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
       override;
 
@@ -93,6 +108,11 @@ class ServiceManagerMetadata : public ServiceManagerStub {
       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> SubmitConfigSource(
+      grpc::ClientContext& context, Options options,
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+          request) override;
+
   StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
   ListServiceRollouts(
       grpc::ClientContext& context, Options const& options,
@@ -108,6 +128,11 @@ class ServiceManagerMetadata : public ServiceManagerStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateServiceRollout(
+      grpc::ClientContext& context, Options options,
       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
           request) override;
 

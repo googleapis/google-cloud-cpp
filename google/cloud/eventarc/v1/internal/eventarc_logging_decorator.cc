@@ -74,6 +74,17 @@ EventarcLogging::AsyncCreateTrigger(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EventarcLogging::CreateTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+        return child_->CreateTrigger(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
@@ -92,6 +103,17 @@ EventarcLogging::AsyncUpdateTrigger(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EventarcLogging::UpdateTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+        return child_->UpdateTrigger(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +130,17 @@ EventarcLogging::AsyncDeleteTrigger(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EventarcLogging::DeleteTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+        return child_->DeleteTrigger(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel> EventarcLogging::GetChannel(
@@ -151,6 +184,17 @@ EventarcLogging::AsyncCreateChannel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EventarcLogging::CreateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+        return child_->CreateChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
@@ -169,6 +213,17 @@ EventarcLogging::AsyncUpdateChannel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> EventarcLogging::UpdateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+        return child_->UpdateChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
@@ -185,6 +240,17 @@ EventarcLogging::AsyncDeleteChannel(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> EventarcLogging::DeleteChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+        return child_->DeleteChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider> EventarcLogging::GetProvider(
@@ -256,6 +322,20 @@ EventarcLogging::AsyncCreateChannelConnection(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcLogging::CreateChannelConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+                 request) {
+        return child_->CreateChannelConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteChannelConnection(
     google::cloud::CompletionQueue& cq,
@@ -274,6 +354,20 @@ EventarcLogging::AsyncDeleteChannelConnection(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+EventarcLogging::DeleteChannelConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+                 request) {
+        return child_->DeleteChannelConnection(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>

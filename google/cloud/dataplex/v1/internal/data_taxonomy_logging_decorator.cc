@@ -52,6 +52,19 @@ DataTaxonomyServiceLogging::AsyncCreateDataTaxonomy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceLogging::CreateDataTaxonomy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&
+                 request) {
+        return child_->CreateDataTaxonomy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceLogging::AsyncUpdateDataTaxonomy(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +84,19 @@ DataTaxonomyServiceLogging::AsyncUpdateDataTaxonomy(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceLogging::UpdateDataTaxonomy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&
+                 request) {
+        return child_->UpdateDataTaxonomy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceLogging::AsyncDeleteDataTaxonomy(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +114,19 @@ DataTaxonomyServiceLogging::AsyncDeleteDataTaxonomy(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceLogging::DeleteDataTaxonomy(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&
+                 request) {
+        return child_->DeleteDataTaxonomy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataTaxonomiesResponse>
@@ -137,6 +176,21 @@ DataTaxonomyServiceLogging::AsyncCreateDataAttributeBinding(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceLogging::CreateDataAttributeBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+              request) {
+        return child_->CreateDataAttributeBinding(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceLogging::AsyncUpdateDataAttributeBinding(
     google::cloud::CompletionQueue& cq,
@@ -158,6 +212,21 @@ DataTaxonomyServiceLogging::AsyncUpdateDataAttributeBinding(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceLogging::UpdateDataAttributeBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+              request) {
+        return child_->UpdateDataAttributeBinding(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceLogging::AsyncDeleteDataAttributeBinding(
     google::cloud::CompletionQueue& cq,
@@ -177,6 +246,21 @@ DataTaxonomyServiceLogging::AsyncDeleteDataAttributeBinding(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceLogging::DeleteDataAttributeBinding(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+              request) {
+        return child_->DeleteDataAttributeBinding(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributeBindingsResponse>
@@ -227,6 +311,19 @@ DataTaxonomyServiceLogging::AsyncCreateDataAttribute(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceLogging::CreateDataAttribute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::CreateDataAttributeRequest const&
+                 request) {
+        return child_->CreateDataAttribute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceLogging::AsyncUpdateDataAttribute(
     google::cloud::CompletionQueue& cq,
@@ -246,6 +343,19 @@ DataTaxonomyServiceLogging::AsyncUpdateDataAttribute(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceLogging::UpdateDataAttribute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::UpdateDataAttributeRequest const&
+                 request) {
+        return child_->UpdateDataAttribute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataTaxonomyServiceLogging::AsyncDeleteDataAttribute(
     google::cloud::CompletionQueue& cq,
@@ -263,6 +373,19 @@ DataTaxonomyServiceLogging::AsyncDeleteDataAttribute(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceLogging::DeleteDataAttribute(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataplex::v1::DeleteDataAttributeRequest const&
+                 request) {
+        return child_->DeleteDataAttribute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListDataAttributesResponse>

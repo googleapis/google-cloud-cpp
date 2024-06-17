@@ -46,6 +46,13 @@ class ExternalVpnGatewaysRestStub {
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           DeleteExternalVpnGatewayRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteExternalVpnGateway(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::external_vpn_gateways::v1::
+          DeleteExternalVpnGatewayRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
   GetExternalVpnGateway(google::cloud::rest_internal::RestContext& rest_context,
                         Options const& options,
@@ -57,6 +64,13 @@ class ExternalVpnGatewaysRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::external_vpn_gateways::v1::
+          InsertExternalVpnGatewayRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertExternalVpnGateway(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           InsertExternalVpnGatewayRequest const& request) = 0;
 
@@ -72,6 +86,12 @@ class ExternalVpnGatewaysRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::external_vpn_gateways::v1::
+          SetLabelsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           SetLabelsRequest const& request) = 0;
 
@@ -114,6 +134,12 @@ class DefaultExternalVpnGatewaysRestStub : public ExternalVpnGatewaysRestStub {
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           DeleteExternalVpnGatewayRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteExternalVpnGateway(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::external_vpn_gateways::v1::
+          DeleteExternalVpnGatewayRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
   GetExternalVpnGateway(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -129,6 +155,12 @@ class DefaultExternalVpnGatewaysRestStub : public ExternalVpnGatewaysRestStub {
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           InsertExternalVpnGatewayRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertExternalVpnGateway(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::external_vpn_gateways::v1::
+          InsertExternalVpnGatewayRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGatewayList>
   ListExternalVpnGateways(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -140,6 +172,12 @@ class DefaultExternalVpnGatewaysRestStub : public ExternalVpnGatewaysRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::external_vpn_gateways::v1::
+          SetLabelsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           SetLabelsRequest const& request) override;
 

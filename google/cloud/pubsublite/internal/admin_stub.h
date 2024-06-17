@@ -107,6 +107,11 @@ class AdminServiceStub {
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> SeekSubscription(
+      grpc::ClientContext& context, Options options,
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::pubsublite::v1::Reservation>
   CreateReservation(
       grpc::ClientContext& context, Options const& options,
@@ -233,6 +238,11 @@ class DefaultAdminServiceStub : public AdminServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> SeekSubscription(
+      grpc::ClientContext& context, Options options,
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request)
       override;
 

@@ -50,6 +50,15 @@ MachineImagesRestMetadata::AsyncDeleteMachineImage(
                                          std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesRestMetadata::DeleteMachineImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        DeleteMachineImageRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteMachineImage(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
 MachineImagesRestMetadata::GetMachineImage(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -78,6 +87,15 @@ MachineImagesRestMetadata::AsyncInsertMachineImage(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertMachineImage(cq, std::move(rest_context),
                                          std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesRestMetadata::InsertMachineImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::machine_images::v1::
+        InsertMachineImageRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertMachineImage(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImageList>

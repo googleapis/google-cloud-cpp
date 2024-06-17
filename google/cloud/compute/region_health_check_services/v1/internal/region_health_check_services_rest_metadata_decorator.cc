@@ -52,6 +52,15 @@ RegionHealthCheckServicesRestMetadata::AsyncDeleteHealthCheckService(
                                                std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthCheckServicesRestMetadata::DeleteHealthCheckService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        DeleteHealthCheckServiceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteHealthCheckService(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
 RegionHealthCheckServicesRestMetadata::GetHealthCheckService(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -73,6 +82,15 @@ RegionHealthCheckServicesRestMetadata::AsyncInsertHealthCheckService(
                                                std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthCheckServicesRestMetadata::InsertHealthCheckService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        InsertHealthCheckServiceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertHealthCheckService(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckServicesList>
 RegionHealthCheckServicesRestMetadata::ListRegionHealthCheckServices(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -92,6 +110,15 @@ RegionHealthCheckServicesRestMetadata::AsyncPatchHealthCheckService(
   SetMetadata(*rest_context, *options);
   return child_->AsyncPatchHealthCheckService(cq, std::move(rest_context),
                                               std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionHealthCheckServicesRestMetadata::PatchHealthCheckService(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::region_health_check_services::v1::
+        PatchHealthCheckServiceRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchHealthCheckService(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

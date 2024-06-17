@@ -49,6 +49,11 @@ class SimulatorStub {
       google::cloud::policysimulator::v1::CreateReplayRequest const&
           request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateReplay(
+      grpc::ClientContext& context, Options options,
+      google::cloud::policysimulator::v1::CreateReplayRequest const&
+          request) = 0;
+
   virtual StatusOr<
       google::cloud::policysimulator::v1::ListReplayResultsResponse>
   ListReplayResults(
@@ -88,6 +93,11 @@ class DefaultSimulatorStub : public SimulatorStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::policysimulator::v1::CreateReplayRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateReplay(
+      grpc::ClientContext& context, Options options,
       google::cloud::policysimulator::v1::CreateReplayRequest const& request)
       override;
 

@@ -51,6 +51,17 @@ ModelServiceLogging::AsyncUploadModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceLogging::UploadModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UploadModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::UploadModelRequest const& request) {
+        return child_->UploadModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceLogging::GetModel(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelRequest const& request) {
@@ -119,6 +130,21 @@ ModelServiceLogging::AsyncUpdateExplanationDataset(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceLogging::UpdateExplanationDataset(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+              request) {
+        return child_->UpdateExplanationDataset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceLogging::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
@@ -135,6 +161,17 @@ ModelServiceLogging::AsyncDeleteModel(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceLogging::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
+        return child_->DeleteModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -154,6 +191,19 @@ ModelServiceLogging::AsyncDeleteModelVersion(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ModelServiceLogging::DeleteModelVersion(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteModelVersionRequest const&
+                 request) {
+        return child_->DeleteModelVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
@@ -187,6 +237,17 @@ ModelServiceLogging::AsyncExportModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceLogging::ExportModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ExportModelRequest const& request) {
+        return child_->ExportModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceLogging::AsyncCopyModel(
     google::cloud::CompletionQueue& cq,
@@ -203,6 +264,17 @@ ModelServiceLogging::AsyncCopyModel(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceLogging::CopyModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CopyModelRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::CopyModelRequest const& request) {
+        return child_->CopyModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>

@@ -51,6 +51,14 @@ CatalogServiceAuth::AsyncCreateEntryType(
       });
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::CreateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEntryType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncUpdateEntryType(
     google::cloud::CompletionQueue& cq,
@@ -71,6 +79,14 @@ CatalogServiceAuth::AsyncUpdateEntryType(
       });
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::UpdateEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEntryType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncDeleteEntryType(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +105,14 @@ CatalogServiceAuth::AsyncDeleteEntryType(
         return child->AsyncDeleteEntryType(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::DeleteEntryType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEntryType(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryTypesResponse>
@@ -129,6 +153,14 @@ CatalogServiceAuth::AsyncCreateAspectType(
       });
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::CreateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateAspectType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncUpdateAspectType(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +181,14 @@ CatalogServiceAuth::AsyncUpdateAspectType(
       });
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::UpdateAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAspectType(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncDeleteAspectType(
     google::cloud::CompletionQueue& cq,
@@ -167,6 +207,14 @@ CatalogServiceAuth::AsyncDeleteAspectType(
         return child->AsyncDeleteAspectType(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::DeleteAspectType(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAspectType(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListAspectTypesResponse>
@@ -207,6 +255,14 @@ CatalogServiceAuth::AsyncCreateEntryGroup(
       });
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::CreateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEntryGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncUpdateEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -227,6 +283,14 @@ CatalogServiceAuth::AsyncUpdateEntryGroup(
       });
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::UpdateEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEntryGroup(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CatalogServiceAuth::AsyncDeleteEntryGroup(
     google::cloud::CompletionQueue& cq,
@@ -245,6 +309,14 @@ CatalogServiceAuth::AsyncDeleteEntryGroup(
         return child->AsyncDeleteEntryGroup(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceAuth::DeleteEntryGroup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEntryGroup(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntryGroupsResponse>

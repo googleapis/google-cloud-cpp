@@ -91,6 +91,18 @@ DataFusionLogging::AsyncCreateInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataFusionLogging::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+        return child_->CreateInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataFusionLogging::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -108,6 +120,18 @@ DataFusionLogging::AsyncDeleteInstance(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataFusionLogging::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+        return child_->DeleteInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -129,6 +153,18 @@ DataFusionLogging::AsyncUpdateInstance(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DataFusionLogging::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+        return child_->UpdateInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataFusionLogging::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
@@ -146,6 +182,18 @@ DataFusionLogging::AsyncRestartInstance(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DataFusionLogging::RestartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datafusion::v1::RestartInstanceRequest const&
+                 request) {
+        return child_->RestartInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

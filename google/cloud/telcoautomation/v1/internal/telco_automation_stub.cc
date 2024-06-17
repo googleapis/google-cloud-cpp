@@ -81,6 +81,20 @@ DefaultTelcoAutomationStub::AsyncCreateOrchestrationCluster(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultTelcoAutomationStub::CreateOrchestrationCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateOrchestrationCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncDeleteOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
@@ -100,6 +114,20 @@ DefaultTelcoAutomationStub::AsyncDeleteOrchestrationCluster(
                                                            cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTelcoAutomationStub::DeleteOrchestrationCluster(
+    grpc::ClientContext& context, Options,
+    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteOrchestrationCluster(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
@@ -145,6 +173,18 @@ DefaultTelcoAutomationStub::AsyncCreateEdgeSlm(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultTelcoAutomationStub::CreateEdgeSlm(
+    grpc::ClientContext& context, Options,
+    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEdgeSlm(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncDeleteEdgeSlm(
     google::cloud::CompletionQueue& cq,
@@ -162,6 +202,18 @@ DefaultTelcoAutomationStub::AsyncDeleteEdgeSlm(
         return grpc_stub_->AsyncDeleteEdgeSlm(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultTelcoAutomationStub::DeleteEdgeSlm(
+    grpc::ClientContext& context, Options,
+    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteEdgeSlm(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>

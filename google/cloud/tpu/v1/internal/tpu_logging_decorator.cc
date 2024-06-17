@@ -72,6 +72,17 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncCreateNode(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TpuLogging::CreateNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::CreateNodeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tpu::v1::CreateNodeRequest const& request) {
+        return child_->CreateNode(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -87,6 +98,17 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncDeleteNode(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TpuLogging::DeleteNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::DeleteNodeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tpu::v1::DeleteNodeRequest const& request) {
+        return child_->DeleteNode(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncReimageNode(
@@ -106,6 +128,17 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncReimageNode(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TpuLogging::ReimageNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::ReimageNodeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tpu::v1::ReimageNodeRequest const& request) {
+        return child_->ReimageNode(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncStopNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -123,6 +156,17 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncStopNode(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> TpuLogging::StopNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::StopNodeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tpu::v1::StopNodeRequest const& request) {
+        return child_->StopNode(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -138,6 +182,17 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncStartNode(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> TpuLogging::StartNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v1::StartNodeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::tpu::v1::StartNodeRequest const& request) {
+        return child_->StartNode(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>

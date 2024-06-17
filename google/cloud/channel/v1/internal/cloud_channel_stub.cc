@@ -135,6 +135,19 @@ DefaultCloudChannelServiceStub::AsyncProvisionCloudIdentity(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::ProvisionCloudIdentity(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ProvisionCloudIdentity(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
 DefaultCloudChannelServiceStub::ListEntitlements(
     grpc::ClientContext& context, Options const&,
@@ -203,6 +216,18 @@ DefaultCloudChannelServiceStub::AsyncCreateEntitlement(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::CreateEntitlement(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateEntitlement(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncChangeParameters(
     google::cloud::CompletionQueue& cq,
@@ -219,6 +244,18 @@ DefaultCloudChannelServiceStub::AsyncChangeParameters(
         return grpc_stub_->AsyncChangeParameters(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::ChangeParameters(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::ChangeParametersRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ChangeParameters(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -240,6 +277,18 @@ DefaultCloudChannelServiceStub::AsyncChangeRenewalSettings(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::ChangeRenewalSettings(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ChangeRenewalSettings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncChangeOffer(
     google::cloud::CompletionQueue& cq,
@@ -258,6 +307,18 @@ DefaultCloudChannelServiceStub::AsyncChangeOffer(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::ChangeOffer(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::ChangeOfferRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ChangeOffer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncStartPaidService(
     google::cloud::CompletionQueue& cq,
@@ -274,6 +335,18 @@ DefaultCloudChannelServiceStub::AsyncStartPaidService(
         return grpc_stub_->AsyncStartPaidService(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::StartPaidService(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->StartPaidService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -295,6 +368,18 @@ DefaultCloudChannelServiceStub::AsyncSuspendEntitlement(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::SuspendEntitlement(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SuspendEntitlement(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncCancelEntitlement(
     google::cloud::CompletionQueue& cq,
@@ -312,6 +397,18 @@ DefaultCloudChannelServiceStub::AsyncCancelEntitlement(
         return grpc_stub_->AsyncCancelEntitlement(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::CancelEntitlement(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CancelEntitlement(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -333,6 +430,18 @@ DefaultCloudChannelServiceStub::AsyncActivateEntitlement(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::ActivateEntitlement(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ActivateEntitlement(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncTransferEntitlements(
     google::cloud::CompletionQueue& cq,
@@ -350,6 +459,18 @@ DefaultCloudChannelServiceStub::AsyncTransferEntitlements(
         return grpc_stub_->AsyncTransferEntitlements(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::TransferEntitlements(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->TransferEntitlements(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -372,6 +493,20 @@ DefaultCloudChannelServiceStub::AsyncTransferEntitlementsToGoogle(
                                                              cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCloudChannelServiceStub::TransferEntitlementsToGoogle(
+    grpc::ClientContext& context, Options,
+    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->TransferEntitlementsToGoogle(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>

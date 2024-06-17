@@ -45,6 +45,11 @@ class FeatureRegistryServiceTracingStub : public FeatureRegistryServiceStub {
       google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateFeatureGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request)
+      override;
+
   StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
       grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request)
@@ -63,6 +68,11 @@ class FeatureRegistryServiceTracingStub : public FeatureRegistryServiceStub {
       google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeatureGroup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -70,10 +80,20 @@ class FeatureRegistryServiceTracingStub : public FeatureRegistryServiceStub {
       google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFeature(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
       override;
 
@@ -93,10 +113,20 @@ class FeatureRegistryServiceTracingStub : public FeatureRegistryServiceStub {
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateFeature(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeature(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteFeature(
+      grpc::ClientContext& context, Options options,
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
       override;
 

@@ -53,6 +53,10 @@ class BatchServiceMetadata : public BatchServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      grpc::ClientContext& context, Options options,
+      google::cloud::batch::v1::DeleteJobRequest const& request) override;
+
   StatusOr<google::cloud::batch::v1::ListJobsResponse> ListJobs(
       grpc::ClientContext& context, Options const& options,
       google::cloud::batch::v1::ListJobsRequest const& request) override;

@@ -88,6 +88,15 @@ TranslationServiceAuth::AsyncBatchTranslateText(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceAuth::BatchTranslateText(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchTranslateText(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceAuth::AsyncBatchTranslateDocument(
     google::cloud::CompletionQueue& cq,
@@ -109,6 +118,16 @@ TranslationServiceAuth::AsyncBatchTranslateDocument(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceAuth::BatchTranslateDocument(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchTranslateDocument(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceAuth::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
@@ -127,6 +146,14 @@ TranslationServiceAuth::AsyncCreateGlossary(
         return child->AsyncCreateGlossary(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceAuth::CreateGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::CreateGlossaryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateGlossary(context, options, request);
 }
 
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
@@ -165,6 +192,14 @@ TranslationServiceAuth::AsyncDeleteGlossary(
         return child->AsyncDeleteGlossary(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TranslationServiceAuth::DeleteGlossary(
+    grpc::ClientContext& context, Options options,
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteGlossary(context, options, request);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>

@@ -51,6 +51,14 @@ EngineServiceAuth::AsyncCreateEngine(
       });
 }
 
+StatusOr<google::longrunning::Operation> EngineServiceAuth::CreateEngine(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEngine(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EngineServiceAuth::AsyncDeleteEngine(
     google::cloud::CompletionQueue& cq,
@@ -69,6 +77,14 @@ EngineServiceAuth::AsyncDeleteEngine(
         return child->AsyncDeleteEngine(cq, *std::move(context),
                                         std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EngineServiceAuth::DeleteEngine(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEngine(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>

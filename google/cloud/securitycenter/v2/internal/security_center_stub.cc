@@ -66,6 +66,18 @@ DefaultSecurityCenterStub::AsyncBulkMuteFindings(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultSecurityCenterStub::BulkMuteFindings(
+    grpc::ClientContext& context, Options,
+    google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->BulkMuteFindings(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
 DefaultSecurityCenterStub::CreateBigQueryExport(
     grpc::ClientContext& context, Options const&,

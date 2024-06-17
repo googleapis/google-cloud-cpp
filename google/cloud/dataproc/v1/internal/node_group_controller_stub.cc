@@ -49,6 +49,18 @@ DefaultNodeGroupControllerStub::AsyncCreateNodeGroup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNodeGroupControllerStub::CreateNodeGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateNodeGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNodeGroupControllerStub::AsyncResizeNodeGroup(
     google::cloud::CompletionQueue& cq,
@@ -65,6 +77,18 @@ DefaultNodeGroupControllerStub::AsyncResizeNodeGroup(
         return grpc_stub_->AsyncResizeNodeGroup(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNodeGroupControllerStub::ResizeNodeGroup(
+    grpc::ClientContext& context, Options,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ResizeNodeGroup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>

@@ -68,6 +68,14 @@ EventarcAuth::AsyncCreateTrigger(
       });
 }
 
+StatusOr<google::longrunning::Operation> EventarcAuth::CreateTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTrigger(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +96,14 @@ EventarcAuth::AsyncUpdateTrigger(
       });
 }
 
+StatusOr<google::longrunning::Operation> EventarcAuth::UpdateTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTrigger(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +122,14 @@ EventarcAuth::AsyncDeleteTrigger(
         return child->AsyncDeleteTrigger(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::DeleteTrigger(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTrigger(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel> EventarcAuth::GetChannel(
@@ -145,6 +169,14 @@ EventarcAuth::AsyncCreateChannel(
       });
 }
 
+StatusOr<google::longrunning::Operation> EventarcAuth::CreateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
@@ -165,6 +197,14 @@ EventarcAuth::AsyncUpdateChannel(
       });
 }
 
+StatusOr<google::longrunning::Operation> EventarcAuth::UpdateChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateChannel(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
@@ -183,6 +223,14 @@ EventarcAuth::AsyncDeleteChannel(
         return child->AsyncDeleteChannel(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::DeleteChannel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteChannel(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider> EventarcAuth::GetProvider(
@@ -241,6 +289,15 @@ EventarcAuth::AsyncCreateChannelConnection(
       });
 }
 
+StatusOr<google::longrunning::Operation> EventarcAuth::CreateChannelConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateChannelConnection(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncDeleteChannelConnection(
     google::cloud::CompletionQueue& cq,
@@ -260,6 +317,15 @@ EventarcAuth::AsyncDeleteChannelConnection(
         return child->AsyncDeleteChannelConnection(cq, *std::move(context),
                                                    std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> EventarcAuth::DeleteChannelConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteChannelConnection(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>

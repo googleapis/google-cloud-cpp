@@ -51,6 +51,15 @@ MetadataServiceAuth::AsyncCreateMetadataStore(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceAuth::CreateMetadataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateMetadataStore(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
 MetadataServiceAuth::GetMetadataStore(
     grpc::ClientContext& context, Options const& options,
@@ -87,6 +96,15 @@ MetadataServiceAuth::AsyncDeleteMetadataStore(
         return child->AsyncDeleteMetadataStore(cq, *std::move(context),
                                                std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceAuth::DeleteMetadataStore(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteMetadataStore(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
@@ -145,6 +163,14 @@ MetadataServiceAuth::AsyncDeleteArtifact(
       });
 }
 
+StatusOr<google::longrunning::Operation> MetadataServiceAuth::DeleteArtifact(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteArtifact(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceAuth::AsyncPurgeArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -163,6 +189,14 @@ MetadataServiceAuth::AsyncPurgeArtifacts(
         return child->AsyncPurgeArtifacts(cq, *std::move(context),
                                           std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> MetadataServiceAuth::PurgeArtifacts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PurgeArtifacts(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
@@ -221,6 +255,14 @@ MetadataServiceAuth::AsyncDeleteContext(
       });
 }
 
+StatusOr<google::longrunning::Operation> MetadataServiceAuth::DeleteContext(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteContext(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceAuth::AsyncPurgeContexts(
     google::cloud::CompletionQueue& cq,
@@ -239,6 +281,14 @@ MetadataServiceAuth::AsyncPurgeContexts(
         return child->AsyncPurgeContexts(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> MetadataServiceAuth::PurgeContexts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PurgeContexts(context, options, request);
 }
 
 StatusOr<
@@ -337,6 +387,14 @@ MetadataServiceAuth::AsyncDeleteExecution(
       });
 }
 
+StatusOr<google::longrunning::Operation> MetadataServiceAuth::DeleteExecution(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteExecution(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceAuth::AsyncPurgeExecutions(
     google::cloud::CompletionQueue& cq,
@@ -355,6 +413,14 @@ MetadataServiceAuth::AsyncPurgeExecutions(
         return child->AsyncPurgeExecutions(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> MetadataServiceAuth::PurgeExecutions(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PurgeExecutions(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>

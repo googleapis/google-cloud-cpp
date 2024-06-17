@@ -60,6 +60,14 @@ FleetRoutingAuth::AsyncBatchOptimizeTours(
       });
 }
 
+StatusOr<google::longrunning::Operation> FleetRoutingAuth::BatchOptimizeTours(
+    grpc::ClientContext& context, Options options,
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchOptimizeTours(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 FleetRoutingAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -87,6 +87,14 @@ WebRiskServiceAuth::AsyncSubmitUri(
       });
 }
 
+StatusOr<google::longrunning::Operation> WebRiskServiceAuth::SubmitUri(
+    grpc::ClientContext& context, Options options,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SubmitUri(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WebRiskServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

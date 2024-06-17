@@ -54,6 +54,14 @@ ServiceUsageMetadata::AsyncEnableService(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation> ServiceUsageMetadata::EnableService(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::EnableServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->EnableService(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageMetadata::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
@@ -64,6 +72,14 @@ ServiceUsageMetadata::AsyncDisableService(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDisableService(cq, std::move(context), std::move(options),
                                      request);
+}
+
+StatusOr<google::longrunning::Operation> ServiceUsageMetadata::DisableService(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::DisableServiceRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DisableService(context, options, request);
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
@@ -94,6 +110,15 @@ ServiceUsageMetadata::AsyncBatchEnableServices(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncBatchEnableServices(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceUsageMetadata::BatchEnableServices(
+    grpc::ClientContext& context, Options options,
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->BatchEnableServices(context, options, request);
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>

@@ -73,6 +73,18 @@ DefaultDataprocMetastoreStub::AsyncCreateService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::CreateService(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::CreateServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreStub::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +103,18 @@ DefaultDataprocMetastoreStub::AsyncUpdateService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::UpdateService(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::UpdateServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -107,6 +131,18 @@ DefaultDataprocMetastoreStub::AsyncDeleteService(
         return grpc_stub_->AsyncDeleteService(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::DeleteService(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::DeleteServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
@@ -152,6 +188,18 @@ DefaultDataprocMetastoreStub::AsyncCreateMetadataImport(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::CreateMetadataImport(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateMetadataImport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreStub::AsyncUpdateMetadataImport(
     google::cloud::CompletionQueue& cq,
@@ -169,6 +217,18 @@ DefaultDataprocMetastoreStub::AsyncUpdateMetadataImport(
         return grpc_stub_->AsyncUpdateMetadataImport(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::UpdateMetadataImport(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateMetadataImport(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -189,6 +249,18 @@ DefaultDataprocMetastoreStub::AsyncExportMetadata(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::ExportMetadata(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::ExportMetadataRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportMetadata(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreStub::AsyncRestoreService(
     google::cloud::CompletionQueue& cq,
@@ -205,6 +277,18 @@ DefaultDataprocMetastoreStub::AsyncRestoreService(
         return grpc_stub_->AsyncRestoreService(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::RestoreService(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::RestoreServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->RestoreService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
@@ -249,6 +333,18 @@ DefaultDataprocMetastoreStub::AsyncCreateBackup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::CreateBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::CreateBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreStub::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
@@ -267,6 +363,18 @@ DefaultDataprocMetastoreStub::AsyncDeleteBackup(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::DeleteBackup(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::DeleteBackupRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteBackup(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreStub::AsyncQueryMetadata(
     google::cloud::CompletionQueue& cq,
@@ -283,6 +391,18 @@ DefaultDataprocMetastoreStub::AsyncQueryMetadata(
         return grpc_stub_->AsyncQueryMetadata(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::QueryMetadata(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->QueryMetadata(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -304,6 +424,18 @@ DefaultDataprocMetastoreStub::AsyncMoveTableToDatabase(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::MoveTableToDatabase(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->MoveTableToDatabase(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreStub::AsyncAlterMetadataResourceLocation(
     google::cloud::CompletionQueue& cq,
@@ -323,6 +455,20 @@ DefaultDataprocMetastoreStub::AsyncAlterMetadataResourceLocation(
                                                               cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDataprocMetastoreStub::AlterMetadataResourceLocation(
+    grpc::ClientContext& context, Options,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->AlterMetadataResourceLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

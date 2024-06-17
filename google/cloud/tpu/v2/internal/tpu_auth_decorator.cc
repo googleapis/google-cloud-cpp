@@ -66,6 +66,14 @@ future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncCreateNode(
       });
 }
 
+StatusOr<google::longrunning::Operation> TpuAuth::CreateNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::CreateNodeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateNode(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -83,6 +91,14 @@ future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncDeleteNode(
         return child->AsyncDeleteNode(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TpuAuth::DeleteNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::DeleteNodeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteNode(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncStopNode(
@@ -104,6 +120,14 @@ future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncStopNode(
       });
 }
 
+StatusOr<google::longrunning::Operation> TpuAuth::StopNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::StopNodeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StopNode(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -123,6 +147,14 @@ future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncStartNode(
       });
 }
 
+StatusOr<google::longrunning::Operation> TpuAuth::StartNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::StartNodeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->StartNode(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncUpdateNode(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -140,6 +172,14 @@ future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncUpdateNode(
         return child->AsyncUpdateNode(cq, *std::move(context),
                                       std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> TpuAuth::UpdateNode(
+    grpc::ClientContext& context, Options options,
+    google::cloud::tpu::v2::UpdateNodeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateNode(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>

@@ -72,6 +72,15 @@ ApiGatewayServiceMetadata::AsyncCreateGateway(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceMetadata::CreateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
@@ -85,6 +94,16 @@ ApiGatewayServiceMetadata::AsyncUpdateGateway(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceMetadata::UpdateGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("gateway.name=",
+                           internal::UrlEncode(request.gateway().name())));
+  return child_->UpdateGateway(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
@@ -95,6 +114,15 @@ ApiGatewayServiceMetadata::AsyncDeleteGateway(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteGateway(cq, std::move(context), std::move(options),
                                     request);
+}
+
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceMetadata::DeleteGateway(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteGateway(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
@@ -126,6 +154,14 @@ ApiGatewayServiceMetadata::AsyncCreateApi(
                                 request);
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceMetadata::CreateApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateApi(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncUpdateApi(
     google::cloud::CompletionQueue& cq,
@@ -139,6 +175,15 @@ ApiGatewayServiceMetadata::AsyncUpdateApi(
                                 request);
 }
 
+StatusOr<google::longrunning::Operation> ApiGatewayServiceMetadata::UpdateApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("api.name=", internal::UrlEncode(request.api().name())));
+  return child_->UpdateApi(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncDeleteApi(
     google::cloud::CompletionQueue& cq,
@@ -149,6 +194,14 @@ ApiGatewayServiceMetadata::AsyncDeleteApi(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteApi(cq, std::move(context), std::move(options),
                                 request);
+}
+
+StatusOr<google::longrunning::Operation> ApiGatewayServiceMetadata::DeleteApi(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteApi(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
@@ -181,6 +234,15 @@ ApiGatewayServiceMetadata::AsyncCreateApiConfig(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceMetadata::CreateApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateApiConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncUpdateApiConfig(
     google::cloud::CompletionQueue& cq,
@@ -194,6 +256,16 @@ ApiGatewayServiceMetadata::AsyncUpdateApiConfig(
                                       std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceMetadata::UpdateApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("api_config.name=",
+                           internal::UrlEncode(request.api_config().name())));
+  return child_->UpdateApiConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncDeleteApiConfig(
     google::cloud::CompletionQueue& cq,
@@ -204,6 +276,15 @@ ApiGatewayServiceMetadata::AsyncDeleteApiConfig(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteApiConfig(cq, std::move(context),
                                       std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceMetadata::DeleteApiConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteApiConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

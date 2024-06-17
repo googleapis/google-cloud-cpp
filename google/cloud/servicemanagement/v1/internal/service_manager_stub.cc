@@ -74,6 +74,18 @@ DefaultServiceManagerStub::AsyncCreateService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultServiceManagerStub::CreateService(
+    grpc::ClientContext& context, Options,
+    google::api::servicemanagement::v1::CreateServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -93,6 +105,18 @@ DefaultServiceManagerStub::AsyncDeleteService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultServiceManagerStub::DeleteService(
+    grpc::ClientContext& context, Options,
+    google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
@@ -110,6 +134,18 @@ DefaultServiceManagerStub::AsyncUndeleteService(
         return grpc_stub_->AsyncUndeleteService(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultServiceManagerStub::UndeleteService(
+    grpc::ClientContext& context, Options,
+    google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UndeleteService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
@@ -170,6 +206,19 @@ DefaultServiceManagerStub::AsyncSubmitConfigSource(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultServiceManagerStub::SubmitConfigSource(
+    grpc::ClientContext& context, Options,
+    google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->SubmitConfigSource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 DefaultServiceManagerStub::ListServiceRollouts(
     grpc::ClientContext& context, Options const&,
@@ -215,6 +264,19 @@ DefaultServiceManagerStub::AsyncCreateServiceRollout(
         return grpc_stub_->AsyncCreateServiceRollout(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultServiceManagerStub::CreateServiceRollout(
+    grpc::ClientContext& context, Options,
+    google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateServiceRollout(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>

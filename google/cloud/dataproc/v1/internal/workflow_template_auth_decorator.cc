@@ -70,6 +70,16 @@ WorkflowTemplateServiceAuth::AsyncInstantiateWorkflowTemplate(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceAuth::InstantiateWorkflowTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->InstantiateWorkflowTemplate(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceAuth::AsyncInstantiateInlineWorkflowTemplate(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +99,16 @@ WorkflowTemplateServiceAuth::AsyncInstantiateInlineWorkflowTemplate(
         return child->AsyncInstantiateInlineWorkflowTemplate(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceAuth::InstantiateInlineWorkflowTemplate(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->InstantiateInlineWorkflowTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

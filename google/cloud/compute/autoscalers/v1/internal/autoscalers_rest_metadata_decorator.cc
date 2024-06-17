@@ -59,6 +59,15 @@ AutoscalersRestMetadata::AsyncDeleteAutoscaler(
                                        std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AutoscalersRestMetadata::DeleteAutoscaler(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteAutoscaler(rest_context, options, request);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 AutoscalersRestMetadata::GetAutoscaler(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -78,6 +87,15 @@ AutoscalersRestMetadata::AsyncInsertAutoscaler(
   SetMetadata(*rest_context, *options);
   return child_->AsyncInsertAutoscaler(cq, std::move(rest_context),
                                        std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AutoscalersRestMetadata::InsertAutoscaler(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->InsertAutoscaler(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::AutoscalerList>
@@ -101,6 +119,15 @@ AutoscalersRestMetadata::AsyncPatchAutoscaler(
                                       std::move(options), request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AutoscalersRestMetadata::PatchAutoscaler(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->PatchAutoscaler(rest_context, options, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersRestMetadata::AsyncUpdateAutoscaler(
     CompletionQueue& cq,
@@ -111,6 +138,15 @@ AutoscalersRestMetadata::AsyncUpdateAutoscaler(
   SetMetadata(*rest_context, *options);
   return child_->AsyncUpdateAutoscaler(cq, std::move(rest_context),
                                        std::move(options), request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AutoscalersRestMetadata::UpdateAutoscaler(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateAutoscaler(rest_context, options, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

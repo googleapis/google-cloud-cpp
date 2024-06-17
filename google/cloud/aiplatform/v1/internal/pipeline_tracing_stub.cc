@@ -86,6 +86,20 @@ PipelineServiceTracingStub::AsyncDeleteTrainingPipeline(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+PipelineServiceTracingStub::DeleteTrainingPipeline(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PipelineService", "DeleteTrainingPipeline");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteTrainingPipeline(context, options, request));
+}
+
 Status PipelineServiceTracingStub::CancelTrainingPipeline(
     grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
@@ -150,6 +164,18 @@ PipelineServiceTracingStub::AsyncDeletePipelineJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+PipelineServiceTracingStub::DeletePipelineJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PipelineService", "DeletePipelineJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeletePipelineJob(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PipelineServiceTracingStub::AsyncBatchDeletePipelineJobs(
     google::cloud::CompletionQueue& cq,
@@ -164,6 +190,20 @@ PipelineServiceTracingStub::AsyncBatchDeletePipelineJobs(
   auto f = child_->AsyncBatchDeletePipelineJobs(cq, context, std::move(options),
                                                 request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+PipelineServiceTracingStub::BatchDeletePipelineJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PipelineService", "BatchDeletePipelineJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchDeletePipelineJobs(context, options, request));
 }
 
 Status PipelineServiceTracingStub::CancelPipelineJob(
@@ -191,6 +231,20 @@ PipelineServiceTracingStub::AsyncBatchCancelPipelineJobs(
   auto f = child_->AsyncBatchCancelPipelineJobs(cq, context, std::move(options),
                                                 request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+PipelineServiceTracingStub::BatchCancelPipelineJobs(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.PipelineService", "BatchCancelPipelineJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchCancelPipelineJobs(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

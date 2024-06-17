@@ -71,10 +71,20 @@ class EntityTypesAuth : public EntityTypesStub {
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteEntityTypes(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
           request) override;
 
@@ -85,6 +95,11 @@ class EntityTypesAuth : public EntityTypesStub {
       google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchCreateEntities(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchUpdateEntities(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -92,10 +107,20 @@ class EntityTypesAuth : public EntityTypesStub {
       google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchUpdateEntities(
+      grpc::ClientContext& context, Options options,
+      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteEntities(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteEntities(
+      grpc::ClientContext& context, Options options,
       google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request)
       override;
 

@@ -44,6 +44,10 @@ class VpcAccessServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateConnector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
       grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request) = 0;
@@ -57,6 +61,10 @@ class VpcAccessServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteConnector(
+      grpc::ClientContext& context, Options options,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -89,6 +97,11 @@ class DefaultVpcAccessServiceStub : public VpcAccessServiceStub {
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateConnector(
+      grpc::ClientContext& context, Options options,
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
+      override;
+
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
       grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
@@ -103,6 +116,11 @@ class DefaultVpcAccessServiceStub : public VpcAccessServiceStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnector(
+      grpc::ClientContext& context, Options options,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
       override;
 

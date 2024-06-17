@@ -82,6 +82,16 @@ BigtableTableAdminMetadata::AsyncUpdateTable(
                                   request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminMetadata::UpdateTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("table.name=", internal::UrlEncode(request.table().name())));
+  return child_->UpdateTable(context, options, request);
+}
+
 Status BigtableTableAdminMetadata::DeleteTable(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
@@ -102,6 +112,15 @@ BigtableTableAdminMetadata::AsyncUndeleteTable(
                                     request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminMetadata::UndeleteTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UndeleteTable(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminMetadata::AsyncCreateAuthorizedView(
     google::cloud::CompletionQueue& cq,
@@ -112,6 +131,15 @@ BigtableTableAdminMetadata::AsyncCreateAuthorizedView(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateAuthorizedView(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminMetadata::CreateAuthorizedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateAuthorizedView(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
@@ -144,6 +172,17 @@ BigtableTableAdminMetadata::AsyncUpdateAuthorizedView(
                    internal::UrlEncode(request.authorized_view().name())));
   return child_->AsyncUpdateAuthorizedView(cq, std::move(context),
                                            std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminMetadata::UpdateAuthorizedView(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("authorized_view.name=",
+                   internal::UrlEncode(request.authorized_view().name())));
+  return child_->UpdateAuthorizedView(context, options, request);
 }
 
 Status BigtableTableAdminMetadata::DeleteAuthorizedView(
@@ -202,6 +241,15 @@ BigtableTableAdminMetadata::AsyncCreateBackup(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminMetadata::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CreateBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackup(context, options, request);
+}
+
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminMetadata::GetBackup(
     grpc::ClientContext& context, Options const& options,
@@ -250,6 +298,15 @@ BigtableTableAdminMetadata::AsyncRestoreTable(
                                    request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminMetadata::RestoreTable(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::RestoreTableRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->RestoreTable(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminMetadata::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -260,6 +317,14 @@ BigtableTableAdminMetadata::AsyncCopyBackup(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCopyBackup(cq, std::move(context), std::move(options),
                                  request);
+}
+
+StatusOr<google::longrunning::Operation> BigtableTableAdminMetadata::CopyBackup(
+    grpc::ClientContext& context, Options options,
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CopyBackup(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminMetadata::GetIamPolicy(

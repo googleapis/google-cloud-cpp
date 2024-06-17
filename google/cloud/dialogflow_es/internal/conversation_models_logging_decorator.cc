@@ -54,6 +54,21 @@ ConversationModelsLogging::AsyncCreateConversationModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsLogging::CreateConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+              request) {
+        return child_->CreateConversationModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsLogging::GetConversationModel(
     grpc::ClientContext& context, Options const& options,
@@ -102,6 +117,21 @@ ConversationModelsLogging::AsyncDeleteConversationModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsLogging::DeleteConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+              request) {
+        return child_->DeleteConversationModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsLogging::AsyncDeployConversationModel(
     google::cloud::CompletionQueue& cq,
@@ -123,6 +153,21 @@ ConversationModelsLogging::AsyncDeployConversationModel(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsLogging::DeployConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+              request) {
+        return child_->DeployConversationModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsLogging::AsyncUndeployConversationModel(
     google::cloud::CompletionQueue& cq,
@@ -142,6 +187,21 @@ ConversationModelsLogging::AsyncUndeployConversationModel(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsLogging::UndeployConversationModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+              request) {
+        return child_->UndeployConversationModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -193,6 +253,21 @@ ConversationModelsLogging::AsyncCreateConversationModelEvaluation(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsLogging::CreateConversationModelEvaluation(
+    grpc::ClientContext& context, Options options,
+    google::cloud::dialogflow::v2::
+        CreateConversationModelEvaluationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 CreateConversationModelEvaluationRequest const& request) {
+        return child_->CreateConversationModelEvaluation(context, options,
+                                                         request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

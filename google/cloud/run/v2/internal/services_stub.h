@@ -44,6 +44,10 @@ class ServicesStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::CreateServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> CreateService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::CreateServiceRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::run::v2::Service> GetService(
       grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetServiceRequest const& request) = 0;
@@ -58,10 +62,18 @@ class ServicesStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::UpdateServiceRequest const& request) = 0;
 
+  virtual StatusOr<google::longrunning::Operation> UpdateService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::UpdateServiceRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::run::v2::DeleteServiceRequest const& request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteService(
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::DeleteServiceRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -105,6 +117,10 @@ class DefaultServicesStub : public ServicesStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::CreateServiceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::CreateServiceRequest const& request) override;
+
   StatusOr<google::cloud::run::v2::Service> GetService(
       grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetServiceRequest const& request) override;
@@ -119,10 +135,18 @@ class DefaultServicesStub : public ServicesStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::run::v2::UpdateServiceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateService(
+      grpc::ClientContext& context, Options options,
+      google::cloud::run::v2::UpdateServiceRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::run::v2::DeleteServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteService(
+      grpc::ClientContext& context, Options options,
       google::cloud::run::v2::DeleteServiceRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

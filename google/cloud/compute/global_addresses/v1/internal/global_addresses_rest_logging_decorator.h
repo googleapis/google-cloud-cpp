@@ -50,6 +50,12 @@ class GlobalAddressesRestLogging : public GlobalAddressesRestStub {
       google::cloud::cpp::compute::global_addresses::v1::
           DeleteAddressRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::global_addresses::v1::
+          DeleteAddressRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -61,6 +67,12 @@ class GlobalAddressesRestLogging : public GlobalAddressesRestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::global_addresses::v1::
+          InsertAddressRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_addresses::v1::
           InsertAddressRequest const& request) override;
 
@@ -77,10 +89,22 @@ class GlobalAddressesRestLogging : public GlobalAddressesRestStub {
       google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
           request) override;
 

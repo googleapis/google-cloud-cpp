@@ -46,6 +46,19 @@ AnalyticsServiceTracingStub::AsyncExportAnalyticsMetrics(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceTracingStub::ExportAnalyticsMetrics(
+    grpc::ClientContext& context, Options options,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.AnalyticsService",
+                                     "ExportAnalyticsMetrics");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ExportAnalyticsMetrics(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

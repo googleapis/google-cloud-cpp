@@ -50,6 +50,19 @@ DefaultAnalyticsServiceStub::AsyncExportAnalyticsMetrics(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAnalyticsServiceStub::ExportAnalyticsMetrics(
+    grpc::ClientContext& context, Options,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ExportAnalyticsMetrics(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAnalyticsServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

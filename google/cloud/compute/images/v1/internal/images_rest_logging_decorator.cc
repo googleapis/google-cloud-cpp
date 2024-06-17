@@ -54,6 +54,20 @@ ImagesRestLogging::AsyncDeleteImage(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestLogging::DeleteImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+                 request) {
+        return child_->DeleteImage(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestLogging::AsyncDeprecate(
     CompletionQueue& cq,
@@ -71,6 +85,19 @@ ImagesRestLogging::AsyncDeprecate(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestLogging::Deprecate(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::DeprecateRequest const&
+                 request) {
+        return child_->Deprecate(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image> ImagesRestLogging::GetImage(
@@ -134,6 +161,20 @@ ImagesRestLogging::AsyncInsertImage(
       tracing_options_);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestLogging::InsertImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+                 request) {
+        return child_->InsertImage(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ImageList>
 ImagesRestLogging::ListImages(
     rest_internal::RestContext& rest_context, Options const& options,
@@ -164,6 +205,19 @@ ImagesRestLogging::AsyncPatchImage(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestLogging::PatchImage(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::PatchImageRequest const&
+                 request) {
+        return child_->PatchImage(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -197,6 +251,19 @@ ImagesRestLogging::AsyncSetLabels(
       },
       cq, std::move(rest_context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ImagesRestLogging::SetLabels(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::compute::images::v1::SetLabelsRequest const&
+                 request) {
+        return child_->SetLabels(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

@@ -74,6 +74,19 @@ DefaultBackupDRStub::AsyncCreateManagementServer(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultBackupDRStub::CreateManagementServer(
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateManagementServer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBackupDRStub::AsyncDeleteManagementServer(
     google::cloud::CompletionQueue& cq,
@@ -91,6 +104,19 @@ DefaultBackupDRStub::AsyncDeleteManagementServer(
         return grpc_stub_->AsyncDeleteManagementServer(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultBackupDRStub::DeleteManagementServer(
+    grpc::ClientContext& context, Options,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteManagementServer(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

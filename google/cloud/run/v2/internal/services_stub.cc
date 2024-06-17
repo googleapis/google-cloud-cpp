@@ -49,6 +49,17 @@ DefaultServicesStub::AsyncCreateService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultServicesStub::CreateService(
+    grpc::ClientContext& context, Options,
+    google::cloud::run::v2::CreateServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::run::v2::Service> DefaultServicesStub::GetService(
     grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::GetServiceRequest const& request) {
@@ -90,6 +101,17 @@ DefaultServicesStub::AsyncUpdateService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultServicesStub::UpdateService(
+    grpc::ClientContext& context, Options,
+    google::cloud::run::v2::UpdateServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -106,6 +128,17 @@ DefaultServicesStub::AsyncDeleteService(
         return grpc_stub_->AsyncDeleteService(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultServicesStub::DeleteService(
+    grpc::ClientContext& context, Options,
+    google::cloud::run::v2::DeleteServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::iam::v1::Policy> DefaultServicesStub::GetIamPolicy(

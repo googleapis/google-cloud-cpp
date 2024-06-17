@@ -109,6 +109,17 @@ DefaultIntentsStub::AsyncImportIntents(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultIntentsStub::ImportIntents(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ImportIntents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultIntentsStub::AsyncExportIntents(
     google::cloud::CompletionQueue& cq,
@@ -126,6 +137,17 @@ DefaultIntentsStub::AsyncExportIntents(
         return grpc_stub_->AsyncExportIntents(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultIntentsStub::ExportIntents(
+    grpc::ClientContext& context, Options,
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->ExportIntents(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

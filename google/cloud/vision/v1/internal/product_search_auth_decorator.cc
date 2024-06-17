@@ -197,6 +197,14 @@ ProductSearchAuth::AsyncImportProductSets(
       });
 }
 
+StatusOr<google::longrunning::Operation> ProductSearchAuth::ImportProductSets(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ImportProductSets(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchAuth::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
@@ -215,6 +223,14 @@ ProductSearchAuth::AsyncPurgeProducts(
         return child->AsyncPurgeProducts(cq, *std::move(context),
                                          std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation> ProductSearchAuth::PurgeProducts(
+    grpc::ClientContext& context, Options options,
+    google::cloud::vision::v1::PurgeProductsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->PurgeProducts(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

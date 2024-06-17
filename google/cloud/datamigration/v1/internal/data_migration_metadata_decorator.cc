@@ -72,6 +72,15 @@ DataMigrationServiceMetadata::AsyncCreateMigrationJob(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::CreateMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncUpdateMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -86,6 +95,17 @@ DataMigrationServiceMetadata::AsyncUpdateMigrationJob(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::UpdateMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("migration_job.name=",
+                   internal::UrlEncode(request.migration_job().name())));
+  return child_->UpdateMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncDeleteMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -96,6 +116,15 @@ DataMigrationServiceMetadata::AsyncDeleteMigrationJob(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteMigrationJob(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::DeleteMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteMigrationJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,6 +139,15 @@ DataMigrationServiceMetadata::AsyncStartMigrationJob(
                                         std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::StartMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StartMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncStopMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -120,6 +158,15 @@ DataMigrationServiceMetadata::AsyncStopMigrationJob(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncStopMigrationJob(cq, std::move(context),
                                        std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::StopMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->StopMigrationJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -134,6 +181,15 @@ DataMigrationServiceMetadata::AsyncResumeMigrationJob(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::ResumeMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ResumeMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncPromoteMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -144,6 +200,15 @@ DataMigrationServiceMetadata::AsyncPromoteMigrationJob(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncPromoteMigrationJob(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::PromoteMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->PromoteMigrationJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -158,6 +223,15 @@ DataMigrationServiceMetadata::AsyncVerifyMigrationJob(
                                          std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::VerifyMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->VerifyMigrationJob(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncRestartMigrationJob(
     google::cloud::CompletionQueue& cq,
@@ -168,6 +242,15 @@ DataMigrationServiceMetadata::AsyncRestartMigrationJob(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncRestartMigrationJob(cq, std::move(context),
                                           std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::RestartMigrationJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RestartMigrationJob(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
@@ -221,6 +304,16 @@ DataMigrationServiceMetadata::AsyncCreateConnectionProfile(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::CreateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConnectionProfile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -236,6 +329,18 @@ DataMigrationServiceMetadata::AsyncUpdateConnectionProfile(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::UpdateConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("connection_profile.name=",
+                   internal::UrlEncode(request.connection_profile().name())));
+  return child_->UpdateConnectionProfile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
@@ -249,6 +354,16 @@ DataMigrationServiceMetadata::AsyncDeleteConnectionProfile(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::DeleteConnectionProfile(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConnectionProfile(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
@@ -260,6 +375,16 @@ DataMigrationServiceMetadata::AsyncCreatePrivateConnection(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreatePrivateConnection(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::CreatePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreatePrivateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
@@ -291,6 +416,16 @@ DataMigrationServiceMetadata::AsyncDeletePrivateConnection(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeletePrivateConnection(cq, std::move(context),
                                               std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::DeletePrivateConnection(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeletePrivateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -325,6 +460,16 @@ DataMigrationServiceMetadata::AsyncCreateConversionWorkspace(
                                                 std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::CreateConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncUpdateConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -340,6 +485,18 @@ DataMigrationServiceMetadata::AsyncUpdateConversionWorkspace(
                                                 std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::UpdateConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("conversion_workspace.name=",
+                   internal::UrlEncode(request.conversion_workspace().name())));
+  return child_->UpdateConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncDeleteConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -351,6 +508,16 @@ DataMigrationServiceMetadata::AsyncDeleteConversionWorkspace(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteConversionWorkspace(cq, std::move(context),
                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::DeleteConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteConversionWorkspace(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
@@ -401,6 +568,16 @@ DataMigrationServiceMetadata::AsyncSeedConversionWorkspace(
                                               std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::SeedConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->SeedConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncImportMappingRules(
     google::cloud::CompletionQueue& cq,
@@ -411,6 +588,15 @@ DataMigrationServiceMetadata::AsyncImportMappingRules(
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncImportMappingRules(cq, std::move(context),
                                          std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::ImportMappingRules(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportMappingRules(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -426,6 +612,16 @@ DataMigrationServiceMetadata::AsyncConvertConversionWorkspace(
                                                  std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::ConvertConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ConvertConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncCommitConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -437,6 +633,16 @@ DataMigrationServiceMetadata::AsyncCommitConversionWorkspace(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncCommitConversionWorkspace(cq, std::move(context),
                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::CommitConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->CommitConversionWorkspace(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -452,6 +658,16 @@ DataMigrationServiceMetadata::AsyncRollbackConversionWorkspace(
                                                   std::move(options), request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::RollbackConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->RollbackConversionWorkspace(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncApplyConversionWorkspace(
     google::cloud::CompletionQueue& cq,
@@ -463,6 +679,16 @@ DataMigrationServiceMetadata::AsyncApplyConversionWorkspace(
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncApplyConversionWorkspace(cq, std::move(context),
                                                std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataMigrationServiceMetadata::ApplyConversionWorkspace(
+    grpc::ClientContext& context, Options options,
+    google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ApplyConversionWorkspace(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>

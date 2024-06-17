@@ -62,6 +62,16 @@ SiteSearchEngineServiceAuth::AsyncCreateTargetSite(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceAuth::CreateTargetSite(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateTargetSite(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncBatchCreateTargetSites(
     google::cloud::CompletionQueue& cq,
@@ -81,6 +91,16 @@ SiteSearchEngineServiceAuth::AsyncBatchCreateTargetSites(
         return child->AsyncBatchCreateTargetSites(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceAuth::BatchCreateTargetSites(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCreateTargetSites(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
@@ -113,6 +133,16 @@ SiteSearchEngineServiceAuth::AsyncUpdateTargetSite(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceAuth::UpdateTargetSite(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateTargetSite(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncDeleteTargetSite(
     google::cloud::CompletionQueue& cq,
@@ -132,6 +162,16 @@ SiteSearchEngineServiceAuth::AsyncDeleteTargetSite(
         return child->AsyncDeleteTargetSite(cq, *std::move(context),
                                             std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceAuth::DeleteTargetSite(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteTargetSite(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListTargetSitesResponse>
@@ -164,6 +204,16 @@ SiteSearchEngineServiceAuth::AsyncEnableAdvancedSiteSearch(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceAuth::EnableAdvancedSiteSearch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->EnableAdvancedSiteSearch(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncDisableAdvancedSiteSearch(
     google::cloud::CompletionQueue& cq,
@@ -183,6 +233,16 @@ SiteSearchEngineServiceAuth::AsyncDisableAdvancedSiteSearch(
         return child->AsyncDisableAdvancedSiteSearch(
             cq, *std::move(context), std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceAuth::DisableAdvancedSiteSearch(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DisableAdvancedSiteSearch(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -205,6 +265,15 @@ SiteSearchEngineServiceAuth::AsyncRecrawlUris(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceAuth::RecrawlUris(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RecrawlUris(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SiteSearchEngineServiceAuth::AsyncBatchVerifyTargetSites(
     google::cloud::CompletionQueue& cq,
@@ -224,6 +293,16 @@ SiteSearchEngineServiceAuth::AsyncBatchVerifyTargetSites(
         return child->AsyncBatchVerifyTargetSites(cq, *std::move(context),
                                                   std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceAuth::BatchVerifyTargetSites(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchVerifyTargetSites(context, options, request);
 }
 
 StatusOr<

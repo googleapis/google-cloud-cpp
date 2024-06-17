@@ -119,6 +119,16 @@ StorageTransferServiceMetadata::AsyncRunTransferJob(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+StorageTransferServiceMetadata::RunTransferJob(
+    grpc::ClientContext& context, Options options,
+    google::storagetransfer::v1::RunTransferJobRequest const& request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("job_name=", internal::UrlEncode(request.job_name())));
+  return child_->RunTransferJob(context, options, request);
+}
+
 Status StorageTransferServiceMetadata::DeleteTransferJob(
     grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {

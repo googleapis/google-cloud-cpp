@@ -80,6 +80,20 @@ DefaultAppHubStub::AsyncCreateServiceProjectAttachment(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultAppHubStub::CreateServiceProjectAttachment(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateServiceProjectAttachment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
 DefaultAppHubStub::GetServiceProjectAttachment(
     grpc::ClientContext& context, Options const&,
@@ -113,6 +127,20 @@ DefaultAppHubStub::AsyncDeleteServiceProjectAttachment(
                                                                cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultAppHubStub::DeleteServiceProjectAttachment(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteServiceProjectAttachment(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -197,6 +225,17 @@ DefaultAppHubStub::AsyncCreateService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::CreateService(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::CreateServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::apphub::v1::Service> DefaultAppHubStub::GetService(
     grpc::ClientContext& context, Options const&,
     google::cloud::apphub::v1::GetServiceRequest const& request) {
@@ -226,6 +265,17 @@ DefaultAppHubStub::AsyncUpdateService(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::UpdateService(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppHubStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
@@ -242,6 +292,17 @@ DefaultAppHubStub::AsyncDeleteService(
         return grpc_stub_->AsyncDeleteService(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::DeleteService(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteService(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apphub::v1::ListDiscoveredWorkloadsResponse>
@@ -312,6 +373,17 @@ DefaultAppHubStub::AsyncCreateWorkload(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::CreateWorkload(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateWorkload(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::apphub::v1::Workload> DefaultAppHubStub::GetWorkload(
     grpc::ClientContext& context, Options const&,
     google::cloud::apphub::v1::GetWorkloadRequest const& request) {
@@ -341,6 +413,17 @@ DefaultAppHubStub::AsyncUpdateWorkload(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::UpdateWorkload(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateWorkload(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppHubStub::AsyncDeleteWorkload(
     google::cloud::CompletionQueue& cq,
@@ -357,6 +440,17 @@ DefaultAppHubStub::AsyncDeleteWorkload(
         return grpc_stub_->AsyncDeleteWorkload(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::DeleteWorkload(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteWorkload(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::apphub::v1::ListApplicationsResponse>
@@ -389,6 +483,17 @@ DefaultAppHubStub::AsyncCreateApplication(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::CreateApplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateApplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::apphub::v1::Application>
 DefaultAppHubStub::GetApplication(
     grpc::ClientContext& context, Options const&,
@@ -419,6 +524,17 @@ DefaultAppHubStub::AsyncUpdateApplication(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::UpdateApplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateApplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAppHubStub::AsyncDeleteApplication(
     google::cloud::CompletionQueue& cq,
@@ -435,6 +551,17 @@ DefaultAppHubStub::AsyncDeleteApplication(
         return grpc_stub_->AsyncDeleteApplication(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation> DefaultAppHubStub::DeleteApplication(
+    grpc::ClientContext& context, Options,
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteApplication(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

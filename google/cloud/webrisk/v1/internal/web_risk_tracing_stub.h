@@ -62,6 +62,10 @@ class WebRiskServiceTracingStub : public WebRiskServiceStub {
       google::cloud::internal::ImmutableOptions options,
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> SubmitUri(
+      grpc::ClientContext& context, Options options,
+      google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

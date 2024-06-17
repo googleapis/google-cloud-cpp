@@ -63,6 +63,15 @@ ScheduleServiceMetadata::AsyncDeleteSchedule(
                                      request);
 }
 
+StatusOr<google::longrunning::Operation>
+ScheduleServiceMetadata::DeleteSchedule(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteSchedule(context, options, request);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceMetadata::GetSchedule(
     grpc::ClientContext& context, Options const& options,

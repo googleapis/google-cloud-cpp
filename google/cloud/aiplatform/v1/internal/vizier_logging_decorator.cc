@@ -110,6 +110,18 @@ VizierServiceLogging::AsyncSuggestTrials(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> VizierServiceLogging::SuggestTrials(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+        return child_->SuggestTrials(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceLogging::CreateTrial(
     grpc::ClientContext& context, Options const& options,
@@ -200,6 +212,20 @@ VizierServiceLogging::AsyncCheckTrialEarlyStoppingState(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VizierServiceLogging::CheckTrialEarlyStoppingState(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 CheckTrialEarlyStoppingStateRequest const& request) {
+        return child_->CheckTrialEarlyStoppingState(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceLogging::StopTrial(

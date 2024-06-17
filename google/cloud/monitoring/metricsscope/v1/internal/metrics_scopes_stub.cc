@@ -80,6 +80,20 @@ DefaultMetricsScopesStub::AsyncCreateMonitoredProject(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultMetricsScopesStub::CreateMonitoredProject(
+    grpc::ClientContext& context, Options,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateMonitoredProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetricsScopesStub::AsyncDeleteMonitoredProject(
     google::cloud::CompletionQueue& cq,
@@ -98,6 +112,20 @@ DefaultMetricsScopesStub::AsyncDeleteMonitoredProject(
         return grpc_stub_->AsyncDeleteMonitoredProject(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultMetricsScopesStub::DeleteMonitoredProject(
+    grpc::ClientContext& context, Options,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteMonitoredProject(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -49,6 +49,12 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
       google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+          request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
   AggregatedListNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
@@ -64,10 +70,22 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
       google::cloud::cpp::compute::node_groups::v1::
           DeleteNodeGroupRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::node_groups::v1::
+          DeleteNodeGroupRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteNodes(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request) override;
 
@@ -91,6 +109,12 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
       google::cloud::cpp::compute::node_groups::v1::
           InsertNodeGroupRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::node_groups::v1::
+          InsertNodeGroupRequest const& request) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NodeGroupList> ListNodeGroups(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
@@ -111,11 +135,23 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
       google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroup(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncPerformMaintenance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::node_groups::v1::
+          PerformMaintenanceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::
           PerformMaintenanceRequest const& request) override;
 
@@ -133,11 +169,23 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
       google::cloud::cpp::compute::node_groups::v1::
           SetNodeTemplateRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::cloud::cpp::compute::node_groups::v1::
+          SetNodeTemplateRequest const& request) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AsyncSimulateMaintenanceEvent(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::cloud::internal::ImmutableOptions options,
+      google::cloud::cpp::compute::node_groups::v1::
+          SimulateMaintenanceEventRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
       google::cloud::cpp::compute::node_groups::v1::
           SimulateMaintenanceEventRequest const& request) override;
 

@@ -66,6 +66,19 @@ DatabaseAdminLogging::AsyncCreateDatabase(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminLogging::CreateDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CreateDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::spanner::admin::database::v1::CreateDatabaseRequest const&
+                 request) {
+        return child_->CreateDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminLogging::GetDatabase(
     grpc::ClientContext& context, Options const& options,
@@ -99,6 +112,19 @@ DatabaseAdminLogging::AsyncUpdateDatabase(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminLogging::UpdateDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+                 request) {
+        return child_->UpdateDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminLogging::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +144,21 @@ DatabaseAdminLogging::AsyncUpdateDatabaseDdl(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DatabaseAdminLogging::UpdateDatabaseDdl(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+              request) {
+        return child_->UpdateDatabaseDdl(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status DatabaseAdminLogging::DropDatabase(
@@ -199,6 +240,18 @@ DatabaseAdminLogging::AsyncCreateBackup(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminLogging::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CreateBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::spanner::admin::database::v1::CreateBackupRequest const&
+                 request) {
+        return child_->CreateBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminLogging::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
@@ -216,6 +269,18 @@ DatabaseAdminLogging::AsyncCopyBackup(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminLogging::CopyBackup(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::spanner::admin::database::v1::CopyBackupRequest const&
+                 request) {
+        return child_->CopyBackup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -287,6 +352,19 @@ DatabaseAdminLogging::AsyncRestoreDatabase(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation> DatabaseAdminLogging::RestoreDatabase(
+    grpc::ClientContext& context, Options options,
+    google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+                 request) {
+        return child_->RestoreDatabase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>

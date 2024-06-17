@@ -43,6 +43,16 @@ JobsTracingStub::AsyncCreateJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> JobsTracingStub::CreateJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::CreateJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "CreateJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreateJob(context, options, request));
+}
+
 StatusOr<google::cloud::run::v2::Job> JobsTracingStub::GetJob(
     grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetJobRequest const& request) {
@@ -76,6 +86,16 @@ JobsTracingStub::AsyncUpdateJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> JobsTracingStub::UpdateJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::UpdateJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "UpdateJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdateJob(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 JobsTracingStub::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
@@ -89,6 +109,16 @@ JobsTracingStub::AsyncDeleteJob(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> JobsTracingStub::DeleteJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::DeleteJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "DeleteJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeleteJob(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>> JobsTracingStub::AsyncRunJob(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
@@ -99,6 +129,16 @@ future<StatusOr<google::longrunning::Operation>> JobsTracingStub::AsyncRunJob(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRunJob(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> JobsTracingStub::RunJob(
+    grpc::ClientContext& context, Options options,
+    google::cloud::run::v2::RunJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Jobs", "RunJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->RunJob(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> JobsTracingStub::GetIamPolicy(

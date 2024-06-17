@@ -64,6 +64,16 @@ PoliciesTracingStub::AsyncCreatePolicy(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> PoliciesTracingStub::CreatePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::CreatePolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "CreatePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->CreatePolicy(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PoliciesTracingStub::AsyncUpdatePolicy(
     google::cloud::CompletionQueue& cq,
@@ -77,6 +87,16 @@ PoliciesTracingStub::AsyncUpdatePolicy(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::longrunning::Operation> PoliciesTracingStub::UpdatePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::UpdatePolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "UpdatePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UpdatePolicy(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 PoliciesTracingStub::AsyncDeletePolicy(
     google::cloud::CompletionQueue& cq,
@@ -88,6 +108,16 @@ PoliciesTracingStub::AsyncDeletePolicy(
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeletePolicy(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation> PoliciesTracingStub::DeletePolicy(
+    grpc::ClientContext& context, Options options,
+    google::iam::v2::DeletePolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "DeletePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->DeletePolicy(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

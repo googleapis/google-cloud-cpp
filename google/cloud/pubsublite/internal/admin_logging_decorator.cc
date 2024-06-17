@@ -199,6 +199,18 @@ AdminServiceLogging::AsyncSeekSubscription(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> AdminServiceLogging::SeekSubscription(
+    grpc::ClientContext& context, Options options,
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
+                 request) {
+        return child_->SeekSubscription(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceLogging::CreateReservation(
     grpc::ClientContext& context, Options const& options,

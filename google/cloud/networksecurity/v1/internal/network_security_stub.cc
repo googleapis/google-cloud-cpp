@@ -80,6 +80,20 @@ DefaultNetworkSecurityStub::AsyncCreateAuthorizationPolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::CreateAuthorizationPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateAuthorizationPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncUpdateAuthorizationPolicy(
     google::cloud::CompletionQueue& cq,
@@ -100,6 +114,20 @@ DefaultNetworkSecurityStub::AsyncUpdateAuthorizationPolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::UpdateAuthorizationPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateAuthorizationPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncDeleteAuthorizationPolicy(
     google::cloud::CompletionQueue& cq,
@@ -118,6 +146,20 @@ DefaultNetworkSecurityStub::AsyncDeleteAuthorizationPolicy(
         return grpc_stub_->AsyncDeleteAuthorizationPolicy(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::DeleteAuthorizationPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteAuthorizationPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
@@ -166,6 +208,19 @@ DefaultNetworkSecurityStub::AsyncCreateServerTlsPolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::CreateServerTlsPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateServerTlsPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncUpdateServerTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -186,6 +241,19 @@ DefaultNetworkSecurityStub::AsyncUpdateServerTlsPolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::UpdateServerTlsPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateServerTlsPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncDeleteServerTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -204,6 +272,19 @@ DefaultNetworkSecurityStub::AsyncDeleteServerTlsPolicy(
         return grpc_stub_->AsyncDeleteServerTlsPolicy(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::DeleteServerTlsPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteServerTlsPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
@@ -252,6 +333,19 @@ DefaultNetworkSecurityStub::AsyncCreateClientTlsPolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::CreateClientTlsPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->CreateClientTlsPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncUpdateClientTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -272,6 +366,19 @@ DefaultNetworkSecurityStub::AsyncUpdateClientTlsPolicy(
       request, std::move(context));
 }
 
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::UpdateClientTlsPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->UpdateClientTlsPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncDeleteClientTlsPolicy(
     google::cloud::CompletionQueue& cq,
@@ -290,6 +397,19 @@ DefaultNetworkSecurityStub::AsyncDeleteClientTlsPolicy(
         return grpc_stub_->AsyncDeleteClientTlsPolicy(context, request, cq);
       },
       request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNetworkSecurityStub::DeleteClientTlsPolicy(
+    grpc::ClientContext& context, Options,
+    google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status = grpc_stub_->DeleteClientTlsPolicy(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>
