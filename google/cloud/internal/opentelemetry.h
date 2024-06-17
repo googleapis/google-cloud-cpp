@@ -242,7 +242,7 @@ bool TracingEnabled(Options const& options);
 template <typename Rep, typename Period>
 std::function<void(std::chrono::duration<Rep, Period>)> MakeTracedSleeper(
     Options const& options,
-    std::function<void(std::chrono::duration<Rep, Period>)> const& sleeper,
+    std::function<void(std::chrono::duration<Rep, Period>)> sleeper,
     std::string const& name) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (TracingEnabled(options)) {
