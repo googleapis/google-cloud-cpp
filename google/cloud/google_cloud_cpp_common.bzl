@@ -18,6 +18,7 @@
 
 google_cloud_cpp_common_hdrs = [
     "access_token.h",
+    "await_tag.h",
     "backoff_policy.h",
     "common_options.h",
     "credentials.h",

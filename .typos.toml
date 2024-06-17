@@ -61,5 +61,8 @@ extend-ignore-identifiers-re = [
   # This pattern can be found in long hex strings.
   "[0-9]caf[0-9]",
   # This is a GCS dual-region name.
-  "NAM4"
+  "NAM4",
+  # Metadata is mispelled in this proto message name found in
+  # google/cloud/aiplatform/v1/vizier_service.proto
+  "CheckTrialEarlyStoppingStateMetatdata"
 ]

@@ -278,14 +278,32 @@ std::string ConnectionImplGenerator::MethodDeclaration(
 
   if (IsLongrunningOperation(method)) {
     if (IsResponseTypeEmpty(method)) {
+      // TODO(#14344): Remove experimental tag.
       return R"""(
   future<Status>
   $method_name$($request_type$ const& request) override;
+
+  StatusOr<$longrunning_operation_type$>
+  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      $request_type$ const& request) override;
+
+  future<Status>
+  $method_name$(google::cloud::ExperimentalTag,
+      $longrunning_operation_type$ const& operation) override;
 )""";
     }
+    // TODO(#14344): Remove experimental tag.
     return R"""(
   future<StatusOr<$longrunning_deduced_response_type$>>
   $method_name$($request_type$ const& request) override;
+
+  StatusOr<$longrunning_operation_type$>
+  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      $request_type$ const& request) override;
+
+  future<StatusOr<$longrunning_deduced_response_type$>>
+  $method_name$(google::cloud::ExperimentalTag,
+      $longrunning_operation_type$ const& operation) override;
 )""";
   }
 
@@ -430,12 +448,11 @@ $connection_class_name$Impl::$method_name$($request_type$ request) {
 
     // The body of the function is basically a call to
     // `google::cloud::internal::AsyncLongRunningOperation`.
-    return absl::StrCat("\n", return_fragment,
-                        R"""(
+    std::string combined_function = absl::StrCat("\n", return_fragment, R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;)""",
-                        request_id_fragment, R"""(
+                                                 request_id_fragment, R"""(
   auto const idempotent =
       idempotency_policy(*current)->$method_name$(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<$longrunning_deduced_response_type$>(
@@ -462,14 +479,72 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
          cq, std::move(context), std::move(options), request);
     },
     )""",
-                        extract_value_fragment,
-                        R"""(
+                                                 extract_value_fragment, R"""(
     retry_policy(*current), backoff_policy(*current), idempotent,
     polling_policy(*current), __func__))""",
-                        elide_protobuf_empty_fragment,
-                        R"""(;
+                                                 elide_protobuf_empty_fragment,
+                                                 R"""(;
 }
 )""");
+
+    // TODO(#14344): Remove experimental tag.
+    std::string start_function =
+        absl::StrCat("\n", "StatusOr<$longrunning_operation_type$>", R"""(
+$connection_class_name$Impl::$method_name$(google::cloud::ExperimentalTag,
+      google::cloud::NoAwaitTag, $request_type$ const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();)""",
+                     R"""(
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->$method_name$(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          $request_type$ const& request) {
+        return stub_->$method_name$(context, options, request);
+      },
+      *current, request, __func__);
+}
+)""");
+
+    // TODO(#14344): Remove experimental tag.
+    std::string await_function =
+        absl::StrCat("\n", return_fragment, R"""(
+$connection_class_name$Impl::$method_name$(google::cloud::ExperimentalTag,
+      $longrunning_operation_type$ const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();)""",
+                     R"""(
+  if (!operation.metadata().Is<typename $longrunning_metadata_type$>()) {
+    return make_ready_)""",
+                     return_fragment, R"""((
+        internal::InvalidArgumentError("operation does not correspond to $method_name$",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<$longrunning_deduced_response_type$>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    )""",
+                     extract_value_fragment, R"""(
+    polling_policy(*current), __func__))""",
+                     elide_protobuf_empty_fragment, R"""(;
+}
+)""");
+
+    return absl::StrCat(combined_function, "\n", start_function, "\n",
+                        await_function);
   }
 
   auto const* return_fragment = IsResponseTypeEmpty(method)

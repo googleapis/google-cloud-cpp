@@ -143,6 +143,7 @@ Status ConnectionImplRestGenerator::GenerateCc() {
   auto const needs_async_retry_loop = !async_methods().empty();
   std::string lro_extract_include;
   std::string lro_op_include;
+  std::string lro_rest_helper_include;
   if (HasLongrunningMethod()) {
     lro_extract_include = "google/cloud/internal/extract_long_running_result.h";
     if (HasGRPCLongrunningOperation()) {
@@ -151,6 +152,7 @@ Status ConnectionImplRestGenerator::GenerateCc() {
     } else {
       lro_op_include =
           "google/cloud/internal/async_rest_long_running_operation_custom.h";
+      lro_rest_helper_include = "google/cloud/internal/rest_lro_helpers.h";
     }
   }
   CcLocalIncludes(
@@ -159,6 +161,7 @@ Status ConnectionImplRestGenerator::GenerateCc() {
        "google/cloud/credentials.h", "google/cloud/rest_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
        std::move(lro_extract_include), std::move(lro_op_include),
+       std::move(lro_rest_helper_include),
        needs_async_retry_loop ? "google/cloud/internal/async_rest_retry_loop.h"
                               : "",
        "google/cloud/internal/rest_retry_loop.h"});
@@ -205,15 +208,32 @@ std::string ConnectionImplRestGenerator::MethodDeclaration(
 
   if (IsLongrunningOperation(method)) {
     if (IsResponseTypeEmpty(method)) {
-      return R"""(
+      return absl::StrCat(R"""(
   future<Status>
   $method_name$($request_type$ const& request) override;
-)""";
+
+  StatusOr<$longrunning_operation_type$>
+  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      $request_type$ const& request) override;
+
+  future<Status>
+  $method_name$(google::cloud::ExperimentalTag,
+      $longrunning_operation_type$ const& operation) override;
+
+)""");
     }
-    return R"""(
+    return absl::StrCat(R"""(
   future<StatusOr<$longrunning_deduced_response_type$>>
   $method_name$($request_type$ const& request) override;
-)""";
+
+  StatusOr<$longrunning_operation_type$>
+  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      $request_type$ const& request) override;
+
+  future<StatusOr<$longrunning_deduced_response_type$>>
+  $method_name$(google::cloud::ExperimentalTag,
+      $longrunning_operation_type$ const& operation) override;
+)""");
   }
 
   if (IsResponseTypeEmpty(method)) {
@@ -334,16 +354,34 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ request) {
     })""";
   };
 
+  auto await_get_request_set_operation = [&] {
+    if (IsGRPCLongrunningOperation(method)) return "";
+    return R"""(
+    [operation](std::string const&, $longrunning_get_operation_request_type$& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+        $longrunning_await_set_operation_fields$
+    },)""";
+  };
+
+  auto await_cancel_request_set_operation = [&] {
+    if (IsGRPCLongrunningOperation(method)) return "";
+    return R"""(
+    [operation](std::string const&, $longrunning_cancel_operation_request_type$& r) {
+        auto info = google::cloud::rest_internal::ParseComputeOperationInfo(operation.self_link());
+        $longrunning_await_set_operation_fields$
+    })""";
+  };
+
   if (IsLongrunningOperation(method)) {
-    return absl::StrCat(
-        // The return type may be a simple `Status` or the
-        // computed type of the long-running operation
-        IsResponseTypeEmpty(method) ?
-                                    R"""(
-future<Status>)"""
-                                    :
-                                    R"""(
-future<StatusOr<$longrunning_deduced_response_type$>>)""",
+    // The return type may be a simple `Status` or the computed type of the
+    // long-running operation.
+    auto const* return_fragment =
+        IsResponseTypeEmpty(method)
+            ? R"""(future<Status>)"""
+            : R"""(future<StatusOr<$longrunning_deduced_response_type$>>)""";
+
+    std::string combined_function = absl::StrCat(
+        "\n", return_fragment,
         // The body of the function is basically a call to
         // internal::AsyncRestLongRunningOperation, a helper template function
         // in `google::cloud::internal`.
@@ -393,6 +431,87 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) 
         R"""(
 }
 )""");
+
+    // TODO(#14344): Remove experimental tag.
+    std::string start_function =
+        absl::StrCat("\n", "StatusOr<$longrunning_operation_type$>",
+                     R"""(
+$connection_impl_rest_class_name$::$method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, $request_type$ const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->$method_name$(request),
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, $request_type$ const& request) {
+        return stub_->$method_name$(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+)""");
+
+    // Checking for gRPC LRO mismatch is a type check that comes from the proto
+    // definition of the rpc. Checking for a Compute LRO mismatch would require
+    // knowledge of the runtime values of the `operation_type` and `target_link`
+    // fields, at a minimum. As the domain of these values are not defined in
+    // the Discovery Document, attempting to check them could introduce false
+    // positives as the service evolves.
+    auto operation_check_fragment = IsGRPCLongrunningOperation(method)
+                                        ? absl::StrCat(R"""(
+  if (!operation.metadata().Is<typename $longrunning_metadata_type$>()) {
+    return make_ready_)""",
+                                                       return_fragment, R"""((
+        internal::InvalidArgumentError("operation does not correspond to $method_name$",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  })""")
+                                        : "";
+
+    // TODO(#14344): Remove experimental tag.
+    std::string await_function = absl::StrCat(
+        "\n", return_fragment,
+        R"""(
+$connection_impl_rest_class_name$::$method_name$(google::cloud::ExperimentalTag,
+    $longrunning_operation_type$ const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();)""",
+        operation_check_fragment,
+        R"""(
+  return rest_internal::AsyncRestAwaitLongRunningOperation<)""",
+        lro_template_types(), R"""(>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   $longrunning_get_operation_request_type$ const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   $longrunning_cancel_operation_request_type$ const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },)""",
+        extractor(),
+        R"""(
+    polling_policy(*current), __func__)""",
+        is_operation_done(), await_get_request_set_operation(),
+        await_cancel_request_set_operation(), R"""())""",
+        // Finally, the internal::AsyncRestLongRunningOperation helper may
+        // return `future<StatusOr<google::protobuf::Empty>>`, in this case we
+        // add a bit of code to drop the `protobuf::Empty`:
+        IsResponseTypeEmpty(method) ? R"""(
+    .then([](future<StatusOr<google::protobuf::Empty>> f) {
+      return f.get().status();
+    });
+)"""
+                                    : R"""(;
+)""",
+        R"""(
+}
+)""");
+
+    return absl::StrCat(combined_function, "\n", start_function, "\n",
+                        await_function);
   }
 
   return absl::StrCat(IsResponseTypeEmpty(method) ? R"""(
