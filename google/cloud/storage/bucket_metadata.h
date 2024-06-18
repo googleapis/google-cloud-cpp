@@ -25,6 +25,7 @@
 #include "google/cloud/storage/bucket_iam_configuration.h"
 #include "google/cloud/storage/bucket_lifecycle.h"
 #include "google/cloud/storage/bucket_logging.h"
+#include "google/cloud/storage/bucket_object_retention.h"
 #include "google/cloud/storage/bucket_retention_policy.h"
 #include "google/cloud/storage/bucket_rpo.h"
 #include "google/cloud/storage/bucket_soft_delete_policy.h"
@@ -411,6 +412,30 @@ class BucketMetadata {
     return *this;
   }
 
+  /// Returns true if the bucket `object_retention` attribute is present.
+  bool has_object_retention() const { return object_retention_.has_value(); }
+
+  /**
+   * Returns the owner.
+   *
+   * It is undefined behavior to call `owner()` if `has_owner()` is false.
+   */
+  BucketObjectRetention const& object_retention() const {
+    return *object_retention_;
+  }
+
+  /// @note this is only intended for mocking.
+  BucketMetadata& set_object_retention(BucketObjectRetention v) {
+    object_retention_ = std::move(v);
+    return *this;
+  }
+
+  /// @note this is only intended for mocking.
+  BucketMetadata& reset_object_retention() {
+    object_retention_.reset();
+    return *this;
+  }
+
   /// Returns true if the bucket `owner` attribute is present.
   bool has_owner() const { return owner_.has_value(); }
   /**
@@ -648,6 +673,7 @@ class BucketMetadata {
   absl::optional<BucketLogging> logging_;
   std::int64_t metageneration_{0};
   std::string name_;
+  absl::optional<BucketObjectRetention> object_retention_;
   absl::optional<Owner> owner_;
   std::int64_t project_number_ = 0;
   absl::optional<BucketRetentionPolicy> retention_policy_;

@@ -152,6 +152,9 @@ BucketMetadata CreateBucketMetadataForTest() {
       },
       "metageneration": "4",
       "name": "test-bucket",
+      "objectRetention": {
+        "mode": "Enabled"
+      },
       "owner": {
         "entity": "project-owners-123456789",
         "entityId": "test-owner-id-123"
@@ -274,6 +277,10 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(4, actual.metageneration());
   EXPECT_EQ("test-bucket", actual.name());
 
+  // object_retention
+  ASSERT_TRUE(actual.has_object_retention());
+  EXPECT_TRUE(actual.object_retention().enabled);
+
   // owner
   EXPECT_EQ("project-owners-123456789", actual.owner().entity);
   EXPECT_EQ("test-owner-id-123", actual.owner().entity_id);
@@ -391,6 +398,11 @@ TEST(BucketMetadataTest, IOStream) {
 
   // name()
   EXPECT_THAT(actual, HasSubstr("name=test-bucket"));
+
+  // object_retention()
+  EXPECT_THAT(
+      actual,
+      HasSubstr("object_retention=BucketObjectRetention={enabled=true}"));
 
   // project_team()
   EXPECT_THAT(actual, HasSubstr("project-owners-123456789"));
@@ -898,6 +910,24 @@ TEST(BucketMetadataTest, ResetLogging) {
   std::ostringstream os;
   os << copy;
   EXPECT_THAT(os.str(), Not(HasSubstr("logging.")));
+}
+
+TEST(BucketMetadataTest, SetObjectRetention) {
+  auto const expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  copy.set_object_retention(BucketObjectRetention{false});
+  ASSERT_TRUE(copy.has_object_retention());
+  EXPECT_FALSE(copy.object_retention().enabled);
+  EXPECT_NE(expected, copy);
+}
+
+TEST(BucketMetadataTest, ResetObjectRetention) {
+  auto const expected = CreateBucketMetadataForTest();
+  ASSERT_TRUE(expected.has_object_retention());
+  auto copy = expected;
+  copy.reset_object_retention();
+  ASSERT_FALSE(copy.has_object_retention());
+  EXPECT_NE(expected, copy);
 }
 
 /// @test Verify we can change the retention policy in BucketMetadata.

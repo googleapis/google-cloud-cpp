@@ -222,6 +222,14 @@ std::map<std::string, std::string> ParseLabels(nlohmann::json const& json) {
   return value;
 }
 
+Status ParseObjectRetention(BucketMetadata& meta, nlohmann::json const& json) {
+  auto l = json.find("objectRetention");
+  if (l == json.end()) return Status{};
+  auto enabled = l->value("mode", "") == "Enabled";
+  meta.set_object_retention(BucketObjectRetention{enabled});
+  return Status{};
+}
+
 Status ParseOwner(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("owner")) return Status{};
   auto const& o = json["owner"];
@@ -570,6 +578,7 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
         meta.set_project_number(*v);
         return Status{};
       },
+      ParseObjectRetention,
       ParseOwner,
       ParseRetentionPolicy,
       [](BucketMetadata& meta, nlohmann::json const& json) {

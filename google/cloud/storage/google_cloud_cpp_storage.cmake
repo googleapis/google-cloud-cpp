@@ -43,6 +43,8 @@ add_library(
     bucket_logging.h
     bucket_metadata.cc
     bucket_metadata.h
+    bucket_object_retention.cc
+    bucket_object_retention.h
     bucket_retention_policy.cc
     bucket_retention_policy.h
     bucket_rpo.h
@@ -55,6 +57,7 @@ add_library(
     client_options.cc
     client_options.h
     download_options.h
+    enable_object_retention.h
     hash_mismatch_error.h
     hashing_options.cc
     hashing_options.h
@@ -425,6 +428,7 @@ if (BUILD_TESTING)
         bucket_cors_entry_test.cc
         bucket_iam_configuration_test.cc
         bucket_metadata_test.cc
+        bucket_object_retention_test.cc
         bucket_soft_delete_policy_test.cc
         client_bucket_acl_test.cc
         client_bucket_test.cc

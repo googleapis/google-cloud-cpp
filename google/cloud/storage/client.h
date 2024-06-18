@@ -381,9 +381,9 @@ class Client {
    * @param metadata the metadata for the new Bucket.  The `name` field is
    *     ignored in favor of @p bucket_name.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `PredefinedAcl`,
-   *     `PredefinedDefaultObjectAcl`, `Projection`, `UserProject`,
-   *     and `OverrideDefaultProject`.
+   *     Valid types for this operation include `EnableObjectRetention`,
+   *     `PredefinedAcl`, `PredefinedDefaultObjectAcl`, `Projection`,
+   *     `UserProject`, and `OverrideDefaultProject`.
    *
    * @par Idempotency
    * This operation is always idempotent. It fails if the bucket already exists.
@@ -424,9 +424,10 @@ class Client {
    * @param metadata the metadata for the new Bucket.  The `name` field is
    *     ignored in favor of @p bucket_name.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `PredefinedAcl`,
-   *     `PredefinedDefaultObjectAcl`, `Projection`, and `UserProject`.
-   *     `OverrideDefaultProject` is accepted, but has no effect.
+   *     Valid types for this operation include `EnableObjectRetention`,
+   *     `PredefinedAcl`, `PredefinedDefaultObjectAcl`, `Projection`, and
+   *     `UserProject`. The function also accepts `OverrideDefaultProject`, but
+   *     this option has no effect.
    *
    * @par Idempotency
    * This operation is always idempotent. It fails if the bucket already exists.

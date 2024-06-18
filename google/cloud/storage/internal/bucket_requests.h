@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_REQUESTS_H
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/storage/enable_object_retention.h"
 #include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/http_response.h"
@@ -90,9 +91,9 @@ std::ostream& operator<<(std::ostream& os, GetBucketMetadataRequest const& r);
  * Represents a request to the `Buckets: insert` API.
  */
 class CreateBucketRequest
-    : public GenericRequest<CreateBucketRequest, PredefinedAcl,
-                            PredefinedDefaultObjectAcl, Projection, UserProject,
-                            OverrideDefaultProject> {
+    : public GenericRequest<CreateBucketRequest, EnableObjectRetention,
+                            PredefinedAcl, PredefinedDefaultObjectAcl,
+                            Projection, UserProject, OverrideDefaultProject> {
  public:
   CreateBucketRequest() = default;
   explicit CreateBucketRequest(std::string project_id, BucketMetadata metadata)
