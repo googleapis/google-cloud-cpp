@@ -36,6 +36,7 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -151,7 +152,7 @@ TEST(GoldenThingAdminClientTest, CreateDatabase) {
         .set<EndpointOption>("override-me")
         .set<UserAgentProductsOption>({"override-me"});
   });
-  EXPECT_CALL(*mock, CreateDatabase)
+  EXPECT_CALL(*mock, CreateDatabase(_))
       .Times(2)
       .WillRepeatedly(
           [expected_instance](
@@ -257,7 +258,7 @@ TEST(GoldenThingAdminClientTest, UpdateDatabase) {
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
     return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
-  EXPECT_CALL(*mock, UpdateDatabaseDdl)
+  EXPECT_CALL(*mock, UpdateDatabaseDdl(_))
       .Times(2)
       .WillRepeatedly([expected_database](
                           ::google::test::admin::database::v1::
@@ -669,7 +670,7 @@ TEST(GoldenThingAdminClientTest, CreateBackup) {
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
     return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
-  EXPECT_CALL(*mock, CreateBackup)
+  EXPECT_CALL(*mock, CreateBackup(_))
       .Times(2)
       .WillRepeatedly(
           [expected_database, expire_time, backup_id, expected_backup_name](
@@ -875,7 +876,7 @@ TEST(GoldenThingAdminClientTest, RestoreDatabase) {
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
     return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
-  EXPECT_CALL(*mock, RestoreDatabase)
+  EXPECT_CALL(*mock, RestoreDatabase(_))
       .Times(2)
       .WillRepeatedly([expected_backup_name, expected_database,
                        expected_instance](::google::test::admin::database::v1::
