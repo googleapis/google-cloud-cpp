@@ -27,8 +27,8 @@ google_cloud_cpp_add_common_options(storage_examples_common)
 # We just know that these tests need to be run against production.
 set(storage_examples_production
     # cmake-format: sort
-    storage_policy_doc_samples.cc storage_signed_url_v2_samples.cc
-    storage_signed_url_v4_samples.cc)
+    storage_policy_doc_samples.cc
+    storage_signed_url_v2_samples.cc storage_signed_url_v4_samples.cc)
 
 set(storage_examples
     # cmake-format: sort
@@ -37,6 +37,7 @@ set(storage_examples
     storage_bucket_cors_samples.cc
     storage_bucket_default_kms_key_samples.cc
     storage_bucket_iam_samples.cc
+    storage_bucket_object_retention_samples.cc 
     storage_bucket_requester_pays_samples.cc
     storage_bucket_samples.cc
     storage_bucket_soft_delete_samples.cc

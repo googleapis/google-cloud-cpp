@@ -102,6 +102,7 @@ bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
          && lhs.logging_ == rhs.logging_                                    //
          && lhs.metageneration_ == rhs.metageneration_                      //
          && lhs.name_ == rhs.name_                                          //
+         && lhs.object_retention_ == rhs.object_retention_                  //
          && lhs.owner_ == rhs.owner_                                        //
          && lhs.project_number_ == rhs.project_number_                      //
          && lhs.retention_policy_ == rhs.retention_policy_                  //
@@ -182,6 +183,9 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
 
   os << ", metageneration=" << rhs.metageneration() << ", name=" << rhs.name();
 
+  if (rhs.has_object_retention()) {
+    os << ", object_retention=" << rhs.object_retention();
+  }
   if (rhs.has_owner()) {
     os << ", owner.entity=" << rhs.owner().entity
        << ", owner.entity_id=" << rhs.owner().entity_id;
