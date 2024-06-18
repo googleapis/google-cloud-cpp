@@ -21,7 +21,6 @@ GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
-    "storagecontrol",
 ]
 
 GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
@@ -213,6 +212,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "speech",
     "sql",
     "storage",
+    "storagecontrol",
     "storageinsights",
     "storagetransfer",
     "support",
