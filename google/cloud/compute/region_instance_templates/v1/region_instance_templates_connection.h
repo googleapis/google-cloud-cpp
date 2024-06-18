@@ -22,7 +22,9 @@
 
 #include "google/cloud/compute/region_instance_templates/v1/internal/region_instance_templates_retry_traits.h"
 #include "google/cloud/compute/region_instance_templates/v1/region_instance_templates_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -200,6 +202,17 @@ class RegionInstanceTemplatesConnection {
       google::cloud::cpp::compute::region_instance_templates::v1::
           DeleteInstanceTemplateRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_templates::v1::
+          DeleteInstanceTemplateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstanceTemplate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
   GetInstanceTemplate(google::cloud::cpp::compute::region_instance_templates::
                           v1::GetInstanceTemplateRequest const& request);
@@ -208,6 +221,17 @@ class RegionInstanceTemplatesConnection {
   InsertInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
           InsertInstanceTemplateRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_templates::v1::
+          InsertInstanceTemplateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInstanceTemplate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
   ListRegionInstanceTemplates(

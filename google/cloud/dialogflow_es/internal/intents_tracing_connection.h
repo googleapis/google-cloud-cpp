@@ -61,9 +61,27 @@ class IntentsTracingConnection : public dialogflow_es::IntentsConnection {
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchUpdateIntents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
+  BatchUpdateIntents(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteIntents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<dialogflow_es::IntentsConnection> child_;

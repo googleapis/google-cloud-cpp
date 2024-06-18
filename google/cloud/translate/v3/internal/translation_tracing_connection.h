@@ -63,15 +63,44 @@ class TranslationServiceTracingConnection
       google::cloud::translation::v3::BatchTranslateTextRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchTranslateText(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateTextRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
+  BatchTranslateText(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
+
   future<
       StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
   BatchTranslateDocument(
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> BatchTranslateDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+  BatchTranslateDocument(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
       google::cloud::translation::v3::CreateGlossaryRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateGlossary(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::CreateGlossaryRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
       google::cloud::translation::v3::ListGlossariesRequest request) override;
@@ -83,6 +112,15 @@ class TranslationServiceTracingConnection
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
   DeleteGlossary(google::cloud::translation::v3::DeleteGlossaryRequest const&
                      request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGlossary(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::DeleteGlossaryRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
+  DeleteGlossary(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
   CreateAdaptiveMtDataset(

@@ -46,6 +46,22 @@ VpcAccessServiceConnection::CreateConnector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceConnection::CreateConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
+VpcAccessServiceConnection::CreateConnector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vpcaccess::v1::Connector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceConnection::GetConnector(
     google::cloud::vpcaccess::v1::GetConnectorRequest const&) {
@@ -63,6 +79,22 @@ VpcAccessServiceConnection::ListConnectors(
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceConnection::DeleteConnector(
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceConnection::DeleteConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
+VpcAccessServiceConnection::DeleteConnector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

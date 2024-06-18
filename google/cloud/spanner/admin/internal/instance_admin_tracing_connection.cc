@@ -66,6 +66,31 @@ InstanceAdminTracingConnection::CreateInstanceConfig(
                            child_->CreateInstanceConfig(request));
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::CreateInstanceConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstanceConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateInstanceConfig(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminTracingConnection::CreateInstanceConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstanceConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateInstanceConfig(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminTracingConnection::UpdateInstanceConfig(
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
@@ -75,6 +100,31 @@ InstanceAdminTracingConnection::UpdateInstanceConfig(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateInstanceConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::UpdateInstanceConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstanceConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateInstanceConfig(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminTracingConnection::UpdateInstanceConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstanceConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateInstanceConfig(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 Status InstanceAdminTracingConnection::DeleteInstanceConfig(
@@ -142,6 +192,31 @@ InstanceAdminTracingConnection::CreateInstance(
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::CreateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+InstanceAdminTracingConnection::CreateInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateInstance(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminTracingConnection::UpdateInstance(
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
@@ -150,6 +225,31 @@ InstanceAdminTracingConnection::UpdateInstance(
       "spanner_admin::InstanceAdminConnection::UpdateInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::UpdateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+InstanceAdminTracingConnection::UpdateInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateInstance(google::cloud::ExperimentalTag{}, operation));
 }
 
 Status InstanceAdminTracingConnection::DeleteInstance(
@@ -207,6 +307,31 @@ InstanceAdminTracingConnection::CreateInstancePartition(
                            child_->CreateInstancePartition(request));
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::CreateInstancePartition(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstancePartition");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateInstancePartition(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminTracingConnection::CreateInstancePartition(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstancePartition");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateInstancePartition(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 Status InstanceAdminTracingConnection::DeleteInstancePartition(
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
         request) {
@@ -225,6 +350,31 @@ InstanceAdminTracingConnection::UpdateInstancePartition(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateInstancePartition(request));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::UpdateInstancePartition(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstancePartition");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateInstancePartition(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminTracingConnection::UpdateInstancePartition(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstancePartition");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateInstancePartition(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::longrunning::Operation>

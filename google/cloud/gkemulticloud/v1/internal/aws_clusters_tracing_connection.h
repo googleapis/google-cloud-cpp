@@ -45,10 +45,28 @@ class AwsClustersTracingConnection
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAwsCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  CreateAwsCluster(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateAwsCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  UpdateAwsCluster(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
       google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request)
@@ -62,6 +80,15 @@ class AwsClustersTracingConnection
   DeleteAwsCluster(
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteAwsCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsCluster(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
@@ -79,15 +106,43 @@ class AwsClustersTracingConnection
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAwsNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  CreateAwsNodePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  UpdateAwsNodePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request)
@@ -101,6 +156,15 @@ class AwsClustersTracingConnection
   DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsNodePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
   GetAwsOpenIdConfig(

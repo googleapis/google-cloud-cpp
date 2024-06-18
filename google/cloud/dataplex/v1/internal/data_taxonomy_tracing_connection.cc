@@ -43,6 +43,30 @@ DataTaxonomyServiceTracingConnection::CreateDataTaxonomy(
                            child_->CreateDataTaxonomy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingConnection::CreateDataTaxonomy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::CreateDataTaxonomy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateDataTaxonomy(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
+DataTaxonomyServiceTracingConnection::CreateDataTaxonomy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::CreateDataTaxonomy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateDataTaxonomy(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceTracingConnection::UpdateDataTaxonomy(
     google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
@@ -53,6 +77,30 @@ DataTaxonomyServiceTracingConnection::UpdateDataTaxonomy(
                            child_->UpdateDataTaxonomy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingConnection::UpdateDataTaxonomy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataTaxonomy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateDataTaxonomy(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
+DataTaxonomyServiceTracingConnection::UpdateDataTaxonomy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataTaxonomy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateDataTaxonomy(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceTracingConnection::DeleteDataTaxonomy(
     google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
@@ -61,6 +109,30 @@ DataTaxonomyServiceTracingConnection::DeleteDataTaxonomy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteDataTaxonomy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingConnection::DeleteDataTaxonomy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataTaxonomy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDataTaxonomy(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataTaxonomyServiceTracingConnection::DeleteDataTaxonomy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataTaxonomy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteDataTaxonomy(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::DataTaxonomy>
@@ -95,6 +167,31 @@ DataTaxonomyServiceTracingConnection::CreateDataAttributeBinding(
                            child_->CreateDataAttributeBinding(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingConnection::CreateDataAttributeBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttributeBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateDataAttributeBinding(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
+DataTaxonomyServiceTracingConnection::CreateDataAttributeBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttributeBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDataAttributeBinding(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceTracingConnection::UpdateDataAttributeBinding(
     google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
@@ -106,6 +203,31 @@ DataTaxonomyServiceTracingConnection::UpdateDataAttributeBinding(
                            child_->UpdateDataAttributeBinding(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingConnection::UpdateDataAttributeBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttributeBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateDataAttributeBinding(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
+DataTaxonomyServiceTracingConnection::UpdateDataAttributeBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttributeBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDataAttributeBinding(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceTracingConnection::DeleteDataAttributeBinding(
     google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
@@ -115,6 +237,31 @@ DataTaxonomyServiceTracingConnection::DeleteDataAttributeBinding(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteDataAttributeBinding(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingConnection::DeleteDataAttributeBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttributeBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteDataAttributeBinding(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataTaxonomyServiceTracingConnection::DeleteDataAttributeBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttributeBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDataAttributeBinding(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
@@ -149,6 +296,30 @@ DataTaxonomyServiceTracingConnection::CreateDataAttribute(
                            child_->CreateDataAttribute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingConnection::CreateDataAttribute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttribute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateDataAttribute(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
+DataTaxonomyServiceTracingConnection::CreateDataAttribute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttribute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateDataAttribute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceTracingConnection::UpdateDataAttribute(
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
@@ -159,6 +330,30 @@ DataTaxonomyServiceTracingConnection::UpdateDataAttribute(
                            child_->UpdateDataAttribute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingConnection::UpdateDataAttribute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttribute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateDataAttribute(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
+DataTaxonomyServiceTracingConnection::UpdateDataAttribute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttribute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateDataAttribute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceTracingConnection::DeleteDataAttribute(
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
@@ -167,6 +362,30 @@ DataTaxonomyServiceTracingConnection::DeleteDataAttribute(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteDataAttribute(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataTaxonomyServiceTracingConnection::DeleteDataAttribute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttribute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDataAttribute(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataTaxonomyServiceTracingConnection::DeleteDataAttribute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttribute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteDataAttribute(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::DataAttribute>

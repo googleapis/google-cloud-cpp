@@ -73,6 +73,29 @@ TagKeysTracingConnection::CreateTagKey(
   return internal::EndSpan(std::move(span), child_->CreateTagKey(request));
 }
 
+StatusOr<google::longrunning::Operation> TagKeysTracingConnection::CreateTagKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
+  auto span =
+      internal::MakeSpan("resourcemanager_v3::TagKeysConnection::CreateTagKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateTagKey(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+TagKeysTracingConnection::CreateTagKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("resourcemanager_v3::TagKeysConnection::CreateTagKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateTagKey(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysTracingConnection::UpdateTagKey(
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
@@ -82,6 +105,29 @@ TagKeysTracingConnection::UpdateTagKey(
   return internal::EndSpan(std::move(span), child_->UpdateTagKey(request));
 }
 
+StatusOr<google::longrunning::Operation> TagKeysTracingConnection::UpdateTagKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
+  auto span =
+      internal::MakeSpan("resourcemanager_v3::TagKeysConnection::UpdateTagKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTagKey(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+TagKeysTracingConnection::UpdateTagKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("resourcemanager_v3::TagKeysConnection::UpdateTagKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateTagKey(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysTracingConnection::DeleteTagKey(
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
@@ -89,6 +135,29 @@ TagKeysTracingConnection::DeleteTagKey(
       internal::MakeSpan("resourcemanager_v3::TagKeysConnection::DeleteTagKey");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTagKey(request));
+}
+
+StatusOr<google::longrunning::Operation> TagKeysTracingConnection::DeleteTagKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
+  auto span =
+      internal::MakeSpan("resourcemanager_v3::TagKeysConnection::DeleteTagKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteTagKey(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+TagKeysTracingConnection::DeleteTagKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("resourcemanager_v3::TagKeysConnection::DeleteTagKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteTagKey(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysTracingConnection::GetIamPolicy(

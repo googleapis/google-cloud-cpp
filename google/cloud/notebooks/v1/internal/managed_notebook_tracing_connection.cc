@@ -63,6 +63,30 @@ ManagedNotebookServiceTracingConnection::CreateRuntime(
   return internal::EndSpan(std::move(span), child_->CreateRuntime(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::CreateRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::CreateRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateRuntime(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceTracingConnection::CreateRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::CreateRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateRuntime(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::UpdateRuntime(
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
@@ -70,6 +94,30 @@ ManagedNotebookServiceTracingConnection::UpdateRuntime(
       "notebooks_v1::ManagedNotebookServiceConnection::UpdateRuntime");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateRuntime(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::UpdateRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::UpdateRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateRuntime(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceTracingConnection::UpdateRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::UpdateRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateRuntime(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -81,6 +129,30 @@ ManagedNotebookServiceTracingConnection::DeleteRuntime(
   return internal::EndSpan(std::move(span), child_->DeleteRuntime(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::DeleteRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::DeleteRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteRuntime(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
+ManagedNotebookServiceTracingConnection::DeleteRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::DeleteRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteRuntime(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::StartRuntime(
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
@@ -88,6 +160,30 @@ ManagedNotebookServiceTracingConnection::StartRuntime(
       "notebooks_v1::ManagedNotebookServiceConnection::StartRuntime");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StartRuntime(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::StartRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::StartRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->StartRuntime(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceTracingConnection::StartRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::StartRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->StartRuntime(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -99,6 +195,30 @@ ManagedNotebookServiceTracingConnection::StopRuntime(
   return internal::EndSpan(std::move(span), child_->StopRuntime(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::StopRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::StopRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->StopRuntime(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceTracingConnection::StopRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::StopRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->StopRuntime(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::SwitchRuntime(
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
@@ -106,6 +226,30 @@ ManagedNotebookServiceTracingConnection::SwitchRuntime(
       "notebooks_v1::ManagedNotebookServiceConnection::SwitchRuntime");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SwitchRuntime(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::SwitchRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::SwitchRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SwitchRuntime(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceTracingConnection::SwitchRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::SwitchRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SwitchRuntime(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -117,6 +261,30 @@ ManagedNotebookServiceTracingConnection::ResetRuntime(
   return internal::EndSpan(std::move(span), child_->ResetRuntime(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::ResetRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::ResetRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ResetRuntime(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceTracingConnection::ResetRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::ResetRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ResetRuntime(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::UpgradeRuntime(
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
@@ -124,6 +292,30 @@ ManagedNotebookServiceTracingConnection::UpgradeRuntime(
       "notebooks_v1::ManagedNotebookServiceConnection::UpgradeRuntime");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpgradeRuntime(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::UpgradeRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::UpgradeRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpgradeRuntime(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceTracingConnection::UpgradeRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::UpgradeRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpgradeRuntime(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -134,6 +326,30 @@ ManagedNotebookServiceTracingConnection::ReportRuntimeEvent(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ReportRuntimeEvent(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::ReportRuntimeEvent(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::ReportRuntimeEvent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ReportRuntimeEvent(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceTracingConnection::ReportRuntimeEvent(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::ReportRuntimeEvent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ReportRuntimeEvent(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
@@ -154,6 +370,30 @@ ManagedNotebookServiceTracingConnection::DiagnoseRuntime(
       "notebooks_v1::ManagedNotebookServiceConnection::DiagnoseRuntime");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DiagnoseRuntime(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceTracingConnection::DiagnoseRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::DiagnoseRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DiagnoseRuntime(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceTracingConnection::DiagnoseRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::DiagnoseRuntime");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DiagnoseRuntime(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

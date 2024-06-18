@@ -46,9 +46,39 @@ TagHoldsConnection::CreateTagHold(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsConnection::CreateTagHold(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
+TagHoldsConnection::CreateTagHold(google::cloud::ExperimentalTag,
+                                  google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::TagHold>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
 TagHoldsConnection::DeleteTagHold(
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> TagHoldsConnection::DeleteTagHold(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
+TagHoldsConnection::DeleteTagHold(google::cloud::ExperimentalTag,
+                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -58,17 +58,52 @@ class CloudShellServiceConnectionImpl
   StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const&
                        request) override;
 
+  StatusOr<google::longrunning::Operation> StartEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::shell::v1::StartEnvironmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
+  StartEnvironment(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
   AuthorizeEnvironment(
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
+  AuthorizeEnvironment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> AddPublicKey(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
   RemovePublicKey(
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RemovePublicKey(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
+  RemovePublicKey(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

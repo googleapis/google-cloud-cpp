@@ -116,6 +116,59 @@ CloudShellServiceConnectionImpl::StartEnvironment(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudShellServiceConnectionImpl::StartEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartEnvironment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::shell::v1::StartEnvironmentRequest const& request) {
+        return stub_->StartEnvironment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
+CloudShellServiceConnectionImpl::StartEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::shell::v1::StartEnvironmentMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StartEnvironment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::shell::v1::StartEnvironmentResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::shell::v1::StartEnvironmentResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceConnectionImpl::AuthorizeEnvironment(
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
@@ -153,6 +206,61 @@ CloudShellServiceConnectionImpl::AuthorizeEnvironment(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::shell::v1::AuthorizeEnvironmentResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudShellServiceConnectionImpl::AuthorizeEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AuthorizeEnvironment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::shell::v1::AuthorizeEnvironmentRequest const&
+                 request) {
+        return stub_->AuthorizeEnvironment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
+CloudShellServiceConnectionImpl::AuthorizeEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::shell::v1::
+                   AuthorizeEnvironmentMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AuthorizeEnvironment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::shell::v1::AuthorizeEnvironmentResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::shell::v1::AuthorizeEnvironmentResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -195,6 +303,59 @@ CloudShellServiceConnectionImpl::AddPublicKey(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudShellServiceConnectionImpl::AddPublicKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddPublicKey(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::shell::v1::AddPublicKeyRequest const& request) {
+        return stub_->AddPublicKey(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
+CloudShellServiceConnectionImpl::AddPublicKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::shell::v1::AddPublicKeyMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AddPublicKey",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::shell::v1::AddPublicKeyResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::shell::v1::AddPublicKeyResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceConnectionImpl::RemovePublicKey(
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
@@ -231,6 +392,59 @@ CloudShellServiceConnectionImpl::RemovePublicKey(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::shell::v1::RemovePublicKeyResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudShellServiceConnectionImpl::RemovePublicKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemovePublicKey(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
+        return stub_->RemovePublicKey(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
+CloudShellServiceConnectionImpl::RemovePublicKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::shell::v1::RemovePublicKeyMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RemovePublicKey",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::shell::v1::RemovePublicKeyResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::shell::v1::RemovePublicKeyResponse>,
       polling_policy(*current), __func__);
 }
 

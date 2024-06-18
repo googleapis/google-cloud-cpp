@@ -42,6 +42,30 @@ BigtableInstanceAdminTracingConnection::CreateInstance(
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::CreateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CreateInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Instance>>
+BigtableInstanceAdminTracingConnection::CreateInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateInstance(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminTracingConnection::GetInstance(
     google::bigtable::admin::v2::GetInstanceRequest const& request) {
@@ -79,6 +103,30 @@ BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
                            child_->PartialUpdateInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->PartialUpdateInstance(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Instance>>
+BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PartialUpdateInstance(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 Status BigtableInstanceAdminTracingConnection::DeleteInstance(
     google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
@@ -94,6 +142,30 @@ BigtableInstanceAdminTracingConnection::CreateCluster(
       "bigtable_admin::BigtableInstanceAdminConnection::CreateCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+BigtableInstanceAdminTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateCluster(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
@@ -123,6 +195,30 @@ BigtableInstanceAdminTracingConnection::UpdateCluster(
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::Cluster const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+BigtableInstanceAdminTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
@@ -131,6 +227,30 @@ BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PartialUpdateCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->PartialUpdateCluster(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Cluster>>
+BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PartialUpdateCluster(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 Status BigtableInstanceAdminTracingConnection::DeleteCluster(
@@ -177,6 +297,30 @@ BigtableInstanceAdminTracingConnection::UpdateAppProfile(
       "bigtable_admin::BigtableInstanceAdminConnection::UpdateAppProfile");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAppProfile(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableInstanceAdminTracingConnection::UpdateAppProfile(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateAppProfile");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateAppProfile(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::AppProfile>>
+BigtableInstanceAdminTracingConnection::UpdateAppProfile(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateAppProfile");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateAppProfile(google::cloud::ExperimentalTag{}, operation));
 }
 
 Status BigtableInstanceAdminTracingConnection::DeleteAppProfile(

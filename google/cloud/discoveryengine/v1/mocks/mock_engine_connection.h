@@ -54,10 +54,36 @@ class MockEngineServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEngine,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::discoveryengine::v1::CreateEngineRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Engine>>,
+              CreateEngine,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>,
       DeleteEngine,
       (google::cloud::discoveryengine::v1::DeleteEngineRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteEngine,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>,
+      DeleteEngine,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

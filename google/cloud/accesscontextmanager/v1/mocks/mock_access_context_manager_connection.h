@@ -69,6 +69,20 @@ class MockAccessContextManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAccessPolicy,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::identity::accesscontextmanager::v1::AccessPolicy const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
+      CreateAccessPolicy,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
       UpdateAccessPolicy,
@@ -76,11 +90,38 @@ class MockAccessContextManagerConnection
            UpdateAccessPolicyRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAccessPolicy,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   UpdateAccessPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
+      UpdateAccessPolicy,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   AccessContextManagerOperationMetadata>>,
               DeleteAccessPolicy,
               (google::identity::accesscontextmanager::v1::
                    DeleteAccessPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAccessPolicy,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   DeleteAccessPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
+                                  AccessContextManagerOperationMetadata>>,
+              DeleteAccessPolicy,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -104,11 +145,37 @@ class MockAccessContextManagerConnection
            CreateAccessLevelRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAccessLevel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   CreateAccessLevelRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>,
+      CreateAccessLevel,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>,
       UpdateAccessLevel,
       (google::identity::accesscontextmanager::v1::
            UpdateAccessLevelRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAccessLevel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   UpdateAccessLevelRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>,
+      UpdateAccessLevel,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -118,11 +185,37 @@ class MockAccessContextManagerConnection
                    DeleteAccessLevelRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAccessLevel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   DeleteAccessLevelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
+                                  AccessContextManagerOperationMetadata>>,
+              DeleteAccessLevel,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   ReplaceAccessLevelsResponse>>,
               ReplaceAccessLevels,
               (google::identity::accesscontextmanager::v1::
                    ReplaceAccessLevelsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ReplaceAccessLevels,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   ReplaceAccessLevelsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
+                                  ReplaceAccessLevelsResponse>>,
+              ReplaceAccessLevels,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -148,12 +241,40 @@ class MockAccessContextManagerConnection
            CreateServicePerimeterRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateServicePerimeter,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   CreateServicePerimeterRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::identity::accesscontextmanager::v1::ServicePerimeter>>,
+      CreateServicePerimeter,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::ServicePerimeter>>,
       UpdateServicePerimeter,
       (google::identity::accesscontextmanager::v1::
            UpdateServicePerimeterRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateServicePerimeter,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   UpdateServicePerimeterRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::identity::accesscontextmanager::v1::ServicePerimeter>>,
+      UpdateServicePerimeter,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -163,6 +284,19 @@ class MockAccessContextManagerConnection
                    DeleteServicePerimeterRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteServicePerimeter,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   DeleteServicePerimeterRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
+                                  AccessContextManagerOperationMetadata>>,
+              DeleteServicePerimeter,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   ReplaceServicePerimetersResponse>>,
               ReplaceServicePerimeters,
@@ -170,11 +304,38 @@ class MockAccessContextManagerConnection
                    ReplaceServicePerimetersRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              ReplaceServicePerimeters,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   ReplaceServicePerimetersRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
+                                  ReplaceServicePerimetersResponse>>,
+              ReplaceServicePerimeters,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   CommitServicePerimetersResponse>>,
               CommitServicePerimeters,
               (google::identity::accesscontextmanager::v1::
                    CommitServicePerimetersRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CommitServicePerimeters,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   CommitServicePerimetersRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
+                                  CommitServicePerimetersResponse>>,
+              CommitServicePerimeters,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -201,6 +362,21 @@ class MockAccessContextManagerConnection
            CreateGcpUserAccessBindingRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              CreateGcpUserAccessBinding,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   CreateGcpUserAccessBindingRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>,
+      CreateGcpUserAccessBinding,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>,
@@ -209,11 +385,40 @@ class MockAccessContextManagerConnection
            UpdateGcpUserAccessBindingRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              UpdateGcpUserAccessBinding,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   UpdateGcpUserAccessBindingRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>,
+      UpdateGcpUserAccessBinding,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
                                   GcpUserAccessBindingOperationMetadata>>,
               DeleteGcpUserAccessBinding,
               (google::identity::accesscontextmanager::v1::
                    DeleteGcpUserAccessBindingRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              DeleteGcpUserAccessBinding,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::identity::accesscontextmanager::v1::
+                   DeleteGcpUserAccessBindingRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::identity::accesscontextmanager::v1::
+                                  GcpUserAccessBindingOperationMetadata>>,
+              DeleteGcpUserAccessBinding,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,

@@ -45,6 +45,15 @@ class RepositoryManagerTracingConnection
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
+      override;
+
+  future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
+  CreateConnection(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
       google::devtools::cloudbuild::v2::GetConnectionRequest const& request)
       override;
@@ -58,21 +67,59 @@ class RepositoryManagerTracingConnection
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
+      override;
+
+  future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
+  UpdateConnection(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteConnection(
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
+      override;
+
+  future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
+  DeleteConnection(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
   CreateRepository(
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
+      override;
+
+  future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
+  CreateRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
   BatchCreateRepositories(
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> BatchCreateRepositories(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+  BatchCreateRepositories(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
       google::devtools::cloudbuild::v2::GetRepositoryRequest const& request)
@@ -86,6 +133,15 @@ class RepositoryManagerTracingConnection
   DeleteRepository(
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
+      override;
+
+  future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
+  DeleteRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
   FetchReadWriteToken(

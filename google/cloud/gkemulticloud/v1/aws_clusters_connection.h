@@ -21,7 +21,9 @@
 
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection_idempotency_policy.h"
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -189,9 +191,25 @@ class AwsClustersConnection {
   CreateAwsCluster(
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateAwsCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  CreateAwsCluster(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAwsCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  UpdateAwsCluster(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
       google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request);
@@ -203,6 +221,14 @@ class AwsClustersConnection {
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAwsCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsCluster(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
@@ -221,15 +247,42 @@ class AwsClustersConnection {
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateAwsNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  CreateAwsNodePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  UpdateAwsNodePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(google::cloud::ExperimentalTag,
+                            google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
   GetAwsNodePool(
@@ -243,6 +296,15 @@ class AwsClustersConnection {
   DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsNodePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
   GetAwsOpenIdConfig(

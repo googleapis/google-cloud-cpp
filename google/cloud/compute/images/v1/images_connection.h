@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/images/v1/images_connection_idempotency_policy.h"
 #include "google/cloud/compute/images/v1/internal/images_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -184,9 +186,26 @@ class ImagesConnection {
   DeleteImage(google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
                   request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteImage(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteImage(google::cloud::ExperimentalTag,
+              google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   Deprecate(
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Deprecate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::DeprecateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  Deprecate(google::cloud::ExperimentalTag,
+            google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
       google::cloud::cpp::compute::images::v1::GetImageRequest const& request);
@@ -203,12 +222,30 @@ class ImagesConnection {
   InsertImage(google::cloud::cpp::compute::images::v1::InsertImageRequest const&
                   request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertImage(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertImage(google::cloud::ExperimentalTag,
+              google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::Image> ListImages(
       google::cloud::cpp::compute::images::v1::ListImagesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchImage(google::cloud::cpp::compute::images::v1::PatchImageRequest const&
                  request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchImage(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::PatchImageRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchImage(google::cloud::ExperimentalTag,
+             google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
@@ -217,6 +254,14 @@ class ImagesConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(
       google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::ExperimentalTag,
+            google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(

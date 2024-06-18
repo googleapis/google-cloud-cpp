@@ -40,6 +40,26 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::CreateJob(
   return internal::EndSpan(std::move(span), child_->CreateJob(request));
 }
 
+StatusOr<google::longrunning::Operation> JobsTracingConnection::CreateJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::CreateJobRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::CreateJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateJob(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::CreateJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::CreateJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateJob(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::run::v2::Job> JobsTracingConnection::GetJob(
     google::cloud::run::v2::GetJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::GetJob");
@@ -63,11 +83,51 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::UpdateJob(
   return internal::EndSpan(std::move(span), child_->UpdateJob(request));
 }
 
+StatusOr<google::longrunning::Operation> JobsTracingConnection::UpdateJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::UpdateJobRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::UpdateJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateJob(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::UpdateJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::UpdateJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateJob(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::DeleteJob(
     google::cloud::run::v2::DeleteJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::DeleteJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteJob(request));
+}
+
+StatusOr<google::longrunning::Operation> JobsTracingConnection::DeleteJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::DeleteJobRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::DeleteJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteJob(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Job>> JobsTracingConnection::DeleteJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::DeleteJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteJob(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>>
@@ -76,6 +136,26 @@ JobsTracingConnection::RunJob(
   auto span = internal::MakeSpan("run_v2::JobsConnection::RunJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RunJob(request));
+}
+
+StatusOr<google::longrunning::Operation> JobsTracingConnection::RunJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::RunJobRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::RunJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->RunJob(google::cloud::ExperimentalTag{},
+                            google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Execution>>
+JobsTracingConnection::RunJob(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("run_v2::JobsConnection::RunJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->RunJob(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::iam::v1::Policy> JobsTracingConnection::GetIamPolicy(

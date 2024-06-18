@@ -21,7 +21,9 @@
 
 #include "google/cloud/aiplatform/v1/internal/migration_retry_traits.h"
 #include "google/cloud/aiplatform/v1/migration_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -196,6 +198,16 @@ class MigrationServiceConnection {
   BatchMigrateResources(
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchMigrateResources(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
+  BatchMigrateResources(google::cloud::ExperimentalTag,
+                        google::longrunning::Operation const& operation);
 };
 
 /**

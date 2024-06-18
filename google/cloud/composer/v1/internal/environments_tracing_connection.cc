@@ -44,6 +44,32 @@ EnvironmentsTracingConnection::CreateEnvironment(
   return internal::EndSpan(std::move(span), child_->CreateEnvironment(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::CreateEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::CreateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateEnvironment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsTracingConnection::CreateEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::CreateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateEnvironment(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsTracingConnection::GetEnvironment(
     google::cloud::orchestration::airflow::service::v1::
@@ -78,6 +104,32 @@ EnvironmentsTracingConnection::UpdateEnvironment(
   return internal::EndSpan(std::move(span), child_->UpdateEnvironment(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::UpdateEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::UpdateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateEnvironment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<
+    StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+EnvironmentsTracingConnection::UpdateEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::UpdateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateEnvironment(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
 EnvironmentsTracingConnection::DeleteEnvironment(
@@ -87,6 +139,32 @@ EnvironmentsTracingConnection::DeleteEnvironment(
       "composer_v1::EnvironmentsConnection::DeleteEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEnvironment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::DeleteEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::DeleteEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteEnvironment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+EnvironmentsTracingConnection::DeleteEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::DeleteEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteEnvironment(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -263,6 +341,32 @@ EnvironmentsTracingConnection::SaveSnapshot(
   return internal::EndSpan(std::move(span), child_->SaveSnapshot(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::SaveSnapshot(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request) {
+  auto span =
+      internal::MakeSpan("composer_v1::EnvironmentsConnection::SaveSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SaveSnapshot(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsTracingConnection::SaveSnapshot(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("composer_v1::EnvironmentsConnection::SaveSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SaveSnapshot(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
 EnvironmentsTracingConnection::LoadSnapshot(
@@ -274,6 +378,32 @@ EnvironmentsTracingConnection::LoadSnapshot(
   return internal::EndSpan(std::move(span), child_->LoadSnapshot(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::LoadSnapshot(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request) {
+  auto span =
+      internal::MakeSpan("composer_v1::EnvironmentsConnection::LoadSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->LoadSnapshot(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsTracingConnection::LoadSnapshot(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("composer_v1::EnvironmentsConnection::LoadSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->LoadSnapshot(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                     DatabaseFailoverResponse>>
 EnvironmentsTracingConnection::DatabaseFailover(
@@ -283,6 +413,32 @@ EnvironmentsTracingConnection::DatabaseFailover(
       "composer_v1::EnvironmentsConnection::DatabaseFailover");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DatabaseFailover(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::DatabaseFailover(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::orchestration::airflow::service::v1::
+        DatabaseFailoverRequest const& request) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::DatabaseFailover");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DatabaseFailover(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                    DatabaseFailoverResponse>>
+EnvironmentsTracingConnection::DatabaseFailover(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "composer_v1::EnvironmentsConnection::DatabaseFailover");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DatabaseFailover(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::

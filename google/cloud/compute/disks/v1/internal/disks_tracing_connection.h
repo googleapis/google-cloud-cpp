@@ -44,6 +44,16 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
       google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddResourcePolicies(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<
       std::pair<std::string, google::cloud::cpp::compute::v1::DisksScopedList>>
   AggregatedListDisks(
@@ -54,13 +64,40 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
       google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
       google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
       google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request)
       override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisk(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
       google::cloud::cpp::compute::disks::v1::GetDiskRequest const& request)
@@ -74,6 +111,15 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
       google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisk(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::Disk> ListDisks(
       google::cloud::cpp::compute::disks::v1::ListDisksRequest request)
       override;
@@ -83,9 +129,28 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
       google::cloud::cpp::compute::disks::v1::
           RemoveResourcePoliciesRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::
+          RemoveResourcePoliciesRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveResourcePolicies(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       google::cloud::cpp::compute::disks::v1::ResizeRequest const& request)
       override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::ResizeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::disks::v1::SetIamPolicyRequest const&
@@ -95,20 +160,60 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
       google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartAsyncReplication(
       google::cloud::cpp::compute::disks::v1::
           StartAsyncReplicationRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StartAsyncReplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::
+          StartAsyncReplicationRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StartAsyncReplication(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopAsyncReplication(
       google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StopAsyncReplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopAsyncReplication(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopGroupAsyncReplication(
       google::cloud::cpp::compute::disks::v1::
           StopGroupAsyncReplicationRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  StopGroupAsyncReplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::
+          StopGroupAsyncReplicationRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopGroupAsyncReplication(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(
@@ -118,6 +223,15 @@ class DisksTracingConnection : public compute_disks_v1::DisksConnection {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
       google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request)
       override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisk(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   std::shared_ptr<compute_disks_v1::DisksConnection> child_;

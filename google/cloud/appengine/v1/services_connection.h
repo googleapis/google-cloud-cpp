@@ -21,7 +21,9 @@
 
 #include "google/cloud/appengine/v1/internal/services_retry_traits.h"
 #include "google/cloud/appengine/v1/services_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -192,8 +194,24 @@ class ServicesConnection {
   virtual future<StatusOr<google::appengine::v1::Service>> UpdateService(
       google::appengine::v1::UpdateServiceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::UpdateServiceRequest const& request);
+
+  virtual future<StatusOr<google::appengine::v1::Service>> UpdateService(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteService(google::appengine::v1::DeleteServiceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::DeleteServiceRequest const& request);
+
+  virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteService(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
 };
 
 /**

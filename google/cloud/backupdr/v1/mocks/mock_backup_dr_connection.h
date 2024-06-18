@@ -64,10 +64,34 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateManagementServer,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::backupdr::v1::CreateManagementServerRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>,
+              CreateManagementServer,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
               DeleteManagementServer,
               (google::cloud::backupdr::v1::DeleteManagementServerRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteManagementServer,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::backupdr::v1::DeleteManagementServerRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
+              DeleteManagementServer,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 };
 

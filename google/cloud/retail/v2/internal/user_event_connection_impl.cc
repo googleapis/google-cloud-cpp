@@ -131,6 +131,59 @@ UserEventServiceConnectionImpl::PurgeUserEvents(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceConnectionImpl::PurgeUserEvents(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PurgeUserEvents(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
+        return stub_->PurgeUserEvents(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
+UserEventServiceConnectionImpl::PurgeUserEvents(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::PurgeMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to PurgeUserEvents",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::PurgeUserEventsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::PurgeUserEventsResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
 UserEventServiceConnectionImpl::ImportUserEvents(
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
@@ -170,6 +223,60 @@ UserEventServiceConnectionImpl::ImportUserEvents(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceConnectionImpl::ImportUserEvents(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::ImportUserEventsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportUserEvents(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::retail::v2::ImportUserEventsRequest const& request) {
+        return stub_->ImportUserEvents(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
+UserEventServiceConnectionImpl::ImportUserEvents(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::ImportMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportUserEvents",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::ImportUserEventsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::ImportUserEventsResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
 UserEventServiceConnectionImpl::RejoinUserEvents(
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
@@ -206,6 +313,61 @@ UserEventServiceConnectionImpl::RejoinUserEvents(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::RejoinUserEventsResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+UserEventServiceConnectionImpl::RejoinUserEvents(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RejoinUserEvents(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
+        return stub_->RejoinUserEvents(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
+UserEventServiceConnectionImpl::RejoinUserEvents(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::
+                   RejoinUserEventsMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RejoinUserEvents",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::RejoinUserEventsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::RejoinUserEventsResponse>,
       polling_policy(*current), __func__);
 }
 

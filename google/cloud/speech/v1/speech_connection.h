@@ -21,7 +21,9 @@
 
 #include "google/cloud/speech/v1/internal/speech_retry_traits.h"
 #include "google/cloud/speech/v1/speech_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
@@ -188,6 +190,15 @@ class SpeechConnection {
       StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
   LongRunningRecognize(
       google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> LongRunningRecognize(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
+  LongRunningRecognize(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,

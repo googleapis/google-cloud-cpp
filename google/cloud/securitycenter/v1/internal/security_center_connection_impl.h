@@ -57,6 +57,15 @@ class SecurityCenterConnectionImpl
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
+  BulkMuteFindings(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
   CreateSecurityHealthAnalyticsCustomModule(
@@ -185,6 +194,15 @@ class SecurityCenterConnectionImpl
   RunAssetDiscovery(
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> RunAssetDiscovery(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
+  RunAssetDiscovery(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
       google::cloud::securitycenter::v1::SetFindingStateRequest const& request)

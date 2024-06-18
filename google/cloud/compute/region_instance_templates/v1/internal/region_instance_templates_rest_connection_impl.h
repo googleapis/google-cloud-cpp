@@ -59,6 +59,16 @@ class RegionInstanceTemplatesRestConnectionImpl
       google::cloud::cpp::compute::region_instance_templates::v1::
           DeleteInstanceTemplateRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_templates::v1::
+          DeleteInstanceTemplateRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstanceTemplate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
   GetInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
@@ -68,6 +78,16 @@ class RegionInstanceTemplatesRestConnectionImpl
   InsertInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
           InsertInstanceTemplateRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_templates::v1::
+          InsertInstanceTemplateRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInstanceTemplate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
   ListRegionInstanceTemplates(

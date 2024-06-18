@@ -53,6 +53,18 @@ class MockLivestreamServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateChannel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::video::livestream::v1::CreateChannelRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Channel>>,
+              CreateChannel,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<google::cloud::video::livestream::v1::Channel>),
       ListChannels,
@@ -71,10 +83,35 @@ class MockLivestreamServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteChannel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::video::livestream::v1::DeleteChannelRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteChannel,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Channel>>,
               UpdateChannel,
               (google::cloud::video::livestream::v1::UpdateChannelRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateChannel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::video::livestream::v1::UpdateChannelRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Channel>>,
+              UpdateChannel,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -85,6 +122,20 @@ class MockLivestreamServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartChannel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::video::livestream::v1::StartChannelRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::video::livestream::v1::ChannelOperationResponse>>,
+      StartChannel,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::video::livestream::v1::ChannelOperationResponse>>,
@@ -93,10 +144,36 @@ class MockLivestreamServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StopChannel,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::video::livestream::v1::StopChannelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::video::livestream::v1::ChannelOperationResponse>>,
+      StopChannel,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Input>>,
       CreateInput,
       (google::cloud::video::livestream::v1::CreateInputRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInput,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::video::livestream::v1::CreateInputRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Input>>,
+              CreateInput,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::video::livestream::v1::Input>),
               ListInputs,
@@ -115,10 +192,35 @@ class MockLivestreamServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteInput,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::video::livestream::v1::DeleteInputRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteInput,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Input>>,
       UpdateInput,
       (google::cloud::video::livestream::v1::UpdateInputRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInput,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::video::livestream::v1::UpdateInputRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Input>>,
+              UpdateInput,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::video::livestream::v1::Event>, CreateEvent,
@@ -147,9 +249,34 @@ class MockLivestreamServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAsset,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::video::livestream::v1::CreateAssetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Asset>>,
+              CreateAsset,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
       DeleteAsset,
       (google::cloud::video::livestream::v1::DeleteAssetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteAsset,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::video::livestream::v1::DeleteAssetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteAsset,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -171,6 +298,18 @@ class MockLivestreamServiceConnection
       future<StatusOr<google::cloud::video::livestream::v1::Pool>>, UpdatePool,
       (google::cloud::video::livestream::v1::UpdatePoolRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdatePool,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::video::livestream::v1::UpdatePoolRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Pool>>,
+              UpdatePool,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

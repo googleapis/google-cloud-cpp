@@ -53,6 +53,20 @@ class MockPipelineServiceConnection
       RunPipeline,
       (google::cloud::contentwarehouse::v1::RunPipelineRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RunPipeline,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>,
+      RunPipeline,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

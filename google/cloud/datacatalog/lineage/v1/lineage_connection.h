@@ -21,7 +21,9 @@
 
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_retry_traits.h"
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -212,6 +214,16 @@ class LineageConnection {
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteProcess(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteProcess(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
       google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request);
 
@@ -228,6 +240,15 @@ class LineageConnection {
       StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteRun(
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteRun(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteRun(google::cloud::ExperimentalTag,
+            google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   CreateLineageEvent(

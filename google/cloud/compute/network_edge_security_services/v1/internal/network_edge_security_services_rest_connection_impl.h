@@ -65,6 +65,17 @@ class NetworkEdgeSecurityServicesRestConnectionImpl
       google::cloud::cpp::compute::network_edge_security_services::v1::
           DeleteNetworkEdgeSecurityServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNetworkEdgeSecurityService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          DeleteNetworkEdgeSecurityServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkEdgeSecurityService(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
   GetNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
@@ -75,10 +86,32 @@ class NetworkEdgeSecurityServicesRestConnectionImpl
       google::cloud::cpp::compute::network_edge_security_services::v1::
           InsertNetworkEdgeSecurityServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNetworkEdgeSecurityService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          InsertNetworkEdgeSecurityServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNetworkEdgeSecurityService(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
           PatchNetworkEdgeSecurityServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchNetworkEdgeSecurityService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          PatchNetworkEdgeSecurityServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNetworkEdgeSecurityService(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_network_edge_security_services_v1::

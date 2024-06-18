@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_retry_traits.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -196,6 +198,17 @@ class PacketMirroringsConnection {
   DeletePacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
                             DeletePacketMirroringRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePacketMirroring(google::cloud::ExperimentalTag,
+                        google::cloud::NoAwaitTag,
+                        google::cloud::cpp::compute::packet_mirrorings::v1::
+                            DeletePacketMirroringRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeletePacketMirroring(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
   GetPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
                          GetPacketMirroringRequest const& request);
@@ -204,6 +217,17 @@ class PacketMirroringsConnection {
   InsertPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
                             InsertPacketMirroringRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertPacketMirroring(google::cloud::ExperimentalTag,
+                        google::cloud::NoAwaitTag,
+                        google::cloud::cpp::compute::packet_mirrorings::v1::
+                            InsertPacketMirroringRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertPacketMirroring(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
   ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
                            ListPacketMirroringsRequest request);
@@ -211,6 +235,17 @@ class PacketMirroringsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
                            PatchPacketMirroringRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPacketMirroring(google::cloud::ExperimentalTag,
+                       google::cloud::NoAwaitTag,
+                       google::cloud::cpp::compute::packet_mirrorings::v1::
+                           PatchPacketMirroringRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchPacketMirroring(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::

@@ -57,6 +57,33 @@ SiteSearchEngineServiceTracingConnection::CreateTargetSite(
   return internal::EndSpan(std::move(span), child_->CreateTargetSite(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::CreateTargetSite(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "CreateTargetSite");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateTargetSite(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+SiteSearchEngineServiceTracingConnection::CreateTargetSite(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "CreateTargetSite");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateTargetSite(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
 SiteSearchEngineServiceTracingConnection::BatchCreateTargetSites(
@@ -68,6 +95,34 @@ SiteSearchEngineServiceTracingConnection::BatchCreateTargetSites(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchCreateTargetSites(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::BatchCreateTargetSites(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchCreateTargetSites");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->BatchCreateTargetSites(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+SiteSearchEngineServiceTracingConnection::BatchCreateTargetSites(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchCreateTargetSites");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreateTargetSites(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
@@ -90,6 +145,33 @@ SiteSearchEngineServiceTracingConnection::UpdateTargetSite(
   return internal::EndSpan(std::move(span), child_->UpdateTargetSite(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::UpdateTargetSite(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "UpdateTargetSite");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTargetSite(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+SiteSearchEngineServiceTracingConnection::UpdateTargetSite(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "UpdateTargetSite");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateTargetSite(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
 SiteSearchEngineServiceTracingConnection::DeleteTargetSite(
     google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
@@ -99,6 +181,33 @@ SiteSearchEngineServiceTracingConnection::DeleteTargetSite(
       "DeleteTargetSite");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTargetSite(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::DeleteTargetSite(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DeleteTargetSite");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteTargetSite(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
+SiteSearchEngineServiceTracingConnection::DeleteTargetSite(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DeleteTargetSite");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteTargetSite(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::TargetSite>
@@ -126,6 +235,34 @@ SiteSearchEngineServiceTracingConnection::EnableAdvancedSiteSearch(
                            child_->EnableAdvancedSiteSearch(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::EnableAdvancedSiteSearch(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "EnableAdvancedSiteSearch");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->EnableAdvancedSiteSearch(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+SiteSearchEngineServiceTracingConnection::EnableAdvancedSiteSearch(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "EnableAdvancedSiteSearch");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->EnableAdvancedSiteSearch(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceTracingConnection::DisableAdvancedSiteSearch(
@@ -139,6 +276,34 @@ SiteSearchEngineServiceTracingConnection::DisableAdvancedSiteSearch(
                            child_->DisableAdvancedSiteSearch(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::DisableAdvancedSiteSearch(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DisableAdvancedSiteSearch");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DisableAdvancedSiteSearch(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+SiteSearchEngineServiceTracingConnection::DisableAdvancedSiteSearch(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "DisableAdvancedSiteSearch");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DisableAdvancedSiteSearch(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
 SiteSearchEngineServiceTracingConnection::RecrawlUris(
     google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
@@ -146,6 +311,30 @@ SiteSearchEngineServiceTracingConnection::RecrawlUris(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::RecrawlUris");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RecrawlUris(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::RecrawlUris(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::RecrawlUris");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->RecrawlUris(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
+SiteSearchEngineServiceTracingConnection::RecrawlUris(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::RecrawlUris");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->RecrawlUris(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -159,6 +348,34 @@ SiteSearchEngineServiceTracingConnection::BatchVerifyTargetSites(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchVerifyTargetSites(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceTracingConnection::BatchVerifyTargetSites(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchVerifyTargetSites");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->BatchVerifyTargetSites(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+SiteSearchEngineServiceTracingConnection::BatchVerifyTargetSites(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::SiteSearchEngineServiceConnection::"
+      "BatchVerifyTargetSites");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchVerifyTargetSites(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::discoveryengine::v1::TargetSite>

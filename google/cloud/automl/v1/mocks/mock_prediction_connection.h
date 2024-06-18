@@ -55,6 +55,17 @@ class MockPredictionServiceConnection
               BatchPredict,
               (google::cloud::automl::v1::BatchPredictRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchPredict,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::BatchPredictRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>,
+              BatchPredict,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,7 +21,9 @@
 
 #include "google/cloud/appengine/v1/instances_connection_idempotency_policy.h"
 #include "google/cloud/appengine/v1/internal/instances_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -194,8 +196,24 @@ class InstancesConnection {
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::DeleteInstanceRequest const& request);
+
+  virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
       google::appengine::v1::DebugInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DebugInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::DebugInstanceRequest const& request);
+
+  virtual future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 };
 
 /**

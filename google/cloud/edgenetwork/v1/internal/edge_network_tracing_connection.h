@@ -65,9 +65,27 @@ class EdgeNetworkTracingConnection
       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateNetwork(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const&
                     request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNetwork(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteNetwork(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::edgenetwork::v1::Subnet> ListSubnets(
       google::cloud::edgenetwork::v1::ListSubnetsRequest request) override;
@@ -79,13 +97,40 @@ class EdgeNetworkTracingConnection
       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSubnet(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateSubnet(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const&
                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteSubnet(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteSubnet(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::edgenetwork::v1::Interconnect> ListInterconnects(
       google::cloud::edgenetwork::v1::ListInterconnectsRequest request)
@@ -115,10 +160,30 @@ class EdgeNetworkTracingConnection
       google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
+  CreateInterconnectAttachment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteInterconnectAttachment(
       google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteInterconnectAttachment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::edgenetwork::v1::Router> ListRouters(
       google::cloud::edgenetwork::v1::ListRoutersRequest request) override;
@@ -134,13 +199,40 @@ class EdgeNetworkTracingConnection
       google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const&
                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteRouter(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<edgenetwork_v1::EdgeNetworkConnection> child_;

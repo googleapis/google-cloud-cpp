@@ -88,6 +88,22 @@ StorageTransferServiceConnection::RunTransferJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+StorageTransferServiceConnection::RunTransferJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::storagetransfer::v1::RunTransferJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storagetransfer::v1::TransferOperation>>
+StorageTransferServiceConnection::RunTransferJob(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storagetransfer::v1::TransferOperation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 Status StorageTransferServiceConnection::DeleteTransferJob(
     google::storagetransfer::v1::DeleteTransferJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

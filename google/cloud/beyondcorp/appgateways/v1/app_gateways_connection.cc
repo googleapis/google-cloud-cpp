@@ -61,11 +61,46 @@ AppGatewaysServiceConnection::CreateAppGateway(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceConnection::CreateAppGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appgateways::v1::
+        CreateAppGatewayRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
+AppGatewaysServiceConnection::CreateAppGateway(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<
     google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
 AppGatewaysServiceConnection::DeleteAppGateway(
     google::cloud::beyondcorp::appgateways::v1::
         DeleteAppGatewayRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceConnection::DeleteAppGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appgateways::v1::
+        DeleteAppGatewayRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+AppGatewaysServiceConnection::DeleteAppGateway(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

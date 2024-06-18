@@ -57,6 +57,15 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::CreateStoragePoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateStoragePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::CreateStoragePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::StoragePool>> CreateStoragePool(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::netapp::v1::StoragePool> GetStoragePool(
       google::cloud::netapp::v1::GetStoragePoolRequest const& request) override;
 
@@ -64,9 +73,27 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::UpdateStoragePoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateStoragePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::UpdateStoragePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::StoragePool>> UpdateStoragePool(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteStoragePool(google::cloud::netapp::v1::DeleteStoragePoolRequest const&
                         request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteStoragePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::DeleteStoragePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteStoragePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::netapp::v1::Volume> ListVolumes(
       google::cloud::netapp::v1::ListVolumesRequest request) override;
@@ -77,14 +104,46 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
       google::cloud::netapp::v1::CreateVolumeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::CreateVolumeRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
       google::cloud::netapp::v1::UpdateVolumeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::UpdateVolumeRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
       google::cloud::netapp::v1::DeleteVolumeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::DeleteVolumeRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RevertVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::netapp::v1::Snapshot> ListSnapshots(
       google::cloud::netapp::v1::ListSnapshotsRequest request) override;
@@ -95,11 +154,35 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::Snapshot>> CreateSnapshot(
       google::cloud::netapp::v1::CreateSnapshotRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateSnapshot(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::CreateSnapshotRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Snapshot>> CreateSnapshot(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
       google::cloud::netapp::v1::DeleteSnapshotRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteSnapshot(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::DeleteSnapshotRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::Snapshot>> UpdateSnapshot(
       google::cloud::netapp::v1::UpdateSnapshotRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateSnapshot(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::UpdateSnapshotRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Snapshot>> UpdateSnapshot(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::netapp::v1::ActiveDirectory> ListActiveDirectories(
       google::cloud::netapp::v1::ListActiveDirectoriesRequest request) override;
@@ -113,15 +196,45 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateActiveDirectory(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
+  CreateActiveDirectory(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
   UpdateActiveDirectory(
       google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateActiveDirectory(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
+  UpdateActiveDirectory(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteActiveDirectory(
       google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteActiveDirectory(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteActiveDirectory(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::netapp::v1::KmsConfig> ListKmsConfigs(
       google::cloud::netapp::v1::ListKmsConfigsRequest request) override;
@@ -130,6 +243,15 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::CreateKmsConfigRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateKmsConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::CreateKmsConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::KmsConfig>> CreateKmsConfig(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::netapp::v1::KmsConfig> GetKmsConfig(
       google::cloud::netapp::v1::GetKmsConfigRequest const& request) override;
 
@@ -137,8 +259,25 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::UpdateKmsConfigRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateKmsConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::UpdateKmsConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::KmsConfig>> UpdateKmsConfig(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::KmsConfig>> EncryptVolumes(
       google::cloud::netapp::v1::EncryptVolumesRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> EncryptVolumes(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::EncryptVolumesRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::KmsConfig>> EncryptVolumes(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse> VerifyKmsConfig(
       google::cloud::netapp::v1::VerifyKmsConfigRequest const& request)
@@ -147,6 +286,15 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteKmsConfig(google::cloud::netapp::v1::DeleteKmsConfigRequest const&
                       request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteKmsConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::DeleteKmsConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteKmsConfig(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::netapp::v1::Replication> ListReplications(
       google::cloud::netapp::v1::ListReplicationsRequest request) override;
@@ -158,30 +306,94 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::CreateReplicationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateReplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::CreateReplicationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::Replication>> CreateReplication(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteReplication(google::cloud::netapp::v1::DeleteReplicationRequest const&
                         request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteReplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::DeleteReplicationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteReplication(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
       google::cloud::netapp::v1::UpdateReplicationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateReplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::UpdateReplicationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::Replication>> StopReplication(
       google::cloud::netapp::v1::StopReplicationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> StopReplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::StopReplicationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::Replication>> StopReplication(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::Replication>> ResumeReplication(
       google::cloud::netapp::v1::ResumeReplicationRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> ResumeReplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::ResumeReplicationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::Replication>> ResumeReplication(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::netapp::v1::Replication>>
   ReverseReplicationDirection(
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ReverseReplicationDirection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Replication>>
+  ReverseReplicationDirection(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
       google::cloud::netapp::v1::CreateBackupVaultRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateBackupVault(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::CreateBackupVaultRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
       google::cloud::netapp::v1::GetBackupVaultRequest const& request) override;
@@ -193,12 +405,38 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::UpdateBackupVaultRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateBackupVault(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::UpdateBackupVaultRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::BackupVault>> UpdateBackupVault(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupVault(google::cloud::netapp::v1::DeleteBackupVaultRequest const&
                         request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteBackupVault(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::DeleteBackupVaultRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteBackupVault(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
       google::cloud::netapp::v1::CreateBackupRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::CreateBackupRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
       google::cloud::netapp::v1::GetBackupRequest const& request) override;
@@ -209,12 +447,37 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
       google::cloud::netapp::v1::DeleteBackupRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::DeleteBackupRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
       google::cloud::netapp::v1::UpdateBackupRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::UpdateBackupRequest const& request) override;
+
+  future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> CreateBackupPolicy(
       google::cloud::netapp::v1::CreateBackupPolicyRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateBackupPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::CreateBackupPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> CreateBackupPolicy(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::netapp::v1::BackupPolicy> GetBackupPolicy(
       google::cloud::netapp::v1::GetBackupPolicyRequest const& request)
@@ -227,9 +490,27 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateBackupPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> UpdateBackupPolicy(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupPolicy(google::cloud::netapp::v1::DeleteBackupPolicyRequest const&
                          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteBackupPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+  DeleteBackupPolicy(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

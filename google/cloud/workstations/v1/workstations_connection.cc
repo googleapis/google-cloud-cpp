@@ -60,6 +60,22 @@ WorkstationsConnection::CreateWorkstationCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::CreateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsConnection::CreateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::WorkstationCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsConnection::UpdateWorkstationCluster(
     google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&) {
@@ -68,9 +84,41 @@ WorkstationsConnection::UpdateWorkstationCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::UpdateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsConnection::UpdateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::WorkstationCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsConnection::DeleteWorkstationCluster(
     google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::WorkstationCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::DeleteWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsConnection::DeleteWorkstationCluster(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::workstations::v1::WorkstationCluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -106,6 +154,22 @@ WorkstationsConnection::CreateWorkstationConfig(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::CreateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsConnection::CreateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::WorkstationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsConnection::UpdateWorkstationConfig(
     google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&) {
@@ -114,9 +178,41 @@ WorkstationsConnection::UpdateWorkstationConfig(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::UpdateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsConnection::UpdateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::WorkstationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsConnection::DeleteWorkstationConfig(
     google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::WorkstationConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::DeleteWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsConnection::DeleteWorkstationConfig(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::workstations::v1::WorkstationConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -152,9 +248,41 @@ WorkstationsConnection::CreateWorkstation(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::CreateWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnection::CreateWorkstation(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::Workstation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsConnection::UpdateWorkstation(
     google::cloud::workstations::v1::UpdateWorkstationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::Workstation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::UpdateWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnection::UpdateWorkstation(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::workstations::v1::Workstation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -168,6 +296,22 @@ WorkstationsConnection::DeleteWorkstation(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::DeleteWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnection::DeleteWorkstation(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::Workstation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsConnection::StartWorkstation(
     google::cloud::workstations::v1::StartWorkstationRequest const&) {
@@ -176,9 +320,41 @@ WorkstationsConnection::StartWorkstation(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::StartWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::StartWorkstationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnection::StartWorkstation(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::Workstation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsConnection::StopWorkstation(
     google::cloud::workstations::v1::StopWorkstationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workstations::v1::Workstation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsConnection::StopWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::StopWorkstationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnection::StopWorkstation(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::workstations::v1::Workstation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

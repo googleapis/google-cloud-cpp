@@ -53,6 +53,18 @@ class MockSpecialistPoolServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSpecialistPool,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
+              CreateSpecialistPool,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::SpecialistPool>,
       GetSpecialistPool,
@@ -72,10 +84,35 @@ class MockSpecialistPoolServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteSpecialistPool,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteSpecialistPool,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
               UpdateSpecialistPool,
               (google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateSpecialistPool,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
+              UpdateSpecialistPool,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 };
 

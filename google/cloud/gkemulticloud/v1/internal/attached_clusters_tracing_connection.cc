@@ -44,6 +44,31 @@ AttachedClustersTracingConnection::CreateAttachedCluster(
                            child_->CreateAttachedCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersTracingConnection::CreateAttachedCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::CreateAttachedCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateAttachedCluster(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+AttachedClustersTracingConnection::CreateAttachedCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::CreateAttachedCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAttachedCluster(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersTracingConnection::UpdateAttachedCluster(
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
@@ -55,6 +80,31 @@ AttachedClustersTracingConnection::UpdateAttachedCluster(
                            child_->UpdateAttachedCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersTracingConnection::UpdateAttachedCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::UpdateAttachedCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateAttachedCluster(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+AttachedClustersTracingConnection::UpdateAttachedCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::UpdateAttachedCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAttachedCluster(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersTracingConnection::ImportAttachedCluster(
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
@@ -64,6 +114,31 @@ AttachedClustersTracingConnection::ImportAttachedCluster(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ImportAttachedCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersTracingConnection::ImportAttachedCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::ImportAttachedCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->ImportAttachedCluster(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+AttachedClustersTracingConnection::ImportAttachedCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::ImportAttachedCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportAttachedCluster(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -97,6 +172,31 @@ AttachedClustersTracingConnection::DeleteAttachedCluster(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAttachedCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersTracingConnection::DeleteAttachedCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::DeleteAttachedCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteAttachedCluster(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+AttachedClustersTracingConnection::DeleteAttachedCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::DeleteAttachedCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAttachedCluster(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

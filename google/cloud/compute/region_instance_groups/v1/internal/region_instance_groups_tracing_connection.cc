@@ -86,6 +86,33 @@ RegionInstanceGroupsTracingConnection::SetNamedPorts(
   return internal::EndSpan(std::move(span), child_->SetNamedPorts(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceGroupsTracingConnection::SetNamedPorts(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_instance_groups::v1::
+        SetNamedPortsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_instance_groups_v1::RegionInstanceGroupsConnection::"
+      "SetNamedPorts");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetNamedPorts(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionInstanceGroupsTracingConnection::SetNamedPorts(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_instance_groups_v1::RegionInstanceGroupsConnection::"
+      "SetNamedPorts");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SetNamedPorts(google::cloud::ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<

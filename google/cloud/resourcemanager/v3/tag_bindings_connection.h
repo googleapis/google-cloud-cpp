@@ -21,7 +21,9 @@
 
 #include "google/cloud/resourcemanager/v3/internal/tag_bindings_retry_traits.h"
 #include "google/cloud/resourcemanager/v3/tag_bindings_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -193,11 +195,30 @@ class TagBindingsConnection {
       google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateTagBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
+  CreateTagBinding(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
   DeleteTagBinding(
       google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTagBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
+  DeleteTagBinding(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>
   ListEffectiveTags(

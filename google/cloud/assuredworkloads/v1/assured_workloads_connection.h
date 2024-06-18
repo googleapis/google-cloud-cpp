@@ -21,7 +21,9 @@
 
 #include "google/cloud/assuredworkloads/v1/assured_workloads_connection_idempotency_policy.h"
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -197,6 +199,15 @@ class AssuredWorkloadsServiceConnection {
   CreateWorkload(
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateWorkload(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
+  CreateWorkload(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::assuredworkloads::v1::Workload>
   UpdateWorkload(

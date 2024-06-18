@@ -50,6 +50,30 @@ ApplicationsTracingConnection::CreateApplication(
   return internal::EndSpan(std::move(span), child_->CreateApplication(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ApplicationsTracingConnection::CreateApplication(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::CreateApplicationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::ApplicationsConnection::CreateApplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateApplication(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::Application>>
+ApplicationsTracingConnection::CreateApplication(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::ApplicationsConnection::CreateApplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateApplication(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsTracingConnection::UpdateApplication(
     google::appengine::v1::UpdateApplicationRequest const& request) {
@@ -59,6 +83,30 @@ ApplicationsTracingConnection::UpdateApplication(
   return internal::EndSpan(std::move(span), child_->UpdateApplication(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ApplicationsTracingConnection::UpdateApplication(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::UpdateApplicationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::ApplicationsConnection::UpdateApplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateApplication(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::Application>>
+ApplicationsTracingConnection::UpdateApplication(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::ApplicationsConnection::UpdateApplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateApplication(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsTracingConnection::RepairApplication(
     google::appengine::v1::RepairApplicationRequest const& request) {
@@ -66,6 +114,30 @@ ApplicationsTracingConnection::RepairApplication(
       "appengine_v1::ApplicationsConnection::RepairApplication");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RepairApplication(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ApplicationsTracingConnection::RepairApplication(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::RepairApplicationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::ApplicationsConnection::RepairApplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->RepairApplication(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::Application>>
+ApplicationsTracingConnection::RepairApplication(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::ApplicationsConnection::RepairApplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->RepairApplication(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

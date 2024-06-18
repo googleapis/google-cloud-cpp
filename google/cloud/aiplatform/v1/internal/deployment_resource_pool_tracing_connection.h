@@ -46,6 +46,16 @@ class DeploymentResourcePoolServiceTracingConnection
       google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  CreateDeploymentResourcePool(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
   GetDeploymentResourcePool(
       google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
@@ -60,6 +70,16 @@ class DeploymentResourcePoolServiceTracingConnection
   DeleteDeploymentResourcePool(
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDeploymentResourcePool(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<aiplatform_v1::DeploymentResourcePoolServiceConnection>

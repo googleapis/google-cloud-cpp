@@ -159,6 +159,61 @@ WorkstationsConnectionImpl::CreateWorkstationCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::CreateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkstationCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::
+                 CreateWorkstationClusterRequest const& request) {
+        return stub_->CreateWorkstationCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsConnectionImpl::CreateWorkstationCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::WorkstationCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateWorkstationCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::WorkstationCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::WorkstationCluster>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsConnectionImpl::UpdateWorkstationCluster(
     google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
@@ -199,6 +254,61 @@ WorkstationsConnectionImpl::UpdateWorkstationCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::UpdateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkstationCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::
+                 UpdateWorkstationClusterRequest const& request) {
+        return stub_->UpdateWorkstationCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsConnectionImpl::UpdateWorkstationCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::WorkstationCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateWorkstationCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::WorkstationCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::WorkstationCluster>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsConnectionImpl::DeleteWorkstationCluster(
     google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
@@ -236,6 +346,61 @@ WorkstationsConnectionImpl::DeleteWorkstationCluster(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::workstations::v1::WorkstationCluster>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::DeleteWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkstationCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::
+                 DeleteWorkstationClusterRequest const& request) {
+        return stub_->DeleteWorkstationCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsConnectionImpl::DeleteWorkstationCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::WorkstationCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteWorkstationCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::WorkstationCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::WorkstationCluster>,
       polling_policy(*current), __func__);
 }
 
@@ -371,6 +536,62 @@ WorkstationsConnectionImpl::CreateWorkstationConfig(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::CreateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkstationConfig(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+              request) {
+        return stub_->CreateWorkstationConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsConnectionImpl::CreateWorkstationConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::WorkstationConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateWorkstationConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::WorkstationConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::WorkstationConfig>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsConnectionImpl::UpdateWorkstationConfig(
     google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
@@ -412,6 +633,62 @@ WorkstationsConnectionImpl::UpdateWorkstationConfig(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::UpdateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkstationConfig(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+              request) {
+        return stub_->UpdateWorkstationConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsConnectionImpl::UpdateWorkstationConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::WorkstationConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateWorkstationConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::WorkstationConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::WorkstationConfig>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsConnectionImpl::DeleteWorkstationConfig(
     google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
@@ -450,6 +727,62 @@ WorkstationsConnectionImpl::DeleteWorkstationConfig(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::workstations::v1::WorkstationConfig>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::DeleteWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkstationConfig(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+              request) {
+        return stub_->DeleteWorkstationConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsConnectionImpl::DeleteWorkstationConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::WorkstationConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteWorkstationConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::WorkstationConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::WorkstationConfig>,
       polling_policy(*current), __func__);
 }
 
@@ -579,6 +912,60 @@ WorkstationsConnectionImpl::CreateWorkstation(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::CreateWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkstation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::CreateWorkstationRequest const&
+                 request) {
+        return stub_->CreateWorkstation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnectionImpl::CreateWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::Workstation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateWorkstation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::Workstation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::Workstation>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsConnectionImpl::UpdateWorkstation(
     google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
@@ -616,6 +1003,60 @@ WorkstationsConnectionImpl::UpdateWorkstation(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::workstations::v1::Workstation>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::UpdateWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkstation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::UpdateWorkstationRequest const&
+                 request) {
+        return stub_->UpdateWorkstation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnectionImpl::UpdateWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::Workstation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateWorkstation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::Workstation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::Workstation>,
       polling_policy(*current), __func__);
 }
 
@@ -659,6 +1100,60 @@ WorkstationsConnectionImpl::DeleteWorkstation(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::DeleteWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkstation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::DeleteWorkstationRequest const&
+                 request) {
+        return stub_->DeleteWorkstation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnectionImpl::DeleteWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::Workstation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteWorkstation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::Workstation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::Workstation>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsConnectionImpl::StartWorkstation(
     google::cloud::workstations::v1::StartWorkstationRequest const& request) {
@@ -699,6 +1194,60 @@ WorkstationsConnectionImpl::StartWorkstation(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::StartWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartWorkstation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::StartWorkstationRequest const&
+                 request) {
+        return stub_->StartWorkstation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnectionImpl::StartWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::Workstation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StartWorkstation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::Workstation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::Workstation>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsConnectionImpl::StopWorkstation(
     google::cloud::workstations::v1::StopWorkstationRequest const& request) {
@@ -736,6 +1285,60 @@ WorkstationsConnectionImpl::StopWorkstation(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::workstations::v1::Workstation>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsConnectionImpl::StopWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StopWorkstation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::workstations::v1::StopWorkstationRequest const&
+                 request) {
+        return stub_->StopWorkstation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsConnectionImpl::StopWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workstations::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workstations::v1::Workstation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StopWorkstation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workstations::v1::Workstation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workstations::v1::Workstation>,
       polling_policy(*current), __func__);
 }
 

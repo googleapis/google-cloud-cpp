@@ -59,6 +59,21 @@ ConfigConnection::CreateDeployment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ConfigConnection::CreateDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::CreateDeploymentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigConnection::CreateDeployment(google::cloud::ExperimentalTag,
+                                   google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::Deployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigConnection::UpdateDeployment(
     google::cloud::config::v1::UpdateDeploymentRequest const&) {
@@ -67,9 +82,39 @@ ConfigConnection::UpdateDeployment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ConfigConnection::UpdateDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::UpdateDeploymentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigConnection::UpdateDeployment(google::cloud::ExperimentalTag,
+                                   google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::Deployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigConnection::DeleteDeployment(
     google::cloud::config::v1::DeleteDeploymentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::Deployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ConfigConnection::DeleteDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::DeleteDeploymentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigConnection::DeleteDeployment(google::cloud::ExperimentalTag,
+                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::config::v1::Deployment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -132,9 +177,39 @@ ConfigConnection::LockDeployment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ConfigConnection::LockDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::LockDeploymentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigConnection::LockDeployment(google::cloud::ExperimentalTag,
+                                 google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::Deployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigConnection::UnlockDeployment(
     google::cloud::config::v1::UnlockDeploymentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::Deployment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ConfigConnection::UnlockDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::UnlockDeploymentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigConnection::UnlockDeployment(google::cloud::ExperimentalTag,
+                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::config::v1::Deployment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -148,6 +223,21 @@ StatusOr<google::cloud::config::v1::LockInfo> ConfigConnection::ExportLockInfo(
 future<StatusOr<google::cloud::config::v1::Preview>>
 ConfigConnection::CreatePreview(
     google::cloud::config::v1::CreatePreviewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::Preview>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ConfigConnection::CreatePreview(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::CreatePreviewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigConnection::CreatePreview(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::config::v1::Preview>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -168,6 +258,21 @@ StreamRange<google::cloud::config::v1::Preview> ConfigConnection::ListPreviews(
 future<StatusOr<google::cloud::config::v1::Preview>>
 ConfigConnection::DeletePreview(
     google::cloud::config::v1::DeletePreviewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::config::v1::Preview>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ConfigConnection::DeletePreview(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::DeletePreviewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigConnection::DeletePreview(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::config::v1::Preview>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

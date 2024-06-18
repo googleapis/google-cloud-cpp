@@ -65,6 +65,33 @@ InterconnectAttachmentsTracingConnection::DeleteInterconnectAttachment(
                            child_->DeleteInterconnectAttachment(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsTracingConnection::DeleteInterconnectAttachment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        DeleteInterconnectAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
+      "DeleteInterconnectAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteInterconnectAttachment(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectAttachmentsTracingConnection::DeleteInterconnectAttachment(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
+      "DeleteInterconnectAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteInterconnectAttachment(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
 InterconnectAttachmentsTracingConnection::GetInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
@@ -86,6 +113,33 @@ InterconnectAttachmentsTracingConnection::InsertInterconnectAttachment(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertInterconnectAttachment(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsTracingConnection::InsertInterconnectAttachment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        InsertInterconnectAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
+      "InsertInterconnectAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->InsertInterconnectAttachment(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectAttachmentsTracingConnection::InsertInterconnectAttachment(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
+      "InsertInterconnectAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InsertInterconnectAttachment(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -114,6 +168,33 @@ InterconnectAttachmentsTracingConnection::PatchInterconnectAttachment(
                            child_->PatchInterconnectAttachment(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsTracingConnection::PatchInterconnectAttachment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        PatchInterconnectAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
+      "PatchInterconnectAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->PatchInterconnectAttachment(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectAttachmentsTracingConnection::PatchInterconnectAttachment(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
+      "PatchInterconnectAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PatchInterconnectAttachment(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsTracingConnection::SetLabels(
     google::cloud::cpp::compute::interconnect_attachments::v1::
@@ -123,6 +204,33 @@ InterconnectAttachmentsTracingConnection::SetLabels(
       "SetLabels");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        SetLabelsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
+      "SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetLabels(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectAttachmentsTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
+      "SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SetLabels(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

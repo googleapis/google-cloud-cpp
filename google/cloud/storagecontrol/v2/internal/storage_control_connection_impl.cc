@@ -196,6 +196,58 @@ StorageControlConnectionImpl::RenameFolder(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+StorageControlConnectionImpl::RenameFolder(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::storage::control::v2::RenameFolderRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenameFolder(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::RenameFolderRequest const& request) {
+        return stub_->RenameFolder(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::storage::control::v2::Folder>>
+StorageControlConnectionImpl::RenameFolder(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::storage::control::v2::RenameFolderMetadata>()) {
+    return make_ready_future<StatusOr<google::storage::control::v2::Folder>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RenameFolder",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::storage::control::v2::Folder>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::storage::control::v2::Folder>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlConnectionImpl::GetStorageLayout(
     google::storage::control::v2::GetStorageLayoutRequest const& request) {

@@ -58,12 +58,54 @@ IDSTracingConnection::CreateEndpoint(
   return internal::EndSpan(std::move(span), child_->CreateEndpoint(request));
 }
 
+StatusOr<google::longrunning::Operation> IDSTracingConnection::CreateEndpoint(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateEndpoint(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::ids::v1::Endpoint>>
+IDSTracingConnection::CreateEndpoint(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateEndpoint(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSTracingConnection::DeleteEndpoint(
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
   auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEndpoint(request));
+}
+
+StatusOr<google::longrunning::Operation> IDSTracingConnection::DeleteEndpoint(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteEndpoint(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
+IDSTracingConnection::DeleteEndpoint(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteEndpoint(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

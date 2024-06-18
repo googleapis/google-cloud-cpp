@@ -21,7 +21,9 @@
 
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_retry_traits.h"
 #include "google/cloud/video/stitcher/v1/video_stitcher_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -194,6 +196,14 @@ class VideoStitcherServiceConnection {
   CreateCdnKey(
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateCdnKey(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
+  CreateCdnKey(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
       google::cloud::video::stitcher::v1::ListCdnKeysRequest request);
 
@@ -205,9 +215,26 @@ class VideoStitcherServiceConnection {
   DeleteCdnKey(
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteCdnKey(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteCdnKey(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
   UpdateCdnKey(
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateCdnKey(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
+  UpdateCdnKey(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::video::stitcher::v1::VodSession>
   CreateVodSession(
@@ -249,6 +276,14 @@ class VideoStitcherServiceConnection {
   CreateSlate(
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateSlate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::CreateSlateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
+  CreateSlate(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::video::stitcher::v1::Slate> ListSlates(
       google::cloud::video::stitcher::v1::ListSlatesRequest request);
 
@@ -259,10 +294,27 @@ class VideoStitcherServiceConnection {
   UpdateSlate(
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateSlate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::UpdateSlateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
+  UpdateSlate(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteSlate(
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSlate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::DeleteSlateRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteSlate(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::video::stitcher::v1::LiveSession>
   CreateLiveSession(
@@ -278,6 +330,15 @@ class VideoStitcherServiceConnection {
       google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateLiveConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  CreateLiveConfig(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::video::stitcher::v1::LiveConfig>
   ListLiveConfigs(
       google::cloud::video::stitcher::v1::ListLiveConfigsRequest request);
@@ -292,15 +353,43 @@ class VideoStitcherServiceConnection {
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteLiveConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteLiveConfig(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
   UpdateLiveConfig(
       google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateLiveConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  UpdateLiveConfig(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
   CreateVodConfig(
       google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateVodConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+  CreateVodConfig(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::video::stitcher::v1::VodConfig>
   ListVodConfigs(
@@ -315,10 +404,29 @@ class VideoStitcherServiceConnection {
       google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteVodConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteVodConfig(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
   UpdateVodConfig(
       google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateVodConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+  UpdateVodConfig(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 };
 
 /**

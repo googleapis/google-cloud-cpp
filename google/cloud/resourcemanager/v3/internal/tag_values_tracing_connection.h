@@ -56,13 +56,40 @@ class TagValuesTracingConnection
       google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateTagValue(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> CreateTagValue(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
       google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateTagValue(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
       google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteTagValue(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override;

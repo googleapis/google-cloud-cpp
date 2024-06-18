@@ -64,6 +64,31 @@ BareMetalSolutionTracingConnection::UpdateInstance(
   return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::UpdateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::UpdateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionTracingConnection::UpdateInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::UpdateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateInstance(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionTracingConnection::RenameInstance(
     google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
@@ -83,6 +108,30 @@ BareMetalSolutionTracingConnection::ResetInstance(
   return internal::EndSpan(std::move(span), child_->ResetInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::ResetInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::ResetInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ResetInstance(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
+BareMetalSolutionTracingConnection::ResetInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::ResetInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ResetInstance(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
 BareMetalSolutionTracingConnection::StartInstance(
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
@@ -92,6 +141,30 @@ BareMetalSolutionTracingConnection::StartInstance(
   return internal::EndSpan(std::move(span), child_->StartInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::StartInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::StartInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->StartInstance(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+BareMetalSolutionTracingConnection::StartInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::StartInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->StartInstance(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
 BareMetalSolutionTracingConnection::StopInstance(
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
@@ -99,6 +172,30 @@ BareMetalSolutionTracingConnection::StopInstance(
       "baremetalsolution_v2::BareMetalSolutionConnection::StopInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StopInstance(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::StopInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::StopInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->StopInstance(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
+BareMetalSolutionTracingConnection::StopInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::StopInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->StopInstance(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -114,6 +211,34 @@ BareMetalSolutionTracingConnection::EnableInteractiveSerialConsole(
                            child_->EnableInteractiveSerialConsole(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::EnableInteractiveSerialConsole(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::
+        EnableInteractiveSerialConsoleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::"
+      "EnableInteractiveSerialConsole");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->EnableInteractiveSerialConsole(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::
+                    EnableInteractiveSerialConsoleResponse>>
+BareMetalSolutionTracingConnection::EnableInteractiveSerialConsole(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::"
+      "EnableInteractiveSerialConsole");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->EnableInteractiveSerialConsole(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::
                     DisableInteractiveSerialConsoleResponse>>
 BareMetalSolutionTracingConnection::DisableInteractiveSerialConsole(
@@ -127,6 +252,34 @@ BareMetalSolutionTracingConnection::DisableInteractiveSerialConsole(
                            child_->DisableInteractiveSerialConsole(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::DisableInteractiveSerialConsole(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::
+        DisableInteractiveSerialConsoleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::"
+      "DisableInteractiveSerialConsole");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DisableInteractiveSerialConsole(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::
+                    DisableInteractiveSerialConsoleResponse>>
+BareMetalSolutionTracingConnection::DisableInteractiveSerialConsole(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::"
+      "DisableInteractiveSerialConsole");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DisableInteractiveSerialConsole(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionTracingConnection::DetachLun(
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
@@ -134,6 +287,30 @@ BareMetalSolutionTracingConnection::DetachLun(
       "baremetalsolution_v2::BareMetalSolutionConnection::DetachLun");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DetachLun(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::DetachLun(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::DetachLun");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DetachLun(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionTracingConnection::DetachLun(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::DetachLun");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DetachLun(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::SSHKey>
@@ -195,6 +372,30 @@ BareMetalSolutionTracingConnection::UpdateVolume(
   return internal::EndSpan(std::move(span), child_->UpdateVolume(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::UpdateVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::UpdateVolume");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateVolume(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+BareMetalSolutionTracingConnection::UpdateVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::UpdateVolume");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateVolume(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionTracingConnection::RenameVolume(
     google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
@@ -213,6 +414,30 @@ BareMetalSolutionTracingConnection::EvictVolume(
   return internal::EndSpan(std::move(span), child_->EvictVolume(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::EvictVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::EvictVolume");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->EvictVolume(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+BareMetalSolutionTracingConnection::EvictVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::EvictVolume");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->EvictVolume(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionTracingConnection::ResizeVolume(
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
@@ -220,6 +445,30 @@ BareMetalSolutionTracingConnection::ResizeVolume(
       "baremetalsolution_v2::BareMetalSolutionConnection::ResizeVolume");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ResizeVolume(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::ResizeVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::ResizeVolume");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ResizeVolume(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+BareMetalSolutionTracingConnection::ResizeVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::ResizeVolume");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ResizeVolume(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::Network>
@@ -262,6 +511,30 @@ BareMetalSolutionTracingConnection::UpdateNetwork(
   return internal::EndSpan(std::move(span), child_->UpdateNetwork(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::UpdateNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateNetwork(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
+BareMetalSolutionTracingConnection::UpdateNetwork(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateNetwork(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionTracingConnection::CreateVolumeSnapshot(
     google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
@@ -283,6 +556,33 @@ BareMetalSolutionTracingConnection::RestoreVolumeSnapshot(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RestoreVolumeSnapshot(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::RestoreVolumeSnapshot(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::"
+      "RestoreVolumeSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->RestoreVolumeSnapshot(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
+BareMetalSolutionTracingConnection::RestoreVolumeSnapshot(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::"
+      "RestoreVolumeSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RestoreVolumeSnapshot(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 Status BareMetalSolutionTracingConnection::DeleteVolumeSnapshot(
@@ -347,6 +647,30 @@ BareMetalSolutionTracingConnection::EvictLun(
   return internal::EndSpan(std::move(span), child_->EvictLun(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::EvictLun(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::EvictLun");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->EvictLun(google::cloud::ExperimentalTag{},
+                              google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+BareMetalSolutionTracingConnection::EvictLun(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::EvictLun");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->EvictLun(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionTracingConnection::GetNfsShare(
     google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
@@ -378,6 +702,31 @@ BareMetalSolutionTracingConnection::UpdateNfsShare(
   return internal::EndSpan(std::move(span), child_->UpdateNfsShare(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::UpdateNfsShare(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNfsShare");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateNfsShare(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+BareMetalSolutionTracingConnection::UpdateNfsShare(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::UpdateNfsShare");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateNfsShare(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionTracingConnection::CreateNfsShare(
     google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
@@ -386,6 +735,31 @@ BareMetalSolutionTracingConnection::CreateNfsShare(
       "baremetalsolution_v2::BareMetalSolutionConnection::CreateNfsShare");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateNfsShare(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::CreateNfsShare(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::CreateNfsShare");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateNfsShare(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+BareMetalSolutionTracingConnection::CreateNfsShare(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::CreateNfsShare");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateNfsShare(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
@@ -406,6 +780,31 @@ BareMetalSolutionTracingConnection::DeleteNfsShare(
       "baremetalsolution_v2::BareMetalSolutionConnection::DeleteNfsShare");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteNfsShare(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionTracingConnection::DeleteNfsShare(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::DeleteNfsShare");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteNfsShare(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+BareMetalSolutionTracingConnection::DeleteNfsShare(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "baremetalsolution_v2::BareMetalSolutionConnection::DeleteNfsShare");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteNfsShare(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>

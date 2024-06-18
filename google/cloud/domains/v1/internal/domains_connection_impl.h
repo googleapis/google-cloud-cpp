@@ -62,6 +62,15 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       google::cloud::domains::v1::RegisterDomainRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RegisterDomain(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::RegisterDomainRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::domains::v1::Registration>> RegisterDomain(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
   RetrieveTransferParameters(
       google::cloud::domains::v1::RetrieveTransferParametersRequest const&
@@ -70,6 +79,15 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
   future<StatusOr<google::cloud::domains::v1::Registration>> TransferDomain(
       google::cloud::domains::v1::TransferDomainRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> TransferDomain(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::TransferDomainRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::domains::v1::Registration>> TransferDomain(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::domains::v1::Registration> ListRegistrations(
       google::cloud::domains::v1::ListRegistrationsRequest request) override;
@@ -82,29 +100,86 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       google::cloud::domains::v1::UpdateRegistrationRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateRegistration(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::UpdateRegistrationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::domains::v1::Registration>> UpdateRegistration(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureManagementSettings(
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  ConfigureManagementSettings(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureDnsSettings(
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  ConfigureDnsSettings(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureContactSettings(
       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ConfigureContactSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  ConfigureContactSettings(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::domains::v1::Registration>> ExportRegistration(
       google::cloud::domains::v1::ExportRegistrationRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> ExportRegistration(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ExportRegistrationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::domains::v1::Registration>> ExportRegistration(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
   DeleteRegistration(
       google::cloud::domains::v1::DeleteRegistrationRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteRegistration(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::DeleteRegistrationRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
+  DeleteRegistration(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::domains::v1::AuthorizationCode>
   RetrieveAuthorizationCode(

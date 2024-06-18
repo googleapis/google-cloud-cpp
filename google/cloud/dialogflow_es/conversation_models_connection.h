@@ -21,7 +21,9 @@
 
 #include "google/cloud/dialogflow_es/conversation_models_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversation_models_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -194,6 +196,15 @@ class ConversationModelsConnection {
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateConversationModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
+  CreateConversationModel(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationModel>
   GetConversationModel(
       google::cloud::dialogflow::v2::GetConversationModelRequest const&
@@ -209,17 +220,47 @@ class ConversationModelsConnection {
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteConversationModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  DeleteConversationModel(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
   DeployConversationModel(
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeployConversationModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+  DeployConversationModel(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dialogflow::v2::
                               UndeployConversationModelOperationMetadata>>
   UndeployConversationModel(
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UndeployConversationModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::v2::
+                              UndeployConversationModelOperationMetadata>>
+  UndeployConversationModel(google::cloud::ExperimentalTag,
+                            google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   GetConversationModelEvaluation(
@@ -237,6 +278,18 @@ class ConversationModelsConnection {
   CreateConversationModelEvaluation(
       google::cloud::dialogflow::v2::
           CreateConversationModelEvaluationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  CreateConversationModelEvaluation(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::
+          CreateConversationModelEvaluationRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
+  CreateConversationModelEvaluation(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 };
 
 /**

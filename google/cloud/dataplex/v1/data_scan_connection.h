@@ -21,7 +21,9 @@
 
 #include "google/cloud/dataplex/v1/data_scan_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/data_scan_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -190,13 +192,37 @@ class DataScanServiceConnection {
   CreateDataScan(
       google::cloud::dataplex::v1::CreateDataScanRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateDataScan(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataScanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::DataScan>>
+  CreateDataScan(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::DataScan>>
   UpdateDataScan(
       google::cloud::dataplex::v1::UpdateDataScanRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateDataScan(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataScanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::DataScan>>
+  UpdateDataScan(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataScan(
       google::cloud::dataplex::v1::DeleteDataScanRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDataScan(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataScanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteDataScan(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dataplex::v1::DataScan> GetDataScan(
       google::cloud::dataplex::v1::GetDataScanRequest const& request);

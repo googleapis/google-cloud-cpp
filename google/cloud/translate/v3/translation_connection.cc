@@ -70,6 +70,22 @@ TranslationServiceConnection::BatchTranslateText(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnection::BatchTranslateText(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateTextRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
+TranslationServiceConnection::BatchTranslateText(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceConnection::BatchTranslateDocument(
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&) {
@@ -78,9 +94,41 @@ TranslationServiceConnection::BatchTranslateDocument(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnection::BatchTranslateDocument(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+TranslationServiceConnection::BatchTranslateDocument(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnection::CreateGlossary(
     google::cloud::translation::v3::CreateGlossaryRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::translation::v3::Glossary>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnection::CreateGlossary(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::CreateGlossaryRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::translation::v3::Glossary>>
+TranslationServiceConnection::CreateGlossary(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::translation::v3::Glossary>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -103,6 +151,22 @@ TranslationServiceConnection::GetGlossary(
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceConnection::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnection::DeleteGlossary(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::DeleteGlossaryRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
+TranslationServiceConnection::DeleteGlossary(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

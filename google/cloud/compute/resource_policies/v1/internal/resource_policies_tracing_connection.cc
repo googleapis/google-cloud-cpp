@@ -62,6 +62,33 @@ ResourcePoliciesTracingConnection::DeleteResourcePolicy(
                            child_->DeleteResourcePolicy(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesTracingConnection::DeleteResourcePolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::resource_policies::v1::
+        DeleteResourcePolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_resource_policies_v1::ResourcePoliciesConnection::"
+      "DeleteResourcePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteResourcePolicy(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesTracingConnection::DeleteResourcePolicy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_resource_policies_v1::ResourcePoliciesConnection::"
+      "DeleteResourcePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteResourcePolicy(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
 ResourcePoliciesTracingConnection::GetResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
@@ -95,6 +122,33 @@ ResourcePoliciesTracingConnection::InsertResourcePolicy(
                            child_->InsertResourcePolicy(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesTracingConnection::InsertResourcePolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::resource_policies::v1::
+        InsertResourcePolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_resource_policies_v1::ResourcePoliciesConnection::"
+      "InsertResourcePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->InsertResourcePolicy(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesTracingConnection::InsertResourcePolicy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_resource_policies_v1::ResourcePoliciesConnection::"
+      "InsertResourcePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InsertResourcePolicy(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
 ResourcePoliciesTracingConnection::ListResourcePolicies(
     google::cloud::cpp::compute::resource_policies::v1::
@@ -119,6 +173,33 @@ ResourcePoliciesTracingConnection::PatchResourcePolicy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchResourcePolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesTracingConnection::PatchResourcePolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_resource_policies_v1::ResourcePoliciesConnection::"
+      "PatchResourcePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->PatchResourcePolicy(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesTracingConnection::PatchResourcePolicy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_resource_policies_v1::ResourcePoliciesConnection::"
+      "PatchResourcePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->PatchResourcePolicy(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

@@ -55,15 +55,45 @@ class NetworkServicesTracingConnection
       google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateEndpointPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
+  CreateEndpointPolicy(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
   UpdateEndpointPolicy(
       google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateEndpointPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
+  UpdateEndpointPolicy(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteEndpointPolicy(
       google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteEndpointPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteEndpointPolicy(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::Gateway> ListGateways(
       google::cloud::networkservices::v1::ListGatewaysRequest request) override;
@@ -76,13 +106,40 @@ class NetworkServicesTracingConnection
       google::cloud::networkservices::v1::CreateGatewayRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateGatewayRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::Gateway>> CreateGateway(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
       google::cloud::networkservices::v1::UpdateGatewayRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateGatewayRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteGateway(google::cloud::networkservices::v1::DeleteGatewayRequest const&
                     request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteGatewayRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteGateway(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::GrpcRoute> ListGrpcRoutes(
       google::cloud::networkservices::v1::ListGrpcRoutesRequest request)
@@ -97,15 +154,42 @@ class NetworkServicesTracingConnection
       google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateGrpcRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
+  CreateGrpcRoute(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
   UpdateGrpcRoute(
       google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateGrpcRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
+  UpdateGrpcRoute(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteGrpcRoute(
       google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteGrpcRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteGrpcRoute(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::HttpRoute> ListHttpRoutes(
       google::cloud::networkservices::v1::ListHttpRoutesRequest request)
@@ -120,15 +204,42 @@ class NetworkServicesTracingConnection
       google::cloud::networkservices::v1::CreateHttpRouteRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateHttpRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateHttpRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
+  CreateHttpRoute(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
   UpdateHttpRoute(
       google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateHttpRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
+  UpdateHttpRoute(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteHttpRoute(
       google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteHttpRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteHttpRoute(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::TcpRoute> ListTcpRoutes(
       google::cloud::networkservices::v1::ListTcpRoutesRequest request)
@@ -142,14 +253,41 @@ class NetworkServicesTracingConnection
       google::cloud::networkservices::v1::CreateTcpRouteRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateTcpRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateTcpRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> CreateTcpRoute(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> UpdateTcpRoute(
       google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateTcpRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> UpdateTcpRoute(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteTcpRoute(
       google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteTcpRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteTcpRoute(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::TlsRoute> ListTlsRoutes(
       google::cloud::networkservices::v1::ListTlsRoutesRequest request)
@@ -163,14 +301,41 @@ class NetworkServicesTracingConnection
       google::cloud::networkservices::v1::CreateTlsRouteRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateTlsRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateTlsRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> CreateTlsRoute(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
       google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateTlsRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteTlsRoute(
       google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteTlsRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteTlsRoute(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::ServiceBinding>
   ListServiceBindings(
@@ -187,10 +352,30 @@ class NetworkServicesTracingConnection
       google::cloud::networkservices::v1::CreateServiceBindingRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateServiceBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+  CreateServiceBinding(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteServiceBinding(
       google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteServiceBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteServiceBinding(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::Mesh> ListMeshes(
       google::cloud::networkservices::v1::ListMeshesRequest request) override;
@@ -203,13 +388,40 @@ class NetworkServicesTracingConnection
       google::cloud::networkservices::v1::CreateMeshRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateMesh(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateMeshRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::Mesh>> CreateMesh(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
       google::cloud::networkservices::v1::UpdateMeshRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateMesh(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateMeshRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteMesh(google::cloud::networkservices::v1::DeleteMeshRequest const&
                  request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteMesh(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteMeshRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteMesh(google::cloud::ExperimentalTag,
+             google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<networkservices_v1::NetworkServicesConnection> child_;

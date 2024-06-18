@@ -49,6 +49,23 @@ ConsumerProcurementServiceConnection::PlaceOrder(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceConnection::PlaceOrder(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::commerce::consumer::procurement::v1::
+        PlaceOrderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceConnection::PlaceOrder(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 ConsumerProcurementServiceConnection::GetOrder(
     google::cloud::commerce::consumer::procurement::v1::

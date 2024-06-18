@@ -42,6 +42,30 @@ DataplexServiceTracingConnection::CreateLake(
   return internal::EndSpan(std::move(span), child_->CreateLake(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::CreateLake(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateLakeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::CreateLake");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateLake(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Lake>>
+DataplexServiceTracingConnection::CreateLake(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::CreateLake");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateLake(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
 DataplexServiceTracingConnection::UpdateLake(
     google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
@@ -51,6 +75,30 @@ DataplexServiceTracingConnection::UpdateLake(
   return internal::EndSpan(std::move(span), child_->UpdateLake(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::UpdateLake(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::UpdateLake");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateLake(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Lake>>
+DataplexServiceTracingConnection::UpdateLake(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::UpdateLake");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateLake(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceTracingConnection::DeleteLake(
     google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
@@ -58,6 +106,30 @@ DataplexServiceTracingConnection::DeleteLake(
       internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteLake");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteLake(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::DeleteLake(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteLake");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteLake(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceTracingConnection::DeleteLake(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteLake");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteLake(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::Lake>
@@ -100,6 +172,30 @@ DataplexServiceTracingConnection::CreateZone(
   return internal::EndSpan(std::move(span), child_->CreateZone(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::CreateZone(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateZoneRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::CreateZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateZone(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Zone>>
+DataplexServiceTracingConnection::CreateZone(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::CreateZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateZone(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
 DataplexServiceTracingConnection::UpdateZone(
     google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
@@ -109,6 +205,30 @@ DataplexServiceTracingConnection::UpdateZone(
   return internal::EndSpan(std::move(span), child_->UpdateZone(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::UpdateZone(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::UpdateZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateZone(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Zone>>
+DataplexServiceTracingConnection::UpdateZone(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::UpdateZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateZone(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceTracingConnection::DeleteZone(
     google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
@@ -116,6 +236,30 @@ DataplexServiceTracingConnection::DeleteZone(
       internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteZone");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteZone(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::DeleteZone(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteZone(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceTracingConnection::DeleteZone(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteZone");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteZone(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::Zone>
@@ -158,6 +302,30 @@ DataplexServiceTracingConnection::CreateAsset(
   return internal::EndSpan(std::move(span), child_->CreateAsset(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::CreateAsset(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateAssetRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::CreateAsset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateAsset(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Asset>>
+DataplexServiceTracingConnection::CreateAsset(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::CreateAsset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateAsset(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
 DataplexServiceTracingConnection::UpdateAsset(
     google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
@@ -167,6 +335,30 @@ DataplexServiceTracingConnection::UpdateAsset(
   return internal::EndSpan(std::move(span), child_->UpdateAsset(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::UpdateAsset(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::UpdateAsset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateAsset(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Asset>>
+DataplexServiceTracingConnection::UpdateAsset(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::UpdateAsset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateAsset(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceTracingConnection::DeleteAsset(
     google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
@@ -174,6 +366,30 @@ DataplexServiceTracingConnection::DeleteAsset(
       internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteAsset");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAsset(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::DeleteAsset(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteAsset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteAsset(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceTracingConnection::DeleteAsset(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteAsset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteAsset(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::Asset>
@@ -216,6 +432,30 @@ DataplexServiceTracingConnection::CreateTask(
   return internal::EndSpan(std::move(span), child_->CreateTask(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::CreateTask(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateTaskRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::CreateTask");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateTask(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Task>>
+DataplexServiceTracingConnection::CreateTask(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::CreateTask");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateTask(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Task>>
 DataplexServiceTracingConnection::UpdateTask(
     google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
@@ -225,6 +465,30 @@ DataplexServiceTracingConnection::UpdateTask(
   return internal::EndSpan(std::move(span), child_->UpdateTask(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::UpdateTask(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::UpdateTask");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTask(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Task>>
+DataplexServiceTracingConnection::UpdateTask(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::UpdateTask");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateTask(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceTracingConnection::DeleteTask(
     google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
@@ -232,6 +496,30 @@ DataplexServiceTracingConnection::DeleteTask(
       internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteTask");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTask(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::DeleteTask(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteTask");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteTask(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceTracingConnection::DeleteTask(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataplex_v1::DataplexServiceConnection::DeleteTask");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteTask(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::Task>
@@ -300,6 +588,30 @@ DataplexServiceTracingConnection::CreateEnvironment(
   return internal::EndSpan(std::move(span), child_->CreateEnvironment(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::CreateEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataplexServiceConnection::CreateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateEnvironment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Environment>>
+DataplexServiceTracingConnection::CreateEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataplexServiceConnection::CreateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateEnvironment(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
 DataplexServiceTracingConnection::UpdateEnvironment(
     google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
@@ -309,6 +621,30 @@ DataplexServiceTracingConnection::UpdateEnvironment(
   return internal::EndSpan(std::move(span), child_->UpdateEnvironment(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::UpdateEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataplexServiceConnection::UpdateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateEnvironment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Environment>>
+DataplexServiceTracingConnection::UpdateEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataplexServiceConnection::UpdateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateEnvironment(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceTracingConnection::DeleteEnvironment(
     google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
@@ -316,6 +652,30 @@ DataplexServiceTracingConnection::DeleteEnvironment(
       "dataplex_v1::DataplexServiceConnection::DeleteEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEnvironment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataplexServiceTracingConnection::DeleteEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataplexServiceConnection::DeleteEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteEnvironment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceTracingConnection::DeleteEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataplex_v1::DataplexServiceConnection::DeleteEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteEnvironment(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::Environment>

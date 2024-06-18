@@ -63,6 +63,30 @@ CloudFunctionsServiceTracingConnection::CreateFunction(
   return internal::EndSpan(std::move(span), child_->CreateFunction(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingConnection::CreateFunction(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::CreateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateFunction(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::functions::v1::CloudFunction>>
+CloudFunctionsServiceTracingConnection::CreateFunction(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::CreateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateFunction(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceTracingConnection::UpdateFunction(
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
@@ -72,6 +96,30 @@ CloudFunctionsServiceTracingConnection::UpdateFunction(
   return internal::EndSpan(std::move(span), child_->UpdateFunction(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingConnection::UpdateFunction(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::UpdateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateFunction(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::functions::v1::CloudFunction>>
+CloudFunctionsServiceTracingConnection::UpdateFunction(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::UpdateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateFunction(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
 CloudFunctionsServiceTracingConnection::DeleteFunction(
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
@@ -79,6 +127,30 @@ CloudFunctionsServiceTracingConnection::DeleteFunction(
       "functions_v1::CloudFunctionsServiceConnection::DeleteFunction");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFunction(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingConnection::DeleteFunction(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::DeleteFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteFunction(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
+CloudFunctionsServiceTracingConnection::DeleteFunction(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::DeleteFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteFunction(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>

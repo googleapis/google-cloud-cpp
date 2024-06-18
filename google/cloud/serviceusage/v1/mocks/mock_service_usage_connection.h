@@ -54,9 +54,35 @@ class MockServiceUsageConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, EnableService,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::api::serviceusage::v1::EnableServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
+      EnableService,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
       DisableService,
       (google::api::serviceusage::v1::DisableServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DisableService,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::api::serviceusage::v1::DisableServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
+      DisableService,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::api::serviceusage::v1::Service>, GetService,
@@ -74,6 +100,20 @@ class MockServiceUsageConnection
       BatchEnableServices,
       (google::api::serviceusage::v1::BatchEnableServicesRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchEnableServices,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::api::serviceusage::v1::BatchEnableServicesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,
+      BatchEnableServices,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

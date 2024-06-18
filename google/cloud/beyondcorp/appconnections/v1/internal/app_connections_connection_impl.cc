@@ -172,6 +172,62 @@ AppConnectionsServiceConnectionImpl::CreateAppConnection(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceConnectionImpl::CreateAppConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        CreateAppConnectionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAppConnection(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appconnections::v1::
+                 CreateAppConnectionRequest const& request) {
+        return stub_->CreateAppConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+AppConnectionsServiceConnectionImpl::CreateAppConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::beyondcorp::appconnections::v1::
+                   AppConnectionOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAppConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::beyondcorp::appconnections::v1::AppConnection>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::beyondcorp::appconnections::v1::AppConnection>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceConnectionImpl::UpdateAppConnection(
     google::cloud::beyondcorp::appconnections::v1::
@@ -209,6 +265,62 @@ AppConnectionsServiceConnectionImpl::UpdateAppConnection(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::beyondcorp::appconnections::v1::AppConnection>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceConnectionImpl::UpdateAppConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        UpdateAppConnectionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAppConnection(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appconnections::v1::
+                 UpdateAppConnectionRequest const& request) {
+        return stub_->UpdateAppConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+AppConnectionsServiceConnectionImpl::UpdateAppConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::beyondcorp::appconnections::v1::
+                   AppConnectionOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAppConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::beyondcorp::appconnections::v1::AppConnection>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::beyondcorp::appconnections::v1::AppConnection>,
       polling_policy(*current), __func__);
 }
 
@@ -252,6 +364,66 @@ AppConnectionsServiceConnectionImpl::DeleteAppConnection(
           google::cloud::beyondcorp::appconnections::v1::
               AppConnectionOperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceConnectionImpl::DeleteAppConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        DeleteAppConnectionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAppConnection(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::beyondcorp::appconnections::v1::
+                 DeleteAppConnectionRequest const& request) {
+        return stub_->DeleteAppConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
+                    AppConnectionOperationMetadata>>
+AppConnectionsServiceConnectionImpl::DeleteAppConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::beyondcorp::appconnections::v1::
+                   AppConnectionOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::beyondcorp::appconnections::v1::
+                     AppConnectionOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAppConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::beyondcorp::appconnections::v1::
+          AppConnectionOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::beyondcorp::appconnections::v1::
+              AppConnectionOperationMetadata>,
       polling_policy(*current), __func__);
 }
 

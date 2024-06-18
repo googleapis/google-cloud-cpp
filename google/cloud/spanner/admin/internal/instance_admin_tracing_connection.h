@@ -55,10 +55,30 @@ class InstanceAdminTracingConnection
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  CreateInstanceConfig(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
   UpdateInstanceConfig(
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   Status DeleteInstanceConfig(
       google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
@@ -86,10 +106,28 @@ class InstanceAdminTracingConnection
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  CreateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  UpdateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
 
   Status DeleteInstance(
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
@@ -114,6 +152,16 @@ class InstanceAdminTracingConnection
       google::spanner::admin::instance::v1::
           CreateInstancePartitionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  CreateInstancePartition(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   Status DeleteInstancePartition(
       google::spanner::admin::instance::v1::
           DeleteInstancePartitionRequest const& request) override;
@@ -122,6 +170,16 @@ class InstanceAdminTracingConnection
   UpdateInstancePartition(
       google::spanner::admin::instance::v1::
           UpdateInstancePartitionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  UpdateInstancePartition(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::longrunning::Operation> ListInstancePartitionOperations(
       google::spanner::admin::instance::v1::

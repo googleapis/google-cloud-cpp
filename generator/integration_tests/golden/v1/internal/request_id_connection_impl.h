@@ -59,6 +59,14 @@ class RequestIdServiceConnectionImpl
   future<StatusOr<google::test::requestid::v1::Foo>>
   RenameFoo(google::test::requestid::v1::RenameFooRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation>
+  RenameFoo(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::test::requestid::v1::RenameFooRequest const& request) override;
+
+  future<StatusOr<google::test::requestid::v1::Foo>>
+  RenameFoo(google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::test::requestid::v1::Foo>
   ListFoos(google::test::requestid::v1::ListFoosRequest request) override;
 

@@ -62,6 +62,30 @@ InstancesTracingConnection::DeleteInstance(
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+InstancesTracingConnection::DeleteInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::DeleteInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpan("appengine_v1::InstancesConnection::DeleteInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+InstancesTracingConnection::DeleteInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("appengine_v1::InstancesConnection::DeleteInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteInstance(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::appengine::v1::Instance>>
 InstancesTracingConnection::DebugInstance(
     google::appengine::v1::DebugInstanceRequest const& request) {
@@ -69,6 +93,30 @@ InstancesTracingConnection::DebugInstance(
       internal::MakeSpan("appengine_v1::InstancesConnection::DebugInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DebugInstance(request));
+}
+
+StatusOr<google::longrunning::Operation>
+InstancesTracingConnection::DebugInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::DebugInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpan("appengine_v1::InstancesConnection::DebugInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DebugInstance(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::Instance>>
+InstancesTracingConnection::DebugInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("appengine_v1::InstancesConnection::DebugInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DebugInstance(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

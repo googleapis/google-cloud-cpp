@@ -59,6 +59,16 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
       google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+  CreateFeatureOnlineStore(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
   GetFeatureOnlineStore(
       google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
@@ -74,15 +84,44 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
       google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+  UpdateFeatureOnlineStore(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureOnlineStore(
       google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureOnlineStore(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
   CreateFeatureView(
       google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateFeatureView(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+  CreateFeatureView(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
       google::cloud::aiplatform::v1::GetFeatureViewRequest const& request)
@@ -96,10 +135,28 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
       google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateFeatureView(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+  UpdateFeatureView(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureView(
       google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteFeatureView(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureView(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
   SyncFeatureView(google::cloud::aiplatform::v1::SyncFeatureViewRequest const&

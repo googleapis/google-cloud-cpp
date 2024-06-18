@@ -56,6 +56,33 @@ InstanceSettingsTracingConnection::PatchInstanceSettings(
                            child_->PatchInstanceSettings(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InstanceSettingsTracingConnection::PatchInstanceSettings(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::instance_settings::v1::
+        PatchInstanceSettingsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_instance_settings_v1::InstanceSettingsConnection::"
+      "PatchInstanceSettings");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->PatchInstanceSettings(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InstanceSettingsTracingConnection::PatchInstanceSettings(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_instance_settings_v1::InstanceSettingsConnection::"
+      "PatchInstanceSettings");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PatchInstanceSettings(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_instance_settings_v1::InstanceSettingsConnection>

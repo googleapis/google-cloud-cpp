@@ -321,6 +321,63 @@ ArtifactRegistryConnectionImpl::ImportAptArtifacts(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::ImportAptArtifacts(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportAptArtifacts(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 ImportAptArtifactsRequest const& request) {
+        return stub_->ImportAptArtifacts(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+ArtifactRegistryConnectionImpl::ImportAptArtifacts(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   ImportAptArtifactsMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportAptArtifacts",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
 ArtifactRegistryConnectionImpl::ImportYumArtifacts(
@@ -359,6 +416,63 @@ ArtifactRegistryConnectionImpl::ImportYumArtifacts(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::ImportYumArtifacts(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportYumArtifacts(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 ImportYumArtifactsRequest const& request) {
+        return stub_->ImportYumArtifacts(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+ArtifactRegistryConnectionImpl::ImportYumArtifacts(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   ImportYumArtifactsMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportYumArtifacts",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -455,6 +569,63 @@ ArtifactRegistryConnectionImpl::CreateRepository(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::CreateRepository(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRepository(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+              request) {
+        return stub_->CreateRepository(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
+ArtifactRegistryConnectionImpl::CreateRepository(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::devtools::artifactregistry::v1::Repository>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateRepository",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::Repository>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::artifactregistry::v1::Repository>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryConnectionImpl::UpdateRepository(
     google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
@@ -510,6 +681,63 @@ ArtifactRegistryConnectionImpl::DeleteRepository(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::DeleteRepository(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRepository(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+              request) {
+        return stub_->DeleteRepository(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnectionImpl::DeleteRepository(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteRepository",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::artifactregistry::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -605,6 +833,62 @@ ArtifactRegistryConnectionImpl::DeletePackage(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::DeletePackage(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePackage(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::DeletePackageRequest const&
+                 request) {
+        return stub_->DeletePackage(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnectionImpl::DeletePackage(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeletePackage",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::artifactregistry::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryConnectionImpl::ListVersions(
     google::devtools::artifactregistry::v1::ListVersionsRequest request) {
@@ -697,6 +981,62 @@ ArtifactRegistryConnectionImpl::DeleteVersion(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::DeleteVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+                 request) {
+        return stub_->DeleteVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnectionImpl::DeleteVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::artifactregistry::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
 ArtifactRegistryConnectionImpl::BatchDeleteVersions(
@@ -735,6 +1075,63 @@ ArtifactRegistryConnectionImpl::BatchDeleteVersions(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnectionImpl::BatchDeleteVersions(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchDeleteVersions(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::artifactregistry::v1::
+                 BatchDeleteVersionsRequest const& request) {
+        return stub_->BatchDeleteVersions(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryConnectionImpl::BatchDeleteVersions(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::artifactregistry::v1::
+                   BatchDeleteVersionsMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchDeleteVersions",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>,
       polling_policy(*current), __func__);
 }
 

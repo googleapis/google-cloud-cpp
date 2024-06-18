@@ -21,7 +21,9 @@
 
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_retry_traits.h"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -214,10 +216,30 @@ class PolicyBasedRoutingServiceConnection {
   CreatePolicyBasedRoute(google::cloud::networkconnectivity::v1::
                              CreatePolicyBasedRouteRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          CreatePolicyBasedRouteRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
+  CreatePolicyBasedRoute(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeletePolicyBasedRoute(google::cloud::networkconnectivity::v1::
                              DeletePolicyBasedRouteRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          DeletePolicyBasedRouteRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeletePolicyBasedRoute(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation);
 };
 
 /**

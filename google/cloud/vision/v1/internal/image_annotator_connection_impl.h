@@ -65,10 +65,30 @@ class ImageAnnotatorConnectionImpl
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
+  AsyncBatchAnnotateImages(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
+  AsyncBatchAnnotateFiles(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

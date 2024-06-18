@@ -90,6 +90,18 @@ class MockCloudChannelServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ProvisionCloudIdentity,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::channel::v1::ProvisionCloudIdentityRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Customer>>,
+              ProvisionCloudIdentity,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::channel::v1::Entitlement>),
               ListEntitlements,
               (google::cloud::channel::v1::ListEntitlementsRequest request),
@@ -118,10 +130,34 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEntitlement,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::channel::v1::CreateEntitlementRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+              CreateEntitlement,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       ChangeParameters,
       (google::cloud::channel::v1::ChangeParametersRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ChangeParameters,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::channel::v1::ChangeParametersRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+              ChangeParameters,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
@@ -129,9 +165,32 @@ class MockCloudChannelServiceConnection
       (google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ChangeRenewalSettings,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+              ChangeRenewalSettings,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
               ChangeOffer,
               (google::cloud::channel::v1::ChangeOfferRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ChangeOffer,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::channel::v1::ChangeOfferRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+              ChangeOffer,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -141,10 +200,34 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartPaidService,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::channel::v1::StartPaidServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+              StartPaidService,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       SuspendEntitlement,
       (google::cloud::channel::v1::SuspendEntitlementRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, SuspendEntitlement,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::channel::v1::SuspendEntitlementRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+              SuspendEntitlement,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
@@ -153,10 +236,34 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CancelEntitlement,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::channel::v1::CancelEntitlementRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
+              CancelEntitlement,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       ActivateEntitlement,
       (google::cloud::channel::v1::ActivateEntitlementRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ActivateEntitlement,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::channel::v1::ActivateEntitlementRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
+              ActivateEntitlement,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       future<
@@ -166,11 +273,38 @@ class MockCloudChannelServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, TransferEntitlements,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::channel::v1::TransferEntitlementsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>,
+      TransferEntitlements,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
       TransferEntitlementsToGoogle,
       (google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, TransferEntitlementsToGoogle,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
+              TransferEntitlementsToGoogle,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::channel::v1::ChannelPartnerLink>),

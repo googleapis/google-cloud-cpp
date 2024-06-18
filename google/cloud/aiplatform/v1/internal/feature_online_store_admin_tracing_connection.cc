@@ -47,6 +47,33 @@ FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
                            child_->CreateFeatureOnlineStore(request));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "CreateFeatureOnlineStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateFeatureOnlineStore(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "CreateFeatureOnlineStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateFeatureOnlineStore(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
 FeatureOnlineStoreAdminServiceTracingConnection::GetFeatureOnlineStore(
     google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
@@ -83,6 +110,33 @@ FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
                            child_->UpdateFeatureOnlineStore(request));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "UpdateFeatureOnlineStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateFeatureOnlineStore(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "UpdateFeatureOnlineStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateFeatureOnlineStore(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
     google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
@@ -95,6 +149,33 @@ FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
                            child_->DeleteFeatureOnlineStore(request));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "DeleteFeatureOnlineStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteFeatureOnlineStore(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "DeleteFeatureOnlineStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteFeatureOnlineStore(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
@@ -103,6 +184,32 @@ FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
       "CreateFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateFeatureView(request));
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "CreateFeatureView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateFeatureView(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "CreateFeatureView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateFeatureView(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
@@ -138,6 +245,32 @@ FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
   return internal::EndSpan(std::move(span), child_->UpdateFeatureView(request));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "UpdateFeatureView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateFeatureView(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "UpdateFeatureView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateFeatureView(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
@@ -146,6 +279,32 @@ FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
       "DeleteFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFeatureView(request));
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "DeleteFeatureView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteFeatureView(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
+      "DeleteFeatureView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteFeatureView(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>

@@ -71,6 +71,30 @@ BigtableTableAdminTracingConnection::UpdateTable(
   return internal::EndSpan(std::move(span), child_->UpdateTable(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingConnection::UpdateTable(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UpdateTable");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTable(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminTracingConnection::UpdateTable(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UpdateTable");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateTable(google::cloud::ExperimentalTag{}, operation));
+}
+
 Status BigtableTableAdminTracingConnection::DeleteTable(
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
   auto span = internal::MakeSpan(
@@ -88,6 +112,30 @@ BigtableTableAdminTracingConnection::UndeleteTable(
   return internal::EndSpan(std::move(span), child_->UndeleteTable(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingConnection::UndeleteTable(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UndeleteTable");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UndeleteTable(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminTracingConnection::UndeleteTable(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UndeleteTable");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UndeleteTable(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
 BigtableTableAdminTracingConnection::CreateAuthorizedView(
     google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
@@ -96,6 +144,30 @@ BigtableTableAdminTracingConnection::CreateAuthorizedView(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateAuthorizedView(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingConnection::CreateAuthorizedView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CreateAuthorizedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateAuthorizedView(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminTracingConnection::CreateAuthorizedView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CreateAuthorizedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAuthorizedView(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::bigtable::admin::v2::AuthorizedView>
@@ -127,6 +199,30 @@ BigtableTableAdminTracingConnection::UpdateAuthorizedView(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateAuthorizedView(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingConnection::UpdateAuthorizedView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UpdateAuthorizedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateAuthorizedView(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminTracingConnection::UpdateAuthorizedView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UpdateAuthorizedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAuthorizedView(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 Status BigtableTableAdminTracingConnection::DeleteAuthorizedView(
@@ -182,6 +278,30 @@ BigtableTableAdminTracingConnection::CreateBackup(
   return internal::EndSpan(std::move(span), child_->CreateBackup(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingConnection::CreateBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CreateBackupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CreateBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateBackup(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminTracingConnection::CreateBackup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CreateBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateBackup(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminTracingConnection::GetBackup(
     google::bigtable::admin::v2::GetBackupRequest const& request) {
@@ -228,6 +348,30 @@ BigtableTableAdminTracingConnection::RestoreTable(
   return internal::EndSpan(std::move(span), child_->RestoreTable(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingConnection::RestoreTable(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::RestoreTableRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::RestoreTable");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->RestoreTable(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminTracingConnection::RestoreTable(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::RestoreTable");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->RestoreTable(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminTracingConnection::CopyBackup(
     google::bigtable::admin::v2::CopyBackupRequest const& request) {
@@ -235,6 +379,30 @@ BigtableTableAdminTracingConnection::CopyBackup(
       "bigtable_admin::BigtableTableAdminConnection::CopyBackup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CopyBackup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminTracingConnection::CopyBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CopyBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CopyBackup(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminTracingConnection::CopyBackup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CopyBackup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CopyBackup(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::iam::v1::Policy>

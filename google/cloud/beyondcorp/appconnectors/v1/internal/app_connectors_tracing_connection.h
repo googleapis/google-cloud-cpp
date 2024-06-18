@@ -55,19 +55,56 @@ class AppConnectorsServiceTracingConnection
   CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                          CreateAppConnectorRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateAppConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::
+          CreateAppConnectorRequest const& request) override;
+
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  CreateAppConnector(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                          UpdateAppConnectorRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateAppConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::
+          UpdateAppConnectorRequest const& request) override;
+
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  UpdateAppConnector(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                       AppConnectorOperationMetadata>>
   DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                          DeleteAppConnectorRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteAppConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::
+          DeleteAppConnectorRequest const& request) override;
+
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                      AppConnectorOperationMetadata>>
+  DeleteAppConnector(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   ReportStatus(
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> ReportStatus(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  ReportStatus(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<beyondcorp_appconnectors_v1::AppConnectorsServiceConnection>

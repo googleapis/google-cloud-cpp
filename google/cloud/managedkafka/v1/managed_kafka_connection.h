@@ -21,7 +21,9 @@
 
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_retry_traits.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -195,13 +197,37 @@ class ManagedKafkaConnection {
   CreateCluster(
       google::cloud::managedkafka::v1::CreateClusterRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedkafka::v1::CreateClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
+  CreateCluster(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
   UpdateCluster(
       google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
+  UpdateCluster(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
   DeleteCluster(
       google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
+  DeleteCluster(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
       google::cloud::managedkafka::v1::ListTopicsRequest request);

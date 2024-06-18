@@ -42,6 +42,30 @@ EngineServiceTracingConnection::CreateEngine(
   return internal::EndSpan(std::move(span), child_->CreateEngine(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EngineServiceTracingConnection::CreateEngine(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::CreateEngine");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateEngine(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
+EngineServiceTracingConnection::CreateEngine(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::CreateEngine");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateEngine(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
 EngineServiceTracingConnection::DeleteEngine(
     google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
@@ -49,6 +73,30 @@ EngineServiceTracingConnection::DeleteEngine(
       "discoveryengine_v1::EngineServiceConnection::DeleteEngine");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEngine(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EngineServiceTracingConnection::DeleteEngine(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::DeleteEngine");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteEngine(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
+EngineServiceTracingConnection::DeleteEngine(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::EngineServiceConnection::DeleteEngine");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteEngine(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>

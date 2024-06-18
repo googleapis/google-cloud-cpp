@@ -21,7 +21,9 @@
 
 #include "google/cloud/cloudbuild/v1/cloud_build_connection_idempotency_policy.h"
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -187,6 +189,14 @@ class CloudBuildConnection {
   virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateBuild(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v1::CreateBuildRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
       google::devtools::cloudbuild::v1::GetBuildRequest const& request);
 
@@ -199,9 +209,25 @@ class CloudBuildConnection {
   virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> RetryBuild(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v1::RetryBuildRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>>
   ApproveBuild(
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ApproveBuild(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  ApproveBuild(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
   CreateBuildTrigger(
@@ -229,6 +255,14 @@ class CloudBuildConnection {
   RunBuildTrigger(
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> RunBuildTrigger(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+  RunBuildTrigger(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual StatusOr<
       google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
   ReceiveTriggerWebhook(
@@ -239,6 +273,14 @@ class CloudBuildConnection {
   CreateWorkerPool(
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateWorkerPool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
+  CreateWorkerPool(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
       google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request);
 
@@ -247,9 +289,26 @@ class CloudBuildConnection {
   DeleteWorkerPool(
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteWorkerPool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request);
+
+  virtual future<StatusOr<
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
+  DeleteWorkerPool(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   UpdateWorkerPool(
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateWorkerPool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
+  UpdateWorkerPool(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
   ListWorkerPools(

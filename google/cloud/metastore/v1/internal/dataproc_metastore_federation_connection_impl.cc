@@ -165,6 +165,60 @@ DataprocMetastoreFederationConnectionImpl::CreateFederation(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationConnectionImpl::CreateFederation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::CreateFederationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateFederation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::CreateFederationRequest const&
+                 request) {
+        return stub_->CreateFederation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Federation>>
+DataprocMetastoreFederationConnectionImpl::CreateFederation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::Federation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateFederation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::Federation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::Federation>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationConnectionImpl::UpdateFederation(
     google::cloud::metastore::v1::UpdateFederationRequest const& request) {
@@ -205,6 +259,60 @@ DataprocMetastoreFederationConnectionImpl::UpdateFederation(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationConnectionImpl::UpdateFederation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::UpdateFederationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateFederation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::UpdateFederationRequest const&
+                 request) {
+        return stub_->UpdateFederation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Federation>>
+DataprocMetastoreFederationConnectionImpl::UpdateFederation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::Federation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateFederation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::Federation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::Federation>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreFederationConnectionImpl::DeleteFederation(
     google::cloud::metastore::v1::DeleteFederationRequest const& request) {
@@ -242,6 +350,60 @@ DataprocMetastoreFederationConnectionImpl::DeleteFederation(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::metastore::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationConnectionImpl::DeleteFederation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::DeleteFederationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteFederation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::DeleteFederationRequest const&
+                 request) {
+        return stub_->DeleteFederation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+DataprocMetastoreFederationConnectionImpl::DeleteFederation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteFederation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::metastore::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

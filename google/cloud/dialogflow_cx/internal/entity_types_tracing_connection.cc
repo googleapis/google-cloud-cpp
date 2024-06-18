@@ -90,6 +90,31 @@ EntityTypesTracingConnection::ExportEntityTypes(
   return internal::EndSpan(std::move(span), child_->ExportEntityTypes(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingConnection::ExportEntityTypes(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::ExportEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ExportEntityTypes(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+EntityTypesTracingConnection::ExportEntityTypes(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::ExportEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ExportEntityTypes(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
 EntityTypesTracingConnection::ImportEntityTypes(
     google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
@@ -98,6 +123,31 @@ EntityTypesTracingConnection::ImportEntityTypes(
       "dialogflow_cx::EntityTypesConnection::ImportEntityTypes");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportEntityTypes(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingConnection::ImportEntityTypes(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::ImportEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ImportEntityTypes(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+EntityTypesTracingConnection::ImportEntityTypes(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::ImportEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ImportEntityTypes(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

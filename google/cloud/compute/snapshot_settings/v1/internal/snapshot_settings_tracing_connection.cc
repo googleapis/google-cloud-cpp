@@ -56,6 +56,33 @@ SnapshotSettingsTracingConnection::PatchSnapshotSettings(
                            child_->PatchSnapshotSettings(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotSettingsTracingConnection::PatchSnapshotSettings(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::snapshot_settings::v1::
+        PatchSnapshotSettingsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshot_settings_v1::SnapshotSettingsConnection::"
+      "PatchSnapshotSettings");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->PatchSnapshotSettings(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotSettingsTracingConnection::PatchSnapshotSettings(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_snapshot_settings_v1::SnapshotSettingsConnection::"
+      "PatchSnapshotSettings");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PatchSnapshotSettings(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<compute_snapshot_settings_v1::SnapshotSettingsConnection>

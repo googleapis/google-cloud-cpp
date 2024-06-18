@@ -56,11 +56,30 @@ class AppGatewaysServiceTracingConnection
       google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateAppGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
+  CreateAppGateway(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(
       google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAppGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  DeleteAppGateway(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<beyondcorp_appgateways_v1::AppGatewaysServiceConnection>

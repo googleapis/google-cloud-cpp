@@ -75,6 +75,26 @@ future<StatusOr<google::protobuf::Struct>> AgentsTracingConnection::TrainAgent(
   return internal::EndSpan(std::move(span), child_->TrainAgent(request));
 }
 
+StatusOr<google::longrunning::Operation> AgentsTracingConnection::TrainAgent(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
+  auto span = internal::MakeSpan("dialogflow_es::AgentsConnection::TrainAgent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->TrainAgent(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>> AgentsTracingConnection::TrainAgent(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("dialogflow_es::AgentsConnection::TrainAgent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->TrainAgent(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
 AgentsTracingConnection::ExportAgent(
     google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
@@ -82,6 +102,29 @@ AgentsTracingConnection::ExportAgent(
       internal::MakeSpan("dialogflow_es::AgentsConnection::ExportAgent");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportAgent(request));
+}
+
+StatusOr<google::longrunning::Operation> AgentsTracingConnection::ExportAgent(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::AgentsConnection::ExportAgent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ExportAgent(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
+AgentsTracingConnection::ExportAgent(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::AgentsConnection::ExportAgent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ExportAgent(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::protobuf::Struct>> AgentsTracingConnection::ImportAgent(
@@ -92,6 +135,28 @@ future<StatusOr<google::protobuf::Struct>> AgentsTracingConnection::ImportAgent(
   return internal::EndSpan(std::move(span), child_->ImportAgent(request));
 }
 
+StatusOr<google::longrunning::Operation> AgentsTracingConnection::ImportAgent(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::AgentsConnection::ImportAgent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ImportAgent(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>> AgentsTracingConnection::ImportAgent(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::AgentsConnection::ImportAgent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ImportAgent(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::protobuf::Struct>>
 AgentsTracingConnection::RestoreAgent(
     google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
@@ -99,6 +164,29 @@ AgentsTracingConnection::RestoreAgent(
       internal::MakeSpan("dialogflow_es::AgentsConnection::RestoreAgent");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestoreAgent(request));
+}
+
+StatusOr<google::longrunning::Operation> AgentsTracingConnection::RestoreAgent(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::AgentsConnection::RestoreAgent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->RestoreAgent(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+AgentsTracingConnection::RestoreAgent(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dialogflow_es::AgentsConnection::RestoreAgent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->RestoreAgent(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ValidationResult>

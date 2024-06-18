@@ -43,6 +43,31 @@ SnapshotsTracingConnection::DeleteSnapshot(
   return internal::EndSpan(std::move(span), child_->DeleteSnapshot(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsTracingConnection::DeleteSnapshot(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::DeleteSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteSnapshot(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsTracingConnection::DeleteSnapshot(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::DeleteSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteSnapshot(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
 SnapshotsTracingConnection::GetSnapshot(
     google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
@@ -71,6 +96,31 @@ SnapshotsTracingConnection::InsertSnapshot(
       "compute_snapshots_v1::SnapshotsConnection::InsertSnapshot");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertSnapshot(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsTracingConnection::InsertSnapshot(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::InsertSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertSnapshot(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsTracingConnection::InsertSnapshot(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::InsertSnapshot");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->InsertSnapshot(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Snapshot>
@@ -103,6 +153,31 @@ SnapshotsTracingConnection::SetLabels(
       "compute_snapshots_v1::SnapshotsConnection::SetLabels");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetLabels(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_snapshots_v1::SnapshotsConnection::SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SetLabels(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

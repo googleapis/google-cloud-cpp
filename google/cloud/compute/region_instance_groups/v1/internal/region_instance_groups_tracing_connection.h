@@ -60,6 +60,15 @@ class RegionInstanceGroupsTracingConnection
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_groups::v1::
+          SetNamedPortsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   std::shared_ptr<
       compute_region_instance_groups_v1::RegionInstanceGroupsConnection>

@@ -73,6 +73,15 @@ class StorageTransferServiceTracingConnection
   RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const&
                      request) override;
 
+  StatusOr<google::longrunning::Operation> RunTransferJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::storagetransfer::v1::RunTransferJobRequest const& request)
+      override;
+
+  future<StatusOr<google::storagetransfer::v1::TransferOperation>>
+  RunTransferJob(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   Status DeleteTransferJob(
       google::storagetransfer::v1::DeleteTransferJobRequest const& request)
       override;

@@ -76,10 +76,28 @@ class EntityTypesConnectionImpl : public dialogflow_cx::EntityTypesConnection {
       google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ExportEntityTypes(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+  ExportEntityTypes(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
   ImportEntityTypes(
       google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> ImportEntityTypes(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+  ImportEntityTypes(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

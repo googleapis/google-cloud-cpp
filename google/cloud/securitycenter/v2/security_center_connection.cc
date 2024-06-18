@@ -54,6 +54,22 @@ SecurityCenterConnection::BulkMuteFindings(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+SecurityCenterConnection::BulkMuteFindings(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
+SecurityCenterConnection::BulkMuteFindings(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
 SecurityCenterConnection::CreateBigQueryExport(
     google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&) {

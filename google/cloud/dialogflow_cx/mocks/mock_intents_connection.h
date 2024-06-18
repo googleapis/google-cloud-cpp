@@ -79,10 +79,38 @@ class MockIntentsConnection : public dialogflow_cx::IntentsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportIntents,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>,
+      ImportIntents,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>,
       ExportIntents,
       (google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportIntents,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>,
+      ExportIntents,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 };
 

@@ -69,6 +69,33 @@ AppGatewaysServiceTracingConnection::CreateAppGateway(
   return internal::EndSpan(std::move(span), child_->CreateAppGateway(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceTracingConnection::CreateAppGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
+      "CreateAppGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateAppGateway(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
+AppGatewaysServiceTracingConnection::CreateAppGateway(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
+      "CreateAppGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateAppGateway(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
 AppGatewaysServiceTracingConnection::DeleteAppGateway(
@@ -79,6 +106,34 @@ AppGatewaysServiceTracingConnection::DeleteAppGateway(
       "DeleteAppGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAppGateway(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AppGatewaysServiceTracingConnection::DeleteAppGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
+      "DeleteAppGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteAppGateway(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+AppGatewaysServiceTracingConnection::DeleteAppGateway(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
+      "DeleteAppGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteAppGateway(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

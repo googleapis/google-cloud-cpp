@@ -53,6 +53,20 @@ class MockAnalyticsServiceConnection
       ExportAnalyticsMetrics,
       (google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportAnalyticsMetrics,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>,
+      ExportAnalyticsMetrics,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

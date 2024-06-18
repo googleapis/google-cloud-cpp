@@ -149,6 +149,57 @@ EventarcConnectionImpl::CreateTrigger(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> EventarcConnectionImpl::CreateTrigger(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTrigger(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+        return stub_->CreateTrigger(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+EventarcConnectionImpl::CreateTrigger(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::eventarc::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::eventarc::v1::Trigger>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateTrigger",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::eventarc::v1::Trigger>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::eventarc::v1::Trigger>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcConnectionImpl::UpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
@@ -188,6 +239,57 @@ EventarcConnectionImpl::UpdateTrigger(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> EventarcConnectionImpl::UpdateTrigger(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTrigger(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+        return stub_->UpdateTrigger(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+EventarcConnectionImpl::UpdateTrigger(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::eventarc::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::eventarc::v1::Trigger>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateTrigger",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::eventarc::v1::Trigger>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::eventarc::v1::Trigger>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcConnectionImpl::DeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
@@ -224,6 +326,57 @@ EventarcConnectionImpl::DeleteTrigger(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::Trigger>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> EventarcConnectionImpl::DeleteTrigger(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTrigger(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+        return stub_->DeleteTrigger(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+EventarcConnectionImpl::DeleteTrigger(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::eventarc::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::eventarc::v1::Trigger>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteTrigger",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::eventarc::v1::Trigger>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::eventarc::v1::Trigger>,
       polling_policy(*current), __func__);
 }
 
@@ -314,6 +467,57 @@ EventarcConnectionImpl::CreateChannel(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> EventarcConnectionImpl::CreateChannel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+        return stub_->CreateChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Channel>>
+EventarcConnectionImpl::CreateChannel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::eventarc::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::eventarc::v1::Channel>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateChannel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::eventarc::v1::Channel>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::eventarc::v1::Channel>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcConnectionImpl::UpdateChannel(
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
@@ -353,6 +557,57 @@ EventarcConnectionImpl::UpdateChannel(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> EventarcConnectionImpl::UpdateChannel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+        return stub_->UpdateChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Channel>>
+EventarcConnectionImpl::UpdateChannel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::eventarc::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::eventarc::v1::Channel>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateChannel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::eventarc::v1::Channel>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::eventarc::v1::Channel>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcConnectionImpl::DeleteChannel(
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
@@ -389,6 +644,57 @@ EventarcConnectionImpl::DeleteChannel(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::Channel>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> EventarcConnectionImpl::DeleteChannel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteChannel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+        return stub_->DeleteChannel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Channel>>
+EventarcConnectionImpl::DeleteChannel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::eventarc::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::eventarc::v1::Channel>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteChannel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::eventarc::v1::Channel>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::eventarc::v1::Channel>,
       polling_policy(*current), __func__);
 }
 
@@ -531,6 +837,61 @@ EventarcConnectionImpl::CreateChannelConnection(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcConnectionImpl::CreateChannelConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateChannelConnection(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+                 request) {
+        return stub_->CreateChannelConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+EventarcConnectionImpl::CreateChannelConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::eventarc::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::eventarc::v1::ChannelConnection>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateChannelConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::eventarc::v1::ChannelConnection>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::eventarc::v1::ChannelConnection>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcConnectionImpl::DeleteChannelConnection(
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
@@ -569,6 +930,61 @@ EventarcConnectionImpl::DeleteChannelConnection(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::ChannelConnection>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+EventarcConnectionImpl::DeleteChannelConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteChannelConnection(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+                 request) {
+        return stub_->DeleteChannelConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+EventarcConnectionImpl::DeleteChannelConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::eventarc::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::eventarc::v1::ChannelConnection>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteChannelConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::eventarc::v1::ChannelConnection>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::eventarc::v1::ChannelConnection>,
       polling_policy(*current), __func__);
 }
 

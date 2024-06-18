@@ -58,6 +58,31 @@ AutoscalersTracingConnection::DeleteAutoscaler(
   return internal::EndSpan(std::move(span), child_->DeleteAutoscaler(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AutoscalersTracingConnection::DeleteAutoscaler(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::autoscalers::v1::DeleteAutoscalerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_autoscalers_v1::AutoscalersConnection::DeleteAutoscaler");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteAutoscaler(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+AutoscalersTracingConnection::DeleteAutoscaler(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_autoscalers_v1::AutoscalersConnection::DeleteAutoscaler");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteAutoscaler(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
 AutoscalersTracingConnection::GetAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
@@ -76,6 +101,31 @@ AutoscalersTracingConnection::InsertAutoscaler(
       "compute_autoscalers_v1::AutoscalersConnection::InsertAutoscaler");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertAutoscaler(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AutoscalersTracingConnection::InsertAutoscaler(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::autoscalers::v1::InsertAutoscalerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_autoscalers_v1::AutoscalersConnection::InsertAutoscaler");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertAutoscaler(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+AutoscalersTracingConnection::InsertAutoscaler(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_autoscalers_v1::AutoscalersConnection::InsertAutoscaler");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->InsertAutoscaler(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
@@ -101,6 +151,31 @@ AutoscalersTracingConnection::PatchAutoscaler(
   return internal::EndSpan(std::move(span), child_->PatchAutoscaler(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AutoscalersTracingConnection::PatchAutoscaler(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::autoscalers::v1::PatchAutoscalerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_autoscalers_v1::AutoscalersConnection::PatchAutoscaler");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->PatchAutoscaler(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+AutoscalersTracingConnection::PatchAutoscaler(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_autoscalers_v1::AutoscalersConnection::PatchAutoscaler");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->PatchAutoscaler(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AutoscalersTracingConnection::UpdateAutoscaler(
     google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&
@@ -109,6 +184,31 @@ AutoscalersTracingConnection::UpdateAutoscaler(
       "compute_autoscalers_v1::AutoscalersConnection::UpdateAutoscaler");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAutoscaler(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+AutoscalersTracingConnection::UpdateAutoscaler(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::autoscalers::v1::UpdateAutoscalerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_autoscalers_v1::AutoscalersConnection::UpdateAutoscaler");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateAutoscaler(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+AutoscalersTracingConnection::UpdateAutoscaler(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_autoscalers_v1::AutoscalersConnection::UpdateAutoscaler");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateAutoscaler(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

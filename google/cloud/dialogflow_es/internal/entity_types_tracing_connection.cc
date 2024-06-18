@@ -91,6 +91,31 @@ EntityTypesTracingConnection::BatchUpdateEntityTypes(
                            child_->BatchUpdateEntityTypes(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingConnection::BatchUpdateEntityTypes(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchUpdateEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->BatchUpdateEntityTypes(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
+EntityTypesTracingConnection::BatchUpdateEntityTypes(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchUpdateEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchUpdateEntityTypes(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesTracingConnection::BatchDeleteEntityTypes(
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
@@ -100,6 +125,31 @@ EntityTypesTracingConnection::BatchDeleteEntityTypes(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchDeleteEntityTypes(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingConnection::BatchDeleteEntityTypes(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->BatchDeleteEntityTypes(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesTracingConnection::BatchDeleteEntityTypes(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeleteEntityTypes(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -112,6 +162,30 @@ EntityTypesTracingConnection::BatchCreateEntities(
                            child_->BatchCreateEntities(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingConnection::BatchCreateEntities(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->BatchCreateEntities(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesTracingConnection::BatchCreateEntities(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->BatchCreateEntities(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesTracingConnection::BatchUpdateEntities(
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
@@ -122,6 +196,30 @@ EntityTypesTracingConnection::BatchUpdateEntities(
                            child_->BatchUpdateEntities(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingConnection::BatchUpdateEntities(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchUpdateEntities");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->BatchUpdateEntities(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesTracingConnection::BatchUpdateEntities(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchUpdateEntities");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->BatchUpdateEntities(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesTracingConnection::BatchDeleteEntities(
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
@@ -130,6 +228,30 @@ EntityTypesTracingConnection::BatchDeleteEntities(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchDeleteEntities(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesTracingConnection::BatchDeleteEntities(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchDeleteEntities");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->BatchDeleteEntities(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesTracingConnection::BatchDeleteEntities(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchDeleteEntities");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->BatchDeleteEntities(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

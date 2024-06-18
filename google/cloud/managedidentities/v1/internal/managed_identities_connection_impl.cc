@@ -113,6 +113,61 @@ ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMicrosoftAdDomain(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedidentities::v1::
+                 CreateMicrosoftAdDomainRequest const& request) {
+        return stub_->CreateMicrosoftAdDomain(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::managedidentities::v1::Domain>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateMicrosoftAdDomain",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::managedidentities::v1::Domain>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::managedidentities::v1::Domain>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceConnectionImpl::ResetAdminPassword(
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
@@ -221,6 +276,60 @@ ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDomain(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedidentities::v1::UpdateDomainRequest const&
+                 request) {
+        return stub_->UpdateDomain(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::managedidentities::v1::Domain>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateDomain",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::managedidentities::v1::Domain>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::managedidentities::v1::Domain>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
@@ -261,6 +370,60 @@ ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDomain(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedidentities::v1::DeleteDomainRequest const&
+                 request) {
+        return stub_->DeleteDomain(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
+ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::managedidentities::v1::OpMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDomain",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::managedidentities::v1::OpMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::managedidentities::v1::OpMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::AttachTrust(
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
@@ -298,6 +461,60 @@ ManagedIdentitiesServiceConnectionImpl::AttachTrust(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::managedidentities::v1::Domain>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceConnectionImpl::AttachTrust(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AttachTrust(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedidentities::v1::AttachTrustRequest const&
+                 request) {
+        return stub_->AttachTrust(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceConnectionImpl::AttachTrust(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::managedidentities::v1::Domain>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AttachTrust",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::managedidentities::v1::Domain>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::managedidentities::v1::Domain>,
       polling_policy(*current), __func__);
 }
 
@@ -342,6 +559,62 @@ ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReconfigureTrust(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+              request) {
+        return stub_->ReconfigureTrust(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::managedidentities::v1::Domain>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ReconfigureTrust",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::managedidentities::v1::Domain>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::managedidentities::v1::Domain>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::DetachTrust(
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
@@ -382,6 +655,60 @@ ManagedIdentitiesServiceConnectionImpl::DetachTrust(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceConnectionImpl::DetachTrust(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DetachTrust(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedidentities::v1::DetachTrustRequest const&
+                 request) {
+        return stub_->DetachTrust(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceConnectionImpl::DetachTrust(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::managedidentities::v1::Domain>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DetachTrust",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::managedidentities::v1::Domain>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::managedidentities::v1::Domain>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
@@ -419,6 +746,60 @@ ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::managedidentities::v1::Domain>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ValidateTrust(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::managedidentities::v1::ValidateTrustRequest const&
+                 request) {
+        return stub_->ValidateTrust(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::managedidentities::v1::Domain>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ValidateTrust",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::managedidentities::v1::Domain>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::managedidentities::v1::Domain>,
       polling_policy(*current), __func__);
 }
 

@@ -57,6 +57,28 @@ PoliciesTracingConnection::CreatePolicy(
   return internal::EndSpan(std::move(span), child_->CreatePolicy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+PoliciesTracingConnection::CreatePolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::iam::v2::CreatePolicyRequest const& request) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::CreatePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreatePolicy(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::iam::v2::Policy>>
+PoliciesTracingConnection::CreatePolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::CreatePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreatePolicy(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::iam::v2::Policy>>
 PoliciesTracingConnection::UpdatePolicy(
     google::iam::v2::UpdatePolicyRequest const& request) {
@@ -65,12 +87,56 @@ PoliciesTracingConnection::UpdatePolicy(
   return internal::EndSpan(std::move(span), child_->UpdatePolicy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+PoliciesTracingConnection::UpdatePolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::iam::v2::UpdatePolicyRequest const& request) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::UpdatePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdatePolicy(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::iam::v2::Policy>>
+PoliciesTracingConnection::UpdatePolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::UpdatePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdatePolicy(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::iam::v2::Policy>>
 PoliciesTracingConnection::DeletePolicy(
     google::iam::v2::DeletePolicyRequest const& request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::DeletePolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeletePolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+PoliciesTracingConnection::DeletePolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::iam::v2::DeletePolicyRequest const& request) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::DeletePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeletePolicy(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::iam::v2::Policy>>
+PoliciesTracingConnection::DeletePolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::DeletePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeletePolicy(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

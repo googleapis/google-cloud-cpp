@@ -21,7 +21,9 @@
 
 #include "google/cloud/aiplatform/v1/internal/model_retry_traits.h"
 #include "google/cloud/aiplatform/v1/model_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -189,6 +191,14 @@ class ModelServiceConnection {
   virtual future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
   UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UploadModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UploadModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
+  UploadModel(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
       google::cloud::aiplatform::v1::GetModelRequest const& request);
 
@@ -207,14 +217,42 @@ class ModelServiceConnection {
       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+  UpdateExplanationDataset(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteModelRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteModel(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModelVersion(
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteModelVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteModelVersion(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
       google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request);
@@ -222,8 +260,24 @@ class ModelServiceConnection {
   virtual future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
   ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ExportModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::ExportModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
+  ExportModel(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
   CopyModel(google::cloud::aiplatform::v1::CopyModelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CopyModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CopyModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
+  CopyModel(google::cloud::ExperimentalTag,
+            google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
   ImportModelEvaluation(

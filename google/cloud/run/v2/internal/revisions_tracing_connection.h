@@ -48,6 +48,14 @@ class RevisionsTracingConnection : public run_v2::RevisionsConnection {
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteRevision(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::DeleteRevisionRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
  private:
   std::shared_ptr<run_v2::RevisionsConnection> child_;
 };

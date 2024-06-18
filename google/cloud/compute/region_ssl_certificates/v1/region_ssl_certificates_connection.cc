@@ -46,6 +46,24 @@ RegionSslCertificatesConnection::DeleteSslCertificate(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslCertificatesConnection::DeleteSslCertificate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_ssl_certificates::v1::
+        DeleteSslCertificateRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSslCertificatesConnection::DeleteSslCertificate(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
 RegionSslCertificatesConnection::GetSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
@@ -57,6 +75,24 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesConnection::InsertSslCertificate(
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         InsertSslCertificateRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslCertificatesConnection::InsertSslCertificate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_ssl_certificates::v1::
+        InsertSslCertificateRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSslCertificatesConnection::InsertSslCertificate(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

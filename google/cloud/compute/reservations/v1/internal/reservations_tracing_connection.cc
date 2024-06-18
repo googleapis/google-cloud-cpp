@@ -58,6 +58,31 @@ ReservationsTracingConnection::DeleteReservation(
   return internal::EndSpan(std::move(span), child_->DeleteReservation(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsTracingConnection::DeleteReservation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::
+        DeleteReservationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservations_v1::ReservationsConnection::DeleteReservation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteReservation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsTracingConnection::DeleteReservation(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_reservations_v1::ReservationsConnection::DeleteReservation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteReservation(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Reservation>
 ReservationsTracingConnection::GetReservation(
     google::cloud::cpp::compute::reservations::v1::GetReservationRequest const&
@@ -88,6 +113,31 @@ ReservationsTracingConnection::InsertReservation(
   return internal::EndSpan(std::move(span), child_->InsertReservation(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsTracingConnection::InsertReservation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::
+        InsertReservationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservations_v1::ReservationsConnection::InsertReservation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertReservation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsTracingConnection::InsertReservation(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_reservations_v1::ReservationsConnection::InsertReservation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->InsertReservation(google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::Reservation>
 ReservationsTracingConnection::ListReservations(
     google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
@@ -109,6 +159,31 @@ ReservationsTracingConnection::Resize(
       "compute_reservations_v1::ReservationsConnection::Resize");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->Resize(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsTracingConnection::Resize(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_reservations_v1::ReservationsConnection::Resize");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->Resize(google::cloud::ExperimentalTag{},
+                            google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsTracingConnection::Resize(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_reservations_v1::ReservationsConnection::Resize");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->Resize(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -139,6 +214,31 @@ ReservationsTracingConnection::UpdateReservation(
       "compute_reservations_v1::ReservationsConnection::UpdateReservation");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateReservation(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ReservationsTracingConnection::UpdateReservation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::reservations::v1::
+        UpdateReservationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_reservations_v1::ReservationsConnection::UpdateReservation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateReservation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ReservationsTracingConnection::UpdateReservation(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_reservations_v1::ReservationsConnection::UpdateReservation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateReservation(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -61,10 +61,44 @@ TelcoAutomationConnection::CreateOrchestrationCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationConnection::CreateOrchestrationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::telcoautomation::v1::
+        CreateOrchestrationClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
+TelcoAutomationConnection::CreateOrchestrationCluster(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnection::DeleteOrchestrationCluster(
     google::cloud::telcoautomation::v1::
         DeleteOrchestrationClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationConnection::DeleteOrchestrationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::telcoautomation::v1::
+        DeleteOrchestrationClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+TelcoAutomationConnection::DeleteOrchestrationCluster(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -92,9 +126,41 @@ TelcoAutomationConnection::CreateEdgeSlm(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationConnection::CreateEdgeSlm(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
+TelcoAutomationConnection::CreateEdgeSlm(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnection::DeleteEdgeSlm(
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationConnection::DeleteEdgeSlm(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+TelcoAutomationConnection::DeleteEdgeSlm(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

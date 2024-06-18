@@ -56,6 +56,15 @@ class EndpointServiceConnectionImpl
       google::cloud::aiplatform::v1::CreateEndpointRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
       google::cloud::aiplatform::v1::GetEndpointRequest const& request)
       override;
@@ -71,18 +80,54 @@ class EndpointServiceConnectionImpl
   DeleteEndpoint(google::cloud::aiplatform::v1::DeleteEndpointRequest const&
                      request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteEndpoint(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
   DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeployModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeployModelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
+  DeployModel(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
   UndeployModel(google::cloud::aiplatform::v1::UndeployModelRequest const&
                     request) override;
 
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
+  UndeployModel(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
   MutateDeployedModel(
       google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> MutateDeployedModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
+  MutateDeployedModel(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -43,6 +43,30 @@ CloudChannelReportsServiceTracingConnection::RunReportJob(
   return internal::EndSpan(std::move(span), child_->RunReportJob(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelReportsServiceTracingConnection::RunReportJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::RunReportJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelReportsServiceConnection::RunReportJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->RunReportJob(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
+CloudChannelReportsServiceTracingConnection::RunReportJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelReportsServiceConnection::RunReportJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->RunReportJob(google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::channel::v1::Row>
 CloudChannelReportsServiceTracingConnection::FetchReportResults(
     google::cloud::channel::v1::FetchReportResultsRequest request) {

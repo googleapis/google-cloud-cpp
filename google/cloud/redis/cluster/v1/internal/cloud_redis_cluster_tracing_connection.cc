@@ -63,6 +63,30 @@ CloudRedisClusterTracingConnection::UpdateCluster(
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::protobuf::Any>>
 CloudRedisClusterTracingConnection::DeleteCluster(
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
@@ -72,6 +96,30 @@ CloudRedisClusterTracingConnection::DeleteCluster(
   return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingConnection::DeleteCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Any>>
+CloudRedisClusterTracingConnection::DeleteCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::DeleteCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterTracingConnection::CreateCluster(
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
@@ -79,6 +127,30 @@ CloudRedisClusterTracingConnection::CreateCluster(
       "redis_cluster_v1::CloudRedisClusterConnection::CreateCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisClusterTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "redis_cluster_v1::CloudRedisClusterConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateCluster(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>

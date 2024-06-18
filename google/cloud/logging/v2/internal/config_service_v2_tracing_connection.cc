@@ -62,6 +62,30 @@ ConfigServiceV2TracingConnection::CreateBucketAsync(
   return internal::EndSpan(std::move(span), child_->CreateBucketAsync(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2TracingConnection::CreateBucketAsync(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::logging::v2::CreateBucketRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::ConfigServiceV2Connection::CreateBucketAsync");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateBucketAsync(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::logging::v2::LogBucket>>
+ConfigServiceV2TracingConnection::CreateBucketAsync(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "logging_v2::ConfigServiceV2Connection::CreateBucketAsync");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateBucketAsync(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2TracingConnection::UpdateBucketAsync(
     google::logging::v2::UpdateBucketRequest const& request) {
@@ -69,6 +93,30 @@ ConfigServiceV2TracingConnection::UpdateBucketAsync(
       "logging_v2::ConfigServiceV2Connection::UpdateBucketAsync");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateBucketAsync(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2TracingConnection::UpdateBucketAsync(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::logging::v2::UpdateBucketRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::ConfigServiceV2Connection::UpdateBucketAsync");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateBucketAsync(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::logging::v2::LogBucket>>
+ConfigServiceV2TracingConnection::UpdateBucketAsync(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "logging_v2::ConfigServiceV2Connection::UpdateBucketAsync");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateBucketAsync(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::logging::v2::LogBucket>
@@ -206,6 +254,30 @@ ConfigServiceV2TracingConnection::CreateLink(
   return internal::EndSpan(std::move(span), child_->CreateLink(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2TracingConnection::CreateLink(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::logging::v2::CreateLinkRequest const& request) {
+  auto span =
+      internal::MakeSpan("logging_v2::ConfigServiceV2Connection::CreateLink");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateLink(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::logging::v2::Link>>
+ConfigServiceV2TracingConnection::CreateLink(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("logging_v2::ConfigServiceV2Connection::CreateLink");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateLink(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::logging::v2::LinkMetadata>>
 ConfigServiceV2TracingConnection::DeleteLink(
     google::logging::v2::DeleteLinkRequest const& request) {
@@ -213,6 +285,30 @@ ConfigServiceV2TracingConnection::DeleteLink(
       internal::MakeSpan("logging_v2::ConfigServiceV2Connection::DeleteLink");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteLink(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2TracingConnection::DeleteLink(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::logging::v2::DeleteLinkRequest const& request) {
+  auto span =
+      internal::MakeSpan("logging_v2::ConfigServiceV2Connection::DeleteLink");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteLink(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::logging::v2::LinkMetadata>>
+ConfigServiceV2TracingConnection::DeleteLink(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("logging_v2::ConfigServiceV2Connection::DeleteLink");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteLink(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::logging::v2::Link>
@@ -323,6 +419,30 @@ ConfigServiceV2TracingConnection::CopyLogEntries(
       "logging_v2::ConfigServiceV2Connection::CopyLogEntries");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CopyLogEntries(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2TracingConnection::CopyLogEntries(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::logging::v2::CopyLogEntriesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "logging_v2::ConfigServiceV2Connection::CopyLogEntries");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CopyLogEntries(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
+ConfigServiceV2TracingConnection::CopyLogEntries(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "logging_v2::ConfigServiceV2Connection::CopyLogEntries");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CopyLogEntries(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

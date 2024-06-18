@@ -21,7 +21,9 @@
 
 #include "google/cloud/eventarc/v1/eventarc_connection_idempotency_policy.h"
 #include "google/cloud/eventarc/v1/internal/eventarc_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -193,11 +195,35 @@ class EventarcConnection {
   virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
       google::cloud::eventarc::v1::CreateTriggerRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateTrigger(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
       google::cloud::eventarc::v1::UpdateTriggerRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateTrigger(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTrigger(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
       google::cloud::eventarc::v1::GetChannelRequest const& request);
@@ -208,11 +234,35 @@ class EventarcConnection {
   virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
       google::cloud::eventarc::v1::CreateChannelRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateChannel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::eventarc::v1::CreateChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
       google::cloud::eventarc::v1::UpdateChannelRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateChannel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
       google::cloud::eventarc::v1::DeleteChannelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteChannel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
       google::cloud::eventarc::v1::GetProviderRequest const& request);
@@ -233,10 +283,28 @@ class EventarcConnection {
       google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateChannelConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  CreateChannelConnection(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   DeleteChannelConnection(
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteChannelConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  DeleteChannelConnection(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
   GetGoogleChannelConfig(

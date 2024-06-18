@@ -51,6 +51,17 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
               (google::cloud::automl::v1::CreateDatasetRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateDataset,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::CreateDatasetRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Dataset>>,
+              CreateDataset,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::automl::v1::Dataset>, GetDataset,
               (google::cloud::automl::v1::GetDatasetRequest const& request),
               (override));
@@ -68,14 +79,47 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
               (google::cloud::automl::v1::DeleteDatasetRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteDataset,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::DeleteDatasetRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
+              DeleteDataset,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               ImportData,
               (google::cloud::automl::v1::ImportDataRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportData,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::ImportDataRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
+              ImportData,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               ExportData,
               (google::cloud::automl::v1::ExportDataRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportData,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::ExportDataRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
+              ExportData,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -85,6 +129,16 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
 
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Model>>, CreateModel,
               (google::cloud::automl::v1::CreateModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateModel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::CreateModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Model>>, CreateModel,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::automl::v1::Model>, GetModel,
@@ -100,6 +154,17 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
               (google::cloud::automl::v1::DeleteModelRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteModel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::DeleteModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
+              DeleteModel,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::automl::v1::Model>, UpdateModel,
               (google::cloud::automl::v1::UpdateModelRequest const& request),
               (override));
@@ -109,14 +174,47 @@ class MockAutoMlConnection : public automl_v1::AutoMlConnection {
               (google::cloud::automl::v1::DeployModelRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeployModel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::DeployModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
+              DeployModel,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               UndeployModel,
               (google::cloud::automl::v1::UndeployModelRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeployModel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::UndeployModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
+              UndeployModel,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
               ExportModel,
               (google::cloud::automl::v1::ExportModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportModel,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::automl::v1::ExportModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
+              ExportModel,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(

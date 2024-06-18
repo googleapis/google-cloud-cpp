@@ -62,6 +62,15 @@ class VersionsConnectionImpl : public dialogflow_cx::VersionsConnection {
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
       google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request)
       override;
@@ -73,6 +82,15 @@ class VersionsConnectionImpl : public dialogflow_cx::VersionsConnection {
   future<StatusOr<google::protobuf::Struct>> LoadVersion(
       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> LoadVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::protobuf::Struct>> LoadVersion(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
   CompareVersions(

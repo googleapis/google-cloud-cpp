@@ -42,6 +42,30 @@ SessionControllerTracingConnection::CreateSession(
   return internal::EndSpan(std::move(span), child_->CreateSession(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerTracingConnection::CreateSession(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::CreateSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::SessionControllerConnection::CreateSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateSession(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Session>>
+SessionControllerTracingConnection::CreateSession(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::SessionControllerConnection::CreateSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateSession(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::dataproc::v1::Session>
 SessionControllerTracingConnection::GetSession(
     google::cloud::dataproc::v1::GetSessionRequest const& request) {
@@ -71,6 +95,30 @@ SessionControllerTracingConnection::TerminateSession(
   return internal::EndSpan(std::move(span), child_->TerminateSession(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerTracingConnection::TerminateSession(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::SessionControllerConnection::TerminateSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->TerminateSession(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Session>>
+SessionControllerTracingConnection::TerminateSession(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::SessionControllerConnection::TerminateSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->TerminateSession(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerTracingConnection::DeleteSession(
     google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
@@ -78,6 +126,30 @@ SessionControllerTracingConnection::DeleteSession(
       "dataproc_v1::SessionControllerConnection::DeleteSession");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSession(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SessionControllerTracingConnection::DeleteSession(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::SessionControllerConnection::DeleteSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteSession(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Session>>
+SessionControllerTracingConnection::DeleteSession(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::SessionControllerConnection::DeleteSession");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteSession(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

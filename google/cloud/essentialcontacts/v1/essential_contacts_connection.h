@@ -21,7 +21,9 @@
 
 #include "google/cloud/essentialcontacts/v1/essential_contacts_connection_idempotency_policy.h"
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

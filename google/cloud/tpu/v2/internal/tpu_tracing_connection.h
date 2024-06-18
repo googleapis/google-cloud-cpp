@@ -47,17 +47,57 @@ class TpuTracingConnection : public tpu_v2::TpuConnection {
   future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
       google::cloud::tpu::v2::CreateNodeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::CreateNodeRequest const& request) override;
+
+  future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
       google::cloud::tpu::v2::DeleteNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::DeleteNodeRequest const& request) override;
+
+  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
       google::cloud::tpu::v2::StopNodeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> StopNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::StopNodeRequest const& request) override;
+
+  future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
       google::cloud::tpu::v2::StartNodeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> StartNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::StartNodeRequest const& request) override;
+
+  future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
       google::cloud::tpu::v2::UpdateNodeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::UpdateNodeRequest const& request) override;
+
+  future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(

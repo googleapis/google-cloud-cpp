@@ -68,11 +68,37 @@ class MockMetricsScopesConnection
            CreateMonitoredProjectRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMonitoredProject,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::monitoring::metricsscope::v1::
+                   CreateMonitoredProjectRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
+      CreateMonitoredProject,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
       DeleteMonitoredProject,
       (google::monitoring::metricsscope::v1::
            DeleteMonitoredProjectRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteMonitoredProject,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::monitoring::metricsscope::v1::
+                   DeleteMonitoredProjectRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
+      DeleteMonitoredProject,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 };
 

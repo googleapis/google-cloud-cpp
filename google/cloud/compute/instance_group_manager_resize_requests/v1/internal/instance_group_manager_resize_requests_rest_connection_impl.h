@@ -59,11 +59,32 @@ class InstanceGroupManagerResizeRequestsRestConnectionImpl
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           CancelRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Cancel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+          CancelRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroupManagerResizeRequest(
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           DeleteInstanceGroupManagerResizeRequestRequest const& request)
       override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceGroupManagerResizeRequest(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+          DeleteInstanceGroupManagerResizeRequestRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstanceGroupManagerResizeRequest(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>
   GetInstanceGroupManagerResizeRequest(
@@ -75,6 +96,18 @@ class InstanceGroupManagerResizeRequestsRestConnectionImpl
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           InsertInstanceGroupManagerResizeRequestRequest const& request)
       override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceGroupManagerResizeRequest(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+          InsertInstanceGroupManagerResizeRequestRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInstanceGroupManagerResizeRequest(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<
       google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>

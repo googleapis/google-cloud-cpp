@@ -41,6 +41,28 @@ ServicesTracingConnection::CreateService(
   return internal::EndSpan(std::move(span), child_->CreateService(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ServicesTracingConnection::CreateService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::CreateServiceRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::ServicesConnection::CreateService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateService(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Service>>
+ServicesTracingConnection::CreateService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("run_v2::ServicesConnection::CreateService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateService(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::run::v2::Service> ServicesTracingConnection::GetService(
     google::cloud::run::v2::GetServiceRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ServicesConnection::GetService");
@@ -66,12 +88,56 @@ ServicesTracingConnection::UpdateService(
   return internal::EndSpan(std::move(span), child_->UpdateService(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ServicesTracingConnection::UpdateService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::UpdateServiceRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::ServicesConnection::UpdateService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateService(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Service>>
+ServicesTracingConnection::UpdateService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("run_v2::ServicesConnection::UpdateService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateService(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::run::v2::Service>>
 ServicesTracingConnection::DeleteService(
     google::cloud::run::v2::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ServicesConnection::DeleteService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteService(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ServicesTracingConnection::DeleteService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::DeleteServiceRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::ServicesConnection::DeleteService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteService(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Service>>
+ServicesTracingConnection::DeleteService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("run_v2::ServicesConnection::DeleteService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteService(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::iam::v1::Policy> ServicesTracingConnection::GetIamPolicy(

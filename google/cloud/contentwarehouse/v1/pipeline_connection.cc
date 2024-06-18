@@ -45,6 +45,21 @@ PipelineServiceConnection::RunPipeline(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> PipelineServiceConnection::RunPipeline(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contentwarehouse::v1::RunPipelineRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
+PipelineServiceConnection::RunPipeline(google::cloud::ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<PipelineServiceConnection> MakePipelineServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -21,7 +21,9 @@
 
 #include "google/cloud/tpu/v2/internal/tpu_retry_traits.h"
 #include "google/cloud/tpu/v2/tpu_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -190,17 +192,57 @@ class TpuConnection {
   virtual future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
       google::cloud::tpu::v2::CreateNodeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::CreateNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
   DeleteNode(google::cloud::tpu::v2::DeleteNodeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::DeleteNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+  DeleteNode(google::cloud::ExperimentalTag,
+             google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
       google::cloud::tpu::v2::StopNodeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> StopNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::StopNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
       google::cloud::tpu::v2::StartNodeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> StartNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::StartNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
       google::cloud::tpu::v2::UpdateNodeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::UpdateNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(

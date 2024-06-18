@@ -67,6 +67,33 @@ MetricsScopesTracingConnection::CreateMonitoredProject(
                            child_->CreateMonitoredProject(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MetricsScopesTracingConnection::CreateMonitoredProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "monitoring_metricsscope_v1::MetricsScopesConnection::"
+      "CreateMonitoredProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateMonitoredProject(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
+MetricsScopesTracingConnection::CreateMonitoredProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "monitoring_metricsscope_v1::MetricsScopesConnection::"
+      "CreateMonitoredProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateMonitoredProject(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesTracingConnection::DeleteMonitoredProject(
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
@@ -77,6 +104,33 @@ MetricsScopesTracingConnection::DeleteMonitoredProject(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteMonitoredProject(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MetricsScopesTracingConnection::DeleteMonitoredProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "monitoring_metricsscope_v1::MetricsScopesConnection::"
+      "DeleteMonitoredProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteMonitoredProject(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
+MetricsScopesTracingConnection::DeleteMonitoredProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "monitoring_metricsscope_v1::MetricsScopesConnection::"
+      "DeleteMonitoredProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteMonitoredProject(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

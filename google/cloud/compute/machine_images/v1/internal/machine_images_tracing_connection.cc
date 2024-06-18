@@ -44,6 +44,31 @@ MachineImagesTracingConnection::DeleteMachineImage(
                            child_->DeleteMachineImage(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesTracingConnection::DeleteMachineImage(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::machine_images::v1::
+        DeleteMachineImageRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_machine_images_v1::MachineImagesConnection::DeleteMachineImage");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteMachineImage(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+MachineImagesTracingConnection::DeleteMachineImage(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_machine_images_v1::MachineImagesConnection::DeleteMachineImage");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteMachineImage(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
 MachineImagesTracingConnection::GetMachineImage(
     google::cloud::cpp::compute::machine_images::v1::
@@ -73,6 +98,31 @@ MachineImagesTracingConnection::InsertMachineImage(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertMachineImage(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+MachineImagesTracingConnection::InsertMachineImage(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::machine_images::v1::
+        InsertMachineImageRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_machine_images_v1::MachineImagesConnection::InsertMachineImage");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertMachineImage(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+MachineImagesTracingConnection::InsertMachineImage(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_machine_images_v1::MachineImagesConnection::InsertMachineImage");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->InsertMachineImage(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineImage>

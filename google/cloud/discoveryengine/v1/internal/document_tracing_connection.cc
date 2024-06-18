@@ -89,6 +89,30 @@ DocumentServiceTracingConnection::ImportDocuments(
   return internal::EndSpan(std::move(span), child_->ImportDocuments(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentServiceTracingConnection::ImportDocuments(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::ImportDocuments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ImportDocuments(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
+DocumentServiceTracingConnection::ImportDocuments(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::ImportDocuments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ImportDocuments(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
 DocumentServiceTracingConnection::PurgeDocuments(
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
@@ -96,6 +120,30 @@ DocumentServiceTracingConnection::PurgeDocuments(
       "discoveryengine_v1::DocumentServiceConnection::PurgeDocuments");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeDocuments(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentServiceTracingConnection::PurgeDocuments(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::PurgeDocuments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->PurgeDocuments(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
+DocumentServiceTracingConnection::PurgeDocuments(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DocumentServiceConnection::PurgeDocuments");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->PurgeDocuments(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -21,7 +21,9 @@
 
 #include "google/cloud/managedidentities/v1/internal/managed_identities_retry_traits.h"
 #include "google/cloud/managedidentities/v1/managed_identities_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -203,6 +205,15 @@ class ManagedIdentitiesServiceConnection {
   CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::
                               CreateMicrosoftAdDomainRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedidentities::v1::
+          CreateMicrosoftAdDomainRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  CreateMicrosoftAdDomain(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual StatusOr<
       google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
   ResetAdminPassword(
@@ -219,27 +230,77 @@ class ManagedIdentitiesServiceConnection {
   UpdateDomain(
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateDomain(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  UpdateDomain(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
   DeleteDomain(
       google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteDomain(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
+  DeleteDomain(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   AttachTrust(
       google::cloud::managedidentities::v1::AttachTrustRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> AttachTrust(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  AttachTrust(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   ReconfigureTrust(
       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> ReconfigureTrust(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  ReconfigureTrust(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   DetachTrust(
       google::cloud::managedidentities::v1::DetachTrustRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DetachTrust(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  DetachTrust(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   ValidateTrust(
       google::cloud::managedidentities::v1::ValidateTrustRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> ValidateTrust(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::managedidentities::v1::ValidateTrustRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  ValidateTrust(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
 };
 
 /**

@@ -107,6 +107,61 @@ DatastoreAdminConnectionImpl::ExportEntities(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastoreAdminConnectionImpl::ExportEntities(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportEntities(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::datastore::admin::v1::ExportEntitiesRequest const& request) {
+        return stub_->ExportEntities(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
+DatastoreAdminConnectionImpl::ExportEntities(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::datastore::admin::v1::
+                   ExportEntitiesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportEntities",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::datastore::admin::v1::ExportEntitiesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::datastore::admin::v1::ExportEntitiesResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
 DatastoreAdminConnectionImpl::ImportEntities(
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
@@ -143,6 +198,61 @@ DatastoreAdminConnectionImpl::ImportEntities(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::datastore::admin::v1::ImportEntitiesMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastoreAdminConnectionImpl::ImportEntities(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportEntities(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::datastore::admin::v1::ImportEntitiesRequest const& request) {
+        return stub_->ImportEntities(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
+DatastoreAdminConnectionImpl::ImportEntities(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::datastore::admin::v1::
+                   ImportEntitiesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportEntities",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::datastore::admin::v1::ImportEntitiesMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::datastore::admin::v1::ImportEntitiesMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -185,6 +295,59 @@ DatastoreAdminConnectionImpl::CreateIndex(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastoreAdminConnectionImpl::CreateIndex(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::datastore::admin::v1::CreateIndexRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateIndex(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::datastore::admin::v1::CreateIndexRequest const& request) {
+        return stub_->CreateIndex(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::datastore::admin::v1::Index>>
+DatastoreAdminConnectionImpl::CreateIndex(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::datastore::admin::v1::
+                   IndexOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::datastore::admin::v1::Index>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateIndex",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::datastore::admin::v1::Index>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::datastore::admin::v1::Index>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::datastore::admin::v1::Index>>
 DatastoreAdminConnectionImpl::DeleteIndex(
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
@@ -221,6 +384,59 @@ DatastoreAdminConnectionImpl::DeleteIndex(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::datastore::admin::v1::Index>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastoreAdminConnectionImpl::DeleteIndex(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::datastore::admin::v1::DeleteIndexRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIndex(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::datastore::admin::v1::DeleteIndexRequest const& request) {
+        return stub_->DeleteIndex(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::datastore::admin::v1::Index>>
+DatastoreAdminConnectionImpl::DeleteIndex(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::datastore::admin::v1::
+                   IndexOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::datastore::admin::v1::Index>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteIndex",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::datastore::admin::v1::Index>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::datastore::admin::v1::Index>,
       polling_policy(*current), __func__);
 }
 

@@ -53,6 +53,18 @@ class MockRepositoryManagerConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateConnection,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::devtools::cloudbuild::v2::CreateConnectionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
+              CreateConnection,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::devtools::cloudbuild::v2::Connection>, GetConnection,
       (google::devtools::cloudbuild::v2::GetConnectionRequest const& request),
@@ -70,11 +82,36 @@ class MockRepositoryManagerConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateConnection,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
+              UpdateConnection,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
       DeleteConnection,
       (google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteConnection,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      DeleteConnection,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
@@ -83,12 +120,39 @@ class MockRepositoryManagerConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateRepository,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
+              CreateRepository,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
       BatchCreateRepositories,
       (google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchCreateRepositories,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
+      BatchCreateRepositories,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -107,6 +171,19 @@ class MockRepositoryManagerConnection
       DeleteRepository,
       (google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteRepository,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      DeleteRepository,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

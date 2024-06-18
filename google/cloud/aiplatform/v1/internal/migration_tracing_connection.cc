@@ -56,6 +56,31 @@ MigrationServiceTracingConnection::BatchMigrateResources(
                            child_->BatchMigrateResources(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationServiceTracingConnection::BatchMigrateResources(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MigrationServiceConnection::BatchMigrateResources");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->BatchMigrateResources(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
+MigrationServiceTracingConnection::BatchMigrateResources(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MigrationServiceConnection::BatchMigrateResources");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchMigrateResources(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<aiplatform_v1::MigrationServiceConnection>

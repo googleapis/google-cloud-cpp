@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/networks/v1/internal/networks_retry_traits.h"
 #include "google/cloud/compute/networks/v1/networks_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -185,10 +187,28 @@ class NetworksConnection {
   AddPeering(google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
                  request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddPeering(google::cloud::ExperimentalTag,
+             google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetwork(
       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetwork(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetwork(google::cloud::ExperimentalTag,
+                google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
       google::cloud::cpp::compute::networks::v1::GetNetworkRequest const&
@@ -204,6 +224,15 @@ class NetworksConnection {
       google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetwork(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNetwork(google::cloud::ExperimentalTag,
+                google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
       google::cloud::cpp::compute::networks::v1::ListNetworksRequest request);
 
@@ -217,19 +246,56 @@ class NetworksConnection {
       google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetwork(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNetwork(google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemovePeering(
       google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemovePeering(google::cloud::ExperimentalTag,
+                google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SwitchToCustomMode(google::cloud::cpp::compute::networks::v1::
                          SwitchToCustomModeRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SwitchToCustomMode(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                     google::cloud::cpp::compute::networks::v1::
+                         SwitchToCustomModeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SwitchToCustomMode(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdatePeering(
       google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdatePeering(google::cloud::ExperimentalTag,
+                google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

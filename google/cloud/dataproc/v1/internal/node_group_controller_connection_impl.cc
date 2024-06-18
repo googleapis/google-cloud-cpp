@@ -105,6 +105,60 @@ NodeGroupControllerConnectionImpl::CreateNodeGroup(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerConnectionImpl::CreateNodeGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateNodeGroup(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
+        return stub_->CreateNodeGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+NodeGroupControllerConnectionImpl::CreateNodeGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   NodeGroupOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateNodeGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::NodeGroup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::NodeGroup>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnectionImpl::ResizeNodeGroup(
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
@@ -141,6 +195,60 @@ NodeGroupControllerConnectionImpl::ResizeNodeGroup(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::NodeGroup>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerConnectionImpl::ResizeNodeGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResizeNodeGroup(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
+        return stub_->ResizeNodeGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+NodeGroupControllerConnectionImpl::ResizeNodeGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   NodeGroupOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResizeNodeGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::NodeGroup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::NodeGroup>,
       polling_policy(*current), __func__);
 }
 

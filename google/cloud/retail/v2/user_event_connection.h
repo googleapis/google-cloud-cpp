@@ -21,7 +21,9 @@
 
 #include "google/cloud/retail/v2/internal/user_event_retry_traits.h"
 #include "google/cloud/retail/v2/user_event_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -195,13 +197,37 @@ class UserEventServiceConnection {
   PurgeUserEvents(
       google::cloud::retail::v2::PurgeUserEventsRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::retail::v2::PurgeUserEventsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
+  PurgeUserEvents(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
   ImportUserEvents(
       google::cloud::retail::v2::ImportUserEventsRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ImportUserEvents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::retail::v2::ImportUserEventsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
+  ImportUserEvents(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
   RejoinUserEvents(
       google::cloud::retail::v2::RejoinUserEventsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RejoinUserEvents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::retail::v2::RejoinUserEventsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
+  RejoinUserEvents(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 };
 
 /**

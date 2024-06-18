@@ -83,11 +83,31 @@ class ArtifactRegistryTracingConnection
       google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ImportAptArtifacts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
+
   future<StatusOr<
       google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
   ImportYumArtifacts(
       google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> ImportYumArtifacts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
 
   StreamRange<google::devtools::artifactregistry::v1::Repository>
   ListRepositories(
@@ -103,6 +123,15 @@ class ArtifactRegistryTracingConnection
       google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
+  CreateRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
       google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
           request) override;
@@ -111,6 +140,15 @@ class ArtifactRegistryTracingConnection
   DeleteRepository(
       google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   StreamRange<google::devtools::artifactregistry::v1::Package> ListPackages(
       google::devtools::artifactregistry::v1::ListPackagesRequest request)
@@ -125,6 +163,15 @@ class ArtifactRegistryTracingConnection
       google::devtools::artifactregistry::v1::DeletePackageRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeletePackage(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeletePackage(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   StreamRange<google::devtools::artifactregistry::v1::Version> ListVersions(
       google::devtools::artifactregistry::v1::ListVersionsRequest request)
       override;
@@ -138,11 +185,30 @@ class ArtifactRegistryTracingConnection
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request) override;
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteVersion(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   future<StatusOr<
       google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
   BatchDeleteVersions(
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteVersions(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
       google::devtools::artifactregistry::v1::ListFilesRequest request)

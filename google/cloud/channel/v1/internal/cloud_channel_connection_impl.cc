@@ -227,6 +227,59 @@ CloudChannelServiceConnectionImpl::ProvisionCloudIdentity(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::ProvisionCloudIdentity(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ProvisionCloudIdentity(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::ProvisionCloudIdentityRequest const&
+                 request) {
+        return stub_->ProvisionCloudIdentity(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::Customer>>
+CloudChannelServiceConnectionImpl::ProvisionCloudIdentity(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::channel::v1::Customer>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ProvisionCloudIdentity",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::Customer>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::channel::v1::Customer>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::channel::v1::Entitlement>
 CloudChannelServiceConnectionImpl::ListEntitlements(
     google::cloud::channel::v1::ListEntitlementsRequest request) {
@@ -386,6 +439,59 @@ CloudChannelServiceConnectionImpl::CreateEntitlement(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::CreateEntitlement(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateEntitlement(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::CreateEntitlementRequest const& request) {
+        return stub_->CreateEntitlement(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::Entitlement>>
+CloudChannelServiceConnectionImpl::CreateEntitlement(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::channel::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateEntitlement",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::channel::v1::Entitlement>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeParameters(
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
@@ -422,6 +528,59 @@ CloudChannelServiceConnectionImpl::ChangeParameters(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::ChangeParameters(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::ChangeParametersRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ChangeParameters(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::ChangeParametersRequest const& request) {
+        return stub_->ChangeParameters(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::Entitlement>>
+CloudChannelServiceConnectionImpl::ChangeParameters(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::channel::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ChangeParameters",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::channel::v1::Entitlement>,
       polling_policy(*current), __func__);
 }
 
@@ -465,6 +624,59 @@ CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ChangeRenewalSettings(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::ChangeRenewalSettingsRequest const&
+                 request) {
+        return stub_->ChangeRenewalSettings(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::Entitlement>>
+CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::channel::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ChangeRenewalSettings",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::channel::v1::Entitlement>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeOffer(
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
@@ -504,6 +716,58 @@ CloudChannelServiceConnectionImpl::ChangeOffer(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::ChangeOffer(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::ChangeOfferRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ChangeOffer(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::ChangeOfferRequest const& request) {
+        return stub_->ChangeOffer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::Entitlement>>
+CloudChannelServiceConnectionImpl::ChangeOffer(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::channel::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ChangeOffer",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::channel::v1::Entitlement>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::StartPaidService(
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
@@ -540,6 +804,59 @@ CloudChannelServiceConnectionImpl::StartPaidService(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::StartPaidService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartPaidService(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::StartPaidServiceRequest const& request) {
+        return stub_->StartPaidService(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::Entitlement>>
+CloudChannelServiceConnectionImpl::StartPaidService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::channel::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StartPaidService",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::channel::v1::Entitlement>,
       polling_policy(*current), __func__);
 }
 
@@ -583,6 +900,59 @@ CloudChannelServiceConnectionImpl::SuspendEntitlement(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::SuspendEntitlement(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SuspendEntitlement(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::SuspendEntitlementRequest const&
+                 request) {
+        return stub_->SuspendEntitlement(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::Entitlement>>
+CloudChannelServiceConnectionImpl::SuspendEntitlement(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::channel::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SuspendEntitlement",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::channel::v1::Entitlement>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceConnectionImpl::CancelEntitlement(
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
@@ -619,6 +989,60 @@ CloudChannelServiceConnectionImpl::CancelEntitlement(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::channel::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::CancelEntitlement(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelEntitlement(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::CancelEntitlementRequest const& request) {
+        return stub_->CancelEntitlement(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
+CloudChannelServiceConnectionImpl::CancelEntitlement(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::channel::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CancelEntitlement",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::channel::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -662,6 +1086,59 @@ CloudChannelServiceConnectionImpl::ActivateEntitlement(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::ActivateEntitlement(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ActivateEntitlement(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::ActivateEntitlementRequest const&
+                 request) {
+        return stub_->ActivateEntitlement(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::Entitlement>>
+CloudChannelServiceConnectionImpl::ActivateEntitlement(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::channel::v1::Entitlement>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ActivateEntitlement",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::Entitlement>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::channel::v1::Entitlement>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
 CloudChannelServiceConnectionImpl::TransferEntitlements(
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
@@ -699,6 +1176,60 @@ CloudChannelServiceConnectionImpl::TransferEntitlements(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::TransferEntitlementsResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::TransferEntitlements(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TransferEntitlements(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::channel::v1::TransferEntitlementsRequest const&
+                 request) {
+        return stub_->TransferEntitlements(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
+CloudChannelServiceConnectionImpl::TransferEntitlements(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to TransferEntitlements",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::TransferEntitlementsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::channel::v1::TransferEntitlementsResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -740,6 +1271,62 @@ CloudChannelServiceConnectionImpl::TransferEntitlementsToGoogle(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::channel::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudChannelServiceConnectionImpl::TransferEntitlementsToGoogle(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TransferEntitlementsToGoogle(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+              request) {
+        return stub_->TransferEntitlementsToGoogle(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
+CloudChannelServiceConnectionImpl::TransferEntitlementsToGoogle(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::channel::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::channel::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to TransferEntitlementsToGoogle",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::channel::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::channel::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

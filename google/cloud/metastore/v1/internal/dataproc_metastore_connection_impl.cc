@@ -154,6 +154,59 @@ DataprocMetastoreConnectionImpl::CreateService(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::CreateService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::CreateServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateService(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::CreateServiceRequest const& request) {
+        return stub_->CreateService(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Service>>
+DataprocMetastoreConnectionImpl::CreateService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::metastore::v1::Service>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateService",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::Service>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::Service>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreConnectionImpl::UpdateService(
     google::cloud::metastore::v1::UpdateServiceRequest const& request) {
@@ -193,6 +246,59 @@ DataprocMetastoreConnectionImpl::UpdateService(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::UpdateService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::UpdateServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateService(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::UpdateServiceRequest const& request) {
+        return stub_->UpdateService(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Service>>
+DataprocMetastoreConnectionImpl::UpdateService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::metastore::v1::Service>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateService",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::Service>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::Service>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreConnectionImpl::DeleteService(
     google::cloud::metastore::v1::DeleteServiceRequest const& request) {
@@ -229,6 +335,60 @@ DataprocMetastoreConnectionImpl::DeleteService(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::metastore::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::DeleteService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::DeleteServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteService(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::DeleteServiceRequest const& request) {
+        return stub_->DeleteService(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+DataprocMetastoreConnectionImpl::DeleteService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteService",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::metastore::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -322,6 +482,60 @@ DataprocMetastoreConnectionImpl::CreateMetadataImport(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::CreateMetadataImport(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMetadataImport(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::CreateMetadataImportRequest const&
+                 request) {
+        return stub_->CreateMetadataImport(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+DataprocMetastoreConnectionImpl::CreateMetadataImport(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::MetadataImport>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateMetadataImport",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::MetadataImport>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::MetadataImport>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreConnectionImpl::UpdateMetadataImport(
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
@@ -359,6 +573,60 @@ DataprocMetastoreConnectionImpl::UpdateMetadataImport(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::MetadataImport>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::UpdateMetadataImport(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateMetadataImport(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::UpdateMetadataImportRequest const&
+                 request) {
+        return stub_->UpdateMetadataImport(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+DataprocMetastoreConnectionImpl::UpdateMetadataImport(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::MetadataImport>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateMetadataImport",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::MetadataImport>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::MetadataImport>,
       polling_policy(*current), __func__);
 }
 
@@ -401,6 +669,60 @@ DataprocMetastoreConnectionImpl::ExportMetadata(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::ExportMetadata(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::ExportMetadataRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportMetadata(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::ExportMetadataRequest const& request) {
+        return stub_->ExportMetadata(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
+DataprocMetastoreConnectionImpl::ExportMetadata(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::MetadataExport>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportMetadata",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::MetadataExport>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::MetadataExport>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::metastore::v1::Restore>>
 DataprocMetastoreConnectionImpl::RestoreService(
     google::cloud::metastore::v1::RestoreServiceRequest const& request) {
@@ -437,6 +759,59 @@ DataprocMetastoreConnectionImpl::RestoreService(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::Restore>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::RestoreService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::RestoreServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RestoreService(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::RestoreServiceRequest const& request) {
+        return stub_->RestoreService(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Restore>>
+DataprocMetastoreConnectionImpl::RestoreService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::metastore::v1::Restore>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RestoreService",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::Restore>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::Restore>,
       polling_policy(*current), __func__);
 }
 
@@ -527,6 +902,58 @@ DataprocMetastoreConnectionImpl::CreateBackup(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::CreateBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::CreateBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::CreateBackupRequest const& request) {
+        return stub_->CreateBackup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Backup>>
+DataprocMetastoreConnectionImpl::CreateBackup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::metastore::v1::Backup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateBackup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::Backup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::Backup>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreConnectionImpl::DeleteBackup(
     google::cloud::metastore::v1::DeleteBackupRequest const& request) {
@@ -566,6 +993,59 @@ DataprocMetastoreConnectionImpl::DeleteBackup(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::DeleteBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::DeleteBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::DeleteBackupRequest const& request) {
+        return stub_->DeleteBackup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+DataprocMetastoreConnectionImpl::DeleteBackup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteBackup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::metastore::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
 DataprocMetastoreConnectionImpl::QueryMetadata(
     google::cloud::metastore::v1::QueryMetadataRequest const& request) {
@@ -602,6 +1082,60 @@ DataprocMetastoreConnectionImpl::QueryMetadata(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::QueryMetadataResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::QueryMetadata(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->QueryMetadata(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::metastore::v1::QueryMetadataRequest const& request) {
+        return stub_->QueryMetadata(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+DataprocMetastoreConnectionImpl::QueryMetadata(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to QueryMetadata",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::QueryMetadataResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::QueryMetadataResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -645,6 +1179,60 @@ DataprocMetastoreConnectionImpl::MoveTableToDatabase(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::MoveTableToDatabase(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->MoveTableToDatabase(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::MoveTableToDatabaseRequest const&
+                 request) {
+        return stub_->MoveTableToDatabase(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+DataprocMetastoreConnectionImpl::MoveTableToDatabase(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to MoveTableToDatabase",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::MoveTableToDatabaseResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::MoveTableToDatabaseResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
 DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
@@ -683,6 +1271,62 @@ DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AlterMetadataResourceLocation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::metastore::v1::
+                 AlterMetadataResourceLocationRequest const& request) {
+        return stub_->AlterMetadataResourceLocation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AlterMetadataResourceLocation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>,
       polling_policy(*current), __func__);
 }
 

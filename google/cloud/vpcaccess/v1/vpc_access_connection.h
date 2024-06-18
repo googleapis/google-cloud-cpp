@@ -21,7 +21,9 @@
 
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_retry_traits.h"
 #include "google/cloud/vpcaccess/v1/vpc_access_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -192,6 +194,14 @@ class VpcAccessServiceConnection {
   CreateConnector(
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
+  CreateConnector(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request);
 
@@ -201,6 +211,14 @@ class VpcAccessServiceConnection {
   virtual future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
   DeleteConnector(
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
+  DeleteConnector(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 };
 
 /**

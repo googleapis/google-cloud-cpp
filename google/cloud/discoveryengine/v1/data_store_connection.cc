@@ -46,6 +46,22 @@ DataStoreServiceConnection::CreateDataStore(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataStoreServiceConnection::CreateDataStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
+DataStoreServiceConnection::CreateDataStore(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::DataStore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
 DataStoreServiceConnection::GetDataStore(
     google::cloud::discoveryengine::v1::GetDataStoreRequest const&) {
@@ -63,6 +79,22 @@ DataStoreServiceConnection::ListDataStores(
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
 DataStoreServiceConnection::DeleteDataStore(
     google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataStoreServiceConnection::DeleteDataStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
+DataStoreServiceConnection::DeleteDataStore(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -73,6 +73,33 @@ AppConnectionsServiceTracingConnection::CreateAppConnection(
                            child_->CreateAppConnection(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceTracingConnection::CreateAppConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        CreateAppConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "CreateAppConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateAppConnection(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+AppConnectionsServiceTracingConnection::CreateAppConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "CreateAppConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateAppConnection(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceTracingConnection::UpdateAppConnection(
     google::cloud::beyondcorp::appconnections::v1::
@@ -83,6 +110,33 @@ AppConnectionsServiceTracingConnection::UpdateAppConnection(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateAppConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceTracingConnection::UpdateAppConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        UpdateAppConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "UpdateAppConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateAppConnection(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+AppConnectionsServiceTracingConnection::UpdateAppConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "UpdateAppConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateAppConnection(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
@@ -96,6 +150,34 @@ AppConnectionsServiceTracingConnection::DeleteAppConnection(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAppConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceTracingConnection::DeleteAppConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        DeleteAppConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "DeleteAppConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteAppConnection(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
+                    AppConnectionOperationMetadata>>
+AppConnectionsServiceTracingConnection::DeleteAppConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "DeleteAppConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteAppConnection(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::beyondcorp::appconnections::v1::

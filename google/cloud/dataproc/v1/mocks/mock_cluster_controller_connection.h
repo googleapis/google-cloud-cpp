@@ -53,13 +53,48 @@ class MockClusterControllerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dataproc::v1::CreateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+              CreateCluster,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::Cluster>>, UpdateCluster,
       (google::cloud::dataproc::v1::UpdateClusterRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dataproc::v1::UpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+              UpdateCluster,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
               StopCluster,
               (google::cloud::dataproc::v1::StopClusterRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StopCluster,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::dataproc::v1::StopClusterRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+              StopCluster,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
@@ -67,10 +102,34 @@ class MockClusterControllerConnection
               (google::cloud::dataproc::v1::StartClusterRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCluster,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::dataproc::v1::StartClusterRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+              StartCluster,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
       DeleteCluster,
       (google::cloud::dataproc::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dataproc::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
+      DeleteCluster,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Cluster>, GetCluster,
@@ -85,6 +144,19 @@ class MockClusterControllerConnection
       future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
       DiagnoseCluster,
       (google::cloud::dataproc::v1::DiagnoseClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DiagnoseCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
+      DiagnoseCluster,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 };
 

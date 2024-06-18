@@ -42,6 +42,30 @@ ModelServiceTracingConnection::CreateModel(
   return internal::EndSpan(std::move(span), child_->CreateModel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingConnection::CreateModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ModelServiceConnection::CreateModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateModel(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::retail::v2::Model>>
+ModelServiceTracingConnection::CreateModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("retail_v2::ModelServiceConnection::CreateModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateModel(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::retail::v2::Model>
 ModelServiceTracingConnection::GetModel(
     google::cloud::retail::v2::GetModelRequest const& request) {
@@ -103,6 +127,30 @@ ModelServiceTracingConnection::TuneModel(
       internal::MakeSpan("retail_v2::ModelServiceConnection::TuneModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->TuneModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingConnection::TuneModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("retail_v2::ModelServiceConnection::TuneModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->TuneModel(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
+ModelServiceTracingConnection::TuneModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("retail_v2::ModelServiceConnection::TuneModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->TuneModel(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

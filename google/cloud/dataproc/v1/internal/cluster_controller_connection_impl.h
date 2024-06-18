@@ -56,19 +56,62 @@ class ClusterControllerConnectionImpl
       google::cloud::dataproc::v1::CreateClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::CreateClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
       google::cloud::dataproc::v1::UpdateClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
       google::cloud::dataproc::v1::StopClusterRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> StopCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::StopClusterRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
       google::cloud::dataproc::v1::StartClusterRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> StartCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::StartClusterRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
   DeleteCluster(google::cloud::dataproc::v1::DeleteClusterRequest const&
                     request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
+  DeleteCluster(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
       google::cloud::dataproc::v1::GetClusterRequest const& request) override;
@@ -79,6 +122,15 @@ class ClusterControllerConnectionImpl
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
   DiagnoseCluster(google::cloud::dataproc::v1::DiagnoseClusterRequest const&
                       request) override;
+
+  StatusOr<google::longrunning::Operation> DiagnoseCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
+  DiagnoseCluster(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

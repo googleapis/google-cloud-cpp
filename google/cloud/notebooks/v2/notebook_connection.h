@@ -21,7 +21,9 @@
 
 #include "google/cloud/notebooks/v2/internal/notebook_retry_traits.h"
 #include "google/cloud/notebooks/v2/notebook_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -196,24 +198,72 @@ class NotebookServiceConnection {
   CreateInstance(
       google::cloud::notebooks::v2::CreateInstanceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::CreateInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  CreateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
   UpdateInstance(
       google::cloud::notebooks::v2::UpdateInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::UpdateInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  UpdateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
   DeleteInstance(
       google::cloud::notebooks::v2::DeleteInstanceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::DeleteInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
+  DeleteInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
   StartInstance(
       google::cloud::notebooks::v2::StartInstanceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> StartInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::StartInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  StartInstance(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
       google::cloud::notebooks::v2::StopInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> StopInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::StopInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
   ResetInstance(
       google::cloud::notebooks::v2::ResetInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ResetInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::ResetInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  ResetInstance(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual StatusOr<
       google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
@@ -225,13 +275,37 @@ class NotebookServiceConnection {
   UpgradeInstance(
       google::cloud::notebooks::v2::UpgradeInstanceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpgradeInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  UpgradeInstance(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
   RollbackInstance(
       google::cloud::notebooks::v2::RollbackInstanceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> RollbackInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::RollbackInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  RollbackInstance(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
   DiagnoseInstance(
       google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DiagnoseInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v2::Instance>>
+  DiagnoseInstance(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 };
 
 /**

@@ -45,6 +45,15 @@ class RegionUrlMapsTracingConnection
       google::cloud::cpp::compute::region_url_maps::v1::
           DeleteUrlMapRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          DeleteUrlMapRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
           request) override;
@@ -52,6 +61,15 @@ class RegionUrlMapsTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
           InsertUrlMapRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          InsertUrlMapRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListRegionUrlMaps(
       google::cloud::cpp::compute::region_url_maps::v1::ListRegionUrlMapsRequest
@@ -61,9 +79,27 @@ class RegionUrlMapsTracingConnection
       google::cloud::cpp::compute::region_url_maps::v1::
           PatchUrlMapRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          PatchUrlMapRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMap(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
           UpdateUrlMapRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          UpdateUrlMapRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(
       google::cloud::cpp::compute::region_url_maps::v1::ValidateRequest const&

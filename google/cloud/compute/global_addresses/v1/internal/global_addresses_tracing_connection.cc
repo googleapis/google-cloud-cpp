@@ -44,6 +44,31 @@ GlobalAddressesTracingConnection::DeleteAddress(
   return internal::EndSpan(std::move(span), child_->DeleteAddress(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesTracingConnection::DeleteAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::
+        DeleteAddressRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::DeleteAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteAddress(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesTracingConnection::DeleteAddress(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::DeleteAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteAddress(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Address>
 GlobalAddressesTracingConnection::GetAddress(
     google::cloud::cpp::compute::global_addresses::v1::GetAddressRequest const&
@@ -62,6 +87,31 @@ GlobalAddressesTracingConnection::InsertAddress(
       "compute_global_addresses_v1::GlobalAddressesConnection::InsertAddress");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertAddress(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesTracingConnection::InsertAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::
+        InsertAddressRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::InsertAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertAddress(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesTracingConnection::InsertAddress(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::InsertAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->InsertAddress(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>
@@ -87,6 +137,31 @@ GlobalAddressesTracingConnection::Move(
   return internal::EndSpan(std::move(span), child_->Move(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesTracingConnection::Move(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::Move");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span,
+                           child_->Move(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesTracingConnection::Move(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::Move");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->Move(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesTracingConnection::SetLabels(
     google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
@@ -95,6 +170,31 @@ GlobalAddressesTracingConnection::SetLabels(
       "compute_global_addresses_v1::GlobalAddressesConnection::SetLabels");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetLabels(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_global_addresses_v1::GlobalAddressesConnection::SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SetLabels(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

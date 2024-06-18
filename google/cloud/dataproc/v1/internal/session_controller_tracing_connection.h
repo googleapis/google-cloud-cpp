@@ -44,6 +44,15 @@ class SessionControllerTracingConnection
       google::cloud::dataproc::v1::CreateSessionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSession(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::dataproc::v1::Session> GetSession(
       google::cloud::dataproc::v1::GetSessionRequest const& request) override;
 
@@ -54,9 +63,27 @@ class SessionControllerTracingConnection
       google::cloud::dataproc::v1::TerminateSessionRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> TerminateSession(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
       google::cloud::dataproc::v1::DeleteSessionRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteSession(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<dataproc_v1::SessionControllerConnection> child_;

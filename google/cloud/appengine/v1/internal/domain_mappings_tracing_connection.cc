@@ -63,6 +63,30 @@ DomainMappingsTracingConnection::CreateDomainMapping(
                            child_->CreateDomainMapping(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsTracingConnection::CreateDomainMapping(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::CreateDomainMappingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::DomainMappingsConnection::CreateDomainMapping");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateDomainMapping(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::DomainMapping>>
+DomainMappingsTracingConnection::CreateDomainMapping(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::DomainMappingsConnection::CreateDomainMapping");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateDomainMapping(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsTracingConnection::UpdateDomainMapping(
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
@@ -73,6 +97,30 @@ DomainMappingsTracingConnection::UpdateDomainMapping(
                            child_->UpdateDomainMapping(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsTracingConnection::UpdateDomainMapping(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::UpdateDomainMappingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::DomainMappingsConnection::UpdateDomainMapping");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateDomainMapping(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::DomainMapping>>
+DomainMappingsTracingConnection::UpdateDomainMapping(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::DomainMappingsConnection::UpdateDomainMapping");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateDomainMapping(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsTracingConnection::DeleteDomainMapping(
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
@@ -81,6 +129,30 @@ DomainMappingsTracingConnection::DeleteDomainMapping(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteDomainMapping(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DomainMappingsTracingConnection::DeleteDomainMapping(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::DeleteDomainMappingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::DomainMappingsConnection::DeleteDomainMapping");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDomainMapping(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+DomainMappingsTracingConnection::DeleteDomainMapping(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "appengine_v1::DomainMappingsConnection::DeleteDomainMapping");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteDomainMapping(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

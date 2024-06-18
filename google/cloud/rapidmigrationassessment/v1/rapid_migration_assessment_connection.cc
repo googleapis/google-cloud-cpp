@@ -49,10 +49,44 @@ RapidMigrationAssessmentConnection::CreateCollector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnection::CreateCollector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::
+        CreateCollectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnection::CreateCollector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
 RapidMigrationAssessmentConnection::CreateAnnotation(
     google::cloud::rapidmigrationassessment::v1::
         CreateAnnotationRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnection::CreateAnnotation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::
+        CreateAnnotationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
+RapidMigrationAssessmentConnection::CreateAnnotation(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,10 +121,44 @@ RapidMigrationAssessmentConnection::UpdateCollector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnection::UpdateCollector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::
+        UpdateCollectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnection::UpdateCollector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnection::DeleteCollector(
     google::cloud::rapidmigrationassessment::v1::
         DeleteCollectorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnection::DeleteCollector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::
+        DeleteCollectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnection::DeleteCollector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -105,6 +173,23 @@ RapidMigrationAssessmentConnection::ResumeCollector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnection::ResumeCollector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::
+        ResumeCollectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnection::ResumeCollector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnection::RegisterCollector(
     google::cloud::rapidmigrationassessment::v1::
@@ -114,9 +199,42 @@ RapidMigrationAssessmentConnection::RegisterCollector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnection::RegisterCollector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::
+        RegisterCollectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnection::RegisterCollector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnection::PauseCollector(
     google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnection::PauseCollector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnection::PauseCollector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

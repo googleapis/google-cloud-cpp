@@ -46,6 +46,22 @@ VideoIntelligenceServiceConnection::AnnotateVideo(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+VideoIntelligenceServiceConnection::AnnotateVideo(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::videointelligence::v1::AnnotateVideoRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
+VideoIntelligenceServiceConnection::AnnotateVideo(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<VideoIntelligenceServiceConnection>
 MakeVideoIntelligenceServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

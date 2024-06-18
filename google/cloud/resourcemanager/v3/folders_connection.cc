@@ -68,9 +68,39 @@ FoldersConnection::CreateFolder(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> FoldersConnection::CreateFolder(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateFolderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+FoldersConnection::CreateFolder(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnection::UpdateFolder(
     google::cloud::resourcemanager::v3::UpdateFolderRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> FoldersConnection::UpdateFolder(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::UpdateFolderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+FoldersConnection::UpdateFolder(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::Folder>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -84,6 +114,21 @@ FoldersConnection::MoveFolder(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> FoldersConnection::MoveFolder(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::MoveFolderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+FoldersConnection::MoveFolder(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnection::DeleteFolder(
     google::cloud::resourcemanager::v3::DeleteFolderRequest const&) {
@@ -92,9 +137,39 @@ FoldersConnection::DeleteFolder(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> FoldersConnection::DeleteFolder(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteFolderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+FoldersConnection::DeleteFolder(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnection::UndeleteFolder(
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Folder>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> FoldersConnection::UndeleteFolder(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::UndeleteFolderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
+FoldersConnection::UndeleteFolder(google::cloud::ExperimentalTag,
+                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::Folder>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

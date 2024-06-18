@@ -154,6 +154,30 @@ AdminServiceTracingConnection::SeekSubscription(
   return internal::EndSpan(std::move(span), child_->SeekSubscription(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AdminServiceTracingConnection::SeekSubscription(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::SeekSubscription");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SeekSubscription(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
+AdminServiceTracingConnection::SeekSubscription(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::SeekSubscription");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SeekSubscription(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceTracingConnection::CreateReservation(
     google::cloud::pubsublite::v1::CreateReservationRequest const& request) {

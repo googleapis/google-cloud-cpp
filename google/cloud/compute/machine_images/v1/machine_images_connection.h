@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_retry_traits.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -189,6 +191,16 @@ class MachineImagesConnection {
   DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::
                          DeleteMachineImageRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteMachineImage(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                     google::cloud::cpp::compute::machine_images::v1::
+                         DeleteMachineImageRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteMachineImage(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage>
   GetMachineImage(google::cloud::cpp::compute::machine_images::v1::
                       GetMachineImageRequest const& request);
@@ -200,6 +212,16 @@ class MachineImagesConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::
                          InsertMachineImageRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertMachineImage(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                     google::cloud::cpp::compute::machine_images::v1::
+                         InsertMachineImageRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertMachineImage(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::MachineImage>
   ListMachineImages(

@@ -66,10 +66,28 @@ class SecureSourceManagerConnectionImpl
       google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
+  CreateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteInstance(
       google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::securesourcemanager::v1::Repository>
   ListRepositories(
@@ -85,10 +103,28 @@ class SecureSourceManagerConnectionImpl
       google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+  CreateRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteRepository(
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(
       google::iam::v1::GetIamPolicyRequest const& request) override;

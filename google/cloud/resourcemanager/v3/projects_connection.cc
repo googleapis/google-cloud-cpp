@@ -68,9 +68,39 @@ ProjectsConnection::CreateProject(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ProjectsConnection::CreateProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateProjectRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+ProjectsConnection::CreateProject(google::cloud::ExperimentalTag,
+                                  google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Project>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnection::UpdateProject(
     google::cloud::resourcemanager::v3::UpdateProjectRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Project>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ProjectsConnection::UpdateProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::UpdateProjectRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+ProjectsConnection::UpdateProject(google::cloud::ExperimentalTag,
+                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::Project>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -84,6 +114,21 @@ ProjectsConnection::MoveProject(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ProjectsConnection::MoveProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::MoveProjectRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+ProjectsConnection::MoveProject(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Project>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnection::DeleteProject(
     google::cloud::resourcemanager::v3::DeleteProjectRequest const&) {
@@ -92,9 +137,39 @@ ProjectsConnection::DeleteProject(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ProjectsConnection::DeleteProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteProjectRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+ProjectsConnection::DeleteProject(google::cloud::ExperimentalTag,
+                                  google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Project>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnection::UndeleteProject(
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::Project>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ProjectsConnection::UndeleteProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::UndeleteProjectRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::Project>>
+ProjectsConnection::UndeleteProject(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::Project>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
