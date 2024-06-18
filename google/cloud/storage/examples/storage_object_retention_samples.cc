@@ -200,13 +200,13 @@ void RunAll(std::vector<std::string> const& argv) {
   PatchObjectRetention(client, {bucket_name, name3});
 
   std::cout << "\nRunning ResetObjectRetention() [1]" << std::endl;
-  PatchObjectRetention(client, {bucket_name, name1});
+  ResetObjectRetention(client, {bucket_name, name1});
 
   std::cout << "\nRunning ResetObjectRetention() [2]" << std::endl;
-  PatchObjectRetention(client, {bucket_name, name2});
+  ResetObjectRetention(client, {bucket_name, name2});
 
   std::cout << "\nRunning ResetObjectRetention() [3]" << std::endl;
-  PatchObjectRetention(client, {bucket_name, name3});
+  ResetObjectRetention(client, {bucket_name, name3});
 
   std::cout << "\nCleaning up" << std::endl;
   for (auto const& name : {name1, name2, name3}) {
