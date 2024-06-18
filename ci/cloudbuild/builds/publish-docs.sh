@@ -103,9 +103,9 @@ function stage_docfx() {
   fi
 
   version="$(jq -r .version <"${path}/docs.metadata.json")"
-  tar -C "${path}" -zcf "/tmp/cpp-${feature}-${version}.tar.gz" . >>"${log}" 2>&1
+  tar -C "${path}" -zcf "/tmp/docfx-cpp-${feature}-${version}.tar.gz" . >>"${log}" 2>&1
   export TIMEFORMAT="${feature} completed in %0lR"
-  if time ci/retry-command.sh 3 120 gcloud storage cp "/tmp/cpp-${feature}-${version}.tar.gz" "gs://${bucket}" >>"${log}" 2>&1; then
+  if time ci/retry-command.sh 3 120 gcloud storage cp "/tmp/docfx-cpp-${feature}-${version}.tar.gz" "gs://${bucket}" >>"${log}" 2>&1; then
     echo "SUCCESS" >>"${log}"
   fi
 }
