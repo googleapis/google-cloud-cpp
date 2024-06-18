@@ -59,6 +59,7 @@ bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
          && lhs.name_ == rhs.name_                                            //
          && lhs.owner_ == rhs.owner_                                          //
          && lhs.retention_expiration_time_ == rhs.retention_expiration_time_  //
+         && lhs.retention_ == rhs.retention_                                  //
          && lhs.self_link_ == rhs.self_link_                                  //
          && lhs.size_ == rhs.size_                                            //
          && lhs.storage_class_ == rhs.storage_class_                          //
@@ -109,8 +110,11 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
   }
 
   os << ", retention_expiration_time="
-     << FormatRfc3339(rhs.retention_expiration_time())
-     << ", self_link=" << rhs.self_link() << ", size=" << rhs.size()
+     << FormatRfc3339(rhs.retention_expiration_time());
+  if (rhs.has_retention()) {
+    os << ", retention=" << rhs.retention();
+  }
+  os << ", self_link=" << rhs.self_link() << ", size=" << rhs.size()
      << ", storage_class=" << rhs.storage_class()
      << ", temporary_hold=" << std::boolalpha << rhs.temporary_hold()
      << ", time_created=" << rhs.time_created().time_since_epoch().count()
@@ -285,6 +289,22 @@ ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetCustomTime(
 
 ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetCustomTime() {
   impl_.RemoveField("customTime");
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::SetRetention(
+    ObjectRetention const& tp) {
+  impl_.AddSubPatch("retention",
+                    internal::PatchBuilder()
+                        .SetStringField("mode", tp.mode)
+                        .SetStringField("retainUntilTime",
+                                        google::cloud::internal::FormatRfc3339(
+                                            tp.retain_until_time)));
+  return *this;
+}
+
+ObjectMetadataPatchBuilder& ObjectMetadataPatchBuilder::ResetRetention() {
+  impl_.RemoveField("retention");
   return *this;
 }
 

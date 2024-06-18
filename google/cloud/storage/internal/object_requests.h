@@ -25,6 +25,7 @@
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/override_unlocked_retention.h"
 #include "google/cloud/storage/soft_deleted.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
@@ -241,7 +242,7 @@ class UpdateObjectRequest
     : public GenericObjectRequest<
           UpdateObjectRequest, Generation, EncryptionKey, IfGenerationMatch,
           IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          PredefinedAcl, Projection, UserProject> {
+          OverrideUnlockedRetention, PredefinedAcl, Projection, UserProject> {
  public:
   UpdateObjectRequest() = default;
   explicit UpdateObjectRequest(std::string bucket_name, std::string object_name,
@@ -294,7 +295,8 @@ class PatchObjectRequest
     : public GenericObjectRequest<
           PatchObjectRequest, Generation, IfGenerationMatch,
           IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          PredefinedAcl, EncryptionKey, Projection, UserProject,
+          OverrideUnlockedRetention, PredefinedAcl, EncryptionKey, Projection,
+          UserProject,
           // PredefinedDefaultObjectAcl has no effect in an `Objects: patch`
           // request.  We are keeping it here for backwards compatibility. It
           // was introduced in error (should have been PredefinedAcl), and it

@@ -1348,8 +1348,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, `EncryptionKey`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `PredefinedAcl`, `Projection`, and
-   *     `UserProject`.
+   *     `IfMetagenerationNotMatch`, `OverrideUnlockedRetention`,
+   *     `PredefinedAcl`, `Projection`, and `UserProject`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -1387,8 +1387,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, `EncryptionKey`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `PredefinedAcl`,
-   *     `Projection`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `OverrideUnlockedRetention`,
+   *     `PredefinedAcl`, `Projection`, and `UserProject`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
@@ -1425,8 +1425,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `Generation`, `EncryptionKey`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `PredefinedAcl`, `EncryptionKey`,
-   *     `Projection`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `OverrideUnlockedRetention`,
+   *     `PredefinedAcl`, `Projection`, and `UserProject`.
    *
    * @par Idempotency
    * This operation is only idempotent if restricted by pre-conditions, in this
