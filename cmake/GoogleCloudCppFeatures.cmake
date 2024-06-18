@@ -37,7 +37,7 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
 )
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sort
-                                          "storagecontrol")
+)
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sort
@@ -153,6 +153,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "speech"
     "sql"
     "storage"
+    "storagecontrol"
     "storageinsights"
     "storagetransfer"
     "support"
