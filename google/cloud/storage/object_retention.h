@@ -31,8 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Objects under retention cannot be deleted or overwritten until their
  * retention expires. Objects with a "Locked" retention cannot have their
- * retention period decreased or incce. The soft delete policy prevents
- * soft-deleted objects from being permanently deleted.
+ * retention period decreased or increased.
  */
 struct ObjectRetention {
   std::string mode;

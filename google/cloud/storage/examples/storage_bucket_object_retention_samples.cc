@@ -23,6 +23,7 @@ namespace {
 
 void CreateBucketWithObjectRetention(google::cloud::storage::Client client,
                                      std::vector<std::string> const& argv) {
+  //! [START storage_create_bucket_with_object_retention]
   //! [create-bucket-with-object-retention]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -41,6 +42,7 @@ void CreateBucketWithObjectRetention(google::cloud::storage::Client client,
               << "\n";
   }
   //! [create-bucket-with-object-retention]
+  //! [END storage_create_bucket_with_object_retention]
   (std::move(client), argv.at(0), argv.at(1));
 }
 

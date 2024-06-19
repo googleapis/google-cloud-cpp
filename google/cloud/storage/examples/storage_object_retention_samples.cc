@@ -92,7 +92,7 @@ void GetObjectRetention(google::cloud::storage::Client client,
 
 void PatchObjectRetention(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
-  //! [patch-object-retention]
+  //! [START storage_set_object_retention_policy] [patch-object-retention]
   namespace gcs = ::google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
@@ -113,7 +113,7 @@ void PatchObjectRetention(google::cloud::storage::Client client,
     std::cout << "Successfully updated object retention configuration: "
               << *updated << "\n";
   }
-  //! [patch-object-retention]
+  //! [END storage_set_object_retention_policy] [patch-object-retention]
   (std::move(client), argv.at(0), argv.at(1));
 }
 
