@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
+#include "google/cloud/storage/object_retention.h"
 #include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
@@ -426,6 +427,29 @@ class ObjectMetadata {
     return *this;
   }
 
+  /// Returns `true` if the object has a retention configuration.
+  bool has_retention() const { return retention_.has_value(); }
+
+  /**
+   * The object's retention configuration.
+   *
+   * It is undefined behavior to call this member function if
+   * `has_retention() == false`.
+   */
+  ObjectRetention const& retention() const { return *retention_; }
+
+  /// Change or set the object retention value.
+  ObjectMetadata& set_retention(ObjectRetention v) {
+    retention_ = std::move(v);
+    return *this;
+  }
+
+  /// Reset the object retention.
+  ObjectMetadata& reset_retention() {
+    retention_.reset();
+    return *this;
+  }
+
   /// An HTTPS link to the object metadata.
   std::string const& self_link() const { return self_link_; }
 
@@ -591,6 +615,7 @@ class ObjectMetadata {
   std::string name_;
   absl::optional<Owner> owner_;
   std::chrono::system_clock::time_point retention_expiration_time_;
+  absl::optional<ObjectRetention> retention_;
   std::string self_link_;
   std::uint64_t size_{0};
   std::string storage_class_;
@@ -662,6 +687,15 @@ class ObjectMetadataPatchBuilder {
   ObjectMetadataPatchBuilder& SetCustomTime(
       std::chrono::system_clock::time_point tp);
   ObjectMetadataPatchBuilder& ResetCustomTime();
+
+  /**
+   * Change the `retention` field.
+   *
+   * @par Example
+   * @snippet storage_object_retention_samples.cc patch-object-retention
+   */
+  ObjectMetadataPatchBuilder& SetRetention(ObjectRetention const& tp);
+  ObjectMetadataPatchBuilder& ResetRetention();
 
  private:
   friend struct internal::PatchBuilderDetails;

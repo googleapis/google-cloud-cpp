@@ -129,6 +129,20 @@ Status ParseRetentionExpirationTime(ObjectMetadata& meta,
   return Status{};
 }
 
+Status ParseRetention(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto f = json.find("retention");
+  if (f == json.end()) return Status{};
+
+  auto ts = internal::ParseTimestampField(*f, "retainUntilTime");
+  if (!ts) return std::move(ts).status();
+
+  ObjectRetention retention;
+  retention.mode = f->value("mode", "");
+  retention.retain_until_time = *ts;
+  meta.set_retention(std::move(retention));
+  return Status{};
+}
+
 Status ParseSize(ObjectMetadata& meta, nlohmann::json const& json) {
   auto v = internal::ParseUnsignedLongField(json, "size");
   if (!v) return std::move(v).status();
@@ -260,6 +274,7 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       },
       ParseOwner,
       ParseRetentionExpirationTime,
+      ParseRetention,
       [](ObjectMetadata& meta, nlohmann::json const& json) {
         meta.set_self_link(json.value("selfLink", ""));
         return Status{};
@@ -329,6 +344,13 @@ nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
         google::cloud::internal::FormatRfc3339(meta.custom_time());
   }
 
+  if (meta.has_retention()) {
+    metadata_as_json["retention"] = nlohmann::json{
+        {"mode", meta.retention().mode},
+        {"retainUntilTime", google::cloud::internal::FormatRfc3339(
+                                meta.retention().retain_until_time)}};
+  }
+
   return metadata_as_json;
 }
 
@@ -378,6 +400,13 @@ nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta) {
   if (meta.has_custom_time()) {
     metadata_as_json["customTime"] =
         google::cloud::internal::FormatRfc3339(meta.custom_time());
+  }
+
+  if (meta.has_retention()) {
+    metadata_as_json["retention"] = nlohmann::json{
+        {"mode", meta.retention().mode},
+        {"retainUntilTime", google::cloud::internal::FormatRfc3339(
+                                meta.retention().retain_until_time)}};
   }
 
   return metadata_as_json;

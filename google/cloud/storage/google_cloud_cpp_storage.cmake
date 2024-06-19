@@ -230,6 +230,8 @@ add_library(
     object_metadata.h
     object_read_stream.cc
     object_read_stream.h
+    object_retention.cc
+    object_retention.h
     object_rewriter.cc
     object_rewriter.h
     object_stream.h
@@ -237,6 +239,7 @@ add_library(
     object_write_stream.h
     options.h
     override_default_project.h
+    override_unlocked_retention.h
     owner.h
     parallel_upload.cc
     parallel_upload.h
@@ -513,6 +516,7 @@ if (BUILD_TESTING)
         oauth2/service_account_credentials_test.cc
         object_access_control_test.cc
         object_metadata_test.cc
+        object_retention_test.cc
         object_stream_test.cc
         parallel_uploads_test.cc
         policy_document_test.cc
