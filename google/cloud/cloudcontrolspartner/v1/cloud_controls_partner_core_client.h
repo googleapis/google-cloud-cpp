@@ -475,7 +475,8 @@ class CloudControlsPartnerCoreClient {
 
   // clang-format off
   ///
-  /// Lists access requests associated with a workload
+  /// Deprecated: Only returns access approval requests directly associated with
+  /// an assured workload folder.
   ///
   /// @param parent  Required. Parent resource
   ///  Format:
@@ -511,7 +512,8 @@ class CloudControlsPartnerCoreClient {
 
   // clang-format off
   ///
-  /// Lists access requests associated with a workload
+  /// Deprecated: Only returns access approval requests directly associated with
+  /// an assured workload folder.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all

@@ -165,7 +165,7 @@ class CloudCatalogClient {
   /// Lists all publicly available SKUs for a given cloud service.
   ///
   /// @param parent  Required. The name of the service.
-  ///  Example: "services/DA34-426B-A397"
+  ///  Example: "services/6F81-5844-456A"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

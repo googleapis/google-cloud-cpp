@@ -110,7 +110,7 @@ class GenAiTuningServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateTuningJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L89}
-  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
@@ -143,7 +143,7 @@ class GenAiTuningServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateTuningJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L89}
-  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TuningJob> CreateTuningJob(
@@ -170,7 +170,7 @@ class GenAiTuningServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetTuningJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L105}
-  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
@@ -200,7 +200,7 @@ class GenAiTuningServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.GetTuningJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L105}
-  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::TuningJob> GetTuningJob(
@@ -236,7 +236,7 @@ class GenAiTuningServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListTuningJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L118}
-  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::TuningJob> ListTuningJobs(
@@ -275,7 +275,7 @@ class GenAiTuningServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.ListTuningJobsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L118}
-  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L35}
+  /// [google.cloud.aiplatform.v1.TuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L36}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::TuningJob> ListTuningJobs(
@@ -312,8 +312,8 @@ class GenAiTuningServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CancelTuningJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L155}
   /// [google.cloud.aiplatform.v1.GenAiTuningService.GetTuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L51}
-  /// [google.cloud.aiplatform.v1.TuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L97}
-  /// [google.cloud.aiplatform.v1.TuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L70}
+  /// [google.cloud.aiplatform.v1.TuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L98}
+  /// [google.cloud.aiplatform.v1.TuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L71}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
@@ -353,8 +353,8 @@ class GenAiTuningServiceClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CancelTuningJobRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L155}
   /// [google.cloud.aiplatform.v1.GenAiTuningService.GetTuningJob]: @googleapis_reference_link{google/cloud/aiplatform/v1/genai_tuning_service.proto#L51}
-  /// [google.cloud.aiplatform.v1.TuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L97}
-  /// [google.cloud.aiplatform.v1.TuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L70}
+  /// [google.cloud.aiplatform.v1.TuningJob.error]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L98}
+  /// [google.cloud.aiplatform.v1.TuningJob.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/tuning_job.proto#L71}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on

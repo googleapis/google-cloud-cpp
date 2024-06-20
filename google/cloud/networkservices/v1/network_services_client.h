@@ -36,7 +36,7 @@ namespace networkservices_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// NetworkServicesClient
+/// Service describing handlers for resources.
 ///
 /// @par Equality
 ///
