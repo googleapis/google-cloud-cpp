@@ -645,6 +645,7 @@ service {
   product_path: "google/cloud/cloudcontrolspartner/v1"
   initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
+  emitted_rpcs: ["ListAccessApprovalRequests"]
 }
 
 service {

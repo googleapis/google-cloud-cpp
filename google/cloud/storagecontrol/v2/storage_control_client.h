@@ -90,7 +90,6 @@ class StorageControlClient {
   ///
   /// Creates a new folder. This operation is only applicable to a hierarchical
   /// namespace enabled bucket.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param parent  Required. Name of the bucket in which the folder will reside. The bucket
   ///  must be a hierarchical namespace enabled bucket.
@@ -116,8 +115,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L240}
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L177}
+  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L232}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
@@ -129,7 +128,6 @@ class StorageControlClient {
   ///
   /// Creates a new folder. This operation is only applicable to a hierarchical
   /// namespace enabled bucket.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -150,8 +148,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L240}
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L177}
+  /// [google.storage.control.v2.CreateFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L232}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
@@ -162,7 +160,6 @@ class StorageControlClient {
   ///
   /// Permanently deletes an empty folder. This operation is only applicable to a
   /// hierarchical namespace enabled bucket.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param name  Required. Name of the folder.
   ///  Format: `projects/{project}/buckets/{bucket}/folders/{folder}`
@@ -177,7 +174,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L278}
+  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L269}
   ///
   // clang-format on
   Status DeleteFolder(std::string const& name, Options opts = {});
@@ -186,7 +183,6 @@ class StorageControlClient {
   ///
   /// Permanently deletes an empty folder. This operation is only applicable to a
   /// hierarchical namespace enabled bucket.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -205,7 +201,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L278}
+  /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L269}
   ///
   // clang-format on
   Status DeleteFolder(
@@ -216,7 +212,6 @@ class StorageControlClient {
   ///
   /// Returns metadata for the specified folder. This operation is only
   /// applicable to a hierarchical namespace enabled bucket.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param name  Required. Name of the folder.
   ///  Format: `projects/{project}/buckets/{bucket}/folders/{folder}`
@@ -233,8 +228,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L177}
-  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L213}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
+  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L206}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> GetFolder(
@@ -244,7 +239,6 @@ class StorageControlClient {
   ///
   /// Returns metadata for the specified folder. This operation is only
   /// applicable to a hierarchical namespace enabled bucket.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -265,8 +259,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L177}
-  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L213}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
+  /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L206}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::Folder> GetFolder(
@@ -277,7 +271,6 @@ class StorageControlClient {
   ///
   /// Retrieves a list of folders. This operation is only applicable to a
   /// hierarchical namespace enabled bucket.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param parent  Required. Name of the bucket in which to look for folders. The bucket must
   ///  be a hierarchical namespace enabled bucket.
@@ -303,8 +296,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L177}
-  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L305}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
+  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L295}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::Folder> ListFolders(
@@ -314,7 +307,6 @@ class StorageControlClient {
   ///
   /// Retrieves a list of folders. This operation is only applicable to a
   /// hierarchical namespace enabled bucket.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -344,8 +336,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L177}
-  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L305}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
+  /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L295}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::Folder> ListFolders(
@@ -358,7 +350,6 @@ class StorageControlClient {
   /// applicable to a hierarchical namespace enabled bucket. During a rename, the
   /// source and destination folders are locked until the long running operation
   /// completes.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param name  Required. Name of the source folder being renamed.
   ///  Format: `projects/{project}/buckets/{bucket}/folders/{folder}`
@@ -383,8 +374,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L177}
-  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L365}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
+  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L354}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
@@ -397,7 +388,6 @@ class StorageControlClient {
   /// applicable to a hierarchical namespace enabled bucket. During a rename, the
   /// source and destination folders are locked until the long running operation
   /// completes.
-  /// Hierarchical namespace buckets are in allowlist preview.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -425,8 +415,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L177}
-  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L365}
+  /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
+  /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L354}
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
@@ -452,8 +442,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L477}
-  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L434}
+  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L466}
+  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L423}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -482,8 +472,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L477}
-  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L434}
+  /// [google.storage.control.v2.GetStorageLayoutRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L466}
+  /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L423}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
@@ -514,8 +504,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L556}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L500}
+  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L545}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
@@ -546,8 +536,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L556}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L500}
+  /// [google.storage.control.v2.CreateManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L545}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
@@ -572,7 +562,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L584}
+  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L573}
   ///
   // clang-format on
   Status DeleteManagedFolder(std::string const& name, Options opts = {});
@@ -598,7 +588,7 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L584}
+  /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L573}
   ///
   // clang-format on
   Status DeleteManagedFolder(
@@ -625,8 +615,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L528}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L500}
+  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L517}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
@@ -655,8 +645,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L528}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L500}
+  /// [google.storage.control.v2.GetManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L517}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
   StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
@@ -690,8 +680,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L618}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L500}
+  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L607}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
@@ -729,8 +719,8 @@ class StorageControlClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L618}
-  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L500}
+  /// [google.storage.control.v2.ListManagedFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L607}
+  /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
   StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(

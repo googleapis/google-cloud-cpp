@@ -7,7 +7,7 @@
     "language": "cpp",
     "library_type": "GAPIC_AUTO",
     "name_pretty": "Backup and DR Service API",
-    "product_documentation": "https://cloud.google.com/backup-disaster-recovery/docs/concepts/backup-dr",
+    "product_documentation": "https://cloud.google.com/backup-disaster-recovery/docs/reference/rpc",
     "release_level": "stable",
     "repo": "googleapis/google-cloud-cpp",
     "requires_billing": true
