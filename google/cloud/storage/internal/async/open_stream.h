@@ -22,6 +22,7 @@
 #include "absl/types/optional.h"
 #include <google/storage/v2/storage.pb.h>
 #include <atomic>
+#include <functional>
 #include <memory>
 
 namespace google {
@@ -73,6 +74,10 @@ class OpenStream : public std::enable_shared_from_this<OpenStream> {
   std::atomic<bool> finish_issued_{false};
   std::shared_ptr<OpenObject::StreamingRpc> rpc_;
 };
+
+using OpenStreamFactory =
+    std::function<future<StatusOr<std::shared_ptr<OpenStream>>>(
+        google::storage::v2::BidiReadObjectRequest)>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
