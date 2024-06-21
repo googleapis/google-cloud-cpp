@@ -107,6 +107,8 @@ add_library(
     internal/async/insert_object.h
     internal/async/open_object.cc
     internal/async/open_object.h
+    internal/async/open_stream.cc
+    internal/async/open_stream.h
     internal/async/partial_upload.cc
     internal/async/partial_upload.h
     internal/async/read_payload_fwd.h
@@ -418,6 +420,7 @@ set(storage_client_grpc_unit_tests
     internal/async/default_options_test.cc
     internal/async/insert_object_test.cc
     internal/async/open_object_test.cc
+    internal/async/open_stream_test.cc
     internal/async/partial_upload_test.cc
     internal/async/read_payload_impl_test.cc
     internal/async/read_range_test.cc
