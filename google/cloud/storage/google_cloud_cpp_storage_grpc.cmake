@@ -105,6 +105,8 @@ add_library(
     internal/async/default_options.h
     internal/async/insert_object.cc
     internal/async/insert_object.h
+    internal/async/object_descriptor_reader.cc
+    internal/async/object_descriptor_reader.h
     internal/async/open_object.cc
     internal/async/open_object.h
     internal/async/open_stream.cc
@@ -419,6 +421,7 @@ set(storage_client_grpc_unit_tests
     internal/async/connection_tracing_test.cc
     internal/async/default_options_test.cc
     internal/async/insert_object_test.cc
+    internal/async/object_descriptor_reader_test.cc
     internal/async/open_object_test.cc
     internal/async/open_stream_test.cc
     internal/async/partial_upload_test.cc
