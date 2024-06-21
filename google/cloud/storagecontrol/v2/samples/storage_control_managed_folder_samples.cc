@@ -35,22 +35,24 @@ void RemoveStaleManagedFolders(
   for (auto managed_folder : client.ListManagedFolders(parent)) {
     if (!managed_folder) throw std::move(managed_folder).status();
     if (!std::regex_match(managed_folder->name(), re)) continue;
-    auto const create_time =
-        google::cloud::internal::ToChronoTimePoint(managed_folder->create_time());
+    auto const create_time = google::cloud::internal::ToChronoTimePoint(
+        managed_folder->create_time());
     if (create_time > created_time_limit) continue;
     (void)client.DeleteManagedFolder(managed_folder->name());
   }
 }
 
-void CreateManagedFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
-                  std::vector<std::string> const& argv) {
-    // [START storage_control_managed_folder_create]
+void CreateManagedFolder(
+    google::cloud::storagecontrol_v2::StorageControlClient client,
+    std::vector<std::string> const& argv) {
+  // [START storage_control_managed_folder_create]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
   [](storagecontrol::StorageControlClient client,
      std::string const& bucket_name, std::string const& managed_folder_id) {
     auto const parent = std::string{"projects/_/buckets/"} + bucket_name;
     auto managed_folder = client.CreateManagedFolder(
-        parent, google::storage::control::v2::ManagedFolder{}, managed_folder_id);
+        parent, google::storage::control::v2::ManagedFolder{},
+        managed_folder_id);
     if (!managed_folder) throw std::move(managed_folder).status();
 
     std::cout << "Created managed folder: " << managed_folder->name() << "\n";
@@ -59,9 +61,10 @@ void CreateManagedFolder(google::cloud::storagecontrol_v2::StorageControlClient 
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void DeleteManagedFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
-                  std::vector<std::string> const& argv) {
-    // [START storage_control_managed_folder_delete]
+void DeleteManagedFolder(
+    google::cloud::storagecontrol_v2::StorageControlClient client,
+    std::vector<std::string> const& argv) {
+  // [START storage_control_managed_folder_delete]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
   [](storagecontrol::StorageControlClient client,
      std::string const& bucket_name, std::string const& managed_folder_id) {
@@ -76,9 +79,10 @@ void DeleteManagedFolder(google::cloud::storagecontrol_v2::StorageControlClient 
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void GetManagedFolder(google::cloud::storagecontrol_v2::StorageControlClient client,
-                  std::vector<std::string> const& argv) {
-   // [START storage_control_managed_folder_get]
+void GetManagedFolder(
+    google::cloud::storagecontrol_v2::StorageControlClient client,
+    std::vector<std::string> const& argv) {
+  // [START storage_control_managed_folder_get]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
   [](storagecontrol::StorageControlClient client,
      std::string const& bucket_name, std::string const& managed_folder_id) {
@@ -93,8 +97,9 @@ void GetManagedFolder(google::cloud::storagecontrol_v2::StorageControlClient cli
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void ListManagedFolders(google::cloud::storagecontrol_v2::StorageControlClient client,
-                  std::vector<std::string> const& argv) {
+void ListManagedFolders(
+    google::cloud::storagecontrol_v2::StorageControlClient client,
+    std::vector<std::string> const& argv) {
   // [START storage_control_managed_folder_list]
   namespace storagecontrol = google::cloud::storagecontrol_v2;
   [](storagecontrol::StorageControlClient client,
@@ -134,9 +139,9 @@ void AutoRun(std::vector<std::string> const& argv) {
                                   generator, 32, "abcdefghijklmnopqrstuvwxyz");
   auto const create_time_limit =
       std::chrono::system_clock::now() - std::chrono::hours(48);
-  // This is the only example that cleans up stale managed folders. The examples run in
-  // parallel (within a build and across the builds), having multiple examples
-  // doing the same cleanup is probably more trouble than it is worth.
+  // This is the only example that cleans up stale managed folders. The examples
+  // run in parallel (within a build and across the builds), having multiple
+  // examples doing the same cleanup is probably more trouble than it is worth.
   std::cout << "\nRemoving stale managed folders for examples" << std::endl;
   RemoveStaleManagedFolders(client, bucket_name, prefix, create_time_limit);
 
@@ -156,7 +161,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 }  // namespace
 
 int main(int argc, char* argv[]) {
-    using google::cloud::testing_util::Example;
+  using google::cloud::testing_util::Example;
   namespace storagecontrol = google::cloud::storagecontrol_v2;
   using ClientCommand = std::function<void(storagecontrol::StorageControlClient,
                                            std::vector<std::string> argv)>;
@@ -180,9 +185,12 @@ int main(int argc, char* argv[]) {
   };
 
   Example example({
-      make_entry("create-managed-folder", {"bucket-name", "folder-id"}, CreateManagedFolder),
-      make_entry("delete-managed-folder", {"bucket-name", "folder-id"}, DeleteManagedFolder),
-      make_entry("get-managed-folder", {"bucket-name", "folder-id"}, GetManagedFolder),
+      make_entry("create-managed-folder", {"bucket-name", "folder-id"},
+                 CreateManagedFolder),
+      make_entry("delete-managed-folder", {"bucket-name", "folder-id"},
+                 DeleteManagedFolder),
+      make_entry("get-managed-folder", {"bucket-name", "folder-id"},
+                 GetManagedFolder),
       make_entry("list-managed-folders", {"bucket-name"}, ListManagedFolders),
       {"auto", AutoRun},
   });
