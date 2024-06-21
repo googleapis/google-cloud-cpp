@@ -131,12 +131,10 @@ void AutoRun(std::vector<std::string> const& argv) {
       storagecontrol::MakeStorageControlConnection());
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const prefix = std::string{"storage-control-samples"};
-  auto const folder_id = prefix + "-" +
-                         google::cloud::internal::Sample(
-                             generator, 32, "abcdefghijklmnopqrstuvwxyz");
-  auto const dest_folder_id = prefix + "-" +
-                              google::cloud::internal::Sample(
-                                  generator, 32, "abcdefghijklmnopqrstuvwxyz");
+  auto const managed_folder_id =
+      prefix + "-" +
+      google::cloud::internal::Sample(generator, 32,
+                                      "abcdefghijklmnopqrstuvwxyz");
   auto const create_time_limit =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   // This is the only example that cleans up stale managed folders. The examples
@@ -146,16 +144,16 @@ void AutoRun(std::vector<std::string> const& argv) {
   RemoveStaleManagedFolders(client, bucket_name, prefix, create_time_limit);
 
   std::cout << "\nRunning CreateManagedFolder() example" << std::endl;
-  CreateManagedFolder(client, {bucket_name, folder_id});
+  CreateManagedFolder(client, {bucket_name, managed_folder_id});
 
   std::cout << "\nRunning GetManagedFolder() example" << std::endl;
-  GetManagedFolder(client, {bucket_name, folder_id});
+  GetManagedFolder(client, {bucket_name, managed_folder_id});
 
   std::cout << "\nRunning ListManagedFolders() example" << std::endl;
   ListManagedFolders(client, {bucket_name});
 
   std::cout << "\nRunning DeleteManagedFolder() example" << std::endl;
-  DeleteManagedFolder(client, {bucket_name, dest_folder_id});
+  DeleteManagedFolder(client, {bucket_name, managed_folder_id});
 }
 
 }  // namespace
@@ -185,11 +183,11 @@ int main(int argc, char* argv[]) {
   };
 
   Example example({
-      make_entry("create-managed-folder", {"bucket-name", "folder-id"},
+      make_entry("create-managed-folder", {"bucket-name", "managed-folder-id"},
                  CreateManagedFolder),
-      make_entry("delete-managed-folder", {"bucket-name", "folder-id"},
+      make_entry("delete-managed-folder", {"bucket-name", "managed-folder-id"},
                  DeleteManagedFolder),
-      make_entry("get-managed-folder", {"bucket-name", "folder-id"},
+      make_entry("get-managed-folder", {"bucket-name", "managed-folder-id"},
                  GetManagedFolder),
       make_entry("list-managed-folders", {"bucket-name"}, ListManagedFolders),
       {"auto", AutoRun},
