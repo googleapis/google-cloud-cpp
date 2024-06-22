@@ -20,6 +20,9 @@
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
+#include "google/cloud/storage/internal/async/object_descriptor_impl.h"
+#include "google/cloud/storage/internal/async/open_object.h"
+#include "google/cloud/storage/internal/async/open_stream.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_impl.h"
 #include "google/cloud/storage/internal/async/reader_connection_resume.h"
@@ -184,13 +187,59 @@ future<StatusOr<google::storage::v2::Object>> AsyncConnectionImpl::InsertObject(
 }
 
 future<
-    StatusOr<std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>>
-AsyncConnectionImpl::Open(OpenParams /*p*/) {
-  return make_ready_future(
-      StatusOr<
-          std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>(
-          internal::UnimplementedError(
-              "TODO(#20) - provide a real implementation", GCP_ERROR_INFO())));
+    StatusOr<std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
+AsyncConnectionImpl::Open(OpenParams p) {
+  auto initial_request = google::storage::v2::BidiReadObjectRequest{};
+  *initial_request.mutable_read_object_spec() = p.read_spec;
+  auto current = internal::MakeImmutableOptions(std::move(p.options));
+  // Get the policy factory and immediately create a policy.
+  auto resume_policy =
+      current->get<storage_experimental::ResumePolicyOption>()();
+
+  auto call = [stub = stub_](
+                  CompletionQueue& cq,
+                  std::shared_ptr<grpc::ClientContext> context,
+                  google::cloud::internal::ImmutableOptions options,
+                  google::storage::v2::BidiReadObjectRequest const& request) {
+    auto open = std::make_shared<OpenObject>(*stub, cq, std::move(context),
+                                             std::move(options), request);
+    return open->Call().then([open](auto f) mutable {
+      open.reset();
+      return f.get();
+    });
+  };
+
+  auto retry = std::shared_ptr<storage::RetryPolicy>(retry_policy(*current));
+  auto backoff =
+      std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
+  auto const* where = __func__;
+  auto factory = OpenStreamFactory(
+      [cq = cq_, retry = std::move(retry), backoff = std::move(backoff),
+       current = std::move(current), call = std::move(call),
+       where](google::storage::v2::BidiReadObjectRequest request) {
+        return google::cloud::internal::AsyncRetryLoop(
+                   retry->clone(), backoff->clone(), Idempotency::kIdempotent,
+                   cq, std::move(call), current, std::move(request), where)
+            .then([](auto f) -> StatusOr<std::shared_ptr<OpenStream>> {
+              auto s = f.get();
+              if (!s) return std::move(s).status();
+              return std::make_shared<OpenStream>(*std::move(s));
+            });
+      });
+
+  auto pending = factory(std::move(initial_request));
+  using ReturnType =
+      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>;
+  return pending.then(
+      [rp = std::move(resume_policy), fa = std::move(factory),
+       rs = std::move(p.read_spec)](auto f) mutable -> StatusOr<ReturnType> {
+        auto rpc = f.get();
+        if (!rpc) return std::move(rpc).status();
+        auto impl = std::make_shared<ObjectDescriptorImpl>(
+            std::move(rp), std::move(fa), std::move(rs), *std::move(rpc));
+        impl->Start();
+        return ReturnType(impl);
+      });
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>

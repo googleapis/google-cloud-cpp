@@ -47,7 +47,7 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
   }
 
   future<StatusOr<
-      std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>>
+      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
   Open(OpenParams p) override {
     // TODO(#18) - decorate the ObjectDescriptor.
     auto span = internal::MakeSpan("storage::AsyncConnection::Open");

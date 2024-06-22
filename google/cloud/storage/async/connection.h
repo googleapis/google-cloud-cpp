@@ -89,7 +89,7 @@ class AsyncConnection {
 
   /// Open an object to perform multiple reads.
   virtual future<StatusOr<
-      std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>>
+      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
   Open(OpenParams p) = 0;
 
   /**
