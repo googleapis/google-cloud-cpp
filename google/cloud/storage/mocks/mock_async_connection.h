@@ -36,7 +36,7 @@ class MockAsyncConnection : public storage_experimental::AsyncConnection {
               (InsertObjectParams), (override));
   MOCK_METHOD(
       future<StatusOr<
-          std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>>,
+          std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>,
       Open, (OpenParams), (override));
   MOCK_METHOD(
       future<StatusOr<
