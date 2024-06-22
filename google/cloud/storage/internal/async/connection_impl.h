@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_CONNECTION_IMPL_H
 
 #include "google/cloud/storage/async/connection.h"
+#include "google/cloud/storage/async/object_descriptor_connection.h"
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/async/rewriter_connection.h"
 #include "google/cloud/storage/idempotency_policy.h"
@@ -23,6 +24,7 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/storage/retry_policy.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/invocation_id_generator.h"
@@ -59,7 +61,7 @@ class AsyncConnectionImpl
       InsertObjectParams p) override;
 
   future<StatusOr<
-      std::unique_ptr<storage_experimental::ObjectDescriptorConnection>>>
+      std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
   Open(OpenParams p) override;
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
