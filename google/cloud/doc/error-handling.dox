@@ -30,7 +30,7 @@ during troubleshooting.
 
 ## Stream Ranges
 
-Some functions return [StreamRange<S>], where `S` is a `StatusOr<T>`. These
+Some functions return `StreamRange<S>`, where `S` is a `StatusOr<T>`. These
 ranges provide [input iterators] that paginate or stream results from a service,
 offering a more idiomatic API.  The value type in these iterators is
 `StatusOr<T>` because the stream may fail after it has successfully returned
