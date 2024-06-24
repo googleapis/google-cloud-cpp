@@ -181,7 +181,7 @@ class GoldenThingAdminClient {
   ///  new database.  The database ID must conform to the regular expression
   ///  `[a-z][a-z0-9_\-]*[a-z0-9]` and be between 2 and 30 characters in length.
   ///  If the database ID is a reserved word or if it contains a hyphen, the
-  ///  database ID must be enclosed in backticks (`` ` ``).
+  ///  database ID must be enclosed in backticks.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO

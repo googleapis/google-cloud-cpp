@@ -269,7 +269,7 @@ class AgentsClient {
   /// Sub-Collections](https://cloud.google.com/apis/design/design_patterns#list_sub-collections).
   ///
   /// @param parent  Required. The project to list agents from.
-  ///  Format: ``projects/<Project ID or '-'>``.
+  ///  Format: `projects/<Project ID or "-">`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

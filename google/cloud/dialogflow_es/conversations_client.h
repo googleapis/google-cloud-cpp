@@ -275,8 +275,7 @@ class ConversationsClient {
   /// Retrieves the specific conversation.
   ///
   /// @param name  Required. The name of the conversation. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation
-  ///  ID>`.
+  ///  `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -392,8 +391,8 @@ class ConversationsClient {
   /// Lists messages that belong to a given conversation.
   /// `messages` are ordered by `create_time` in descending order. To fetch
   /// updates without duplication, send request with filter
-  /// `create_time_epoch_microseconds >
-  /// [first item's create_time of previous request]` and empty page_token.
+  /// `create_time_epoch_microseconds > [first item's create_time of previous request]`
+  /// and empty page_token.
   ///
   /// @param parent  Required. The name of the conversation to list messages for.
   ///  Format: `projects/<Project ID>/locations/<Location ID>/conversations/<Conversation ID>`
@@ -431,8 +430,8 @@ class ConversationsClient {
   /// Lists messages that belong to a given conversation.
   /// `messages` are ordered by `create_time` in descending order. To fetch
   /// updates without duplication, send request with filter
-  /// `create_time_epoch_microseconds >
-  /// [first item's create_time of previous request]` and empty page_token.
+  /// `create_time_epoch_microseconds > [first item's create_time of previous request]`
+  /// and empty page_token.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all

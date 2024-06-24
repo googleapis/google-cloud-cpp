@@ -106,8 +106,7 @@ class SessionsClient {
   ///
   /// @param session  Required. The name of the session this query is sent to. Format:
   ///  `projects/<Project ID>/agent/sessions/<Session ID>`, or
-  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-  ///  ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
+  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>`. If `Environment ID` is not specified, we assume
   ///  default 'draft' environment (`Environment ID` might be referred to as
   ///  environment name at some places). If `User ID` is not specified, we are
   ///  using "-". It's up to the API caller to choose an appropriate `Session ID`

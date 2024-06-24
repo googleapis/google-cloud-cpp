@@ -1366,7 +1366,7 @@ class BigtableTableAdminClient {
   ///
   /// @param parent  Required. The cluster to list backups from.  Values are of the
   ///  form `projects/{project}/instances/{instance}/clusters/{cluster}`.
-  ///  Use ``{cluster} = '-'`` to list backups for all clusters in an instance,
+  ///  Use `{cluster} = "-"` to list backups for all clusters in an instance,
   ///  e.g., `projects/{project}/instances/{instance}/clusters/-`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

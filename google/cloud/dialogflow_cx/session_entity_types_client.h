@@ -96,17 +96,7 @@ class SessionEntityTypesClient {
   /// Returns the list of all session entity types in the specified session.
   ///
   /// @param parent  Required. The session to list all session entity types from.
-  ///  Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>
-  ///  @endcode
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -184,19 +174,8 @@ class SessionEntityTypesClient {
   /// Retrieves the specified session entity type.
   ///
   /// @param name  Required. The name of the session entity type.
-  ///  Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
-  ///  @endcode
-  ///  @n
-  ///  If `Environment ID` is not specified, we assume the default 'draft'
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>`. If `Environment ID` is not specified, we assume default 'draft'
   ///  environment.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -256,17 +235,7 @@ class SessionEntityTypesClient {
   /// Creates a session entity type.
   ///
   /// @param parent  Required. The session to create a session entity type for.
-  ///  Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>
-  ///  @endcode
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment.
   /// @param session_entity_type  Required. The session entity type to create.
@@ -332,19 +301,8 @@ class SessionEntityTypesClient {
   /// Updates the specified session entity type.
   ///
   /// @param session_entity_type  Required. The session entity type to update.
-  ///  Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
-  ///  @endcode
-  ///  @n
-  ///  If `Environment ID` is not specified, we assume the default 'draft'
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>`. If `Environment ID` is not specified, we assume default 'draft'
   ///  environment.
   /// @param update_mask  The mask to control which fields get updated.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -408,19 +366,8 @@ class SessionEntityTypesClient {
   /// Deletes the specified session entity type.
   ///
   /// @param name  Required. The name of the session entity type to delete.
-  ///  Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
-  ///  @endcode
-  ///  @n
-  ///  If `Environment ID` is not specified, we assume the default 'draft'
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>`. If `Environment ID` is not specified, we assume default 'draft'
   ///  environment.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

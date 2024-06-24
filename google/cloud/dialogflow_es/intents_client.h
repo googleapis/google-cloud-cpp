@@ -92,8 +92,7 @@ class IntentsClient {
   /// Returns the list of all intents in the specified agent.
   ///
   /// @param parent  Required. The agent to list all intents from.
-  ///  Format: `projects/<Project ID>/agent` or `projects/<Project
-  ///  ID>/locations/<Location ID>/agent`.
+  ///  Format: `projects/<Project ID>/agent` or `projects/<Project ID>/locations/<Location ID>/agent`.
   ///  @n
   ///  Alternatively, you can specify the environment to list intents for.
   ///  Format: `projects/<Project ID>/agent/environments/<Environment ID>`
@@ -134,8 +133,7 @@ class IntentsClient {
   /// Returns the list of all intents in the specified agent.
   ///
   /// @param parent  Required. The agent to list all intents from.
-  ///  Format: `projects/<Project ID>/agent` or `projects/<Project
-  ///  ID>/locations/<Location ID>/agent`.
+  ///  Format: `projects/<Project ID>/agent` or `projects/<Project ID>/locations/<Location ID>/agent`.
   ///  @n
   ///  Alternatively, you can specify the environment to list intents for.
   ///  Format: `projects/<Project ID>/agent/environments/<Environment ID>`

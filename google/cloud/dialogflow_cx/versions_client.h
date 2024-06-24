@@ -528,8 +528,7 @@ class VersionsClient {
   /// @param base_version  Required. Name of the base flow version to compare with the target version.
   ///  Use version ID `0` to indicate the draft version of the specified flow.
   ///  @n
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/
-  ///  <Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/versions/<Version ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

@@ -524,8 +524,7 @@ class ConversationModelsClient {
   /// Gets an evaluation of conversation model.
   ///
   /// @param name  Required. The conversation model evaluation resource name. Format:
-  ///  `projects/<Project ID>/conversationModels/<Conversation Model
-  ///  ID>/evaluations/<Evaluation ID>`
+  ///  `projects/<Project ID>/conversationModels/<Conversation Model ID>/evaluations/<Evaluation ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type

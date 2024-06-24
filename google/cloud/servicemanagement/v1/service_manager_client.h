@@ -802,11 +802,11 @@ class ServiceManagerClient {
   ///  @n
   ///   -- By [status]
   ///   [google.api.servicemanagement.v1.Rollout.RolloutStatus]. For example,
-  ///   ``filter='status=SUCCESS'``
+  ///   `filter="status=SUCCESS"`
   ///  @n
   ///   -- By [strategy]
   ///   [google.api.servicemanagement.v1.Rollout.strategy]. For example,
-  ///   ``filter='strategy=TrafficPercentStrategy'``
+  ///   `filter="strategy=TrafficPercentStrategy"`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)

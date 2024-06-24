@@ -95,11 +95,7 @@ class DeploymentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param parent  Required. The [Environment][google.cloud.dialogflow.cx.v3.Environment] to
-  ///  list all environments for. Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>
-  ///  @endcode
+  ///  list all environments for. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
