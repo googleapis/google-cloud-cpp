@@ -17,6 +17,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:file.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:finding.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:folder.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:group_membership.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:iam_binding.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:indicator.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:kernel_rootkit.proto
@@ -40,6 +41,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:security_posture.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:securitycenter_service.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:source.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:toxic_combination.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:vulnerability.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:access.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:application.proto
