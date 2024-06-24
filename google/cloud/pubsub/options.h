@@ -53,7 +53,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The retry policy
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct RetryPolicyOption {
   using Type = std::shared_ptr<pubsub::RetryPolicy>;
@@ -62,7 +62,7 @@ struct RetryPolicyOption {
 /**
  * The backoff policy
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct BackoffPolicyOption {
   using Type = std::shared_ptr<pubsub::BackoffPolicy>;
@@ -84,7 +84,7 @@ using PolicyOptionList = OptionList<RetryPolicyOption, BackoffPolicyOption>;
  *     and publish a second message 5 milliseconds later, the second message
  *     will be flushed approximately 5 milliseconds after it is published.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxHoldTimeOption {
   using Type = std::chrono::microseconds;
@@ -100,7 +100,7 @@ struct MaxHoldTimeOption {
  *
  * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxBatchMessagesOption {
   using Type = std::size_t;
@@ -116,7 +116,7 @@ struct MaxBatchMessagesOption {
  *
  * [pubsub-quota-link]: https://cloud.google.com/pubsub/quotas#resource_limits
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxBatchBytesOption {
   using Type = std::size_t;
@@ -133,7 +133,7 @@ struct MaxBatchBytesOption {
  * messages they can tolerate in this pending state, and may prefer to block
  * or reject messages.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxPendingMessagesOption {
   using Type = std::size_t;
@@ -150,7 +150,7 @@ struct MaxPendingMessagesOption {
  * messages they can tolerate in this pending state, and may prefer to block
  * or reject messages.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxPendingBytesOption {
   using Type = std::size_t;
@@ -170,7 +170,7 @@ struct MaxPendingBytesOption {
  *
  * @see the documentation for the `Publisher` class for details.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MessageOrderingOption {
   using Type = bool;
@@ -188,7 +188,7 @@ enum class FullPublisherAction {
 /**
  * The action taken by a full publisher.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct FullPublisherActionOption {
   using Type = FullPublisherAction;
@@ -200,7 +200,7 @@ struct FullPublisherActionOption {
  * If set, the client library turns on gRPC compression for batches larger (in
  * bytes) than the give threshold.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct CompressionThresholdOption {
   using Type = std::size_t;
@@ -214,7 +214,7 @@ struct CompressionThresholdOption {
  * Other values may be added in the future and should be settable via this
  * feature.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct CompressionAlgorithmOption {
   using Type = int;
@@ -230,7 +230,7 @@ struct CompressionAlgorithmOption {
  *    (128). Additionally, Open Telemetry sets the default
  *    [limit][otel-quota-link] to 128.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  *
  * @par Environment variable
  *    This option is controlled by the `OTEL_SPAN_LINK_COUNT_LIMIT`
@@ -268,7 +268,7 @@ using PublisherOptionList =
  *     deadline for all the messages is extended repeatedly. Only once the
  *     message is delivered to a callback does the deadline become immutable.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxDeadlineTimeOption {
   using Type = std::chrono::seconds;
@@ -287,7 +287,7 @@ struct MaxDeadlineTimeOption {
  * The value is clamped between 10 seconds and 10 minutes. Note that this option
  * also affects the effective range for `MinDeadlineExtensionOption`.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxDeadlineExtensionOption {
   using Type = std::chrono::seconds;
@@ -308,7 +308,7 @@ struct MaxDeadlineExtensionOption {
  * `MinDeadlineExtensionOption` is clamped between 10 seconds and the value of
  * `MaxDeadlineExtensionOption`.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MinDeadlineExtensionOption {
   using Type = std::chrono::seconds;
@@ -327,7 +327,7 @@ struct MinDeadlineExtensionOption {
  * @par Example
  * @snippet samples.cc subscriber-flow-control
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxOutstandingMessagesOption {
   using Type = std::int64_t;
@@ -345,7 +345,7 @@ struct MaxOutstandingMessagesOption {
  * @par Example
  * @snippet samples.cc subscriber-flow-control
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxOutstandingBytesOption {
   using Type = std::int64_t;
@@ -370,7 +370,7 @@ struct MaxOutstandingBytesOption {
  * @par Example
  * @snippet samples.cc subscriber-concurrency
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct MaxConcurrencyOption {
   using Type = std::size_t;
@@ -385,7 +385,7 @@ struct MaxConcurrencyOption {
  * down. In this latter case the session polls periodically to detect if the CQ
  * has shutdown. This controls how often this polling happens.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct ShutdownPollingPeriodOption {
   using Type = std::chrono::milliseconds;
@@ -398,14 +398,14 @@ struct ShutdownPollingPeriodOption {
  * this case they can use this option to override the default subscription
  * in a `Subscriber::Pull()` or `Subscriber::Subscribe()` call.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 struct SubscriptionOption {
   using Type = Subscription;
 };
 
 /// The list of options specific to subscribers.
-/// @ingroup pubsub-options
+/// @ingroup google-cloud-pubsub-options
 using SubscriberOptionList =
     OptionList<MaxDeadlineTimeOption, MaxDeadlineExtensionOption,
                MinDeadlineExtensionOption, MaxOutstandingMessagesOption,
@@ -424,7 +424,7 @@ using SubscriberOptionList =
  * can provide additional configuration, or override some of the values before
  * passing the object to `google::cloud::iam::MakeIAMPolicyConnection`.
  *
- * @ingroup pubsub-options
+ * @ingroup google-cloud-pubsub-options
  */
 Options IAMPolicyOptions(Options opts = {});
 
