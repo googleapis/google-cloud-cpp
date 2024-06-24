@@ -1,5 +1,5 @@
 /*!
-@defgroup spanner-options Spanner Client Library Configuration Options
+@defgroup google-cloud-spanner-options Spanner Client Library Configuration Options
 
 The Spanner client library uses the same mechanism as all other C++ client
 libraries for configuration. As usual for the C++ client libraries, it adds a
