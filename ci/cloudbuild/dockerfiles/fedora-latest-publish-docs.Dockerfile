@@ -47,11 +47,20 @@ RUN dnf makecache && dnf install -y libxslt
 RUN echo 'root:' | chpasswd
 
 # We would prefer to say `dnf install -y doxygen`, but Fedora 40 ships with
-# Doxygen 1.10.0 and we need fixes that were released in Doxygen 1.11.0.
+# Doxygen 1.10.0 and we need fixes that were released in Doxygen 1.11.0. Also,
+# we cannot use the binary, as it was built with clang support, which does not
+# work on Fedora.
+#
+# We follow Doxygen's "compiling from source on UNIX" instructions:
+# https://doxygen.nl/manual/install.html#install_src_unix
 WORKDIR /var/tmp/doxygen
-RUN curl -fsSL https://github.com/doxygen/doxygen/releases/download/Release_1_11_0/doxygen-1.11.0.linux.bin.tar.gz | \
+RUN dnf install -y flex bison
+RUN curl -fsSL https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_11_0.tar.gz | \
     tar -zxf - --strip-components=1 && \
-    make install
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -S . -B cmake-out -GNinja && \
+    cmake --build cmake-out --target install
 
 WORKDIR /var/tmp/build/
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
