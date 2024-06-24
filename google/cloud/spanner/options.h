@@ -61,7 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Option for `google::cloud::Options` to set a `spanner::RetryPolicy`.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SpannerRetryPolicyOption {
   using Type = std::shared_ptr<spanner::RetryPolicy>;
@@ -70,7 +70,7 @@ struct SpannerRetryPolicyOption {
 /**
  * Option for `google::cloud::Options` to set a `spanner::BackoffPolicy`.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SpannerBackoffPolicyOption {
   using Type = std::shared_ptr<spanner::BackoffPolicy>;
@@ -79,7 +79,7 @@ struct SpannerBackoffPolicyOption {
 /**
  * Option for `google::cloud::Options` to set a `spanner::PollingPolicy`.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SpannerPollingPolicyOption {
   using Type = std::shared_ptr<spanner::PollingPolicy>;
@@ -102,7 +102,7 @@ using SpannerPolicyOptionList =
  * for more information on multi-regional spanner instances and the role of
  * leader regions.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct RouteToLeaderOption {
   using Type = bool;
@@ -112,7 +112,7 @@ struct RouteToLeaderOption {
  * Option for `google::cloud::Options` to set the database role used for
  * session creation.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SessionCreatorRoleOption {
   using Type = std::string;
@@ -126,7 +126,7 @@ struct SessionCreatorRoleOption {
  * This value will effectively be reduced if it exceeds the overall limit on
  * the number of sessions (`max_sessions_per_channel` * number of channels).
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SessionPoolMinSessionsOption {
   using Type = int;
@@ -138,7 +138,7 @@ struct SessionPoolMinSessionsOption {
  *
  * Values <= 1 are treated as 1.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SessionPoolMaxSessionsPerChannelOption {
   using Type = int;
@@ -150,7 +150,7 @@ struct SessionPoolMaxSessionsPerChannelOption {
  *
  * Values <= 0 are treated as 0.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SessionPoolMaxIdleSessionsOption {
   using Type = int;
@@ -168,7 +168,7 @@ enum class ActionOnExhaustion {
  * Option for `google::cloud::Options` to set the action to take when
  * attempting to allocate a session when the pool is exhausted.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SessionPoolActionOnExhaustionOption {
   using Type = spanner::ActionOnExhaustion;
@@ -182,7 +182,7 @@ struct SessionPoolActionOnExhaustionOption {
  * below that (less some slack to allow the calls to be made to refresh the
  * sessions) should suffice.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SessionPoolKeepAliveIntervalOption {
   using Type = std::chrono::seconds;
@@ -196,7 +196,7 @@ struct SessionPoolKeepAliveIntervalOption {
  *  * Label values must match `([a-z]([-a-z0-9]{0,61}[a-z0-9])?)?`.
  *  * The maximum number of labels is 64.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct SessionPoolLabelsOption {
   using Type = std::map<std::string, std::string>;
@@ -215,7 +215,7 @@ using SessionPoolOptionList = OptionList<
  * Option for `google::cloud::Options` to set the optimizer version used in an
  * SQL query.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct QueryOptimizerVersionOption {
   using Type = std::string;
@@ -225,7 +225,7 @@ struct QueryOptimizerVersionOption {
  * Option for `google::cloud::Options` to set the optimizer statistics package
  * used in an SQL query.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct QueryOptimizerStatisticsPackageOption {
   using Type = std::string;
@@ -234,7 +234,7 @@ struct QueryOptimizerStatisticsPackageOption {
 /**
  * Option for `google::cloud::Options` to set a `spanner::RequestPriority`.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct RequestPriorityOption {
   using Type = spanner::RequestPriority;
@@ -243,7 +243,7 @@ struct RequestPriorityOption {
 /**
  * Option for `google::cloud::Options` to set a per-request tag.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct RequestTagOption {
   using Type = std::string;
@@ -254,7 +254,7 @@ struct RequestTagOption {
  * database table. This index is used instead of the table primary key when
  * interpreting the `KeySet` and sorting result rows.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct ReadIndexNameOption {
   using Type = std::string;
@@ -265,7 +265,7 @@ struct ReadIndexNameOption {
  * to yield from `Client::Read()`. There is no limit when the option is unset,
  * or when it is set to 0.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct ReadRowLimitOption {
   using Type = std::int64_t;
@@ -277,7 +277,7 @@ struct ReadRowLimitOption {
  * If the limit is exceeded, and the stream is subsequently interrupted before
  * a new resumption point can be established, the read/query will fail.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct StreamingResumabilityBufferSizeOption {
   using Type = std::size_t;
@@ -290,7 +290,7 @@ struct StreamingResumabilityBufferSizeOption {
  * The default for this option is currently 1 GiB. This is only a hint. The
  * actual size of each partition may be smaller or larger than this request.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct PartitionSizeOption {
   using Type = std::int64_t;
@@ -305,7 +305,7 @@ struct PartitionSizeOption {
  * currently 200,000. This is only a hint. The actual number of partitions
  * returned may be smaller or larger than this request.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct PartitionsMaximumOption {
   using Type = std::int64_t;
@@ -319,7 +319,7 @@ struct PartitionsMaximumOption {
  * and `Client::ExecuteQuery()` calls will be executed using the independent
  * compute resources of Cloud Spanner Data Boost.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct PartitionDataBoostOption {
   using Type = bool;
@@ -345,7 +345,7 @@ struct DirectedReadOption {
 /**
  * Option for `google::cloud::Options` to set a per-transaction tag.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct TransactionTagOption {
   using Type = std::string;
@@ -362,7 +362,7 @@ struct TransactionTagOption {
  * May only be specified for read-write transactions, ExecutePartitionedDml(),
  * and the mutation-groups overload of CommitAtLeastOnce().
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct ExcludeTransactionFromChangeStreamsOption {
   using Type = bool;
@@ -372,7 +372,7 @@ struct ExcludeTransactionFromChangeStreamsOption {
  * Option for `google::cloud::Options` to return additional statistics
  * about the committed transaction in a `spanner::CommitResult`.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct CommitReturnStatsOption {
   using Type = bool;
@@ -384,7 +384,7 @@ struct CommitReturnStatsOption {
  * Spanner assumes requests are relatively latency sensitive and automatically
  * determines an appropriate delay time. Value must be between 0ms and 500ms.
  *
- * @ingroup spanner-options
+ * @ingroup google-cloud-spanner-options
  */
 struct MaxCommitDelayOption {
   using Type = std::chrono::milliseconds;
