@@ -71,7 +71,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @see https://cloud.google.com/bigtable/docs/replication-overview#app-profiles
  *     for how app profiles are used to achieve replication.
  *
- * @ingroup bigtable-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct AppProfileIdOption {
   using Type = std::string;
@@ -93,7 +93,7 @@ struct AppProfileIdOption {
  *
  * @see https://cloud.google.com/bigtable/docs/reads#reverse-scan
  *
- * @ingroup bigtable-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct ReverseScanOption {
   using Type = bool;
@@ -135,7 +135,7 @@ struct InstanceAdminEndpointOption {
  *
  * The server will not disconnect idle connections before this time.
  *
- * @ingroup bigtable-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct MinConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
@@ -151,7 +151,7 @@ struct MinConnectionRefreshOption {
  * @note If this value is less than the value of `MinConnectionRefreshOption`,
  * it will be set to the value of `MinConnectionRefreshOption`.
  *
- * @ingroup bigtable-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct MaxConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
@@ -198,7 +198,7 @@ using ClientOptionList =
 /**
  * Option to configure the retry policy used by `Table`.
  *
- * @ingroup bigtable-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct DataRetryPolicyOption {
   using Type = std::shared_ptr<DataRetryPolicy>;
@@ -207,7 +207,7 @@ struct DataRetryPolicyOption {
 /**
  * Option to configure the backoff policy used by `Table`.
  *
- * @ingroup bigtable-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct DataBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
@@ -216,7 +216,7 @@ struct DataBackoffPolicyOption {
 /**
  * Option to configure the idempotency policy used by `Table`.
  *
- * @ingroup bigtable-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct IdempotentMutationPolicyOption {
   using Type = std::shared_ptr<bigtable::IdempotentMutationPolicy>;
