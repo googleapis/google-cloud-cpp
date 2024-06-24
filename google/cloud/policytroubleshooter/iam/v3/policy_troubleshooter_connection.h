@@ -21,7 +21,9 @@
 
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_retry_traits.h"
 #include "google/cloud/policytroubleshooter/iam/v3/policy_troubleshooter_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

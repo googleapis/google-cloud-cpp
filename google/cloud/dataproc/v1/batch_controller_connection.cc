@@ -46,6 +46,21 @@ BatchControllerConnection::CreateBatch(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> BatchControllerConnection::CreateBatch(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::CreateBatchRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Batch>>
+BatchControllerConnection::CreateBatch(google::cloud::ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataproc::v1::Batch>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::dataproc::v1::Batch>
 BatchControllerConnection::GetBatch(
     google::cloud::dataproc::v1::GetBatchRequest const&) {

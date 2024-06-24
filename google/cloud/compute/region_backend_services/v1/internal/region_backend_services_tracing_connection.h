@@ -49,6 +49,16 @@ class RegionBackendServicesTracingConnection
       google::cloud::cpp::compute::region_backend_services::v1::
           DeleteBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          DeleteBackendServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteBackendService(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
           GetBackendServiceRequest const& request) override;
@@ -66,6 +76,16 @@ class RegionBackendServicesTracingConnection
       google::cloud::cpp::compute::region_backend_services::v1::
           InsertBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          InsertBackendServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertBackendService(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListRegionBackendServices(
       google::cloud::cpp::compute::region_backend_services::v1::
@@ -79,6 +99,16 @@ class RegionBackendServicesTracingConnection
   PatchBackendService(google::cloud::cpp::compute::region_backend_services::v1::
                           PatchBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          PatchBackendServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchBackendService(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::region_backend_services::v1::
           SetIamPolicyRequest const& request) override;
@@ -86,6 +116,16 @@ class RegionBackendServicesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(google::cloud::cpp::compute::region_backend_services::v1::
                         SetSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          SetSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::region_backend_services::v1::
@@ -95,6 +135,16 @@ class RegionBackendServicesTracingConnection
   UpdateBackendService(
       google::cloud::cpp::compute::region_backend_services::v1::
           UpdateBackendServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          UpdateBackendServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateBackendService(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   std::shared_ptr<

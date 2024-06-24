@@ -156,6 +156,60 @@ VmwareEngineConnectionImpl::CreatePrivateCloud(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreatePrivateCloud(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePrivateCloud(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const&
+                 request) {
+        return stub_->CreatePrivateCloud(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineConnectionImpl::CreatePrivateCloud(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreatePrivateCloud",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateCloud>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateCloud>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::UpdatePrivateCloud(
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
@@ -193,6 +247,60 @@ VmwareEngineConnectionImpl::UpdatePrivateCloud(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateCloud>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdatePrivateCloud(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePrivateCloud(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const&
+                 request) {
+        return stub_->UpdatePrivateCloud(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineConnectionImpl::UpdatePrivateCloud(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdatePrivateCloud",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateCloud>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateCloud>,
       polling_policy(*current), __func__);
 }
 
@@ -236,6 +344,60 @@ VmwareEngineConnectionImpl::DeletePrivateCloud(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeletePrivateCloud(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePrivateCloud(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const&
+                 request) {
+        return stub_->DeletePrivateCloud(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineConnectionImpl::DeletePrivateCloud(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeletePrivateCloud",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateCloud>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateCloud>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::UndeletePrivateCloud(
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
@@ -274,6 +436,61 @@ VmwareEngineConnectionImpl::UndeletePrivateCloud(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateCloud>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UndeletePrivateCloud(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UndeletePrivateCloud(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
+                 request) {
+        return stub_->UndeletePrivateCloud(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineConnectionImpl::UndeletePrivateCloud(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UndeletePrivateCloud",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateCloud>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateCloud>,
       polling_policy(*current), __func__);
 }
 
@@ -366,6 +583,60 @@ VmwareEngineConnectionImpl::CreateCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreateClusterRequest const&
+                 request) {
+        return stub_->CreateCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+VmwareEngineConnectionImpl::CreateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::Cluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::Cluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::Cluster>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineConnectionImpl::UpdateCluster(
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
@@ -406,6 +677,60 @@ VmwareEngineConnectionImpl::UpdateCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateClusterRequest const&
+                 request) {
+        return stub_->UpdateCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+VmwareEngineConnectionImpl::UpdateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::Cluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::Cluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::Cluster>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteCluster(
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
@@ -443,6 +768,60 @@ VmwareEngineConnectionImpl::DeleteCluster(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeleteCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeleteClusterRequest const&
+                 request) {
+        return stub_->DeleteCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeleteCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -627,6 +1006,62 @@ VmwareEngineConnectionImpl::CreateExternalAddress(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreateExternalAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateExternalAddress(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+              request) {
+        return stub_->CreateExternalAddress(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineConnectionImpl::CreateExternalAddress(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateExternalAddress",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::ExternalAddress>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::ExternalAddress>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
 VmwareEngineConnectionImpl::UpdateExternalAddress(
     google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
@@ -668,6 +1103,62 @@ VmwareEngineConnectionImpl::UpdateExternalAddress(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateExternalAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateExternalAddress(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+              request) {
+        return stub_->UpdateExternalAddress(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineConnectionImpl::UpdateExternalAddress(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateExternalAddress",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::ExternalAddress>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::ExternalAddress>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteExternalAddress(
     google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
@@ -706,6 +1197,62 @@ VmwareEngineConnectionImpl::DeleteExternalAddress(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeleteExternalAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteExternalAddress(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+              request) {
+        return stub_->DeleteExternalAddress(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeleteExternalAddress(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteExternalAddress",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -793,6 +1340,59 @@ VmwareEngineConnectionImpl::UpdateSubnet(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::Subnet>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateSubnet(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSubnet(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+        return stub_->UpdateSubnet(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+VmwareEngineConnectionImpl::UpdateSubnet(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateSubnet",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::Subnet>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::Subnet>,
       polling_policy(*current), __func__);
 }
 
@@ -889,6 +1489,61 @@ VmwareEngineConnectionImpl::CreateExternalAccessRule(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreateExternalAccessRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateExternalAccessRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 CreateExternalAccessRuleRequest const& request) {
+        return stub_->CreateExternalAccessRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineConnectionImpl::CreateExternalAccessRule(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateExternalAccessRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::ExternalAccessRule>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::ExternalAccessRule>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
 VmwareEngineConnectionImpl::UpdateExternalAccessRule(
     google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
@@ -929,6 +1584,61 @@ VmwareEngineConnectionImpl::UpdateExternalAccessRule(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateExternalAccessRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateExternalAccessRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 UpdateExternalAccessRuleRequest const& request) {
+        return stub_->UpdateExternalAccessRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineConnectionImpl::UpdateExternalAccessRule(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateExternalAccessRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::ExternalAccessRule>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::ExternalAccessRule>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteExternalAccessRule(
     google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
@@ -966,6 +1676,61 @@ VmwareEngineConnectionImpl::DeleteExternalAccessRule(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeleteExternalAccessRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteExternalAccessRule(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 DeleteExternalAccessRuleRequest const& request) {
+        return stub_->DeleteExternalAccessRule(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeleteExternalAccessRule(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteExternalAccessRule",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -1059,6 +1824,61 @@ VmwareEngineConnectionImpl::CreateLoggingServer(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreateLoggingServer(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateLoggingServer(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+                 request) {
+        return stub_->CreateLoggingServer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineConnectionImpl::CreateLoggingServer(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateLoggingServer",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::LoggingServer>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::LoggingServer>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
 VmwareEngineConnectionImpl::UpdateLoggingServer(
     google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
@@ -1100,6 +1920,61 @@ VmwareEngineConnectionImpl::UpdateLoggingServer(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateLoggingServer(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateLoggingServer(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+                 request) {
+        return stub_->UpdateLoggingServer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineConnectionImpl::UpdateLoggingServer(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateLoggingServer",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::LoggingServer>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::LoggingServer>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteLoggingServer(
     google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
@@ -1138,6 +2013,61 @@ VmwareEngineConnectionImpl::DeleteLoggingServer(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeleteLoggingServer(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteLoggingServer(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+                 request) {
+        return stub_->DeleteLoggingServer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeleteLoggingServer(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteLoggingServer",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -1263,6 +2193,61 @@ VmwareEngineConnectionImpl::ResetNsxCredentials(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::ResetNsxCredentials(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResetNsxCredentials(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
+                 request) {
+        return stub_->ResetNsxCredentials(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineConnectionImpl::ResetNsxCredentials(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResetNsxCredentials",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateCloud>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateCloud>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::ResetVcenterCredentials(
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
@@ -1301,6 +2286,62 @@ VmwareEngineConnectionImpl::ResetVcenterCredentials(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateCloud>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::ResetVcenterCredentials(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResetVcenterCredentials(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
+              request) {
+        return stub_->ResetVcenterCredentials(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineConnectionImpl::ResetVcenterCredentials(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResetVcenterCredentials",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateCloud>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateCloud>,
       polling_policy(*current), __func__);
 }
 
@@ -1357,6 +2398,61 @@ VmwareEngineConnectionImpl::UpdateDnsForwarding(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::DnsForwarding>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateDnsForwarding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDnsForwarding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+                 request) {
+        return stub_->UpdateDnsForwarding(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
+VmwareEngineConnectionImpl::UpdateDnsForwarding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateDnsForwarding",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::DnsForwarding>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::DnsForwarding>,
       polling_policy(*current), __func__);
 }
 
@@ -1451,6 +2547,61 @@ VmwareEngineConnectionImpl::CreateNetworkPeering(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreateNetworkPeering(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateNetworkPeering(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+                 request) {
+        return stub_->CreateNetworkPeering(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineConnectionImpl::CreateNetworkPeering(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateNetworkPeering",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::NetworkPeering>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::NetworkPeering>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteNetworkPeering(
     google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
@@ -1492,6 +2643,61 @@ VmwareEngineConnectionImpl::DeleteNetworkPeering(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeleteNetworkPeering(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteNetworkPeering(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+                 request) {
+        return stub_->DeleteNetworkPeering(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeleteNetworkPeering(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteNetworkPeering",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
 VmwareEngineConnectionImpl::UpdateNetworkPeering(
     google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
@@ -1530,6 +2736,61 @@ VmwareEngineConnectionImpl::UpdateNetworkPeering(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::NetworkPeering>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateNetworkPeering(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateNetworkPeering(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+                 request) {
+        return stub_->UpdateNetworkPeering(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineConnectionImpl::UpdateNetworkPeering(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateNetworkPeering",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::NetworkPeering>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::NetworkPeering>,
       polling_policy(*current), __func__);
 }
 
@@ -1606,6 +2867,62 @@ VmwareEngineConnectionImpl::CreateHcxActivationKey(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::HcxActivationKey>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreateHcxActivationKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateHcxActivationKey(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
+              request) {
+        return stub_->CreateHcxActivationKey(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
+VmwareEngineConnectionImpl::CreateHcxActivationKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateHcxActivationKey",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::HcxActivationKey>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::HcxActivationKey>,
       polling_policy(*current), __func__);
 }
 
@@ -1752,6 +3069,61 @@ VmwareEngineConnectionImpl::CreateNetworkPolicy(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreateNetworkPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateNetworkPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
+                 request) {
+        return stub_->CreateNetworkPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
+VmwareEngineConnectionImpl::CreateNetworkPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateNetworkPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::NetworkPolicy>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::NetworkPolicy>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineConnectionImpl::UpdateNetworkPolicy(
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
@@ -1793,6 +3165,61 @@ VmwareEngineConnectionImpl::UpdateNetworkPolicy(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateNetworkPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateNetworkPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
+                 request) {
+        return stub_->UpdateNetworkPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
+VmwareEngineConnectionImpl::UpdateNetworkPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateNetworkPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::NetworkPolicy>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::NetworkPolicy>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteNetworkPolicy(
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
@@ -1831,6 +3258,61 @@ VmwareEngineConnectionImpl::DeleteNetworkPolicy(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeleteNetworkPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteNetworkPolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
+                 request) {
+        return stub_->DeleteNetworkPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeleteNetworkPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteNetworkPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -1930,6 +3412,61 @@ VmwareEngineConnectionImpl::CreateManagementDnsZoneBinding(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreateManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateManagementDnsZoneBinding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 CreateManagementDnsZoneBindingRequest const& request) {
+        return stub_->CreateManagementDnsZoneBinding(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineConnectionImpl::CreateManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateManagementDnsZoneBinding",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
     google::cloud::vmwareengine::v1::
@@ -1968,6 +3505,61 @@ VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateManagementDnsZoneBinding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 UpdateManagementDnsZoneBindingRequest const& request) {
+        return stub_->UpdateManagementDnsZoneBinding(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateManagementDnsZoneBinding",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>,
       polling_policy(*current), __func__);
 }
 
@@ -2012,6 +3604,61 @@ VmwareEngineConnectionImpl::DeleteManagementDnsZoneBinding(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeleteManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteManagementDnsZoneBinding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 DeleteManagementDnsZoneBindingRequest const& request) {
+        return stub_->DeleteManagementDnsZoneBinding(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeleteManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteManagementDnsZoneBinding",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
     google::cloud::vmwareengine::v1::
@@ -2050,6 +3697,61 @@ VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RepairManagementDnsZoneBinding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 RepairManagementDnsZoneBindingRequest const& request) {
+        return stub_->RepairManagementDnsZoneBinding(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RepairManagementDnsZoneBinding",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>,
       polling_policy(*current), __func__);
 }
 
@@ -2093,6 +3795,61 @@ VmwareEngineConnectionImpl::CreateVmwareEngineNetwork(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreateVmwareEngineNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateVmwareEngineNetwork(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 CreateVmwareEngineNetworkRequest const& request) {
+        return stub_->CreateVmwareEngineNetwork(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
+VmwareEngineConnectionImpl::CreateVmwareEngineNetwork(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateVmwareEngineNetwork",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::VmwareEngineNetwork>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::VmwareEngineNetwork>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
@@ -2133,6 +3890,61 @@ VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateVmwareEngineNetwork(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 UpdateVmwareEngineNetworkRequest const& request) {
+        return stub_->UpdateVmwareEngineNetwork(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
+VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateVmwareEngineNetwork",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::VmwareEngineNetwork>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::VmwareEngineNetwork>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
@@ -2170,6 +3982,61 @@ VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteVmwareEngineNetwork(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmwareengine::v1::
+                 DeleteVmwareEngineNetworkRequest const& request) {
+        return stub_->DeleteVmwareEngineNetwork(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteVmwareEngineNetwork",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -2267,6 +4134,62 @@ VmwareEngineConnectionImpl::CreatePrivateConnection(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::CreatePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePrivateConnection(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+              request) {
+        return stub_->CreatePrivateConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineConnectionImpl::CreatePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreatePrivateConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateConnection>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateConnection>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
 VmwareEngineConnectionImpl::GetPrivateConnection(
     google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
@@ -2360,6 +4283,62 @@ VmwareEngineConnectionImpl::UpdatePrivateConnection(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::UpdatePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePrivateConnection(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+              request) {
+        return stub_->UpdatePrivateConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineConnectionImpl::UpdatePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdatePrivateConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::PrivateConnection>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::PrivateConnection>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeletePrivateConnection(
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
@@ -2398,6 +4377,62 @@ VmwareEngineConnectionImpl::DeletePrivateConnection(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::DeletePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePrivateConnection(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+              request) {
+        return stub_->DeletePrivateConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineConnectionImpl::DeletePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeletePrivateConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmwareengine::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -2482,6 +4517,62 @@ VmwareEngineConnectionImpl::GrantDnsBindPermission(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::GrantDnsBindPermission(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GrantDnsBindPermission(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+              request) {
+        return stub_->GrantDnsBindPermission(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineConnectionImpl::GrantDnsBindPermission(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to GrantDnsBindPermission",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::DnsBindPermission>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::DnsBindPermission>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
 VmwareEngineConnectionImpl::GetDnsBindPermission(
     google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
@@ -2536,6 +4627,62 @@ VmwareEngineConnectionImpl::RevokeDnsBindPermission(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::DnsBindPermission>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineConnectionImpl::RevokeDnsBindPermission(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RevokeDnsBindPermission(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+              request) {
+        return stub_->RevokeDnsBindPermission(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineConnectionImpl::RevokeDnsBindPermission(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RevokeDnsBindPermission",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmwareengine::v1::DnsBindPermission>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmwareengine::v1::DnsBindPermission>,
       polling_policy(*current), __func__);
 }
 

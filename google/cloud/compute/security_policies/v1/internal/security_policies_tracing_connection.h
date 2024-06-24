@@ -45,6 +45,15 @@ class SecurityPoliciesTracingConnection
       google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::SecurityPoliciesScopedList>>
   AggregatedListSecurityPolicies(
@@ -54,6 +63,16 @@ class SecurityPoliciesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
                            DeleteSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          DeleteSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSecurityPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
       google::cloud::cpp::compute::security_policies::v1::
@@ -66,6 +85,16 @@ class SecurityPoliciesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
                            InsertSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          InsertSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSecurityPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
   ListSecurityPolicies(google::cloud::cpp::compute::security_policies::v1::
@@ -81,17 +110,54 @@ class SecurityPoliciesTracingConnection
   PatchSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
                           PatchSecurityPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchSecurityPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
       google::cloud::cpp::compute::security_policies::v1::
           PatchRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
       google::cloud::cpp::compute::security_policies::v1::
           RemoveRuleRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          RemoveRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::security_policies::v1::
           SetLabelsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          SetLabelsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   std::shared_ptr<compute_security_policies_v1::SecurityPoliciesConnection>

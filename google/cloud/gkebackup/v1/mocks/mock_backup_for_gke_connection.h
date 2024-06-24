@@ -52,6 +52,18 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateBackupPlan,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>,
+              CreateBackupPlan,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::BackupPlan>),
               ListBackupPlans,
               (google::cloud::gkebackup::v1::ListBackupPlansRequest request),
@@ -69,15 +81,51 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateBackupPlan,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>,
+              UpdateBackupPlan,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteBackupPlan,
       (google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteBackupPlan,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
+              DeleteBackupPlan,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::Backup>>, CreateBackup,
       (google::cloud::gkebackup::v1::CreateBackupRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateBackup,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::CreateBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::Backup>>,
+              CreateBackup,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::Backup>), ListBackups,
               (google::cloud::gkebackup::v1::ListBackupsRequest request),
@@ -93,10 +141,34 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateBackup,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::UpdateBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::Backup>>,
+              UpdateBackup,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteBackup,
       (google::cloud::gkebackup::v1::DeleteBackupRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteBackup,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::DeleteBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
+              DeleteBackup,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::VolumeBackup>),
               ListVolumeBackups,
@@ -113,6 +185,18 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       CreateRestorePlan,
       (google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateRestorePlan,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>,
+              CreateRestorePlan,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::RestorePlan>),
               ListRestorePlans,
@@ -131,15 +215,51 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateRestorePlan,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>,
+              UpdateRestorePlan,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteRestorePlan,
       (google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteRestorePlan,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
+              DeleteRestorePlan,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::Restore>>, CreateRestore,
       (google::cloud::gkebackup::v1::CreateRestoreRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateRestore,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::CreateRestoreRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::Restore>>,
+              CreateRestore,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::Restore>),
               ListRestores,
@@ -156,10 +276,34 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateRestore,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::UpdateRestoreRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::Restore>>,
+              UpdateRestore,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteRestore,
       (google::cloud::gkebackup::v1::DeleteRestoreRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteRestore,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::gkebackup::v1::DeleteRestoreRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
+              DeleteRestore,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::gkebackup::v1::VolumeRestore>),
               ListVolumeRestores,

@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/ssl_certificates/v1/internal/ssl_certificates_retry_traits.h"
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -196,6 +198,17 @@ class SslCertificatesConnection {
   DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
                            DeleteSslCertificateRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteSslCertificate(google::cloud::ExperimentalTag,
+                       google::cloud::NoAwaitTag,
+                       google::cloud::cpp::compute::ssl_certificates::v1::
+                           DeleteSslCertificateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSslCertificate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
   GetSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
                         GetSslCertificateRequest const& request);
@@ -203,6 +216,17 @@ class SslCertificatesConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
                            InsertSslCertificateRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertSslCertificate(google::cloud::ExperimentalTag,
+                       google::cloud::NoAwaitTag,
+                       google::cloud::cpp::compute::ssl_certificates::v1::
+                           InsertSslCertificateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSslCertificate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::

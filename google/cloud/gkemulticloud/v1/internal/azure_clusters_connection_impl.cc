@@ -107,6 +107,61 @@ AzureClustersConnectionImpl::CreateAzureClient(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AzureClustersConnectionImpl::CreateAzureClient(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAzureClient(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
+                 request) {
+        return stub_->CreateAzureClient(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
+AzureClustersConnectionImpl::CreateAzureClient(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAzureClient",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AzureClient>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AzureClient>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersConnectionImpl::GetAzureClient(
     google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
@@ -197,6 +252,61 @@ AzureClustersConnectionImpl::DeleteAzureClient(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AzureClustersConnectionImpl::DeleteAzureClient(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAzureClient(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
+                 request) {
+        return stub_->DeleteAzureClient(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+AzureClustersConnectionImpl::DeleteAzureClient(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAzureClient",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkemulticloud::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
 AzureClustersConnectionImpl::CreateAzureCluster(
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
@@ -238,6 +348,62 @@ AzureClustersConnectionImpl::CreateAzureCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AzureClustersConnectionImpl::CreateAzureCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAzureCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+                 request) {
+        return stub_->CreateAzureCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
+AzureClustersConnectionImpl::CreateAzureCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAzureCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AzureCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AzureCluster>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
 AzureClustersConnectionImpl::UpdateAzureCluster(
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
@@ -276,6 +442,62 @@ AzureClustersConnectionImpl::UpdateAzureCluster(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AzureCluster>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AzureClustersConnectionImpl::UpdateAzureCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAzureCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+                 request) {
+        return stub_->UpdateAzureCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
+AzureClustersConnectionImpl::UpdateAzureCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAzureCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AzureCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AzureCluster>,
       polling_policy(*current), __func__);
 }
 
@@ -369,6 +591,62 @@ AzureClustersConnectionImpl::DeleteAzureCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AzureClustersConnectionImpl::DeleteAzureCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAzureCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+                 request) {
+        return stub_->DeleteAzureCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+AzureClustersConnectionImpl::DeleteAzureCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAzureCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkemulticloud::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<
     google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
 AzureClustersConnectionImpl::GenerateAzureClusterAgentToken(
@@ -443,6 +721,62 @@ AzureClustersConnectionImpl::CreateAzureNodePool(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AzureClustersConnectionImpl::CreateAzureNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAzureNodePool(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+                 request) {
+        return stub_->CreateAzureNodePool(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
+AzureClustersConnectionImpl::CreateAzureNodePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAzureNodePool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AzureNodePool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AzureNodePool>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
 AzureClustersConnectionImpl::UpdateAzureNodePool(
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
@@ -481,6 +815,62 @@ AzureClustersConnectionImpl::UpdateAzureNodePool(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AzureNodePool>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AzureClustersConnectionImpl::UpdateAzureNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateAzureNodePool(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+                 request) {
+        return stub_->UpdateAzureNodePool(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
+AzureClustersConnectionImpl::UpdateAzureNodePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateAzureNodePool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::AzureNodePool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkemulticloud::v1::AzureNodePool>,
       polling_policy(*current), __func__);
 }
 
@@ -572,6 +962,62 @@ AzureClustersConnectionImpl::DeleteAzureNodePool(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkemulticloud::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AzureClustersConnectionImpl::DeleteAzureNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteAzureNodePool(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+                 request) {
+        return stub_->DeleteAzureNodePool(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+AzureClustersConnectionImpl::DeleteAzureNodePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkemulticloud::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteAzureNodePool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkemulticloud::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkemulticloud::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

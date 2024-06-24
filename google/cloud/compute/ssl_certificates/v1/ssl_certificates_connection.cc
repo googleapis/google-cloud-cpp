@@ -55,6 +55,24 @@ SslCertificatesConnection::DeleteSslCertificate(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslCertificatesConnection::DeleteSslCertificate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::ssl_certificates::v1::
+        DeleteSslCertificateRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SslCertificatesConnection::DeleteSslCertificate(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
 SslCertificatesConnection::GetSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
@@ -66,6 +84,24 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslCertificatesConnection::InsertSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
         InsertSslCertificateRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslCertificatesConnection::InsertSslCertificate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::ssl_certificates::v1::
+        InsertSslCertificateRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SslCertificatesConnection::InsertSslCertificate(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

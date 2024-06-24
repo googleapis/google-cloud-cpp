@@ -22,7 +22,9 @@
 
 #include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments_connection_idempotency_policy.h"
 #include "google/cloud/compute/interconnect_attachments/v1/internal/interconnect_attachments_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -207,6 +209,17 @@ class InterconnectAttachmentsConnection {
       google::cloud::cpp::compute::interconnect_attachments::v1::
           DeleteInterconnectAttachmentRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          DeleteInterconnectAttachmentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInterconnectAttachment(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
   GetInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
@@ -216,6 +229,17 @@ class InterconnectAttachmentsConnection {
   InsertInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
           InsertInterconnectAttachmentRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          InsertInterconnectAttachmentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInterconnectAttachment(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
   ListInterconnectAttachments(
@@ -227,9 +251,29 @@ class InterconnectAttachmentsConnection {
       google::cloud::cpp::compute::interconnect_attachments::v1::
           PatchInterconnectAttachmentRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          PatchInterconnectAttachmentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchInterconnectAttachment(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(google::cloud::cpp::compute::interconnect_attachments::v1::
                 SetLabelsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          SetLabelsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::ExperimentalTag,
+            google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

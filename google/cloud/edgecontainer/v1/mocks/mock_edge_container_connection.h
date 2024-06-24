@@ -64,10 +64,34 @@ class MockEdgeContainerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::edgecontainer::v1::CreateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
+              CreateCluster,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
       UpdateCluster,
       (google::cloud::edgecontainer::v1::UpdateClusterRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
+              UpdateCluster,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
@@ -76,9 +100,34 @@ class MockEdgeContainerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpgradeCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
+              UpgradeCluster,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteCluster,
       (google::cloud::edgecontainer::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::edgecontainer::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
+      DeleteCluster,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -113,15 +162,52 @@ class MockEdgeContainerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateNodePool,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
+              CreateNodePool,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
       UpdateNodePool,
       (google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateNodePool,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
+              UpdateNodePool,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteNodePool,
       (google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteNodePool,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
+      DeleteNodePool,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::edgecontainer::v1::Machine>),
@@ -154,10 +240,37 @@ class MockEdgeContainerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateVpnConnection,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>,
+              CreateVpnConnection,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteVpnConnection,
       (google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteVpnConnection,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
+      DeleteVpnConnection,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

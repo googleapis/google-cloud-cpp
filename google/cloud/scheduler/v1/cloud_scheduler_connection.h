@@ -21,7 +21,9 @@
 
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection_idempotency_policy.h"
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

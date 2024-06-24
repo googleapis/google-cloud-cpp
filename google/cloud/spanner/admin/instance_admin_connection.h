@@ -21,7 +21,9 @@
 
 #include "google/cloud/spanner/admin/instance_admin_connection_idempotency_policy.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -199,10 +201,28 @@ class InstanceAdminConnection {
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  CreateInstanceConfig(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
   UpdateInstanceConfig(
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation);
 
   virtual Status DeleteInstanceConfig(
       google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
@@ -230,10 +250,28 @@ class InstanceAdminConnection {
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  CreateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  UpdateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual Status DeleteInstance(
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
@@ -258,6 +296,16 @@ class InstanceAdminConnection {
   CreateInstancePartition(google::spanner::admin::instance::v1::
                               CreateInstancePartitionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request);
+
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  CreateInstancePartition(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual Status DeleteInstancePartition(
       google::spanner::admin::instance::v1::
           DeleteInstancePartitionRequest const& request);
@@ -266,6 +314,16 @@ class InstanceAdminConnection {
       StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
   UpdateInstancePartition(google::spanner::admin::instance::v1::
                               UpdateInstancePartitionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request);
+
+  virtual future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  UpdateInstancePartition(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::longrunning::Operation>
   ListInstancePartitionOperations(

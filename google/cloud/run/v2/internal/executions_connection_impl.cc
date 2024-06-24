@@ -149,6 +149,57 @@ ExecutionsConnectionImpl::DeleteExecution(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ExecutionsConnectionImpl::DeleteExecution(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteExecution(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::DeleteExecutionRequest const& request) {
+        return stub_->DeleteExecution(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsConnectionImpl::DeleteExecution(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::cloud::run::v2::Execution>()) {
+    return make_ready_future<StatusOr<google::cloud::run::v2::Execution>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteExecution",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::run::v2::Execution>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::run::v2::Execution>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsConnectionImpl::CancelExecution(
     google::cloud::run::v2::CancelExecutionRequest const& request) {
@@ -185,6 +236,57 @@ ExecutionsConnectionImpl::CancelExecution(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Execution>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ExecutionsConnectionImpl::CancelExecution(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelExecution(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::CancelExecutionRequest const& request) {
+        return stub_->CancelExecution(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsConnectionImpl::CancelExecution(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::cloud::run::v2::Execution>()) {
+    return make_ready_future<StatusOr<google::cloud::run::v2::Execution>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CancelExecution",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::run::v2::Execution>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::run::v2::Execution>,
       polling_policy(*current), __func__);
 }
 

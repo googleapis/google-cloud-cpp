@@ -22,7 +22,9 @@
 
 #include "google/cloud/compute/region_health_checks/v1/internal/region_health_checks_retry_traits.h"
 #include "google/cloud/compute/region_health_checks/v1/region_health_checks_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -193,6 +195,16 @@ class RegionHealthChecksConnection {
   DeleteHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
                         DeleteHealthCheckRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteHealthCheck(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                    google::cloud::cpp::compute::region_health_checks::v1::
+                        DeleteHealthCheckRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteHealthCheck(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
       google::cloud::cpp::compute::region_health_checks::v1::
           GetHealthCheckRequest const& request);
@@ -200,6 +212,16 @@ class RegionHealthChecksConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
                         InsertHealthCheckRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertHealthCheck(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                    google::cloud::cpp::compute::region_health_checks::v1::
+                        InsertHealthCheckRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertHealthCheck(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
   ListRegionHealthChecks(google::cloud::cpp::compute::region_health_checks::v1::
@@ -209,9 +231,28 @@ class RegionHealthChecksConnection {
   PatchHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
                        PatchHealthCheckRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheck(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_health_checks::v1::
+          PatchHealthCheckRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchHealthCheck(google::cloud::ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHealthCheck(google::cloud::cpp::compute::region_health_checks::v1::
                         UpdateHealthCheckRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateHealthCheck(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                    google::cloud::cpp::compute::region_health_checks::v1::
+                        UpdateHealthCheckRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateHealthCheck(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

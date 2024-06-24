@@ -61,6 +61,33 @@ ForwardingRulesTracingConnection::DeleteForwardingRule(
                            child_->DeleteForwardingRule(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ForwardingRulesTracingConnection::DeleteForwardingRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        DeleteForwardingRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::"
+      "DeleteForwardingRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteForwardingRule(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ForwardingRulesTracingConnection::DeleteForwardingRule(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::"
+      "DeleteForwardingRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteForwardingRule(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
 ForwardingRulesTracingConnection::GetForwardingRule(
     google::cloud::cpp::compute::forwarding_rules::v1::
@@ -82,6 +109,33 @@ ForwardingRulesTracingConnection::InsertForwardingRule(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertForwardingRule(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ForwardingRulesTracingConnection::InsertForwardingRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        InsertForwardingRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::"
+      "InsertForwardingRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->InsertForwardingRule(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ForwardingRulesTracingConnection::InsertForwardingRule(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::"
+      "InsertForwardingRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InsertForwardingRule(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -110,6 +164,33 @@ ForwardingRulesTracingConnection::PatchForwardingRule(
                            child_->PatchForwardingRule(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ForwardingRulesTracingConnection::PatchForwardingRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::
+        PatchForwardingRuleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::"
+      "PatchForwardingRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->PatchForwardingRule(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ForwardingRulesTracingConnection::PatchForwardingRule(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::"
+      "PatchForwardingRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->PatchForwardingRule(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesTracingConnection::SetLabels(
     google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
@@ -120,6 +201,31 @@ ForwardingRulesTracingConnection::SetLabels(
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ForwardingRulesTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetLabels(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ForwardingRulesTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SetLabels(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesTracingConnection::SetTarget(
     google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
@@ -128,6 +234,31 @@ ForwardingRulesTracingConnection::SetTarget(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::SetTarget");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetTarget(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ForwardingRulesTracingConnection::SetTarget(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::SetTarget");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetTarget(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ForwardingRulesTracingConnection::SetTarget(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_forwarding_rules_v1::ForwardingRulesConnection::SetTarget");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SetTarget(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

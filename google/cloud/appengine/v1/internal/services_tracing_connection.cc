@@ -61,6 +61,30 @@ ServicesTracingConnection::UpdateService(
   return internal::EndSpan(std::move(span), child_->UpdateService(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ServicesTracingConnection::UpdateService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::UpdateServiceRequest const& request) {
+  auto span =
+      internal::MakeSpan("appengine_v1::ServicesConnection::UpdateService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateService(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::Service>>
+ServicesTracingConnection::UpdateService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("appengine_v1::ServicesConnection::UpdateService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateService(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 ServicesTracingConnection::DeleteService(
     google::appengine::v1::DeleteServiceRequest const& request) {
@@ -68,6 +92,30 @@ ServicesTracingConnection::DeleteService(
       internal::MakeSpan("appengine_v1::ServicesConnection::DeleteService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteService(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ServicesTracingConnection::DeleteService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::DeleteServiceRequest const& request) {
+  auto span =
+      internal::MakeSpan("appengine_v1::ServicesConnection::DeleteService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteService(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+ServicesTracingConnection::DeleteService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("appengine_v1::ServicesConnection::DeleteService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteService(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

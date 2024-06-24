@@ -21,7 +21,9 @@
 
 #include "google/cloud/aiplatform/v1/endpoint_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/endpoint_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -191,6 +193,14 @@ class EndpointServiceConnection {
   CreateEndpoint(
       google::cloud::aiplatform::v1::CreateEndpointRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateEndpoint(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
+  CreateEndpoint(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
       google::cloud::aiplatform::v1::GetEndpointRequest const& request);
 
@@ -205,17 +215,51 @@ class EndpointServiceConnection {
   DeleteEndpoint(
       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteEndpoint(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
   DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeployModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeployModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
+  DeployModel(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
   UndeployModel(
       google::cloud::aiplatform::v1::UndeployModelRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UndeployModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
+  UndeployModel(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
   MutateDeployedModel(
       google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> MutateDeployedModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
+  MutateDeployedModel(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation);
 };
 
 /**

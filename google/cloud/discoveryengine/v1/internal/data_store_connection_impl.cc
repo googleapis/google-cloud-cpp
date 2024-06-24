@@ -108,6 +108,61 @@ DataStoreServiceConnectionImpl::CreateDataStore(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataStoreServiceConnectionImpl::CreateDataStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDataStore(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
+                 request) {
+        return stub_->CreateDataStore(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
+DataStoreServiceConnectionImpl::CreateDataStore(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   CreateDataStoreMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::DataStore>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDataStore",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::DataStore>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::DataStore>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
 DataStoreServiceConnectionImpl::GetDataStore(
     google::cloud::discoveryengine::v1::GetDataStoreRequest const& request) {
@@ -195,6 +250,61 @@ DataStoreServiceConnectionImpl::DeleteDataStore(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataStoreServiceConnectionImpl::DeleteDataStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDataStore(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
+                 request) {
+        return stub_->DeleteDataStore(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
+DataStoreServiceConnectionImpl::DeleteDataStore(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   DeleteDataStoreMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDataStore",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>,
       polling_policy(*current), __func__);
 }
 

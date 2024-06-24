@@ -51,6 +51,30 @@ FleetRoutingTracingConnection::BatchOptimizeTours(
                            child_->BatchOptimizeTours(request));
 }
 
+StatusOr<google::longrunning::Operation>
+FleetRoutingTracingConnection::BatchOptimizeTours(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
+  auto span = internal::MakeSpan(
+      "optimization_v1::FleetRoutingConnection::BatchOptimizeTours");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->BatchOptimizeTours(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
+FleetRoutingTracingConnection::BatchOptimizeTours(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "optimization_v1::FleetRoutingConnection::BatchOptimizeTours");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->BatchOptimizeTours(google::cloud::ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<optimization_v1::FleetRoutingConnection>

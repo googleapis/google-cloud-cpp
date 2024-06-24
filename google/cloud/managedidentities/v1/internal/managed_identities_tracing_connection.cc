@@ -48,6 +48,33 @@ ManagedIdentitiesServiceTracingConnection::CreateMicrosoftAdDomain(
                            child_->CreateMicrosoftAdDomain(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingConnection::CreateMicrosoftAdDomain(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::"
+      "CreateMicrosoftAdDomain");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateMicrosoftAdDomain(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceTracingConnection::CreateMicrosoftAdDomain(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::"
+      "CreateMicrosoftAdDomain");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateMicrosoftAdDomain(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceTracingConnection::ResetAdminPassword(
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
@@ -89,6 +116,30 @@ ManagedIdentitiesServiceTracingConnection::UpdateDomain(
   return internal::EndSpan(std::move(span), child_->UpdateDomain(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingConnection::UpdateDomain(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::UpdateDomain");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateDomain(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceTracingConnection::UpdateDomain(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::UpdateDomain");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateDomain(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceTracingConnection::DeleteDomain(
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
@@ -98,6 +149,30 @@ ManagedIdentitiesServiceTracingConnection::DeleteDomain(
   return internal::EndSpan(std::move(span), child_->DeleteDomain(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingConnection::DeleteDomain(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::DeleteDomain");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDomain(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
+ManagedIdentitiesServiceTracingConnection::DeleteDomain(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::DeleteDomain");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteDomain(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceTracingConnection::AttachTrust(
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
@@ -105,6 +180,30 @@ ManagedIdentitiesServiceTracingConnection::AttachTrust(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::AttachTrust");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AttachTrust(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingConnection::AttachTrust(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::AttachTrust");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->AttachTrust(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceTracingConnection::AttachTrust(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::AttachTrust");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->AttachTrust(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -118,6 +217,33 @@ ManagedIdentitiesServiceTracingConnection::ReconfigureTrust(
   return internal::EndSpan(std::move(span), child_->ReconfigureTrust(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingConnection::ReconfigureTrust(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::"
+      "ReconfigureTrust");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ReconfigureTrust(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceTracingConnection::ReconfigureTrust(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::"
+      "ReconfigureTrust");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ReconfigureTrust(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceTracingConnection::DetachTrust(
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
@@ -125,6 +251,30 @@ ManagedIdentitiesServiceTracingConnection::DetachTrust(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::DetachTrust");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DetachTrust(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingConnection::DetachTrust(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::DetachTrust");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DetachTrust(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceTracingConnection::DetachTrust(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::DetachTrust");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DetachTrust(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -135,6 +285,32 @@ ManagedIdentitiesServiceTracingConnection::ValidateTrust(
       "ValidateTrust");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ValidateTrust(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedIdentitiesServiceTracingConnection::ValidateTrust(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::"
+      "ValidateTrust");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ValidateTrust(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+ManagedIdentitiesServiceTracingConnection::ValidateTrust(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "managedidentities_v1::ManagedIdentitiesServiceConnection::"
+      "ValidateTrust");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ValidateTrust(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

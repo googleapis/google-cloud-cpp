@@ -106,6 +106,59 @@ VpcAccessServiceConnectionImpl::CreateConnector(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceConnectionImpl::CreateConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateConnector(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+        return stub_->CreateConnector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
+VpcAccessServiceConnectionImpl::CreateConnector(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vpcaccess::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::vpcaccess::v1::Connector>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateConnector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vpcaccess::v1::Connector>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vpcaccess::v1::Connector>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceConnectionImpl::GetConnector(
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
@@ -190,6 +243,60 @@ VpcAccessServiceConnectionImpl::DeleteConnector(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vpcaccess::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceConnectionImpl::DeleteConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteConnector(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+        return stub_->DeleteConnector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
+VpcAccessServiceConnectionImpl::DeleteConnector(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vpcaccess::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteConnector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vpcaccess::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vpcaccess::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

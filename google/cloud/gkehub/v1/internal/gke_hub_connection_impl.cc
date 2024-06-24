@@ -196,6 +196,58 @@ GkeHubConnectionImpl::CreateMembership(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::CreateMembership(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMembership(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+        return stub_->CreateMembership(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Membership>>
+GkeHubConnectionImpl::CreateMembership(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::gkehub::v1::Membership>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateMembership",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkehub::v1::Membership>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkehub::v1::Membership>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnectionImpl::CreateFeature(
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
@@ -232,6 +284,57 @@ GkeHubConnectionImpl::CreateFeature(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkehub::v1::Feature>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::CreateFeature(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateFeature(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+        return stub_->CreateFeature(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Feature>>
+GkeHubConnectionImpl::CreateFeature(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::gkehub::v1::Feature>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateFeature",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkehub::v1::Feature>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkehub::v1::Feature>,
       polling_policy(*current), __func__);
 }
 
@@ -274,6 +377,59 @@ GkeHubConnectionImpl::DeleteMembership(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::DeleteMembership(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteMembership(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+        return stub_->DeleteMembership(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnectionImpl::DeleteMembership(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteMembership",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkehub::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkehub::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubConnectionImpl::DeleteFeature(
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
@@ -310,6 +466,58 @@ GkeHubConnectionImpl::DeleteFeature(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkehub::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::DeleteFeature(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteFeature(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+        return stub_->DeleteFeature(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnectionImpl::DeleteFeature(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteFeature",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkehub::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::gkehub::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -352,6 +560,58 @@ GkeHubConnectionImpl::UpdateMembership(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::UpdateMembership(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateMembership(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+        return stub_->UpdateMembership(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Membership>>
+GkeHubConnectionImpl::UpdateMembership(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::gkehub::v1::Membership>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateMembership",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkehub::v1::Membership>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkehub::v1::Membership>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnectionImpl::UpdateFeature(
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
@@ -388,6 +648,57 @@ GkeHubConnectionImpl::UpdateFeature(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkehub::v1::Feature>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::UpdateFeature(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateFeature(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+        return stub_->UpdateFeature(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Feature>>
+GkeHubConnectionImpl::UpdateFeature(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::gkehub::v1::Feature>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateFeature",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::gkehub::v1::Feature>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::gkehub::v1::Feature>,
       polling_policy(*current), __func__);
 }
 

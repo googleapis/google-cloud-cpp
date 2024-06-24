@@ -336,6 +336,60 @@ AdminServiceConnectionImpl::SeekSubscription(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AdminServiceConnectionImpl::SeekSubscription(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SeekSubscription(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
+                 request) {
+        return stub_->SeekSubscription(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
+AdminServiceConnectionImpl::SeekSubscription(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::pubsublite::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SeekSubscription",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::pubsublite::v1::SeekSubscriptionResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::pubsublite::v1::SeekSubscriptionResponse>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceConnectionImpl::CreateReservation(
     google::cloud::pubsublite::v1::CreateReservationRequest const& request) {

@@ -48,8 +48,24 @@ class ServicesTracingConnection : public appengine_v1::ServicesConnection {
   future<StatusOr<google::appengine::v1::Service>> UpdateService(
       google::appengine::v1::UpdateServiceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::UpdateServiceRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Service>> UpdateService(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
       google::appengine::v1::DeleteServiceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::DeleteServiceRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<appengine_v1::ServicesConnection> child_;

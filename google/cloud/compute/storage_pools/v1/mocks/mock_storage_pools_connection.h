@@ -62,6 +62,19 @@ class MockStoragePoolsConnection
                    DeleteStoragePoolRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteStoragePool,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::storage_pools::v1::
+                   DeleteStoragePoolRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteStoragePool,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::StoragePool>,
               GetStoragePool,
               (google::cloud::cpp::compute::storage_pools::v1::
@@ -77,6 +90,19 @@ class MockStoragePoolsConnection
               InsertStoragePool,
               (google::cloud::cpp::compute::storage_pools::v1::
                    InsertStoragePoolRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertStoragePool,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::storage_pools::v1::
+                   InsertStoragePoolRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertStoragePool,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -108,6 +134,19 @@ class MockStoragePoolsConnection
               UpdateStoragePool,
               (google::cloud::cpp::compute::storage_pools::v1::
                    UpdateStoragePoolRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              UpdateStoragePool,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::storage_pools::v1::
+                   UpdateStoragePoolRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              UpdateStoragePool,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

@@ -21,7 +21,9 @@
 
 #include "google/cloud/retail/v2/catalog_connection_idempotency_policy.h"
 #include "google/cloud/retail/v2/internal/catalog_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

@@ -62,6 +62,16 @@ class SslCertificatesRestConnectionImpl
   DeleteSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
                            DeleteSslCertificateRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          DeleteSslCertificateRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSslCertificate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
       google::cloud::cpp::compute::ssl_certificates::v1::
           GetSslCertificateRequest const& request) override;
@@ -69,6 +79,16 @@ class SslCertificatesRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSslCertificate(google::cloud::cpp::compute::ssl_certificates::v1::
                            InsertSslCertificateRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::ssl_certificates::v1::
+          InsertSslCertificateRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSslCertificate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>
   ListSslCertificates(google::cloud::cpp::compute::ssl_certificates::v1::

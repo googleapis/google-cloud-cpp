@@ -69,12 +69,40 @@ class MockPolicyBasedRoutingServiceConnection
            CreatePolicyBasedRouteRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreatePolicyBasedRoute,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::networkconnectivity::v1::
+                   CreatePolicyBasedRouteRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>,
+      CreatePolicyBasedRoute,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
       DeletePolicyBasedRoute,
       (google::cloud::networkconnectivity::v1::
            DeletePolicyBasedRouteRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeletePolicyBasedRoute,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::networkconnectivity::v1::
+                   DeletePolicyBasedRouteRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      DeletePolicyBasedRoute,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 };
 

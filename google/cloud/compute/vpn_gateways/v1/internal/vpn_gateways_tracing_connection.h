@@ -50,6 +50,15 @@ class VpnGatewaysTracingConnection
       google::cloud::cpp::compute::vpn_gateways::v1::
           DeleteVpnGatewayRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::vpn_gateways::v1::
+          DeleteVpnGatewayRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnGateway(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateway(
       google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
           request) override;
@@ -63,6 +72,15 @@ class VpnGatewaysTracingConnection
       google::cloud::cpp::compute::vpn_gateways::v1::
           InsertVpnGatewayRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::vpn_gateways::v1::
+          InsertVpnGatewayRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnGateway(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::VpnGateway> ListVpnGateways(
       google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest
           request) override;
@@ -70,6 +88,15 @@ class VpnGatewaysTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::vpn_gateways::v1::

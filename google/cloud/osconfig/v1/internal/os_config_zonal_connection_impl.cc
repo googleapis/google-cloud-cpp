@@ -108,6 +108,62 @@ OsConfigZonalServiceConnectionImpl::CreateOSPolicyAssignment(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceConnectionImpl::CreateOSPolicyAssignment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateOSPolicyAssignment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+                 request) {
+        return stub_->CreateOSPolicyAssignment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+OsConfigZonalServiceConnectionImpl::CreateOSPolicyAssignment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::osconfig::v1::
+                   OSPolicyAssignmentOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateOSPolicyAssignment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::osconfig::v1::OSPolicyAssignment>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::osconfig::v1::OSPolicyAssignment>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
@@ -146,6 +202,62 @@ OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::osconfig::v1::OSPolicyAssignment>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateOSPolicyAssignment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+                 request) {
+        return stub_->UpdateOSPolicyAssignment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::osconfig::v1::
+                   OSPolicyAssignmentOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateOSPolicyAssignment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::osconfig::v1::OSPolicyAssignment>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::osconfig::v1::OSPolicyAssignment>,
       polling_policy(*current), __func__);
 }
 
@@ -278,6 +390,63 @@ OsConfigZonalServiceConnectionImpl::DeleteOSPolicyAssignment(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceConnectionImpl::DeleteOSPolicyAssignment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteOSPolicyAssignment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+                 request) {
+        return stub_->DeleteOSPolicyAssignment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<
+    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+OsConfigZonalServiceConnectionImpl::DeleteOSPolicyAssignment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::osconfig::v1::
+                   OSPolicyAssignmentOperationMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteOSPolicyAssignment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>,
       polling_policy(*current), __func__);
 }
 

@@ -21,7 +21,9 @@
 
 #include "google/cloud/workflows/v1/internal/workflows_retry_traits.h"
 #include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -194,13 +196,37 @@ class WorkflowsConnection {
   CreateWorkflow(
       google::cloud::workflows::v1::CreateWorkflowRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateWorkflow(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::workflows::v1::CreateWorkflowRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  CreateWorkflow(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
   DeleteWorkflow(
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteWorkflow(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
+  DeleteWorkflow(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
   UpdateWorkflow(
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateWorkflow(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
+  UpdateWorkflow(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 };
 
 /**

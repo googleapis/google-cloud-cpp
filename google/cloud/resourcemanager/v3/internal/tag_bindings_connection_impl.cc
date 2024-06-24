@@ -142,6 +142,62 @@ TagBindingsConnectionImpl::CreateTagBinding(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+TagBindingsConnectionImpl::CreateTagBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTagBinding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+                 request) {
+        return stub_->CreateTagBinding(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
+TagBindingsConnectionImpl::CreateTagBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::resourcemanager::v3::
+                   CreateTagBindingMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::resourcemanager::v3::TagBinding>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateTagBinding",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::resourcemanager::v3::TagBinding>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::resourcemanager::v3::TagBinding>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
 TagBindingsConnectionImpl::DeleteTagBinding(
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
@@ -180,6 +236,62 @@ TagBindingsConnectionImpl::DeleteTagBinding(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TagBindingsConnectionImpl::DeleteTagBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTagBinding(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+                 request) {
+        return stub_->DeleteTagBinding(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
+TagBindingsConnectionImpl::DeleteTagBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::resourcemanager::v3::
+                   DeleteTagBindingMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteTagBinding",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>,
       polling_policy(*current), __func__);
 }
 

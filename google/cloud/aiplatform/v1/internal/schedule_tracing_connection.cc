@@ -51,6 +51,30 @@ ScheduleServiceTracingConnection::DeleteSchedule(
   return internal::EndSpan(std::move(span), child_->DeleteSchedule(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ScheduleServiceTracingConnection::DeleteSchedule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::DeleteSchedule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteSchedule(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+ScheduleServiceTracingConnection::DeleteSchedule(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ScheduleServiceConnection::DeleteSchedule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteSchedule(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceTracingConnection::GetSchedule(
     google::cloud::aiplatform::v1::GetScheduleRequest const& request) {

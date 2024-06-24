@@ -56,6 +56,15 @@ class VpcAccessServiceConnectionImpl
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
       override;
@@ -66,6 +75,15 @@ class VpcAccessServiceConnectionImpl
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
   DeleteConnector(google::cloud::vpcaccess::v1::DeleteConnectorRequest const&
                       request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
+  DeleteConnector(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

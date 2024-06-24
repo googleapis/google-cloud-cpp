@@ -69,6 +69,35 @@ NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
                            child_->DeleteNetworkEdgeSecurityService(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        DeleteNetworkEdgeSecurityServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_edge_security_services_v1::"
+      "NetworkEdgeSecurityServicesConnection::"
+      "DeleteNetworkEdgeSecurityService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteNetworkEdgeSecurityService(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_network_edge_security_services_v1::"
+      "NetworkEdgeSecurityServicesConnection::"
+      "DeleteNetworkEdgeSecurityService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetworkEdgeSecurityService(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
 NetworkEdgeSecurityServicesTracingConnection::GetNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
@@ -94,6 +123,35 @@ NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
                            child_->InsertNetworkEdgeSecurityService(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        InsertNetworkEdgeSecurityServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_edge_security_services_v1::"
+      "NetworkEdgeSecurityServicesConnection::"
+      "InsertNetworkEdgeSecurityService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->InsertNetworkEdgeSecurityService(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_network_edge_security_services_v1::"
+      "NetworkEdgeSecurityServicesConnection::"
+      "InsertNetworkEdgeSecurityService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InsertNetworkEdgeSecurityService(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
@@ -104,6 +162,33 @@ NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchNetworkEdgeSecurityService(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        PatchNetworkEdgeSecurityServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_edge_security_services_v1::"
+      "NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->PatchNetworkEdgeSecurityService(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_network_edge_security_services_v1::"
+      "NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PatchNetworkEdgeSecurityService(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

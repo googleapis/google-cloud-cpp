@@ -21,7 +21,9 @@
 
 #include "google/cloud/aiplatform/v1/index_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/index_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -189,6 +191,14 @@ class IndexServiceConnection {
   virtual future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
       google::cloud::aiplatform::v1::CreateIndexRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateIndex(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateIndexRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
       google::cloud::aiplatform::v1::GetIndexRequest const& request);
 
@@ -198,9 +208,26 @@ class IndexServiceConnection {
   virtual future<StatusOr<google::cloud::aiplatform::v1::Index>> UpdateIndex(
       google::cloud::aiplatform::v1::UpdateIndexRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateIndex(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateIndexRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Index>> UpdateIndex(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteIndex(google::cloud::aiplatform::v1::DeleteIndexRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteIndex(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteIndexRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteIndex(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
   UpsertDatapoints(

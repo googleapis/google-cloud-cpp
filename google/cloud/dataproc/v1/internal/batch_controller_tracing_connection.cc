@@ -42,6 +42,30 @@ BatchControllerTracingConnection::CreateBatch(
   return internal::EndSpan(std::move(span), child_->CreateBatch(request));
 }
 
+StatusOr<google::longrunning::Operation>
+BatchControllerTracingConnection::CreateBatch(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::CreateBatchRequest const& request) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateBatch(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Batch>>
+BatchControllerTracingConnection::CreateBatch(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateBatch(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::dataproc::v1::Batch>
 BatchControllerTracingConnection::GetBatch(
     google::cloud::dataproc::v1::GetBatchRequest const& request) {

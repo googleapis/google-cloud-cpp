@@ -54,11 +54,49 @@ CompletionServiceConnection::ImportSuggestionDenyListEntries(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceConnection::ImportSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::
+                    ImportSuggestionDenyListEntriesResponse>>
+CompletionServiceConnection::ImportSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::
+                   ImportSuggestionDenyListEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
 CompletionServiceConnection::PurgeSuggestionDenyListEntries(
     google::cloud::discoveryengine::v1::
         PurgeSuggestionDenyListEntriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::
+                   PurgeSuggestionDenyListEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceConnection::PurgeSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+CompletionServiceConnection::PurgeSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::
                    PurgeSuggestionDenyListEntriesResponse>>(

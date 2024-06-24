@@ -52,6 +52,18 @@ class MockSessionControllerConnection
       (google::cloud::dataproc::v1::CreateSessionRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateSession,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dataproc::v1::CreateSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
+              CreateSession,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Session>, GetSession,
               (google::cloud::dataproc::v1::GetSessionRequest const& request),
               (override));
@@ -66,9 +78,33 @@ class MockSessionControllerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, TerminateSession,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dataproc::v1::TerminateSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
+              TerminateSession,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::Session>>, DeleteSession,
       (google::cloud::dataproc::v1::DeleteSessionRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteSession,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dataproc::v1::DeleteSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
+              DeleteSession,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

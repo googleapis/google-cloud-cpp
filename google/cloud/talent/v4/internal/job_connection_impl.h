@@ -58,6 +58,15 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
   BatchCreateJobs(google::cloud::talent::v4::BatchCreateJobsRequest const&
                       request) override;
 
+  StatusOr<google::longrunning::Operation> BatchCreateJobs(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::talent::v4::BatchCreateJobsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
+  BatchCreateJobs(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::talent::v4::Job> GetJob(
       google::cloud::talent::v4::GetJobRequest const& request) override;
 
@@ -68,12 +77,30 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
   BatchUpdateJobs(google::cloud::talent::v4::BatchUpdateJobsRequest const&
                       request) override;
 
+  StatusOr<google::longrunning::Operation> BatchUpdateJobs(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::talent::v4::BatchUpdateJobsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
+  BatchUpdateJobs(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   Status DeleteJob(
       google::cloud::talent::v4::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
   BatchDeleteJobs(google::cloud::talent::v4::BatchDeleteJobsRequest const&
                       request) override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteJobs(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::talent::v4::BatchDeleteJobsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
+  BatchDeleteJobs(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::talent::v4::Job> ListJobs(
       google::cloud::talent::v4::ListJobsRequest request) override;

@@ -21,7 +21,9 @@
 
 #include "google/cloud/discoveryengine/v1/internal/schema_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/schema_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -195,14 +197,39 @@ class SchemaServiceConnection {
   CreateSchema(
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateSchema(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
+
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
+  CreateSchema(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
   UpdateSchema(
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateSchema(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
+
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
+  UpdateSchema(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
   DeleteSchema(
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSchema(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
+  DeleteSchema(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
 };
 
 /**

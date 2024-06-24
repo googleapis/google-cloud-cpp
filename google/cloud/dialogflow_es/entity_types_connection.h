@@ -21,7 +21,9 @@
 
 #include "google/cloud/dialogflow_es/entity_types_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/entity_types_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -208,18 +210,61 @@ class EntityTypesConnection {
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
+  BatchUpdateEntityTypes(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
       google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+          request);
+
+  virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
       google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchCreateEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
       google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> BatchUpdateEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
       google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchDeleteEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 };
 
 /**

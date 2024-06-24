@@ -64,16 +64,52 @@ class MockDataprocMetastoreFederationConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateFederation,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::metastore::v1::CreateFederationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Federation>>,
+              CreateFederation,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Federation>>,
       UpdateFederation,
       (google::cloud::metastore::v1::UpdateFederationRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateFederation,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::metastore::v1::UpdateFederationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Federation>>,
+              UpdateFederation,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
       DeleteFederation,
       (google::cloud::metastore::v1::DeleteFederationRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteFederation,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::metastore::v1::DeleteFederationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
+              DeleteFederation,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/target_vpn_gateways/v1/internal/target_vpn_gateways_retry_traits.h"
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -197,6 +199,17 @@ class TargetVpnGatewaysConnection {
   DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
                              DeleteTargetVpnGatewayRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetVpnGateway(google::cloud::ExperimentalTag,
+                         google::cloud::NoAwaitTag,
+                         google::cloud::cpp::compute::target_vpn_gateways::v1::
+                             DeleteTargetVpnGatewayRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetVpnGateway(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
   GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
                           GetTargetVpnGatewayRequest const& request);
@@ -205,6 +218,17 @@ class TargetVpnGatewaysConnection {
   InsertTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
                              InsertTargetVpnGatewayRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetVpnGateway(google::cloud::ExperimentalTag,
+                         google::cloud::NoAwaitTag,
+                         google::cloud::cpp::compute::target_vpn_gateways::v1::
+                             InsertTargetVpnGatewayRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetVpnGateway(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
   ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
                             ListTargetVpnGatewaysRequest request);
@@ -212,6 +236,15 @@ class TargetVpnGatewaysConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(google::cloud::cpp::compute::target_vpn_gateways::v1::
                 SetLabelsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          SetLabelsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::ExperimentalTag,
+            google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

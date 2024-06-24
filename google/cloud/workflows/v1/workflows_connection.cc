@@ -60,6 +60,21 @@ WorkflowsConnection::CreateWorkflow(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsConnection::CreateWorkflow(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workflows::v1::CreateWorkflowRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workflows::v1::Workflow>>
+WorkflowsConnection::CreateWorkflow(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workflows::v1::Workflow>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsConnection::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const&) {
@@ -68,9 +83,39 @@ WorkflowsConnection::DeleteWorkflow(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsConnection::DeleteWorkflow(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
+WorkflowsConnection::DeleteWorkflow(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workflows::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnection::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::workflows::v1::Workflow>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> WorkflowsConnection::UpdateWorkflow(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::workflows::v1::Workflow>>
+WorkflowsConnection::UpdateWorkflow(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::workflows::v1::Workflow>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

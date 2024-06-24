@@ -60,9 +60,41 @@ InstanceAdminConnection::CreateInstanceConfig(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminConnection::CreateInstanceConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminConnection::CreateInstanceConfig(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminConnection::UpdateInstanceConfig(
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminConnection::UpdateInstanceConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminConnection::UpdateInstanceConfig(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -111,9 +143,41 @@ InstanceAdminConnection::CreateInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminConnection::CreateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+InstanceAdminConnection::CreateInstance(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminConnection::UpdateInstance(
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminConnection::UpdateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+InstanceAdminConnection::UpdateInstance(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::instance::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -155,6 +219,23 @@ InstanceAdminConnection::CreateInstancePartition(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminConnection::CreateInstancePartition(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::
+        CreateInstancePartitionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminConnection::CreateInstancePartition(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 Status InstanceAdminConnection::DeleteInstancePartition(
     google::spanner::admin::instance::v1::
         DeleteInstancePartitionRequest const&) {
@@ -165,6 +246,23 @@ future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminConnection::UpdateInstancePartition(
     google::spanner::admin::instance::v1::
         UpdateInstancePartitionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminConnection::UpdateInstancePartition(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::spanner::admin::instance::v1::
+        UpdateInstancePartitionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminConnection::UpdateInstancePartition(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -21,7 +21,9 @@
 
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection_idempotency_policy.h"
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -199,6 +201,15 @@ class BareMetalSolutionConnection {
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+  UpdateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::baremetalsolution::v2::Instance>
   RenameInstance(
       google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
@@ -210,16 +221,45 @@ class BareMetalSolutionConnection {
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> ResetInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
+  ResetInstance(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
   StartInstance(
       google::cloud::baremetalsolution::v2::StartInstanceRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> StartInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+  StartInstance(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
   StopInstance(
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> StopInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
+  StopInstance(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::baremetalsolution::v2::
                               EnableInteractiveSerialConsoleResponse>>
@@ -227,15 +267,47 @@ class BareMetalSolutionConnection {
       google::cloud::baremetalsolution::v2::
           EnableInteractiveSerialConsoleRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation>
+  EnableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleRequest const& request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::
+                              EnableInteractiveSerialConsoleResponse>>
+  EnableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::baremetalsolution::v2::
                               DisableInteractiveSerialConsoleResponse>>
   DisableInteractiveSerialConsole(
       google::cloud::baremetalsolution::v2::
           DisableInteractiveSerialConsoleRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation>
+  DisableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleRequest const& request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::
+                              DisableInteractiveSerialConsoleResponse>>
+  DisableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
   DetachLun(
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DetachLun(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::DetachLunRequest const& request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+  DetachLun(google::cloud::ExperimentalTag,
+            google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::baremetalsolution::v2::SSHKey> ListSSHKeys(
       google::cloud::baremetalsolution::v2::ListSSHKeysRequest request);
@@ -256,6 +328,14 @@ class BareMetalSolutionConnection {
   UpdateVolume(
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+  UpdateVolume(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
       google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request);
 
@@ -264,9 +344,26 @@ class BareMetalSolutionConnection {
   EvictVolume(
       google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> EvictVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictVolume(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
   ResizeVolume(
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ResizeVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+  ResizeVolume(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::baremetalsolution::v2::Network>
   ListNetworks(
@@ -286,6 +383,15 @@ class BareMetalSolutionConnection {
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateNetwork(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
+  UpdateNetwork(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
   CreateVolumeSnapshot(
       google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
@@ -295,6 +401,15 @@ class BareMetalSolutionConnection {
   RestoreVolumeSnapshot(
       google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> RestoreVolumeSnapshot(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
+  RestoreVolumeSnapshot(google::cloud::ExperimentalTag,
+                        google::longrunning::Operation const& operation);
 
   virtual Status DeleteVolumeSnapshot(
       google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
@@ -320,6 +435,15 @@ class BareMetalSolutionConnection {
   EvictLun(
       google::cloud::baremetalsolution::v2::EvictLunRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> EvictLun(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::EvictLunRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictLun(google::cloud::ExperimentalTag,
+           google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
       google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request);
 
@@ -332,10 +456,28 @@ class BareMetalSolutionConnection {
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateNfsShare(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  UpdateNfsShare(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
   CreateNfsShare(
       google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateNfsShare(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  CreateNfsShare(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
   RenameNfsShare(
@@ -347,6 +489,16 @@ class BareMetalSolutionConnection {
   DeleteNfsShare(
       google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteNfsShare(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  DeleteNfsShare(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>
   ListProvisioningQuotas(

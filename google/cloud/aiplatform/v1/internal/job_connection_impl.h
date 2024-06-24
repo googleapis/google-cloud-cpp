@@ -66,6 +66,15 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
   DeleteCustomJob(google::cloud::aiplatform::v1::DeleteCustomJobRequest const&
                       request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteCustomJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteCustomJob(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   Status CancelCustomJob(
       google::cloud::aiplatform::v1::CancelCustomJobRequest const& request)
       override;
@@ -88,6 +97,16 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
   DeleteDataLabelingJob(
       google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataLabelingJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDataLabelingJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   Status CancelDataLabelingJob(
       google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
@@ -113,6 +132,16 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
       google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteHyperparameterTuningJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteHyperparameterTuningJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   Status CancelHyperparameterTuningJob(
       google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
           request) override;
@@ -130,6 +159,15 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteNasJob(google::cloud::aiplatform::v1::DeleteNasJobRequest const&
                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNasJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteNasJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNasJob(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
   Status CancelNasJob(google::cloud::aiplatform::v1::CancelNasJobRequest const&
                           request) override;
@@ -162,6 +200,16 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
       google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteBatchPredictionJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteBatchPredictionJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   Status CancelBatchPredictionJob(
       google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
           request) override;
@@ -192,10 +240,30 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
       google::cloud::aiplatform::v1::
           UpdateModelDeploymentMonitoringJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::
+          UpdateModelDeploymentMonitoringJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
+  UpdateModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModelDeploymentMonitoringJob(
       google::cloud::aiplatform::v1::
           DeleteModelDeploymentMonitoringJobRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::
+          DeleteModelDeploymentMonitoringJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   Status PauseModelDeploymentMonitoringJob(
       google::cloud::aiplatform::v1::

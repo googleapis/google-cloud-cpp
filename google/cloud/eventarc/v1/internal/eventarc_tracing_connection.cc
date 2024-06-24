@@ -61,6 +61,30 @@ EventarcTracingConnection::CreateTrigger(
   return internal::EndSpan(std::move(span), child_->CreateTrigger(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::CreateTrigger(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateTrigger(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+EventarcTracingConnection::CreateTrigger(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateTrigger(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcTracingConnection::UpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
@@ -70,6 +94,30 @@ EventarcTracingConnection::UpdateTrigger(
   return internal::EndSpan(std::move(span), child_->UpdateTrigger(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::UpdateTrigger(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTrigger(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+EventarcTracingConnection::UpdateTrigger(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateTrigger(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcTracingConnection::DeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
@@ -77,6 +125,30 @@ EventarcTracingConnection::DeleteTrigger(
       internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteTrigger");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTrigger(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::DeleteTrigger(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteTrigger(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+EventarcTracingConnection::DeleteTrigger(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteTrigger(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel>
@@ -107,6 +179,30 @@ EventarcTracingConnection::CreateChannel(
   return internal::EndSpan(std::move(span), child_->CreateChannel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::CreateChannel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateChannel(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Channel>>
+EventarcTracingConnection::CreateChannel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateChannel(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcTracingConnection::UpdateChannel(
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
@@ -116,6 +212,30 @@ EventarcTracingConnection::UpdateChannel(
   return internal::EndSpan(std::move(span), child_->UpdateChannel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::UpdateChannel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateChannel(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Channel>>
+EventarcTracingConnection::UpdateChannel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateChannel(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcTracingConnection::DeleteChannel(
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
@@ -123,6 +243,30 @@ EventarcTracingConnection::DeleteChannel(
       internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteChannel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteChannel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::DeleteChannel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteChannel(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Channel>>
+EventarcTracingConnection::DeleteChannel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteChannel(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider>
@@ -177,6 +321,31 @@ EventarcTracingConnection::CreateChannelConnection(
                            child_->CreateChannelConnection(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::CreateChannelConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::CreateChannelConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateChannelConnection(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+EventarcTracingConnection::CreateChannelConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::CreateChannelConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateChannelConnection(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcTracingConnection::DeleteChannelConnection(
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
@@ -186,6 +355,31 @@ EventarcTracingConnection::DeleteChannelConnection(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteChannelConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::DeleteChannelConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::DeleteChannelConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteChannelConnection(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+EventarcTracingConnection::DeleteChannelConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::DeleteChannelConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteChannelConnection(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>

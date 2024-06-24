@@ -46,6 +46,21 @@ IndexServiceConnection::CreateIndex(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> IndexServiceConnection::CreateIndex(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateIndexRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Index>>
+IndexServiceConnection::CreateIndex(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::Index>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceConnection::GetIndex(
     google::cloud::aiplatform::v1::GetIndexRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -67,9 +82,39 @@ IndexServiceConnection::UpdateIndex(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> IndexServiceConnection::UpdateIndex(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateIndexRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Index>>
+IndexServiceConnection::UpdateIndex(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::Index>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 IndexServiceConnection::DeleteIndex(
     google::cloud::aiplatform::v1::DeleteIndexRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> IndexServiceConnection::DeleteIndex(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteIndexRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+IndexServiceConnection::DeleteIndex(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

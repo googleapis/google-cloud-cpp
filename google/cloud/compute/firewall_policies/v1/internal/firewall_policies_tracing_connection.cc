@@ -45,6 +45,33 @@ FirewallPoliciesTracingConnection::AddAssociation(
   return internal::EndSpan(std::move(span), child_->AddAssociation(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::AddAssociation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        AddAssociationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "AddAssociation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->AddAssociation(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::AddAssociation(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "AddAssociation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->AddAssociation(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesTracingConnection::AddRule(
     google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
@@ -53,6 +80,31 @@ FirewallPoliciesTracingConnection::AddRule(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::AddRule");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddRule(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::AddRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::AddRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->AddRule(google::cloud::ExperimentalTag{},
+                             google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::AddRule(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::AddRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->AddRule(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -65,6 +117,31 @@ FirewallPoliciesTracingConnection::CloneRules(
   return internal::EndSpan(std::move(span), child_->CloneRules(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::CloneRules(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::CloneRulesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::CloneRules");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CloneRules(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::CloneRules(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::CloneRules");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CloneRules(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesTracingConnection::DeleteFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
@@ -75,6 +152,33 @@ FirewallPoliciesTracingConnection::DeleteFirewallPolicy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteFirewallPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::DeleteFirewallPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        DeleteFirewallPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "DeleteFirewallPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteFirewallPolicy(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::DeleteFirewallPolicy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "DeleteFirewallPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteFirewallPolicy(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -131,6 +235,33 @@ FirewallPoliciesTracingConnection::InsertFirewallPolicy(
                            child_->InsertFirewallPolicy(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::InsertFirewallPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        InsertFirewallPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "InsertFirewallPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->InsertFirewallPolicy(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::InsertFirewallPolicy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "InsertFirewallPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InsertFirewallPolicy(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
 FirewallPoliciesTracingConnection::ListFirewallPolicies(
     google::cloud::cpp::compute::firewall_policies::v1::
@@ -167,6 +298,31 @@ FirewallPoliciesTracingConnection::Move(
   return internal::EndSpan(std::move(span), child_->Move(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::Move(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::Move");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span,
+                           child_->Move(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::Move(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::Move");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->Move(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesTracingConnection::PatchFirewallPolicy(
     google::cloud::cpp::compute::firewall_policies::v1::
@@ -179,6 +335,33 @@ FirewallPoliciesTracingConnection::PatchFirewallPolicy(
                            child_->PatchFirewallPolicy(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::PatchFirewallPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        PatchFirewallPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "PatchFirewallPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->PatchFirewallPolicy(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::PatchFirewallPolicy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "PatchFirewallPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->PatchFirewallPolicy(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesTracingConnection::PatchRule(
     google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const&
@@ -187,6 +370,31 @@ FirewallPoliciesTracingConnection::PatchRule(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::PatchRule");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PatchRule(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::PatchRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::PatchRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->PatchRule(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::PatchRule(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::PatchRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->PatchRule(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -200,6 +408,33 @@ FirewallPoliciesTracingConnection::RemoveAssociation(
   return internal::EndSpan(std::move(span), child_->RemoveAssociation(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::RemoveAssociation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::
+        RemoveAssociationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "RemoveAssociation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->RemoveAssociation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::RemoveAssociation(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::"
+      "RemoveAssociation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->RemoveAssociation(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesTracingConnection::RemoveRule(
     google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const&
@@ -208,6 +443,31 @@ FirewallPoliciesTracingConnection::RemoveRule(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::RemoveRule");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RemoveRule(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallPoliciesTracingConnection::RemoveRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::RemoveRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->RemoveRule(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallPoliciesTracingConnection::RemoveRule(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_firewall_policies_v1::FirewallPoliciesConnection::RemoveRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->RemoveRule(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

@@ -42,6 +42,30 @@ AwsClustersTracingConnection::CreateAwsCluster(
   return internal::EndSpan(std::move(span), child_->CreateAwsCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AwsClustersTracingConnection::CreateAwsCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::CreateAwsCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateAwsCluster(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+AwsClustersTracingConnection::CreateAwsCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::CreateAwsCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateAwsCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersTracingConnection::UpdateAwsCluster(
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
@@ -49,6 +73,30 @@ AwsClustersTracingConnection::UpdateAwsCluster(
       "gkemulticloud_v1::AwsClustersConnection::UpdateAwsCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAwsCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AwsClustersTracingConnection::UpdateAwsCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::UpdateAwsCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateAwsCluster(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+AwsClustersTracingConnection::UpdateAwsCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::UpdateAwsCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateAwsCluster(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
@@ -81,6 +129,30 @@ AwsClustersTracingConnection::DeleteAwsCluster(
   return internal::EndSpan(std::move(span), child_->DeleteAwsCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AwsClustersTracingConnection::DeleteAwsCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::DeleteAwsCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteAwsCluster(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+AwsClustersTracingConnection::DeleteAwsCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::DeleteAwsCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteAwsCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
 AwsClustersTracingConnection::GenerateAwsClusterAgentToken(
     google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
@@ -111,6 +183,30 @@ AwsClustersTracingConnection::CreateAwsNodePool(
   return internal::EndSpan(std::move(span), child_->CreateAwsNodePool(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AwsClustersTracingConnection::CreateAwsNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::CreateAwsNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateAwsNodePool(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+AwsClustersTracingConnection::CreateAwsNodePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::CreateAwsNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateAwsNodePool(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersTracingConnection::UpdateAwsNodePool(
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
@@ -118,6 +214,30 @@ AwsClustersTracingConnection::UpdateAwsNodePool(
       "gkemulticloud_v1::AwsClustersConnection::UpdateAwsNodePool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateAwsNodePool(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AwsClustersTracingConnection::UpdateAwsNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::UpdateAwsNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateAwsNodePool(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+AwsClustersTracingConnection::UpdateAwsNodePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::UpdateAwsNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateAwsNodePool(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
@@ -129,6 +249,31 @@ AwsClustersTracingConnection::RollbackAwsNodePoolUpdate(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RollbackAwsNodePoolUpdate(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AwsClustersTracingConnection::RollbackAwsNodePoolUpdate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::RollbackAwsNodePoolUpdate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->RollbackAwsNodePoolUpdate(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+AwsClustersTracingConnection::RollbackAwsNodePoolUpdate(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::RollbackAwsNodePoolUpdate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RollbackAwsNodePoolUpdate(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -159,6 +304,30 @@ AwsClustersTracingConnection::DeleteAwsNodePool(
       "gkemulticloud_v1::AwsClustersConnection::DeleteAwsNodePool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAwsNodePool(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AwsClustersTracingConnection::DeleteAwsNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::DeleteAwsNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteAwsNodePool(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+AwsClustersTracingConnection::DeleteAwsNodePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::DeleteAwsNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteAwsNodePool(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>

@@ -48,8 +48,24 @@ class ExecutionsTracingConnection : public run_v2::ExecutionsConnection {
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::DeleteExecutionRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CancelExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::CancelExecutionRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<run_v2::ExecutionsConnection> child_;

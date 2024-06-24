@@ -139,6 +139,62 @@ UserEventServiceConnectionImpl::ImportUserEvents(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceConnectionImpl::ImportUserEvents(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportUserEvents(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+                 request) {
+        return stub_->ImportUserEvents(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
+UserEventServiceConnectionImpl::ImportUserEvents(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   ImportUserEventsMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportUserEvents",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::ImportUserEventsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::ImportUserEventsResponse>,
+      polling_policy(*current), __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1_internal
 }  // namespace cloud

@@ -42,6 +42,30 @@ ClusterControllerTracingConnection::CreateCluster(
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ClusterControllerTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerTracingConnection::UpdateCluster(
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
@@ -49,6 +73,30 @@ ClusterControllerTracingConnection::UpdateCluster(
       "dataproc_v1::ClusterControllerConnection::UpdateCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ClusterControllerTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateCluster(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
@@ -60,6 +108,30 @@ ClusterControllerTracingConnection::StopCluster(
   return internal::EndSpan(std::move(span), child_->StopCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ClusterControllerTracingConnection::StopCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::StopClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::StopCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->StopCluster(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerTracingConnection::StopCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::StopCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->StopCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerTracingConnection::StartCluster(
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
@@ -69,6 +141,30 @@ ClusterControllerTracingConnection::StartCluster(
   return internal::EndSpan(std::move(span), child_->StartCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ClusterControllerTracingConnection::StartCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::StartClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::StartCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->StartCluster(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerTracingConnection::StartCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::StartCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->StartCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerTracingConnection::DeleteCluster(
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
@@ -76,6 +172,30 @@ ClusterControllerTracingConnection::DeleteCluster(
       "dataproc_v1::ClusterControllerConnection::DeleteCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ClusterControllerTracingConnection::DeleteCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::DeleteCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
+ClusterControllerTracingConnection::DeleteCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::DeleteCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteCluster(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
@@ -105,6 +225,30 @@ ClusterControllerTracingConnection::DiagnoseCluster(
       "dataproc_v1::ClusterControllerConnection::DiagnoseCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DiagnoseCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ClusterControllerTracingConnection::DiagnoseCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::DiagnoseCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DiagnoseCluster(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
+ClusterControllerTracingConnection::DiagnoseCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::DiagnoseCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DiagnoseCluster(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

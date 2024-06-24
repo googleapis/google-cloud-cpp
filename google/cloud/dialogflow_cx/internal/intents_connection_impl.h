@@ -74,9 +74,27 @@ class IntentsConnectionImpl : public dialogflow_cx::IntentsConnection {
   ImportIntents(google::cloud::dialogflow::cx::v3::ImportIntentsRequest const&
                     request) override;
 
+  StatusOr<google::longrunning::Operation> ImportIntents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+  ImportIntents(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
   ExportIntents(google::cloud::dialogflow::cx::v3::ExportIntentsRequest const&
                     request) override;
+
+  StatusOr<google::longrunning::Operation> ExportIntents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
+  ExportIntents(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

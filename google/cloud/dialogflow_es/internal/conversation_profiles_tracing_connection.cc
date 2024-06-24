@@ -100,6 +100,33 @@ ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(
                            child_->SetSuggestionFeatureConfig(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "SetSuggestionFeatureConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->SetSuggestionFeatureConfig(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
+ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "SetSuggestionFeatureConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SetSuggestionFeatureConfig(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
@@ -110,6 +137,33 @@ ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ClearSuggestionFeatureConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "ClearSuggestionFeatureConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->ClearSuggestionFeatureConfig(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
+ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "ClearSuggestionFeatureConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ClearSuggestionFeatureConfig(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

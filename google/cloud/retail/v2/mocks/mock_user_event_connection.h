@@ -63,15 +63,54 @@ class MockUserEventServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, PurgeUserEvents,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::retail::v2::PurgeUserEventsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
+      PurgeUserEvents,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
       ImportUserEvents,
       (google::cloud::retail::v2::ImportUserEventsRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportUserEvents,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::retail::v2::ImportUserEventsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
+      ImportUserEvents,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
       RejoinUserEvents,
       (google::cloud::retail::v2::RejoinUserEventsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RejoinUserEvents,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::retail::v2::RejoinUserEventsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
+      RejoinUserEvents,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 };
 

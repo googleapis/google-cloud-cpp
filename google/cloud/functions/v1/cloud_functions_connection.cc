@@ -60,6 +60,22 @@ CloudFunctionsServiceConnection::CreateFunction(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceConnection::CreateFunction(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::functions::v1::CreateFunctionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::functions::v1::CloudFunction>>
+CloudFunctionsServiceConnection::CreateFunction(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::functions::v1::CloudFunction>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceConnection::UpdateFunction(
     google::cloud::functions::v1::UpdateFunctionRequest const&) {
@@ -68,9 +84,41 @@ CloudFunctionsServiceConnection::UpdateFunction(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceConnection::UpdateFunction(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::functions::v1::UpdateFunctionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::functions::v1::CloudFunction>>
+CloudFunctionsServiceConnection::UpdateFunction(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::functions::v1::CloudFunction>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
 CloudFunctionsServiceConnection::DeleteFunction(
     google::cloud::functions::v1::DeleteFunctionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::functions::v1::OperationMetadataV1>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceConnection::DeleteFunction(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::functions::v1::DeleteFunctionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
+CloudFunctionsServiceConnection::DeleteFunction(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::functions::v1::OperationMetadataV1>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

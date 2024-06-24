@@ -55,11 +55,37 @@ class MockOsConfigZonalServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateOSPolicyAssignment,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
+              CreateOSPolicyAssignment,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
       UpdateOSPolicyAssignment,
       (google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateOSPolicyAssignment,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
+              UpdateOSPolicyAssignment,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>,
               GetOSPolicyAssignment,
@@ -86,6 +112,21 @@ class MockOsConfigZonalServiceConnection
       DeleteOSPolicyAssignment,
       (google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteOSPolicyAssignment,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,
+      DeleteOSPolicyAssignment,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

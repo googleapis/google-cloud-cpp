@@ -57,6 +57,31 @@ VpnTunnelsTracingConnection::DeleteVpnTunnel(
   return internal::EndSpan(std::move(span), child_->DeleteVpnTunnel(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsTracingConnection::DeleteVpnTunnel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_vpn_tunnels_v1::VpnTunnelsConnection::DeleteVpnTunnel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteVpnTunnel(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+VpnTunnelsTracingConnection::DeleteVpnTunnel(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_vpn_tunnels_v1::VpnTunnelsConnection::DeleteVpnTunnel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteVpnTunnel(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
 VpnTunnelsTracingConnection::GetVpnTunnel(
     google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
@@ -75,6 +100,31 @@ VpnTunnelsTracingConnection::InsertVpnTunnel(
       "compute_vpn_tunnels_v1::VpnTunnelsConnection::InsertVpnTunnel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertVpnTunnel(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsTracingConnection::InsertVpnTunnel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_vpn_tunnels_v1::VpnTunnelsConnection::InsertVpnTunnel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertVpnTunnel(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+VpnTunnelsTracingConnection::InsertVpnTunnel(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_vpn_tunnels_v1::VpnTunnelsConnection::InsertVpnTunnel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->InsertVpnTunnel(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>
@@ -98,6 +148,31 @@ VpnTunnelsTracingConnection::SetLabels(
       "compute_vpn_tunnels_v1::VpnTunnelsConnection::SetLabels");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetLabels(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_vpn_tunnels_v1::VpnTunnelsConnection::SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetLabels(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+VpnTunnelsTracingConnection::SetLabels(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_vpn_tunnels_v1::VpnTunnelsConnection::SetLabels");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->SetLabels(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

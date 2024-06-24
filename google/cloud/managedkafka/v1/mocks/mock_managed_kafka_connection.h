@@ -63,14 +63,51 @@ class MockManagedKafkaConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::managedkafka::v1::CreateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
+              CreateCluster,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::managedkafka::v1::Cluster>>, UpdateCluster,
       (google::cloud::managedkafka::v1::UpdateClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::managedkafka::v1::UpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
+              UpdateCluster,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>,
       DeleteCluster,
       (google::cloud::managedkafka::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCluster,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::managedkafka::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>,
+      DeleteCluster,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::managedkafka::v1::Topic>), ListTopics,

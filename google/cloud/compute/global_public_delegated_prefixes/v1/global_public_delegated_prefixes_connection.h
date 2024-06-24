@@ -22,7 +22,9 @@
 
 #include "google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes_connection_idempotency_policy.h"
 #include "google/cloud/compute/global_public_delegated_prefixes/v1/internal/global_public_delegated_prefixes_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -210,6 +212,17 @@ class GlobalPublicDelegatedPrefixesConnection {
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
           DeletePublicDelegatedPrefixRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePublicDelegatedPrefix(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+          DeletePublicDelegatedPrefixRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeletePublicDelegatedPrefix(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   GetPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
@@ -220,6 +233,17 @@ class GlobalPublicDelegatedPrefixesConnection {
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
           InsertPublicDelegatedPrefixRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+          InsertPublicDelegatedPrefixRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
   ListGlobalPublicDelegatedPrefixes(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
@@ -229,6 +253,17 @@ class GlobalPublicDelegatedPrefixesConnection {
   PatchPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+          PatchPublicDelegatedPrefixRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

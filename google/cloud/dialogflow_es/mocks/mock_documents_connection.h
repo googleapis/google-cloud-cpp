@@ -62,9 +62,34 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDocument,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dialogflow::v2::CreateDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
+              CreateDocument,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>,
       ImportDocuments,
       (google::cloud::dialogflow::v2::ImportDocumentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportDocuments,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>,
+      ImportDocuments,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -75,9 +100,35 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDocument,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>,
+      DeleteDocument,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, UpdateDocument,
       (google::cloud::dialogflow::v2::UpdateDocumentRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDocument,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
+              UpdateDocument,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, ReloadDocument,
@@ -85,9 +136,33 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ReloadDocument,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
+              ReloadDocument,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, ExportDocument,
       (google::cloud::dialogflow::v2::ExportDocumentRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportDocument,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::dialogflow::v2::ExportDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
+              ExportDocument,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

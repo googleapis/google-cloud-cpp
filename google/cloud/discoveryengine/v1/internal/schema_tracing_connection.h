@@ -51,13 +51,40 @@ class SchemaServiceTracingConnection
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSchema(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateSchema(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
   DeleteSchema(google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteSchema(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
+  DeleteSchema(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::SchemaServiceConnection> child_;

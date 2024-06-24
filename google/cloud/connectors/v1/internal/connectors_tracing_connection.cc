@@ -63,6 +63,30 @@ ConnectorsTracingConnection::CreateConnection(
   return internal::EndSpan(std::move(span), child_->CreateConnection(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ConnectorsTracingConnection::CreateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::connectors::v1::CreateConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::CreateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateConnection(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::connectors::v1::Connection>>
+ConnectorsTracingConnection::CreateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::CreateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateConnection(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsTracingConnection::UpdateConnection(
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
@@ -72,6 +96,30 @@ ConnectorsTracingConnection::UpdateConnection(
   return internal::EndSpan(std::move(span), child_->UpdateConnection(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ConnectorsTracingConnection::UpdateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::UpdateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateConnection(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::connectors::v1::Connection>>
+ConnectorsTracingConnection::UpdateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::UpdateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateConnection(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
 ConnectorsTracingConnection::DeleteConnection(
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
@@ -79,6 +127,30 @@ ConnectorsTracingConnection::DeleteConnection(
       "connectors_v1::ConnectorsConnection::DeleteConnection");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConnectorsTracingConnection::DeleteConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::DeleteConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteConnection(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
+ConnectorsTracingConnection::DeleteConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::DeleteConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteConnection(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::connectors::v1::Provider>
@@ -161,6 +233,31 @@ ConnectorsTracingConnection::RefreshConnectionSchemaMetadata(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RefreshConnectionSchemaMetadata(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConnectorsTracingConnection::RefreshConnectionSchemaMetadata(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::RefreshConnectionSchemaMetadata");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->RefreshConnectionSchemaMetadata(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+ConnectorsTracingConnection::RefreshConnectionSchemaMetadata(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::RefreshConnectionSchemaMetadata");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RefreshConnectionSchemaMetadata(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>

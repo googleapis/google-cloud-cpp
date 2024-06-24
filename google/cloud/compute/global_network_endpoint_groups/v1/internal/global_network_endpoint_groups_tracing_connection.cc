@@ -49,6 +49,33 @@ GlobalNetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
                            child_->AttachNetworkEndpoints(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalNetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        AttachNetworkEndpointsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_global_network_endpoint_groups_v1::"
+      "GlobalNetworkEndpointGroupsConnection::AttachNetworkEndpoints");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->AttachNetworkEndpoints(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalNetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_global_network_endpoint_groups_v1::"
+      "GlobalNetworkEndpointGroupsConnection::AttachNetworkEndpoints");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AttachNetworkEndpoints(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
@@ -61,6 +88,33 @@ GlobalNetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
                            child_->DeleteNetworkEndpointGroup(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalNetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        DeleteNetworkEndpointGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_global_network_endpoint_groups_v1::"
+      "GlobalNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteNetworkEndpointGroup(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalNetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_global_network_endpoint_groups_v1::"
+      "GlobalNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetworkEndpointGroup(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
@@ -71,6 +125,33 @@ GlobalNetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DetachNetworkEndpoints(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalNetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        DetachNetworkEndpointsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_global_network_endpoint_groups_v1::"
+      "GlobalNetworkEndpointGroupsConnection::DetachNetworkEndpoints");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DetachNetworkEndpoints(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalNetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_global_network_endpoint_groups_v1::"
+      "GlobalNetworkEndpointGroupsConnection::DetachNetworkEndpoints");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DetachNetworkEndpoints(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -94,6 +175,33 @@ GlobalNetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertNetworkEndpointGroup(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalNetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+        InsertNetworkEndpointGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_global_network_endpoint_groups_v1::"
+      "GlobalNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->InsertNetworkEndpointGroup(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalNetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_global_network_endpoint_groups_v1::"
+      "GlobalNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InsertNetworkEndpointGroup(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>

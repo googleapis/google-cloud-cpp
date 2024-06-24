@@ -61,6 +61,15 @@ class DatabaseAdminConnectionImpl
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  CreateDatabase(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
       override;
@@ -70,11 +79,30 @@ class DatabaseAdminConnectionImpl
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  UpdateDatabase(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   Status DropDatabase(
       google::spanner::admin::database::v1::DropDatabaseRequest const& request)
@@ -98,9 +126,27 @@ class DatabaseAdminConnectionImpl
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
       google::spanner::admin::database::v1::CopyBackupRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CopyBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request)
@@ -122,6 +168,15 @@ class DatabaseAdminConnectionImpl
   RestoreDatabase(
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  RestoreDatabase(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest

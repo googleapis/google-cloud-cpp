@@ -60,6 +60,30 @@ ImageAnnotatorTracingConnection::AsyncBatchAnnotateImages(
                            child_->AsyncBatchAnnotateImages(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorTracingConnection::AsyncBatchAnnotateImages(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vision_v1::ImageAnnotatorConnection::AsyncBatchAnnotateImages");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->AsyncBatchAnnotateImages(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
+ImageAnnotatorTracingConnection::AsyncBatchAnnotateImages(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vision_v1::ImageAnnotatorConnection::AsyncBatchAnnotateImages");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AsyncBatchAnnotateImages(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorTracingConnection::AsyncBatchAnnotateFiles(
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
@@ -68,6 +92,30 @@ ImageAnnotatorTracingConnection::AsyncBatchAnnotateFiles(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AsyncBatchAnnotateFiles(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorTracingConnection::AsyncBatchAnnotateFiles(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vision_v1::ImageAnnotatorConnection::AsyncBatchAnnotateFiles");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->AsyncBatchAnnotateFiles(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
+ImageAnnotatorTracingConnection::AsyncBatchAnnotateFiles(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vision_v1::ImageAnnotatorConnection::AsyncBatchAnnotateFiles");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AsyncBatchAnnotateFiles(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

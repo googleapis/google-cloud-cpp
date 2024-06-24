@@ -62,6 +62,30 @@ FunctionServiceTracingConnection::CreateFunction(
   return internal::EndSpan(std::move(span), child_->CreateFunction(request));
 }
 
+StatusOr<google::longrunning::Operation>
+FunctionServiceTracingConnection::CreateFunction(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::functions::v2::CreateFunctionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "functions_v2::FunctionServiceConnection::CreateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateFunction(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::functions::v2::Function>>
+FunctionServiceTracingConnection::CreateFunction(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "functions_v2::FunctionServiceConnection::CreateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateFunction(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::functions::v2::Function>>
 FunctionServiceTracingConnection::UpdateFunction(
     google::cloud::functions::v2::UpdateFunctionRequest const& request) {
@@ -71,6 +95,30 @@ FunctionServiceTracingConnection::UpdateFunction(
   return internal::EndSpan(std::move(span), child_->UpdateFunction(request));
 }
 
+StatusOr<google::longrunning::Operation>
+FunctionServiceTracingConnection::UpdateFunction(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::functions::v2::UpdateFunctionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "functions_v2::FunctionServiceConnection::UpdateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateFunction(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::functions::v2::Function>>
+FunctionServiceTracingConnection::UpdateFunction(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "functions_v2::FunctionServiceConnection::UpdateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateFunction(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
 FunctionServiceTracingConnection::DeleteFunction(
     google::cloud::functions::v2::DeleteFunctionRequest const& request) {
@@ -78,6 +126,30 @@ FunctionServiceTracingConnection::DeleteFunction(
       "functions_v2::FunctionServiceConnection::DeleteFunction");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFunction(request));
+}
+
+StatusOr<google::longrunning::Operation>
+FunctionServiceTracingConnection::DeleteFunction(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::functions::v2::DeleteFunctionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "functions_v2::FunctionServiceConnection::DeleteFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteFunction(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
+FunctionServiceTracingConnection::DeleteFunction(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "functions_v2::FunctionServiceConnection::DeleteFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteFunction(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>

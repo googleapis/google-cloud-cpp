@@ -146,6 +146,57 @@ VersionsConnectionImpl::CreateVersion(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> VersionsConnectionImpl::CreateVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::CreateVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::CreateVersionRequest const& request) {
+        return stub_->CreateVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::appengine::v1::Version>>
+VersionsConnectionImpl::CreateVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::appengine::v1::CreateVersionMetadataV1>()) {
+    return make_ready_future<StatusOr<google::appengine::v1::Version>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::appengine::v1::Version>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::appengine::v1::Version>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::appengine::v1::Version>>
 VersionsConnectionImpl::UpdateVersion(
     google::appengine::v1::UpdateVersionRequest const& request) {
@@ -185,6 +236,57 @@ VersionsConnectionImpl::UpdateVersion(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> VersionsConnectionImpl::UpdateVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::UpdateVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::UpdateVersionRequest const& request) {
+        return stub_->UpdateVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::appengine::v1::Version>>
+VersionsConnectionImpl::UpdateVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::appengine::v1::OperationMetadataV1>()) {
+    return make_ready_future<StatusOr<google::appengine::v1::Version>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::appengine::v1::Version>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::appengine::v1::Version>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 VersionsConnectionImpl::DeleteVersion(
     google::appengine::v1::DeleteVersionRequest const& request) {
@@ -221,6 +323,58 @@ VersionsConnectionImpl::DeleteVersion(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::appengine::v1::OperationMetadataV1>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> VersionsConnectionImpl::DeleteVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::DeleteVersionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::appengine::v1::DeleteVersionRequest const& request) {
+        return stub_->DeleteVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+VersionsConnectionImpl::DeleteVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::appengine::v1::OperationMetadataV1>()) {
+    return make_ready_future<
+        StatusOr<google::appengine::v1::OperationMetadataV1>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::appengine::v1::OperationMetadataV1>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::appengine::v1::OperationMetadataV1>,
       polling_policy(*current), __func__);
 }
 

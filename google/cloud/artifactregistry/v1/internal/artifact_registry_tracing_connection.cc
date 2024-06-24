@@ -133,6 +133,32 @@ ArtifactRegistryTracingConnection::ImportAptArtifacts(
                            child_->ImportAptArtifacts(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::ImportAptArtifacts(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ImportAptArtifacts");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ImportAptArtifacts(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+ArtifactRegistryTracingConnection::ImportAptArtifacts(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ImportAptArtifacts");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ImportAptArtifacts(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
 ArtifactRegistryTracingConnection::ImportYumArtifacts(
@@ -143,6 +169,32 @@ ArtifactRegistryTracingConnection::ImportYumArtifacts(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ImportYumArtifacts(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::ImportYumArtifacts(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ImportYumArtifacts");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ImportYumArtifacts(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+ArtifactRegistryTracingConnection::ImportYumArtifacts(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ImportYumArtifacts");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ImportYumArtifacts(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
@@ -177,6 +229,31 @@ ArtifactRegistryTracingConnection::CreateRepository(
   return internal::EndSpan(std::move(span), child_->CreateRepository(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::CreateRepository(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::CreateRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateRepository(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
+ArtifactRegistryTracingConnection::CreateRepository(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::CreateRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateRepository(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryTracingConnection::UpdateRepository(
     google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
@@ -195,6 +272,31 @@ ArtifactRegistryTracingConnection::DeleteRepository(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRepository(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::DeleteRepository(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteRepository(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryTracingConnection::DeleteRepository(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteRepository(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Package>
@@ -228,6 +330,31 @@ ArtifactRegistryTracingConnection::DeletePackage(
   return internal::EndSpan(std::move(span), child_->DeletePackage(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::DeletePackage(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeletePackage");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeletePackage(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryTracingConnection::DeletePackage(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeletePackage");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeletePackage(google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryTracingConnection::ListVersions(
     google::devtools::artifactregistry::v1::ListVersionsRequest request) {
@@ -259,6 +386,31 @@ ArtifactRegistryTracingConnection::DeleteVersion(
   return internal::EndSpan(std::move(span), child_->DeleteVersion(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::DeleteVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteVersion(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryTracingConnection::DeleteVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteVersion(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
 ArtifactRegistryTracingConnection::BatchDeleteVersions(
@@ -269,6 +421,32 @@ ArtifactRegistryTracingConnection::BatchDeleteVersions(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchDeleteVersions(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryTracingConnection::BatchDeleteVersions(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::BatchDeleteVersions");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->BatchDeleteVersions(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryTracingConnection::BatchDeleteVersions(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::BatchDeleteVersions");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->BatchDeleteVersions(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::File>

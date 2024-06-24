@@ -21,7 +21,9 @@
 
 #include "google/cloud/telcoautomation/v1/internal/telco_automation_retry_traits.h"
 #include "google/cloud/telcoautomation/v1/telco_automation_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -202,11 +204,31 @@ class TelcoAutomationConnection {
       google::cloud::telcoautomation::v1::
           CreateOrchestrationClusterRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::telcoautomation::v1::
+          CreateOrchestrationClusterRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
+  CreateOrchestrationCluster(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
   DeleteOrchestrationCluster(
       google::cloud::telcoautomation::v1::
           DeleteOrchestrationClusterRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::telcoautomation::v1::
+          DeleteOrchestrationClusterRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+  DeleteOrchestrationCluster(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::telcoautomation::v1::EdgeSlm> ListEdgeSlms(
       google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request);
@@ -218,10 +240,27 @@ class TelcoAutomationConnection {
   CreateEdgeSlm(
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateEdgeSlm(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request);
+
+  virtual future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
+  CreateEdgeSlm(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
   DeleteEdgeSlm(
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+  DeleteEdgeSlm(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::telcoautomation::v1::Blueprint>
   CreateBlueprint(

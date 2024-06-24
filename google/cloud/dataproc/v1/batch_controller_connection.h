@@ -21,7 +21,9 @@
 
 #include "google/cloud/dataproc/v1/batch_controller_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/internal/batch_controller_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -190,6 +192,14 @@ class BatchControllerConnection {
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
       google::cloud::dataproc::v1::CreateBatchRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateBatch(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::CreateBatchRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
       google::cloud::dataproc::v1::GetBatchRequest const& request);

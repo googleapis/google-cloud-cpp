@@ -59,6 +59,16 @@ class PipelineServiceTracingConnection
       google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTrainingPipeline(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   Status CancelTrainingPipeline(
       google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
           request) override;
@@ -79,11 +89,31 @@ class PipelineServiceTracingConnection
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeletePipelineJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePipelineJob(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<
       StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
   BatchDeletePipelineJobs(
       google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   Status CancelPipelineJob(
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request)
@@ -94,6 +124,17 @@ class PipelineServiceTracingConnection
   BatchCancelPipelineJobs(
       google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<aiplatform_v1::PipelineServiceConnection> child_;

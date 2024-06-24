@@ -192,6 +192,19 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
       (google::cloud::datacatalog::v1::ReconcileTagsRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ReconcileTags,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>,
+      ReconcileTags,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>,
               StarEntry,
               (google::cloud::datacatalog::v1::StarEntryRequest const& request),
@@ -220,6 +233,19 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
       future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
       ImportEntries,
       (google::cloud::datacatalog::v1::ImportEntriesRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportEntries,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::datacatalog::v1::ImportEntriesRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
+      ImportEntries,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 };
 

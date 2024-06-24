@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/licenses/v1/internal/licenses_retry_traits.h"
 #include "google/cloud/compute/licenses/v1/licenses_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -186,6 +188,15 @@ class LicensesConnection {
       google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteLicense(google::cloud::ExperimentalTag,
+                google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
       google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
           request);
@@ -198,6 +209,15 @@ class LicensesConnection {
   InsertLicense(
       google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertLicense(google::cloud::ExperimentalTag,
+                google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(
       google::cloud::cpp::compute::licenses::v1::ListLicensesRequest request);

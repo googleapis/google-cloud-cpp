@@ -55,14 +55,47 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
               (google::appengine::v1::CreateApplicationRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateApplication,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::appengine::v1::CreateApplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
+              CreateApplication,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               UpdateApplication,
               (google::appengine::v1::UpdateApplicationRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateApplication,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::appengine::v1::UpdateApplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
+              UpdateApplication,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               RepairApplication,
               (google::appengine::v1::RepairApplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RepairApplication,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::appengine::v1::RepairApplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
+              RepairApplication,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 };
 

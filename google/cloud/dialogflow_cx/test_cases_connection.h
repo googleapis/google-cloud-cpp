@@ -21,7 +21,9 @@
 
 #include "google/cloud/dialogflow_cx/internal/test_cases_retry_traits.h"
 #include "google/cloud/dialogflow_cx/test_cases_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -207,11 +209,30 @@ class TestCasesConnection {
   RunTestCase(
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> RunTestCase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
+  RunTestCase(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
   BatchRunTestCases(
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchRunTestCases(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
+  BatchRunTestCases(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
   CalculateCoverage(
@@ -223,10 +244,28 @@ class TestCasesConnection {
   ImportTestCases(
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ImportTestCases(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
+  ImportTestCases(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
   ExportTestCases(
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportTestCases(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
+  ExportTestCases(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
   ListTestCaseResults(

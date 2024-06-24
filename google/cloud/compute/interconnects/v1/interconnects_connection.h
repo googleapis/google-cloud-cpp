@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/interconnects/v1/interconnects_connection_idempotency_policy.h"
 #include "google/cloud/compute/interconnects/v1/internal/interconnects_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -189,6 +191,16 @@ class InterconnectsConnection {
   DeleteInterconnect(google::cloud::cpp::compute::interconnects::v1::
                          DeleteInterconnectRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInterconnect(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                     google::cloud::cpp::compute::interconnects::v1::
+                         DeleteInterconnectRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInterconnect(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Interconnect>
   GetInterconnect(google::cloud::cpp::compute::interconnects::v1::
                       GetInterconnectRequest const& request);
@@ -207,6 +219,16 @@ class InterconnectsConnection {
   InsertInterconnect(google::cloud::cpp::compute::interconnects::v1::
                          InsertInterconnectRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInterconnect(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                     google::cloud::cpp::compute::interconnects::v1::
+                         InsertInterconnectRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInterconnect(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::Interconnect>
   ListInterconnects(
       google::cloud::cpp::compute::interconnects::v1::ListInterconnectsRequest
@@ -216,10 +238,29 @@ class InterconnectsConnection {
   PatchInterconnect(google::cloud::cpp::compute::interconnects::v1::
                         PatchInterconnectRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInterconnect(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                    google::cloud::cpp::compute::interconnects::v1::
+                        PatchInterconnectRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchInterconnect(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::ExperimentalTag,
+            google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

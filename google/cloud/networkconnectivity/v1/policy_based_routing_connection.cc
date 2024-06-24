@@ -62,10 +62,44 @@ PolicyBasedRoutingServiceConnection::CreatePolicyBasedRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceConnection::CreatePolicyBasedRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkconnectivity::v1::
+        CreatePolicyBasedRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
+PolicyBasedRoutingServiceConnection::CreatePolicyBasedRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 PolicyBasedRoutingServiceConnection::DeletePolicyBasedRoute(
     google::cloud::networkconnectivity::v1::
         DeletePolicyBasedRouteRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceConnection::DeletePolicyBasedRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkconnectivity::v1::
+        DeletePolicyBasedRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+PolicyBasedRoutingServiceConnection::DeletePolicyBasedRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

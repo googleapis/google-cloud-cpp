@@ -64,6 +64,33 @@ WorkflowTemplateServiceTracingConnection::InstantiateWorkflowTemplate(
                            child_->InstantiateWorkflowTemplate(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceTracingConnection::InstantiateWorkflowTemplate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::WorkflowTemplateServiceConnection::"
+      "InstantiateWorkflowTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->InstantiateWorkflowTemplate(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+WorkflowTemplateServiceTracingConnection::InstantiateWorkflowTemplate(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::WorkflowTemplateServiceConnection::"
+      "InstantiateWorkflowTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InstantiateWorkflowTemplate(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceTracingConnection::InstantiateInlineWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
@@ -74,6 +101,33 @@ WorkflowTemplateServiceTracingConnection::InstantiateInlineWorkflowTemplate(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InstantiateInlineWorkflowTemplate(request));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceTracingConnection::InstantiateInlineWorkflowTemplate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::WorkflowTemplateServiceConnection::"
+      "InstantiateInlineWorkflowTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->InstantiateInlineWorkflowTemplate(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+WorkflowTemplateServiceTracingConnection::InstantiateInlineWorkflowTemplate(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dataproc_v1::WorkflowTemplateServiceConnection::"
+      "InstantiateInlineWorkflowTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InstantiateInlineWorkflowTemplate(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

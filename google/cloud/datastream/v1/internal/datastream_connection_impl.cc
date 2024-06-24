@@ -156,6 +156,62 @@ DatastreamConnectionImpl::CreateConnectionProfile(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamConnectionImpl::CreateConnectionProfile(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateConnectionProfile(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+              request) {
+        return stub_->CreateConnectionProfile(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+DatastreamConnectionImpl::CreateConnectionProfile(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateConnectionProfile",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::ConnectionProfile>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datastream::v1::ConnectionProfile>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamConnectionImpl::UpdateConnectionProfile(
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
@@ -197,6 +253,62 @@ DatastreamConnectionImpl::UpdateConnectionProfile(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamConnectionImpl::UpdateConnectionProfile(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateConnectionProfile(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+              request) {
+        return stub_->UpdateConnectionProfile(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+DatastreamConnectionImpl::UpdateConnectionProfile(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datastream::v1::ConnectionProfile>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateConnectionProfile",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::ConnectionProfile>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datastream::v1::ConnectionProfile>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnectionImpl::DeleteConnectionProfile(
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
@@ -235,6 +347,62 @@ DatastreamConnectionImpl::DeleteConnectionProfile(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datastream::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamConnectionImpl::DeleteConnectionProfile(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteConnectionProfile(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+              request) {
+        return stub_->DeleteConnectionProfile(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+DatastreamConnectionImpl::DeleteConnectionProfile(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteConnectionProfile",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::datastream::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -342,6 +510,58 @@ DatastreamConnectionImpl::CreateStream(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::CreateStream(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::CreateStreamRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateStream(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::CreateStreamRequest const& request) {
+        return stub_->CreateStream(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamConnectionImpl::CreateStream(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::datastream::v1::Stream>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateStream",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::Stream>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datastream::v1::Stream>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamConnectionImpl::UpdateStream(
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
@@ -381,6 +601,58 @@ DatastreamConnectionImpl::UpdateStream(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::UpdateStream(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::UpdateStreamRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateStream(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::UpdateStreamRequest const& request) {
+        return stub_->UpdateStream(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamConnectionImpl::UpdateStream(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::datastream::v1::Stream>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateStream",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::Stream>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datastream::v1::Stream>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnectionImpl::DeleteStream(
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
@@ -417,6 +689,59 @@ DatastreamConnectionImpl::DeleteStream(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datastream::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::DeleteStream(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::DeleteStreamRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteStream(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::DeleteStreamRequest const& request) {
+        return stub_->DeleteStream(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+DatastreamConnectionImpl::DeleteStream(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteStream",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::datastream::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -587,6 +912,62 @@ DatastreamConnectionImpl::CreatePrivateConnection(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamConnectionImpl::CreatePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePrivateConnection(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+              request) {
+        return stub_->CreatePrivateConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
+DatastreamConnectionImpl::CreatePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datastream::v1::PrivateConnection>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreatePrivateConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::PrivateConnection>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datastream::v1::PrivateConnection>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
 DatastreamConnectionImpl::GetPrivateConnection(
     google::cloud::datastream::v1::GetPrivateConnectionRequest const& request) {
@@ -679,6 +1060,62 @@ DatastreamConnectionImpl::DeletePrivateConnection(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamConnectionImpl::DeletePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePrivateConnection(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+              request) {
+        return stub_->DeletePrivateConnection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+DatastreamConnectionImpl::DeletePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeletePrivateConnection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::datastream::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::datastream::v1::Route>>
 DatastreamConnectionImpl::CreateRoute(
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
@@ -715,6 +1152,57 @@ DatastreamConnectionImpl::CreateRoute(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datastream::v1::Route>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::CreateRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::CreateRouteRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRoute(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datastream::v1::CreateRouteRequest const& request) {
+        return stub_->CreateRoute(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::Route>>
+DatastreamConnectionImpl::CreateRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::datastream::v1::Route>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateRoute",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::Route>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datastream::v1::Route>,
       polling_policy(*current), __func__);
 }
 
@@ -802,6 +1290,58 @@ DatastreamConnectionImpl::DeleteRoute(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datastream::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::DeleteRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::DeleteRouteRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRoute(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::datastream::v1::DeleteRouteRequest const& request) {
+        return stub_->DeleteRoute(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+DatastreamConnectionImpl::DeleteRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datastream::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteRoute",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datastream::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::datastream::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

@@ -66,6 +66,31 @@ NetworkServicesTracingConnection::CreateEndpointPolicy(
                            child_->CreateEndpointPolicy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::CreateEndpointPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateEndpointPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateEndpointPolicy(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
+NetworkServicesTracingConnection::CreateEndpointPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateEndpointPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateEndpointPolicy(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
 NetworkServicesTracingConnection::UpdateEndpointPolicy(
     google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
@@ -77,6 +102,31 @@ NetworkServicesTracingConnection::UpdateEndpointPolicy(
                            child_->UpdateEndpointPolicy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::UpdateEndpointPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateEndpointPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateEndpointPolicy(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
+NetworkServicesTracingConnection::UpdateEndpointPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateEndpointPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateEndpointPolicy(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesTracingConnection::DeleteEndpointPolicy(
     google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
@@ -86,6 +136,31 @@ NetworkServicesTracingConnection::DeleteEndpointPolicy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteEndpointPolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::DeleteEndpointPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteEndpointPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteEndpointPolicy(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteEndpointPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteEndpointPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteEndpointPolicy(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::networkservices::v1::Gateway>
@@ -118,6 +193,30 @@ NetworkServicesTracingConnection::CreateGateway(
   return internal::EndSpan(std::move(span), child_->CreateGateway(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::CreateGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateGatewayRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateGateway(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::Gateway>>
+NetworkServicesTracingConnection::CreateGateway(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateGateway(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
 NetworkServicesTracingConnection::UpdateGateway(
     google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
@@ -127,6 +226,30 @@ NetworkServicesTracingConnection::UpdateGateway(
   return internal::EndSpan(std::move(span), child_->UpdateGateway(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::UpdateGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateGateway(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::Gateway>>
+NetworkServicesTracingConnection::UpdateGateway(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateGateway(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesTracingConnection::DeleteGateway(
     google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
@@ -134,6 +257,30 @@ NetworkServicesTracingConnection::DeleteGateway(
       "networkservices_v1::NetworkServicesConnection::DeleteGateway");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteGateway(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::DeleteGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteGateway(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteGateway(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteGateway");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteGateway(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::networkservices::v1::GrpcRoute>
@@ -166,6 +313,30 @@ NetworkServicesTracingConnection::CreateGrpcRoute(
   return internal::EndSpan(std::move(span), child_->CreateGrpcRoute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::CreateGrpcRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateGrpcRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateGrpcRoute(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
+NetworkServicesTracingConnection::CreateGrpcRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateGrpcRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateGrpcRoute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
 NetworkServicesTracingConnection::UpdateGrpcRoute(
     google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
@@ -175,6 +346,30 @@ NetworkServicesTracingConnection::UpdateGrpcRoute(
   return internal::EndSpan(std::move(span), child_->UpdateGrpcRoute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::UpdateGrpcRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateGrpcRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateGrpcRoute(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
+NetworkServicesTracingConnection::UpdateGrpcRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateGrpcRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateGrpcRoute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesTracingConnection::DeleteGrpcRoute(
     google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
@@ -182,6 +377,30 @@ NetworkServicesTracingConnection::DeleteGrpcRoute(
       "networkservices_v1::NetworkServicesConnection::DeleteGrpcRoute");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteGrpcRoute(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::DeleteGrpcRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteGrpcRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteGrpcRoute(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteGrpcRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteGrpcRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteGrpcRoute(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::networkservices::v1::HttpRoute>
@@ -214,6 +433,30 @@ NetworkServicesTracingConnection::CreateHttpRoute(
   return internal::EndSpan(std::move(span), child_->CreateHttpRoute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::CreateHttpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateHttpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateHttpRoute(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
+NetworkServicesTracingConnection::CreateHttpRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateHttpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateHttpRoute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
 NetworkServicesTracingConnection::UpdateHttpRoute(
     google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
@@ -223,6 +466,30 @@ NetworkServicesTracingConnection::UpdateHttpRoute(
   return internal::EndSpan(std::move(span), child_->UpdateHttpRoute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::UpdateHttpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateHttpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateHttpRoute(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
+NetworkServicesTracingConnection::UpdateHttpRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateHttpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateHttpRoute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesTracingConnection::DeleteHttpRoute(
     google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
@@ -230,6 +497,30 @@ NetworkServicesTracingConnection::DeleteHttpRoute(
       "networkservices_v1::NetworkServicesConnection::DeleteHttpRoute");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteHttpRoute(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::DeleteHttpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteHttpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteHttpRoute(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteHttpRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteHttpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteHttpRoute(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::networkservices::v1::TcpRoute>
@@ -262,6 +553,30 @@ NetworkServicesTracingConnection::CreateTcpRoute(
   return internal::EndSpan(std::move(span), child_->CreateTcpRoute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::CreateTcpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateTcpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateTcpRoute(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
+NetworkServicesTracingConnection::CreateTcpRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateTcpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateTcpRoute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
 NetworkServicesTracingConnection::UpdateTcpRoute(
     google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
@@ -271,6 +586,30 @@ NetworkServicesTracingConnection::UpdateTcpRoute(
   return internal::EndSpan(std::move(span), child_->UpdateTcpRoute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::UpdateTcpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateTcpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTcpRoute(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
+NetworkServicesTracingConnection::UpdateTcpRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateTcpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateTcpRoute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesTracingConnection::DeleteTcpRoute(
     google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
@@ -278,6 +617,30 @@ NetworkServicesTracingConnection::DeleteTcpRoute(
       "networkservices_v1::NetworkServicesConnection::DeleteTcpRoute");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTcpRoute(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::DeleteTcpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteTcpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteTcpRoute(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteTcpRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteTcpRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteTcpRoute(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::networkservices::v1::TlsRoute>
@@ -310,6 +673,30 @@ NetworkServicesTracingConnection::CreateTlsRoute(
   return internal::EndSpan(std::move(span), child_->CreateTlsRoute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::CreateTlsRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateTlsRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateTlsRoute(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
+NetworkServicesTracingConnection::CreateTlsRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateTlsRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateTlsRoute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
 NetworkServicesTracingConnection::UpdateTlsRoute(
     google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
@@ -319,6 +706,30 @@ NetworkServicesTracingConnection::UpdateTlsRoute(
   return internal::EndSpan(std::move(span), child_->UpdateTlsRoute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::UpdateTlsRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateTlsRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTlsRoute(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
+NetworkServicesTracingConnection::UpdateTlsRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateTlsRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateTlsRoute(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesTracingConnection::DeleteTlsRoute(
     google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
@@ -326,6 +737,30 @@ NetworkServicesTracingConnection::DeleteTlsRoute(
       "networkservices_v1::NetworkServicesConnection::DeleteTlsRoute");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTlsRoute(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::DeleteTlsRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteTlsRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteTlsRoute(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteTlsRoute(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteTlsRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteTlsRoute(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::networkservices::v1::ServiceBinding>
@@ -361,6 +796,31 @@ NetworkServicesTracingConnection::CreateServiceBinding(
                            child_->CreateServiceBinding(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::CreateServiceBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateServiceBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateServiceBinding(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+NetworkServicesTracingConnection::CreateServiceBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateServiceBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateServiceBinding(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesTracingConnection::DeleteServiceBinding(
     google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
@@ -370,6 +830,31 @@ NetworkServicesTracingConnection::DeleteServiceBinding(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteServiceBinding(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::DeleteServiceBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteServiceBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteServiceBinding(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteServiceBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteServiceBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteServiceBinding(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::networkservices::v1::Mesh>
@@ -401,6 +886,30 @@ NetworkServicesTracingConnection::CreateMesh(
   return internal::EndSpan(std::move(span), child_->CreateMesh(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::CreateMesh(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateMeshRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateMesh");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateMesh(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::Mesh>>
+NetworkServicesTracingConnection::CreateMesh(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::CreateMesh");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateMesh(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>
 NetworkServicesTracingConnection::UpdateMesh(
     google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
@@ -410,6 +919,30 @@ NetworkServicesTracingConnection::UpdateMesh(
   return internal::EndSpan(std::move(span), child_->UpdateMesh(request));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::UpdateMesh(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateMesh");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateMesh(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::Mesh>>
+NetworkServicesTracingConnection::UpdateMesh(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::UpdateMesh");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateMesh(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesTracingConnection::DeleteMesh(
     google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
@@ -417,6 +950,30 @@ NetworkServicesTracingConnection::DeleteMesh(
       "networkservices_v1::NetworkServicesConnection::DeleteMesh");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteMesh(request));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesTracingConnection::DeleteMesh(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteMesh");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteMesh(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesTracingConnection::DeleteMesh(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkservices_v1::NetworkServicesConnection::DeleteMesh");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteMesh(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -46,6 +46,22 @@ DataScanServiceConnection::CreateDataScan(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataScanServiceConnection::CreateDataScan(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateDataScanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataScan>>
+DataScanServiceConnection::CreateDataScan(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::DataScan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceConnection::UpdateDataScan(
     google::cloud::dataplex::v1::UpdateDataScanRequest const&) {
@@ -54,9 +70,41 @@ DataScanServiceConnection::UpdateDataScan(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataScanServiceConnection::UpdateDataScan(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateDataScanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataScan>>
+DataScanServiceConnection::UpdateDataScan(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::DataScan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataScanServiceConnection::DeleteDataScan(
     google::cloud::dataplex::v1::DeleteDataScanRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataScanServiceConnection::DeleteDataScan(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteDataScanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataScanServiceConnection::DeleteDataScan(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

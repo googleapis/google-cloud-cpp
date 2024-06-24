@@ -50,6 +50,16 @@ class MockServicesConnection : public run_v2::ServicesConnection {
               (google::cloud::run::v2::CreateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateService,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::run::v2::CreateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, CreateService,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::run::v2::Service>, GetService,
               (google::cloud::run::v2::GetServiceRequest const& request),
               (override));
@@ -62,8 +72,28 @@ class MockServicesConnection : public run_v2::ServicesConnection {
               (google::cloud::run::v2::UpdateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateService,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::run::v2::UpdateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, UpdateService,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, DeleteService,
               (google::cloud::run::v2::DeleteServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteService,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::run::v2::DeleteServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, DeleteService,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,

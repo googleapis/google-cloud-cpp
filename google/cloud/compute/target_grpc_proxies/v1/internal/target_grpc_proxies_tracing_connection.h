@@ -47,6 +47,16 @@ class TargetGrpcProxiesTracingConnection
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           DeleteTargetGrpcProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          DeleteTargetGrpcProxyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetGrpcProxy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy> GetTargetGrpcProxy(
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           GetTargetGrpcProxyRequest const& request) override;
@@ -56,6 +66,16 @@ class TargetGrpcProxiesTracingConnection
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           InsertTargetGrpcProxyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          InsertTargetGrpcProxyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetGrpcProxy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
   ListTargetGrpcProxies(google::cloud::cpp::compute::target_grpc_proxies::v1::
                             ListTargetGrpcProxiesRequest request) override;
@@ -63,6 +83,16 @@ class TargetGrpcProxiesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetGrpcProxy(google::cloud::cpp::compute::target_grpc_proxies::v1::
                            PatchTargetGrpcProxyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_grpc_proxies::v1::
+          PatchTargetGrpcProxyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchTargetGrpcProxy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   std::shared_ptr<compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection>

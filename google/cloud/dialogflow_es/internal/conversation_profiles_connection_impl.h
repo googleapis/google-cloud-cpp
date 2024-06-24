@@ -81,10 +81,30 @@ class ConversationProfilesConnectionImpl
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
+  SetSuggestionFeatureConfig(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   ClearSuggestionFeatureConfig(
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
+  ClearSuggestionFeatureConfig(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

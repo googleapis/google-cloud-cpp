@@ -121,6 +121,60 @@ SimulatorConnectionImpl::CreateReplay(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> SimulatorConnectionImpl::CreateReplay(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateReplay(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::policysimulator::v1::CreateReplayRequest const&
+                 request) {
+        return stub_->CreateReplay(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::policysimulator::v1::Replay>>
+SimulatorConnectionImpl::CreateReplay(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::policysimulator::v1::
+                   ReplayOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::policysimulator::v1::Replay>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateReplay",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::policysimulator::v1::Replay>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::policysimulator::v1::Replay>,
+      polling_policy(*current), __func__);
+}
+
 StreamRange<google::cloud::policysimulator::v1::ReplayResult>
 SimulatorConnectionImpl::ListReplayResults(
     google::cloud::policysimulator::v1::ListReplayResultsRequest request) {

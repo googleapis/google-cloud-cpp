@@ -62,10 +62,44 @@ AppConnectorsServiceConnection::CreateAppConnector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceConnection::CreateAppConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::
+        CreateAppConnectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+AppConnectorsServiceConnection::CreateAppConnector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnection::UpdateAppConnector(
     google::cloud::beyondcorp::appconnectors::v1::
         UpdateAppConnectorRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceConnection::UpdateAppConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::
+        UpdateAppConnectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+AppConnectorsServiceConnection::UpdateAppConnector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,9 +116,44 @@ AppConnectorsServiceConnection::DeleteAppConnector(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceConnection::DeleteAppConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::
+        DeleteAppConnectorRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                    AppConnectorOperationMetadata>>
+AppConnectorsServiceConnection::DeleteAppConnector(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                   AppConnectorOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnection::ReportStatus(
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectorsServiceConnection::ReportStatus(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+AppConnectorsServiceConnection::ReportStatus(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

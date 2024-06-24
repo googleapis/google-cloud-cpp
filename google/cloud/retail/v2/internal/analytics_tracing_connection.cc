@@ -42,6 +42,30 @@ AnalyticsServiceTracingConnection::ExportAnalyticsMetrics(
                            child_->ExportAnalyticsMetrics(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceTracingConnection::ExportAnalyticsMetrics(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "retail_v2::AnalyticsServiceConnection::ExportAnalyticsMetrics");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->ExportAnalyticsMetrics(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
+AnalyticsServiceTracingConnection::ExportAnalyticsMetrics(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "retail_v2::AnalyticsServiceConnection::ExportAnalyticsMetrics");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ExportAnalyticsMetrics(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<retail_v2::AnalyticsServiceConnection>

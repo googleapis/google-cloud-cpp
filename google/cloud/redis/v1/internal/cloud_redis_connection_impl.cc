@@ -164,6 +164,58 @@ CloudRedisConnectionImpl::CreateInstance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisConnectionImpl::CreateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::v1::CreateInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::CreateInstanceRequest const& request) {
+        return stub_->CreateInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnectionImpl::CreateInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::redis::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::UpdateInstance(
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
@@ -200,6 +252,58 @@ CloudRedisConnectionImpl::UpdateInstance(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisConnectionImpl::UpdateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::v1::UpdateInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::UpdateInstanceRequest const& request) {
+        return stub_->UpdateInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnectionImpl::UpdateInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::redis::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::v1::Instance>,
       polling_policy(*current), __func__);
 }
 
@@ -242,6 +346,58 @@ CloudRedisConnectionImpl::UpgradeInstance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisConnectionImpl::UpgradeInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpgradeInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
+        return stub_->UpgradeInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnectionImpl::UpgradeInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::redis::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpgradeInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::ImportInstance(
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
@@ -278,6 +434,58 @@ CloudRedisConnectionImpl::ImportInstance(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisConnectionImpl::ImportInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::v1::ImportInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::ImportInstanceRequest const& request) {
+        return stub_->ImportInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnectionImpl::ImportInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::redis::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::v1::Instance>,
       polling_policy(*current), __func__);
 }
 
@@ -320,6 +528,58 @@ CloudRedisConnectionImpl::ExportInstance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisConnectionImpl::ExportInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::v1::ExportInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::ExportInstanceRequest const& request) {
+        return stub_->ExportInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnectionImpl::ExportInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::redis::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::FailoverInstance(
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
@@ -356,6 +616,58 @@ CloudRedisConnectionImpl::FailoverInstance(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisConnectionImpl::FailoverInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::v1::FailoverInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FailoverInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::FailoverInstanceRequest const& request) {
+        return stub_->FailoverInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnectionImpl::FailoverInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::redis::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to FailoverInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::v1::Instance>,
       polling_policy(*current), __func__);
 }
 
@@ -398,6 +710,59 @@ CloudRedisConnectionImpl::DeleteInstance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudRedisConnectionImpl::DeleteInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::v1::DeleteInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::DeleteInstanceRequest const& request) {
+        return stub_->DeleteInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
+CloudRedisConnectionImpl::DeleteInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::redis::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::redis::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::RescheduleMaintenance(
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
@@ -435,6 +800,59 @@ CloudRedisConnectionImpl::RescheduleMaintenance(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisConnectionImpl::RescheduleMaintenance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RescheduleMaintenance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::redis::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return stub_->RescheduleMaintenance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnectionImpl::RescheduleMaintenance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::redis::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::redis::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RescheduleMaintenance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::redis::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::v1::Instance>,
       polling_policy(*current), __func__);
 }
 

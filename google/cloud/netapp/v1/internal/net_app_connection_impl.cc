@@ -135,6 +135,59 @@ NetAppConnectionImpl::CreateStoragePool(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::CreateStoragePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateStoragePool(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
+        return stub_->CreateStoragePool(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppConnectionImpl::CreateStoragePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::StoragePool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateStoragePool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::StoragePool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::StoragePool>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::netapp::v1::StoragePool>
 NetAppConnectionImpl::GetStoragePool(
     google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
@@ -188,6 +241,59 @@ NetAppConnectionImpl::UpdateStoragePool(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::UpdateStoragePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateStoragePool(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
+        return stub_->UpdateStoragePool(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::StoragePool>>
+NetAppConnectionImpl::UpdateStoragePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::StoragePool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateStoragePool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::StoragePool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::StoragePool>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteStoragePool(
     google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
@@ -224,6 +330,60 @@ NetAppConnectionImpl::DeleteStoragePool(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::DeleteStoragePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteStoragePool(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
+        return stub_->DeleteStoragePool(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteStoragePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteStoragePool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -313,6 +473,57 @@ NetAppConnectionImpl::CreateVolume(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::CreateVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::CreateVolumeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateVolume(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateVolumeRequest const& request) {
+        return stub_->CreateVolume(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppConnectionImpl::CreateVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Volume>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateVolume",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Volume>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Volume>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppConnectionImpl::UpdateVolume(
     google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
@@ -349,6 +560,57 @@ NetAppConnectionImpl::UpdateVolume(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Volume>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::UpdateVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateVolume(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
+        return stub_->UpdateVolume(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppConnectionImpl::UpdateVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Volume>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateVolume",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Volume>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Volume>,
       polling_policy(*current), __func__);
 }
 
@@ -391,6 +653,58 @@ NetAppConnectionImpl::DeleteVolume(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::DeleteVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteVolume(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
+        return stub_->DeleteVolume(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteVolume",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppConnectionImpl::RevertVolume(
     google::cloud::netapp::v1::RevertVolumeRequest const& request) {
@@ -427,6 +741,57 @@ NetAppConnectionImpl::RevertVolume(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Volume>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::RevertVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::RevertVolumeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RevertVolume(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::RevertVolumeRequest const& request) {
+        return stub_->RevertVolume(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Volume>>
+NetAppConnectionImpl::RevertVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Volume>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RevertVolume",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Volume>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Volume>,
       polling_policy(*current), __func__);
 }
 
@@ -516,6 +881,57 @@ NetAppConnectionImpl::CreateSnapshot(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::CreateSnapshot(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSnapshot(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
+        return stub_->CreateSnapshot(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Snapshot>>
+NetAppConnectionImpl::CreateSnapshot(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Snapshot>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateSnapshot",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Snapshot>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Snapshot>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteSnapshot(
     google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
@@ -555,6 +971,58 @@ NetAppConnectionImpl::DeleteSnapshot(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::DeleteSnapshot(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSnapshot(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
+        return stub_->DeleteSnapshot(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteSnapshot(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteSnapshot",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
 NetAppConnectionImpl::UpdateSnapshot(
     google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
@@ -591,6 +1059,57 @@ NetAppConnectionImpl::UpdateSnapshot(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Snapshot>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::UpdateSnapshot(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSnapshot(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
+        return stub_->UpdateSnapshot(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Snapshot>>
+NetAppConnectionImpl::UpdateSnapshot(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Snapshot>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateSnapshot",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Snapshot>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Snapshot>,
       polling_policy(*current), __func__);
 }
 
@@ -685,6 +1204,60 @@ NetAppConnectionImpl::CreateActiveDirectory(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::CreateActiveDirectory(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateActiveDirectory(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateActiveDirectoryRequest const&
+                 request) {
+        return stub_->CreateActiveDirectory(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
+NetAppConnectionImpl::CreateActiveDirectory(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::ActiveDirectory>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateActiveDirectory",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::ActiveDirectory>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::ActiveDirectory>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
 NetAppConnectionImpl::UpdateActiveDirectory(
     google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
@@ -725,6 +1298,60 @@ NetAppConnectionImpl::UpdateActiveDirectory(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::UpdateActiveDirectory(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateActiveDirectory(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateActiveDirectoryRequest const&
+                 request) {
+        return stub_->UpdateActiveDirectory(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
+NetAppConnectionImpl::UpdateActiveDirectory(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::ActiveDirectory>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateActiveDirectory",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::ActiveDirectory>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::ActiveDirectory>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteActiveDirectory(
     google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
@@ -762,6 +1389,60 @@ NetAppConnectionImpl::DeleteActiveDirectory(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::DeleteActiveDirectory(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteActiveDirectory(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteActiveDirectoryRequest const&
+                 request) {
+        return stub_->DeleteActiveDirectory(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteActiveDirectory(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteActiveDirectory",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -838,6 +1519,57 @@ NetAppConnectionImpl::CreateKmsConfig(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::CreateKmsConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateKmsConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
+        return stub_->CreateKmsConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
+NetAppConnectionImpl::CreateKmsConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::KmsConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateKmsConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::KmsConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::KmsConfig>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::netapp::v1::KmsConfig>
 NetAppConnectionImpl::GetKmsConfig(
     google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
@@ -891,6 +1623,57 @@ NetAppConnectionImpl::UpdateKmsConfig(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::UpdateKmsConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateKmsConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
+        return stub_->UpdateKmsConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
+NetAppConnectionImpl::UpdateKmsConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::KmsConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateKmsConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::KmsConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::KmsConfig>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
 NetAppConnectionImpl::EncryptVolumes(
     google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
@@ -927,6 +1710,57 @@ NetAppConnectionImpl::EncryptVolumes(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::KmsConfig>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::EncryptVolumes(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EncryptVolumes(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
+        return stub_->EncryptVolumes(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
+NetAppConnectionImpl::EncryptVolumes(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::KmsConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to EncryptVolumes",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::KmsConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::KmsConfig>,
       polling_policy(*current), __func__);
 }
 
@@ -980,6 +1814,58 @@ NetAppConnectionImpl::DeleteKmsConfig(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::DeleteKmsConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteKmsConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
+        return stub_->DeleteKmsConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteKmsConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteKmsConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -1070,6 +1956,59 @@ NetAppConnectionImpl::CreateReplication(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::CreateReplication(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::CreateReplicationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateReplication(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::CreateReplicationRequest const& request) {
+        return stub_->CreateReplication(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnectionImpl::CreateReplication(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Replication>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateReplication",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Replication>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Replication>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteReplication(
     google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
@@ -1106,6 +2045,60 @@ NetAppConnectionImpl::DeleteReplication(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::DeleteReplication(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteReplication(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
+        return stub_->DeleteReplication(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteReplication(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteReplication",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -1148,6 +2141,59 @@ NetAppConnectionImpl::UpdateReplication(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::UpdateReplication(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateReplication(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
+        return stub_->UpdateReplication(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnectionImpl::UpdateReplication(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Replication>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateReplication",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Replication>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Replication>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppConnectionImpl::StopReplication(
     google::cloud::netapp::v1::StopReplicationRequest const& request) {
@@ -1187,6 +2233,57 @@ NetAppConnectionImpl::StopReplication(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::StopReplication(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::StopReplicationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StopReplication(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::StopReplicationRequest const& request) {
+        return stub_->StopReplication(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnectionImpl::StopReplication(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Replication>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StopReplication",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Replication>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Replication>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppConnectionImpl::ResumeReplication(
     google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
@@ -1223,6 +2320,59 @@ NetAppConnectionImpl::ResumeReplication(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Replication>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::ResumeReplication(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResumeReplication(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
+        return stub_->ResumeReplication(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnectionImpl::ResumeReplication(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Replication>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResumeReplication",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Replication>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Replication>,
       polling_policy(*current), __func__);
 }
 
@@ -1267,6 +2417,61 @@ NetAppConnectionImpl::ReverseReplicationDirection(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::ReverseReplicationDirection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReverseReplicationDirection(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
+              request) {
+        return stub_->ReverseReplicationDirection(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Replication>>
+NetAppConnectionImpl::ReverseReplicationDirection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Replication>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ReverseReplicationDirection",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Replication>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Replication>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppConnectionImpl::CreateBackupVault(
     google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
@@ -1303,6 +2508,59 @@ NetAppConnectionImpl::CreateBackupVault(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::BackupVault>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::CreateBackupVault(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackupVault(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
+        return stub_->CreateBackupVault(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppConnectionImpl::CreateBackupVault(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::BackupVault>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateBackupVault",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::BackupVault>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::BackupVault>,
       polling_policy(*current), __func__);
 }
 
@@ -1393,6 +2651,59 @@ NetAppConnectionImpl::UpdateBackupVault(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::UpdateBackupVault(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackupVault(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
+        return stub_->UpdateBackupVault(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupVault>>
+NetAppConnectionImpl::UpdateBackupVault(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::BackupVault>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateBackupVault",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::BackupVault>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::BackupVault>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteBackupVault(
     google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
@@ -1432,6 +2743,60 @@ NetAppConnectionImpl::DeleteBackupVault(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::DeleteBackupVault(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackupVault(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
+        return stub_->DeleteBackupVault(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteBackupVault(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteBackupVault",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::Backup>>
 NetAppConnectionImpl::CreateBackup(
     google::cloud::netapp::v1::CreateBackupRequest const& request) {
@@ -1468,6 +2833,57 @@ NetAppConnectionImpl::CreateBackup(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Backup>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::CreateBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::CreateBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::CreateBackupRequest const& request) {
+        return stub_->CreateBackup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>>
+NetAppConnectionImpl::CreateBackup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Backup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateBackup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Backup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Backup>,
       polling_policy(*current), __func__);
 }
 
@@ -1557,6 +2973,58 @@ NetAppConnectionImpl::DeleteBackup(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::DeleteBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+        return stub_->DeleteBackup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteBackup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteBackup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::Backup>>
 NetAppConnectionImpl::UpdateBackup(
     google::cloud::netapp::v1::UpdateBackupRequest const& request) {
@@ -1596,6 +3064,57 @@ NetAppConnectionImpl::UpdateBackup(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> NetAppConnectionImpl::UpdateBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackup(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+        return stub_->UpdateBackup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::Backup>>
+NetAppConnectionImpl::UpdateBackup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::Backup>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateBackup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::Backup>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::Backup>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
 NetAppConnectionImpl::CreateBackupPolicy(
     google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
@@ -1632,6 +3151,59 @@ NetAppConnectionImpl::CreateBackupPolicy(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::BackupPolicy>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::CreateBackupPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackupPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
+        return stub_->CreateBackupPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppConnectionImpl::CreateBackupPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateBackupPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::BackupPolicy>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::BackupPolicy>,
       polling_policy(*current), __func__);
 }
 
@@ -1722,6 +3294,59 @@ NetAppConnectionImpl::UpdateBackupPolicy(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::UpdateBackupPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackupPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
+        return stub_->UpdateBackupPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
+NetAppConnectionImpl::UpdateBackupPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateBackupPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::BackupPolicy>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::netapp::v1::BackupPolicy>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteBackupPolicy(
     google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
@@ -1758,6 +3383,60 @@ NetAppConnectionImpl::DeleteBackupPolicy(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+NetAppConnectionImpl::DeleteBackupPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackupPolicy(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
+        return stub_->DeleteBackupPolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
+NetAppConnectionImpl::DeleteBackupPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::netapp::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteBackupPolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::netapp::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::netapp::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

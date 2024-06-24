@@ -64,6 +64,30 @@ VmwareEngineTracingConnection::CreatePrivateCloud(
                            child_->CreatePrivateCloud(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreatePrivateCloud(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreatePrivateCloud");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreatePrivateCloud(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineTracingConnection::CreatePrivateCloud(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreatePrivateCloud");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreatePrivateCloud(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::UpdatePrivateCloud(
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
@@ -72,6 +96,30 @@ VmwareEngineTracingConnection::UpdatePrivateCloud(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdatePrivateCloud(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdatePrivateCloud(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateCloud");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdatePrivateCloud(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineTracingConnection::UpdatePrivateCloud(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateCloud");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdatePrivateCloud(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -84,6 +132,30 @@ VmwareEngineTracingConnection::DeletePrivateCloud(
                            child_->DeletePrivateCloud(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeletePrivateCloud(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeletePrivateCloud");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeletePrivateCloud(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineTracingConnection::DeletePrivateCloud(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeletePrivateCloud");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeletePrivateCloud(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::UndeletePrivateCloud(
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
@@ -93,6 +165,31 @@ VmwareEngineTracingConnection::UndeletePrivateCloud(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UndeletePrivateCloud(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UndeletePrivateCloud(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UndeletePrivateCloud");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UndeletePrivateCloud(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineTracingConnection::UndeletePrivateCloud(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UndeletePrivateCloud");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UndeletePrivateCloud(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Cluster>
@@ -124,6 +221,30 @@ VmwareEngineTracingConnection::CreateCluster(
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+VmwareEngineTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineTracingConnection::UpdateCluster(
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
@@ -133,6 +254,30 @@ VmwareEngineTracingConnection::UpdateCluster(
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
+VmwareEngineTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteCluster(
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
@@ -140,6 +285,30 @@ VmwareEngineTracingConnection::DeleteCluster(
       "vmwareengine_v1::VmwareEngineConnection::DeleteCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeleteCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteCluster(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Node>
@@ -208,6 +377,31 @@ VmwareEngineTracingConnection::CreateExternalAddress(
                            child_->CreateExternalAddress(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreateExternalAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateExternalAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateExternalAddress(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineTracingConnection::CreateExternalAddress(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateExternalAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExternalAddress(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
 VmwareEngineTracingConnection::UpdateExternalAddress(
     google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
@@ -219,6 +413,31 @@ VmwareEngineTracingConnection::UpdateExternalAddress(
                            child_->UpdateExternalAddress(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateExternalAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateExternalAddress(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
+VmwareEngineTracingConnection::UpdateExternalAddress(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateExternalAddress(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteExternalAddress(
     google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
@@ -228,6 +447,31 @@ VmwareEngineTracingConnection::DeleteExternalAddress(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteExternalAddress(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeleteExternalAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteExternalAddress(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteExternalAddress(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAddress");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExternalAddress(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Subnet>
@@ -257,6 +501,30 @@ VmwareEngineTracingConnection::UpdateSubnet(
       "vmwareengine_v1::VmwareEngineConnection::UpdateSubnet");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateSubnet(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateSubnet(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateSubnet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateSubnet(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
+VmwareEngineTracingConnection::UpdateSubnet(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateSubnet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateSubnet(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
@@ -292,6 +560,31 @@ VmwareEngineTracingConnection::CreateExternalAccessRule(
                            child_->CreateExternalAccessRule(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreateExternalAccessRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateExternalAccessRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateExternalAccessRule(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineTracingConnection::CreateExternalAccessRule(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateExternalAccessRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExternalAccessRule(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
 VmwareEngineTracingConnection::UpdateExternalAccessRule(
     google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
@@ -303,6 +596,31 @@ VmwareEngineTracingConnection::UpdateExternalAccessRule(
                            child_->UpdateExternalAccessRule(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateExternalAccessRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAccessRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateExternalAccessRule(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
+VmwareEngineTracingConnection::UpdateExternalAccessRule(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAccessRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateExternalAccessRule(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteExternalAccessRule(
     google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
@@ -312,6 +630,31 @@ VmwareEngineTracingConnection::DeleteExternalAccessRule(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteExternalAccessRule(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeleteExternalAccessRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAccessRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteExternalAccessRule(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteExternalAccessRule(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAccessRule");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExternalAccessRule(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
@@ -346,6 +689,31 @@ VmwareEngineTracingConnection::CreateLoggingServer(
                            child_->CreateLoggingServer(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreateLoggingServer(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateLoggingServer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateLoggingServer(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineTracingConnection::CreateLoggingServer(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateLoggingServer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateLoggingServer(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
 VmwareEngineTracingConnection::UpdateLoggingServer(
     google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
@@ -357,6 +725,31 @@ VmwareEngineTracingConnection::UpdateLoggingServer(
                            child_->UpdateLoggingServer(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateLoggingServer(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateLoggingServer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateLoggingServer(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
+VmwareEngineTracingConnection::UpdateLoggingServer(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateLoggingServer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateLoggingServer(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteLoggingServer(
     google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
@@ -366,6 +759,31 @@ VmwareEngineTracingConnection::DeleteLoggingServer(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteLoggingServer(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeleteLoggingServer(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteLoggingServer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteLoggingServer(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteLoggingServer(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteLoggingServer");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteLoggingServer(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
@@ -419,6 +837,31 @@ VmwareEngineTracingConnection::ResetNsxCredentials(
                            child_->ResetNsxCredentials(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::ResetNsxCredentials(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ResetNsxCredentials");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ResetNsxCredentials(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineTracingConnection::ResetNsxCredentials(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ResetNsxCredentials");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ResetNsxCredentials(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::ResetVcenterCredentials(
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
@@ -428,6 +871,31 @@ VmwareEngineTracingConnection::ResetVcenterCredentials(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ResetVcenterCredentials(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::ResetVcenterCredentials(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ResetVcenterCredentials");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->ResetVcenterCredentials(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
+VmwareEngineTracingConnection::ResetVcenterCredentials(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ResetVcenterCredentials");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ResetVcenterCredentials(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
@@ -448,6 +916,31 @@ VmwareEngineTracingConnection::UpdateDnsForwarding(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateDnsForwarding(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateDnsForwarding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateDnsForwarding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateDnsForwarding(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
+VmwareEngineTracingConnection::UpdateDnsForwarding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateDnsForwarding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateDnsForwarding(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
@@ -482,6 +975,31 @@ VmwareEngineTracingConnection::CreateNetworkPeering(
                            child_->CreateNetworkPeering(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreateNetworkPeering(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateNetworkPeering(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineTracingConnection::CreateNetworkPeering(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateNetworkPeering(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteNetworkPeering(
     google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
@@ -493,6 +1011,31 @@ VmwareEngineTracingConnection::DeleteNetworkPeering(
                            child_->DeleteNetworkPeering(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeleteNetworkPeering(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteNetworkPeering(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteNetworkPeering(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetworkPeering(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
 VmwareEngineTracingConnection::UpdateNetworkPeering(
     google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
@@ -502,6 +1045,31 @@ VmwareEngineTracingConnection::UpdateNetworkPeering(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateNetworkPeering(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateNetworkPeering(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateNetworkPeering(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
+VmwareEngineTracingConnection::UpdateNetworkPeering(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateNetworkPeering(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
@@ -525,6 +1093,31 @@ VmwareEngineTracingConnection::CreateHcxActivationKey(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateHcxActivationKey(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreateHcxActivationKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateHcxActivationKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateHcxActivationKey(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
+VmwareEngineTracingConnection::CreateHcxActivationKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateHcxActivationKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateHcxActivationKey(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -581,6 +1174,31 @@ VmwareEngineTracingConnection::CreateNetworkPolicy(
                            child_->CreateNetworkPolicy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreateNetworkPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateNetworkPolicy(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
+VmwareEngineTracingConnection::CreateNetworkPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateNetworkPolicy(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineTracingConnection::UpdateNetworkPolicy(
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
@@ -592,6 +1210,31 @@ VmwareEngineTracingConnection::UpdateNetworkPolicy(
                            child_->UpdateNetworkPolicy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateNetworkPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateNetworkPolicy(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
+VmwareEngineTracingConnection::UpdateNetworkPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateNetworkPolicy(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteNetworkPolicy(
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
@@ -601,6 +1244,31 @@ VmwareEngineTracingConnection::DeleteNetworkPolicy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteNetworkPolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeleteNetworkPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteNetworkPolicy(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteNetworkPolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteNetworkPolicy(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
@@ -638,6 +1306,33 @@ VmwareEngineTracingConnection::CreateManagementDnsZoneBinding(
                            child_->CreateManagementDnsZoneBinding(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreateManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        CreateManagementDnsZoneBindingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "CreateManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateManagementDnsZoneBinding(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineTracingConnection::CreateManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "CreateManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateManagementDnsZoneBinding(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineTracingConnection::UpdateManagementDnsZoneBinding(
     google::cloud::vmwareengine::v1::
@@ -648,6 +1343,33 @@ VmwareEngineTracingConnection::UpdateManagementDnsZoneBinding(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateManagementDnsZoneBinding(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        UpdateManagementDnsZoneBindingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "UpdateManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateManagementDnsZoneBinding(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineTracingConnection::UpdateManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "UpdateManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateManagementDnsZoneBinding(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -662,6 +1384,33 @@ VmwareEngineTracingConnection::DeleteManagementDnsZoneBinding(
                            child_->DeleteManagementDnsZoneBinding(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeleteManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        DeleteManagementDnsZoneBindingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "DeleteManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteManagementDnsZoneBinding(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "DeleteManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteManagementDnsZoneBinding(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineTracingConnection::RepairManagementDnsZoneBinding(
     google::cloud::vmwareengine::v1::
@@ -672,6 +1421,33 @@ VmwareEngineTracingConnection::RepairManagementDnsZoneBinding(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RepairManagementDnsZoneBinding(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::RepairManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::
+        RepairManagementDnsZoneBindingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "RepairManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->RepairManagementDnsZoneBinding(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
+VmwareEngineTracingConnection::RepairManagementDnsZoneBinding(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::"
+      "RepairManagementDnsZoneBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RepairManagementDnsZoneBinding(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -685,6 +1461,31 @@ VmwareEngineTracingConnection::CreateVmwareEngineNetwork(
                            child_->CreateVmwareEngineNetwork(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreateVmwareEngineNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateVmwareEngineNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateVmwareEngineNetwork(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
+VmwareEngineTracingConnection::CreateVmwareEngineNetwork(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateVmwareEngineNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateVmwareEngineNetwork(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
@@ -696,6 +1497,31 @@ VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
                            child_->UpdateVmwareEngineNetwork(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateVmwareEngineNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateVmwareEngineNetwork(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
+VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateVmwareEngineNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateVmwareEngineNetwork(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
@@ -705,6 +1531,31 @@ VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteVmwareEngineNetwork(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteVmwareEngineNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteVmwareEngineNetwork(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteVmwareEngineNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteVmwareEngineNetwork(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -740,6 +1591,31 @@ VmwareEngineTracingConnection::CreatePrivateConnection(
                            child_->CreatePrivateConnection(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::CreatePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreatePrivateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreatePrivateConnection(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineTracingConnection::CreatePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreatePrivateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePrivateConnection(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
 VmwareEngineTracingConnection::GetPrivateConnection(
     google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
@@ -773,6 +1649,31 @@ VmwareEngineTracingConnection::UpdatePrivateConnection(
                            child_->UpdatePrivateConnection(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::UpdatePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdatePrivateConnection(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
+VmwareEngineTracingConnection::UpdatePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePrivateConnection(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeletePrivateConnection(
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
@@ -782,6 +1683,31 @@ VmwareEngineTracingConnection::DeletePrivateConnection(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePrivateConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::DeletePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeletePrivateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeletePrivateConnection(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
+VmwareEngineTracingConnection::DeletePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeletePrivateConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePrivateConnection(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
@@ -809,6 +1735,31 @@ VmwareEngineTracingConnection::GrantDnsBindPermission(
                            child_->GrantDnsBindPermission(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::GrantDnsBindPermission(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GrantDnsBindPermission");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->GrantDnsBindPermission(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineTracingConnection::GrantDnsBindPermission(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GrantDnsBindPermission");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->GrantDnsBindPermission(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
 VmwareEngineTracingConnection::GetDnsBindPermission(
     google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
@@ -828,6 +1779,31 @@ VmwareEngineTracingConnection::RevokeDnsBindPermission(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RevokeDnsBindPermission(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmwareEngineTracingConnection::RevokeDnsBindPermission(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::RevokeDnsBindPermission");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->RevokeDnsBindPermission(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
+VmwareEngineTracingConnection::RevokeDnsBindPermission(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::RevokeDnsBindPermission");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RevokeDnsBindPermission(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

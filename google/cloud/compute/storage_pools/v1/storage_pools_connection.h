@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/storage_pools/v1/internal/storage_pools_retry_traits.h"
 #include "google/cloud/compute/storage_pools/v1/storage_pools_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -194,6 +196,16 @@ class StoragePoolsConnection {
   DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::
                         DeleteStoragePoolRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteStoragePool(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                    google::cloud::cpp::compute::storage_pools::v1::
+                        DeleteStoragePoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteStoragePool(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
       google::cloud::cpp::compute::storage_pools::v1::
           GetStoragePoolRequest const& request);
@@ -205,6 +217,16 @@ class StoragePoolsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::
                         InsertStoragePoolRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertStoragePool(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                    google::cloud::cpp::compute::storage_pools::v1::
+                        InsertStoragePoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertStoragePool(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::StoragePool>
   ListStoragePools(
@@ -226,6 +248,16 @@ class StoragePoolsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::
                         UpdateStoragePoolRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateStoragePool(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+                    google::cloud::cpp::compute::storage_pools::v1::
+                        UpdateStoragePoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateStoragePool(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

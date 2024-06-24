@@ -78,6 +78,15 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteProcess(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteProcess(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
       google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request)
       override;
@@ -97,6 +106,15 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteRun(google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
                 request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteRun(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteRun(google::cloud::ExperimentalTag,
+            google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   CreateLineageEvent(

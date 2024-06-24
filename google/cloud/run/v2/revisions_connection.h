@@ -21,7 +21,9 @@
 
 #include "google/cloud/run/v2/internal/revisions_retry_traits.h"
 #include "google/cloud/run/v2/revisions_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -192,6 +194,14 @@ class RevisionsConnection {
 
   virtual future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       google::cloud::run::v2::DeleteRevisionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteRevision(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::DeleteRevisionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 };
 
 /**

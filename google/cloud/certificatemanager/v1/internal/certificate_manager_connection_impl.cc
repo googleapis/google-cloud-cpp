@@ -166,6 +166,63 @@ CertificateManagerConnectionImpl::CreateCertificate(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::CreateCertificate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::CreateCertificateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCertificate(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::certificatemanager::v1::CreateCertificateRequest const&
+              request) {
+        return stub_->CreateCertificate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
+CertificateManagerConnectionImpl::CreateCertificate(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::Certificate>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCertificate",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::Certificate>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::Certificate>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
 CertificateManagerConnectionImpl::UpdateCertificate(
     google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
@@ -207,6 +264,63 @@ CertificateManagerConnectionImpl::UpdateCertificate(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::UpdateCertificate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCertificate(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
+              request) {
+        return stub_->UpdateCertificate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
+CertificateManagerConnectionImpl::UpdateCertificate(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::Certificate>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateCertificate",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::Certificate>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::Certificate>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteCertificate(
     google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
@@ -245,6 +359,63 @@ CertificateManagerConnectionImpl::DeleteCertificate(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::DeleteCertificate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCertificate(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
+              request) {
+        return stub_->DeleteCertificate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerConnectionImpl::DeleteCertificate(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCertificate",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::certificatemanager::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -340,6 +511,62 @@ CertificateManagerConnectionImpl::CreateCertificateMap(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::CreateCertificateMap(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCertificateMap(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 CreateCertificateMapRequest const& request) {
+        return stub_->CreateCertificateMap(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
+CertificateManagerConnectionImpl::CreateCertificateMap(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCertificateMap",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::CertificateMap>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::CertificateMap>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
 CertificateManagerConnectionImpl::UpdateCertificateMap(
     google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
@@ -380,6 +607,62 @@ CertificateManagerConnectionImpl::UpdateCertificateMap(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::UpdateCertificateMap(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCertificateMap(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 UpdateCertificateMapRequest const& request) {
+        return stub_->UpdateCertificateMap(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
+CertificateManagerConnectionImpl::UpdateCertificateMap(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateCertificateMap",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::CertificateMap>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::CertificateMap>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteCertificateMap(
     google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
@@ -417,6 +700,62 @@ CertificateManagerConnectionImpl::DeleteCertificateMap(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::DeleteCertificateMap(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCertificateMap(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 DeleteCertificateMapRequest const& request) {
+        return stub_->DeleteCertificateMap(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerConnectionImpl::DeleteCertificateMap(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCertificateMap",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::certificatemanager::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -515,6 +854,62 @@ CertificateManagerConnectionImpl::CreateCertificateMapEntry(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::CreateCertificateMapEntry(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::
+        CreateCertificateMapEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCertificateMapEntry(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 CreateCertificateMapEntryRequest const& request) {
+        return stub_->CreateCertificateMapEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
+CertificateManagerConnectionImpl::CreateCertificateMapEntry(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCertificateMapEntry",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::CertificateMapEntry>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::CertificateMapEntry>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
 CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
     google::cloud::certificatemanager::v1::
@@ -555,6 +950,62 @@ CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::
+        UpdateCertificateMapEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCertificateMapEntry(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 UpdateCertificateMapEntryRequest const& request) {
+        return stub_->UpdateCertificateMapEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
+CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateCertificateMapEntry",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::CertificateMapEntry>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::CertificateMapEntry>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
     google::cloud::certificatemanager::v1::
@@ -592,6 +1043,62 @@ CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::
+        DeleteCertificateMapEntryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCertificateMapEntry(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 DeleteCertificateMapEntryRequest const& request) {
+        return stub_->DeleteCertificateMapEntry(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCertificateMapEntry",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::certificatemanager::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -689,6 +1196,62 @@ CertificateManagerConnectionImpl::CreateDnsAuthorization(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::CreateDnsAuthorization(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDnsAuthorization(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 CreateDnsAuthorizationRequest const& request) {
+        return stub_->CreateDnsAuthorization(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
+CertificateManagerConnectionImpl::CreateDnsAuthorization(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDnsAuthorization",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::DnsAuthorization>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::DnsAuthorization>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
 CertificateManagerConnectionImpl::UpdateDnsAuthorization(
     google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
@@ -729,6 +1292,62 @@ CertificateManagerConnectionImpl::UpdateDnsAuthorization(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::UpdateDnsAuthorization(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDnsAuthorization(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 UpdateDnsAuthorizationRequest const& request) {
+        return stub_->UpdateDnsAuthorization(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
+CertificateManagerConnectionImpl::UpdateDnsAuthorization(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateDnsAuthorization",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::DnsAuthorization>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::DnsAuthorization>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteDnsAuthorization(
     google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
@@ -766,6 +1385,62 @@ CertificateManagerConnectionImpl::DeleteDnsAuthorization(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::DeleteDnsAuthorization(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDnsAuthorization(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 DeleteDnsAuthorizationRequest const& request) {
+        return stub_->DeleteDnsAuthorization(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerConnectionImpl::DeleteDnsAuthorization(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDnsAuthorization",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::certificatemanager::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -869,6 +1544,64 @@ CertificateManagerConnectionImpl::CreateCertificateIssuanceConfig(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::CreateCertificateIssuanceConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::
+        CreateCertificateIssuanceConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCertificateIssuanceConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 CreateCertificateIssuanceConfigRequest const& request) {
+        return stub_->CreateCertificateIssuanceConfig(context, options,
+                                                      request);
+      },
+      *current, request, __func__);
+}
+
+future<
+    StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+CertificateManagerConnectionImpl::CreateCertificateIssuanceConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCertificateIssuanceConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::CertificateIssuanceConfig>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::
@@ -908,6 +1641,63 @@ CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::
+        DeleteCertificateIssuanceConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCertificateIssuanceConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::certificatemanager::v1::
+                 DeleteCertificateIssuanceConfigRequest const& request) {
+        return stub_->DeleteCertificateIssuanceConfig(context, options,
+                                                      request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCertificateIssuanceConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::certificatemanager::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -1004,6 +1794,63 @@ CertificateManagerConnectionImpl::CreateTrustConfig(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::CreateTrustConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTrustConfig(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+              request) {
+        return stub_->CreateTrustConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerConnectionImpl::CreateTrustConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateTrustConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::TrustConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::TrustConfig>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
 CertificateManagerConnectionImpl::UpdateTrustConfig(
     google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
@@ -1045,6 +1892,63 @@ CertificateManagerConnectionImpl::UpdateTrustConfig(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::UpdateTrustConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTrustConfig(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+              request) {
+        return stub_->UpdateTrustConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+CertificateManagerConnectionImpl::UpdateTrustConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateTrustConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::TrustConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::certificatemanager::v1::TrustConfig>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteTrustConfig(
     google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
@@ -1083,6 +1987,63 @@ CertificateManagerConnectionImpl::DeleteTrustConfig(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CertificateManagerConnectionImpl::DeleteTrustConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTrustConfig(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+              request) {
+        return stub_->DeleteTrustConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+CertificateManagerConnectionImpl::DeleteTrustConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::certificatemanager::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteTrustConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::certificatemanager::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::certificatemanager::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

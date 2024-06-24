@@ -21,7 +21,9 @@
 
 #include "google/cloud/dialogflow_es/documents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/documents_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -195,27 +197,77 @@ class DocumentsConnection {
   CreateDocument(
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  CreateDocument(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
   ImportDocuments(
       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportDocuments(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
+  ImportDocuments(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
   DeleteDocument(
       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
+  DeleteDocument(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
   UpdateDocument(
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  UpdateDocument(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
   ReloadDocument(
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ReloadDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  ReloadDocument(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
   ExportDocument(
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::v2::Document>>
+  ExportDocument(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 };
 
 /**

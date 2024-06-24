@@ -63,10 +63,35 @@ class MockPublicDelegatedPrefixesConnection
                    AnnounceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, Announce,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   AnnounceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Announce,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePublicDelegatedPrefix,
               (google::cloud::cpp::compute::public_delegated_prefixes::v1::
                    DeletePublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeletePublicDelegatedPrefix,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   DeletePublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeletePublicDelegatedPrefix,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>,
@@ -79,6 +104,19 @@ class MockPublicDelegatedPrefixesConnection
               InsertPublicDelegatedPrefix,
               (google::cloud::cpp::compute::public_delegated_prefixes::v1::
                    InsertPublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertPublicDelegatedPrefix,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   InsertPublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertPublicDelegatedPrefix,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -94,10 +132,35 @@ class MockPublicDelegatedPrefixesConnection
                    PatchPublicDelegatedPrefixRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PatchPublicDelegatedPrefix,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   PatchPublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchPublicDelegatedPrefix,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Withdraw,
               (google::cloud::cpp::compute::public_delegated_prefixes::v1::
                    WithdrawRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, Withdraw,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   WithdrawRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Withdraw,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

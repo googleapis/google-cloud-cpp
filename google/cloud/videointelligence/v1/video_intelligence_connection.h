@@ -21,7 +21,9 @@
 
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_retry_traits.h"
 #include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -203,6 +205,16 @@ class VideoIntelligenceServiceConnection {
   AnnotateVideo(
       google::cloud::videointelligence::v1::AnnotateVideoRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> AnnotateVideo(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
+  AnnotateVideo(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
 };
 
 /**

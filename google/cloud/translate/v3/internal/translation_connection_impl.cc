@@ -168,6 +168,61 @@ TranslationServiceConnectionImpl::BatchTranslateText(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::BatchTranslateText(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchTranslateText(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::BatchTranslateTextRequest const&
+                 request) {
+        return stub_->BatchTranslateText(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
+TranslationServiceConnectionImpl::BatchTranslateText(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::
+                   BatchTranslateMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchTranslateText",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::BatchTranslateResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::BatchTranslateResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceConnectionImpl::BatchTranslateDocument(
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
@@ -209,6 +264,63 @@ TranslationServiceConnectionImpl::BatchTranslateDocument(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::BatchTranslateDocument(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchTranslateDocument(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+              request) {
+        return stub_->BatchTranslateDocument(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+TranslationServiceConnectionImpl::BatchTranslateDocument(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::
+                   BatchTranslateDocumentMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::translation::v3::BatchTranslateDocumentResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchTranslateDocument",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::BatchTranslateDocumentResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::BatchTranslateDocumentResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnectionImpl::CreateGlossary(
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
@@ -246,6 +358,61 @@ TranslationServiceConnectionImpl::CreateGlossary(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::translation::v3::Glossary>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::CreateGlossary(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::CreateGlossaryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateGlossary(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::CreateGlossaryRequest const&
+                 request) {
+        return stub_->CreateGlossary(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::Glossary>>
+TranslationServiceConnectionImpl::CreateGlossary(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::
+                   CreateGlossaryMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::translation::v3::Glossary>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateGlossary",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::Glossary>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::Glossary>,
       polling_policy(*current), __func__);
 }
 
@@ -335,6 +502,61 @@ TranslationServiceConnectionImpl::DeleteGlossary(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::translation::v3::DeleteGlossaryResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceConnectionImpl::DeleteGlossary(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteGlossary(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::translation::v3::DeleteGlossaryRequest const&
+                 request) {
+        return stub_->DeleteGlossary(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
+TranslationServiceConnectionImpl::DeleteGlossary(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::translation::v3::
+                   DeleteGlossaryMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteGlossary",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::translation::v3::DeleteGlossaryResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::translation::v3::DeleteGlossaryResponse>,
       polling_policy(*current), __func__);
 }
 

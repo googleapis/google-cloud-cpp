@@ -59,6 +59,21 @@ RevisionsConnection::DeleteRevision(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> RevisionsConnection::DeleteRevision(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::run::v2::DeleteRevisionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::run::v2::Revision>>
+RevisionsConnection::DeleteRevision(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::run::v2::Revision>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<RevisionsConnection> MakeRevisionsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,

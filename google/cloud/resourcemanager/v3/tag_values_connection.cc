@@ -66,6 +66,21 @@ TagValuesConnection::CreateTagValue(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> TagValuesConnection::CreateTagValue(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateTagValueRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+TagValuesConnection::CreateTagValue(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::TagValue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
 TagValuesConnection::UpdateTagValue(
     google::cloud::resourcemanager::v3::UpdateTagValueRequest const&) {
@@ -74,9 +89,39 @@ TagValuesConnection::UpdateTagValue(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> TagValuesConnection::UpdateTagValue(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::UpdateTagValueRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+TagValuesConnection::UpdateTagValue(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::TagValue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
 TagValuesConnection::DeleteTagValue(
     google::cloud::resourcemanager::v3::DeleteTagValueRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::resourcemanager::v3::TagValue>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> TagValuesConnection::DeleteTagValue(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteTagValueRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
+TagValuesConnection::DeleteTagValue(google::cloud::ExperimentalTag,
+                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::TagValue>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

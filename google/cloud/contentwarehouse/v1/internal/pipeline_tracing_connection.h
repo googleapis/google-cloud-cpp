@@ -44,6 +44,15 @@ class PipelineServiceTracingConnection
   RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const&
                   request) override;
 
+  StatusOr<google::longrunning::Operation> RunPipeline(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
+  RunPipeline(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation) override;
+
  private:
   std::shared_ptr<contentwarehouse_v1::PipelineServiceConnection> child_;
 };

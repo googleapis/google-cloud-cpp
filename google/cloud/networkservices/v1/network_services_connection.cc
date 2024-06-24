@@ -60,6 +60,22 @@ NetworkServicesConnection::CreateEndpointPolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateEndpointPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
+NetworkServicesConnection::CreateEndpointPolicy(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
 NetworkServicesConnection::UpdateEndpointPolicy(
     google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&) {
@@ -68,9 +84,41 @@ NetworkServicesConnection::UpdateEndpointPolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::UpdateEndpointPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
+NetworkServicesConnection::UpdateEndpointPolicy(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnection::DeleteEndpointPolicy(
     google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteEndpointPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteEndpointPolicy(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -98,6 +146,22 @@ NetworkServicesConnection::CreateGateway(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateGatewayRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::Gateway>>
+NetworkServicesConnection::CreateGateway(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::Gateway>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
 NetworkServicesConnection::UpdateGateway(
     google::cloud::networkservices::v1::UpdateGatewayRequest const&) {
@@ -106,9 +170,41 @@ NetworkServicesConnection::UpdateGateway(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::UpdateGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateGatewayRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::Gateway>>
+NetworkServicesConnection::UpdateGateway(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::Gateway>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnection::DeleteGateway(
     google::cloud::networkservices::v1::DeleteGatewayRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteGateway(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteGatewayRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteGateway(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -136,6 +232,22 @@ NetworkServicesConnection::CreateGrpcRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateGrpcRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateGrpcRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
+NetworkServicesConnection::CreateGrpcRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::GrpcRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
 NetworkServicesConnection::UpdateGrpcRoute(
     google::cloud::networkservices::v1::UpdateGrpcRouteRequest const&) {
@@ -144,9 +256,41 @@ NetworkServicesConnection::UpdateGrpcRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::UpdateGrpcRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateGrpcRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
+NetworkServicesConnection::UpdateGrpcRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::GrpcRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnection::DeleteGrpcRoute(
     google::cloud::networkservices::v1::DeleteGrpcRouteRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteGrpcRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteGrpcRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteGrpcRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -174,6 +318,22 @@ NetworkServicesConnection::CreateHttpRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateHttpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateHttpRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
+NetworkServicesConnection::CreateHttpRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::HttpRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
 NetworkServicesConnection::UpdateHttpRoute(
     google::cloud::networkservices::v1::UpdateHttpRouteRequest const&) {
@@ -182,9 +342,41 @@ NetworkServicesConnection::UpdateHttpRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::UpdateHttpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateHttpRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
+NetworkServicesConnection::UpdateHttpRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::HttpRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnection::DeleteHttpRoute(
     google::cloud::networkservices::v1::DeleteHttpRouteRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteHttpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteHttpRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteHttpRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -212,6 +404,22 @@ NetworkServicesConnection::CreateTcpRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateTcpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateTcpRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
+NetworkServicesConnection::CreateTcpRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::TcpRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
 NetworkServicesConnection::UpdateTcpRoute(
     google::cloud::networkservices::v1::UpdateTcpRouteRequest const&) {
@@ -220,9 +428,41 @@ NetworkServicesConnection::UpdateTcpRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::UpdateTcpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateTcpRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
+NetworkServicesConnection::UpdateTcpRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::TcpRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnection::DeleteTcpRoute(
     google::cloud::networkservices::v1::DeleteTcpRouteRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteTcpRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteTcpRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteTcpRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -250,6 +490,22 @@ NetworkServicesConnection::CreateTlsRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateTlsRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateTlsRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
+NetworkServicesConnection::CreateTlsRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::TlsRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
 NetworkServicesConnection::UpdateTlsRoute(
     google::cloud::networkservices::v1::UpdateTlsRouteRequest const&) {
@@ -258,9 +514,41 @@ NetworkServicesConnection::UpdateTlsRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::UpdateTlsRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateTlsRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
+NetworkServicesConnection::UpdateTlsRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::TlsRoute>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnection::DeleteTlsRoute(
     google::cloud::networkservices::v1::DeleteTlsRouteRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteTlsRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteTlsRouteRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteTlsRoute(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -288,9 +576,41 @@ NetworkServicesConnection::CreateServiceBinding(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::CreateServiceBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateServiceBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
+NetworkServicesConnection::CreateServiceBinding(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::ServiceBinding>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnection::DeleteServiceBinding(
     google::cloud::networkservices::v1::DeleteServiceBindingRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NetworkServicesConnection::DeleteServiceBinding(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteServiceBindingRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteServiceBinding(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -318,6 +638,21 @@ NetworkServicesConnection::CreateMesh(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesConnection::CreateMesh(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::CreateMeshRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::Mesh>>
+NetworkServicesConnection::CreateMesh(google::cloud::ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::Mesh>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>
 NetworkServicesConnection::UpdateMesh(
     google::cloud::networkservices::v1::UpdateMeshRequest const&) {
@@ -326,9 +661,39 @@ NetworkServicesConnection::UpdateMesh(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> NetworkServicesConnection::UpdateMesh(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::UpdateMeshRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::Mesh>>
+NetworkServicesConnection::UpdateMesh(google::cloud::ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::Mesh>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnection::DeleteMesh(
     google::cloud::networkservices::v1::DeleteMeshRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> NetworkServicesConnection::DeleteMesh(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkservices::v1::DeleteMeshRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+NetworkServicesConnection::DeleteMesh(google::cloud::ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -42,6 +42,30 @@ AssetServiceTracingConnection::ExportAssets(
   return internal::EndSpan(std::move(span), child_->ExportAssets(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AssetServiceTracingConnection::ExportAssets(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::asset::v1::ExportAssetsRequest const& request) {
+  auto span =
+      internal::MakeSpan("asset_v1::AssetServiceConnection::ExportAssets");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ExportAssets(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
+AssetServiceTracingConnection::ExportAssets(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("asset_v1::AssetServiceConnection::ExportAssets");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ExportAssets(google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::asset::v1::Asset>
 AssetServiceTracingConnection::ListAssets(
     google::cloud::asset::v1::ListAssetsRequest request) {
@@ -145,6 +169,31 @@ AssetServiceTracingConnection::AnalyzeIamPolicyLongrunning(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->AnalyzeIamPolicyLongrunning(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AssetServiceTracingConnection::AnalyzeIamPolicyLongrunning(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "asset_v1::AssetServiceConnection::AnalyzeIamPolicyLongrunning");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->AnalyzeIamPolicyLongrunning(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
+AssetServiceTracingConnection::AnalyzeIamPolicyLongrunning(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "asset_v1::AssetServiceConnection::AnalyzeIamPolicyLongrunning");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AnalyzeIamPolicyLongrunning(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>

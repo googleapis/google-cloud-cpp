@@ -59,10 +59,43 @@ WorkflowTemplateServiceConnection::InstantiateWorkflowTemplate(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceConnection::InstantiateWorkflowTemplate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+WorkflowTemplateServiceConnection::InstantiateWorkflowTemplate(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceConnection::InstantiateInlineWorkflowTemplate(
     google::cloud::dataproc::v1::
         InstantiateInlineWorkflowTemplateRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceConnection::InstantiateInlineWorkflowTemplate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::
+        InstantiateInlineWorkflowTemplateRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+WorkflowTemplateServiceConnection::InstantiateInlineWorkflowTemplate(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -59,9 +59,31 @@ class MockConfigServiceV2Connection
               (google::logging::v2::CreateBucketRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBucketAsync,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::logging::v2::CreateBucketRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::logging::v2::LogBucket>>,
+              CreateBucketAsync,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::logging::v2::LogBucket>>,
               UpdateBucketAsync,
               (google::logging::v2::UpdateBucketRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateBucketAsync,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::logging::v2::UpdateBucketRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::logging::v2::LogBucket>>,
+              UpdateBucketAsync,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::logging::v2::LogBucket>, CreateBucket,
@@ -120,8 +142,28 @@ class MockConfigServiceV2Connection
               (google::logging::v2::CreateLinkRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateLink,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::logging::v2::CreateLinkRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::logging::v2::Link>>, CreateLink,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::logging::v2::LinkMetadata>>, DeleteLink,
               (google::logging::v2::DeleteLinkRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteLink,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::logging::v2::DeleteLinkRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::logging::v2::LinkMetadata>>, DeleteLink,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::logging::v2::Link>), ListLinks,
@@ -168,6 +210,17 @@ class MockConfigServiceV2Connection
   MOCK_METHOD(future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>,
               CopyLogEntries,
               (google::logging::v2::CopyLogEntriesRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CopyLogEntries,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::logging::v2::CopyLogEntriesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>,
+              CopyLogEntries,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 };
 

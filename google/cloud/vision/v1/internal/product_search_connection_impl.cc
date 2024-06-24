@@ -427,6 +427,60 @@ ProductSearchConnectionImpl::ImportProductSets(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductSearchConnectionImpl::ImportProductSets(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportProductSets(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vision::v1::ImportProductSetsRequest const& request) {
+        return stub_->ImportProductSets(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
+ProductSearchConnectionImpl::ImportProductSets(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vision::v1::BatchOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportProductSets",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vision::v1::ImportProductSetsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vision::v1::ImportProductSetsResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
 ProductSearchConnectionImpl::PurgeProducts(
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
@@ -463,6 +517,59 @@ ProductSearchConnectionImpl::PurgeProducts(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vision::v1::BatchOperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductSearchConnectionImpl::PurgeProducts(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vision::v1::PurgeProductsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PurgeProducts(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vision::v1::PurgeProductsRequest const& request) {
+        return stub_->PurgeProducts(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
+ProductSearchConnectionImpl::PurgeProducts(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vision::v1::BatchOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to PurgeProducts",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vision::v1::BatchOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vision::v1::BatchOperationMetadata>,
       polling_policy(*current), __func__);
 }
 

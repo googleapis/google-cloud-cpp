@@ -60,9 +60,41 @@ CloudMemcacheConnection::CreateInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnection::CreateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::memcache::v1::CreateInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnection::CreateInstance(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memcache::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnection::UpdateInstance(
     google::cloud::memcache::v1::UpdateInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memcache::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnection::UpdateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::memcache::v1::UpdateInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnection::UpdateInstance(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::memcache::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -76,9 +108,41 @@ CloudMemcacheConnection::UpdateParameters(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnection::UpdateParameters(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::memcache::v1::UpdateParametersRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnection::UpdateParameters(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memcache::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheConnection::DeleteInstance(
     google::cloud::memcache::v1::DeleteInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memcache::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnection::DeleteInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::memcache::v1::DeleteInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
+CloudMemcacheConnection::DeleteInstance(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::memcache::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -92,9 +156,41 @@ CloudMemcacheConnection::ApplyParameters(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnection::ApplyParameters(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::memcache::v1::ApplyParametersRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnection::ApplyParameters(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memcache::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnection::RescheduleMaintenance(
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memcache::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnection::RescheduleMaintenance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnection::RescheduleMaintenance(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::memcache::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

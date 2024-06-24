@@ -50,13 +50,40 @@ class DomainMappingsTracingConnection
       google::appengine::v1::CreateDomainMappingRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDomainMapping(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::CreateDomainMappingRequest const& request)
+      override;
+
+  future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
       google::appengine::v1::UpdateDomainMappingRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateDomainMapping(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::UpdateDomainMappingRequest const& request)
+      override;
+
+  future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const&
                           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDomainMapping(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::DeleteDomainMappingRequest const& request)
+      override;
+
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteDomainMapping(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<appengine_v1::DomainMappingsConnection> child_;

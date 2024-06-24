@@ -148,6 +148,15 @@ class DataCatalogTracingConnection
   ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const&
                     request) override;
 
+  StatusOr<google::longrunning::Operation> ReconcileTags(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+  ReconcileTags(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
 
@@ -167,6 +176,15 @@ class DataCatalogTracingConnection
   future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
   ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const&
                     request) override;
+
+  StatusOr<google::longrunning::Operation> ImportEntries(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+  ImportEntries(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<datacatalog_v1::DataCatalogConnection> child_;

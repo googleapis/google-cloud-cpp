@@ -21,7 +21,9 @@
 
 #include "google/cloud/domains/v1/domains_connection_idempotency_policy.h"
 #include "google/cloud/domains/v1/internal/domains_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -196,6 +198,14 @@ class DomainsConnection {
   RegisterDomain(
       google::cloud::domains::v1::RegisterDomainRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> RegisterDomain(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::RegisterDomainRequest const& request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  RegisterDomain(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual StatusOr<
       google::cloud::domains::v1::RetrieveTransferParametersResponse>
   RetrieveTransferParameters(
@@ -205,6 +215,14 @@ class DomainsConnection {
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
   TransferDomain(
       google::cloud::domains::v1::TransferDomainRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> TransferDomain(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::TransferDomainRequest const& request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  TransferDomain(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::domains::v1::Registration>
   ListRegistrations(
@@ -217,27 +235,77 @@ class DomainsConnection {
   UpdateRegistration(
       google::cloud::domains::v1::UpdateRegistrationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateRegistration(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::UpdateRegistrationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  UpdateRegistration(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureManagementSettings(
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  ConfigureManagementSettings(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureDnsSettings(
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  ConfigureDnsSettings(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureContactSettings(
       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> ConfigureContactSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  ConfigureContactSettings(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::domains::v1::Registration>>
   ExportRegistration(
       google::cloud::domains::v1::ExportRegistrationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ExportRegistration(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ExportRegistrationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::Registration>>
+  ExportRegistration(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
   DeleteRegistration(
       google::cloud::domains::v1::DeleteRegistrationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteRegistration(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::DeleteRegistrationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
+  DeleteRegistration(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::domains::v1::AuthorizationCode>
   RetrieveAuthorizationCode(

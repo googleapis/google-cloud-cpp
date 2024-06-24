@@ -66,6 +66,31 @@ WorkstationsTracingConnection::CreateWorkstationCluster(
                            child_->CreateWorkstationCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::CreateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::CreateWorkstationCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateWorkstationCluster(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsTracingConnection::CreateWorkstationCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::CreateWorkstationCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateWorkstationCluster(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsTracingConnection::UpdateWorkstationCluster(
     google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
@@ -77,6 +102,31 @@ WorkstationsTracingConnection::UpdateWorkstationCluster(
                            child_->UpdateWorkstationCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::UpdateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::UpdateWorkstationCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateWorkstationCluster(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsTracingConnection::UpdateWorkstationCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::UpdateWorkstationCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateWorkstationCluster(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsTracingConnection::DeleteWorkstationCluster(
     google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
@@ -86,6 +136,31 @@ WorkstationsTracingConnection::DeleteWorkstationCluster(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteWorkstationCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::DeleteWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::DeleteWorkstationCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteWorkstationCluster(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsTracingConnection::DeleteWorkstationCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::DeleteWorkstationCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteWorkstationCluster(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -134,6 +209,31 @@ WorkstationsTracingConnection::CreateWorkstationConfig(
                            child_->CreateWorkstationConfig(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::CreateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::CreateWorkstationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateWorkstationConfig(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsTracingConnection::CreateWorkstationConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::CreateWorkstationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateWorkstationConfig(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsTracingConnection::UpdateWorkstationConfig(
     google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
@@ -145,6 +245,31 @@ WorkstationsTracingConnection::UpdateWorkstationConfig(
                            child_->UpdateWorkstationConfig(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::UpdateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::UpdateWorkstationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->UpdateWorkstationConfig(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsTracingConnection::UpdateWorkstationConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::UpdateWorkstationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateWorkstationConfig(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsTracingConnection::DeleteWorkstationConfig(
     google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
@@ -154,6 +279,31 @@ WorkstationsTracingConnection::DeleteWorkstationConfig(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteWorkstationConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::DeleteWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::DeleteWorkstationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteWorkstationConfig(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsTracingConnection::DeleteWorkstationConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::DeleteWorkstationConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteWorkstationConfig(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::workstations::v1::Workstation>
@@ -198,6 +348,30 @@ WorkstationsTracingConnection::CreateWorkstation(
   return internal::EndSpan(std::move(span), child_->CreateWorkstation(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::CreateWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::CreateWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateWorkstation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsTracingConnection::CreateWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::CreateWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateWorkstation(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsTracingConnection::UpdateWorkstation(
     google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
@@ -205,6 +379,30 @@ WorkstationsTracingConnection::UpdateWorkstation(
       "workstations_v1::WorkstationsConnection::UpdateWorkstation");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateWorkstation(request));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::UpdateWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::UpdateWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateWorkstation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsTracingConnection::UpdateWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::UpdateWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateWorkstation(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -216,6 +414,30 @@ WorkstationsTracingConnection::DeleteWorkstation(
   return internal::EndSpan(std::move(span), child_->DeleteWorkstation(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::DeleteWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::DeleteWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteWorkstation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsTracingConnection::DeleteWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::DeleteWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteWorkstation(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsTracingConnection::StartWorkstation(
     google::cloud::workstations::v1::StartWorkstationRequest const& request) {
@@ -225,6 +447,30 @@ WorkstationsTracingConnection::StartWorkstation(
   return internal::EndSpan(std::move(span), child_->StartWorkstation(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::StartWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::StartWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->StartWorkstation(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsTracingConnection::StartWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::StartWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->StartWorkstation(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsTracingConnection::StopWorkstation(
     google::cloud::workstations::v1::StopWorkstationRequest const& request) {
@@ -232,6 +478,30 @@ WorkstationsTracingConnection::StopWorkstation(
       "workstations_v1::WorkstationsConnection::StopWorkstation");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->StopWorkstation(request));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsTracingConnection::StopWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::StopWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->StopWorkstation(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsTracingConnection::StopWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "workstations_v1::WorkstationsConnection::StopWorkstation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->StopWorkstation(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>

@@ -56,6 +56,15 @@ class BigtableInstanceAdminConnectionImpl
       google::bigtable::admin::v2::CreateInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
       google::bigtable::admin::v2::GetInstanceRequest const& request) override;
 
@@ -70,6 +79,15 @@ class BigtableInstanceAdminConnectionImpl
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> PartialUpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   Status DeleteInstance(
       google::bigtable::admin::v2::DeleteInstanceRequest const& request)
       override;
@@ -77,6 +95,15 @@ class BigtableInstanceAdminConnectionImpl
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       google::bigtable::admin::v2::CreateClusterRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::CreateClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
       google::bigtable::admin::v2::GetClusterRequest const& request) override;
@@ -87,9 +114,26 @@ class BigtableInstanceAdminConnectionImpl
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       google::bigtable::admin::v2::Cluster const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::Cluster const& request) override;
+
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> PartialUpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   Status DeleteCluster(google::bigtable::admin::v2::DeleteClusterRequest const&
                            request) override;
@@ -108,6 +152,15 @@ class BigtableInstanceAdminConnectionImpl
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateAppProfile(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request)
+      override;
+
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   Status DeleteAppProfile(
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request)

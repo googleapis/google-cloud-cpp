@@ -57,6 +57,15 @@ class DataStoreServiceConnectionImpl
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDataStore(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
+  CreateDataStore(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
       google::cloud::discoveryengine::v1::GetDataStoreRequest const& request)
       override;
@@ -69,6 +78,15 @@ class DataStoreServiceConnectionImpl
   DeleteDataStore(
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteDataStore(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
+  DeleteDataStore(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::discoveryengine::v1::DataStore> UpdateDataStore(
       google::cloud::discoveryengine::v1::UpdateDataStoreRequest const& request)

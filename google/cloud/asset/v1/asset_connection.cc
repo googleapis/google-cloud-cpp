@@ -46,6 +46,21 @@ AssetServiceConnection::ExportAssets(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> AssetServiceConnection::ExportAssets(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::asset::v1::ExportAssetsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
+AssetServiceConnection::ExportAssets(google::cloud::ExperimentalTag,
+                                     google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::asset::v1::Asset> AssetServiceConnection::ListAssets(
     google::cloud::asset::v1::
         ListAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
@@ -110,6 +125,22 @@ AssetServiceConnection::AnalyzeIamPolicy(
 future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
 AssetServiceConnection::AnalyzeIamPolicyLongrunning(
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+AssetServiceConnection::AnalyzeIamPolicyLongrunning(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
+AssetServiceConnection::AnalyzeIamPolicyLongrunning(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

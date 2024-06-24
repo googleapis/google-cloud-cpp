@@ -21,7 +21,9 @@
 
 #include "google/cloud/translate/v3/internal/translation_retry_traits.h"
 #include "google/cloud/translate/v3/translation_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -210,15 +212,42 @@ class TranslationServiceConnection {
   BatchTranslateText(
       google::cloud::translation::v3::BatchTranslateTextRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> BatchTranslateText(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateTextRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
+  BatchTranslateText(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
   BatchTranslateDocument(
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> BatchTranslateDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+  BatchTranslateDocument(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::translation::v3::Glossary>>
   CreateGlossary(
       google::cloud::translation::v3::CreateGlossaryRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateGlossary(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::CreateGlossaryRequest const& request);
+
+  virtual future<StatusOr<google::cloud::translation::v3::Glossary>>
+  CreateGlossary(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
       google::cloud::translation::v3::ListGlossariesRequest request);
@@ -230,6 +259,15 @@ class TranslationServiceConnection {
       StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
   DeleteGlossary(
       google::cloud::translation::v3::DeleteGlossaryRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteGlossary(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::DeleteGlossaryRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
+  DeleteGlossary(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
   CreateAdaptiveMtDataset(

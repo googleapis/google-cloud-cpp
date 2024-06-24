@@ -21,7 +21,9 @@
 
 #include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
 #include "google/cloud/spanner/admin/internal/database_admin_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -194,6 +196,15 @@ class DatabaseAdminConnection {
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
+  CreateDatabase(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request);
 
@@ -202,11 +213,30 @@ class DatabaseAdminConnection {
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
+  UpdateDatabase(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual Status DropDatabase(
       google::spanner::admin::database::v1::DropDatabaseRequest const& request);
@@ -229,9 +259,25 @@ class DatabaseAdminConnection {
   CreateBackup(
       google::spanner::admin::database::v1::CreateBackupRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request);
+
+  virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
+  CreateBackup(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
   CopyBackup(
       google::spanner::admin::database::v1::CopyBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CopyBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request);
+
+  virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
+  CopyBackup(google::cloud::ExperimentalTag,
+             google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request);
@@ -249,6 +295,15 @@ class DatabaseAdminConnection {
   RestoreDatabase(
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> RestoreDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
+  RestoreDatabase(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::longrunning::Operation> ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest

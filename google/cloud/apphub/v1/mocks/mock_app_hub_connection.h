@@ -68,6 +68,20 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateServiceProjectAttachment,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>,
+      CreateServiceProjectAttachment,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>,
       GetServiceProjectAttachment,
       (google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
@@ -80,6 +94,19 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteServiceProjectAttachment,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+              DeleteServiceProjectAttachment,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<
@@ -117,6 +144,17 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::CreateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateService,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::apphub::v1::CreateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
+              CreateService,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Service>, GetService,
               (google::cloud::apphub::v1::GetServiceRequest const& request),
               (override));
@@ -126,9 +164,31 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::UpdateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateService,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::apphub::v1::UpdateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
+              UpdateService,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteService,
               (google::cloud::apphub::v1::DeleteServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteService,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::apphub::v1::DeleteServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+              DeleteService,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -159,6 +219,17 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::CreateWorkloadRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateWorkload,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::apphub::v1::CreateWorkloadRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
+              CreateWorkload,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Workload>, GetWorkload,
               (google::cloud::apphub::v1::GetWorkloadRequest const& request),
               (override));
@@ -168,9 +239,31 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::UpdateWorkloadRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateWorkload,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::apphub::v1::UpdateWorkloadRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
+              UpdateWorkload,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteWorkload,
               (google::cloud::apphub::v1::DeleteWorkloadRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteWorkload,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::apphub::v1::DeleteWorkloadRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+              DeleteWorkload,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apphub::v1::Application>),
@@ -184,6 +277,18 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (google::cloud::apphub::v1::CreateApplicationRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateApplication,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::apphub::v1::CreateApplicationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Application>>,
+              CreateApplication,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Application>, GetApplication,
               (google::cloud::apphub::v1::GetApplicationRequest const& request),
               (override));
@@ -195,10 +300,34 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateApplication,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::apphub::v1::UpdateApplicationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Application>>,
+              UpdateApplication,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
       DeleteApplication,
       (google::cloud::apphub::v1::DeleteApplicationRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteApplication,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::apphub::v1::DeleteApplicationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+              DeleteApplication,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

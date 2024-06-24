@@ -21,7 +21,9 @@
 
 #include "google/cloud/run/v2/executions_connection_idempotency_policy.h"
 #include "google/cloud/run/v2/internal/executions_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -193,8 +195,24 @@ class ExecutionsConnection {
   virtual future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
       google::cloud::run::v2::DeleteExecutionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::DeleteExecutionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
       google::cloud::run::v2::CancelExecutionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CancelExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::CancelExecutionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 };
 
 /**

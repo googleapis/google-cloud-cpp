@@ -44,9 +44,27 @@ class NodeGroupControllerTracingConnection
       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateNodeGroup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> ResizeNodeGroup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
       google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;

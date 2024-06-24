@@ -21,7 +21,9 @@
 
 #include "google/cloud/certificatemanager/v1/certificate_manager_connection_idempotency_policy.h"
 #include "google/cloud/certificatemanager/v1/internal/certificate_manager_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -203,16 +205,44 @@ class CertificateManagerConnection {
       google::cloud::certificatemanager::v1::CreateCertificateRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateCertificate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::CreateCertificateRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
+  CreateCertificate(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
   UpdateCertificate(
       google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateCertificate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
+  UpdateCertificate(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificate(
       google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCertificate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+  DeleteCertificate(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
   ListCertificateMaps(
@@ -230,17 +260,47 @@ class CertificateManagerConnection {
       google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateCertificateMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
+  CreateCertificateMap(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   UpdateCertificateMap(
       google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateCertificateMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
+  UpdateCertificateMap(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateMap(
       google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCertificateMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+  DeleteCertificateMap(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation);
 
   virtual StreamRange<
       google::cloud::certificatemanager::v1::CertificateMapEntry>
@@ -258,17 +318,47 @@ class CertificateManagerConnection {
       google::cloud::certificatemanager::v1::
           CreateCertificateMapEntryRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateCertificateMapEntry(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::
+          CreateCertificateMapEntryRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
+  CreateCertificateMapEntry(google::cloud::ExperimentalTag,
+                            google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   UpdateCertificateMapEntry(
       google::cloud::certificatemanager::v1::
           UpdateCertificateMapEntryRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateCertificateMapEntry(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::
+          UpdateCertificateMapEntryRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
+  UpdateCertificateMapEntry(google::cloud::ExperimentalTag,
+                            google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateMapEntry(
       google::cloud::certificatemanager::v1::
           DeleteCertificateMapEntryRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteCertificateMapEntry(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::
+          DeleteCertificateMapEntryRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+  DeleteCertificateMapEntry(google::cloud::ExperimentalTag,
+                            google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
   ListDnsAuthorizations(
@@ -285,15 +375,45 @@ class CertificateManagerConnection {
   CreateDnsAuthorization(google::cloud::certificatemanager::v1::
                              CreateDnsAuthorizationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateDnsAuthorization(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::
+          CreateDnsAuthorizationRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
+  CreateDnsAuthorization(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   UpdateDnsAuthorization(google::cloud::certificatemanager::v1::
                              UpdateDnsAuthorizationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateDnsAuthorization(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::
+          UpdateDnsAuthorizationRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
+  UpdateDnsAuthorization(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteDnsAuthorization(google::cloud::certificatemanager::v1::
                              DeleteDnsAuthorizationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDnsAuthorization(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::
+          DeleteDnsAuthorizationRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+  DeleteDnsAuthorization(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation);
 
   virtual StreamRange<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
@@ -313,11 +433,35 @@ class CertificateManagerConnection {
       google::cloud::certificatemanager::v1::
           CreateCertificateIssuanceConfigRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation>
+  CreateCertificateIssuanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::
+          CreateCertificateIssuanceConfigRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
+  CreateCertificateIssuanceConfig(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateIssuanceConfig(
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  DeleteCertificateIssuanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::
+          DeleteCertificateIssuanceConfigRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+  DeleteCertificateIssuanceConfig(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::certificatemanager::v1::TrustConfig>
   ListTrustConfigs(
@@ -333,16 +477,44 @@ class CertificateManagerConnection {
       google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateTrustConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+  CreateTrustConfig(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
   UpdateTrustConfig(
       google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateTrustConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
+  UpdateTrustConfig(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteTrustConfig(
       google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTrustConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
+  DeleteTrustConfig(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 };
 
 /**

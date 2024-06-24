@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/vpn_tunnels/v1/internal/vpn_tunnels_retry_traits.h"
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -192,6 +194,15 @@ class VpnTunnelsConnection {
   DeleteVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::
                       DeleteVpnTunnelRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          DeleteVpnTunnelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteVpnTunnel(google::cloud::ExperimentalTag,
+                  google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
       google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
           request);
@@ -199,6 +210,15 @@ class VpnTunnelsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::v1::
                       InsertVpnTunnelRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          InsertVpnTunnelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertVpnTunnel(google::cloud::ExperimentalTag,
+                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>
   ListVpnTunnels(
@@ -209,6 +229,15 @@ class VpnTunnelsConnection {
   SetLabels(
       google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(google::cloud::ExperimentalTag,
+            google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

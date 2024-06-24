@@ -61,6 +61,19 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteRouter,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteRouter,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Router>, GetRouter,
               (google::cloud::cpp::compute::routers::v1::GetRouterRequest const&
                    request),
@@ -95,6 +108,19 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertRouter,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertRouter,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::Router>), ListRouters,
       (google::cloud::cpp::compute::routers::v1::ListRoutersRequest request),
       (override));
@@ -104,6 +130,19 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
       (google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchRouter,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchRouter,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>,
@@ -117,6 +156,19 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
       (google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, UpdateRouter,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              UpdateRouter,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,7 +21,9 @@
 
 #include "google/cloud/dialogflow_es/intents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/intents_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -204,8 +206,25 @@ class IntentsConnection {
   BatchUpdateIntents(
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> BatchUpdateIntents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
+  BatchUpdateIntents(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchDeleteIntents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
 };
 
 /**

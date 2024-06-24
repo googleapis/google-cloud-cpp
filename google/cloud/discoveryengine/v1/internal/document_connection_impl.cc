@@ -202,6 +202,61 @@ DocumentServiceConnectionImpl::ImportDocuments(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentServiceConnectionImpl::ImportDocuments(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportDocuments(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
+                 request) {
+        return stub_->ImportDocuments(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
+DocumentServiceConnectionImpl::ImportDocuments(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   ImportDocumentsMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportDocuments",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::ImportDocumentsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::ImportDocumentsResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
 DocumentServiceConnectionImpl::PurgeDocuments(
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
@@ -239,6 +294,61 @@ DocumentServiceConnectionImpl::PurgeDocuments(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::PurgeDocumentsResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentServiceConnectionImpl::PurgeDocuments(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PurgeDocuments(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
+                 request) {
+        return stub_->PurgeDocuments(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
+DocumentServiceConnectionImpl::PurgeDocuments(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   PurgeDocumentsMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to PurgeDocuments",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::PurgeDocumentsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::PurgeDocumentsResponse>,
       polling_policy(*current), __func__);
 }
 

@@ -99,6 +99,15 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
   SeekSubscription(google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
                        request) override;
 
+  StatusOr<google::longrunning::Operation> SeekSubscription(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
+  SeekSubscription(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
       google::cloud::pubsublite::v1::CreateReservationRequest const& request)
       override;

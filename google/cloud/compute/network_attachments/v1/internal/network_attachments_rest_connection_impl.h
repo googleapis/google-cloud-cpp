@@ -64,6 +64,16 @@ class NetworkAttachmentsRestConnectionImpl
       google::cloud::cpp::compute::network_attachments::v1::
           DeleteNetworkAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::network_attachments::v1::
+          DeleteNetworkAttachmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkAttachment(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
   GetNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
                            GetNetworkAttachmentRequest const& request) override;
@@ -77,6 +87,16 @@ class NetworkAttachmentsRestConnectionImpl
       google::cloud::cpp::compute::network_attachments::v1::
           InsertNetworkAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::network_attachments::v1::
+          InsertNetworkAttachmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNetworkAttachment(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
   ListNetworkAttachments(google::cloud::cpp::compute::network_attachments::v1::
                              ListNetworkAttachmentsRequest request) override;
@@ -85,6 +105,16 @@ class NetworkAttachmentsRestConnectionImpl
   PatchNetworkAttachment(
       google::cloud::cpp::compute::network_attachments::v1::
           PatchNetworkAttachmentRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworkAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::network_attachments::v1::
+          PatchNetworkAttachmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNetworkAttachment(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::network_attachments::v1::

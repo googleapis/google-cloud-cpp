@@ -64,6 +64,31 @@ EnvironmentsTracingConnection::CreateEnvironment(
   return internal::EndSpan(std::move(span), child_->CreateEnvironment(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::CreateEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::CreateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateEnvironment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
+EnvironmentsTracingConnection::CreateEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::CreateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateEnvironment(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsTracingConnection::UpdateEnvironment(
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
@@ -72,6 +97,31 @@ EnvironmentsTracingConnection::UpdateEnvironment(
       "dialogflow_cx::EnvironmentsConnection::UpdateEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateEnvironment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::UpdateEnvironment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::UpdateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateEnvironment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
+EnvironmentsTracingConnection::UpdateEnvironment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::UpdateEnvironment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateEnvironment(google::cloud::ExperimentalTag{}, operation));
 }
 
 Status EnvironmentsTracingConnection::DeleteEnvironment(
@@ -106,6 +156,31 @@ EnvironmentsTracingConnection::RunContinuousTest(
   return internal::EndSpan(std::move(span), child_->RunContinuousTest(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::RunContinuousTest(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::RunContinuousTest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->RunContinuousTest(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
+EnvironmentsTracingConnection::RunContinuousTest(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::RunContinuousTest");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->RunContinuousTest(google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
 EnvironmentsTracingConnection::ListContinuousTestResults(
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
@@ -126,6 +201,30 @@ EnvironmentsTracingConnection::DeployFlow(
       internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeployFlow");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeployFlow(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EnvironmentsTracingConnection::DeployFlow(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
+  auto span =
+      internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeployFlow");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeployFlow(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
+EnvironmentsTracingConnection::DeployFlow(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeployFlow");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeployFlow(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

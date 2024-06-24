@@ -21,7 +21,9 @@
 
 #include "google/cloud/securitycenter/v2/internal/security_center_retry_traits.h"
 #include "google/cloud/securitycenter/v2/security_center_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -196,6 +198,16 @@ class SecurityCenterConnection {
   BulkMuteFindings(
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
+  BulkMuteFindings(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
   CreateBigQueryExport(

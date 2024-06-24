@@ -43,6 +43,31 @@ RoutesTracingConnection::DeleteRoute(
   return internal::EndSpan(std::move(span), child_->DeleteRoute(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutesTracingConnection::DeleteRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::DeleteRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteRoute(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutesTracingConnection::DeleteRoute(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::DeleteRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteRoute(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Route>
 RoutesTracingConnection::GetRoute(
     google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request) {
@@ -60,6 +85,31 @@ RoutesTracingConnection::InsertRoute(
       internal::MakeSpan("compute_routes_v1::RoutesConnection::InsertRoute");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertRoute(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutesTracingConnection::InsertRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::InsertRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertRoute(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutesTracingConnection::InsertRoute(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("compute_routes_v1::RoutesConnection::InsertRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->InsertRoute(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Route>

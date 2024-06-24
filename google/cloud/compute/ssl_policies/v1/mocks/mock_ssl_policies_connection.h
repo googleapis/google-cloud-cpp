@@ -62,6 +62,19 @@ class MockSslPoliciesConnection
                    DeleteSslPolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteSslPolicy,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::ssl_policies::v1::
+                   DeleteSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteSslPolicy,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::SslPolicy>, GetSslPolicy,
       (google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
@@ -72,6 +85,19 @@ class MockSslPoliciesConnection
               InsertSslPolicy,
               (google::cloud::cpp::compute::ssl_policies::v1::
                    InsertSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertSslPolicy,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::ssl_policies::v1::
+                   InsertSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertSslPolicy,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -92,6 +118,19 @@ class MockSslPoliciesConnection
               PatchSslPolicy,
               (google::cloud::cpp::compute::ssl_policies::v1::
                    PatchSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PatchSslPolicy,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::cpp::compute::ssl_policies::v1::
+                   PatchSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchSslPolicy,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

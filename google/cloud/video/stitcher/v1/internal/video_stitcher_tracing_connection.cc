@@ -42,6 +42,30 @@ VideoStitcherServiceTracingConnection::CreateCdnKey(
   return internal::EndSpan(std::move(span), child_->CreateCdnKey(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::CreateCdnKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::CreateCdnKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCdnKey(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
+VideoStitcherServiceTracingConnection::CreateCdnKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::CreateCdnKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateCdnKey(google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::video::stitcher::v1::CdnKey>
 VideoStitcherServiceTracingConnection::ListCdnKeys(
     google::cloud::video::stitcher::v1::ListCdnKeysRequest request) {
@@ -72,6 +96,30 @@ VideoStitcherServiceTracingConnection::DeleteCdnKey(
   return internal::EndSpan(std::move(span), child_->DeleteCdnKey(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::DeleteCdnKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::DeleteCdnKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteCdnKey(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceTracingConnection::DeleteCdnKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::DeleteCdnKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteCdnKey(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
 VideoStitcherServiceTracingConnection::UpdateCdnKey(
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
@@ -79,6 +127,30 @@ VideoStitcherServiceTracingConnection::UpdateCdnKey(
       "video_stitcher_v1::VideoStitcherServiceConnection::UpdateCdnKey");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCdnKey(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::UpdateCdnKey(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateCdnKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateCdnKey(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
+VideoStitcherServiceTracingConnection::UpdateCdnKey(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateCdnKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateCdnKey(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
@@ -177,6 +249,30 @@ VideoStitcherServiceTracingConnection::CreateSlate(
   return internal::EndSpan(std::move(span), child_->CreateSlate(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::CreateSlate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::CreateSlate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateSlate(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
+VideoStitcherServiceTracingConnection::CreateSlate(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::CreateSlate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateSlate(google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::video::stitcher::v1::Slate>
 VideoStitcherServiceTracingConnection::ListSlates(
     google::cloud::video::stitcher::v1::ListSlatesRequest request) {
@@ -207,6 +303,30 @@ VideoStitcherServiceTracingConnection::UpdateSlate(
   return internal::EndSpan(std::move(span), child_->UpdateSlate(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::UpdateSlate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateSlate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateSlate(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
+VideoStitcherServiceTracingConnection::UpdateSlate(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateSlate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateSlate(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceTracingConnection::DeleteSlate(
     google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
@@ -214,6 +334,30 @@ VideoStitcherServiceTracingConnection::DeleteSlate(
       "video_stitcher_v1::VideoStitcherServiceConnection::DeleteSlate");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSlate(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::DeleteSlate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::DeleteSlate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteSlate(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceTracingConnection::DeleteSlate(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::DeleteSlate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteSlate(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
@@ -243,6 +387,31 @@ VideoStitcherServiceTracingConnection::CreateLiveConfig(
       "video_stitcher_v1::VideoStitcherServiceConnection::CreateLiveConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateLiveConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::CreateLiveConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::CreateLiveConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateLiveConfig(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+VideoStitcherServiceTracingConnection::CreateLiveConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::CreateLiveConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateLiveConfig(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::video::stitcher::v1::LiveConfig>
@@ -276,6 +445,31 @@ VideoStitcherServiceTracingConnection::DeleteLiveConfig(
   return internal::EndSpan(std::move(span), child_->DeleteLiveConfig(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::DeleteLiveConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::DeleteLiveConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteLiveConfig(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceTracingConnection::DeleteLiveConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::DeleteLiveConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteLiveConfig(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
 VideoStitcherServiceTracingConnection::UpdateLiveConfig(
     google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
@@ -286,6 +480,31 @@ VideoStitcherServiceTracingConnection::UpdateLiveConfig(
   return internal::EndSpan(std::move(span), child_->UpdateLiveConfig(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::UpdateLiveConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateLiveConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateLiveConfig(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+VideoStitcherServiceTracingConnection::UpdateLiveConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateLiveConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateLiveConfig(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
 VideoStitcherServiceTracingConnection::CreateVodConfig(
     google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
@@ -293,6 +512,30 @@ VideoStitcherServiceTracingConnection::CreateVodConfig(
       "video_stitcher_v1::VideoStitcherServiceConnection::CreateVodConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateVodConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::CreateVodConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::CreateVodConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateVodConfig(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceTracingConnection::CreateVodConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::CreateVodConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateVodConfig(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodConfig>
@@ -325,6 +568,30 @@ VideoStitcherServiceTracingConnection::DeleteVodConfig(
   return internal::EndSpan(std::move(span), child_->DeleteVodConfig(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::DeleteVodConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::DeleteVodConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteVodConfig(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceTracingConnection::DeleteVodConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::DeleteVodConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteVodConfig(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
 VideoStitcherServiceTracingConnection::UpdateVodConfig(
     google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
@@ -332,6 +599,30 @@ VideoStitcherServiceTracingConnection::UpdateVodConfig(
       "video_stitcher_v1::VideoStitcherServiceConnection::UpdateVodConfig");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateVodConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceTracingConnection::UpdateVodConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateVodConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateVodConfig(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
+VideoStitcherServiceTracingConnection::UpdateVodConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_stitcher_v1::VideoStitcherServiceConnection::UpdateVodConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateVodConfig(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

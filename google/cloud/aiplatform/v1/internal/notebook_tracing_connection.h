@@ -45,6 +45,16 @@ class NotebookServiceTracingConnection
       google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
+  CreateNotebookRuntimeTemplate(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
   GetNotebookRuntimeTemplate(
       google::cloud::aiplatform::v1::GetNotebookRuntimeTemplateRequest const&
@@ -60,6 +70,16 @@ class NotebookServiceTracingConnection
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNotebookRuntimeTemplate(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
   UpdateNotebookRuntimeTemplate(
       google::cloud::aiplatform::v1::UpdateNotebookRuntimeTemplateRequest const&
@@ -69,6 +89,16 @@ class NotebookServiceTracingConnection
   AssignNotebookRuntime(
       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
+  AssignNotebookRuntime(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::NotebookRuntime> GetNotebookRuntime(
       google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request)
@@ -84,16 +114,47 @@ class NotebookServiceTracingConnection
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNotebookRuntime(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<
       StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
   UpgradeNotebookRuntime(
       google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
+  UpgradeNotebookRuntime(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
   StartNotebookRuntime(
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> StartNotebookRuntime(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
+  StartNotebookRuntime(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<aiplatform_v1::NotebookServiceConnection> child_;

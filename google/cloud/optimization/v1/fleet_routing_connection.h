@@ -21,7 +21,9 @@
 
 #include "google/cloud/optimization/v1/fleet_routing_connection_idempotency_policy.h"
 #include "google/cloud/optimization/v1/internal/fleet_routing_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -193,6 +195,16 @@ class FleetRoutingConnection {
   BatchOptimizeTours(
       google::cloud::optimization::v1::BatchOptimizeToursRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchOptimizeTours(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
+  BatchOptimizeTours(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation);
 };
 
 /**

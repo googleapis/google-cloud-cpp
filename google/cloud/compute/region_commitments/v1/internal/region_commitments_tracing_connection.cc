@@ -71,6 +71,33 @@ RegionCommitmentsTracingConnection::InsertCommitment(
   return internal::EndSpan(std::move(span), child_->InsertCommitment(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionCommitmentsTracingConnection::InsertCommitment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertCommitmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_commitments_v1::RegionCommitmentsConnection::"
+      "InsertCommitment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertCommitment(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionCommitmentsTracingConnection::InsertCommitment(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_commitments_v1::RegionCommitmentsConnection::"
+      "InsertCommitment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->InsertCommitment(google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::Commitment>
 RegionCommitmentsTracingConnection::ListRegionCommitments(
     google::cloud::cpp::compute::region_commitments::v1::
@@ -94,6 +121,33 @@ RegionCommitmentsTracingConnection::UpdateCommitment(
       "UpdateCommitment");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCommitment(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionCommitmentsTracingConnection::UpdateCommitment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateCommitmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_commitments_v1::RegionCommitmentsConnection::"
+      "UpdateCommitment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateCommitment(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionCommitmentsTracingConnection::UpdateCommitment(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_commitments_v1::RegionCommitmentsConnection::"
+      "UpdateCommitment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateCommitment(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

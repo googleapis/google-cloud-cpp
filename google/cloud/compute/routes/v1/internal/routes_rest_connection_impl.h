@@ -53,6 +53,15 @@ class RoutesRestConnectionImpl : public compute_routes_v1::RoutesConnection {
       google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoute(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
       google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request)
       override;
@@ -60,6 +69,15 @@ class RoutesRestConnectionImpl : public compute_routes_v1::RoutesConnection {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoute(
       google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoute(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
       google::cloud::cpp::compute::routes::v1::ListRoutesRequest request)

@@ -54,6 +54,19 @@ class MockSecurityCenterConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, BulkMuteFindings,
+              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+               google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>,
+              BulkMuteFindings,
+              (google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::securitycenter::v1::
                    SecurityHealthAnalyticsCustomModule>,
@@ -222,6 +235,21 @@ class MockSecurityCenterConnection
       RunAssetDiscovery,
       (google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RunAssetDiscovery,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>,
+      RunAssetDiscovery,
+      (google::cloud::ExperimentalTag,
+       google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::securitycenter::v1::Finding>,

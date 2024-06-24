@@ -130,6 +130,67 @@ CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportSuggestionDenyListEntries(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 ImportSuggestionDenyListEntriesRequest const& request) {
+        return stub_->ImportSuggestionDenyListEntries(context, options,
+                                                      request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::
+                    ImportSuggestionDenyListEntriesResponse>>
+CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   ImportSuggestionDenyListEntriesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::
+                     ImportSuggestionDenyListEntriesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportSuggestionDenyListEntries",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::
+              ImportSuggestionDenyListEntriesResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
 CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
@@ -171,6 +232,66 @@ CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
           google::cloud::discoveryengine::v1::
               PurgeSuggestionDenyListEntriesResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PurgeSuggestionDenyListEntries(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 PurgeSuggestionDenyListEntriesRequest const& request) {
+        return stub_->PurgeSuggestionDenyListEntries(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   PurgeSuggestionDenyListEntriesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::
+                     PurgeSuggestionDenyListEntriesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to PurgeSuggestionDenyListEntries",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::
+              PurgeSuggestionDenyListEntriesResponse>,
       polling_policy(*current), __func__);
 }
 

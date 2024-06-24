@@ -60,9 +60,39 @@ EdgeContainerConnection::CreateCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> EdgeContainerConnection::CreateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::CreateClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerConnection::CreateCluster(google::cloud::ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
 EdgeContainerConnection::UpdateCluster(
     google::cloud::edgecontainer::v1::UpdateClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerConnection::UpdateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::UpdateClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerConnection::UpdateCluster(google::cloud::ExperimentalTag,
+                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -76,9 +106,40 @@ EdgeContainerConnection::UpgradeCluster(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerConnection::UpgradeCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerConnection::UpgradeCluster(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::Cluster>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerConnection::DeleteCluster(
     google::cloud::edgecontainer::v1::DeleteClusterRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> EdgeContainerConnection::DeleteCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::DeleteClusterRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+EdgeContainerConnection::DeleteCluster(google::cloud::ExperimentalTag,
+                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,6 +179,22 @@ EdgeContainerConnection::CreateNodePool(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerConnection::CreateNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::CreateNodePoolRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
+EdgeContainerConnection::CreateNodePool(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::NodePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
 EdgeContainerConnection::UpdateNodePool(
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const&) {
@@ -126,9 +203,41 @@ EdgeContainerConnection::UpdateNodePool(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerConnection::UpdateNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::UpdateNodePoolRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
+EdgeContainerConnection::UpdateNodePool(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::NodePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerConnection::DeleteNodePool(
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+EdgeContainerConnection::DeleteNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::DeleteNodePoolRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+EdgeContainerConnection::DeleteNodePool(google::cloud::ExperimentalTag,
+                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -170,9 +279,41 @@ EdgeContainerConnection::CreateVpnConnection(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerConnection::CreateVpnConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
+EdgeContainerConnection::CreateVpnConnection(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerConnection::DeleteVpnConnection(
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+EdgeContainerConnection::DeleteVpnConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+EdgeContainerConnection::DeleteVpnConnection(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

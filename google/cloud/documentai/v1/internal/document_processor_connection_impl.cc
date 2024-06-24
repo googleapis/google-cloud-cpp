@@ -125,6 +125,61 @@ DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::BatchProcessRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchProcessDocuments(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::documentai::v1::BatchProcessRequest const& request) {
+        return stub_->BatchProcessDocuments(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
+DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   BatchProcessMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchProcessDocuments",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::BatchProcessResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::BatchProcessResponse>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DocumentProcessorServiceConnectionImpl::FetchProcessorTypes(
     google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
@@ -282,6 +337,62 @@ DocumentProcessorServiceConnectionImpl::TrainProcessorVersion(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::TrainProcessorVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TrainProcessorVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+                 request) {
+        return stub_->TrainProcessorVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::TrainProcessorVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   TrainProcessorVersionMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to TrainProcessorVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::TrainProcessorVersionResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::TrainProcessorVersionResponse>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceConnectionImpl::GetProcessorVersion(
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
@@ -375,6 +486,62 @@ DocumentProcessorServiceConnectionImpl::DeleteProcessorVersion(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::DeleteProcessorVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteProcessorVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+                 request) {
+        return stub_->DeleteProcessorVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+DocumentProcessorServiceConnectionImpl::DeleteProcessorVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   DeleteProcessorVersionMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteProcessorVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::DeleteProcessorVersionMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::documentai::v1::DeleteProcessorVersionMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
 DocumentProcessorServiceConnectionImpl::DeployProcessorVersion(
     google::cloud::documentai::v1::DeployProcessorVersionRequest const&
@@ -413,6 +580,62 @@ DocumentProcessorServiceConnectionImpl::DeployProcessorVersion(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::DeployProcessorVersionResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::DeployProcessorVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeployProcessorVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+                 request) {
+        return stub_->DeployProcessorVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::DeployProcessorVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   DeployProcessorVersionMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::documentai::v1::DeployProcessorVersionResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeployProcessorVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::DeployProcessorVersionResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::DeployProcessorVersionResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -455,6 +678,64 @@ DocumentProcessorServiceConnectionImpl::UndeployProcessorVersion(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::UndeployProcessorVersionResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::UndeployProcessorVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UndeployProcessorVersion(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+              request) {
+        return stub_->UndeployProcessorVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::UndeployProcessorVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   UndeployProcessorVersionMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::documentai::v1::UndeployProcessorVersionResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UndeployProcessorVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::UndeployProcessorVersionResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::UndeployProcessorVersionResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -513,6 +794,61 @@ DocumentProcessorServiceConnectionImpl::DeleteProcessor(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::DeleteProcessor(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteProcessor(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::documentai::v1::DeleteProcessorRequest const&
+                 request) {
+        return stub_->DeleteProcessor(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+DocumentProcessorServiceConnectionImpl::DeleteProcessor(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   DeleteProcessorMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteProcessor",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::DeleteProcessorMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::documentai::v1::DeleteProcessorMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
 DocumentProcessorServiceConnectionImpl::EnableProcessor(
     google::cloud::documentai::v1::EnableProcessorRequest const& request) {
@@ -553,6 +889,61 @@ DocumentProcessorServiceConnectionImpl::EnableProcessor(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::EnableProcessor(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EnableProcessor(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::documentai::v1::EnableProcessorRequest const&
+                 request) {
+        return stub_->EnableProcessor(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
+DocumentProcessorServiceConnectionImpl::EnableProcessor(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   EnableProcessorMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to EnableProcessor",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::EnableProcessorResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::EnableProcessorResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
 DocumentProcessorServiceConnectionImpl::DisableProcessor(
     google::cloud::documentai::v1::DisableProcessorRequest const& request) {
@@ -590,6 +981,61 @@ DocumentProcessorServiceConnectionImpl::DisableProcessor(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::DisableProcessorResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::DisableProcessor(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DisableProcessor(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::documentai::v1::DisableProcessorRequest const&
+                 request) {
+        return stub_->DisableProcessor(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
+DocumentProcessorServiceConnectionImpl::DisableProcessor(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   DisableProcessorMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DisableProcessor",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::DisableProcessorResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::DisableProcessorResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -634,6 +1080,63 @@ DocumentProcessorServiceConnectionImpl::SetDefaultProcessorVersion(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::SetDefaultProcessorVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetDefaultProcessorVersion(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::documentai::v1::
+                 SetDefaultProcessorVersionRequest const& request) {
+        return stub_->SetDefaultProcessorVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::SetDefaultProcessorVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   SetDefaultProcessorVersionMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SetDefaultProcessorVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
 DocumentProcessorServiceConnectionImpl::ReviewDocument(
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
@@ -670,6 +1173,61 @@ DocumentProcessorServiceConnectionImpl::ReviewDocument(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::ReviewDocumentResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::ReviewDocument(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReviewDocument(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
+        return stub_->ReviewDocument(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
+DocumentProcessorServiceConnectionImpl::ReviewDocument(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   ReviewDocumentOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ReviewDocument",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::ReviewDocumentResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::ReviewDocumentResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -712,6 +1270,64 @@ DocumentProcessorServiceConnectionImpl::EvaluateProcessorVersion(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::EvaluateProcessorVersionResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentProcessorServiceConnectionImpl::EvaluateProcessorVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EvaluateProcessorVersion(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+              request) {
+        return stub_->EvaluateProcessorVersion(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::EvaluateProcessorVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::documentai::v1::
+                   EvaluateProcessorVersionMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to EvaluateProcessorVersion",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::documentai::v1::EvaluateProcessorVersionResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::EvaluateProcessorVersionResponse>,
       polling_policy(*current), __func__);
 }
 

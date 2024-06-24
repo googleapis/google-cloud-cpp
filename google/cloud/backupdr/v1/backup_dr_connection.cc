@@ -60,9 +60,41 @@ BackupDRConnection::CreateManagementServer(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BackupDRConnection::CreateManagementServer(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
+BackupDRConnection::CreateManagementServer(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::ManagementServer>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
 BackupDRConnection::DeleteManagementServer(
     google::cloud::backupdr::v1::DeleteManagementServerRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::backupdr::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRConnection::DeleteManagementServer(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRConnection::DeleteManagementServer(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::backupdr::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

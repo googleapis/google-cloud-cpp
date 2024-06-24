@@ -56,6 +56,21 @@ BatchServiceConnection::DeleteJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> BatchServiceConnection::DeleteJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::batch::v1::DeleteJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
+BatchServiceConnection::DeleteJob(google::cloud::ExperimentalTag,
+                                  google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::batch::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::batch::v1::Job> BatchServiceConnection::ListJobs(
     google::cloud::batch::v1::
         ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)

@@ -21,7 +21,9 @@
 
 #include "google/cloud/retail/v2/analytics_connection_idempotency_policy.h"
 #include "google/cloud/retail/v2/internal/analytics_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -189,6 +191,15 @@ class AnalyticsServiceConnection {
       StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
   ExportAnalyticsMetrics(
       google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
+  ExportAnalyticsMetrics(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation);
 };
 
 /**

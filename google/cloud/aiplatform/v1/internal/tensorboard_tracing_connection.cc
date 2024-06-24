@@ -42,6 +42,30 @@ TensorboardServiceTracingConnection::CreateTensorboard(
   return internal::EndSpan(std::move(span), child_->CreateTensorboard(request));
 }
 
+StatusOr<google::longrunning::Operation>
+TensorboardServiceTracingConnection::CreateTensorboard(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::CreateTensorboard");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateTensorboard(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
+TensorboardServiceTracingConnection::CreateTensorboard(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::CreateTensorboard");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateTensorboard(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
 TensorboardServiceTracingConnection::GetTensorboard(
     google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
@@ -58,6 +82,30 @@ TensorboardServiceTracingConnection::UpdateTensorboard(
       "aiplatform_v1::TensorboardServiceConnection::UpdateTensorboard");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateTensorboard(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TensorboardServiceTracingConnection::UpdateTensorboard(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::UpdateTensorboard");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTensorboard(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
+TensorboardServiceTracingConnection::UpdateTensorboard(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::UpdateTensorboard");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateTensorboard(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::aiplatform::v1::Tensorboard>
@@ -79,6 +127,30 @@ TensorboardServiceTracingConnection::DeleteTensorboard(
       "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboard");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTensorboard(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TensorboardServiceTracingConnection::DeleteTensorboard(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboard");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteTensorboard(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+TensorboardServiceTracingConnection::DeleteTensorboard(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboard");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteTensorboard(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
@@ -156,6 +228,33 @@ TensorboardServiceTracingConnection::DeleteTensorboardExperiment(
                            child_->DeleteTensorboardExperiment(request));
 }
 
+StatusOr<google::longrunning::Operation>
+TensorboardServiceTracingConnection::DeleteTensorboardExperiment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::"
+      "DeleteTensorboardExperiment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteTensorboardExperiment(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+TensorboardServiceTracingConnection::DeleteTensorboardExperiment(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::"
+      "DeleteTensorboardExperiment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTensorboardExperiment(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceTracingConnection::CreateTensorboardRun(
     google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request) {
@@ -214,6 +313,30 @@ TensorboardServiceTracingConnection::DeleteTensorboardRun(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTensorboardRun(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TensorboardServiceTracingConnection::DeleteTensorboardRun(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboardRun");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteTensorboardRun(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+TensorboardServiceTracingConnection::DeleteTensorboardRun(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboardRun");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTensorboardRun(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<
@@ -283,6 +406,33 @@ TensorboardServiceTracingConnection::DeleteTensorboardTimeSeries(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTensorboardTimeSeries(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TensorboardServiceTracingConnection::DeleteTensorboardTimeSeries(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::"
+      "DeleteTensorboardTimeSeries");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteTensorboardTimeSeries(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+TensorboardServiceTracingConnection::DeleteTensorboardTimeSeries(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::TensorboardServiceConnection::"
+      "DeleteTensorboardTimeSeries");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTensorboardTimeSeries(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<

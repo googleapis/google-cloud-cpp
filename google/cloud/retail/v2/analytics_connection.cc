@@ -45,6 +45,22 @@ AnalyticsServiceConnection::ExportAnalyticsMetrics(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceConnection::ExportAnalyticsMetrics(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
+AnalyticsServiceConnection::ExportAnalyticsMetrics(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<AnalyticsServiceConnection> MakeAnalyticsServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

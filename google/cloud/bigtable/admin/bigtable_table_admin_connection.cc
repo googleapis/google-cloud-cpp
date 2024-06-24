@@ -66,6 +66,22 @@ BigtableTableAdminConnection::UpdateTable(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnection::UpdateTable(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UpdateTableRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnection::UpdateTable(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Table>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 Status BigtableTableAdminConnection::DeleteTable(
     google::bigtable::admin::v2::DeleteTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -79,9 +95,41 @@ BigtableTableAdminConnection::UndeleteTable(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnection::UndeleteTable(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UndeleteTableRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnection::UndeleteTable(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Table>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
 BigtableTableAdminConnection::CreateAuthorizedView(
     google::bigtable::admin::v2::CreateAuthorizedViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::AuthorizedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnection::CreateAuthorizedView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminConnection::CreateAuthorizedView(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::AuthorizedView>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -104,6 +152,22 @@ BigtableTableAdminConnection::GetAuthorizedView(
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
 BigtableTableAdminConnection::UpdateAuthorizedView(
     google::bigtable::admin::v2::UpdateAuthorizedViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::AuthorizedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnection::UpdateAuthorizedView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminConnection::UpdateAuthorizedView(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::AuthorizedView>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -145,6 +209,22 @@ BigtableTableAdminConnection::CreateBackup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnection::CreateBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CreateBackupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminConnection::CreateBackup(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminConnection::GetBackup(
     google::bigtable::admin::v2::GetBackupRequest const&) {
@@ -178,9 +258,41 @@ BigtableTableAdminConnection::RestoreTable(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnection::RestoreTable(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::RestoreTableRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnection::RestoreTable(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Table>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminConnection::CopyBackup(
     google::bigtable::admin::v2::CopyBackupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminConnection::CopyBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CopyBackupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminConnection::CopyBackup(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::Backup>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

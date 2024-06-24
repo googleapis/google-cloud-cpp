@@ -151,6 +151,59 @@ VmMigrationConnectionImpl::CreateSource(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::CreateSource(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
+        return stub_->CreateSource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::Source>>
+VmMigrationConnectionImpl::CreateSource(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::vmmigration::v1::Source>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateSource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::Source>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::Source>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
 VmMigrationConnectionImpl::UpdateSource(
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
@@ -190,6 +243,59 @@ VmMigrationConnectionImpl::UpdateSource(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::UpdateSource(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
+        return stub_->UpdateSource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::Source>>
+VmMigrationConnectionImpl::UpdateSource(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::vmmigration::v1::Source>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateSource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::Source>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::Source>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteSource(
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
@@ -226,6 +332,60 @@ VmMigrationConnectionImpl::DeleteSource(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::DeleteSource(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
+        return stub_->DeleteSource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnectionImpl::DeleteSource(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteSource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmmigration::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -337,6 +497,62 @@ VmMigrationConnectionImpl::CreateUtilizationReport(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::CreateUtilizationReport(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateUtilizationReport(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
+              request) {
+        return stub_->CreateUtilizationReport(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
+VmMigrationConnectionImpl::CreateUtilizationReport(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateUtilizationReport",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::UtilizationReport>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::UtilizationReport>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteUtilizationReport(
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
@@ -375,6 +591,62 @@ VmMigrationConnectionImpl::DeleteUtilizationReport(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::DeleteUtilizationReport(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteUtilizationReport(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
+              request) {
+        return stub_->DeleteUtilizationReport(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnectionImpl::DeleteUtilizationReport(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteUtilizationReport",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmmigration::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -471,6 +743,61 @@ VmMigrationConnectionImpl::CreateDatacenterConnector(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::CreateDatacenterConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDatacenterConnector(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::
+                 CreateDatacenterConnectorRequest const& request) {
+        return stub_->CreateDatacenterConnector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
+VmMigrationConnectionImpl::CreateDatacenterConnector(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDatacenterConnector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::DatacenterConnector>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::DatacenterConnector>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteDatacenterConnector(
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
@@ -508,6 +835,61 @@ VmMigrationConnectionImpl::DeleteDatacenterConnector(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::DeleteDatacenterConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDatacenterConnector(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::
+                 DeleteDatacenterConnectorRequest const& request) {
+        return stub_->DeleteDatacenterConnector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnectionImpl::DeleteDatacenterConnector(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDatacenterConnector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmmigration::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -551,6 +933,60 @@ VmMigrationConnectionImpl::UpgradeAppliance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::UpgradeAppliance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpgradeAppliance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
+                 request) {
+        return stub_->UpgradeAppliance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
+VmMigrationConnectionImpl::UpgradeAppliance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpgradeAppliance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::UpgradeApplianceResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::UpgradeApplianceResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnectionImpl::CreateMigratingVm(
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
@@ -588,6 +1024,60 @@ VmMigrationConnectionImpl::CreateMigratingVm(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::MigratingVm>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::CreateMigratingVm(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMigratingVm(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CreateMigratingVmRequest const&
+                 request) {
+        return stub_->CreateMigratingVm(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
+VmMigrationConnectionImpl::CreateMigratingVm(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::MigratingVm>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateMigratingVm",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::MigratingVm>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::MigratingVm>,
       polling_policy(*current), __func__);
 }
 
@@ -681,6 +1171,60 @@ VmMigrationConnectionImpl::UpdateMigratingVm(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::UpdateMigratingVm(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateMigratingVm(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&
+                 request) {
+        return stub_->UpdateMigratingVm(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
+VmMigrationConnectionImpl::UpdateMigratingVm(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::MigratingVm>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateMigratingVm",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::MigratingVm>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::MigratingVm>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteMigratingVm(
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
@@ -718,6 +1262,60 @@ VmMigrationConnectionImpl::DeleteMigratingVm(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::DeleteMigratingVm(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteMigratingVm(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&
+                 request) {
+        return stub_->DeleteMigratingVm(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnectionImpl::DeleteMigratingVm(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteMigratingVm",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmmigration::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -761,6 +1359,60 @@ VmMigrationConnectionImpl::StartMigration(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::StartMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartMigration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::StartMigrationRequest const&
+                 request) {
+        return stub_->StartMigration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
+VmMigrationConnectionImpl::StartMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StartMigration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::StartMigrationResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::StartMigrationResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
 VmMigrationConnectionImpl::ResumeMigration(
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
@@ -798,6 +1450,60 @@ VmMigrationConnectionImpl::ResumeMigration(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::ResumeMigrationResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::ResumeMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResumeMigration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::ResumeMigrationRequest const&
+                 request) {
+        return stub_->ResumeMigration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
+VmMigrationConnectionImpl::ResumeMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResumeMigration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::ResumeMigrationResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::ResumeMigrationResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -841,6 +1547,60 @@ VmMigrationConnectionImpl::PauseMigration(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::PauseMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PauseMigration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::PauseMigrationRequest const&
+                 request) {
+        return stub_->PauseMigration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
+VmMigrationConnectionImpl::PauseMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to PauseMigration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::PauseMigrationResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::PauseMigrationResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
 VmMigrationConnectionImpl::FinalizeMigration(
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
@@ -878,6 +1638,60 @@ VmMigrationConnectionImpl::FinalizeMigration(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::FinalizeMigrationResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::FinalizeMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->FinalizeMigration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::FinalizeMigrationRequest const&
+                 request) {
+        return stub_->FinalizeMigration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
+VmMigrationConnectionImpl::FinalizeMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to FinalizeMigration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::FinalizeMigrationResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::FinalizeMigrationResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -921,6 +1735,60 @@ VmMigrationConnectionImpl::CreateCloneJob(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::CreateCloneJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCloneJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CreateCloneJobRequest const&
+                 request) {
+        return stub_->CreateCloneJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
+VmMigrationConnectionImpl::CreateCloneJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::CloneJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCloneJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::CloneJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::CloneJob>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
 VmMigrationConnectionImpl::CancelCloneJob(
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
@@ -958,6 +1826,60 @@ VmMigrationConnectionImpl::CancelCloneJob(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::CancelCloneJobResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::CancelCloneJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelCloneJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CancelCloneJobRequest const&
+                 request) {
+        return stub_->CancelCloneJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
+VmMigrationConnectionImpl::CancelCloneJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CancelCloneJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::CancelCloneJobResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::CancelCloneJobResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -1050,6 +1972,60 @@ VmMigrationConnectionImpl::CreateCutoverJob(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::CreateCutoverJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCutoverJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CreateCutoverJobRequest const&
+                 request) {
+        return stub_->CreateCutoverJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
+VmMigrationConnectionImpl::CreateCutoverJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::CutoverJob>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCutoverJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::CutoverJob>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::CutoverJob>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
 VmMigrationConnectionImpl::CancelCutoverJob(
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
@@ -1087,6 +2063,60 @@ VmMigrationConnectionImpl::CancelCutoverJob(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::CancelCutoverJobResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::CancelCutoverJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CancelCutoverJob(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CancelCutoverJobRequest const&
+                 request) {
+        return stub_->CancelCutoverJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
+VmMigrationConnectionImpl::CancelCutoverJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CancelCutoverJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::CancelCutoverJobResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::CancelCutoverJobResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -1226,6 +2256,58 @@ VmMigrationConnectionImpl::CreateGroup(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationConnectionImpl::CreateGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateGroup(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
+        return stub_->CreateGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::Group>>
+VmMigrationConnectionImpl::CreateGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::vmmigration::v1::Group>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::Group>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::Group>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
 VmMigrationConnectionImpl::UpdateGroup(
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
@@ -1265,6 +2347,58 @@ VmMigrationConnectionImpl::UpdateGroup(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> VmMigrationConnectionImpl::UpdateGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateGroup(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
+        return stub_->UpdateGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::Group>>
+VmMigrationConnectionImpl::UpdateGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::vmmigration::v1::Group>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::Group>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::Group>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteGroup(
     google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
@@ -1301,6 +2435,59 @@ VmMigrationConnectionImpl::DeleteGroup(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> VmMigrationConnectionImpl::DeleteGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteGroup(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
+        return stub_->DeleteGroup(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnectionImpl::DeleteGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteGroup",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmmigration::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -1344,6 +2531,60 @@ VmMigrationConnectionImpl::AddGroupMigration(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::AddGroupMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddGroupMigration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::AddGroupMigrationRequest const&
+                 request) {
+        return stub_->AddGroupMigration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
+VmMigrationConnectionImpl::AddGroupMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AddGroupMigration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::AddGroupMigrationResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::AddGroupMigrationResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
 VmMigrationConnectionImpl::RemoveGroupMigration(
     google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
@@ -1382,6 +2623,61 @@ VmMigrationConnectionImpl::RemoveGroupMigration(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::RemoveGroupMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemoveGroupMigration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
+                 request) {
+        return stub_->RemoveGroupMigration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
+VmMigrationConnectionImpl::RemoveGroupMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RemoveGroupMigration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -1475,6 +2771,60 @@ VmMigrationConnectionImpl::CreateTargetProject(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::CreateTargetProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTargetProject(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
+                 request) {
+        return stub_->CreateTargetProject(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
+VmMigrationConnectionImpl::CreateTargetProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::TargetProject>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateTargetProject",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::TargetProject>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::TargetProject>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationConnectionImpl::UpdateTargetProject(
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
@@ -1515,6 +2865,60 @@ VmMigrationConnectionImpl::UpdateTargetProject(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::UpdateTargetProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTargetProject(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
+                 request) {
+        return stub_->UpdateTargetProject(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
+VmMigrationConnectionImpl::UpdateTargetProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::TargetProject>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateTargetProject",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::TargetProject>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::vmmigration::v1::TargetProject>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnectionImpl::DeleteTargetProject(
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
@@ -1552,6 +2956,60 @@ VmMigrationConnectionImpl::DeleteTargetProject(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmmigration::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationConnectionImpl::DeleteTargetProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTargetProject(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
+                 request) {
+        return stub_->DeleteTargetProject(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationConnectionImpl::DeleteTargetProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::vmmigration::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteTargetProject",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::vmmigration::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::vmmigration::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

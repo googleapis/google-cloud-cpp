@@ -57,6 +57,33 @@ ContactCenterInsightsTracingConnection::UploadConversation(
                            child_->UploadConversation(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::UploadConversation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UploadConversation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UploadConversation(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+ContactCenterInsightsTracingConnection::UploadConversation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UploadConversation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UploadConversation(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsTracingConnection::UpdateConversation(
     google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
@@ -114,6 +141,33 @@ ContactCenterInsightsTracingConnection::CreateAnalysis(
   return internal::EndSpan(std::move(span), child_->CreateAnalysis(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::CreateAnalysis(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CreateAnalysis");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateAnalysis(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
+ContactCenterInsightsTracingConnection::CreateAnalysis(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CreateAnalysis");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateAnalysis(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsTracingConnection::GetAnalysis(
     google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
@@ -160,6 +214,34 @@ ContactCenterInsightsTracingConnection::BulkAnalyzeConversations(
                            child_->BulkAnalyzeConversations(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::BulkAnalyzeConversations(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkAnalyzeConversations");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->BulkAnalyzeConversations(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+ContactCenterInsightsTracingConnection::BulkAnalyzeConversations(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkAnalyzeConversations");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BulkAnalyzeConversations(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
 ContactCenterInsightsTracingConnection::BulkDeleteConversations(
@@ -171,6 +253,34 @@ ContactCenterInsightsTracingConnection::BulkDeleteConversations(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BulkDeleteConversations(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::BulkDeleteConversations(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkDeleteConversations");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->BulkDeleteConversations(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+ContactCenterInsightsTracingConnection::BulkDeleteConversations(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "BulkDeleteConversations");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BulkDeleteConversations(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -186,6 +296,34 @@ ContactCenterInsightsTracingConnection::IngestConversations(
                            child_->IngestConversations(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::IngestConversations(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "IngestConversations");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->IngestConversations(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+ContactCenterInsightsTracingConnection::IngestConversations(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "IngestConversations");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->IngestConversations(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsTracingConnection::ExportInsightsData(
@@ -199,6 +337,34 @@ ContactCenterInsightsTracingConnection::ExportInsightsData(
                            child_->ExportInsightsData(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::ExportInsightsData(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ExportInsightsData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ExportInsightsData(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+ContactCenterInsightsTracingConnection::ExportInsightsData(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "ExportInsightsData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ExportInsightsData(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsTracingConnection::CreateIssueModel(
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
@@ -208,6 +374,33 @@ ContactCenterInsightsTracingConnection::CreateIssueModel(
       "CreateIssueModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateIssueModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::CreateIssueModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CreateIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateIssueModel(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
+ContactCenterInsightsTracingConnection::CreateIssueModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "CreateIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateIssueModel(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -255,6 +448,34 @@ ContactCenterInsightsTracingConnection::DeleteIssueModel(
   return internal::EndSpan(std::move(span), child_->DeleteIssueModel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::DeleteIssueModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeleteIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteIssueModel(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+ContactCenterInsightsTracingConnection::DeleteIssueModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeleteIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteIssueModel(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
 ContactCenterInsightsTracingConnection::DeployIssueModel(
@@ -265,6 +486,34 @@ ContactCenterInsightsTracingConnection::DeployIssueModel(
       "DeployIssueModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeployIssueModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::DeployIssueModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeployIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeployIssueModel(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+ContactCenterInsightsTracingConnection::DeployIssueModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "DeployIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeployIssueModel(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -278,6 +527,34 @@ ContactCenterInsightsTracingConnection::UndeployIssueModel(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UndeployIssueModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsTracingConnection::UndeployIssueModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UndeployIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UndeployIssueModel(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+ContactCenterInsightsTracingConnection::UndeployIssueModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contactcenterinsights_v1::ContactCenterInsightsConnection::"
+      "UndeployIssueModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UndeployIssueModel(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>

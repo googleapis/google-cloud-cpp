@@ -21,7 +21,9 @@
 
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection_idempotency_policy.h"
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -205,11 +207,31 @@ class AppGatewaysServiceConnection {
       google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateAppGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
+  CreateAppGateway(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(
       google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAppGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  DeleteAppGateway(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 };
 
 /**

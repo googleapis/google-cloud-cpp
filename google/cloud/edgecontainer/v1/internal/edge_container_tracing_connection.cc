@@ -63,6 +63,30 @@ EdgeContainerTracingConnection::CreateCluster(
   return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerTracingConnection::CreateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::CreateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
 EdgeContainerTracingConnection::UpdateCluster(
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
@@ -70,6 +94,30 @@ EdgeContainerTracingConnection::UpdateCluster(
       "edgecontainer_v1::EdgeContainerConnection::UpdateCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EdgeContainerTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerTracingConnection::UpdateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::UpdateCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateCluster(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
@@ -81,6 +129,30 @@ EdgeContainerTracingConnection::UpgradeCluster(
   return internal::EndSpan(std::move(span), child_->UpgradeCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerTracingConnection::UpgradeCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::UpgradeCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpgradeCluster(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
+EdgeContainerTracingConnection::UpgradeCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::UpgradeCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpgradeCluster(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerTracingConnection::DeleteCluster(
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
@@ -88,6 +160,30 @@ EdgeContainerTracingConnection::DeleteCluster(
       "edgecontainer_v1::EdgeContainerConnection::DeleteCluster");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EdgeContainerTracingConnection::DeleteCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::DeleteCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+EdgeContainerTracingConnection::DeleteCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::DeleteCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteCluster(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -140,6 +236,30 @@ EdgeContainerTracingConnection::CreateNodePool(
   return internal::EndSpan(std::move(span), child_->CreateNodePool(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerTracingConnection::CreateNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::CreateNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateNodePool(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
+EdgeContainerTracingConnection::CreateNodePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::CreateNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateNodePool(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
 EdgeContainerTracingConnection::UpdateNodePool(
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
@@ -149,6 +269,30 @@ EdgeContainerTracingConnection::UpdateNodePool(
   return internal::EndSpan(std::move(span), child_->UpdateNodePool(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerTracingConnection::UpdateNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::UpdateNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateNodePool(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
+EdgeContainerTracingConnection::UpdateNodePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::UpdateNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateNodePool(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerTracingConnection::DeleteNodePool(
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
@@ -156,6 +300,30 @@ EdgeContainerTracingConnection::DeleteNodePool(
       "edgecontainer_v1::EdgeContainerConnection::DeleteNodePool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteNodePool(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EdgeContainerTracingConnection::DeleteNodePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::DeleteNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteNodePool(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+EdgeContainerTracingConnection::DeleteNodePool(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::DeleteNodePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteNodePool(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::edgecontainer::v1::Machine>
@@ -211,6 +379,31 @@ EdgeContainerTracingConnection::CreateVpnConnection(
                            child_->CreateVpnConnection(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EdgeContainerTracingConnection::CreateVpnConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::CreateVpnConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateVpnConnection(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
+EdgeContainerTracingConnection::CreateVpnConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::CreateVpnConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateVpnConnection(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerTracingConnection::DeleteVpnConnection(
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
@@ -220,6 +413,31 @@ EdgeContainerTracingConnection::DeleteVpnConnection(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteVpnConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EdgeContainerTracingConnection::DeleteVpnConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::DeleteVpnConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteVpnConnection(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+EdgeContainerTracingConnection::DeleteVpnConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "edgecontainer_v1::EdgeContainerConnection::DeleteVpnConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteVpnConnection(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ServerConfig>

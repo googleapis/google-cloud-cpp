@@ -21,7 +21,9 @@
 
 #include "google/cloud/dialogflow_cx/flows_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/flows_retry_traits.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -201,6 +203,14 @@ class FlowsConnection {
   virtual future<StatusOr<google::protobuf::Struct>> TrainFlow(
       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> TrainFlow(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Struct>> TrainFlow(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   ValidateFlow(
       google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request);
@@ -215,10 +225,28 @@ class FlowsConnection {
   ImportFlow(
       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ImportFlow(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
+  ImportFlow(google::cloud::ExperimentalTag,
+             google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
   ExportFlow(
       google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportFlow(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
+  ExportFlow(google::cloud::ExperimentalTag,
+             google::longrunning::Operation const& operation);
 };
 
 /**

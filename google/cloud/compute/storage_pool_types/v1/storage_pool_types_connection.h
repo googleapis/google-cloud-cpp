@@ -21,7 +21,9 @@
 
 #include "google/cloud/compute/storage_pool_types/v1/internal/storage_pool_types_retry_traits.h"
 #include "google/cloud/compute/storage_pool_types/v1/storage_pool_types_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

@@ -88,6 +88,30 @@ IntentsTracingConnection::BatchUpdateIntents(
                            child_->BatchUpdateIntents(request));
 }
 
+StatusOr<google::longrunning::Operation>
+IntentsTracingConnection::BatchUpdateIntents(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::IntentsConnection::BatchUpdateIntents");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->BatchUpdateIntents(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
+IntentsTracingConnection::BatchUpdateIntents(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::IntentsConnection::BatchUpdateIntents");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->BatchUpdateIntents(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::protobuf::Struct>>
 IntentsTracingConnection::BatchDeleteIntents(
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
@@ -96,6 +120,30 @@ IntentsTracingConnection::BatchDeleteIntents(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchDeleteIntents(request));
+}
+
+StatusOr<google::longrunning::Operation>
+IntentsTracingConnection::BatchDeleteIntents(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::IntentsConnection::BatchDeleteIntents");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->BatchDeleteIntents(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+IntentsTracingConnection::BatchDeleteIntents(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::IntentsConnection::BatchDeleteIntents");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->BatchDeleteIntents(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

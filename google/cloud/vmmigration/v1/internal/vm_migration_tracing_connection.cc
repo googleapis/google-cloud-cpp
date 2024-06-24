@@ -62,6 +62,30 @@ VmMigrationTracingConnection::CreateSource(
   return internal::EndSpan(std::move(span), child_->CreateSource(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CreateSource(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::CreateSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateSource(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::Source>>
+VmMigrationTracingConnection::CreateSource(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::CreateSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateSource(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
 VmMigrationTracingConnection::UpdateSource(
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
@@ -71,6 +95,30 @@ VmMigrationTracingConnection::UpdateSource(
   return internal::EndSpan(std::move(span), child_->UpdateSource(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::UpdateSource(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::UpdateSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateSource(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::Source>>
+VmMigrationTracingConnection::UpdateSource(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::UpdateSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateSource(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationTracingConnection::DeleteSource(
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
@@ -78,6 +126,30 @@ VmMigrationTracingConnection::DeleteSource(
       internal::MakeSpan("vmmigration_v1::VmMigrationConnection::DeleteSource");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSource(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::DeleteSource(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::DeleteSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteSource(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationTracingConnection::DeleteSource(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::DeleteSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteSource(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
@@ -122,6 +194,31 @@ VmMigrationTracingConnection::CreateUtilizationReport(
                            child_->CreateUtilizationReport(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CreateUtilizationReport(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateUtilizationReport");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateUtilizationReport(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
+VmMigrationTracingConnection::CreateUtilizationReport(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateUtilizationReport");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateUtilizationReport(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationTracingConnection::DeleteUtilizationReport(
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
@@ -131,6 +228,31 @@ VmMigrationTracingConnection::DeleteUtilizationReport(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteUtilizationReport(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::DeleteUtilizationReport(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::DeleteUtilizationReport");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteUtilizationReport(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationTracingConnection::DeleteUtilizationReport(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::DeleteUtilizationReport");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteUtilizationReport(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
@@ -166,6 +288,31 @@ VmMigrationTracingConnection::CreateDatacenterConnector(
                            child_->CreateDatacenterConnector(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CreateDatacenterConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateDatacenterConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateDatacenterConnector(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
+VmMigrationTracingConnection::CreateDatacenterConnector(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateDatacenterConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDatacenterConnector(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationTracingConnection::DeleteDatacenterConnector(
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
@@ -177,6 +324,31 @@ VmMigrationTracingConnection::DeleteDatacenterConnector(
                            child_->DeleteDatacenterConnector(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::DeleteDatacenterConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::DeleteDatacenterConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteDatacenterConnector(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationTracingConnection::DeleteDatacenterConnector(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::DeleteDatacenterConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDatacenterConnector(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
 VmMigrationTracingConnection::UpgradeAppliance(
     google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
@@ -186,6 +358,30 @@ VmMigrationTracingConnection::UpgradeAppliance(
   return internal::EndSpan(std::move(span), child_->UpgradeAppliance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::UpgradeAppliance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::UpgradeAppliance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpgradeAppliance(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
+VmMigrationTracingConnection::UpgradeAppliance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::UpgradeAppliance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpgradeAppliance(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationTracingConnection::CreateMigratingVm(
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
@@ -193,6 +389,30 @@ VmMigrationTracingConnection::CreateMigratingVm(
       "vmmigration_v1::VmMigrationConnection::CreateMigratingVm");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateMigratingVm(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CreateMigratingVm(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateMigratingVm");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateMigratingVm(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
+VmMigrationTracingConnection::CreateMigratingVm(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateMigratingVm");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateMigratingVm(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmmigration::v1::MigratingVm>
@@ -225,6 +445,30 @@ VmMigrationTracingConnection::UpdateMigratingVm(
   return internal::EndSpan(std::move(span), child_->UpdateMigratingVm(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::UpdateMigratingVm(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::UpdateMigratingVm");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateMigratingVm(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
+VmMigrationTracingConnection::UpdateMigratingVm(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::UpdateMigratingVm");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateMigratingVm(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationTracingConnection::DeleteMigratingVm(
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
@@ -232,6 +476,30 @@ VmMigrationTracingConnection::DeleteMigratingVm(
       "vmmigration_v1::VmMigrationConnection::DeleteMigratingVm");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteMigratingVm(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::DeleteMigratingVm(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::DeleteMigratingVm");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteMigratingVm(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationTracingConnection::DeleteMigratingVm(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::DeleteMigratingVm");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteMigratingVm(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
@@ -243,6 +511,30 @@ VmMigrationTracingConnection::StartMigration(
   return internal::EndSpan(std::move(span), child_->StartMigration(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::StartMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::StartMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->StartMigration(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
+VmMigrationTracingConnection::StartMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::StartMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->StartMigration(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
 VmMigrationTracingConnection::ResumeMigration(
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
@@ -250,6 +542,30 @@ VmMigrationTracingConnection::ResumeMigration(
       "vmmigration_v1::VmMigrationConnection::ResumeMigration");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ResumeMigration(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::ResumeMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::ResumeMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ResumeMigration(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
+VmMigrationTracingConnection::ResumeMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::ResumeMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ResumeMigration(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
@@ -261,6 +577,30 @@ VmMigrationTracingConnection::PauseMigration(
   return internal::EndSpan(std::move(span), child_->PauseMigration(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::PauseMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::PauseMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->PauseMigration(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
+VmMigrationTracingConnection::PauseMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::PauseMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->PauseMigration(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
 VmMigrationTracingConnection::FinalizeMigration(
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
@@ -268,6 +608,30 @@ VmMigrationTracingConnection::FinalizeMigration(
       "vmmigration_v1::VmMigrationConnection::FinalizeMigration");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->FinalizeMigration(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::FinalizeMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::FinalizeMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->FinalizeMigration(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
+VmMigrationTracingConnection::FinalizeMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::FinalizeMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->FinalizeMigration(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
@@ -279,6 +643,30 @@ VmMigrationTracingConnection::CreateCloneJob(
   return internal::EndSpan(std::move(span), child_->CreateCloneJob(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CreateCloneJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateCloneJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCloneJob(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
+VmMigrationTracingConnection::CreateCloneJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateCloneJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateCloneJob(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
 VmMigrationTracingConnection::CancelCloneJob(
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
@@ -286,6 +674,30 @@ VmMigrationTracingConnection::CancelCloneJob(
       "vmmigration_v1::VmMigrationConnection::CancelCloneJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CancelCloneJob(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CancelCloneJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CancelCloneJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CancelCloneJob(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
+VmMigrationTracingConnection::CancelCloneJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CancelCloneJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CancelCloneJob(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmmigration::v1::CloneJob>
@@ -317,6 +729,30 @@ VmMigrationTracingConnection::CreateCutoverJob(
   return internal::EndSpan(std::move(span), child_->CreateCutoverJob(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CreateCutoverJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateCutoverJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCutoverJob(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
+VmMigrationTracingConnection::CreateCutoverJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateCutoverJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateCutoverJob(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
 VmMigrationTracingConnection::CancelCutoverJob(
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
@@ -324,6 +760,30 @@ VmMigrationTracingConnection::CancelCutoverJob(
       "vmmigration_v1::VmMigrationConnection::CancelCutoverJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CancelCutoverJob(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CancelCutoverJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CancelCutoverJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CancelCutoverJob(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
+VmMigrationTracingConnection::CancelCutoverJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CancelCutoverJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CancelCutoverJob(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmmigration::v1::CutoverJob>
@@ -376,6 +836,30 @@ VmMigrationTracingConnection::CreateGroup(
   return internal::EndSpan(std::move(span), child_->CreateGroup(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CreateGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::CreateGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateGroup(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::Group>>
+VmMigrationTracingConnection::CreateGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::CreateGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateGroup(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
 VmMigrationTracingConnection::UpdateGroup(
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
@@ -383,6 +867,30 @@ VmMigrationTracingConnection::UpdateGroup(
       internal::MakeSpan("vmmigration_v1::VmMigrationConnection::UpdateGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateGroup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::UpdateGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::UpdateGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateGroup(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::Group>>
+VmMigrationTracingConnection::UpdateGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::UpdateGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateGroup(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -394,6 +902,30 @@ VmMigrationTracingConnection::DeleteGroup(
   return internal::EndSpan(std::move(span), child_->DeleteGroup(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::DeleteGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::DeleteGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteGroup(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationTracingConnection::DeleteGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("vmmigration_v1::VmMigrationConnection::DeleteGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteGroup(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
 VmMigrationTracingConnection::AddGroupMigration(
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
@@ -401,6 +933,30 @@ VmMigrationTracingConnection::AddGroupMigration(
       "vmmigration_v1::VmMigrationConnection::AddGroupMigration");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->AddGroupMigration(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::AddGroupMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::AddGroupMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->AddGroupMigration(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
+VmMigrationTracingConnection::AddGroupMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::AddGroupMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->AddGroupMigration(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
@@ -412,6 +968,31 @@ VmMigrationTracingConnection::RemoveGroupMigration(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RemoveGroupMigration(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::RemoveGroupMigration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::RemoveGroupMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->RemoveGroupMigration(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
+VmMigrationTracingConnection::RemoveGroupMigration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::RemoveGroupMigration");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RemoveGroupMigration(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmmigration::v1::TargetProject>
@@ -445,6 +1026,30 @@ VmMigrationTracingConnection::CreateTargetProject(
                            child_->CreateTargetProject(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::CreateTargetProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateTargetProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateTargetProject(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
+VmMigrationTracingConnection::CreateTargetProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::CreateTargetProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateTargetProject(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationTracingConnection::UpdateTargetProject(
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
@@ -455,6 +1060,30 @@ VmMigrationTracingConnection::UpdateTargetProject(
                            child_->UpdateTargetProject(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::UpdateTargetProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::UpdateTargetProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTargetProject(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
+VmMigrationTracingConnection::UpdateTargetProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::UpdateTargetProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateTargetProject(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationTracingConnection::DeleteTargetProject(
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
@@ -463,6 +1092,30 @@ VmMigrationTracingConnection::DeleteTargetProject(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteTargetProject(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VmMigrationTracingConnection::DeleteTargetProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::DeleteTargetProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteTargetProject(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
+VmMigrationTracingConnection::DeleteTargetProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vmmigration_v1::VmMigrationConnection::DeleteTargetProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteTargetProject(google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>

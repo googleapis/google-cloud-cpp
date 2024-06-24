@@ -54,6 +54,19 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteLicense,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteLicense,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::License>, GetLicense,
       (google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
            request),
@@ -71,6 +84,19 @@ class MockLicensesConnection : public compute_licenses_v1::LicensesConnection {
       (google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertLicense,
+      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+       google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertLicense,
+              (google::cloud::ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::License>), ListLicenses,

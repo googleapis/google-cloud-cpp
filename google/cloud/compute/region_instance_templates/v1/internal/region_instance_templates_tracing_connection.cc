@@ -49,6 +49,33 @@ RegionInstanceTemplatesTracingConnection::DeleteInstanceTemplate(
                            child_->DeleteInstanceTemplate(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceTemplatesTracingConnection::DeleteInstanceTemplate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_instance_templates::v1::
+        DeleteInstanceTemplateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
+      ":DeleteInstanceTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteInstanceTemplate(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionInstanceTemplatesTracingConnection::DeleteInstanceTemplate(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
+      ":DeleteInstanceTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteInstanceTemplate(
+                               google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
 RegionInstanceTemplatesTracingConnection::GetInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
@@ -70,6 +97,33 @@ RegionInstanceTemplatesTracingConnection::InsertInstanceTemplate(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertInstanceTemplate(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstanceTemplatesTracingConnection::InsertInstanceTemplate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_instance_templates::v1::
+        InsertInstanceTemplateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
+      ":InsertInstanceTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->InsertInstanceTemplate(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionInstanceTemplatesTracingConnection::InsertInstanceTemplate(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
+      ":InsertInstanceTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InsertInstanceTemplate(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>

@@ -41,6 +41,27 @@ AutoMlTracingConnection::CreateDataset(
   return internal::EndSpan(std::move(span), child_->CreateDataset(request));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlTracingConnection::CreateDataset(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::automl::v1::CreateDatasetRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::CreateDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateDataset(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::automl::v1::Dataset>>
+AutoMlTracingConnection::CreateDataset(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::CreateDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateDataset(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::automl::v1::Dataset>
 AutoMlTracingConnection::GetDataset(
     google::cloud::automl::v1::GetDatasetRequest const& request) {
@@ -75,6 +96,27 @@ AutoMlTracingConnection::DeleteDataset(
   return internal::EndSpan(std::move(span), child_->DeleteDataset(request));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlTracingConnection::DeleteDataset(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::automl::v1::DeleteDatasetRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::DeleteDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDataset(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlTracingConnection::DeleteDataset(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::DeleteDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteDataset(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::ImportData(
     google::cloud::automl::v1::ImportDataRequest const& request) {
@@ -83,12 +125,54 @@ AutoMlTracingConnection::ImportData(
   return internal::EndSpan(std::move(span), child_->ImportData(request));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlTracingConnection::ImportData(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::automl::v1::ImportDataRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ImportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ImportData(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlTracingConnection::ImportData(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ImportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ImportData(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::ExportData(
     google::cloud::automl::v1::ExportDataRequest const& request) {
   auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ExportData");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportData(request));
+}
+
+StatusOr<google::longrunning::Operation> AutoMlTracingConnection::ExportData(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::automl::v1::ExportDataRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ExportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ExportData(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlTracingConnection::ExportData(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ExportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ExportData(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
@@ -106,6 +190,27 @@ AutoMlTracingConnection::CreateModel(
   auto span = internal::MakeSpan("automl_v1::AutoMlConnection::CreateModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateModel(request));
+}
+
+StatusOr<google::longrunning::Operation> AutoMlTracingConnection::CreateModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::automl::v1::CreateModelRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::CreateModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateModel(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::automl::v1::Model>>
+AutoMlTracingConnection::CreateModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::CreateModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateModel(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlTracingConnection::GetModel(
@@ -133,6 +238,27 @@ AutoMlTracingConnection::DeleteModel(
   return internal::EndSpan(std::move(span), child_->DeleteModel(request));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlTracingConnection::DeleteModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::automl::v1::DeleteModelRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::DeleteModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteModel(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlTracingConnection::DeleteModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::DeleteModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteModel(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::automl::v1::Model> AutoMlTracingConnection::UpdateModel(
     google::cloud::automl::v1::UpdateModelRequest const& request) {
   auto span = internal::MakeSpan("automl_v1::AutoMlConnection::UpdateModel");
@@ -148,6 +274,27 @@ AutoMlTracingConnection::DeployModel(
   return internal::EndSpan(std::move(span), child_->DeployModel(request));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlTracingConnection::DeployModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::automl::v1::DeployModelRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::DeployModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeployModel(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlTracingConnection::DeployModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::DeployModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeployModel(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::UndeployModel(
     google::cloud::automl::v1::UndeployModelRequest const& request) {
@@ -156,12 +303,54 @@ AutoMlTracingConnection::UndeployModel(
   return internal::EndSpan(std::move(span), child_->UndeployModel(request));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlTracingConnection::UndeployModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::automl::v1::UndeployModelRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::UndeployModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->UndeployModel(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlTracingConnection::UndeployModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::UndeployModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UndeployModel(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::ExportModel(
     google::cloud::automl::v1::ExportModelRequest const& request) {
   auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ExportModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ExportModel(request));
+}
+
+StatusOr<google::longrunning::Operation> AutoMlTracingConnection::ExportModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::automl::v1::ExportModelRequest const& request) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ExportModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ExportModel(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlTracingConnection::ExportModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ExportModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ExportModel(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>

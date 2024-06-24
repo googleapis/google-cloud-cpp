@@ -50,11 +50,33 @@ class CompletionServiceTracingConnection
       google::cloud::discoveryengine::v1::
           ImportSuggestionDenyListEntriesRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      ImportSuggestionDenyListEntriesResponse>>
+  ImportSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::discoveryengine::v1::
                       PurgeSuggestionDenyListEntriesResponse>>
   PurgeSuggestionDenyListEntries(
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      PurgeSuggestionDenyListEntriesResponse>>
+  PurgeSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::CompletionServiceConnection> child_;

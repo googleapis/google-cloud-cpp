@@ -155,6 +155,59 @@ ManagedNotebookServiceConnectionImpl::CreateRuntime(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::CreateRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateRuntime(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
+        return stub_->CreateRuntime(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnectionImpl::CreateRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::notebooks::v1::Runtime>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateRuntime",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::Runtime>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Runtime>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::UpdateRuntime(
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
@@ -191,6 +244,59 @@ ManagedNotebookServiceConnectionImpl::UpdateRuntime(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::UpdateRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRuntime(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+        return stub_->UpdateRuntime(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnectionImpl::UpdateRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::notebooks::v1::Runtime>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateRuntime",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::Runtime>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Runtime>,
       polling_policy(*current), __func__);
 }
 
@@ -233,6 +339,60 @@ ManagedNotebookServiceConnectionImpl::DeleteRuntime(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::DeleteRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRuntime(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
+        return stub_->DeleteRuntime(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
+ManagedNotebookServiceConnectionImpl::DeleteRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::notebooks::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteRuntime",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::notebooks::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::StartRuntime(
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
@@ -269,6 +429,58 @@ ManagedNotebookServiceConnectionImpl::StartRuntime(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::StartRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartRuntime(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
+        return stub_->StartRuntime(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnectionImpl::StartRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::notebooks::v1::Runtime>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StartRuntime",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::Runtime>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Runtime>,
       polling_policy(*current), __func__);
 }
 
@@ -311,6 +523,58 @@ ManagedNotebookServiceConnectionImpl::StopRuntime(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::StopRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StopRuntime(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
+        return stub_->StopRuntime(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnectionImpl::StopRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::notebooks::v1::Runtime>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StopRuntime",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::Runtime>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Runtime>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::SwitchRuntime(
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
@@ -347,6 +611,59 @@ ManagedNotebookServiceConnectionImpl::SwitchRuntime(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::SwitchRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SwitchRuntime(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
+        return stub_->SwitchRuntime(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnectionImpl::SwitchRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::notebooks::v1::Runtime>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SwitchRuntime",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::Runtime>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Runtime>,
       polling_policy(*current), __func__);
 }
 
@@ -389,6 +706,58 @@ ManagedNotebookServiceConnectionImpl::ResetRuntime(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::ResetRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResetRuntime(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
+        return stub_->ResetRuntime(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnectionImpl::ResetRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::notebooks::v1::Runtime>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResetRuntime",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::Runtime>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Runtime>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnectionImpl::UpgradeRuntime(
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
@@ -425,6 +794,59 @@ ManagedNotebookServiceConnectionImpl::UpgradeRuntime(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::UpgradeRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpgradeRuntime(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+        return stub_->UpgradeRuntime(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnectionImpl::UpgradeRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::notebooks::v1::Runtime>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpgradeRuntime",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::Runtime>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Runtime>,
       polling_policy(*current), __func__);
 }
 
@@ -465,6 +887,59 @@ ManagedNotebookServiceConnectionImpl::ReportRuntimeEvent(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::ReportRuntimeEvent(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReportRuntimeEvent(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::notebooks::v1::ReportRuntimeEventRequest const&
+                 request) {
+        return stub_->ReportRuntimeEvent(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnectionImpl::ReportRuntimeEvent(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::notebooks::v1::Runtime>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ReportRuntimeEvent",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::Runtime>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Runtime>,
       polling_policy(*current), __func__);
 }
 
@@ -520,6 +995,59 @@ ManagedNotebookServiceConnectionImpl::DiagnoseRuntime(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v1::Runtime>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ManagedNotebookServiceConnectionImpl::DiagnoseRuntime(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DiagnoseRuntime(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+        return stub_->DiagnoseRuntime(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnectionImpl::DiagnoseRuntime(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::notebooks::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::notebooks::v1::Runtime>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DiagnoseRuntime",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::notebooks::v1::Runtime>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Runtime>,
       polling_policy(*current), __func__);
 }
 

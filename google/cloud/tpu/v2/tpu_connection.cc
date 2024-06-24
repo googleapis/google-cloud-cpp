@@ -57,8 +57,37 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::CreateNode(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> TpuConnection::CreateNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v2::CreateNodeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::CreateNode(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::Node>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
 TpuConnection::DeleteNode(google::cloud::tpu::v2::DeleteNodeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> TpuConnection::DeleteNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v2::DeleteNodeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+TpuConnection::DeleteNode(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::tpu::v2::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -71,6 +100,20 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::StopNode(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> TpuConnection::StopNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v2::StopNodeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::StopNode(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::Node>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::StartNode(
     google::cloud::tpu::v2::StartNodeRequest const&) {
   return google::cloud::make_ready_future<
@@ -78,8 +121,36 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::StartNode(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> TpuConnection::StartNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v2::StartNodeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::StartNode(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::Node>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::UpdateNode(
     google::cloud::tpu::v2::UpdateNodeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::tpu::v2::Node>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> TpuConnection::UpdateNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v2::UpdateNodeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnection::UpdateNode(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::tpu::v2::Node>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

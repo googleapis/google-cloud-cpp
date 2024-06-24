@@ -61,10 +61,44 @@ ReachabilityServiceConnection::CreateConnectivityTest(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceConnection::CreateConnectivityTest(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkmanagement::v1::
+        CreateConnectivityTestRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+ReachabilityServiceConnection::CreateConnectivityTest(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::UpdateConnectivityTest(
     google::cloud::networkmanagement::v1::
         UpdateConnectivityTestRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceConnection::UpdateConnectivityTest(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkmanagement::v1::
+        UpdateConnectivityTestRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+ReachabilityServiceConnection::UpdateConnectivityTest(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -78,10 +112,43 @@ ReachabilityServiceConnection::RerunConnectivityTest(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceConnection::RerunConnectivityTest(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+ReachabilityServiceConnection::RerunConnectivityTest(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceConnection::DeleteConnectivityTest(
     google::cloud::networkmanagement::v1::
         DeleteConnectivityTestRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceConnection::DeleteConnectivityTest(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::networkmanagement::v1::
+        DeleteConnectivityTestRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
+ReachabilityServiceConnection::DeleteConnectivityTest(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

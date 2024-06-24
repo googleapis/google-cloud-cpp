@@ -47,6 +47,22 @@ FeatureOnlineStoreAdminServiceConnection::CreateFeatureOnlineStore(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceConnection::CreateFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+FeatureOnlineStoreAdminServiceConnection::CreateFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
 FeatureOnlineStoreAdminServiceConnection::GetFeatureOnlineStore(
     google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&) {
@@ -69,6 +85,22 @@ FeatureOnlineStoreAdminServiceConnection::UpdateFeatureOnlineStore(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceConnection::UpdateFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+FeatureOnlineStoreAdminServiceConnection::UpdateFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore(
     google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&) {
@@ -77,9 +109,41 @@ FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+FeatureOnlineStoreAdminServiceConnection::DeleteFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceConnection::CreateFeatureView(
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceConnection::CreateFeatureView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateFeatureViewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+FeatureOnlineStoreAdminServiceConnection::CreateFeatureView(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -107,9 +171,41 @@ FeatureOnlineStoreAdminServiceConnection::UpdateFeatureView(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceConnection::UpdateFeatureView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+FeatureOnlineStoreAdminServiceConnection::UpdateFeatureView(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::FeatureView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceConnection::DeleteFeatureView(
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceConnection::DeleteFeatureView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+FeatureOnlineStoreAdminServiceConnection::DeleteFeatureView(
+    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

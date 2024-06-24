@@ -21,7 +21,9 @@
 
 #include "google/cloud/vision/v1/internal/product_search_retry_traits.h"
 #include "google/cloud/vision/v1/product_search_connection_idempotency_policy.h"
+#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
@@ -244,8 +246,24 @@ class ProductSearchConnection {
   ImportProductSets(
       google::cloud::vision::v1::ImportProductSetsRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ImportProductSets(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vision::v1::ImportProductSetsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
+  ImportProductSets(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> PurgeProducts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vision::v1::PurgeProductsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
+  PurgeProducts(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation);
 };
 
 /**

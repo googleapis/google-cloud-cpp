@@ -45,6 +45,16 @@ class MachineImagesTracingConnection
   DeleteMachineImage(google::cloud::cpp::compute::machine_images::v1::
                          DeleteMachineImageRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImage(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::machine_images::v1::
+          DeleteMachineImageRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteMachineImage(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::MachineImage> GetMachineImage(
       google::cloud::cpp::compute::machine_images::v1::
           GetMachineImageRequest const& request) override;
@@ -56,6 +66,16 @@ class MachineImagesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertMachineImage(google::cloud::cpp::compute::machine_images::v1::
                          InsertMachineImageRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImage(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::machine_images::v1::
+          InsertMachineImageRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertMachineImage(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::MachineImage> ListMachineImages(
       google::cloud::cpp::compute::machine_images::v1::ListMachineImagesRequest

@@ -42,6 +42,30 @@ DatasetServiceTracingConnection::CreateDataset(
   return internal::EndSpan(std::move(span), child_->CreateDataset(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DatasetServiceTracingConnection::CreateDataset(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::CreateDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateDataset(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
+DatasetServiceTracingConnection::CreateDataset(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::CreateDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateDataset(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceTracingConnection::GetDataset(
     google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
@@ -80,6 +104,30 @@ DatasetServiceTracingConnection::DeleteDataset(
   return internal::EndSpan(std::move(span), child_->DeleteDataset(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DatasetServiceTracingConnection::DeleteDataset(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::DeleteDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDataset(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceTracingConnection::DeleteDataset(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::DeleteDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteDataset(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
 DatasetServiceTracingConnection::ImportData(
     google::cloud::aiplatform::v1::ImportDataRequest const& request) {
@@ -87,6 +135,30 @@ DatasetServiceTracingConnection::ImportData(
       internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ImportData");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportData(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceTracingConnection::ImportData(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::ImportDataRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ImportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ImportData(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
+DatasetServiceTracingConnection::ImportData(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ImportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ImportData(google::cloud::ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
@@ -98,6 +170,30 @@ DatasetServiceTracingConnection::ExportData(
   return internal::EndSpan(std::move(span), child_->ExportData(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DatasetServiceTracingConnection::ExportData(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::ExportDataRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ExportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->ExportData(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
+DatasetServiceTracingConnection::ExportData(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ExportData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->ExportData(google::cloud::ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
 DatasetServiceTracingConnection::CreateDatasetVersion(
     google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
@@ -106,6 +202,30 @@ DatasetServiceTracingConnection::CreateDatasetVersion(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateDatasetVersion(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceTracingConnection::CreateDatasetVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::CreateDatasetVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->CreateDatasetVersion(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceTracingConnection::CreateDatasetVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::CreateDatasetVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDatasetVersion(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
@@ -125,6 +245,30 @@ DatasetServiceTracingConnection::DeleteDatasetVersion(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteDatasetVersion(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceTracingConnection::DeleteDatasetVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::DeleteDatasetVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->DeleteDatasetVersion(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceTracingConnection::DeleteDatasetVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::DeleteDatasetVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDatasetVersion(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
@@ -157,6 +301,31 @@ DatasetServiceTracingConnection::RestoreDatasetVersion(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RestoreDatasetVersion(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceTracingConnection::RestoreDatasetVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::RestoreDatasetVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->RestoreDatasetVersion(
+                                      google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceTracingConnection::RestoreDatasetVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::RestoreDatasetVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RestoreDatasetVersion(
+                               google::cloud::ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataItem>
@@ -201,6 +370,30 @@ DatasetServiceTracingConnection::DeleteSavedQuery(
       "aiplatform_v1::DatasetServiceConnection::DeleteSavedQuery");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSavedQuery(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceTracingConnection::DeleteSavedQuery(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::DeleteSavedQuery");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteSavedQuery(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceTracingConnection::DeleteSavedQuery(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DatasetServiceConnection::DeleteSavedQuery");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteSavedQuery(google::cloud::ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>

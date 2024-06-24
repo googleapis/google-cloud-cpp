@@ -42,6 +42,30 @@ VpcAccessServiceTracingConnection::CreateConnector(
   return internal::EndSpan(std::move(span), child_->CreateConnector(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceTracingConnection::CreateConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::CreateConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateConnector(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
+VpcAccessServiceTracingConnection::CreateConnector(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::CreateConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateConnector(google::cloud::ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceTracingConnection::GetConnector(
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
@@ -69,6 +93,30 @@ VpcAccessServiceTracingConnection::DeleteConnector(
       "vpcaccess_v1::VpcAccessServiceConnection::DeleteConnector");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteConnector(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VpcAccessServiceTracingConnection::DeleteConnector(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::DeleteConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteConnector(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
+VpcAccessServiceTracingConnection::DeleteConnector(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::DeleteConnector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteConnector(google::cloud::ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
