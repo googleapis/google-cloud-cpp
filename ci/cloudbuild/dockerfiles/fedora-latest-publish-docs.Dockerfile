@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:39
+FROM fedora:40
 ARG NCPU=4
 ARG ARCH=amd64
 
@@ -38,13 +38,29 @@ RUN dnf makecache && \
         yaml-cpp-devel
 
 # This is used in the `publish-docs` build
-RUN dnf makecache && dnf install -y libxslt doxygen
+RUN dnf makecache && dnf install -y libxslt
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
 # the container's /etc/passwd file.
 RUN echo 'root:' | chpasswd
+
+# We would prefer to say `dnf install -y doxygen`, but Fedora 40 ships with
+# Doxygen 1.10.0 and we need fixes that were released in Doxygen 1.11.0. Also,
+# we cannot use the binary, as it was built with clang support, which does not
+# work on Fedora.
+#
+# We follow Doxygen's "compiling from source on UNIX" instructions:
+# https://doxygen.nl/manual/install.html#install_src_unix
+WORKDIR /var/tmp/doxygen
+RUN dnf install -y flex bison
+RUN curl -fsSL https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_11_0.tar.gz | \
+    tar -zxf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -S . -B cmake-out -GNinja && \
+    cmake --build cmake-out --target install
 
 WORKDIR /var/tmp/build/
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
