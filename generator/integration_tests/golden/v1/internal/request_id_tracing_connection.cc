@@ -48,6 +48,26 @@ RequestIdServiceTracingConnection::RenameFoo(google::test::requestid::v1::Rename
   return internal::EndSpan(std::move(span), child_->RenameFoo(request));
 }
 
+StatusOr<google::longrunning::Operation>
+RequestIdServiceTracingConnection::RenameFoo(google::cloud::ExperimentalTag,
+    google::cloud::NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request) {
+  auto span = internal::MakeSpan(
+      "golden_v1::RequestIdServiceConnection::RenameFoo");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->RenameFoo(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::test::requestid::v1::Foo>>
+RequestIdServiceTracingConnection::RenameFoo(google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "golden_v1::RequestIdServiceConnection::RenameFoo");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+      child_->RenameFoo(google::cloud::ExperimentalTag{}, operation));
+}
+
 StreamRange<google::test::requestid::v1::Foo>
 RequestIdServiceTracingConnection::ListFoos(google::test::requestid::v1::ListFoosRequest request) {
   auto span = internal::MakeSpan("golden_v1::RequestIdServiceConnection::ListFoos");
