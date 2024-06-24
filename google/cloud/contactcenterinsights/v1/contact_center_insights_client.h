@@ -1773,9 +1773,7 @@ class ContactCenterInsightsClient {
   /// Creates a phrase matcher.
   ///
   /// @param parent  Required. The parent resource of the phrase matcher. Required. The location
-  ///  to create a phrase matcher for. Format: `projects/<Project
-  ///  ID>/locations/<Location ID>` or `projects/<Project
-  ///  Number>/locations/<Location ID>`
+  ///  to create a phrase matcher for. Format: `projects/<Project ID>/locations/<Location ID>` or `projects/<Project Number>/locations/<Location ID>`
   /// @param phrase_matcher  Required. The phrase matcher resource to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

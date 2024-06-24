@@ -92,8 +92,7 @@ class ContextsClient {
   ///
   /// @param parent  Required. The session to list all contexts from.
   ///  Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
-  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-  ///  ID>/sessions/<Session ID>`.
+  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -170,16 +169,8 @@ class ContextsClient {
   /// Retrieves the specified context.
   ///
   /// @param name  Required. The name of the context. Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/contexts/<Context ID>`
-  ///  @endcode
+  ///  `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
+  ///  or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/contexts/<Context ID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -241,8 +232,7 @@ class ContextsClient {
   ///
   /// @param parent  Required. The session to create a context for.
   ///  Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
-  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
-  ///  ID>/sessions/<Session ID>`.
+  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param context  Required. The context to create.
@@ -363,16 +353,8 @@ class ContextsClient {
   /// Deletes the specified context.
   ///
   /// @param name  Required. The name of the context to delete. Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/contexts/<Context ID>`
-  ///  @endcode
+  ///  `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
+  ///  or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/contexts/<Context ID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -424,16 +406,7 @@ class ContextsClient {
   /// Deletes all active contexts in the specified session.
   ///
   /// @param parent  Required. The name of the session to delete all contexts from. Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/sessions/<Session ID>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>
-  ///  @endcode
+  ///  `projects/<Project ID>/agent/sessions/<Session ID>` or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>`.
   ///  If `Environment ID` is not specified we assume default 'draft' environment.
   ///  If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and

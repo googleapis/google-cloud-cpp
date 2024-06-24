@@ -635,8 +635,7 @@ class TestCasesClient {
   /// results are kept for each test case.
   ///
   /// @param parent  Required. The test case to list results for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/
-  ///  testCases/<TestCase ID>`. Specify a `-` as a wildcard for TestCase ID to
+  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/testCases/<TestCase ID>`. Specify a `-` as a wildcard for TestCase ID to
   ///  list results across multiple test cases.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

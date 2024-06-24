@@ -101,8 +101,7 @@ class SessionEntityTypesClient {
   ///
   /// @param parent  Required. The session to list all session entity types from.
   ///  Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
-  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/
-  ///  sessions/<Session ID>`.
+  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -188,16 +187,7 @@ class SessionEntityTypesClient {
   /// with Google Assistant integration.
   ///
   /// @param name  Required. The name of the session entity type. Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
-  ///  @endcode
+  ///  `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type Display Name>` or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -269,8 +259,7 @@ class SessionEntityTypesClient {
   ///
   /// @param parent  Required. The session to create a session entity type for.
   ///  Format: `projects/<Project ID>/agent/sessions/<Session ID>` or
-  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/
-  ///  sessions/<Session ID>`.
+  ///  `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param session_entity_type  Required. The session entity type to create.
@@ -449,16 +438,7 @@ class SessionEntityTypesClient {
   /// with Google Assistant integration.
   ///
   /// @param name  Required. The name of the entity type to delete. Format:
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
-  ///  @endcode
-  ///  @n
-  ///  or
-  ///  @n
-  ///  @code
-  ///  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
-  ///  @endcode
+  ///  `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type Display Name>` or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment. If `User ID` is not specified, we assume default '-' user.
   /// @param opts Optional. Override the class-level options, such as retry and
