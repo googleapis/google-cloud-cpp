@@ -153,12 +153,25 @@ struct MethodCommentSubstitution {
   std::size_t uses = 0;
 };
 
-MethodCommentSubstitution substitutions[] = {
-    {"\n", "\n  ///"},
+auto constexpr kDialogflowEsConversationsProto = R"""(
+ `create_time_epoch_microseconds >
+ [first item's create_time of previous request]` and empty page_token.)""";
 
+auto constexpr kDialogflowEsConversationsCpp = R"""(
+ `create_time_epoch_microseconds > [first item's create_time of previous request]`
+ and empty page_token.)""";
+
+MethodCommentSubstitution substitutions[] = {
     // From google/logging/v2/logging_config.proto
     {R"""(Gets a view on a log bucket..)""",
      R"""(Gets a view on a log bucket.)"""},
+
+    // From google/dialogflow/v2/conversation.proto
+    {kDialogflowEsConversationsProto, kDialogflowEsConversationsCpp},
+
+    // Add Doxygen-style comments
+    {"\n", "\n  ///"},
+
 };
 
 }  // namespace

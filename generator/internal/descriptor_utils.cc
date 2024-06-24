@@ -201,120 +201,6 @@ struct ParameterCommentSubstitution {
   std::size_t uses = 0;
 };
 
-auto constexpr kDialogflowCXEnvironmentIdProto1 = R"""(
- list all environments for. Format: `projects/<Project
- ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment
- ID>`.)""";
-
-auto constexpr kDialogflowCXEnvironmentIdCpp1 = R"""(
- list all environments for. Format:
-
- @code
- projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>
- @endcode)""";
-
-auto constexpr kDialogflowCXEnvironmentIdProto2 = R"""(
- Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- ID>/environments/<Environment ID>`.)""";
-
-auto constexpr kDialogflowCXEnvironmentIdCpp2 = R"""(
- Format:
-
- @code
- projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>
- @endcode)""";
-
-auto constexpr kDialogflowCXSessionIdProto = R"""(
- Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location
- ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.)""";
-
-auto constexpr kDialogflowCXSessionIdCpp = R"""(
- Format:
-
- @code
- projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>
- @endcode
-
- or
-
- @code
- projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>
- @endcode)""";
-
-auto constexpr kDialogflowCXEntityTypeIdProto = R"""(
- Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
- `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity
- Type ID>`. If `Environment ID` is not specified, we assume default 'draft'
- environment.)""";
-
-auto constexpr kDialogflowCXEntityTypeIdCpp = R"""(
- Format:
-
- @code
- projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
- @endcode
-
- or
-
- @code
- projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>
- @endcode
-
- If `Environment ID` is not specified, we assume the default 'draft'
- environment.)""";
-
-auto constexpr kDialogflowESSessionIdProto =
-    R"""( `projects/<Project ID>/agent/sessions/<Session ID>` or `projects/<Project
- ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session
- ID>`.)""";
-
-auto constexpr kDialogflowESSessionIdCpp = R"""(
- @code
- projects/<Project ID>/agent/sessions/<Session ID>
- @endcode
-
- or
-
- @code
- projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>
- @endcode)""";
-
-auto constexpr kDialogflowESContextIdProto =
-    R"""( `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
- or `projects/<Project ID>/agent/environments/<Environment ID>/users/<User
- ID>/sessions/<Session ID>/contexts/<Context ID>`.)""";
-
-auto constexpr kDialogflowESContextIdCpp = R"""(
- @code
- projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>
- @endcode
-
- or
-
- @code
- projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/contexts/<Context ID>`
- @endcode)""";
-
-auto constexpr kDialogflowESSessionEntityTypeDisplayNameProto =
-    R"""( `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type
- Display Name>` or `projects/<Project ID>/agent/environments/<Environment
- ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display
- Name>`.)""";
-
-auto constexpr kDialogflowESSessionEntityTypeDisplayNameCpp = R"""(
- @code
- projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
- @endcode
-
- or
-
- @code
- projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
- @endcode)""";
-
 auto constexpr kLoggingConfigClientProto1 =
     R"""( The resource name of the link:
 
@@ -354,21 +240,33 @@ ParameterCommentSubstitution substitutions[] = {
      " `projects/<project>/instances/<instance>/"
      "tables/<table>/authorizedViews/<authorized_view>`"},
 
-    // From dialogflow/cx/v3.
-    {kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
-    {kDialogflowCXEnvironmentIdProto2, kDialogflowCXEnvironmentIdCpp2},
-    {kDialogflowCXSessionIdProto, kDialogflowCXSessionIdCpp},
-    {kDialogflowCXEntityTypeIdProto, kDialogflowCXEntityTypeIdCpp},
+    // There a number of comments (almost all from DialogFlow) that
+    // - use single code quotes
+    // - are broken up over multiple lines
+    // - contain variables in angle brackets
+    //
+    // Doxygen thinks these are unrecognized HTML tags. To work around this, we
+    // remove the line breaks, so the code quotes occupy a single line.
+    {"agents/\n <Agent ID>", "agents/<Agent ID>"},
     {"<Agent\n ID>", "<Agent ID>"},
+    {"<Agent ID>/\n testCases/", "<Agent ID>/testCases/"},
+    {"<Agent ID>/\n environments/", "<Agent ID>/environments/"},
+    {"<Conversation\n ID>", "<Conversation ID>"},
+    {"<Conversation Model\n ID>", "<Conversation Model ID>"},
+    {"<Entity Type Display\n Name>", "<Entity Type Display Name>"},
+    {"<Entity Type\n Display Name>", "<Entity Type Display Name>"},
+    {"<Entity\n Type ID>", "<Entity Type ID>"},
+    {"<Environment\n ID>", "<Environment ID>"},
     {"<Location\n ID>", "<Location ID>"},
+    {"<Project\n ID>", "<Project ID>"},
+    {"<Project\n Number>", "<Project Number>"},
+    {"<Session\n ID>", "<Session ID>"},
     {"<Transition\n Route Group ID>", "<Transition Route Group ID>"},
-    {"<Agent ID>.", "<Agent ID>`."},  // missing close quote
+    {"<User\n ID>", "<User ID>"},
+    {"<User ID>/\n sessions/", "<User ID>/sessions/"},
 
-    // From dialogflow/v2.
-    {kDialogflowESSessionIdProto, kDialogflowESSessionIdCpp},
-    {kDialogflowESContextIdProto, kDialogflowESContextIdCpp},
-    {kDialogflowESSessionEntityTypeDisplayNameProto,
-     kDialogflowESSessionEntityTypeDisplayNameCpp},
+    // Missing closed quote in dialogflow
+    {"<Agent ID>.", "<Agent ID>`."},
 
     // From logging/v2.
     {kLoggingConfigClientProto1, kLoggingConfigClientCpp1},
@@ -390,10 +288,17 @@ ParameterCommentSubstitution substitutions[] = {
     // Doxygen gets confused by single quotes in code spans:
     //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
     // The workaround is to double quote these:
-    {R"""(`{instance} = '-'`)""", R"""(``{instance} = '-'``)"""},
-    {R"""(`{cluster} = '-'`)""", R"""(``{cluster} = '-'``)"""},
+    {R"""(`{instance} = '-'`)""", R"""(`{instance} = "-"`)"""},
+    {R"""(`{cluster} = '-'`)""", R"""(`{cluster} = "-"`)"""},
     {R"""(`projects/<Project ID or '-'>`)""",
-     R"""(``projects/<Project ID or '-'>``)"""},
+     R"""(`projects/<Project ID or "-">`)"""},
+    // These appear in google/api/servicemanagement/v1/servicemanager.proto
+    {R"""(`filter='status=SUCCESS'`)""", R"""(`filter="status=SUCCESS"`)"""},
+    {R"""(`filter='strategy=TrafficPercentStrategy'`)""",
+     R"""(`filter="strategy=TrafficPercentStrategy"`)"""},
+
+    // Spanner attempts to explain what a backtick is.
+    {R"""(backticks (`` ` ``).)""", R"""(backticks.)"""},
 
     // Further trim some initial paragraphs for long descriptions.
     {R"""( The included patch
@@ -412,14 +317,6 @@ ParameterCommentSubstitution substitutions[] = {
      R"""(and the `PATCH` request body would specify the new value.)"""},
     {"fields. Some eligible fields are:", "fields."},
     {" The allowable fields to\n update are:", ""},
-
-    // These appear in google/api/servicemanagement/v1/servicemanager.proto
-    // Doxygen gets confused by single quotes in code spans:
-    //    https://www.doxygen.nl/manual/markdown.html#mddox_code_spans
-    // The workaround is to double quote these:
-    {"`filter='status=SUCCESS'`", "``filter='status=SUCCESS'``"},
-    {"`filter='strategy=TrafficPercentStrategy'`",
-     "``filter='strategy=TrafficPercentStrategy'``"},
 
     {"conversionWorkspace/123/mappingRules/"
      "rule123@c7cfa2a8c7cfa2a8c7cfa2a8c7cfa2a8",
