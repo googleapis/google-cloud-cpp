@@ -1,5 +1,5 @@
 /*!
-@defgroup pubsub-options Pub/Sub Client Library Configuration Options
+@defgroup google-cloud-pubsub-options Pub/Sub Client Library Configuration Options
 
 The Pub/Sub client library uses the same mechanism as all other C++ client
 libraries for configuration. As usual for the C++ client libraries, it adds a
