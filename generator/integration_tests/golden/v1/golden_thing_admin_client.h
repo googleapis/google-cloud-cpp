@@ -20,8 +20,10 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_THING_ADMIN_CLIENT_H
 
 #include "generator/integration_tests/golden/v1/golden_thing_admin_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -213,6 +215,9 @@ class GoldenThingAdminClient {
   future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent, std::string const& create_statement, Options opts = {});
 
+  StatusOr<google::longrunning::Operation>
+  CreateDatabase(ExperimentalTag, NoAwaitTag, std::string const& parent, std::string const& create_statement, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Cloud Test database and starts to prepare it for serving.
@@ -260,6 +265,12 @@ class GoldenThingAdminClient {
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation>
+  CreateDatabase(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request, Options opts = {});
+
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  CreateDatabase(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -359,6 +370,9 @@ class GoldenThingAdminClient {
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements, Options opts = {});
 
+  StatusOr<google::longrunning::Operation>
+  UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag, std::string const& database, std::vector<std::string> const& statements, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the schema of a Cloud Test database by
@@ -404,6 +418,12 @@ class GoldenThingAdminClient {
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation>
+  UpdateDatabaseDdl(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options opts = {});
+
+  future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -822,6 +842,9 @@ class GoldenThingAdminClient {
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation>
+  CreateBackup(ExperimentalTag, NoAwaitTag, std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options opts = {});
+
   // clang-format off
   ///
   /// Starts creating a new Cloud Test Backup.
@@ -873,6 +896,12 @@ class GoldenThingAdminClient {
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation>
+  CreateBackup(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request, Options opts = {});
+
+  future<StatusOr<google::test::admin::database::v1::Backup>>
+  CreateBackup(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1193,6 +1222,9 @@ class GoldenThingAdminClient {
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup, Options opts = {});
 
+  StatusOr<google::longrunning::Operation>
+  RestoreDatabase(ExperimentalTag, NoAwaitTag, std::string const& parent, std::string const& database_id, std::string const& backup, Options opts = {});
+
   // clang-format off
   ///
   /// Create a new database by restoring from a completed backup. The new
@@ -1249,6 +1281,12 @@ class GoldenThingAdminClient {
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation>
+  RestoreDatabase(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
+
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  RestoreDatabase(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1470,6 +1508,12 @@ class GoldenThingAdminClient {
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::Database>>
   LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation>
+  LongRunningWithoutRouting(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
+
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  LongRunningWithoutRouting(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
