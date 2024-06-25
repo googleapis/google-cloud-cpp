@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/target_tcp_proxies/v1/internal/target_tcp_proxies_retry_traits.h"
 #include "google/cloud/compute/target_tcp_proxies/v1/target_tcp_proxies_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,14 +199,13 @@ class TargetTcpProxiesConnection {
                            DeleteTargetTcpProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetTcpProxy(google::cloud::ExperimentalTag,
-                       google::cloud::NoAwaitTag,
+  DeleteTargetTcpProxy(ExperimentalTag, NoAwaitTag,
                        google::cloud::cpp::compute::target_tcp_proxies::v1::
                            DeleteTargetTcpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetTcpProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
@@ -218,14 +217,13 @@ class TargetTcpProxiesConnection {
                            InsertTargetTcpProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetTcpProxy(google::cloud::ExperimentalTag,
-                       google::cloud::NoAwaitTag,
+  InsertTargetTcpProxy(ExperimentalTag, NoAwaitTag,
                        google::cloud::cpp::compute::target_tcp_proxies::v1::
                            InsertTargetTcpProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetTcpProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
@@ -237,13 +235,13 @@ class TargetTcpProxiesConnection {
                         SetBackendServiceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetBackendService(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetBackendService(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::target_tcp_proxies::v1::
                         SetBackendServiceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetBackendService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -251,12 +249,12 @@ class TargetTcpProxiesConnection {
                      SetProxyHeaderRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetProxyHeaderRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetProxyHeader(google::cloud::ExperimentalTag,
+  SetProxyHeader(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

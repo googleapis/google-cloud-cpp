@@ -21,7 +21,6 @@
 
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_monitoring_connection_idempotency_policy.h"
 #include "google/cloud/cloudcontrolspartner/v1/internal/cloud_controls_partner_monitoring_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

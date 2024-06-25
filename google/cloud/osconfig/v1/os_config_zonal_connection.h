@@ -21,11 +21,11 @@
 
 #include "google/cloud/osconfig/v1/internal/os_config_zonal_retry_traits.h"
 #include "google/cloud/osconfig/v1/os_config_zonal_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -197,12 +197,12 @@ class OsConfigZonalServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  CreateOSPolicyAssignment(google::cloud::ExperimentalTag,
+  CreateOSPolicyAssignment(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
@@ -211,12 +211,12 @@ class OsConfigZonalServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  UpdateOSPolicyAssignment(google::cloud::ExperimentalTag,
+  UpdateOSPolicyAssignment(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -239,13 +239,13 @@ class OsConfigZonalServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-  DeleteOSPolicyAssignment(google::cloud::ExperimentalTag,
+  DeleteOSPolicyAssignment(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>

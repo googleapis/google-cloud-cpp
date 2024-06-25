@@ -21,11 +21,11 @@
 
 #include "google/cloud/discoveryengine/v1/data_store_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/data_store_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -194,12 +194,12 @@ class DataStoreServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateDataStore(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
-  CreateDataStore(google::cloud::ExperimentalTag,
+  CreateDataStore(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::discoveryengine::v1::DataStore> GetDataStore(
@@ -216,13 +216,13 @@ class DataStoreServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDataStore(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
-  DeleteDataStore(google::cloud::ExperimentalTag,
+  DeleteDataStore(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::discoveryengine::v1::DataStore>

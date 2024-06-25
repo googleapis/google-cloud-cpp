@@ -60,12 +60,12 @@ class RoutersRestConnectionImpl : public compute_routers_v1::RoutersConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
@@ -91,12 +91,12 @@ class RoutersRestConnectionImpl : public compute_routers_v1::RoutersConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
@@ -108,12 +108,12 @@ class RoutersRestConnectionImpl : public compute_routers_v1::RoutersConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
@@ -125,12 +125,12 @@ class RoutersRestConnectionImpl : public compute_routers_v1::RoutersConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

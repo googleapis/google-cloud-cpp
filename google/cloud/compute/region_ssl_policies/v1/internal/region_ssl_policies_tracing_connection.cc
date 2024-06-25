@@ -53,7 +53,7 @@ RegionSslPoliciesTracingConnection::DeleteSslPolicy(
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
       "DeleteSslPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSslPolicy(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ RegionSslPoliciesTracingConnection::InsertSslPolicy(
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
       "InsertSslPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertSslPolicy(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -166,7 +166,7 @@ RegionSslPoliciesTracingConnection::PatchSslPolicy(
   auto span = internal::MakeSpan(
       "compute_region_ssl_policies_v1::RegionSslPoliciesConnection::"
       "PatchSslPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchSslPolicy(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

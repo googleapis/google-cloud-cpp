@@ -21,7 +21,6 @@
 
 #include "google/cloud/composer/v1/image_versions_connection_idempotency_policy.h"
 #include "google/cloud/composer/v1/internal/image_versions_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

@@ -48,7 +48,7 @@ AssetServiceTracingConnection::ExportAssets(
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
   auto span =
       internal::MakeSpan("asset_v1::AssetServiceConnection::ExportAssets");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportAssets(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -178,7 +178,7 @@ AssetServiceTracingConnection::AnalyzeIamPolicyLongrunning(
         request) {
   auto span = internal::MakeSpan(
       "asset_v1::AssetServiceConnection::AnalyzeIamPolicyLongrunning");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->AnalyzeIamPolicyLongrunning(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

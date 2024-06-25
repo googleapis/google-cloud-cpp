@@ -21,11 +21,11 @@
 
 #include "google/cloud/metastore/v1/dataproc_metastore_federation_connection_idempotency_policy.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -215,11 +215,11 @@ class DataprocMetastoreFederationConnection {
       google::cloud::metastore::v1::CreateFederationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateFederation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateFederationRequest const& request);
 
   virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
-  CreateFederation(google::cloud::ExperimentalTag,
+  CreateFederation(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
@@ -227,11 +227,11 @@ class DataprocMetastoreFederationConnection {
       google::cloud::metastore::v1::UpdateFederationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateFederation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateFederationRequest const& request);
 
   virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
-  UpdateFederation(google::cloud::ExperimentalTag,
+  UpdateFederation(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -239,11 +239,11 @@ class DataprocMetastoreFederationConnection {
       google::cloud::metastore::v1::DeleteFederationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFederation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteFederationRequest const& request);
 
   virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteFederation(google::cloud::ExperimentalTag,
+  DeleteFederation(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 };
 

@@ -62,7 +62,7 @@ InstanceAdminConnection::CreateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnection::CreateInstanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ InstanceAdminConnection::CreateInstanceConfig(
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminConnection::CreateInstanceConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ InstanceAdminConnection::UpdateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnection::UpdateInstanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ InstanceAdminConnection::UpdateInstanceConfig(
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminConnection::UpdateInstanceConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -145,14 +145,14 @@ InstanceAdminConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnection::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-InstanceAdminConnection::CreateInstance(google::cloud::ExperimentalTag,
+InstanceAdminConnection::CreateInstance(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::instance::v1::Instance>>(
@@ -169,14 +169,14 @@ InstanceAdminConnection::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnection::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-InstanceAdminConnection::UpdateInstance(google::cloud::ExperimentalTag,
+InstanceAdminConnection::UpdateInstance(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::instance::v1::Instance>>(
@@ -221,7 +221,7 @@ InstanceAdminConnection::CreateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnection::CreateInstancePartition(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::
         CreateInstancePartitionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -230,7 +230,7 @@ InstanceAdminConnection::CreateInstancePartition(
 
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminConnection::CreateInstancePartition(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -253,7 +253,7 @@ InstanceAdminConnection::UpdateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnection::UpdateInstancePartition(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::
         UpdateInstancePartitionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -262,7 +262,7 @@ InstanceAdminConnection::UpdateInstancePartition(
 
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminConnection::UpdateInstancePartition(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::instance::v1::InstancePartition>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -149,7 +149,7 @@ TargetHttpsProxiesRestConnectionImpl::DeleteTargetHttpsProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpsProxiesRestConnectionImpl::DeleteTargetHttpsProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_https_proxies::v1::
         DeleteTargetHttpsProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -166,7 +166,7 @@ TargetHttpsProxiesRestConnectionImpl::DeleteTargetHttpsProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpsProxiesRestConnectionImpl::DeleteTargetHttpsProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -294,7 +294,7 @@ TargetHttpsProxiesRestConnectionImpl::InsertTargetHttpsProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpsProxiesRestConnectionImpl::InsertTargetHttpsProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_https_proxies::v1::
         InsertTargetHttpsProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -311,7 +311,7 @@ TargetHttpsProxiesRestConnectionImpl::InsertTargetHttpsProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpsProxiesRestConnectionImpl::InsertTargetHttpsProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -463,7 +463,7 @@ TargetHttpsProxiesRestConnectionImpl::PatchTargetHttpsProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpsProxiesRestConnectionImpl::PatchTargetHttpsProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_https_proxies::v1::
         PatchTargetHttpsProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -480,7 +480,7 @@ TargetHttpsProxiesRestConnectionImpl::PatchTargetHttpsProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpsProxiesRestConnectionImpl::PatchTargetHttpsProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -592,7 +592,7 @@ TargetHttpsProxiesRestConnectionImpl::SetCertificateMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpsProxiesRestConnectionImpl::SetCertificateMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetCertificateMapRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -609,7 +609,7 @@ TargetHttpsProxiesRestConnectionImpl::SetCertificateMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpsProxiesRestConnectionImpl::SetCertificateMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -721,7 +721,7 @@ TargetHttpsProxiesRestConnectionImpl::SetQuicOverride(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpsProxiesRestConnectionImpl::SetQuicOverride(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetQuicOverrideRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -738,7 +738,7 @@ TargetHttpsProxiesRestConnectionImpl::SetQuicOverride(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpsProxiesRestConnectionImpl::SetQuicOverride(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -850,7 +850,7 @@ TargetHttpsProxiesRestConnectionImpl::SetSslCertificates(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpsProxiesRestConnectionImpl::SetSslCertificates(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetSslCertificatesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -867,7 +867,7 @@ TargetHttpsProxiesRestConnectionImpl::SetSslCertificates(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpsProxiesRestConnectionImpl::SetSslCertificates(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -979,7 +979,7 @@ TargetHttpsProxiesRestConnectionImpl::SetSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpsProxiesRestConnectionImpl::SetSslPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -996,7 +996,7 @@ TargetHttpsProxiesRestConnectionImpl::SetSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpsProxiesRestConnectionImpl::SetSslPolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1108,7 +1108,7 @@ TargetHttpsProxiesRestConnectionImpl::SetUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpsProxiesRestConnectionImpl::SetUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_https_proxies::v1::
         SetUrlMapRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1125,7 +1125,7 @@ TargetHttpsProxiesRestConnectionImpl::SetUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpsProxiesRestConnectionImpl::SetUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

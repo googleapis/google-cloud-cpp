@@ -48,7 +48,7 @@ AzureClustersConnection::CreateAzureClient(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnection::CreateAzureClient(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ AzureClustersConnection::CreateAzureClient(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
 AzureClustersConnection::CreateAzureClient(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ AzureClustersConnection::DeleteAzureClient(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnection::DeleteAzureClient(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ AzureClustersConnection::DeleteAzureClient(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AzureClustersConnection::DeleteAzureClient(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ AzureClustersConnection::CreateAzureCluster(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnection::CreateAzureCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ AzureClustersConnection::CreateAzureCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
 AzureClustersConnection::CreateAzureCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,7 +134,7 @@ AzureClustersConnection::UpdateAzureCluster(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnection::UpdateAzureCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,7 +142,7 @@ AzureClustersConnection::UpdateAzureCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
 AzureClustersConnection::UpdateAzureCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -172,7 +172,7 @@ AzureClustersConnection::DeleteAzureCluster(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnection::DeleteAzureCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -180,7 +180,7 @@ AzureClustersConnection::DeleteAzureCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AzureClustersConnection::DeleteAzureCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -210,7 +210,7 @@ AzureClustersConnection::CreateAzureNodePool(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnection::CreateAzureNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -218,7 +218,7 @@ AzureClustersConnection::CreateAzureNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
 AzureClustersConnection::CreateAzureNodePool(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -234,7 +234,7 @@ AzureClustersConnection::UpdateAzureNodePool(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnection::UpdateAzureNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -242,7 +242,7 @@ AzureClustersConnection::UpdateAzureNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
 AzureClustersConnection::UpdateAzureNodePool(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -272,7 +272,7 @@ AzureClustersConnection::DeleteAzureNodePool(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnection::DeleteAzureNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -280,7 +280,7 @@ AzureClustersConnection::DeleteAzureNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AzureClustersConnection::DeleteAzureNodePool(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

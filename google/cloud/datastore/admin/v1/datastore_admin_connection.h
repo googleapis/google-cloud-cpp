@@ -21,11 +21,11 @@
 
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection_idempotency_policy.h"
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,11 +192,11 @@ class DatastoreAdminConnection {
       google::datastore::admin::v1::ExportEntitiesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ExportEntities(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::ExportEntitiesRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(google::cloud::ExperimentalTag,
+  ExportEntities(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
@@ -204,34 +204,32 @@ class DatastoreAdminConnection {
       google::datastore::admin::v1::ImportEntitiesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ImportEntities(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::ImportEntitiesRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(google::cloud::ExperimentalTag,
+  ImportEntities(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
       google::datastore::admin::v1::CreateIndexRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateIndex(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::CreateIndexRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
       google::datastore::admin::v1::DeleteIndexRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteIndex(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::DeleteIndexRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::datastore::admin::v1::Index> GetIndex(
       google::datastore::admin::v1::GetIndexRequest const& request);

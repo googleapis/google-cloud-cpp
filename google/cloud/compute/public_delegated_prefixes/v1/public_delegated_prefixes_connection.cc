@@ -59,7 +59,7 @@ PublicDelegatedPrefixesConnection::Announce(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesConnection::Announce(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         AnnounceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -68,8 +68,7 @@ PublicDelegatedPrefixesConnection::Announce(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesConnection::Announce(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +85,7 @@ PublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         DeletePublicDelegatedPrefixRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -95,8 +94,7 @@ PublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -120,7 +118,7 @@ PublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         InsertPublicDelegatedPrefixRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -129,8 +127,7 @@ PublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -155,7 +152,7 @@ PublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         PatchPublicDelegatedPrefixRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -164,8 +161,7 @@ PublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -182,7 +178,7 @@ PublicDelegatedPrefixesConnection::Withdraw(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesConnection::Withdraw(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         WithdrawRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -191,8 +187,7 @@ PublicDelegatedPrefixesConnection::Withdraw(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesConnection::Withdraw(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

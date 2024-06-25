@@ -148,7 +148,7 @@ TargetTcpProxiesRestConnectionImpl::DeleteTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestConnectionImpl::DeleteTargetTcpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         DeleteTargetTcpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -165,7 +165,7 @@ TargetTcpProxiesRestConnectionImpl::DeleteTargetTcpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesRestConnectionImpl::DeleteTargetTcpProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -293,7 +293,7 @@ TargetTcpProxiesRestConnectionImpl::InsertTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestConnectionImpl::InsertTargetTcpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         InsertTargetTcpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -310,7 +310,7 @@ TargetTcpProxiesRestConnectionImpl::InsertTargetTcpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesRestConnectionImpl::InsertTargetTcpProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -461,7 +461,7 @@ TargetTcpProxiesRestConnectionImpl::SetBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestConnectionImpl::SetBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         SetBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -478,7 +478,7 @@ TargetTcpProxiesRestConnectionImpl::SetBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesRestConnectionImpl::SetBackendService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -590,7 +590,7 @@ TargetTcpProxiesRestConnectionImpl::SetProxyHeader(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetTcpProxiesRestConnectionImpl::SetProxyHeader(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         SetProxyHeaderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -607,7 +607,7 @@ TargetTcpProxiesRestConnectionImpl::SetProxyHeader(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesRestConnectionImpl::SetProxyHeader(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

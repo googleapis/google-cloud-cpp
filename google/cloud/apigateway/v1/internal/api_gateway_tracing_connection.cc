@@ -68,7 +68,7 @@ ApiGatewayServiceTracingConnection::CreateGateway(
     google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::CreateGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateGateway(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ ApiGatewayServiceTracingConnection::UpdateGateway(
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::UpdateGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateGateway(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ ApiGatewayServiceTracingConnection::DeleteGateway(
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::DeleteGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteGateway(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -187,7 +187,7 @@ ApiGatewayServiceTracingConnection::CreateApi(
     google::cloud::apigateway::v1::CreateApiRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::CreateApi");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateApi(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -220,7 +220,7 @@ ApiGatewayServiceTracingConnection::UpdateApi(
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::UpdateApi");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateApi(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -253,7 +253,7 @@ ApiGatewayServiceTracingConnection::DeleteApi(
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::DeleteApi");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteApi(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -306,7 +306,7 @@ ApiGatewayServiceTracingConnection::CreateApiConfig(
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::CreateApiConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateApiConfig(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -339,7 +339,7 @@ ApiGatewayServiceTracingConnection::UpdateApiConfig(
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::UpdateApiConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateApiConfig(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -372,7 +372,7 @@ ApiGatewayServiceTracingConnection::DeleteApiConfig(
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::DeleteApiConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteApiConfig(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

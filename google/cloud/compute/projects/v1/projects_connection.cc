@@ -46,7 +46,7 @@ ProjectsConnection::DisableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::DisableXpnHost(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,8 +54,7 @@ ProjectsConnection::DisableXpnHost(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::DisableXpnHost(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -72,7 +71,7 @@ ProjectsConnection::DisableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::DisableXpnResource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         DisableXpnResourceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -81,8 +80,7 @@ ProjectsConnection::DisableXpnResource(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::DisableXpnResource(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -98,7 +96,7 @@ ProjectsConnection::EnableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::EnableXpnHost(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -106,8 +104,7 @@ ProjectsConnection::EnableXpnHost(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::EnableXpnHost(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -122,8 +119,7 @@ ProjectsConnection::EnableXpnResource(google::cloud::cpp::compute::projects::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsConnection::EnableXpnResource(google::cloud::ExperimentalTag,
-                                      google::cloud::NoAwaitTag,
+ProjectsConnection::EnableXpnResource(ExperimentalTag, NoAwaitTag,
                                       google::cloud::cpp::compute::projects::
                                           v1::EnableXpnResourceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -132,8 +128,7 @@ ProjectsConnection::EnableXpnResource(google::cloud::ExperimentalTag,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::EnableXpnResource(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -175,7 +170,7 @@ ProjectsConnection::MoveDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::MoveDisk(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -183,8 +178,7 @@ ProjectsConnection::MoveDisk(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::MoveDisk(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -200,7 +194,7 @@ ProjectsConnection::MoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::MoveInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -208,8 +202,7 @@ ProjectsConnection::MoveInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::MoveInstance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -224,8 +217,7 @@ ProjectsConnection::SetCloudArmorTier(google::cloud::cpp::compute::projects::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-ProjectsConnection::SetCloudArmorTier(google::cloud::ExperimentalTag,
-                                      google::cloud::NoAwaitTag,
+ProjectsConnection::SetCloudArmorTier(ExperimentalTag, NoAwaitTag,
                                       google::cloud::cpp::compute::projects::
                                           v1::SetCloudArmorTierRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -234,8 +226,7 @@ ProjectsConnection::SetCloudArmorTier(google::cloud::ExperimentalTag,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetCloudArmorTier(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -252,7 +243,7 @@ ProjectsConnection::SetCommonInstanceMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::SetCommonInstanceMetadata(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         SetCommonInstanceMetadataRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -261,8 +252,7 @@ ProjectsConnection::SetCommonInstanceMetadata(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetCommonInstanceMetadata(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -279,7 +269,7 @@ ProjectsConnection::SetDefaultNetworkTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::SetDefaultNetworkTier(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         SetDefaultNetworkTierRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -288,8 +278,7 @@ ProjectsConnection::SetDefaultNetworkTier(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetDefaultNetworkTier(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -306,7 +295,7 @@ ProjectsConnection::SetUsageExportBucket(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsConnection::SetUsageExportBucket(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         SetUsageExportBucketRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -315,8 +304,7 @@ ProjectsConnection::SetUsageExportBucket(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsConnection::SetUsageExportBucket(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

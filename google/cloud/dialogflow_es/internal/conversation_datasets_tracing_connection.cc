@@ -53,7 +53,7 @@ ConversationDatasetsTracingConnection::CreateConversationDataset(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationDatasetsConnection::"
       "CreateConversationDataset");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateConversationDataset(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -116,7 +116,7 @@ ConversationDatasetsTracingConnection::DeleteConversationDataset(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationDatasetsConnection::"
       "DeleteConversationDataset");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteConversationDataset(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -155,7 +155,7 @@ ConversationDatasetsTracingConnection::ImportConversationData(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationDatasetsConnection::ImportConversationData");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ImportConversationData(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

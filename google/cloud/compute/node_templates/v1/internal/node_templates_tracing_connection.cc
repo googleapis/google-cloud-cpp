@@ -66,7 +66,7 @@ NodeTemplatesTracingConnection::DeleteNodeTemplate(
         DeleteNodeTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_node_templates_v1::NodeTemplatesConnection::DeleteNodeTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteNodeTemplate(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -122,7 +122,7 @@ NodeTemplatesTracingConnection::InsertNodeTemplate(
         InsertNodeTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_node_templates_v1::NodeTemplatesConnection::InsertNodeTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertNodeTemplate(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));

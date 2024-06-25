@@ -50,7 +50,7 @@ BackendBucketsTracingConnection::AddSignedUrlKey(
         AddSignedUrlKeyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::AddSignedUrlKey");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddSignedUrlKey(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -88,7 +88,7 @@ BackendBucketsTracingConnection::DeleteBackendBucket(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "DeleteBackendBucket");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteBackendBucket(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -127,7 +127,7 @@ BackendBucketsTracingConnection::DeleteSignedUrlKey(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "DeleteSignedUrlKey");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSignedUrlKey(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -186,7 +186,7 @@ BackendBucketsTracingConnection::InsertBackendBucket(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "InsertBackendBucket");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertBackendBucket(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -239,7 +239,7 @@ BackendBucketsTracingConnection::PatchBackendBucket(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "PatchBackendBucket");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchBackendBucket(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -278,7 +278,7 @@ BackendBucketsTracingConnection::SetEdgeSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "SetEdgeSecurityPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SetEdgeSecurityPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -338,7 +338,7 @@ BackendBucketsTracingConnection::UpdateBackendBucket(
   auto span = internal::MakeSpan(
       "compute_backend_buckets_v1::BackendBucketsConnection::"
       "UpdateBackendBucket");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateBackendBucket(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

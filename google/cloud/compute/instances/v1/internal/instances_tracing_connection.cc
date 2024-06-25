@@ -50,7 +50,7 @@ InstancesTracingConnection::AddAccessConfig(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::AddAccessConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddAccessConfig(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -86,7 +86,7 @@ InstancesTracingConnection::AddResourcePolicies(
         AddResourcePoliciesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::AddResourcePolicies");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddResourcePolicies(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ InstancesTracingConnection::AttachDisk(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::AttachDisk");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AttachDisk(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -170,7 +170,7 @@ InstancesTracingConnection::BulkInsert(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::BulkInsert");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BulkInsert(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -205,7 +205,7 @@ InstancesTracingConnection::DeleteInstance(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::DeleteInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -241,7 +241,7 @@ InstancesTracingConnection::DeleteAccessConfig(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::DeleteAccessConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAccessConfig(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -276,7 +276,7 @@ InstancesTracingConnection::DetachDisk(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::DetachDisk");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DetachDisk(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -382,7 +382,7 @@ InstancesTracingConnection::InsertInstance(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::InsertInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -442,7 +442,7 @@ InstancesTracingConnection::PerformMaintenance(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::PerformMaintenance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PerformMaintenance(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -478,7 +478,7 @@ InstancesTracingConnection::RemoveResourcePolicies(
         RemoveResourcePoliciesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::RemoveResourcePolicies");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RemoveResourcePolicies(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -511,7 +511,7 @@ InstancesTracingConnection::Reset(
     google::cloud::cpp::compute::instances::v1::ResetRequest const& request) {
   auto span =
       internal::MakeSpan("compute_instances_v1::InstancesConnection::Reset");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span,
                            child_->Reset(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -544,7 +544,7 @@ InstancesTracingConnection::Resume(
     google::cloud::cpp::compute::instances::v1::ResumeRequest const& request) {
   auto span =
       internal::MakeSpan("compute_instances_v1::InstancesConnection::Resume");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->Resume(google::cloud::ExperimentalTag{},
                             google::cloud::NoAwaitTag{}, request));
@@ -589,7 +589,7 @@ InstancesTracingConnection::SetDeletionProtection(
         SetDeletionProtectionRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetDeletionProtection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SetDeletionProtection(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -624,7 +624,7 @@ InstancesTracingConnection::SetDiskAutoDelete(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetDiskAutoDelete");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetDiskAutoDelete(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -669,7 +669,7 @@ InstancesTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -705,7 +705,7 @@ InstancesTracingConnection::SetMachineResources(
         SetMachineResourcesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetMachineResources");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetMachineResources(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -740,7 +740,7 @@ InstancesTracingConnection::SetMachineType(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetMachineType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetMachineType(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -775,7 +775,7 @@ InstancesTracingConnection::SetMetadata(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetMetadata");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetMetadata(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -810,7 +810,7 @@ InstancesTracingConnection::SetMinCpuPlatform(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetMinCpuPlatform");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetMinCpuPlatform(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -843,7 +843,7 @@ InstancesTracingConnection::SetName(
     google::cloud::cpp::compute::instances::v1::SetNameRequest const& request) {
   auto span =
       internal::MakeSpan("compute_instances_v1::InstancesConnection::SetName");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetName(google::cloud::ExperimentalTag{},
                              google::cloud::NoAwaitTag{}, request));
@@ -878,7 +878,7 @@ InstancesTracingConnection::SetScheduling(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetScheduling");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetScheduling(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -913,7 +913,7 @@ InstancesTracingConnection::SetSecurityPolicy(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetSecurityPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetSecurityPolicy(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -948,7 +948,7 @@ InstancesTracingConnection::SetServiceAccount(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SetServiceAccount");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetServiceAccount(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -986,7 +986,7 @@ InstancesTracingConnection::SetShieldedInstanceIntegrityPolicy(
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::"
       "SetShieldedInstanceIntegrityPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SetShieldedInstanceIntegrityPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1020,7 +1020,7 @@ InstancesTracingConnection::SetTags(
     google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request) {
   auto span =
       internal::MakeSpan("compute_instances_v1::InstancesConnection::SetTags");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetTags(google::cloud::ExperimentalTag{},
                              google::cloud::NoAwaitTag{}, request));
@@ -1056,7 +1056,7 @@ InstancesTracingConnection::SimulateMaintenanceEvent(
         SimulateMaintenanceEventRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::SimulateMaintenanceEvent");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SimulateMaintenanceEvent(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1089,7 +1089,7 @@ InstancesTracingConnection::Start(
     google::cloud::cpp::compute::instances::v1::StartRequest const& request) {
   auto span =
       internal::MakeSpan("compute_instances_v1::InstancesConnection::Start");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span,
                            child_->Start(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -1125,7 +1125,7 @@ InstancesTracingConnection::StartWithEncryptionKey(
         StartWithEncryptionKeyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::StartWithEncryptionKey");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->StartWithEncryptionKey(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1158,7 +1158,7 @@ InstancesTracingConnection::Stop(
     google::cloud::cpp::compute::instances::v1::StopRequest const& request) {
   auto span =
       internal::MakeSpan("compute_instances_v1::InstancesConnection::Stop");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span,
                            child_->Stop(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -1191,7 +1191,7 @@ InstancesTracingConnection::Suspend(
     google::cloud::cpp::compute::instances::v1::SuspendRequest const& request) {
   auto span =
       internal::MakeSpan("compute_instances_v1::InstancesConnection::Suspend");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->Suspend(google::cloud::ExperimentalTag{},
                              google::cloud::NoAwaitTag{}, request));
@@ -1236,7 +1236,7 @@ InstancesTracingConnection::UpdateInstance(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::UpdateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -1272,7 +1272,7 @@ InstancesTracingConnection::UpdateAccessConfig(
         request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::UpdateAccessConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAccessConfig(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -1308,7 +1308,7 @@ InstancesTracingConnection::UpdateDisplayDevice(
         UpdateDisplayDeviceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::UpdateDisplayDevice");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDisplayDevice(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -1344,7 +1344,7 @@ InstancesTracingConnection::UpdateNetworkInterface(
         UpdateNetworkInterfaceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::UpdateNetworkInterface");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateNetworkInterface(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1382,7 +1382,7 @@ InstancesTracingConnection::UpdateShieldedInstanceConfig(
   auto span = internal::MakeSpan(
       "compute_instances_v1::InstancesConnection::"
       "UpdateShieldedInstanceConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateShieldedInstanceConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

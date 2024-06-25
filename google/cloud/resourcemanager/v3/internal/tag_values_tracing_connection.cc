@@ -79,7 +79,7 @@ TagValuesTracingConnection::CreateTagValue(
     google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagValuesConnection::CreateTagValue");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTagValue(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -112,7 +112,7 @@ TagValuesTracingConnection::UpdateTagValue(
     google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagValuesConnection::UpdateTagValue");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTagValue(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -145,7 +145,7 @@ TagValuesTracingConnection::DeleteTagValue(
     google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagValuesConnection::DeleteTagValue");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTagValue(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

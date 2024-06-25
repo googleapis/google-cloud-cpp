@@ -77,7 +77,7 @@ TelcoAutomationTracingConnection::CreateOrchestrationCluster(
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::"
       "CreateOrchestrationCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateOrchestrationCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -116,7 +116,7 @@ TelcoAutomationTracingConnection::DeleteOrchestrationCluster(
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::"
       "DeleteOrchestrationCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteOrchestrationCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -171,7 +171,7 @@ TelcoAutomationTracingConnection::CreateEdgeSlm(
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::CreateEdgeSlm");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEdgeSlm(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -204,7 +204,7 @@ TelcoAutomationTracingConnection::DeleteEdgeSlm(
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   auto span = internal::MakeSpan(
       "telcoautomation_v1::TelcoAutomationConnection::DeleteEdgeSlm");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteEdgeSlm(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/health_checks/v1/health_checks_connection_idempotency_policy.h"
 #include "google/cloud/compute/health_checks/v1/internal/health_checks_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -197,13 +197,13 @@ class HealthChecksConnection {
                         DeleteHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteHealthCheck(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  DeleteHealthCheck(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::health_checks::v1::
                         DeleteHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
@@ -215,13 +215,13 @@ class HealthChecksConnection {
                         InsertHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertHealthCheck(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  InsertHealthCheck(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::health_checks::v1::
                         InsertHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
@@ -234,12 +234,12 @@ class HealthChecksConnection {
                        PatchHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::health_checks::v1::
           PatchHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchHealthCheck(google::cloud::ExperimentalTag,
+  PatchHealthCheck(ExperimentalTag,
                    google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -247,13 +247,13 @@ class HealthChecksConnection {
                         UpdateHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateHealthCheck(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  UpdateHealthCheck(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::health_checks::v1::
                         UpdateHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

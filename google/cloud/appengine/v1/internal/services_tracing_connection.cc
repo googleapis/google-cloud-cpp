@@ -67,7 +67,7 @@ ServicesTracingConnection::UpdateService(
     google::appengine::v1::UpdateServiceRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::ServicesConnection::UpdateService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -100,7 +100,7 @@ ServicesTracingConnection::DeleteService(
     google::appengine::v1::DeleteServiceRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::ServicesConnection::DeleteService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

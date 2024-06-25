@@ -106,7 +106,7 @@ EdgeNetworkTracingConnection::CreateNetwork(
     google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::CreateNetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateNetwork(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -139,7 +139,7 @@ EdgeNetworkTracingConnection::DeleteNetwork(
     google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::DeleteNetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteNetwork(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -192,7 +192,7 @@ EdgeNetworkTracingConnection::CreateSubnet(
     google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
   auto span =
       internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::CreateSubnet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateSubnet(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -225,7 +225,7 @@ EdgeNetworkTracingConnection::UpdateSubnet(
     google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
   auto span =
       internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::UpdateSubnet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateSubnet(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -258,7 +258,7 @@ EdgeNetworkTracingConnection::DeleteSubnet(
     google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
   auto span =
       internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DeleteSubnet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSubnet(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -348,7 +348,7 @@ EdgeNetworkTracingConnection::CreateInterconnectAttachment(
         request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::CreateInterconnectAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateInterconnectAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -384,7 +384,7 @@ EdgeNetworkTracingConnection::DeleteInterconnectAttachment(
         request) {
   auto span = internal::MakeSpan(
       "edgenetwork_v1::EdgeNetworkConnection::DeleteInterconnectAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteInterconnectAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -446,7 +446,7 @@ EdgeNetworkTracingConnection::CreateRouter(
     google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
   auto span =
       internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::CreateRouter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRouter(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -479,7 +479,7 @@ EdgeNetworkTracingConnection::UpdateRouter(
     google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
   auto span =
       internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::UpdateRouter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateRouter(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -512,7 +512,7 @@ EdgeNetworkTracingConnection::DeleteRouter(
     google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
   auto span =
       internal::MakeSpan("edgenetwork_v1::EdgeNetworkConnection::DeleteRouter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRouter(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

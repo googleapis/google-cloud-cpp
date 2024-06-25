@@ -79,7 +79,7 @@ ConversationProfilesConnection::SetSuggestionFeatureConfig(
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesConnection::SetSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,7 +87,7 @@ ConversationProfilesConnection::SetSuggestionFeatureConfig(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnection::SetSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -103,7 +103,7 @@ ConversationProfilesConnection::ClearSuggestionFeatureConfig(
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesConnection::ClearSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -111,7 +111,7 @@ ConversationProfilesConnection::ClearSuggestionFeatureConfig(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnection::ClearSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

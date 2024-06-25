@@ -55,8 +55,7 @@ VpnTunnelsConnection::DeleteVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-VpnTunnelsConnection::DeleteVpnTunnel(google::cloud::ExperimentalTag,
-                                      google::cloud::NoAwaitTag,
+VpnTunnelsConnection::DeleteVpnTunnel(ExperimentalTag, NoAwaitTag,
                                       google::cloud::cpp::compute::vpn_tunnels::
                                           v1::DeleteVpnTunnelRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -65,8 +64,7 @@ VpnTunnelsConnection::DeleteVpnTunnel(google::cloud::ExperimentalTag,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnTunnelsConnection::DeleteVpnTunnel(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,8 +85,7 @@ VpnTunnelsConnection::InsertVpnTunnel(google::cloud::cpp::compute::vpn_tunnels::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-VpnTunnelsConnection::InsertVpnTunnel(google::cloud::ExperimentalTag,
-                                      google::cloud::NoAwaitTag,
+VpnTunnelsConnection::InsertVpnTunnel(ExperimentalTag, NoAwaitTag,
                                       google::cloud::cpp::compute::vpn_tunnels::
                                           v1::InsertVpnTunnelRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -97,8 +94,7 @@ VpnTunnelsConnection::InsertVpnTunnel(google::cloud::ExperimentalTag,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnTunnelsConnection::InsertVpnTunnel(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -122,7 +118,7 @@ VpnTunnelsConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnTunnelsConnection::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -130,8 +126,7 @@ VpnTunnelsConnection::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnTunnelsConnection::SetLabels(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

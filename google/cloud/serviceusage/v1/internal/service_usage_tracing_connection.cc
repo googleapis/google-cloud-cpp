@@ -48,7 +48,7 @@ ServiceUsageTracingConnection::EnableService(
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::EnableService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->EnableService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -81,7 +81,7 @@ ServiceUsageTracingConnection::DisableService(
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::DisableService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DisableService(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ ServiceUsageTracingConnection::BatchEnableServices(
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   auto span = internal::MakeSpan(
       "serviceusage_v1::ServiceUsageConnection::BatchEnableServices");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchEnableServices(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

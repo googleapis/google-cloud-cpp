@@ -59,14 +59,14 @@ InstancesConnection::DeleteInstance(
 }
 
 StatusOr<google::longrunning::Operation> InstancesConnection::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-InstancesConnection::DeleteInstance(google::cloud::ExperimentalTag,
+InstancesConnection::DeleteInstance(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::OperationMetadataV1>>(
@@ -82,14 +82,14 @@ InstancesConnection::DebugInstance(
 }
 
 StatusOr<google::longrunning::Operation> InstancesConnection::DebugInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DebugInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
-InstancesConnection::DebugInstance(google::cloud::ExperimentalTag,
+InstancesConnection::DebugInstance(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::Instance>>(

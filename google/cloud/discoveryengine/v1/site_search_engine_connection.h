@@ -21,11 +21,11 @@
 
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -206,12 +206,12 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateTargetSite(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  CreateTargetSite(google::cloud::ExperimentalTag,
+  CreateTargetSite(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
@@ -221,13 +221,13 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
-  BatchCreateTargetSites(google::cloud::ExperimentalTag,
+  BatchCreateTargetSites(ExperimentalTag,
                          google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::discoveryengine::v1::TargetSite>
@@ -240,12 +240,12 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateTargetSite(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  UpdateTargetSite(google::cloud::ExperimentalTag,
+  UpdateTargetSite(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 
   virtual future<
@@ -255,13 +255,13 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteTargetSite(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
-  DeleteTargetSite(google::cloud::ExperimentalTag,
+  DeleteTargetSite(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::discoveryengine::v1::TargetSite>
@@ -275,13 +275,13 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
-  EnableAdvancedSiteSearch(google::cloud::ExperimentalTag,
+  EnableAdvancedSiteSearch(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
@@ -291,13 +291,13 @@ class SiteSearchEngineServiceConnection {
           DisableAdvancedSiteSearchRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           DisableAdvancedSiteSearchRequest const& request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
-  DisableAdvancedSiteSearch(google::cloud::ExperimentalTag,
+  DisableAdvancedSiteSearch(ExperimentalTag,
                             google::longrunning::Operation const& operation);
 
   virtual future<
@@ -306,13 +306,12 @@ class SiteSearchEngineServiceConnection {
       google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RecrawlUris(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-  RecrawlUris(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation);
+  RecrawlUris(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
@@ -321,13 +320,13 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
-  BatchVerifyTargetSites(google::cloud::ExperimentalTag,
+  BatchVerifyTargetSites(ExperimentalTag,
                          google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::discoveryengine::v1::TargetSite>

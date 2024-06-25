@@ -48,7 +48,7 @@ RegionTargetTcpProxiesConnection::DeleteTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionTargetTcpProxiesConnection::DeleteTargetTcpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
         DeleteTargetTcpProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -57,8 +57,7 @@ RegionTargetTcpProxiesConnection::DeleteTargetTcpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetTcpProxiesConnection::DeleteTargetTcpProxy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,7 +81,7 @@ RegionTargetTcpProxiesConnection::InsertTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionTargetTcpProxiesConnection::InsertTargetTcpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
         InsertTargetTcpProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -91,8 +90,7 @@ RegionTargetTcpProxiesConnection::InsertTargetTcpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetTcpProxiesConnection::InsertTargetTcpProxy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

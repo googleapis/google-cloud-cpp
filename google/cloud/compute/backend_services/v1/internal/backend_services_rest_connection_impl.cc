@@ -105,7 +105,7 @@ BackendServicesRestConnectionImpl::AddSignedUrlKey(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestConnectionImpl::AddSignedUrlKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_services::v1::
         AddSignedUrlKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -122,7 +122,7 @@ BackendServicesRestConnectionImpl::AddSignedUrlKey(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestConnectionImpl::AddSignedUrlKey(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -277,7 +277,7 @@ BackendServicesRestConnectionImpl::DeleteBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestConnectionImpl::DeleteBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_services::v1::
         DeleteBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -294,7 +294,7 @@ BackendServicesRestConnectionImpl::DeleteBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestConnectionImpl::DeleteBackendService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -406,7 +406,7 @@ BackendServicesRestConnectionImpl::DeleteSignedUrlKey(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestConnectionImpl::DeleteSignedUrlKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_services::v1::
         DeleteSignedUrlKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -423,7 +423,7 @@ BackendServicesRestConnectionImpl::DeleteSignedUrlKey(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestConnectionImpl::DeleteSignedUrlKey(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -583,7 +583,7 @@ BackendServicesRestConnectionImpl::InsertBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestConnectionImpl::InsertBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_services::v1::
         InsertBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -600,7 +600,7 @@ BackendServicesRestConnectionImpl::InsertBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestConnectionImpl::InsertBackendService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -788,7 +788,7 @@ BackendServicesRestConnectionImpl::PatchBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestConnectionImpl::PatchBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_services::v1::
         PatchBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -805,7 +805,7 @@ BackendServicesRestConnectionImpl::PatchBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestConnectionImpl::PatchBackendService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -917,7 +917,7 @@ BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_services::v1::
         SetEdgeSecurityPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -934,7 +934,7 @@ BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestConnectionImpl::SetEdgeSecurityPolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1062,7 +1062,7 @@ BackendServicesRestConnectionImpl::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestConnectionImpl::SetSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_services::v1::
         SetSecurityPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1079,7 +1079,7 @@ BackendServicesRestConnectionImpl::SetSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestConnectionImpl::SetSecurityPolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1207,7 +1207,7 @@ BackendServicesRestConnectionImpl::UpdateBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesRestConnectionImpl::UpdateBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_services::v1::
         UpdateBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1224,7 +1224,7 @@ BackendServicesRestConnectionImpl::UpdateBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesRestConnectionImpl::UpdateBackendService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -108,7 +108,7 @@ ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationProfilesConnection::"
       "SetSuggestionFeatureConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SetSuggestionFeatureConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -147,7 +147,7 @@ ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationProfilesConnection::"
       "ClearSuggestionFeatureConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ClearSuggestionFeatureConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -49,7 +49,7 @@ InstanceGroupManagerResizeRequestsConnection::Cancel(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsConnection::Cancel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
         CancelRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -58,8 +58,7 @@ InstanceGroupManagerResizeRequestsConnection::Cancel(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsConnection::Cancel(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -78,7 +77,7 @@ InstanceGroupManagerResizeRequestsConnection::
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsConnection::
     DeleteInstanceGroupManagerResizeRequest(
-        google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+        ExperimentalTag, NoAwaitTag,
         google::cloud::cpp::compute::instance_group_manager_resize_requests::
             v1::DeleteInstanceGroupManagerResizeRequestRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -88,8 +87,7 @@ InstanceGroupManagerResizeRequestsConnection::
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsConnection::
     DeleteInstanceGroupManagerResizeRequest(
-        google::cloud::ExperimentalTag,
-        google::cloud::cpp::compute::v1::Operation const&) {
+        ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,7 +114,7 @@ InstanceGroupManagerResizeRequestsConnection::
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsConnection::
     InsertInstanceGroupManagerResizeRequest(
-        google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+        ExperimentalTag, NoAwaitTag,
         google::cloud::cpp::compute::instance_group_manager_resize_requests::
             v1::InsertInstanceGroupManagerResizeRequestRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -126,8 +124,7 @@ InstanceGroupManagerResizeRequestsConnection::
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsConnection::
     InsertInstanceGroupManagerResizeRequest(
-        google::cloud::ExperimentalTag,
-        google::cloud::cpp::compute::v1::Operation const&) {
+        ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

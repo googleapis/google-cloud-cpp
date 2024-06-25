@@ -73,7 +73,7 @@ NetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "AttachNetworkEndpoints");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->AttachNetworkEndpoints(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -112,7 +112,7 @@ NetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "DeleteNetworkEndpointGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteNetworkEndpointGroup(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -151,7 +151,7 @@ NetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "DetachNetworkEndpoints");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DetachNetworkEndpoints(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -201,7 +201,7 @@ NetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
   auto span = internal::MakeSpan(
       "compute_network_endpoint_groups_v1::NetworkEndpointGroupsConnection::"
       "InsertNetworkEndpointGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertNetworkEndpointGroup(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

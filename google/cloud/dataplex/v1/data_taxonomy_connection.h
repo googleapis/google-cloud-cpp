@@ -21,11 +21,11 @@
 
 #include "google/cloud/dataplex/v1/data_taxonomy_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/data_taxonomy_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -195,11 +195,11 @@ class DataTaxonomyServiceConnection {
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  CreateDataTaxonomy(google::cloud::ExperimentalTag,
+  CreateDataTaxonomy(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
@@ -207,11 +207,11 @@ class DataTaxonomyServiceConnection {
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  UpdateDataTaxonomy(google::cloud::ExperimentalTag,
+  UpdateDataTaxonomy(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -219,11 +219,11 @@ class DataTaxonomyServiceConnection {
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataTaxonomy(google::cloud::ExperimentalTag,
+  DeleteDataTaxonomy(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::DataTaxonomy>
@@ -239,12 +239,12 @@ class DataTaxonomyServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  CreateDataAttributeBinding(google::cloud::ExperimentalTag,
+  CreateDataAttributeBinding(ExperimentalTag,
                              google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
@@ -253,12 +253,12 @@ class DataTaxonomyServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  UpdateDataAttributeBinding(google::cloud::ExperimentalTag,
+  UpdateDataAttributeBinding(ExperimentalTag,
                              google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -267,12 +267,12 @@ class DataTaxonomyServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttributeBinding(google::cloud::ExperimentalTag,
+  DeleteDataAttributeBinding(ExperimentalTag,
                              google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
@@ -289,11 +289,11 @@ class DataTaxonomyServiceConnection {
       google::cloud::dataplex::v1::CreateDataAttributeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateDataAttribute(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataAttributeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  CreateDataAttribute(google::cloud::ExperimentalTag,
+  CreateDataAttribute(ExperimentalTag,
                       google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
@@ -301,11 +301,11 @@ class DataTaxonomyServiceConnection {
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateDataAttribute(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  UpdateDataAttribute(google::cloud::ExperimentalTag,
+  UpdateDataAttribute(ExperimentalTag,
                       google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -313,11 +313,11 @@ class DataTaxonomyServiceConnection {
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDataAttribute(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttribute(google::cloud::ExperimentalTag,
+  DeleteDataAttribute(ExperimentalTag,
                       google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::DataAttribute>

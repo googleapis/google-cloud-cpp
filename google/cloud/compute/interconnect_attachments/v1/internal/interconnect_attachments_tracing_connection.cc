@@ -73,7 +73,7 @@ InterconnectAttachmentsTracingConnection::DeleteInterconnectAttachment(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "DeleteInterconnectAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteInterconnectAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -123,7 +123,7 @@ InterconnectAttachmentsTracingConnection::InsertInterconnectAttachment(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "InsertInterconnectAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertInterconnectAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -176,7 +176,7 @@ InterconnectAttachmentsTracingConnection::PatchInterconnectAttachment(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "PatchInterconnectAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchInterconnectAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -214,7 +214,7 @@ InterconnectAttachmentsTracingConnection::SetLabels(
   auto span = internal::MakeSpan(
       "compute_interconnect_attachments_v1::InterconnectAttachmentsConnection::"
       "SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

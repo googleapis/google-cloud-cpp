@@ -21,11 +21,11 @@
 
 #include "google/cloud/gkemulticloud/v1/azure_clusters_connection_idempotency_policy.h"
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -194,12 +194,12 @@ class AzureClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAzureClient(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
-  CreateAzureClient(google::cloud::ExperimentalTag,
+  CreateAzureClient(ExperimentalTag,
                     google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
@@ -216,12 +216,12 @@ class AzureClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteAzureClient(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureClient(google::cloud::ExperimentalTag,
+  DeleteAzureClient(ExperimentalTag,
                     google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
@@ -230,12 +230,12 @@ class AzureClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAzureCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-  CreateAzureCluster(google::cloud::ExperimentalTag,
+  CreateAzureCluster(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
@@ -244,12 +244,12 @@ class AzureClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAzureCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
-  UpdateAzureCluster(google::cloud::ExperimentalTag,
+  UpdateAzureCluster(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
@@ -266,12 +266,12 @@ class AzureClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteAzureCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureCluster(google::cloud::ExperimentalTag,
+  DeleteAzureCluster(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual StatusOr<
@@ -292,12 +292,12 @@ class AzureClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAzureNodePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-  CreateAzureNodePool(google::cloud::ExperimentalTag,
+  CreateAzureNodePool(ExperimentalTag,
                       google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
@@ -306,12 +306,12 @@ class AzureClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
-  UpdateAzureNodePool(google::cloud::ExperimentalTag,
+  UpdateAzureNodePool(ExperimentalTag,
                       google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
@@ -328,12 +328,12 @@ class AzureClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAzureNodePool(google::cloud::ExperimentalTag,
+  DeleteAzureNodePool(ExperimentalTag,
                       google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>

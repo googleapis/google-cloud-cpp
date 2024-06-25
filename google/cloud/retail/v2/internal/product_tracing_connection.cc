@@ -94,7 +94,7 @@ ProductServiceTracingConnection::PurgeProducts(
     google::cloud::retail::v2::PurgeProductsRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::PurgeProducts");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PurgeProducts(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -127,7 +127,7 @@ ProductServiceTracingConnection::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::ImportProducts");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportProducts(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -160,7 +160,7 @@ ProductServiceTracingConnection::SetInventory(
     google::cloud::retail::v2::SetInventoryRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::SetInventory");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetInventory(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -194,7 +194,7 @@ ProductServiceTracingConnection::AddFulfillmentPlaces(
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::AddFulfillmentPlaces");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->AddFulfillmentPlaces(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -228,7 +228,7 @@ ProductServiceTracingConnection::RemoveFulfillmentPlaces(
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::RemoveFulfillmentPlaces");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RemoveFulfillmentPlaces(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -262,7 +262,7 @@ ProductServiceTracingConnection::AddLocalInventories(
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::AddLocalInventories");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddLocalInventories(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -296,7 +296,7 @@ ProductServiceTracingConnection::RemoveLocalInventories(
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::RemoveLocalInventories");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RemoveLocalInventories(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -48,7 +48,7 @@ IndexEndpointServiceConnection::CreateIndexEndpoint(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceConnection::CreateIndexEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ IndexEndpointServiceConnection::CreateIndexEndpoint(
 
 future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
 IndexEndpointServiceConnection::CreateIndexEndpoint(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -92,7 +92,7 @@ IndexEndpointServiceConnection::DeleteIndexEndpoint(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceConnection::DeleteIndexEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -100,7 +100,7 @@ IndexEndpointServiceConnection::DeleteIndexEndpoint(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 IndexEndpointServiceConnection::DeleteIndexEndpoint(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,7 +116,7 @@ IndexEndpointServiceConnection::DeployIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceConnection::DeployIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeployIndexRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -124,7 +124,7 @@ IndexEndpointServiceConnection::DeployIndex(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
 IndexEndpointServiceConnection::DeployIndex(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -140,7 +140,7 @@ IndexEndpointServiceConnection::UndeployIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceConnection::UndeployIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UndeployIndexRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -148,7 +148,7 @@ IndexEndpointServiceConnection::UndeployIndex(
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
 IndexEndpointServiceConnection::UndeployIndex(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -164,7 +164,7 @@ IndexEndpointServiceConnection::MutateDeployedIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexEndpointServiceConnection::MutateDeployedIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -172,7 +172,7 @@ IndexEndpointServiceConnection::MutateDeployedIndex(
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
 IndexEndpointServiceConnection::MutateDeployedIndex(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

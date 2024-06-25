@@ -21,11 +21,11 @@
 
 #include "google/cloud/discoveryengine/v1/completion_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/completion_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,15 +199,14 @@ class CompletionServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   ImportSuggestionDenyListEntries(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           ImportSuggestionDenyListEntriesRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::
                               ImportSuggestionDenyListEntriesResponse>>
   ImportSuggestionDenyListEntries(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::
                               PurgeSuggestionDenyListEntriesResponse>>
@@ -217,15 +216,14 @@ class CompletionServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   PurgeSuggestionDenyListEntries(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::
                               PurgeSuggestionDenyListEntriesResponse>>
   PurgeSuggestionDenyListEntries(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 };
 
 /**

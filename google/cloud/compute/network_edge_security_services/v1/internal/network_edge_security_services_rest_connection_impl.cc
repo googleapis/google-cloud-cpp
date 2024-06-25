@@ -160,7 +160,7 @@ NetworkEdgeSecurityServicesRestConnectionImpl::DeleteNetworkEdgeSecurityService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEdgeSecurityServicesRestConnectionImpl::DeleteNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         DeleteNetworkEdgeSecurityServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -178,7 +178,7 @@ NetworkEdgeSecurityServicesRestConnectionImpl::DeleteNetworkEdgeSecurityService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesRestConnectionImpl::DeleteNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -312,7 +312,7 @@ NetworkEdgeSecurityServicesRestConnectionImpl::InsertNetworkEdgeSecurityService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEdgeSecurityServicesRestConnectionImpl::InsertNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         InsertNetworkEdgeSecurityServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -330,7 +330,7 @@ NetworkEdgeSecurityServicesRestConnectionImpl::InsertNetworkEdgeSecurityService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesRestConnectionImpl::InsertNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -447,7 +447,7 @@ NetworkEdgeSecurityServicesRestConnectionImpl::PatchNetworkEdgeSecurityService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEdgeSecurityServicesRestConnectionImpl::PatchNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         PatchNetworkEdgeSecurityServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -465,7 +465,7 @@ NetworkEdgeSecurityServicesRestConnectionImpl::PatchNetworkEdgeSecurityService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesRestConnectionImpl::PatchNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

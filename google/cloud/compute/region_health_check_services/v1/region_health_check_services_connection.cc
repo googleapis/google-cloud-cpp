@@ -49,7 +49,7 @@ RegionHealthCheckServicesConnection::DeleteHealthCheckService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthCheckServicesConnection::DeleteHealthCheckService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_health_check_services::v1::
         DeleteHealthCheckServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -58,8 +58,7 @@ RegionHealthCheckServicesConnection::DeleteHealthCheckService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesConnection::DeleteHealthCheckService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,7 +82,7 @@ RegionHealthCheckServicesConnection::InsertHealthCheckService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthCheckServicesConnection::InsertHealthCheckService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_health_check_services::v1::
         InsertHealthCheckServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -92,8 +91,7 @@ RegionHealthCheckServicesConnection::InsertHealthCheckService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesConnection::InsertHealthCheckService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +116,7 @@ RegionHealthCheckServicesConnection::PatchHealthCheckService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthCheckServicesConnection::PatchHealthCheckService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_health_check_services::v1::
         PatchHealthCheckServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -127,8 +125,7 @@ RegionHealthCheckServicesConnection::PatchHealthCheckService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesConnection::PatchHealthCheckService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

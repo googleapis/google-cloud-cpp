@@ -21,11 +21,11 @@
 
 #include "google/cloud/aiplatform/v1/internal/vizier_retry_traits.h"
 #include "google/cloud/aiplatform/v1/vizier_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -208,11 +208,11 @@ class VizierServiceConnection {
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> SuggestTrials(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-  SuggestTrials(google::cloud::ExperimentalTag,
+  SuggestTrials(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
@@ -240,13 +240,13 @@ class VizierServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-  CheckTrialEarlyStoppingState(google::cloud::ExperimentalTag,
+  CheckTrialEarlyStoppingState(ExperimentalTag,
                                google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Trial> StopTrial(

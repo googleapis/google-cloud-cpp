@@ -57,7 +57,7 @@ RegionTargetHttpProxiesTracingConnection::DeleteTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_region_target_http_proxies_v1::"
       "RegionTargetHttpProxiesConnection::DeleteTargetHttpProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteTargetHttpProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -107,7 +107,7 @@ RegionTargetHttpProxiesTracingConnection::InsertTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_region_target_http_proxies_v1::"
       "RegionTargetHttpProxiesConnection::InsertTargetHttpProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertTargetHttpProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -159,7 +159,7 @@ RegionTargetHttpProxiesTracingConnection::SetUrlMap(
   auto span = internal::MakeSpan(
       "compute_region_target_http_proxies_v1::"
       "RegionTargetHttpProxiesConnection::SetUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetUrlMap(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

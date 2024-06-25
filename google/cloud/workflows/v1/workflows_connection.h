@@ -21,11 +21,11 @@
 
 #include "google/cloud/workflows/v1/internal/workflows_retry_traits.h"
 #include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -197,11 +197,11 @@ class WorkflowsConnection {
       google::cloud::workflows::v1::CreateWorkflowRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateWorkflow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::CreateWorkflowRequest const& request);
 
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
-  CreateWorkflow(google::cloud::ExperimentalTag,
+  CreateWorkflow(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
@@ -209,11 +209,11 @@ class WorkflowsConnection {
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
 
   virtual future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(google::cloud::ExperimentalTag,
+  DeleteWorkflow(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
@@ -221,11 +221,11 @@ class WorkflowsConnection {
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
-  UpdateWorkflow(google::cloud::ExperimentalTag,
+  UpdateWorkflow(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 };
 

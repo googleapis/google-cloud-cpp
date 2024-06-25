@@ -57,7 +57,7 @@ RegionInstanceTemplatesTracingConnection::DeleteInstanceTemplate(
   auto span = internal::MakeSpan(
       "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
       ":DeleteInstanceTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteInstanceTemplate(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -107,7 +107,7 @@ RegionInstanceTemplatesTracingConnection::InsertInstanceTemplate(
   auto span = internal::MakeSpan(
       "compute_region_instance_templates_v1::RegionInstanceTemplatesConnection:"
       ":InsertInstanceTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertInstanceTemplate(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

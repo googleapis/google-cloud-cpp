@@ -47,7 +47,7 @@ HttpHealthChecksConnection::DeleteHttpHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpHealthChecksConnection::DeleteHttpHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::http_health_checks::v1::
         DeleteHttpHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -56,8 +56,7 @@ HttpHealthChecksConnection::DeleteHttpHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpHealthChecksConnection::DeleteHttpHealthCheck(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -81,7 +80,7 @@ HttpHealthChecksConnection::InsertHttpHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpHealthChecksConnection::InsertHttpHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::http_health_checks::v1::
         InsertHttpHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -90,8 +89,7 @@ HttpHealthChecksConnection::InsertHttpHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpHealthChecksConnection::InsertHttpHealthCheck(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,7 +114,7 @@ HttpHealthChecksConnection::PatchHttpHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpHealthChecksConnection::PatchHttpHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::http_health_checks::v1::
         PatchHttpHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -125,8 +123,7 @@ HttpHealthChecksConnection::PatchHttpHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpHealthChecksConnection::PatchHttpHealthCheck(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -143,7 +140,7 @@ HttpHealthChecksConnection::UpdateHttpHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpHealthChecksConnection::UpdateHttpHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::http_health_checks::v1::
         UpdateHttpHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -152,8 +149,7 @@ HttpHealthChecksConnection::UpdateHttpHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpHealthChecksConnection::UpdateHttpHealthCheck(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

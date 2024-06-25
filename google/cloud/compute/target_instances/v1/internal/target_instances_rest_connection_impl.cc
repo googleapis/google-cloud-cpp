@@ -150,7 +150,7 @@ TargetInstancesRestConnectionImpl::DeleteTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesRestConnectionImpl::DeleteTargetInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_instances::v1::
         DeleteTargetInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -167,7 +167,7 @@ TargetInstancesRestConnectionImpl::DeleteTargetInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesRestConnectionImpl::DeleteTargetInstance(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -299,7 +299,7 @@ TargetInstancesRestConnectionImpl::InsertTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesRestConnectionImpl::InsertTargetInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_instances::v1::
         InsertTargetInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -316,7 +316,7 @@ TargetInstancesRestConnectionImpl::InsertTargetInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesRestConnectionImpl::InsertTargetInstance(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -470,7 +470,7 @@ TargetInstancesRestConnectionImpl::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesRestConnectionImpl::SetSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_instances::v1::
         SetSecurityPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -487,7 +487,7 @@ TargetInstancesRestConnectionImpl::SetSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesRestConnectionImpl::SetSecurityPolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

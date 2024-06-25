@@ -21,11 +21,11 @@
 
 #include "google/cloud/accesscontextmanager/v1/access_context_manager_connection_idempotency_policy.h"
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -208,12 +208,12 @@ class AccessContextManagerConnection {
       google::identity::accesscontextmanager::v1::AccessPolicy const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAccessPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::AccessPolicy const& request);
 
   virtual future<
       StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  CreateAccessPolicy(google::cloud::ExperimentalTag,
+  CreateAccessPolicy(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<
@@ -222,13 +222,13 @@ class AccessContextManagerConnection {
                          UpdateAccessPolicyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateAccessPolicyRequest const& request);
 
   virtual future<
       StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  UpdateAccessPolicy(google::cloud::ExperimentalTag,
+  UpdateAccessPolicy(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -237,13 +237,13 @@ class AccessContextManagerConnection {
                          DeleteAccessPolicyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteAccessPolicyRequest const& request);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
                               AccessContextManagerOperationMetadata>>
-  DeleteAccessPolicy(google::cloud::ExperimentalTag,
+  DeleteAccessPolicy(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
@@ -262,13 +262,13 @@ class AccessContextManagerConnection {
                         CreateAccessLevelRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAccessLevel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateAccessLevelRequest const& request);
 
   virtual future<
       StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  CreateAccessLevel(google::cloud::ExperimentalTag,
+  CreateAccessLevel(ExperimentalTag,
                     google::longrunning::Operation const& operation);
 
   virtual future<
@@ -277,13 +277,13 @@ class AccessContextManagerConnection {
                         UpdateAccessLevelRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAccessLevel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateAccessLevelRequest const& request);
 
   virtual future<
       StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  UpdateAccessLevel(google::cloud::ExperimentalTag,
+  UpdateAccessLevel(ExperimentalTag,
                     google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -292,13 +292,13 @@ class AccessContextManagerConnection {
                         DeleteAccessLevelRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteAccessLevel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteAccessLevelRequest const& request);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
                               AccessContextManagerOperationMetadata>>
-  DeleteAccessLevel(google::cloud::ExperimentalTag,
+  DeleteAccessLevel(ExperimentalTag,
                     google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
@@ -307,13 +307,13 @@ class AccessContextManagerConnection {
                           ReplaceAccessLevelsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ReplaceAccessLevels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           ReplaceAccessLevelsRequest const& request);
 
   virtual future<StatusOr<
       google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
-  ReplaceAccessLevels(google::cloud::ExperimentalTag,
+  ReplaceAccessLevels(ExperimentalTag,
                       google::longrunning::Operation const& operation);
 
   virtual StreamRange<
@@ -332,13 +332,13 @@ class AccessContextManagerConnection {
                              CreateServicePerimeterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateServicePerimeter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateServicePerimeterRequest const& request);
 
   virtual future<
       StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  CreateServicePerimeter(google::cloud::ExperimentalTag,
+  CreateServicePerimeter(ExperimentalTag,
                          google::longrunning::Operation const& operation);
 
   virtual future<
@@ -347,13 +347,13 @@ class AccessContextManagerConnection {
                              UpdateServicePerimeterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateServicePerimeterRequest const& request);
 
   virtual future<
       StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  UpdateServicePerimeter(google::cloud::ExperimentalTag,
+  UpdateServicePerimeter(ExperimentalTag,
                          google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -362,13 +362,13 @@ class AccessContextManagerConnection {
                              DeleteServicePerimeterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteServicePerimeterRequest const& request);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
                               AccessContextManagerOperationMetadata>>
-  DeleteServicePerimeter(google::cloud::ExperimentalTag,
+  DeleteServicePerimeter(ExperimentalTag,
                          google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -377,13 +377,13 @@ class AccessContextManagerConnection {
                                ReplaceServicePerimetersRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ReplaceServicePerimeters(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           ReplaceServicePerimetersRequest const& request);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
                               ReplaceServicePerimetersResponse>>
-  ReplaceServicePerimeters(google::cloud::ExperimentalTag,
+  ReplaceServicePerimeters(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -392,13 +392,13 @@ class AccessContextManagerConnection {
                               CommitServicePerimetersRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CommitServicePerimeters(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CommitServicePerimetersRequest const& request);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
                               CommitServicePerimetersResponse>>
-  CommitServicePerimeters(google::cloud::ExperimentalTag,
+  CommitServicePerimeters(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual StreamRange<
@@ -418,13 +418,13 @@ class AccessContextManagerConnection {
           CreateGcpUserAccessBindingRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateGcpUserAccessBindingRequest const& request);
 
   virtual future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  CreateGcpUserAccessBinding(google::cloud::ExperimentalTag,
+  CreateGcpUserAccessBinding(ExperimentalTag,
                              google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
@@ -434,13 +434,13 @@ class AccessContextManagerConnection {
           UpdateGcpUserAccessBindingRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateGcpUserAccessBindingRequest const& request);
 
   virtual future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  UpdateGcpUserAccessBinding(google::cloud::ExperimentalTag,
+  UpdateGcpUserAccessBinding(ExperimentalTag,
                              google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -450,13 +450,13 @@ class AccessContextManagerConnection {
           DeleteGcpUserAccessBindingRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteGcpUserAccessBindingRequest const& request);
 
   virtual future<StatusOr<google::identity::accesscontextmanager::v1::
                               GcpUserAccessBindingOperationMetadata>>
-  DeleteGcpUserAccessBinding(google::cloud::ExperimentalTag,
+  DeleteGcpUserAccessBinding(ExperimentalTag,
                              google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(

@@ -50,7 +50,7 @@ FeatureRegistryServiceTracingConnection::CreateFeatureGroup(
     google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureRegistryServiceConnection::CreateFeatureGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateFeatureGroup(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -105,7 +105,7 @@ FeatureRegistryServiceTracingConnection::UpdateFeatureGroup(
     google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureRegistryServiceConnection::UpdateFeatureGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateFeatureGroup(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -139,7 +139,7 @@ FeatureRegistryServiceTracingConnection::DeleteFeatureGroup(
     google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureRegistryServiceConnection::DeleteFeatureGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteFeatureGroup(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -172,7 +172,7 @@ FeatureRegistryServiceTracingConnection::CreateFeature(
     google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureRegistryServiceConnection::CreateFeature");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateFeature(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -225,7 +225,7 @@ FeatureRegistryServiceTracingConnection::UpdateFeature(
     google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureRegistryServiceConnection::UpdateFeature");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateFeature(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -258,7 +258,7 @@ FeatureRegistryServiceTracingConnection::DeleteFeature(
     google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureRegistryServiceConnection::DeleteFeature");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteFeature(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

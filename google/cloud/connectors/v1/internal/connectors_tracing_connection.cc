@@ -69,7 +69,7 @@ ConnectorsTracingConnection::CreateConnection(
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::CreateConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateConnection(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ ConnectorsTracingConnection::UpdateConnection(
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::UpdateConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateConnection(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ ConnectorsTracingConnection::DeleteConnection(
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::DeleteConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteConnection(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -242,7 +242,7 @@ ConnectorsTracingConnection::RefreshConnectionSchemaMetadata(
         request) {
   auto span = internal::MakeSpan(
       "connectors_v1::ConnectorsConnection::RefreshConnectionSchemaMetadata");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RefreshConnectionSchemaMetadata(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

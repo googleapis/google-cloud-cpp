@@ -103,7 +103,7 @@ FirewallsRestConnectionImpl::DeleteFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestConnectionImpl::DeleteFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -120,7 +120,7 @@ FirewallsRestConnectionImpl::DeleteFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestConnectionImpl::DeleteFirewall(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -249,7 +249,7 @@ FirewallsRestConnectionImpl::InsertFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestConnectionImpl::InsertFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -266,7 +266,7 @@ FirewallsRestConnectionImpl::InsertFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestConnectionImpl::InsertFirewall(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -413,7 +413,7 @@ FirewallsRestConnectionImpl::PatchFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestConnectionImpl::PatchFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -430,7 +430,7 @@ FirewallsRestConnectionImpl::PatchFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestConnectionImpl::PatchFirewall(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -542,7 +542,7 @@ FirewallsRestConnectionImpl::UpdateFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsRestConnectionImpl::UpdateFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -559,7 +559,7 @@ FirewallsRestConnectionImpl::UpdateFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsRestConnectionImpl::UpdateFirewall(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -21,7 +21,6 @@
 
 #include "google/cloud/servicehealth/v1/internal/service_health_retry_traits.h"
 #include "google/cloud/servicehealth/v1/service_health_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

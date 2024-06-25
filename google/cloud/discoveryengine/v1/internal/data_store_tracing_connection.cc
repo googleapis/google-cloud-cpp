@@ -48,7 +48,7 @@ DataStoreServiceTracingConnection::CreateDataStore(
     google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DataStoreServiceConnection::CreateDataStore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateDataStore(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ DataStoreServiceTracingConnection::DeleteDataStore(
     google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DataStoreServiceConnection::DeleteDataStore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteDataStore(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

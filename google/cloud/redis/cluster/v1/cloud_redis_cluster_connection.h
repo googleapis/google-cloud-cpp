@@ -21,11 +21,11 @@
 
 #include "google/cloud/redis/cluster/v1/cloud_redis_cluster_connection_idempotency_policy.h"
 #include "google/cloud/redis/cluster/v1/internal/cloud_redis_cluster_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,34 +199,33 @@ class CloudRedisClusterConnection {
       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  UpdateCluster(google::cloud::ExperimentalTag,
+  UpdateCluster(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::protobuf::Any>> DeleteCluster(
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request);
 
   virtual future<StatusOr<google::protobuf::Any>> DeleteCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
   CreateCluster(
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
-  CreateCluster(google::cloud::ExperimentalTag,
+  CreateCluster(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>

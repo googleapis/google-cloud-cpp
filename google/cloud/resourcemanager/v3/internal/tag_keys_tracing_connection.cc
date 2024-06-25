@@ -78,7 +78,7 @@ StatusOr<google::longrunning::Operation> TagKeysTracingConnection::CreateTagKey(
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::TagKeysConnection::CreateTagKey");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTagKey(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -110,7 +110,7 @@ StatusOr<google::longrunning::Operation> TagKeysTracingConnection::UpdateTagKey(
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::TagKeysConnection::UpdateTagKey");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTagKey(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -142,7 +142,7 @@ StatusOr<google::longrunning::Operation> TagKeysTracingConnection::DeleteTagKey(
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::TagKeysConnection::DeleteTagKey");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTagKey(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

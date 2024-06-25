@@ -46,7 +46,7 @@ FirewallsConnection::DeleteFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsConnection::DeleteFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,8 +54,7 @@ FirewallsConnection::DeleteFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsConnection::DeleteFirewall(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -77,7 +76,7 @@ FirewallsConnection::InsertFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsConnection::InsertFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -85,8 +84,7 @@ FirewallsConnection::InsertFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsConnection::InsertFirewall(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +108,7 @@ FirewallsConnection::PatchFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsConnection::PatchFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,8 +116,7 @@ FirewallsConnection::PatchFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsConnection::PatchFirewall(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -135,7 +132,7 @@ FirewallsConnection::UpdateFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsConnection::UpdateFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -143,8 +140,7 @@ FirewallsConnection::UpdateFirewall(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsConnection::UpdateFirewall(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

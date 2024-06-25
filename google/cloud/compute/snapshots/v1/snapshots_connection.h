@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/snapshots/v1/internal/snapshots_retry_traits.h"
 #include "google/cloud/compute/snapshots/v1/snapshots_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -191,12 +191,12 @@ class SnapshotsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshot(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSnapshot(google::cloud::ExperimentalTag,
+  DeleteSnapshot(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
@@ -213,12 +213,12 @@ class SnapshotsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshot(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSnapshot(google::cloud::ExperimentalTag,
+  InsertSnapshot(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
@@ -233,12 +233,12 @@ class SnapshotsConnection {
                 request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::ExperimentalTag,
+  SetLabels(ExperimentalTag,
             google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

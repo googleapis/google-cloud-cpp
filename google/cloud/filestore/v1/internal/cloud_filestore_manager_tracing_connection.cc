@@ -68,7 +68,7 @@ CloudFilestoreManagerTracingConnection::CreateInstance(
     google::cloud::filestore::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ CloudFilestoreManagerTracingConnection::UpdateInstance(
     google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ CloudFilestoreManagerTracingConnection::RestoreInstance(
     google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::RestoreInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RestoreInstance(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -167,7 +167,7 @@ CloudFilestoreManagerTracingConnection::RevertInstance(
     google::cloud::filestore::v1::RevertInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::RevertInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RevertInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -200,7 +200,7 @@ CloudFilestoreManagerTracingConnection::DeleteInstance(
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -253,7 +253,7 @@ CloudFilestoreManagerTracingConnection::CreateSnapshot(
     google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateSnapshot");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateSnapshot(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -286,7 +286,7 @@ CloudFilestoreManagerTracingConnection::DeleteSnapshot(
     google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteSnapshot");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSnapshot(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -319,7 +319,7 @@ CloudFilestoreManagerTracingConnection::UpdateSnapshot(
     google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateSnapshot");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateSnapshot(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -372,7 +372,7 @@ CloudFilestoreManagerTracingConnection::CreateBackup(
     google::cloud::filestore::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -405,7 +405,7 @@ CloudFilestoreManagerTracingConnection::DeleteBackup(
     google::cloud::filestore::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -438,7 +438,7 @@ CloudFilestoreManagerTracingConnection::UpdateBackup(
     google::cloud::filestore::v1::UpdateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

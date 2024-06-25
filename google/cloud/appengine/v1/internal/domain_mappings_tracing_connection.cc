@@ -69,7 +69,7 @@ DomainMappingsTracingConnection::CreateDomainMapping(
     google::appengine::v1::CreateDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::CreateDomainMapping");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateDomainMapping(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -103,7 +103,7 @@ DomainMappingsTracingConnection::UpdateDomainMapping(
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::UpdateDomainMapping");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDomainMapping(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -137,7 +137,7 @@ DomainMappingsTracingConnection::DeleteDomainMapping(
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::DeleteDomainMapping");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteDomainMapping(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

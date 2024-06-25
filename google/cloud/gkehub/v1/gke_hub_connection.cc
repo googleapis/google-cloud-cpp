@@ -72,14 +72,14 @@ GkeHubConnection::CreateMembership(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnection::CreateMembership(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::CreateMembershipRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
-GkeHubConnection::CreateMembership(google::cloud::ExperimentalTag,
+GkeHubConnection::CreateMembership(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkehub::v1::Membership>>(
@@ -95,14 +95,14 @@ GkeHubConnection::CreateFeature(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnection::CreateFeature(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::CreateFeatureRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
-GkeHubConnection::CreateFeature(google::cloud::ExperimentalTag,
+GkeHubConnection::CreateFeature(ExperimentalTag,
                                 google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkehub::v1::Feature>>(
@@ -118,14 +118,14 @@ GkeHubConnection::DeleteMembership(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnection::DeleteMembership(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::DeleteMembershipRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-GkeHubConnection::DeleteMembership(google::cloud::ExperimentalTag,
+GkeHubConnection::DeleteMembership(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
@@ -141,14 +141,14 @@ GkeHubConnection::DeleteFeature(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnection::DeleteFeature(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::DeleteFeatureRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-GkeHubConnection::DeleteFeature(google::cloud::ExperimentalTag,
+GkeHubConnection::DeleteFeature(ExperimentalTag,
                                 google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
@@ -164,14 +164,14 @@ GkeHubConnection::UpdateMembership(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnection::UpdateMembership(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::UpdateMembershipRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
-GkeHubConnection::UpdateMembership(google::cloud::ExperimentalTag,
+GkeHubConnection::UpdateMembership(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkehub::v1::Membership>>(
@@ -187,14 +187,14 @@ GkeHubConnection::UpdateFeature(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnection::UpdateFeature(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::UpdateFeatureRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
-GkeHubConnection::UpdateFeature(google::cloud::ExperimentalTag,
+GkeHubConnection::UpdateFeature(ExperimentalTag,
                                 google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkehub::v1::Feature>>(

@@ -51,7 +51,7 @@ RapidMigrationAssessmentConnection::CreateCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnection::CreateCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::
         CreateCollectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -60,7 +60,7 @@ RapidMigrationAssessmentConnection::CreateCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnection::CreateCollector(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -77,7 +77,7 @@ RapidMigrationAssessmentConnection::CreateAnnotation(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnection::CreateAnnotation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::
         CreateAnnotationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -86,7 +86,7 @@ RapidMigrationAssessmentConnection::CreateAnnotation(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
 RapidMigrationAssessmentConnection::CreateAnnotation(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -123,7 +123,7 @@ RapidMigrationAssessmentConnection::UpdateCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnection::UpdateCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::
         UpdateCollectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -132,7 +132,7 @@ RapidMigrationAssessmentConnection::UpdateCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnection::UpdateCollector(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -149,7 +149,7 @@ RapidMigrationAssessmentConnection::DeleteCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnection::DeleteCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::
         DeleteCollectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -158,7 +158,7 @@ RapidMigrationAssessmentConnection::DeleteCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnection::DeleteCollector(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -175,7 +175,7 @@ RapidMigrationAssessmentConnection::ResumeCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnection::ResumeCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::
         ResumeCollectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -184,7 +184,7 @@ RapidMigrationAssessmentConnection::ResumeCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnection::ResumeCollector(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -201,7 +201,7 @@ RapidMigrationAssessmentConnection::RegisterCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnection::RegisterCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::
         RegisterCollectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -210,7 +210,7 @@ RapidMigrationAssessmentConnection::RegisterCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnection::RegisterCollector(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -226,7 +226,7 @@ RapidMigrationAssessmentConnection::PauseCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnection::PauseCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -234,7 +234,7 @@ RapidMigrationAssessmentConnection::PauseCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnection::PauseCollector(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

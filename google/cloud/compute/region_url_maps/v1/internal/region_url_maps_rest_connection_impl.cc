@@ -106,7 +106,7 @@ RegionUrlMapsRestConnectionImpl::DeleteUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestConnectionImpl::DeleteUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_url_maps::v1::DeleteUrlMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -123,7 +123,7 @@ RegionUrlMapsRestConnectionImpl::DeleteUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsRestConnectionImpl::DeleteUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -255,7 +255,7 @@ RegionUrlMapsRestConnectionImpl::InsertUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestConnectionImpl::InsertUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_url_maps::v1::InsertUrlMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -272,7 +272,7 @@ RegionUrlMapsRestConnectionImpl::InsertUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsRestConnectionImpl::InsertUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -425,7 +425,7 @@ RegionUrlMapsRestConnectionImpl::PatchUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestConnectionImpl::PatchUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_url_maps::v1::PatchUrlMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -442,7 +442,7 @@ RegionUrlMapsRestConnectionImpl::PatchUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsRestConnectionImpl::PatchUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -558,7 +558,7 @@ RegionUrlMapsRestConnectionImpl::UpdateUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsRestConnectionImpl::UpdateUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_url_maps::v1::UpdateUrlMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -575,7 +575,7 @@ RegionUrlMapsRestConnectionImpl::UpdateUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsRestConnectionImpl::UpdateUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

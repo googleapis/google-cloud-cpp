@@ -47,7 +47,7 @@ NodeGroupControllerTracingConnection::CreateNodeGroup(
     google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::CreateNodeGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateNodeGroup(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -80,7 +80,7 @@ NodeGroupControllerTracingConnection::ResizeNodeGroup(
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::ResizeNodeGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ResizeNodeGroup(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

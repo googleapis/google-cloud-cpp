@@ -21,7 +21,6 @@
 
 #include "google/cloud/compute/machine_types/v1/internal/machine_types_retry_traits.h"
 #include "google/cloud/compute/machine_types/v1/machine_types_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

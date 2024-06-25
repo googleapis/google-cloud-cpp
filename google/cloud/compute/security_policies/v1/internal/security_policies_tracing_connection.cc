@@ -51,7 +51,7 @@ SecurityPoliciesTracingConnection::AddRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::AddRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddRule(google::cloud::ExperimentalTag{},
                              google::cloud::NoAwaitTag{}, request));
@@ -105,7 +105,7 @@ SecurityPoliciesTracingConnection::DeleteSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::"
       "DeleteSecurityPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteSecurityPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -165,7 +165,7 @@ SecurityPoliciesTracingConnection::InsertSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::"
       "InsertSecurityPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertSecurityPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -231,7 +231,7 @@ SecurityPoliciesTracingConnection::PatchSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::"
       "PatchSecurityPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchSecurityPolicy(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -267,7 +267,7 @@ SecurityPoliciesTracingConnection::PatchRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::PatchRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchRule(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -302,7 +302,7 @@ SecurityPoliciesTracingConnection::RemoveRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::RemoveRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemoveRule(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -337,7 +337,7 @@ SecurityPoliciesTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_security_policies_v1::SecurityPoliciesConnection::SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

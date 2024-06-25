@@ -62,7 +62,7 @@ VmwareEngineConnection::CreatePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreatePrivateCloud(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ VmwareEngineConnection::CreatePrivateCloud(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnection::CreatePrivateCloud(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ VmwareEngineConnection::UpdatePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdatePrivateCloud(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ VmwareEngineConnection::UpdatePrivateCloud(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnection::UpdatePrivateCloud(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ VmwareEngineConnection::DeletePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::DeletePrivateCloud(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ VmwareEngineConnection::DeletePrivateCloud(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnection::DeletePrivateCloud(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,7 +134,7 @@ VmwareEngineConnection::UndeletePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UndeletePrivateCloud(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,7 +142,7 @@ VmwareEngineConnection::UndeletePrivateCloud(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnection::UndeletePrivateCloud(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -171,14 +171,14 @@ VmwareEngineConnection::CreateCluster(
 }
 
 StatusOr<google::longrunning::Operation> VmwareEngineConnection::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
-VmwareEngineConnection::CreateCluster(google::cloud::ExperimentalTag,
+VmwareEngineConnection::CreateCluster(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::Cluster>>(
@@ -194,14 +194,14 @@ VmwareEngineConnection::UpdateCluster(
 }
 
 StatusOr<google::longrunning::Operation> VmwareEngineConnection::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
-VmwareEngineConnection::UpdateCluster(google::cloud::ExperimentalTag,
+VmwareEngineConnection::UpdateCluster(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::Cluster>>(
@@ -217,14 +217,14 @@ VmwareEngineConnection::DeleteCluster(
 }
 
 StatusOr<google::longrunning::Operation> VmwareEngineConnection::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-VmwareEngineConnection::DeleteCluster(google::cloud::ExperimentalTag,
+VmwareEngineConnection::DeleteCluster(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
@@ -276,7 +276,7 @@ VmwareEngineConnection::CreateExternalAddress(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreateExternalAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -284,7 +284,7 @@ VmwareEngineConnection::CreateExternalAddress(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
 VmwareEngineConnection::CreateExternalAddress(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -300,7 +300,7 @@ VmwareEngineConnection::UpdateExternalAddress(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdateExternalAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -308,7 +308,7 @@ VmwareEngineConnection::UpdateExternalAddress(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
 VmwareEngineConnection::UpdateExternalAddress(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -324,7 +324,7 @@ VmwareEngineConnection::DeleteExternalAddress(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::DeleteExternalAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -332,7 +332,7 @@ VmwareEngineConnection::DeleteExternalAddress(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnection::DeleteExternalAddress(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -361,14 +361,14 @@ VmwareEngineConnection::UpdateSubnet(
 }
 
 StatusOr<google::longrunning::Operation> VmwareEngineConnection::UpdateSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
-VmwareEngineConnection::UpdateSubnet(google::cloud::ExperimentalTag,
+VmwareEngineConnection::UpdateSubnet(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::Subnet>>(
@@ -399,7 +399,7 @@ VmwareEngineConnection::CreateExternalAccessRule(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreateExternalAccessRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -407,7 +407,7 @@ VmwareEngineConnection::CreateExternalAccessRule(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
 VmwareEngineConnection::CreateExternalAccessRule(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -423,7 +423,7 @@ VmwareEngineConnection::UpdateExternalAccessRule(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdateExternalAccessRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -431,7 +431,7 @@ VmwareEngineConnection::UpdateExternalAccessRule(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
 VmwareEngineConnection::UpdateExternalAccessRule(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -447,7 +447,7 @@ VmwareEngineConnection::DeleteExternalAccessRule(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::DeleteExternalAccessRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -455,7 +455,7 @@ VmwareEngineConnection::DeleteExternalAccessRule(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnection::DeleteExternalAccessRule(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -485,7 +485,7 @@ VmwareEngineConnection::CreateLoggingServer(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreateLoggingServer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -493,7 +493,7 @@ VmwareEngineConnection::CreateLoggingServer(
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
 VmwareEngineConnection::CreateLoggingServer(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -509,7 +509,7 @@ VmwareEngineConnection::UpdateLoggingServer(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdateLoggingServer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -517,7 +517,7 @@ VmwareEngineConnection::UpdateLoggingServer(
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
 VmwareEngineConnection::UpdateLoggingServer(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -533,7 +533,7 @@ VmwareEngineConnection::DeleteLoggingServer(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::DeleteLoggingServer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -541,7 +541,7 @@ VmwareEngineConnection::DeleteLoggingServer(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnection::DeleteLoggingServer(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -583,7 +583,7 @@ VmwareEngineConnection::ResetNsxCredentials(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::ResetNsxCredentials(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -591,7 +591,7 @@ VmwareEngineConnection::ResetNsxCredentials(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnection::ResetNsxCredentials(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -607,7 +607,7 @@ VmwareEngineConnection::ResetVcenterCredentials(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::ResetVcenterCredentials(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -615,7 +615,7 @@ VmwareEngineConnection::ResetVcenterCredentials(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnection::ResetVcenterCredentials(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -637,7 +637,7 @@ VmwareEngineConnection::UpdateDnsForwarding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdateDnsForwarding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -645,7 +645,7 @@ VmwareEngineConnection::UpdateDnsForwarding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
 VmwareEngineConnection::UpdateDnsForwarding(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -675,7 +675,7 @@ VmwareEngineConnection::CreateNetworkPeering(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreateNetworkPeering(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -683,7 +683,7 @@ VmwareEngineConnection::CreateNetworkPeering(
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
 VmwareEngineConnection::CreateNetworkPeering(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -699,7 +699,7 @@ VmwareEngineConnection::DeleteNetworkPeering(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::DeleteNetworkPeering(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -707,7 +707,7 @@ VmwareEngineConnection::DeleteNetworkPeering(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnection::DeleteNetworkPeering(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -723,7 +723,7 @@ VmwareEngineConnection::UpdateNetworkPeering(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdateNetworkPeering(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -731,7 +731,7 @@ VmwareEngineConnection::UpdateNetworkPeering(
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
 VmwareEngineConnection::UpdateNetworkPeering(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -755,7 +755,7 @@ VmwareEngineConnection::CreateHcxActivationKey(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreateHcxActivationKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -763,7 +763,7 @@ VmwareEngineConnection::CreateHcxActivationKey(
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
 VmwareEngineConnection::CreateHcxActivationKey(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -807,7 +807,7 @@ VmwareEngineConnection::CreateNetworkPolicy(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreateNetworkPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -815,7 +815,7 @@ VmwareEngineConnection::CreateNetworkPolicy(
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineConnection::CreateNetworkPolicy(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -831,7 +831,7 @@ VmwareEngineConnection::UpdateNetworkPolicy(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdateNetworkPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -839,7 +839,7 @@ VmwareEngineConnection::UpdateNetworkPolicy(
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineConnection::UpdateNetworkPolicy(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -855,7 +855,7 @@ VmwareEngineConnection::DeleteNetworkPolicy(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::DeleteNetworkPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -863,7 +863,7 @@ VmwareEngineConnection::DeleteNetworkPolicy(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnection::DeleteNetworkPolicy(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -895,7 +895,7 @@ VmwareEngineConnection::CreateManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreateManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::
         CreateManagementDnsZoneBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -904,7 +904,7 @@ VmwareEngineConnection::CreateManagementDnsZoneBinding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineConnection::CreateManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -921,7 +921,7 @@ VmwareEngineConnection::UpdateManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdateManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::
         UpdateManagementDnsZoneBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -930,7 +930,7 @@ VmwareEngineConnection::UpdateManagementDnsZoneBinding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineConnection::UpdateManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -947,7 +947,7 @@ VmwareEngineConnection::DeleteManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::DeleteManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::
         DeleteManagementDnsZoneBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -956,7 +956,7 @@ VmwareEngineConnection::DeleteManagementDnsZoneBinding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnection::DeleteManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -973,7 +973,7 @@ VmwareEngineConnection::RepairManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::RepairManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::
         RepairManagementDnsZoneBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -982,7 +982,7 @@ VmwareEngineConnection::RepairManagementDnsZoneBinding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineConnection::RepairManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -998,7 +998,7 @@ VmwareEngineConnection::CreateVmwareEngineNetwork(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreateVmwareEngineNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1006,7 +1006,7 @@ VmwareEngineConnection::CreateVmwareEngineNetwork(
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineConnection::CreateVmwareEngineNetwork(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1022,7 +1022,7 @@ VmwareEngineConnection::UpdateVmwareEngineNetwork(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdateVmwareEngineNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1030,7 +1030,7 @@ VmwareEngineConnection::UpdateVmwareEngineNetwork(
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineConnection::UpdateVmwareEngineNetwork(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1046,7 +1046,7 @@ VmwareEngineConnection::DeleteVmwareEngineNetwork(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::DeleteVmwareEngineNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1054,7 +1054,7 @@ VmwareEngineConnection::DeleteVmwareEngineNetwork(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnection::DeleteVmwareEngineNetwork(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1084,7 +1084,7 @@ VmwareEngineConnection::CreatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::CreatePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1092,7 +1092,7 @@ VmwareEngineConnection::CreatePrivateConnection(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
 VmwareEngineConnection::CreatePrivateConnection(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1122,7 +1122,7 @@ VmwareEngineConnection::UpdatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::UpdatePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1130,7 +1130,7 @@ VmwareEngineConnection::UpdatePrivateConnection(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
 VmwareEngineConnection::UpdatePrivateConnection(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1146,7 +1146,7 @@ VmwareEngineConnection::DeletePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::DeletePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1154,7 +1154,7 @@ VmwareEngineConnection::DeletePrivateConnection(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnection::DeletePrivateConnection(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1178,7 +1178,7 @@ VmwareEngineConnection::GrantDnsBindPermission(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::GrantDnsBindPermission(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1186,7 +1186,7 @@ VmwareEngineConnection::GrantDnsBindPermission(
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
 VmwareEngineConnection::GrantDnsBindPermission(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1208,7 +1208,7 @@ VmwareEngineConnection::RevokeDnsBindPermission(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnection::RevokeDnsBindPermission(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1216,7 +1216,7 @@ VmwareEngineConnection::RevokeDnsBindPermission(
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
 VmwareEngineConnection::RevokeDnsBindPermission(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

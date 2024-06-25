@@ -62,7 +62,7 @@ CertificateManagerConnection::CreateCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::CreateCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::CreateCertificateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ CertificateManagerConnection::CreateCertificate(
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
 CertificateManagerConnection::CreateCertificate(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::Certificate>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ CertificateManagerConnection::UpdateCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::UpdateCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::UpdateCertificateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ CertificateManagerConnection::UpdateCertificate(
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
 CertificateManagerConnection::UpdateCertificate(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::Certificate>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ CertificateManagerConnection::DeleteCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::DeleteCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::DeleteCertificateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ CertificateManagerConnection::DeleteCertificate(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnection::DeleteCertificate(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -148,7 +148,7 @@ CertificateManagerConnection::CreateCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::CreateCertificateMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -156,7 +156,7 @@ CertificateManagerConnection::CreateCertificateMap(
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
 CertificateManagerConnection::CreateCertificateMap(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -172,7 +172,7 @@ CertificateManagerConnection::UpdateCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::UpdateCertificateMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -180,7 +180,7 @@ CertificateManagerConnection::UpdateCertificateMap(
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
 CertificateManagerConnection::UpdateCertificateMap(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -196,7 +196,7 @@ CertificateManagerConnection::DeleteCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::DeleteCertificateMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -204,7 +204,7 @@ CertificateManagerConnection::DeleteCertificateMap(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnection::DeleteCertificateMap(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -236,7 +236,7 @@ CertificateManagerConnection::CreateCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::CreateCertificateMapEntry(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::
         CreateCertificateMapEntryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -245,7 +245,7 @@ CertificateManagerConnection::CreateCertificateMapEntry(
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
 CertificateManagerConnection::CreateCertificateMapEntry(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -262,7 +262,7 @@ CertificateManagerConnection::UpdateCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::UpdateCertificateMapEntry(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::
         UpdateCertificateMapEntryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -271,7 +271,7 @@ CertificateManagerConnection::UpdateCertificateMapEntry(
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
 CertificateManagerConnection::UpdateCertificateMapEntry(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -288,7 +288,7 @@ CertificateManagerConnection::DeleteCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::DeleteCertificateMapEntry(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::
         DeleteCertificateMapEntryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -297,7 +297,7 @@ CertificateManagerConnection::DeleteCertificateMapEntry(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnection::DeleteCertificateMapEntry(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -328,7 +328,7 @@ CertificateManagerConnection::CreateDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::CreateDnsAuthorization(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::
         CreateDnsAuthorizationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -337,7 +337,7 @@ CertificateManagerConnection::CreateDnsAuthorization(
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
 CertificateManagerConnection::CreateDnsAuthorization(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -354,7 +354,7 @@ CertificateManagerConnection::UpdateDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::UpdateDnsAuthorization(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::
         UpdateDnsAuthorizationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -363,7 +363,7 @@ CertificateManagerConnection::UpdateDnsAuthorization(
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
 CertificateManagerConnection::UpdateDnsAuthorization(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -380,7 +380,7 @@ CertificateManagerConnection::DeleteDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::DeleteDnsAuthorization(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::
         DeleteDnsAuthorizationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -389,7 +389,7 @@ CertificateManagerConnection::DeleteDnsAuthorization(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnection::DeleteDnsAuthorization(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -422,7 +422,7 @@ CertificateManagerConnection::CreateCertificateIssuanceConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::CreateCertificateIssuanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::
         CreateCertificateIssuanceConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -432,7 +432,7 @@ CertificateManagerConnection::CreateCertificateIssuanceConfig(
 future<
     StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
 CertificateManagerConnection::CreateCertificateIssuanceConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -449,7 +449,7 @@ CertificateManagerConnection::DeleteCertificateIssuanceConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::DeleteCertificateIssuanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::
         DeleteCertificateIssuanceConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -458,7 +458,7 @@ CertificateManagerConnection::DeleteCertificateIssuanceConfig(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnection::DeleteCertificateIssuanceConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -488,7 +488,7 @@ CertificateManagerConnection::CreateTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::CreateTrustConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -496,7 +496,7 @@ CertificateManagerConnection::CreateTrustConfig(
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
 CertificateManagerConnection::CreateTrustConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -512,7 +512,7 @@ CertificateManagerConnection::UpdateTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::UpdateTrustConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -520,7 +520,7 @@ CertificateManagerConnection::UpdateTrustConfig(
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
 CertificateManagerConnection::UpdateTrustConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -536,7 +536,7 @@ CertificateManagerConnection::DeleteTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnection::DeleteTrustConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -544,7 +544,7 @@ CertificateManagerConnection::DeleteTrustConfig(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnection::DeleteTrustConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/routers/v1/internal/routers_retry_traits.h"
 #include "google/cloud/compute/routers/v1/routers_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -195,12 +195,12 @@ class RoutersConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteRouter(google::cloud::ExperimentalTag,
+  DeleteRouter(ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
@@ -228,12 +228,12 @@ class RoutersConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertRouter(google::cloud::ExperimentalTag,
+  InsertRouter(ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
@@ -245,12 +245,12 @@ class RoutersConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRouter(google::cloud::ExperimentalTag,
+  PatchRouter(ExperimentalTag,
               google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
@@ -263,12 +263,12 @@ class RoutersConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateRouter(google::cloud::ExperimentalTag,
+  UpdateRouter(ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

@@ -62,7 +62,7 @@ NotebookServiceConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ NotebookServiceConnection::CreateInstance(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::CreateInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ NotebookServiceConnection::RegisterInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::RegisterInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::RegisterInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ NotebookServiceConnection::RegisterInstance(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::RegisterInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ NotebookServiceConnection::SetInstanceAccelerator(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::SetInstanceAccelerator(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ NotebookServiceConnection::SetInstanceAccelerator(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::SetInstanceAccelerator(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,7 +134,7 @@ NotebookServiceConnection::SetInstanceMachineType(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::SetInstanceMachineType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,7 +142,7 @@ NotebookServiceConnection::SetInstanceMachineType(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::SetInstanceMachineType(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -158,7 +158,7 @@ NotebookServiceConnection::UpdateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::UpdateInstanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpdateInstanceConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -166,7 +166,7 @@ NotebookServiceConnection::UpdateInstanceConfig(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::UpdateInstanceConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -182,7 +182,7 @@ NotebookServiceConnection::UpdateShieldedInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::UpdateShieldedInstanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -190,7 +190,7 @@ NotebookServiceConnection::UpdateShieldedInstanceConfig(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::UpdateShieldedInstanceConfig(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -206,7 +206,7 @@ NotebookServiceConnection::SetInstanceLabels(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::SetInstanceLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::SetInstanceLabelsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -214,7 +214,7 @@ NotebookServiceConnection::SetInstanceLabels(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::SetInstanceLabels(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -236,7 +236,7 @@ NotebookServiceConnection::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -244,7 +244,7 @@ NotebookServiceConnection::DeleteInstance(
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnection::DeleteInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -260,7 +260,7 @@ NotebookServiceConnection::StartInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::StartInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::StartInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -268,7 +268,7 @@ NotebookServiceConnection::StartInstance(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::StartInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -284,14 +284,14 @@ NotebookServiceConnection::StopInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::StopInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::StopInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
-NotebookServiceConnection::StopInstance(google::cloud::ExperimentalTag,
+NotebookServiceConnection::StopInstance(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
@@ -308,7 +308,7 @@ NotebookServiceConnection::ResetInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::ResetInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::ResetInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -316,7 +316,7 @@ NotebookServiceConnection::ResetInstance(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::ResetInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -332,7 +332,7 @@ NotebookServiceConnection::ReportInstanceInfo(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::ReportInstanceInfo(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::ReportInstanceInfoRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -340,7 +340,7 @@ NotebookServiceConnection::ReportInstanceInfo(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::ReportInstanceInfo(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -368,7 +368,7 @@ NotebookServiceConnection::UpgradeInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::UpgradeInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpgradeInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -376,7 +376,7 @@ NotebookServiceConnection::UpgradeInstance(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::UpgradeInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -392,7 +392,7 @@ NotebookServiceConnection::RollbackInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::RollbackInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::RollbackInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -400,7 +400,7 @@ NotebookServiceConnection::RollbackInstance(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::RollbackInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -416,7 +416,7 @@ NotebookServiceConnection::DiagnoseInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::DiagnoseInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DiagnoseInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -424,7 +424,7 @@ NotebookServiceConnection::DiagnoseInstance(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::DiagnoseInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -440,7 +440,7 @@ NotebookServiceConnection::UpgradeInstanceInternal(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::UpgradeInstanceInternal(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -448,7 +448,7 @@ NotebookServiceConnection::UpgradeInstanceInternal(
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::UpgradeInstanceInternal(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -478,7 +478,7 @@ NotebookServiceConnection::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::CreateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -486,7 +486,7 @@ NotebookServiceConnection::CreateEnvironment(
 
 future<StatusOr<google::cloud::notebooks::v1::Environment>>
 NotebookServiceConnection::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Environment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -502,7 +502,7 @@ NotebookServiceConnection::DeleteEnvironment(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::DeleteEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DeleteEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -510,7 +510,7 @@ NotebookServiceConnection::DeleteEnvironment(
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnection::DeleteEnvironment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -540,7 +540,7 @@ NotebookServiceConnection::DeleteSchedule(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::DeleteSchedule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DeleteScheduleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -548,7 +548,7 @@ NotebookServiceConnection::DeleteSchedule(
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnection::DeleteSchedule(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -564,7 +564,7 @@ NotebookServiceConnection::CreateSchedule(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::CreateSchedule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::CreateScheduleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -572,7 +572,7 @@ NotebookServiceConnection::CreateSchedule(
 
 future<StatusOr<google::cloud::notebooks::v1::Schedule>>
 NotebookServiceConnection::CreateSchedule(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Schedule>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -588,7 +588,7 @@ NotebookServiceConnection::TriggerSchedule(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::TriggerSchedule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::TriggerScheduleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -596,7 +596,7 @@ NotebookServiceConnection::TriggerSchedule(
 
 future<StatusOr<google::cloud::notebooks::v1::Schedule>>
 NotebookServiceConnection::TriggerSchedule(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Schedule>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -626,7 +626,7 @@ NotebookServiceConnection::DeleteExecution(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::DeleteExecution(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DeleteExecutionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -634,7 +634,7 @@ NotebookServiceConnection::DeleteExecution(
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceConnection::DeleteExecution(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -650,7 +650,7 @@ NotebookServiceConnection::CreateExecution(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnection::CreateExecution(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::CreateExecutionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -658,7 +658,7 @@ NotebookServiceConnection::CreateExecution(
 
 future<StatusOr<google::cloud::notebooks::v1::Execution>>
 NotebookServiceConnection::CreateExecution(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Execution>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

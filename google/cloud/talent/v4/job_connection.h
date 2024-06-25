@@ -21,11 +21,11 @@
 
 #include "google/cloud/talent/v4/internal/job_retry_traits.h"
 #include "google/cloud/talent/v4/job_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -194,11 +194,11 @@ class JobServiceConnection {
       google::cloud::talent::v4::BatchCreateJobsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> BatchCreateJobs(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchCreateJobsRequest const& request);
 
   virtual future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(google::cloud::ExperimentalTag,
+  BatchCreateJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::talent::v4::Job> GetJob(
@@ -212,11 +212,11 @@ class JobServiceConnection {
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> BatchUpdateJobs(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request);
 
   virtual future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(google::cloud::ExperimentalTag,
+  BatchUpdateJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual Status DeleteJob(
@@ -227,11 +227,11 @@ class JobServiceConnection {
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> BatchDeleteJobs(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request);
 
   virtual future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(google::cloud::ExperimentalTag,
+  BatchDeleteJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::talent::v4::Job> ListJobs(

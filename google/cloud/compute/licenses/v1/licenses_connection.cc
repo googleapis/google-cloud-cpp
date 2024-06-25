@@ -46,7 +46,7 @@ LicensesConnection::DeleteLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesConnection::DeleteLicense(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,8 +54,7 @@ LicensesConnection::DeleteLicense(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::DeleteLicense(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,7 +82,7 @@ LicensesConnection::InsertLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesConnection::InsertLicense(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -91,8 +90,7 @@ LicensesConnection::InsertLicense(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesConnection::InsertLicense(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

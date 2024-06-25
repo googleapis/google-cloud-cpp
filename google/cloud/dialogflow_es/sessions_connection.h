@@ -21,7 +21,6 @@
 
 #include "google/cloud/dialogflow_es/internal/sessions_retry_traits.h"
 #include "google/cloud/dialogflow_es/sessions_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"

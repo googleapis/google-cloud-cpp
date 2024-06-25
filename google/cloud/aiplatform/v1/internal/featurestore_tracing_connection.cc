@@ -49,7 +49,7 @@ FeaturestoreServiceTracingConnection::CreateFeaturestore(
     google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateFeaturestore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateFeaturestore(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -104,7 +104,7 @@ FeaturestoreServiceTracingConnection::UpdateFeaturestore(
     google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::UpdateFeaturestore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateFeaturestore(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -138,7 +138,7 @@ FeaturestoreServiceTracingConnection::DeleteFeaturestore(
     google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeaturestore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteFeaturestore(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -171,7 +171,7 @@ FeaturestoreServiceTracingConnection::CreateEntityType(
     google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateEntityType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEntityType(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ FeaturestoreServiceTracingConnection::DeleteEntityType(
     google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteEntityType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteEntityType(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -267,7 +267,7 @@ FeaturestoreServiceTracingConnection::CreateFeature(
     google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::CreateFeature");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateFeature(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -301,7 +301,7 @@ FeaturestoreServiceTracingConnection::BatchCreateFeatures(
     google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::BatchCreateFeatures");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchCreateFeatures(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -363,7 +363,7 @@ FeaturestoreServiceTracingConnection::DeleteFeature(
     google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeature");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteFeature(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -397,7 +397,7 @@ FeaturestoreServiceTracingConnection::ImportFeatureValues(
     google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::ImportFeatureValues");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportFeatureValues(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -433,7 +433,7 @@ FeaturestoreServiceTracingConnection::BatchReadFeatureValues(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::BatchReadFeatureValues");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchReadFeatureValues(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -467,7 +467,7 @@ FeaturestoreServiceTracingConnection::ExportFeatureValues(
     google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::ExportFeatureValues");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportFeatureValues(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -501,7 +501,7 @@ FeaturestoreServiceTracingConnection::DeleteFeatureValues(
     google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeaturestoreServiceConnection::DeleteFeatureValues");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteFeatureValues(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

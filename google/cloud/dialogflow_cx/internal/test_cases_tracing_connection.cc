@@ -96,7 +96,7 @@ TestCasesTracingConnection::RunTestCase(
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::TestCasesConnection::RunTestCase");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RunTestCase(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -131,7 +131,7 @@ TestCasesTracingConnection::BatchRunTestCases(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::TestCasesConnection::BatchRunTestCases");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchRunTestCases(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -174,7 +174,7 @@ TestCasesTracingConnection::ImportTestCases(
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::TestCasesConnection::ImportTestCases");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportTestCases(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -207,7 +207,7 @@ TestCasesTracingConnection::ExportTestCases(
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::TestCasesConnection::ExportTestCases");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportTestCases(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

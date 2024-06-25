@@ -64,7 +64,7 @@ SnapshotSettingsTracingConnection::PatchSnapshotSettings(
   auto span = internal::MakeSpan(
       "compute_snapshot_settings_v1::SnapshotSettingsConnection::"
       "PatchSnapshotSettings");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchSnapshotSettings(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

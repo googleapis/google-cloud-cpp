@@ -50,7 +50,7 @@ AssuredWorkloadsServiceTracingConnection::CreateWorkload(
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   auto span = internal::MakeSpan(
       "assuredworkloads_v1::AssuredWorkloadsServiceConnection::CreateWorkload");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateWorkload(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

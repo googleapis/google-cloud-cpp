@@ -166,7 +166,7 @@ RegionCommitmentsRestConnectionImpl::InsertCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsRestConnectionImpl::InsertCommitment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_commitments::v1::
         InsertCommitmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -183,7 +183,7 @@ RegionCommitmentsRestConnectionImpl::InsertCommitment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsRestConnectionImpl::InsertCommitment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -339,7 +339,7 @@ RegionCommitmentsRestConnectionImpl::UpdateCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsRestConnectionImpl::UpdateCommitment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_commitments::v1::
         UpdateCommitmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -356,7 +356,7 @@ RegionCommitmentsRestConnectionImpl::UpdateCommitment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsRestConnectionImpl::UpdateCommitment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

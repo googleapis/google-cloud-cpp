@@ -109,7 +109,7 @@ RegionInstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_instance_templates::v1::
         DeleteInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -126,7 +126,7 @@ RegionInstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -258,7 +258,7 @@ RegionInstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_instance_templates::v1::
         InsertInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -275,7 +275,7 @@ RegionInstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

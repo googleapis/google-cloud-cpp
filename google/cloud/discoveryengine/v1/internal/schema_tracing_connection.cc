@@ -69,7 +69,7 @@ SchemaServiceTracingConnection::CreateSchema(
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::CreateSchema");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateSchema(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ SchemaServiceTracingConnection::UpdateSchema(
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::UpdateSchema");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateSchema(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ SchemaServiceTracingConnection::DeleteSchema(
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::DeleteSchema");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSchema(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

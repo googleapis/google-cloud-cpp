@@ -48,7 +48,7 @@ RepositoryManagerTracingConnection::CreateConnection(
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::CreateConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateConnection(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ RepositoryManagerTracingConnection::UpdateConnection(
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::UpdateConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateConnection(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ RepositoryManagerTracingConnection::DeleteConnection(
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::DeleteConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteConnection(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -168,7 +168,7 @@ RepositoryManagerTracingConnection::CreateRepository(
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::CreateRepository");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRepository(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -205,7 +205,7 @@ RepositoryManagerTracingConnection::BatchCreateRepositories(
         request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::BatchCreateRepositories");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchCreateRepositories(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -260,7 +260,7 @@ RepositoryManagerTracingConnection::DeleteRepository(
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v2::RepositoryManagerConnection::DeleteRepository");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRepository(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -46,7 +46,7 @@ SnapshotsConnection::DeleteSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotsConnection::DeleteSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,8 +54,7 @@ SnapshotsConnection::DeleteSnapshot(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsConnection::DeleteSnapshot(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,7 +82,7 @@ SnapshotsConnection::InsertSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotsConnection::InsertSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -91,8 +90,7 @@ SnapshotsConnection::InsertSnapshot(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsConnection::InsertSnapshot(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -122,7 +120,7 @@ SnapshotsConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotsConnection::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -130,8 +128,7 @@ SnapshotsConnection::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsConnection::SetLabels(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

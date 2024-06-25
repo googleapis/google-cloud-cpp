@@ -49,7 +49,7 @@ GlobalNetworkEndpointGroupsConnection::AttachNetworkEndpoints(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalNetworkEndpointGroupsConnection::AttachNetworkEndpoints(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         AttachNetworkEndpointsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -58,8 +58,7 @@ GlobalNetworkEndpointGroupsConnection::AttachNetworkEndpoints(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsConnection::AttachNetworkEndpoints(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -76,7 +75,7 @@ GlobalNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         DeleteNetworkEndpointGroupRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -85,8 +84,7 @@ GlobalNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -103,7 +101,7 @@ GlobalNetworkEndpointGroupsConnection::DetachNetworkEndpoints(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalNetworkEndpointGroupsConnection::DetachNetworkEndpoints(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         DetachNetworkEndpointsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -112,8 +110,7 @@ GlobalNetworkEndpointGroupsConnection::DetachNetworkEndpoints(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsConnection::DetachNetworkEndpoints(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -137,7 +134,7 @@ GlobalNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         InsertNetworkEndpointGroupRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -146,8 +143,7 @@ GlobalNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

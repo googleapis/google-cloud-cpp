@@ -48,7 +48,7 @@ TagHoldsTracingConnection::CreateTagHold(
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::CreateTagHold");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTagHold(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -81,7 +81,7 @@ TagHoldsTracingConnection::DeleteTagHold(
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::DeleteTagHold");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTagHold(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

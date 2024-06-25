@@ -55,7 +55,7 @@ DocumentProcessorServiceConnection::BatchProcessDocuments(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::BatchProcessDocuments(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::BatchProcessRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -63,7 +63,7 @@ DocumentProcessorServiceConnection::BatchProcessDocuments(
 
 future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
 DocumentProcessorServiceConnection::BatchProcessDocuments(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -113,7 +113,7 @@ DocumentProcessorServiceConnection::TrainProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::TrainProcessorVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::TrainProcessorVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -121,7 +121,7 @@ DocumentProcessorServiceConnection::TrainProcessorVersion(
 
 future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
 DocumentProcessorServiceConnection::TrainProcessorVersion(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -151,7 +151,7 @@ DocumentProcessorServiceConnection::DeleteProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::DeleteProcessorVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::DeleteProcessorVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -159,7 +159,7 @@ DocumentProcessorServiceConnection::DeleteProcessorVersion(
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
 DocumentProcessorServiceConnection::DeleteProcessorVersion(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -175,7 +175,7 @@ DocumentProcessorServiceConnection::DeployProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::DeployProcessorVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::DeployProcessorVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -183,7 +183,7 @@ DocumentProcessorServiceConnection::DeployProcessorVersion(
 
 future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
 DocumentProcessorServiceConnection::DeployProcessorVersion(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -200,7 +200,7 @@ DocumentProcessorServiceConnection::UndeployProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::UndeployProcessorVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::UndeployProcessorVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -209,7 +209,7 @@ DocumentProcessorServiceConnection::UndeployProcessorVersion(
 future<
     StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
 DocumentProcessorServiceConnection::UndeployProcessorVersion(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::documentai::v1::UndeployProcessorVersionResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -231,7 +231,7 @@ DocumentProcessorServiceConnection::DeleteProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::DeleteProcessor(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::DeleteProcessorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -239,7 +239,7 @@ DocumentProcessorServiceConnection::DeleteProcessor(
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
 DocumentProcessorServiceConnection::DeleteProcessor(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -255,7 +255,7 @@ DocumentProcessorServiceConnection::EnableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::EnableProcessor(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::EnableProcessorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -263,7 +263,7 @@ DocumentProcessorServiceConnection::EnableProcessor(
 
 future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
 DocumentProcessorServiceConnection::EnableProcessor(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -279,7 +279,7 @@ DocumentProcessorServiceConnection::DisableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::DisableProcessor(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::DisableProcessorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -287,7 +287,7 @@ DocumentProcessorServiceConnection::DisableProcessor(
 
 future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
 DocumentProcessorServiceConnection::DisableProcessor(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -304,7 +304,7 @@ DocumentProcessorServiceConnection::SetDefaultProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::SetDefaultProcessorVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -313,7 +313,7 @@ DocumentProcessorServiceConnection::SetDefaultProcessorVersion(
 future<
     StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
 DocumentProcessorServiceConnection::SetDefaultProcessorVersion(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -329,7 +329,7 @@ DocumentProcessorServiceConnection::ReviewDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::ReviewDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::ReviewDocumentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -337,7 +337,7 @@ DocumentProcessorServiceConnection::ReviewDocument(
 
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
 DocumentProcessorServiceConnection::ReviewDocument(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -354,7 +354,7 @@ DocumentProcessorServiceConnection::EvaluateProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnection::EvaluateProcessorVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -363,7 +363,7 @@ DocumentProcessorServiceConnection::EvaluateProcessorVersion(
 future<
     StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
 DocumentProcessorServiceConnection::EvaluateProcessorVersion(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

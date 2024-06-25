@@ -50,7 +50,7 @@ InstanceGroupsTracingConnection::AddInstances(
         request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::AddInstances");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddInstances(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -103,7 +103,7 @@ InstanceGroupsTracingConnection::DeleteInstanceGroup(
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::"
       "DeleteInstanceGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstanceGroup(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -152,7 +152,7 @@ InstanceGroupsTracingConnection::InsertInstanceGroup(
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::"
       "InsertInstanceGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertInstanceGroup(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -215,7 +215,7 @@ InstanceGroupsTracingConnection::RemoveInstances(
         RemoveInstancesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::RemoveInstances");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemoveInstances(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -250,7 +250,7 @@ InstanceGroupsTracingConnection::SetNamedPorts(
         SetNamedPortsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_groups_v1::InstanceGroupsConnection::SetNamedPorts");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetNamedPorts(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

@@ -73,7 +73,7 @@ InstanceAdminTracingConnection::CreateInstanceConfig(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::CreateInstanceConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateInstanceConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -109,7 +109,7 @@ InstanceAdminTracingConnection::UpdateInstanceConfig(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::UpdateInstanceConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateInstanceConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -199,7 +199,7 @@ InstanceAdminTracingConnection::CreateInstance(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::CreateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ InstanceAdminTracingConnection::UpdateInstance(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::UpdateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -314,7 +314,7 @@ InstanceAdminTracingConnection::CreateInstancePartition(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::CreateInstancePartition");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateInstancePartition(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -359,7 +359,7 @@ InstanceAdminTracingConnection::UpdateInstancePartition(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::UpdateInstancePartition");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateInstancePartition(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

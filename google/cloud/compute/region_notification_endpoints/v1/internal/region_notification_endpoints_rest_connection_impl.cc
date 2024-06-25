@@ -111,7 +111,7 @@ RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         DeleteNotificationEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -129,7 +129,7 @@ RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -262,7 +262,7 @@ RegionNotificationEndpointsRestConnectionImpl::InsertNotificationEndpoint(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNotificationEndpointsRestConnectionImpl::InsertNotificationEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         InsertNotificationEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -280,7 +280,7 @@ RegionNotificationEndpointsRestConnectionImpl::InsertNotificationEndpoint(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestConnectionImpl::InsertNotificationEndpoint(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

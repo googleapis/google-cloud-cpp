@@ -104,7 +104,7 @@ MachineImagesRestConnectionImpl::DeleteMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesRestConnectionImpl::DeleteMachineImage(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::machine_images::v1::
         DeleteMachineImageRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -121,7 +121,7 @@ MachineImagesRestConnectionImpl::DeleteMachineImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestConnectionImpl::DeleteMachineImage(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -265,7 +265,7 @@ MachineImagesRestConnectionImpl::InsertMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesRestConnectionImpl::InsertMachineImage(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::machine_images::v1::
         InsertMachineImageRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -282,7 +282,7 @@ MachineImagesRestConnectionImpl::InsertMachineImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestConnectionImpl::InsertMachineImage(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

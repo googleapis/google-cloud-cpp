@@ -56,7 +56,7 @@ AddressesConnection::DeleteAddress(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesConnection::DeleteAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -64,8 +64,7 @@ AddressesConnection::DeleteAddress(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesConnection::DeleteAddress(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,7 +86,7 @@ AddressesConnection::InsertAddress(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesConnection::InsertAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -95,8 +94,7 @@ AddressesConnection::InsertAddress(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesConnection::InsertAddress(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -119,14 +117,14 @@ AddressesConnection::Move(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> AddressesConnection::Move(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::addresses::v1::MoveRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-AddressesConnection::Move(google::cloud::ExperimentalTag,
+AddressesConnection::Move(ExperimentalTag,
                           google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
@@ -143,7 +141,7 @@ AddressesConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesConnection::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -151,8 +149,7 @@ AddressesConnection::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesConnection::SetLabels(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

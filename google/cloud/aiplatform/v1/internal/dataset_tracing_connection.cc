@@ -48,7 +48,7 @@ DatasetServiceTracingConnection::CreateDataset(
     google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::CreateDataset");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateDataset(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -110,7 +110,7 @@ DatasetServiceTracingConnection::DeleteDataset(
     google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteDataset");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteDataset(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -143,7 +143,7 @@ DatasetServiceTracingConnection::ImportData(
     google::cloud::aiplatform::v1::ImportDataRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ImportData");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportData(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -176,7 +176,7 @@ DatasetServiceTracingConnection::ExportData(
     google::cloud::aiplatform::v1::ExportDataRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::DatasetServiceConnection::ExportData");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportData(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -210,7 +210,7 @@ DatasetServiceTracingConnection::CreateDatasetVersion(
     google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::CreateDatasetVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateDatasetVersion(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -253,7 +253,7 @@ DatasetServiceTracingConnection::DeleteDatasetVersion(
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteDatasetVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteDatasetVersion(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -310,7 +310,7 @@ DatasetServiceTracingConnection::RestoreDatasetVersion(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::RestoreDatasetVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RestoreDatasetVersion(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -378,7 +378,7 @@ DatasetServiceTracingConnection::DeleteSavedQuery(
     google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::DatasetServiceConnection::DeleteSavedQuery");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSavedQuery(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

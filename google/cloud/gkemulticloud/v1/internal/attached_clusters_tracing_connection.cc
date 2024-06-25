@@ -51,7 +51,7 @@ AttachedClustersTracingConnection::CreateAttachedCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::CreateAttachedCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateAttachedCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -87,7 +87,7 @@ AttachedClustersTracingConnection::UpdateAttachedCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::UpdateAttachedCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateAttachedCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -123,7 +123,7 @@ AttachedClustersTracingConnection::ImportAttachedCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::ImportAttachedCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ImportAttachedCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -181,7 +181,7 @@ AttachedClustersTracingConnection::DeleteAttachedCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::DeleteAttachedCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteAttachedCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

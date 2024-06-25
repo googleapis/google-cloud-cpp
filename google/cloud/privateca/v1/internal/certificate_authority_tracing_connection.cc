@@ -107,7 +107,7 @@ CertificateAuthorityServiceTracingConnection::ActivateCertificateAuthority(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "ActivateCertificateAuthority");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ActivateCertificateAuthority(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -146,7 +146,7 @@ CertificateAuthorityServiceTracingConnection::CreateCertificateAuthority(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "CreateCertificateAuthority");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateCertificateAuthority(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -185,7 +185,7 @@ CertificateAuthorityServiceTracingConnection::DisableCertificateAuthority(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "DisableCertificateAuthority");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DisableCertificateAuthority(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -224,7 +224,7 @@ CertificateAuthorityServiceTracingConnection::EnableCertificateAuthority(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "EnableCertificateAuthority");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->EnableCertificateAuthority(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -301,7 +301,7 @@ CertificateAuthorityServiceTracingConnection::UndeleteCertificateAuthority(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UndeleteCertificateAuthority");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UndeleteCertificateAuthority(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -340,7 +340,7 @@ CertificateAuthorityServiceTracingConnection::DeleteCertificateAuthority(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "DeleteCertificateAuthority");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteCertificateAuthority(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -379,7 +379,7 @@ CertificateAuthorityServiceTracingConnection::UpdateCertificateAuthority(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UpdateCertificateAuthority");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateCertificateAuthority(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -415,7 +415,7 @@ CertificateAuthorityServiceTracingConnection::CreateCaPool(
         request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::CreateCaPool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCaPool(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -450,7 +450,7 @@ CertificateAuthorityServiceTracingConnection::UpdateCaPool(
         request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::UpdateCaPool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCaPool(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -506,7 +506,7 @@ CertificateAuthorityServiceTracingConnection::DeleteCaPool(
         request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::DeleteCaPool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCaPool(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -581,7 +581,7 @@ CertificateAuthorityServiceTracingConnection::UpdateCertificateRevocationList(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UpdateCertificateRevocationList");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateCertificateRevocationList(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -621,7 +621,7 @@ CertificateAuthorityServiceTracingConnection::CreateCertificateTemplate(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "CreateCertificateTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateCertificateTemplate(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -660,7 +660,7 @@ CertificateAuthorityServiceTracingConnection::DeleteCertificateTemplate(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "DeleteCertificateTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteCertificateTemplate(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -724,7 +724,7 @@ CertificateAuthorityServiceTracingConnection::UpdateCertificateTemplate(
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UpdateCertificateTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateCertificateTemplate(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

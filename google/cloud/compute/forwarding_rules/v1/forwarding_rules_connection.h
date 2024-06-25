@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/forwarding_rules/v1/forwarding_rules_connection_idempotency_policy.h"
 #include "google/cloud/compute/forwarding_rules/v1/internal/forwarding_rules_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,14 +199,13 @@ class ForwardingRulesConnection {
                            DeleteForwardingRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteForwardingRule(google::cloud::ExperimentalTag,
-                       google::cloud::NoAwaitTag,
+  DeleteForwardingRule(ExperimentalTag, NoAwaitTag,
                        google::cloud::cpp::compute::forwarding_rules::v1::
                            DeleteForwardingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteForwardingRule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -218,14 +217,13 @@ class ForwardingRulesConnection {
                            InsertForwardingRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertForwardingRule(google::cloud::ExperimentalTag,
-                       google::cloud::NoAwaitTag,
+  InsertForwardingRule(ExperimentalTag, NoAwaitTag,
                        google::cloud::cpp::compute::forwarding_rules::v1::
                            InsertForwardingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertForwardingRule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -237,13 +235,13 @@ class ForwardingRulesConnection {
                           PatchForwardingRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchForwardingRule(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  PatchForwardingRule(ExperimentalTag, NoAwaitTag,
                       google::cloud::cpp::compute::forwarding_rules::v1::
                           PatchForwardingRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchForwardingRule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -252,12 +250,12 @@ class ForwardingRulesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::ExperimentalTag,
+  SetLabels(ExperimentalTag,
             google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -266,12 +264,12 @@ class ForwardingRulesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTarget(google::cloud::ExperimentalTag,
+  SetTarget(ExperimentalTag,
             google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

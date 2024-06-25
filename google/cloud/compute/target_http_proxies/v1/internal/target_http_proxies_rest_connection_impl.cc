@@ -148,7 +148,7 @@ TargetHttpProxiesRestConnectionImpl::DeleteTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesRestConnectionImpl::DeleteTargetHttpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         DeleteTargetHttpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -165,7 +165,7 @@ TargetHttpProxiesRestConnectionImpl::DeleteTargetHttpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestConnectionImpl::DeleteTargetHttpProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -293,7 +293,7 @@ TargetHttpProxiesRestConnectionImpl::InsertTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesRestConnectionImpl::InsertTargetHttpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         InsertTargetHttpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -310,7 +310,7 @@ TargetHttpProxiesRestConnectionImpl::InsertTargetHttpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestConnectionImpl::InsertTargetHttpProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -462,7 +462,7 @@ TargetHttpProxiesRestConnectionImpl::PatchTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesRestConnectionImpl::PatchTargetHttpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         PatchTargetHttpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -479,7 +479,7 @@ TargetHttpProxiesRestConnectionImpl::PatchTargetHttpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestConnectionImpl::PatchTargetHttpProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -591,7 +591,7 @@ TargetHttpProxiesRestConnectionImpl::SetUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesRestConnectionImpl::SetUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         SetUrlMapRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -608,7 +608,7 @@ TargetHttpProxiesRestConnectionImpl::SetUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesRestConnectionImpl::SetUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

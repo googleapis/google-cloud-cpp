@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/node_templates/v1/internal/node_templates_retry_traits.h"
 #include "google/cloud/compute/node_templates/v1/node_templates_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -197,13 +197,13 @@ class NodeTemplatesConnection {
                          DeleteNodeTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNodeTemplate(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  DeleteNodeTemplate(ExperimentalTag, NoAwaitTag,
                      google::cloud::cpp::compute::node_templates::v1::
                          DeleteNodeTemplateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodeTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
@@ -219,13 +219,13 @@ class NodeTemplatesConnection {
                          InsertNodeTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNodeTemplate(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  InsertNodeTemplate(ExperimentalTag, NoAwaitTag,
                      google::cloud::cpp::compute::node_templates::v1::
                          InsertNodeTemplateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNodeTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>

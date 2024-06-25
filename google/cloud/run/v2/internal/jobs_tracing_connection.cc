@@ -44,7 +44,7 @@ StatusOr<google::longrunning::Operation> JobsTracingConnection::CreateJob(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::run::v2::CreateJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::CreateJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateJob(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -87,7 +87,7 @@ StatusOr<google::longrunning::Operation> JobsTracingConnection::UpdateJob(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::run::v2::UpdateJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::UpdateJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateJob(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -114,7 +114,7 @@ StatusOr<google::longrunning::Operation> JobsTracingConnection::DeleteJob(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::run::v2::DeleteJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::DeleteJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteJob(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -142,7 +142,7 @@ StatusOr<google::longrunning::Operation> JobsTracingConnection::RunJob(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::run::v2::RunJobRequest const& request) {
   auto span = internal::MakeSpan("run_v2::JobsConnection::RunJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RunJob(google::cloud::ExperimentalTag{},
                             google::cloud::NoAwaitTag{}, request));

@@ -109,7 +109,7 @@ RegionSslCertificatesRestConnectionImpl::DeleteSslCertificate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslCertificatesRestConnectionImpl::DeleteSslCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         DeleteSslCertificateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -126,7 +126,7 @@ RegionSslCertificatesRestConnectionImpl::DeleteSslCertificate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesRestConnectionImpl::DeleteSslCertificate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -258,7 +258,7 @@ RegionSslCertificatesRestConnectionImpl::InsertSslCertificate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslCertificatesRestConnectionImpl::InsertSslCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         InsertSslCertificateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -275,7 +275,7 @@ RegionSslCertificatesRestConnectionImpl::InsertSslCertificate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesRestConnectionImpl::InsertSslCertificate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

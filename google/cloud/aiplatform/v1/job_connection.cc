@@ -67,14 +67,14 @@ JobServiceConnection::DeleteCustomJob(
 }
 
 StatusOr<google::longrunning::Operation> JobServiceConnection::DeleteCustomJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteCustomJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceConnection::DeleteCustomJob(google::cloud::ExperimentalTag,
+JobServiceConnection::DeleteCustomJob(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
@@ -116,7 +116,7 @@ JobServiceConnection::DeleteDataLabelingJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnection::DeleteDataLabelingJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -124,7 +124,7 @@ JobServiceConnection::DeleteDataLabelingJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnection::DeleteDataLabelingJob(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -167,7 +167,7 @@ JobServiceConnection::DeleteHyperparameterTuningJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnection::DeleteHyperparameterTuningJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::
         DeleteHyperparameterTuningJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -176,7 +176,7 @@ JobServiceConnection::DeleteHyperparameterTuningJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnection::DeleteHyperparameterTuningJob(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -216,14 +216,14 @@ JobServiceConnection::DeleteNasJob(
 }
 
 StatusOr<google::longrunning::Operation> JobServiceConnection::DeleteNasJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteNasJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-JobServiceConnection::DeleteNasJob(google::cloud::ExperimentalTag,
+JobServiceConnection::DeleteNasJob(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
@@ -279,7 +279,7 @@ JobServiceConnection::DeleteBatchPredictionJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnection::DeleteBatchPredictionJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -287,7 +287,7 @@ JobServiceConnection::DeleteBatchPredictionJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnection::DeleteBatchPredictionJob(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -339,7 +339,7 @@ JobServiceConnection::UpdateModelDeploymentMonitoringJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnection::UpdateModelDeploymentMonitoringJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::
         UpdateModelDeploymentMonitoringJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -348,7 +348,7 @@ JobServiceConnection::UpdateModelDeploymentMonitoringJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
 JobServiceConnection::UpdateModelDeploymentMonitoringJob(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -365,7 +365,7 @@ JobServiceConnection::DeleteModelDeploymentMonitoringJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnection::DeleteModelDeploymentMonitoringJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::
         DeleteModelDeploymentMonitoringJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -374,7 +374,7 @@ JobServiceConnection::DeleteModelDeploymentMonitoringJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnection::DeleteModelDeploymentMonitoringJob(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

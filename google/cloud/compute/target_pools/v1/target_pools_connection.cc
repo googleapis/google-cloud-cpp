@@ -47,7 +47,7 @@ TargetPoolsConnection::AddHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::AddHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::
         AddHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -56,8 +56,7 @@ TargetPoolsConnection::AddHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsConnection::AddHealthCheck(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -73,7 +72,7 @@ TargetPoolsConnection::AddInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::AddInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -81,8 +80,7 @@ TargetPoolsConnection::AddInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsConnection::AddInstance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -109,7 +107,7 @@ TargetPoolsConnection::DeleteTargetPool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::DeleteTargetPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::
         DeleteTargetPoolRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -118,8 +116,7 @@ TargetPoolsConnection::DeleteTargetPool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsConnection::DeleteTargetPool(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -148,7 +145,7 @@ TargetPoolsConnection::InsertTargetPool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::InsertTargetPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::
         InsertTargetPoolRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -157,8 +154,7 @@ TargetPoolsConnection::InsertTargetPool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsConnection::InsertTargetPool(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -183,7 +179,7 @@ TargetPoolsConnection::RemoveHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::RemoveHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::
         RemoveHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -192,8 +188,7 @@ TargetPoolsConnection::RemoveHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsConnection::RemoveHealthCheck(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -210,7 +205,7 @@ TargetPoolsConnection::RemoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::RemoveInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::
         RemoveInstanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -219,8 +214,7 @@ TargetPoolsConnection::RemoveInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsConnection::RemoveInstance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -236,7 +230,7 @@ TargetPoolsConnection::SetBackup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::SetBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -244,8 +238,7 @@ TargetPoolsConnection::SetBackup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsConnection::SetBackup(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -262,7 +255,7 @@ TargetPoolsConnection::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsConnection::SetSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::
         SetSecurityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -271,8 +264,7 @@ TargetPoolsConnection::SetSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsConnection::SetSecurityPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

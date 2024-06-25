@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/network_attachments/v1/internal/network_attachments_retry_traits.h"
 #include "google/cloud/compute/network_attachments/v1/network_attachments_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -202,14 +202,13 @@ class NetworkAttachmentsConnection {
                               DeleteNetworkAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNetworkAttachment(google::cloud::ExperimentalTag,
-                          google::cloud::NoAwaitTag,
+  DeleteNetworkAttachment(ExperimentalTag, NoAwaitTag,
                           google::cloud::cpp::compute::network_attachments::v1::
                               DeleteNetworkAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkAttachment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
@@ -225,14 +224,13 @@ class NetworkAttachmentsConnection {
                               InsertNetworkAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertNetworkAttachment(google::cloud::ExperimentalTag,
-                          google::cloud::NoAwaitTag,
+  InsertNetworkAttachment(ExperimentalTag, NoAwaitTag,
                           google::cloud::cpp::compute::network_attachments::v1::
                               InsertNetworkAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkAttachment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
@@ -244,14 +242,13 @@ class NetworkAttachmentsConnection {
                              PatchNetworkAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchNetworkAttachment(google::cloud::ExperimentalTag,
-                         google::cloud::NoAwaitTag,
+  PatchNetworkAttachment(ExperimentalTag, NoAwaitTag,
                          google::cloud::cpp::compute::network_attachments::v1::
                              PatchNetworkAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkAttachment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(

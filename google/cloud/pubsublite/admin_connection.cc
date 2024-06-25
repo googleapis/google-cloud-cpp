@@ -122,7 +122,7 @@ AdminServiceConnection::SeekSubscription(
 
 StatusOr<google::longrunning::Operation>
 AdminServiceConnection::SeekSubscription(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -130,7 +130,7 @@ AdminServiceConnection::SeekSubscription(
 
 future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
 AdminServiceConnection::SeekSubscription(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

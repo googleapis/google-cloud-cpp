@@ -50,7 +50,7 @@ EnvironmentsConnection::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -60,7 +60,7 @@ EnvironmentsConnection::CreateEnvironment(
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnection::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::Environment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -93,7 +93,7 @@ EnvironmentsConnection::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::UpdateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -103,7 +103,7 @@ EnvironmentsConnection::UpdateEnvironment(
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnection::UpdateEnvironment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::Environment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -121,7 +121,7 @@ EnvironmentsConnection::DeleteEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::DeleteEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -131,7 +131,7 @@ EnvironmentsConnection::DeleteEnvironment(
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
 EnvironmentsConnection::DeleteEnvironment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -263,7 +263,7 @@ EnvironmentsConnection::SaveSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsConnection::SaveSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -272,7 +272,7 @@ StatusOr<google::longrunning::Operation> EnvironmentsConnection::SaveSnapshot(
 
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-EnvironmentsConnection::SaveSnapshot(google::cloud::ExperimentalTag,
+EnvironmentsConnection::SaveSnapshot(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -292,7 +292,7 @@ EnvironmentsConnection::LoadSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsConnection::LoadSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -301,7 +301,7 @@ StatusOr<google::longrunning::Operation> EnvironmentsConnection::LoadSnapshot(
 
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-EnvironmentsConnection::LoadSnapshot(google::cloud::ExperimentalTag,
+EnvironmentsConnection::LoadSnapshot(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -322,7 +322,7 @@ EnvironmentsConnection::DatabaseFailover(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::DatabaseFailover(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         DatabaseFailoverRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -332,7 +332,7 @@ EnvironmentsConnection::DatabaseFailover(
 future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                     DatabaseFailoverResponse>>
 EnvironmentsConnection::DatabaseFailover(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::
                    DatabaseFailoverResponse>>(

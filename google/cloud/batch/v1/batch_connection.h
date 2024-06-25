@@ -21,11 +21,11 @@
 
 #include "google/cloud/batch/v1/batch_connection_idempotency_policy.h"
 #include "google/cloud/batch/v1/internal/batch_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -197,12 +197,11 @@ class BatchServiceConnection {
   DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::batch::v1::DeleteJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
-  DeleteJob(google::cloud::ExperimentalTag,
-            google::longrunning::Operation const& operation);
+  DeleteJob(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::batch::v1::Job> ListJobs(
       google::cloud::batch::v1::ListJobsRequest request);

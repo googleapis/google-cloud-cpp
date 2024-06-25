@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_retry_traits.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -190,12 +190,12 @@ class TargetPoolsConnection {
                      AddHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           AddHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddHealthCheck(google::cloud::ExperimentalTag,
+  AddHealthCheck(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -204,12 +204,12 @@ class TargetPoolsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddInstance(google::cloud::ExperimentalTag,
+  AddInstance(ExperimentalTag,
               google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<std::pair<
@@ -222,12 +222,12 @@ class TargetPoolsConnection {
                        DeleteTargetPoolRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           DeleteTargetPoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteTargetPool(google::cloud::ExperimentalTag,
+  DeleteTargetPool(ExperimentalTag,
                    google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
@@ -244,12 +244,12 @@ class TargetPoolsConnection {
                        InsertTargetPoolRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           InsertTargetPoolRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertTargetPool(google::cloud::ExperimentalTag,
+  InsertTargetPool(ExperimentalTag,
                    google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetPool>
@@ -262,13 +262,13 @@ class TargetPoolsConnection {
                         RemoveHealthCheckRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveHealthCheck(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  RemoveHealthCheck(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::target_pools::v1::
                         RemoveHealthCheckRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -276,12 +276,12 @@ class TargetPoolsConnection {
                      RemoveInstanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           RemoveInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveInstance(google::cloud::ExperimentalTag,
+  RemoveInstance(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -290,12 +290,12 @@ class TargetPoolsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetBackup(google::cloud::ExperimentalTag,
+  SetBackup(ExperimentalTag,
             google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -303,13 +303,13 @@ class TargetPoolsConnection {
                         SetSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetSecurityPolicy(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::target_pools::v1::
                         SetSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

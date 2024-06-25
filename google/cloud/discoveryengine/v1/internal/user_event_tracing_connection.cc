@@ -68,7 +68,7 @@ UserEventServiceTracingConnection::ImportUserEvents(
         request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::UserEventServiceConnection::ImportUserEvents");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportUserEvents(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

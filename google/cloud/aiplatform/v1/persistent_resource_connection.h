@@ -21,11 +21,11 @@
 
 #include "google/cloud/aiplatform/v1/internal/persistent_resource_retry_traits.h"
 #include "google/cloud/aiplatform/v1/persistent_resource_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -208,12 +208,12 @@ class PersistentResourceServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreatePersistentResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  CreatePersistentResource(google::cloud::ExperimentalTag,
+  CreatePersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::PersistentResource>
@@ -232,13 +232,13 @@ class PersistentResourceServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeletePersistentResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePersistentResource(google::cloud::ExperimentalTag,
+  DeletePersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
@@ -247,12 +247,12 @@ class PersistentResourceServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdatePersistentResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  UpdatePersistentResource(google::cloud::ExperimentalTag,
+  UpdatePersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
@@ -261,12 +261,12 @@ class PersistentResourceServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> RebootPersistentResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  RebootPersistentResource(google::cloud::ExperimentalTag,
+  RebootPersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 };
 

@@ -61,13 +61,13 @@ class RegionNotificationEndpointsRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNotificationEndpoint(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           DeleteNotificationEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNotificationEndpoint(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -82,13 +82,13 @@ class RegionNotificationEndpointsRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNotificationEndpoint(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           InsertNotificationEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNotificationEndpoint(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>

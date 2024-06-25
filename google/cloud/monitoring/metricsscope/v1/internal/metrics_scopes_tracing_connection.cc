@@ -75,7 +75,7 @@ MetricsScopesTracingConnection::CreateMonitoredProject(
   auto span = internal::MakeSpan(
       "monitoring_metricsscope_v1::MetricsScopesConnection::"
       "CreateMonitoredProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateMonitoredProject(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -114,7 +114,7 @@ MetricsScopesTracingConnection::DeleteMonitoredProject(
   auto span = internal::MakeSpan(
       "monitoring_metricsscope_v1::MetricsScopesConnection::"
       "DeleteMonitoredProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteMonitoredProject(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

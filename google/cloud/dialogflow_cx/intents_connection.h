@@ -21,11 +21,11 @@
 
 #include "google/cloud/dialogflow_cx/intents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/intents_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -206,12 +206,12 @@ class IntentsConnection {
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ImportIntents(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
-  ImportIntents(google::cloud::ExperimentalTag,
+  ImportIntents(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual future<
@@ -220,12 +220,12 @@ class IntentsConnection {
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ExportIntents(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
-  ExportIntents(google::cloud::ExperimentalTag,
+  ExportIntents(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 };
 

@@ -68,7 +68,7 @@ DataprocMetastoreTracingConnection::CreateService(
     google::cloud::metastore::v1::CreateServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ DataprocMetastoreTracingConnection::UpdateService(
     google::cloud::metastore::v1::UpdateServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::UpdateService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ DataprocMetastoreTracingConnection::DeleteService(
     google::cloud::metastore::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::DeleteService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -189,7 +189,7 @@ DataprocMetastoreTracingConnection::CreateMetadataImport(
     google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateMetadataImport");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateMetadataImport(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -223,7 +223,7 @@ DataprocMetastoreTracingConnection::UpdateMetadataImport(
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::UpdateMetadataImport");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateMetadataImport(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -256,7 +256,7 @@ DataprocMetastoreTracingConnection::ExportMetadata(
     google::cloud::metastore::v1::ExportMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::ExportMetadata");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportMetadata(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -289,7 +289,7 @@ DataprocMetastoreTracingConnection::RestoreService(
     google::cloud::metastore::v1::RestoreServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::RestoreService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RestoreService(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -342,7 +342,7 @@ DataprocMetastoreTracingConnection::CreateBackup(
     google::cloud::metastore::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -375,7 +375,7 @@ DataprocMetastoreTracingConnection::DeleteBackup(
     google::cloud::metastore::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::DeleteBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -408,7 +408,7 @@ DataprocMetastoreTracingConnection::QueryMetadata(
     google::cloud::metastore::v1::QueryMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::QueryMetadata");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->QueryMetadata(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -442,7 +442,7 @@ DataprocMetastoreTracingConnection::MoveTableToDatabase(
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::MoveTableToDatabase");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->MoveTableToDatabase(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -481,7 +481,7 @@ DataprocMetastoreTracingConnection::AlterMetadataResourceLocation(
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::"
       "AlterMetadataResourceLocation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->AlterMetadataResourceLocation(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

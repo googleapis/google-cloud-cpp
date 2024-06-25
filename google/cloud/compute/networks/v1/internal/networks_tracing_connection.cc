@@ -50,7 +50,7 @@ NetworksTracingConnection::AddPeering(
         request) {
   auto span =
       internal::MakeSpan("compute_networks_v1::NetworksConnection::AddPeering");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddPeering(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -85,7 +85,7 @@ NetworksTracingConnection::DeleteNetwork(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::DeleteNetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteNetwork(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -140,7 +140,7 @@ NetworksTracingConnection::InsertNetwork(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::InsertNetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertNetwork(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -199,7 +199,7 @@ NetworksTracingConnection::PatchNetwork(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::PatchNetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchNetwork(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ NetworksTracingConnection::RemovePeering(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::RemovePeering");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemovePeering(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -270,7 +270,7 @@ NetworksTracingConnection::SwitchToCustomMode(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::SwitchToCustomMode");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SwitchToCustomMode(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -305,7 +305,7 @@ NetworksTracingConnection::UpdatePeering(
         request) {
   auto span = internal::MakeSpan(
       "compute_networks_v1::NetworksConnection::UpdatePeering");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdatePeering(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

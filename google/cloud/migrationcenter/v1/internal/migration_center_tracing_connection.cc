@@ -125,7 +125,7 @@ MigrationCenterTracingConnection::CreateImportJob(
     google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateImportJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateImportJob(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -179,7 +179,7 @@ MigrationCenterTracingConnection::DeleteImportJob(
     google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteImportJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteImportJob(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -212,7 +212,7 @@ MigrationCenterTracingConnection::UpdateImportJob(
     google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdateImportJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateImportJob(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -247,7 +247,7 @@ MigrationCenterTracingConnection::ValidateImportJob(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::ValidateImportJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ValidateImportJob(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -280,7 +280,7 @@ MigrationCenterTracingConnection::RunImportJob(
     google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::RunImportJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RunImportJob(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -338,7 +338,7 @@ MigrationCenterTracingConnection::CreateImportDataFile(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateImportDataFile");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateImportDataFile(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -374,7 +374,7 @@ MigrationCenterTracingConnection::DeleteImportDataFile(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteImportDataFile");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteImportDataFile(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -428,7 +428,7 @@ MigrationCenterTracingConnection::CreateGroup(
     google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateGroup(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -461,7 +461,7 @@ MigrationCenterTracingConnection::UpdateGroup(
     google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdateGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateGroup(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -494,7 +494,7 @@ MigrationCenterTracingConnection::DeleteGroup(
     google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteGroup(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -529,7 +529,7 @@ MigrationCenterTracingConnection::AddAssetsToGroup(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::AddAssetsToGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddAssetsToGroup(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -565,7 +565,7 @@ MigrationCenterTracingConnection::RemoveAssetsFromGroup(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::RemoveAssetsFromGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RemoveAssetsFromGroup(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -640,7 +640,7 @@ MigrationCenterTracingConnection::CreateSource(
     google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateSource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateSource(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -673,7 +673,7 @@ MigrationCenterTracingConnection::UpdateSource(
     google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdateSource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateSource(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -706,7 +706,7 @@ MigrationCenterTracingConnection::DeleteSource(
     google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteSource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSource(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -764,7 +764,7 @@ MigrationCenterTracingConnection::CreatePreferenceSet(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreatePreferenceSet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreatePreferenceSet(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -800,7 +800,7 @@ MigrationCenterTracingConnection::UpdatePreferenceSet(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdatePreferenceSet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdatePreferenceSet(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -836,7 +836,7 @@ MigrationCenterTracingConnection::DeletePreferenceSet(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeletePreferenceSet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeletePreferenceSet(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -878,7 +878,7 @@ MigrationCenterTracingConnection::UpdateSettings(
     google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::UpdateSettings");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateSettings(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -914,7 +914,7 @@ MigrationCenterTracingConnection::CreateReportConfig(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateReportConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateReportConfig(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -971,7 +971,7 @@ MigrationCenterTracingConnection::DeleteReportConfig(
         request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteReportConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteReportConfig(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -1004,7 +1004,7 @@ MigrationCenterTracingConnection::CreateReport(
     google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::CreateReport");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateReport(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -1058,7 +1058,7 @@ MigrationCenterTracingConnection::DeleteReport(
     google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
   auto span = internal::MakeSpan(
       "migrationcenter_v1::MigrationCenterConnection::DeleteReport");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteReport(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

@@ -21,11 +21,11 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/pipeline_retry_traits.h"
 #include "google/cloud/contentwarehouse/v1/pipeline_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -193,13 +193,12 @@ class PipelineServiceConnection {
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RunPipeline(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation);
+  RunPipeline(ExperimentalTag, google::longrunning::Operation const& operation);
 };
 
 /**

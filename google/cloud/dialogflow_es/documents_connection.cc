@@ -61,14 +61,14 @@ DocumentsConnection::CreateDocument(
 }
 
 StatusOr<google::longrunning::Operation> DocumentsConnection::CreateDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::CreateDocumentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
-DocumentsConnection::CreateDocument(google::cloud::ExperimentalTag,
+DocumentsConnection::CreateDocument(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::Document>>(
@@ -84,14 +84,14 @@ DocumentsConnection::ImportDocuments(
 }
 
 StatusOr<google::longrunning::Operation> DocumentsConnection::ImportDocuments(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ImportDocumentsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-DocumentsConnection::ImportDocuments(google::cloud::ExperimentalTag,
+DocumentsConnection::ImportDocuments(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>(
@@ -107,14 +107,14 @@ DocumentsConnection::DeleteDocument(
 }
 
 StatusOr<google::longrunning::Operation> DocumentsConnection::DeleteDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteDocumentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-DocumentsConnection::DeleteDocument(google::cloud::ExperimentalTag,
+DocumentsConnection::DeleteDocument(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>(
@@ -130,14 +130,14 @@ DocumentsConnection::UpdateDocument(
 }
 
 StatusOr<google::longrunning::Operation> DocumentsConnection::UpdateDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::UpdateDocumentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
-DocumentsConnection::UpdateDocument(google::cloud::ExperimentalTag,
+DocumentsConnection::UpdateDocument(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::Document>>(
@@ -153,14 +153,14 @@ DocumentsConnection::ReloadDocument(
 }
 
 StatusOr<google::longrunning::Operation> DocumentsConnection::ReloadDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ReloadDocumentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
-DocumentsConnection::ReloadDocument(google::cloud::ExperimentalTag,
+DocumentsConnection::ReloadDocument(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::Document>>(
@@ -176,14 +176,14 @@ DocumentsConnection::ExportDocument(
 }
 
 StatusOr<google::longrunning::Operation> DocumentsConnection::ExportDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ExportDocumentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
-DocumentsConnection::ExportDocument(google::cloud::ExperimentalTag,
+DocumentsConnection::ExportDocument(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::Document>>(

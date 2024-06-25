@@ -78,14 +78,14 @@ VizierServiceConnection::SuggestTrials(
 }
 
 StatusOr<google::longrunning::Operation> VizierServiceConnection::SuggestTrials(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::SuggestTrialsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-VizierServiceConnection::SuggestTrials(google::cloud::ExperimentalTag,
+VizierServiceConnection::SuggestTrials(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>(
@@ -140,7 +140,7 @@ VizierServiceConnection::CheckTrialEarlyStoppingState(
 
 StatusOr<google::longrunning::Operation>
 VizierServiceConnection::CheckTrialEarlyStoppingState(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -149,7 +149,7 @@ VizierServiceConnection::CheckTrialEarlyStoppingState(
 future<StatusOr<
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
 VizierServiceConnection::CheckTrialEarlyStoppingState(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

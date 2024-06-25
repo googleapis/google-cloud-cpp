@@ -107,7 +107,7 @@ RegionAutoscalersRestConnectionImpl::DeleteAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestConnectionImpl::DeleteAutoscaler(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_autoscalers::v1::
         DeleteAutoscalerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -124,7 +124,7 @@ RegionAutoscalersRestConnectionImpl::DeleteAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersRestConnectionImpl::DeleteAutoscaler(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -256,7 +256,7 @@ RegionAutoscalersRestConnectionImpl::InsertAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestConnectionImpl::InsertAutoscaler(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_autoscalers::v1::
         InsertAutoscalerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -273,7 +273,7 @@ RegionAutoscalersRestConnectionImpl::InsertAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersRestConnectionImpl::InsertAutoscaler(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -429,7 +429,7 @@ RegionAutoscalersRestConnectionImpl::PatchAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestConnectionImpl::PatchAutoscaler(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_autoscalers::v1::
         PatchAutoscalerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -446,7 +446,7 @@ RegionAutoscalersRestConnectionImpl::PatchAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersRestConnectionImpl::PatchAutoscaler(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -562,7 +562,7 @@ RegionAutoscalersRestConnectionImpl::UpdateAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestConnectionImpl::UpdateAutoscaler(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_autoscalers::v1::
         UpdateAutoscalerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -579,7 +579,7 @@ RegionAutoscalersRestConnectionImpl::UpdateAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersRestConnectionImpl::UpdateAutoscaler(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

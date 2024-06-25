@@ -21,11 +21,11 @@
 
 #include "google/cloud/datamigration/v1/data_migration_connection_idempotency_policy.h"
 #include "google/cloud/datamigration/v1/internal/data_migration_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -204,11 +204,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::CreateMigrationJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateMigrationJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CreateMigrationJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  CreateMigrationJob(google::cloud::ExperimentalTag,
+  CreateMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -216,11 +216,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateMigrationJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  UpdateMigrationJob(google::cloud::ExperimentalTag,
+  UpdateMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -228,11 +228,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteMigrationJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteMigrationJob(google::cloud::ExperimentalTag,
+  DeleteMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -240,11 +240,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> StartMigrationJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  StartMigrationJob(google::cloud::ExperimentalTag,
+  StartMigrationJob(ExperimentalTag,
                     google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -252,11 +252,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> StopMigrationJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  StopMigrationJob(google::cloud::ExperimentalTag,
+  StopMigrationJob(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -264,11 +264,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ResumeMigrationJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  ResumeMigrationJob(google::cloud::ExperimentalTag,
+  ResumeMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -276,11 +276,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> PromoteMigrationJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  PromoteMigrationJob(google::cloud::ExperimentalTag,
+  PromoteMigrationJob(ExperimentalTag,
                       google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -288,11 +288,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> VerifyMigrationJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  VerifyMigrationJob(google::cloud::ExperimentalTag,
+  VerifyMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -300,11 +300,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::RestartMigrationJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RestartMigrationJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::RestartMigrationJobRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  RestartMigrationJob(google::cloud::ExperimentalTag,
+  RestartMigrationJob(ExperimentalTag,
                       google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::clouddms::v1::SshScript> GenerateSshScript(
@@ -329,12 +329,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateConnectionProfile(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  CreateConnectionProfile(google::cloud::ExperimentalTag,
+  CreateConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
@@ -343,12 +343,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  UpdateConnectionProfile(google::cloud::ExperimentalTag,
+  UpdateConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -357,12 +357,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConnectionProfile(google::cloud::ExperimentalTag,
+  DeleteConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
@@ -371,12 +371,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
-  CreatePrivateConnection(google::cloud::ExperimentalTag,
+  CreatePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::clouddms::v1::PrivateConnection>
@@ -393,12 +393,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeletePrivateConnection(google::cloud::ExperimentalTag,
+  DeletePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -416,12 +416,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateConversionWorkspace(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  CreateConversionWorkspace(google::cloud::ExperimentalTag,
+  CreateConversionWorkspace(ExperimentalTag,
                             google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -430,12 +430,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateConversionWorkspace(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  UpdateConversionWorkspace(google::cloud::ExperimentalTag,
+  UpdateConversionWorkspace(ExperimentalTag,
                             google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -444,12 +444,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteConversionWorkspace(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConversionWorkspace(google::cloud::ExperimentalTag,
+  DeleteConversionWorkspace(ExperimentalTag,
                             google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
@@ -471,12 +471,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> SeedConversionWorkspace(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  SeedConversionWorkspace(google::cloud::ExperimentalTag,
+  SeedConversionWorkspace(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -484,11 +484,11 @@ class DataMigrationServiceConnection {
       google::cloud::clouddms::v1::ImportMappingRulesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ImportMappingRules(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ImportMappingRulesRequest const& request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ImportMappingRules(google::cloud::ExperimentalTag,
+  ImportMappingRules(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -497,12 +497,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> ConvertConversionWorkspace(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ConvertConversionWorkspace(google::cloud::ExperimentalTag,
+  ConvertConversionWorkspace(ExperimentalTag,
                              google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -511,12 +511,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CommitConversionWorkspace(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  CommitConversionWorkspace(google::cloud::ExperimentalTag,
+  CommitConversionWorkspace(ExperimentalTag,
                             google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -525,12 +525,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> RollbackConversionWorkspace(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  RollbackConversionWorkspace(google::cloud::ExperimentalTag,
+  RollbackConversionWorkspace(ExperimentalTag,
                               google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -539,12 +539,12 @@ class DataMigrationServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> ApplyConversionWorkspace(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ApplyConversionWorkspace(google::cloud::ExperimentalTag,
+  ApplyConversionWorkspace(ExperimentalTag,
                            google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::clouddms::v1::DatabaseEntity>

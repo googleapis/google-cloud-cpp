@@ -48,7 +48,7 @@ SecurityCenterConnection::BulkMuteFindings(
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterConnection::BulkMuteFindings(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ SecurityCenterConnection::BulkMuteFindings(
 
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterConnection::BulkMuteFindings(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -259,7 +259,7 @@ SecurityCenterConnection::RunAssetDiscovery(
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterConnection::RunAssetDiscovery(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -267,7 +267,7 @@ SecurityCenterConnection::RunAssetDiscovery(
 
 future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
 SecurityCenterConnection::RunAssetDiscovery(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

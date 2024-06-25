@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/target_grpc_proxies/v1/internal/target_grpc_proxies_retry_traits.h"
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -193,14 +193,13 @@ class TargetGrpcProxiesConnection {
                             DeleteTargetGrpcProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetGrpcProxy(google::cloud::ExperimentalTag,
-                        google::cloud::NoAwaitTag,
+  DeleteTargetGrpcProxy(ExperimentalTag, NoAwaitTag,
                         google::cloud::cpp::compute::target_grpc_proxies::v1::
                             DeleteTargetGrpcProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetGrpcProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -212,14 +211,13 @@ class TargetGrpcProxiesConnection {
                             InsertTargetGrpcProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetGrpcProxy(google::cloud::ExperimentalTag,
-                        google::cloud::NoAwaitTag,
+  InsertTargetGrpcProxy(ExperimentalTag, NoAwaitTag,
                         google::cloud::cpp::compute::target_grpc_proxies::v1::
                             InsertTargetGrpcProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetGrpcProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -231,14 +229,13 @@ class TargetGrpcProxiesConnection {
                            PatchTargetGrpcProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchTargetGrpcProxy(google::cloud::ExperimentalTag,
-                       google::cloud::NoAwaitTag,
+  PatchTargetGrpcProxy(ExperimentalTag, NoAwaitTag,
                        google::cloud::cpp::compute::target_grpc_proxies::v1::
                            PatchTargetGrpcProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetGrpcProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

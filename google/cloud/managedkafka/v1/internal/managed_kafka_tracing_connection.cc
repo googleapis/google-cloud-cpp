@@ -68,7 +68,7 @@ ManagedKafkaTracingConnection::CreateCluster(
     google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::CreateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ ManagedKafkaTracingConnection::UpdateCluster(
     google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::UpdateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ ManagedKafkaTracingConnection::DeleteCluster(
     google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::DeleteCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

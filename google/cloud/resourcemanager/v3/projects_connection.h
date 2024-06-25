@@ -21,11 +21,11 @@
 
 #include "google/cloud/resourcemanager/v3/internal/projects_retry_traits.h"
 #include "google/cloud/resourcemanager/v3/projects_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,11 +199,11 @@ class ProjectsConnection {
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  CreateProject(google::cloud::ExperimentalTag,
+  CreateProject(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -211,11 +211,11 @@ class ProjectsConnection {
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UpdateProject(google::cloud::ExperimentalTag,
+  UpdateProject(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -223,23 +223,22 @@ class ProjectsConnection {
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> MoveProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  MoveProject(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation);
+  MoveProject(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
   DeleteProject(
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  DeleteProject(google::cloud::ExperimentalTag,
+  DeleteProject(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -248,12 +247,12 @@ class ProjectsConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UndeleteProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-  UndeleteProject(google::cloud::ExperimentalTag,
+  UndeleteProject(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(

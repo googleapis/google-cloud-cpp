@@ -59,7 +59,7 @@ NetworkEdgeSecurityServicesConnection::DeleteNetworkEdgeSecurityService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEdgeSecurityServicesConnection::DeleteNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         DeleteNetworkEdgeSecurityServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -68,8 +68,7 @@ NetworkEdgeSecurityServicesConnection::DeleteNetworkEdgeSecurityService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesConnection::DeleteNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -93,7 +92,7 @@ NetworkEdgeSecurityServicesConnection::InsertNetworkEdgeSecurityService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEdgeSecurityServicesConnection::InsertNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         InsertNetworkEdgeSecurityServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -102,8 +101,7 @@ NetworkEdgeSecurityServicesConnection::InsertNetworkEdgeSecurityService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesConnection::InsertNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -120,7 +118,7 @@ NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         PatchNetworkEdgeSecurityServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -129,8 +127,7 @@ NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

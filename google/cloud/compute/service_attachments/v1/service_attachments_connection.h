@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/service_attachments/v1/internal/service_attachments_retry_traits.h"
 #include "google/cloud/compute/service_attachments/v1/service_attachments_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -202,14 +202,13 @@ class ServiceAttachmentsConnection {
                               DeleteServiceAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteServiceAttachment(google::cloud::ExperimentalTag,
-                          google::cloud::NoAwaitTag,
+  DeleteServiceAttachment(ExperimentalTag, NoAwaitTag,
                           google::cloud::cpp::compute::service_attachments::v1::
                               DeleteServiceAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteServiceAttachment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -225,14 +224,13 @@ class ServiceAttachmentsConnection {
                               InsertServiceAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertServiceAttachment(google::cloud::ExperimentalTag,
-                          google::cloud::NoAwaitTag,
+  InsertServiceAttachment(ExperimentalTag, NoAwaitTag,
                           google::cloud::cpp::compute::service_attachments::v1::
                               InsertServiceAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertServiceAttachment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -244,14 +242,13 @@ class ServiceAttachmentsConnection {
                              PatchServiceAttachmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchServiceAttachment(google::cloud::ExperimentalTag,
-                         google::cloud::NoAwaitTag,
+  PatchServiceAttachment(ExperimentalTag, NoAwaitTag,
                          google::cloud::cpp::compute::service_attachments::v1::
                              PatchServiceAttachmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchServiceAttachment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(

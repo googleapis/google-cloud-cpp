@@ -56,13 +56,13 @@ class InterconnectsRestConnectionImpl
                          DeleteInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnect(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::interconnects::v1::
           DeleteInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInterconnect(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Interconnect> GetInterconnect(
@@ -83,13 +83,13 @@ class InterconnectsRestConnectionImpl
                          InsertInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnect(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::interconnects::v1::
           InsertInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInterconnect(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Interconnect> ListInterconnects(
@@ -101,13 +101,13 @@ class InterconnectsRestConnectionImpl
                         PatchInterconnectRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnect(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::interconnects::v1::
           PatchInterconnectRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInterconnect(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -115,12 +115,12 @@ class InterconnectsRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

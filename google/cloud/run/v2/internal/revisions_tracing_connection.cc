@@ -64,7 +64,7 @@ RevisionsTracingConnection::DeleteRevision(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::run::v2::DeleteRevisionRequest const& request) {
   auto span = internal::MakeSpan("run_v2::RevisionsConnection::DeleteRevision");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRevision(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

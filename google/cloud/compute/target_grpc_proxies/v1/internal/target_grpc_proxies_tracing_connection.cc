@@ -54,7 +54,7 @@ TargetGrpcProxiesTracingConnection::DeleteTargetGrpcProxy(
   auto span = internal::MakeSpan(
       "compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection::"
       "DeleteTargetGrpcProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteTargetGrpcProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -104,7 +104,7 @@ TargetGrpcProxiesTracingConnection::InsertTargetGrpcProxy(
   auto span = internal::MakeSpan(
       "compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection::"
       "InsertTargetGrpcProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertTargetGrpcProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -157,7 +157,7 @@ TargetGrpcProxiesTracingConnection::PatchTargetGrpcProxy(
   auto span = internal::MakeSpan(
       "compute_target_grpc_proxies_v1::TargetGrpcProxiesConnection::"
       "PatchTargetGrpcProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchTargetGrpcProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -55,14 +55,14 @@ NetAppConnection::CreateStoragePool(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::CreateStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateStoragePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-NetAppConnection::CreateStoragePool(google::cloud::ExperimentalTag,
+NetAppConnection::CreateStoragePool(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::StoragePool>>(
@@ -84,14 +84,14 @@ NetAppConnection::UpdateStoragePool(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::UpdateStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateStoragePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-NetAppConnection::UpdateStoragePool(google::cloud::ExperimentalTag,
+NetAppConnection::UpdateStoragePool(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::StoragePool>>(
@@ -107,14 +107,14 @@ NetAppConnection::DeleteStoragePool(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::DeleteStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteStoragePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppConnection::DeleteStoragePool(google::cloud::ExperimentalTag,
+NetAppConnection::DeleteStoragePool(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
@@ -142,14 +142,14 @@ NetAppConnection::CreateVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::CreateVolume(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateVolumeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
-NetAppConnection::CreateVolume(google::cloud::ExperimentalTag,
+NetAppConnection::CreateVolume(ExperimentalTag,
                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Volume>>(
@@ -165,14 +165,14 @@ NetAppConnection::UpdateVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::UpdateVolume(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateVolumeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
-NetAppConnection::UpdateVolume(google::cloud::ExperimentalTag,
+NetAppConnection::UpdateVolume(ExperimentalTag,
                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Volume>>(
@@ -188,14 +188,14 @@ NetAppConnection::DeleteVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::DeleteVolume(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteVolumeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppConnection::DeleteVolume(google::cloud::ExperimentalTag,
+NetAppConnection::DeleteVolume(ExperimentalTag,
                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
@@ -211,14 +211,14 @@ NetAppConnection::RevertVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::RevertVolume(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::RevertVolumeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
-NetAppConnection::RevertVolume(google::cloud::ExperimentalTag,
+NetAppConnection::RevertVolume(ExperimentalTag,
                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Volume>>(
@@ -247,14 +247,14 @@ NetAppConnection::CreateSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::CreateSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
-NetAppConnection::CreateSnapshot(google::cloud::ExperimentalTag,
+NetAppConnection::CreateSnapshot(ExperimentalTag,
                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Snapshot>>(
@@ -270,14 +270,14 @@ NetAppConnection::DeleteSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::DeleteSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppConnection::DeleteSnapshot(google::cloud::ExperimentalTag,
+NetAppConnection::DeleteSnapshot(ExperimentalTag,
                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
@@ -293,14 +293,14 @@ NetAppConnection::UpdateSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::UpdateSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
-NetAppConnection::UpdateSnapshot(google::cloud::ExperimentalTag,
+NetAppConnection::UpdateSnapshot(ExperimentalTag,
                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Snapshot>>(
@@ -331,14 +331,14 @@ NetAppConnection::CreateActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnection::CreateActiveDirectory(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateActiveDirectoryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
-NetAppConnection::CreateActiveDirectory(google::cloud::ExperimentalTag,
+NetAppConnection::CreateActiveDirectory(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::ActiveDirectory>>(
@@ -355,14 +355,14 @@ NetAppConnection::UpdateActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnection::UpdateActiveDirectory(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateActiveDirectoryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
-NetAppConnection::UpdateActiveDirectory(google::cloud::ExperimentalTag,
+NetAppConnection::UpdateActiveDirectory(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::ActiveDirectory>>(
@@ -379,14 +379,14 @@ NetAppConnection::DeleteActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnection::DeleteActiveDirectory(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteActiveDirectoryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppConnection::DeleteActiveDirectory(google::cloud::ExperimentalTag,
+NetAppConnection::DeleteActiveDirectory(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
@@ -410,14 +410,14 @@ NetAppConnection::CreateKmsConfig(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::CreateKmsConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateKmsConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-NetAppConnection::CreateKmsConfig(google::cloud::ExperimentalTag,
+NetAppConnection::CreateKmsConfig(ExperimentalTag,
                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::KmsConfig>>(
@@ -438,14 +438,14 @@ NetAppConnection::UpdateKmsConfig(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::UpdateKmsConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateKmsConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-NetAppConnection::UpdateKmsConfig(google::cloud::ExperimentalTag,
+NetAppConnection::UpdateKmsConfig(ExperimentalTag,
                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::KmsConfig>>(
@@ -461,14 +461,14 @@ NetAppConnection::EncryptVolumes(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::EncryptVolumes(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::EncryptVolumesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-NetAppConnection::EncryptVolumes(google::cloud::ExperimentalTag,
+NetAppConnection::EncryptVolumes(ExperimentalTag,
                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::KmsConfig>>(
@@ -490,14 +490,14 @@ NetAppConnection::DeleteKmsConfig(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::DeleteKmsConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteKmsConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppConnection::DeleteKmsConfig(google::cloud::ExperimentalTag,
+NetAppConnection::DeleteKmsConfig(ExperimentalTag,
                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
@@ -527,14 +527,14 @@ NetAppConnection::CreateReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::CreateReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateReplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
-NetAppConnection::CreateReplication(google::cloud::ExperimentalTag,
+NetAppConnection::CreateReplication(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Replication>>(
@@ -550,14 +550,14 @@ NetAppConnection::DeleteReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::DeleteReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteReplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppConnection::DeleteReplication(google::cloud::ExperimentalTag,
+NetAppConnection::DeleteReplication(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
@@ -573,14 +573,14 @@ NetAppConnection::UpdateReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::UpdateReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateReplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
-NetAppConnection::UpdateReplication(google::cloud::ExperimentalTag,
+NetAppConnection::UpdateReplication(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Replication>>(
@@ -596,14 +596,14 @@ NetAppConnection::StopReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::StopReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::StopReplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
-NetAppConnection::StopReplication(google::cloud::ExperimentalTag,
+NetAppConnection::StopReplication(ExperimentalTag,
                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Replication>>(
@@ -619,14 +619,14 @@ NetAppConnection::ResumeReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::ResumeReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::ResumeReplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
-NetAppConnection::ResumeReplication(google::cloud::ExperimentalTag,
+NetAppConnection::ResumeReplication(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Replication>>(
@@ -643,7 +643,7 @@ NetAppConnection::ReverseReplicationDirection(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnection::ReverseReplicationDirection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -651,7 +651,7 @@ NetAppConnection::ReverseReplicationDirection(
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppConnection::ReverseReplicationDirection(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Replication>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -666,14 +666,14 @@ NetAppConnection::CreateBackupVault(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::CreateBackupVault(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupVaultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
-NetAppConnection::CreateBackupVault(google::cloud::ExperimentalTag,
+NetAppConnection::CreateBackupVault(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::BackupVault>>(
@@ -703,14 +703,14 @@ NetAppConnection::UpdateBackupVault(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::UpdateBackupVault(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupVaultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
-NetAppConnection::UpdateBackupVault(google::cloud::ExperimentalTag,
+NetAppConnection::UpdateBackupVault(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::BackupVault>>(
@@ -726,14 +726,14 @@ NetAppConnection::DeleteBackupVault(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::DeleteBackupVault(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupVaultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppConnection::DeleteBackupVault(google::cloud::ExperimentalTag,
+NetAppConnection::DeleteBackupVault(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
@@ -749,14 +749,14 @@ NetAppConnection::CreateBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>>
-NetAppConnection::CreateBackup(google::cloud::ExperimentalTag,
+NetAppConnection::CreateBackup(ExperimentalTag,
                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Backup>>(
@@ -784,14 +784,14 @@ NetAppConnection::DeleteBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppConnection::DeleteBackup(google::cloud::ExperimentalTag,
+NetAppConnection::DeleteBackup(ExperimentalTag,
                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(
@@ -807,14 +807,14 @@ NetAppConnection::UpdateBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::UpdateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>>
-NetAppConnection::UpdateBackup(google::cloud::ExperimentalTag,
+NetAppConnection::UpdateBackup(ExperimentalTag,
                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::Backup>>(
@@ -830,14 +830,14 @@ NetAppConnection::CreateBackupPolicy(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::CreateBackupPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
-NetAppConnection::CreateBackupPolicy(google::cloud::ExperimentalTag,
+NetAppConnection::CreateBackupPolicy(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::BackupPolicy>>(
@@ -867,14 +867,14 @@ NetAppConnection::UpdateBackupPolicy(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::UpdateBackupPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
-NetAppConnection::UpdateBackupPolicy(google::cloud::ExperimentalTag,
+NetAppConnection::UpdateBackupPolicy(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::BackupPolicy>>(
@@ -890,14 +890,14 @@ NetAppConnection::DeleteBackupPolicy(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnection::DeleteBackupPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppConnection::DeleteBackupPolicy(google::cloud::ExperimentalTag,
+NetAppConnection::DeleteBackupPolicy(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::netapp::v1::OperationMetadata>>(

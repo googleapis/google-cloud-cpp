@@ -56,7 +56,7 @@ PublicAdvertisedPrefixesTracingConnection::Announce(
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
       "PublicAdvertisedPrefixesConnection::Announce");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->Announce(google::cloud::ExperimentalTag{},
                               google::cloud::NoAwaitTag{}, request));
@@ -95,7 +95,7 @@ PublicAdvertisedPrefixesTracingConnection::DeletePublicAdvertisedPrefix(
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
       "PublicAdvertisedPrefixesConnection::DeletePublicAdvertisedPrefix");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeletePublicAdvertisedPrefix(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -145,7 +145,7 @@ PublicAdvertisedPrefixesTracingConnection::InsertPublicAdvertisedPrefix(
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
       "PublicAdvertisedPrefixesConnection::InsertPublicAdvertisedPrefix");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertPublicAdvertisedPrefix(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -198,7 +198,7 @@ PublicAdvertisedPrefixesTracingConnection::PatchPublicAdvertisedPrefix(
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
       "PublicAdvertisedPrefixesConnection::PatchPublicAdvertisedPrefix");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchPublicAdvertisedPrefix(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -236,7 +236,7 @@ PublicAdvertisedPrefixesTracingConnection::Withdraw(
   auto span = internal::MakeSpan(
       "compute_public_advertised_prefixes_v1::"
       "PublicAdvertisedPrefixesConnection::Withdraw");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->Withdraw(google::cloud::ExperimentalTag{},
                               google::cloud::NoAwaitTag{}, request));

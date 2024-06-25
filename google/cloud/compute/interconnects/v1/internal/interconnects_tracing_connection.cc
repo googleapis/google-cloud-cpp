@@ -51,7 +51,7 @@ InterconnectsTracingConnection::DeleteInterconnect(
         DeleteInterconnectRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnects_v1::InterconnectsConnection::DeleteInterconnect");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInterconnect(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -117,7 +117,7 @@ InterconnectsTracingConnection::InsertInterconnect(
         InsertInterconnectRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnects_v1::InterconnectsConnection::InsertInterconnect");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertInterconnect(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -165,7 +165,7 @@ InterconnectsTracingConnection::PatchInterconnect(
         PatchInterconnectRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_interconnects_v1::InterconnectsConnection::PatchInterconnect");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchInterconnect(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -200,7 +200,7 @@ InterconnectsTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_interconnects_v1::InterconnectsConnection::SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

@@ -47,7 +47,7 @@ PipelineServiceTracingConnection::RunPipeline(
     google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::PipelineServiceConnection::RunPipeline");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RunPipeline(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));

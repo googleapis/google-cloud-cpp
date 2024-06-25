@@ -97,7 +97,7 @@ EntityTypesTracingConnection::ExportEntityTypes(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EntityTypesConnection::ExportEntityTypes");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportEntityTypes(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -132,7 +132,7 @@ EntityTypesTracingConnection::ImportEntityTypes(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EntityTypesConnection::ImportEntityTypes");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportEntityTypes(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));

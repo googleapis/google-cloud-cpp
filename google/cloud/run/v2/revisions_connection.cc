@@ -60,14 +60,14 @@ RevisionsConnection::DeleteRevision(
 }
 
 StatusOr<google::longrunning::Operation> RevisionsConnection::DeleteRevision(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::DeleteRevisionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>
-RevisionsConnection::DeleteRevision(google::cloud::ExperimentalTag,
+RevisionsConnection::DeleteRevision(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::run::v2::Revision>>(

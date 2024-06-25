@@ -102,7 +102,7 @@ LineageTracingConnection::DeleteProcess(
         request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::DeleteProcess");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteProcess(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -173,7 +173,7 @@ StatusOr<google::longrunning::Operation> LineageTracingConnection::DeleteRun(
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::DeleteRun");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRun(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

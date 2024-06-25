@@ -67,7 +67,7 @@ ExecutionsTracingConnection::DeleteExecution(
     google::cloud::run::v2::DeleteExecutionRequest const& request) {
   auto span =
       internal::MakeSpan("run_v2::ExecutionsConnection::DeleteExecution");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteExecution(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -100,7 +100,7 @@ ExecutionsTracingConnection::CancelExecution(
     google::cloud::run::v2::CancelExecutionRequest const& request) {
   auto span =
       internal::MakeSpan("run_v2::ExecutionsConnection::CancelExecution");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CancelExecution(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

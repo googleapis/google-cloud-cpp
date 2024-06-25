@@ -62,7 +62,7 @@ DocumentProcessorServiceTracingConnection::BatchProcessDocuments(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::"
       "BatchProcessDocuments");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchProcessDocuments(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -151,7 +151,7 @@ DocumentProcessorServiceTracingConnection::TrainProcessorVersion(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::"
       "TrainProcessorVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->TrainProcessorVersion(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -212,7 +212,7 @@ DocumentProcessorServiceTracingConnection::DeleteProcessorVersion(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::"
       "DeleteProcessorVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteProcessorVersion(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -251,7 +251,7 @@ DocumentProcessorServiceTracingConnection::DeployProcessorVersion(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::"
       "DeployProcessorVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeployProcessorVersion(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -291,7 +291,7 @@ DocumentProcessorServiceTracingConnection::UndeployProcessorVersion(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::"
       "UndeployProcessorVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UndeployProcessorVersion(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -335,7 +335,7 @@ DocumentProcessorServiceTracingConnection::DeleteProcessor(
     google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::DeleteProcessor");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteProcessor(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -368,7 +368,7 @@ DocumentProcessorServiceTracingConnection::EnableProcessor(
     google::cloud::documentai::v1::EnableProcessorRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::EnableProcessor");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->EnableProcessor(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -401,7 +401,7 @@ DocumentProcessorServiceTracingConnection::DisableProcessor(
     google::cloud::documentai::v1::DisableProcessorRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::DisableProcessor");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DisableProcessor(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -440,7 +440,7 @@ DocumentProcessorServiceTracingConnection::SetDefaultProcessorVersion(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::"
       "SetDefaultProcessorVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SetDefaultProcessorVersion(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -475,7 +475,7 @@ DocumentProcessorServiceTracingConnection::ReviewDocument(
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::ReviewDocument");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ReviewDocument(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -514,7 +514,7 @@ DocumentProcessorServiceTracingConnection::EvaluateProcessorVersion(
   auto span = internal::MakeSpan(
       "documentai_v1::DocumentProcessorServiceConnection::"
       "EvaluateProcessorVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->EvaluateProcessorVersion(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

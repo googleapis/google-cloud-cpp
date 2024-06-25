@@ -52,7 +52,7 @@ VideoIntelligenceServiceTracingConnection::AnnotateVideo(
   auto span = internal::MakeSpan(
       "videointelligence_v1::VideoIntelligenceServiceConnection::"
       "AnnotateVideo");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AnnotateVideo(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

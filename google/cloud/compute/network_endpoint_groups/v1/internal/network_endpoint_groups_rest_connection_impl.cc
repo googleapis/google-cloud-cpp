@@ -156,7 +156,7 @@ NetworkEndpointGroupsRestConnectionImpl::AttachNetworkEndpoints(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEndpointGroupsRestConnectionImpl::AttachNetworkEndpoints(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         AttachNetworkEndpointsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -173,7 +173,7 @@ NetworkEndpointGroupsRestConnectionImpl::AttachNetworkEndpoints(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsRestConnectionImpl::AttachNetworkEndpoints(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -289,7 +289,7 @@ NetworkEndpointGroupsRestConnectionImpl::DeleteNetworkEndpointGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEndpointGroupsRestConnectionImpl::DeleteNetworkEndpointGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         DeleteNetworkEndpointGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -307,7 +307,7 @@ NetworkEndpointGroupsRestConnectionImpl::DeleteNetworkEndpointGroup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsRestConnectionImpl::DeleteNetworkEndpointGroup(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -423,7 +423,7 @@ NetworkEndpointGroupsRestConnectionImpl::DetachNetworkEndpoints(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEndpointGroupsRestConnectionImpl::DetachNetworkEndpoints(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         DetachNetworkEndpointsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -440,7 +440,7 @@ NetworkEndpointGroupsRestConnectionImpl::DetachNetworkEndpoints(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsRestConnectionImpl::DetachNetworkEndpoints(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -572,7 +572,7 @@ NetworkEndpointGroupsRestConnectionImpl::InsertNetworkEndpointGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEndpointGroupsRestConnectionImpl::InsertNetworkEndpointGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         InsertNetworkEndpointGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -590,7 +590,7 @@ NetworkEndpointGroupsRestConnectionImpl::InsertNetworkEndpointGroup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsRestConnectionImpl::InsertNetworkEndpointGroup(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

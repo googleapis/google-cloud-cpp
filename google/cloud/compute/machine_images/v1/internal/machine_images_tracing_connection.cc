@@ -51,7 +51,7 @@ MachineImagesTracingConnection::DeleteMachineImage(
         DeleteMachineImageRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_machine_images_v1::MachineImagesConnection::DeleteMachineImage");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteMachineImage(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -107,7 +107,7 @@ MachineImagesTracingConnection::InsertMachineImage(
         InsertMachineImageRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_machine_images_v1::MachineImagesConnection::InsertMachineImage");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertMachineImage(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));

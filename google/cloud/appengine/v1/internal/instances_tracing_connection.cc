@@ -68,7 +68,7 @@ InstancesTracingConnection::DeleteInstance(
     google::appengine::v1::DeleteInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::InstancesConnection::DeleteInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ InstancesTracingConnection::DebugInstance(
     google::appengine::v1::DebugInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::InstancesConnection::DebugInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DebugInstance(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

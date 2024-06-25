@@ -67,7 +67,7 @@ DomainsTracingConnection::RegisterDomain(
     google::cloud::domains::v1::RegisterDomainRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::RegisterDomain");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RegisterDomain(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -110,7 +110,7 @@ DomainsTracingConnection::TransferDomain(
     google::cloud::domains::v1::TransferDomainRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::TransferDomain");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->TransferDomain(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -164,7 +164,7 @@ DomainsTracingConnection::UpdateRegistration(
     google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::UpdateRegistration");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateRegistration(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -200,7 +200,7 @@ DomainsTracingConnection::ConfigureManagementSettings(
         request) {
   auto span = internal::MakeSpan(
       "domains_v1::DomainsConnection::ConfigureManagementSettings");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ConfigureManagementSettings(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ DomainsTracingConnection::ConfigureDnsSettings(
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::ConfigureDnsSettings");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ConfigureDnsSettings(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -270,7 +270,7 @@ DomainsTracingConnection::ConfigureContactSettings(
         request) {
   auto span = internal::MakeSpan(
       "domains_v1::DomainsConnection::ConfigureContactSettings");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ConfigureContactSettings(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -304,7 +304,7 @@ DomainsTracingConnection::ExportRegistration(
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::ExportRegistration");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportRegistration(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -338,7 +338,7 @@ DomainsTracingConnection::DeleteRegistration(
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::DeleteRegistration");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRegistration(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));

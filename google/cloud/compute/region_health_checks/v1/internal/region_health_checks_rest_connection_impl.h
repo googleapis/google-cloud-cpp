@@ -58,13 +58,13 @@ class RegionHealthChecksRestConnectionImpl
                         DeleteHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_checks::v1::
           DeleteHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::HealthCheck> GetHealthCheck(
@@ -76,13 +76,13 @@ class RegionHealthChecksRestConnectionImpl
                         InsertHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_checks::v1::
           InsertHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
@@ -94,12 +94,12 @@ class RegionHealthChecksRestConnectionImpl
           PatchHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_checks::v1::
           PatchHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -107,13 +107,13 @@ class RegionHealthChecksRestConnectionImpl
                         UpdateHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_checks::v1::
           UpdateHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

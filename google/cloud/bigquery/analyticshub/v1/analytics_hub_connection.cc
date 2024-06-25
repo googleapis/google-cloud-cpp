@@ -130,7 +130,7 @@ AnalyticsHubServiceConnection::SubscribeDataExchange(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnection::SubscribeDataExchange(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::bigquery::analyticshub::v1::
         SubscribeDataExchangeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -140,7 +140,7 @@ AnalyticsHubServiceConnection::SubscribeDataExchange(
 future<StatusOr<
     google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
 AnalyticsHubServiceConnection::SubscribeDataExchange(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::bigquery::analyticshub::v1::
                    SubscribeDataExchangeResponse>>(
@@ -159,7 +159,7 @@ AnalyticsHubServiceConnection::RefreshSubscription(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnection::RefreshSubscription(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::bigquery::analyticshub::v1::
         RefreshSubscriptionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -169,7 +169,7 @@ AnalyticsHubServiceConnection::RefreshSubscription(
 future<StatusOr<
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
 AnalyticsHubServiceConnection::RefreshSubscription(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -215,7 +215,7 @@ AnalyticsHubServiceConnection::DeleteSubscription(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnection::DeleteSubscription(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::bigquery::analyticshub::v1::
         DeleteSubscriptionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -224,7 +224,7 @@ AnalyticsHubServiceConnection::DeleteSubscription(
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
 AnalyticsHubServiceConnection::DeleteSubscription(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

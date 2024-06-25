@@ -144,7 +144,7 @@ UrlMapsRestConnectionImpl::DeleteUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestConnectionImpl::DeleteUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -162,7 +162,7 @@ UrlMapsRestConnectionImpl::DeleteUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::DeleteUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -291,7 +291,7 @@ UrlMapsRestConnectionImpl::InsertUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestConnectionImpl::InsertUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -309,7 +309,7 @@ UrlMapsRestConnectionImpl::InsertUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::InsertUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -421,7 +421,7 @@ UrlMapsRestConnectionImpl::InvalidateCache(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestConnectionImpl::InvalidateCache(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -438,7 +438,7 @@ UrlMapsRestConnectionImpl::InvalidateCache(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::InvalidateCache(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -587,7 +587,7 @@ UrlMapsRestConnectionImpl::PatchUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestConnectionImpl::PatchUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -605,7 +605,7 @@ UrlMapsRestConnectionImpl::PatchUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::PatchUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -718,7 +718,7 @@ UrlMapsRestConnectionImpl::UpdateUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 UrlMapsRestConnectionImpl::UpdateUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -736,7 +736,7 @@ UrlMapsRestConnectionImpl::UpdateUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsRestConnectionImpl::UpdateUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

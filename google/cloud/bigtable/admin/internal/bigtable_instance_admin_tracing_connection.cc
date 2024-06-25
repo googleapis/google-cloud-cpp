@@ -48,7 +48,7 @@ BigtableInstanceAdminTracingConnection::CreateInstance(
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::CreateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -109,7 +109,7 @@ BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PartialUpdateInstance(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -150,7 +150,7 @@ BigtableInstanceAdminTracingConnection::CreateCluster(
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::CreateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -201,7 +201,7 @@ BigtableInstanceAdminTracingConnection::UpdateCluster(
     google::bigtable::admin::v2::Cluster const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::UpdateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -235,7 +235,7 @@ BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PartialUpdateCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -305,7 +305,7 @@ BigtableInstanceAdminTracingConnection::UpdateAppProfile(
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableInstanceAdminConnection::UpdateAppProfile");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAppProfile(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

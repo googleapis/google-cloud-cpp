@@ -79,14 +79,14 @@ ProductServiceConnection::PurgeProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::PurgeProducts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::PurgeProductsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-ProductServiceConnection::PurgeProducts(google::cloud::ExperimentalTag,
+ProductServiceConnection::PurgeProducts(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>(
@@ -103,7 +103,7 @@ ProductServiceConnection::ImportProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::ImportProducts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::ImportProductsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -111,7 +111,7 @@ ProductServiceConnection::ImportProducts(
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceConnection::ImportProducts(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::ImportProductsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -126,14 +126,14 @@ ProductServiceConnection::SetInventory(
 }
 
 StatusOr<google::longrunning::Operation> ProductServiceConnection::SetInventory(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::SetInventoryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-ProductServiceConnection::SetInventory(google::cloud::ExperimentalTag,
+ProductServiceConnection::SetInventory(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::SetInventoryResponse>>(
@@ -150,7 +150,7 @@ ProductServiceConnection::AddFulfillmentPlaces(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::AddFulfillmentPlaces(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -158,7 +158,7 @@ ProductServiceConnection::AddFulfillmentPlaces(
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceConnection::AddFulfillmentPlaces(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -174,7 +174,7 @@ ProductServiceConnection::RemoveFulfillmentPlaces(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::RemoveFulfillmentPlaces(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -182,7 +182,7 @@ ProductServiceConnection::RemoveFulfillmentPlaces(
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceConnection::RemoveFulfillmentPlaces(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -198,7 +198,7 @@ ProductServiceConnection::AddLocalInventories(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::AddLocalInventories(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::AddLocalInventoriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -206,7 +206,7 @@ ProductServiceConnection::AddLocalInventories(
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
 ProductServiceConnection::AddLocalInventories(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -222,7 +222,7 @@ ProductServiceConnection::RemoveLocalInventories(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnection::RemoveLocalInventories(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -230,7 +230,7 @@ ProductServiceConnection::RemoveLocalInventories(
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceConnection::RemoveLocalInventories(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

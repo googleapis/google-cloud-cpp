@@ -61,7 +61,7 @@ BatchServiceTracingConnection::DeleteJob(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::batch::v1::DeleteJobRequest const& request) {
   auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::DeleteJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteJob(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

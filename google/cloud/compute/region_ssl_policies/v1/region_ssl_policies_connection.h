@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/region_ssl_policies/v1/internal/region_ssl_policies_retry_traits.h"
 #include "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -193,12 +193,12 @@ class RegionSslPoliciesConnection {
                       DeleteSslPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_ssl_policies::v1::
           DeleteSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteSslPolicy(google::cloud::ExperimentalTag,
+  DeleteSslPolicy(ExperimentalTag,
                   google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
@@ -210,12 +210,12 @@ class RegionSslPoliciesConnection {
                       InsertSslPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_ssl_policies::v1::
           InsertSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertSslPolicy(google::cloud::ExperimentalTag,
+  InsertSslPolicy(ExperimentalTag,
                   google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
@@ -232,12 +232,12 @@ class RegionSslPoliciesConnection {
                      PatchSslPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_ssl_policies::v1::
           PatchSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchSslPolicy(google::cloud::ExperimentalTag,
+  PatchSslPolicy(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

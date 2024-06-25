@@ -72,7 +72,7 @@ SecureSourceManagerTracingConnection::CreateInstance(
         request) {
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::CreateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -107,7 +107,7 @@ SecureSourceManagerTracingConnection::DeleteInstance(
         request) {
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::DeleteInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -167,7 +167,7 @@ SecureSourceManagerTracingConnection::CreateRepository(
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::"
       "CreateRepository");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRepository(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -205,7 +205,7 @@ SecureSourceManagerTracingConnection::DeleteRepository(
   auto span = internal::MakeSpan(
       "securesourcemanager_v1::SecureSourceManagerConnection::"
       "DeleteRepository");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRepository(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

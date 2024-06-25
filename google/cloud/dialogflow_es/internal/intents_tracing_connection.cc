@@ -94,7 +94,7 @@ IntentsTracingConnection::BatchUpdateIntents(
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchUpdateIntents");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchUpdateIntents(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -128,7 +128,7 @@ IntentsTracingConnection::BatchDeleteIntents(
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchDeleteIntents");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchDeleteIntents(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));

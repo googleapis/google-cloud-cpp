@@ -53,14 +53,14 @@ SimulatorConnection::CreateReplay(
 }
 
 StatusOr<google::longrunning::Operation> SimulatorConnection::CreateReplay(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::policysimulator::v1::CreateReplayRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::policysimulator::v1::Replay>>
-SimulatorConnection::CreateReplay(google::cloud::ExperimentalTag,
+SimulatorConnection::CreateReplay(ExperimentalTag,
                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::policysimulator::v1::Replay>>(

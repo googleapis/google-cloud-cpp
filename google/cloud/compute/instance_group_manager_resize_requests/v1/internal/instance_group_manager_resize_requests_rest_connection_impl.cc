@@ -112,7 +112,7 @@ InstanceGroupManagerResizeRequestsRestConnectionImpl::Cancel(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsRestConnectionImpl::Cancel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
         CancelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -130,7 +130,7 @@ InstanceGroupManagerResizeRequestsRestConnectionImpl::Cancel(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsRestConnectionImpl::Cancel(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -251,7 +251,7 @@ InstanceGroupManagerResizeRequestsRestConnectionImpl::
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsRestConnectionImpl::
     DeleteInstanceGroupManagerResizeRequest(
-        google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+        ExperimentalTag, NoAwaitTag,
         google::cloud::cpp::compute::instance_group_manager_resize_requests::
             v1::DeleteInstanceGroupManagerResizeRequestRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -273,7 +273,7 @@ InstanceGroupManagerResizeRequestsRestConnectionImpl::
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsRestConnectionImpl::
     DeleteInstanceGroupManagerResizeRequest(
-        google::cloud::ExperimentalTag,
+        ExperimentalTag,
         google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -414,7 +414,7 @@ InstanceGroupManagerResizeRequestsRestConnectionImpl::
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsRestConnectionImpl::
     InsertInstanceGroupManagerResizeRequest(
-        google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+        ExperimentalTag, NoAwaitTag,
         google::cloud::cpp::compute::instance_group_manager_resize_requests::
             v1::InsertInstanceGroupManagerResizeRequestRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -436,7 +436,7 @@ InstanceGroupManagerResizeRequestsRestConnectionImpl::
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsRestConnectionImpl::
     InsertInstanceGroupManagerResizeRequest(
-        google::cloud::ExperimentalTag,
+        ExperimentalTag,
         google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

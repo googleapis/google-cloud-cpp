@@ -94,7 +94,7 @@ RegionInstanceGroupsTracingConnection::SetNamedPorts(
   auto span = internal::MakeSpan(
       "compute_region_instance_groups_v1::RegionInstanceGroupsConnection::"
       "SetNamedPorts");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetNamedPorts(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

@@ -60,7 +60,7 @@ StatusOr<google::longrunning::Operation> TpuTracingConnection::CreateNode(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::tpu::v2::CreateNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::CreateNode");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateNode(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -88,7 +88,7 @@ StatusOr<google::longrunning::Operation> TpuTracingConnection::DeleteNode(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::tpu::v2::DeleteNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::DeleteNode");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteNode(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -116,7 +116,7 @@ StatusOr<google::longrunning::Operation> TpuTracingConnection::StopNode(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::tpu::v2::StopNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::StopNode");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StopNode(google::cloud::ExperimentalTag{},
                               google::cloud::NoAwaitTag{}, request));
@@ -143,7 +143,7 @@ StatusOr<google::longrunning::Operation> TpuTracingConnection::StartNode(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::tpu::v2::StartNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::StartNode");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StartNode(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -170,7 +170,7 @@ StatusOr<google::longrunning::Operation> TpuTracingConnection::UpdateNode(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::tpu::v2::UpdateNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::UpdateNode");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateNode(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

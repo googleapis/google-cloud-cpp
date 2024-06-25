@@ -62,13 +62,13 @@ class ReservationsRestConnectionImpl
                         DeleteReservationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::
           DeleteReservationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteReservation(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
@@ -84,13 +84,13 @@ class ReservationsRestConnectionImpl
                         InsertReservationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::
           InsertReservationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertReservation(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
@@ -102,12 +102,12 @@ class ReservationsRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -123,13 +123,13 @@ class ReservationsRestConnectionImpl
                         UpdateReservationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::
           UpdateReservationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateReservation(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

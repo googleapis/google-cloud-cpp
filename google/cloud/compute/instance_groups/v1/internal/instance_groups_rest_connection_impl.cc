@@ -106,7 +106,7 @@ InstanceGroupsRestConnectionImpl::AddInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsRestConnectionImpl::AddInstances(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_groups::v1::AddInstancesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -123,7 +123,7 @@ InstanceGroupsRestConnectionImpl::AddInstances(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestConnectionImpl::AddInstances(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -281,7 +281,7 @@ InstanceGroupsRestConnectionImpl::DeleteInstanceGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsRestConnectionImpl::DeleteInstanceGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_groups::v1::
         DeleteInstanceGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -298,7 +298,7 @@ InstanceGroupsRestConnectionImpl::DeleteInstanceGroup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestConnectionImpl::DeleteInstanceGroup(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -430,7 +430,7 @@ InstanceGroupsRestConnectionImpl::InsertInstanceGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsRestConnectionImpl::InsertInstanceGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_groups::v1::
         InsertInstanceGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -447,7 +447,7 @@ InstanceGroupsRestConnectionImpl::InsertInstanceGroup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestConnectionImpl::InsertInstanceGroup(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -637,7 +637,7 @@ InstanceGroupsRestConnectionImpl::RemoveInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsRestConnectionImpl::RemoveInstances(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_groups::v1::
         RemoveInstancesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -654,7 +654,7 @@ InstanceGroupsRestConnectionImpl::RemoveInstances(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestConnectionImpl::RemoveInstances(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -770,7 +770,7 @@ InstanceGroupsRestConnectionImpl::SetNamedPorts(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupsRestConnectionImpl::SetNamedPorts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_groups::v1::
         SetNamedPortsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -787,7 +787,7 @@ InstanceGroupsRestConnectionImpl::SetNamedPorts(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupsRestConnectionImpl::SetNamedPorts(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

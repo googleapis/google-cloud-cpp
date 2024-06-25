@@ -48,7 +48,7 @@ CatalogServiceConnection::CreateEntryType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::CreateEntryType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateEntryTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ CatalogServiceConnection::CreateEntryType(
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceConnection::CreateEntryType(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::EntryType>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -72,7 +72,7 @@ CatalogServiceConnection::UpdateEntryType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::UpdateEntryType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateEntryTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -80,7 +80,7 @@ CatalogServiceConnection::UpdateEntryType(
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceConnection::UpdateEntryType(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::EntryType>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -96,7 +96,7 @@ CatalogServiceConnection::DeleteEntryType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::DeleteEntryType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteEntryTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -104,7 +104,7 @@ CatalogServiceConnection::DeleteEntryType(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnection::DeleteEntryType(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,7 +134,7 @@ CatalogServiceConnection::CreateAspectType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::CreateAspectType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateAspectTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,7 +142,7 @@ CatalogServiceConnection::CreateAspectType(
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceConnection::CreateAspectType(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::AspectType>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -158,7 +158,7 @@ CatalogServiceConnection::UpdateAspectType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::UpdateAspectType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateAspectTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -166,7 +166,7 @@ CatalogServiceConnection::UpdateAspectType(
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceConnection::UpdateAspectType(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::AspectType>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -182,7 +182,7 @@ CatalogServiceConnection::DeleteAspectType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::DeleteAspectType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteAspectTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -190,7 +190,7 @@ CatalogServiceConnection::DeleteAspectType(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnection::DeleteAspectType(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -220,7 +220,7 @@ CatalogServiceConnection::CreateEntryGroup(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::CreateEntryGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateEntryGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -228,7 +228,7 @@ CatalogServiceConnection::CreateEntryGroup(
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceConnection::CreateEntryGroup(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -244,7 +244,7 @@ CatalogServiceConnection::UpdateEntryGroup(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::UpdateEntryGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateEntryGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -252,7 +252,7 @@ CatalogServiceConnection::UpdateEntryGroup(
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceConnection::UpdateEntryGroup(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::EntryGroup>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -268,7 +268,7 @@ CatalogServiceConnection::DeleteEntryGroup(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnection::DeleteEntryGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteEntryGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -276,7 +276,7 @@ CatalogServiceConnection::DeleteEntryGroup(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnection::DeleteEntryGroup(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

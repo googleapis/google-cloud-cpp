@@ -78,14 +78,14 @@ TestCasesConnection::RunTestCase(
 }
 
 StatusOr<google::longrunning::Operation> TestCasesConnection::RunTestCase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-TestCasesConnection::RunTestCase(google::cloud::ExperimentalTag,
+TestCasesConnection::RunTestCase(ExperimentalTag,
                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>(
@@ -101,14 +101,14 @@ TestCasesConnection::BatchRunTestCases(
 }
 
 StatusOr<google::longrunning::Operation> TestCasesConnection::BatchRunTestCases(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-TestCasesConnection::BatchRunTestCases(google::cloud::ExperimentalTag,
+TestCasesConnection::BatchRunTestCases(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>(
@@ -130,14 +130,14 @@ TestCasesConnection::ImportTestCases(
 }
 
 StatusOr<google::longrunning::Operation> TestCasesConnection::ImportTestCases(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-TestCasesConnection::ImportTestCases(google::cloud::ExperimentalTag,
+TestCasesConnection::ImportTestCases(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>(
@@ -153,14 +153,14 @@ TestCasesConnection::ExportTestCases(
 }
 
 StatusOr<google::longrunning::Operation> TestCasesConnection::ExportTestCases(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-TestCasesConnection::ExportTestCases(google::cloud::ExperimentalTag,
+TestCasesConnection::ExportTestCases(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>(

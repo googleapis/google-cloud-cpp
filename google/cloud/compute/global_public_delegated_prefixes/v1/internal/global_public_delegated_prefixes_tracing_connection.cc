@@ -57,7 +57,7 @@ GlobalPublicDelegatedPrefixesTracingConnection::DeletePublicDelegatedPrefix(
   auto span = internal::MakeSpan(
       "compute_global_public_delegated_prefixes_v1::"
       "GlobalPublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeletePublicDelegatedPrefix(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -107,7 +107,7 @@ GlobalPublicDelegatedPrefixesTracingConnection::InsertPublicDelegatedPrefix(
   auto span = internal::MakeSpan(
       "compute_global_public_delegated_prefixes_v1::"
       "GlobalPublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertPublicDelegatedPrefix(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -162,7 +162,7 @@ GlobalPublicDelegatedPrefixesTracingConnection::PatchPublicDelegatedPrefix(
   auto span = internal::MakeSpan(
       "compute_global_public_delegated_prefixes_v1::"
       "GlobalPublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchPublicDelegatedPrefix(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

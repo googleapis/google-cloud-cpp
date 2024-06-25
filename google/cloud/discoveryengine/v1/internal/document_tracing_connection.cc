@@ -95,7 +95,7 @@ DocumentServiceTracingConnection::ImportDocuments(
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::ImportDocuments");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportDocuments(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -128,7 +128,7 @@ DocumentServiceTracingConnection::PurgeDocuments(
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::DocumentServiceConnection::PurgeDocuments");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PurgeDocuments(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

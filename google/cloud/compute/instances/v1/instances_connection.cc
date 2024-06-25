@@ -46,7 +46,7 @@ InstancesConnection::AddAccessConfig(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::AddAccessConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,8 +54,7 @@ InstancesConnection::AddAccessConfig(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::AddAccessConfig(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -72,7 +71,7 @@ InstancesConnection::AddResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::AddResourcePolicies(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         AddResourcePoliciesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -81,8 +80,7 @@ InstancesConnection::AddResourcePolicies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::AddResourcePolicies(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -108,7 +106,7 @@ InstancesConnection::AttachDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::AttachDisk(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,8 +114,7 @@ InstancesConnection::AttachDisk(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::AttachDisk(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -133,7 +130,7 @@ InstancesConnection::BulkInsert(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::BulkInsert(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -141,8 +138,7 @@ InstancesConnection::BulkInsert(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::BulkInsert(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -158,7 +154,7 @@ InstancesConnection::DeleteInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -166,8 +162,7 @@ InstancesConnection::DeleteInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -184,7 +179,7 @@ InstancesConnection::DeleteAccessConfig(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::DeleteAccessConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         DeleteAccessConfigRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -193,8 +188,7 @@ InstancesConnection::DeleteAccessConfig(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::DeleteAccessConfig(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -210,7 +204,7 @@ InstancesConnection::DetachDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::DetachDisk(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -218,8 +212,7 @@ InstancesConnection::DetachDisk(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::DetachDisk(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -282,7 +275,7 @@ InstancesConnection::InsertInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::InsertInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -290,8 +283,7 @@ InstancesConnection::InsertInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::InsertInstance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -324,7 +316,7 @@ InstancesConnection::PerformMaintenance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::PerformMaintenance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         PerformMaintenanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -333,8 +325,7 @@ InstancesConnection::PerformMaintenance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::PerformMaintenance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -351,7 +342,7 @@ InstancesConnection::RemoveResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::RemoveResourcePolicies(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         RemoveResourcePoliciesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -360,8 +351,7 @@ InstancesConnection::RemoveResourcePolicies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::RemoveResourcePolicies(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -376,14 +366,14 @@ InstancesConnection::Reset(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> InstancesConnection::Reset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::ResetRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesConnection::Reset(google::cloud::ExperimentalTag,
+InstancesConnection::Reset(ExperimentalTag,
                            google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
@@ -400,14 +390,14 @@ InstancesConnection::Resume(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::Resume(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::ResumeRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesConnection::Resume(google::cloud::ExperimentalTag,
+InstancesConnection::Resume(ExperimentalTag,
                             google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
@@ -431,7 +421,7 @@ InstancesConnection::SetDeletionProtection(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetDeletionProtection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         SetDeletionProtectionRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -440,8 +430,7 @@ InstancesConnection::SetDeletionProtection(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetDeletionProtection(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -458,7 +447,7 @@ InstancesConnection::SetDiskAutoDelete(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetDiskAutoDelete(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         SetDiskAutoDeleteRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -467,8 +456,7 @@ InstancesConnection::SetDiskAutoDelete(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetDiskAutoDelete(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -490,7 +478,7 @@ InstancesConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -498,8 +486,7 @@ InstancesConnection::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetLabels(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -516,7 +503,7 @@ InstancesConnection::SetMachineResources(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetMachineResources(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         SetMachineResourcesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -525,8 +512,7 @@ InstancesConnection::SetMachineResources(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetMachineResources(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -542,7 +528,7 @@ InstancesConnection::SetMachineType(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetMachineType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -550,8 +536,7 @@ InstancesConnection::SetMachineType(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetMachineType(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -567,7 +552,7 @@ InstancesConnection::SetMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetMetadata(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -575,8 +560,7 @@ InstancesConnection::SetMetadata(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetMetadata(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -593,7 +577,7 @@ InstancesConnection::SetMinCpuPlatform(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetMinCpuPlatform(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         SetMinCpuPlatformRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -602,8 +586,7 @@ InstancesConnection::SetMinCpuPlatform(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetMinCpuPlatform(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -619,7 +602,7 @@ InstancesConnection::SetName(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetName(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::SetNameRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -627,8 +610,7 @@ InstancesConnection::SetName(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetName(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -644,7 +626,7 @@ InstancesConnection::SetScheduling(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetScheduling(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -652,8 +634,7 @@ InstancesConnection::SetScheduling(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetScheduling(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -670,7 +651,7 @@ InstancesConnection::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         SetSecurityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -679,8 +660,7 @@ InstancesConnection::SetSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetSecurityPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -697,7 +677,7 @@ InstancesConnection::SetServiceAccount(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetServiceAccount(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         SetServiceAccountRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -706,8 +686,7 @@ InstancesConnection::SetServiceAccount(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetServiceAccount(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -724,7 +703,7 @@ InstancesConnection::SetShieldedInstanceIntegrityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetShieldedInstanceIntegrityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         SetShieldedInstanceIntegrityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -733,8 +712,7 @@ InstancesConnection::SetShieldedInstanceIntegrityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetShieldedInstanceIntegrityPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -750,7 +728,7 @@ InstancesConnection::SetTags(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SetTags(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::SetTagsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -758,8 +736,7 @@ InstancesConnection::SetTags(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SetTags(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -776,7 +753,7 @@ InstancesConnection::SimulateMaintenanceEvent(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::SimulateMaintenanceEvent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         SimulateMaintenanceEventRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -785,8 +762,7 @@ InstancesConnection::SimulateMaintenanceEvent(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::SimulateMaintenanceEvent(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -801,14 +777,14 @@ InstancesConnection::Start(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> InstancesConnection::Start(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::StartRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesConnection::Start(google::cloud::ExperimentalTag,
+InstancesConnection::Start(ExperimentalTag,
                            google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
@@ -826,7 +802,7 @@ InstancesConnection::StartWithEncryptionKey(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::StartWithEncryptionKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         StartWithEncryptionKeyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -835,8 +811,7 @@ InstancesConnection::StartWithEncryptionKey(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::StartWithEncryptionKey(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -851,14 +826,14 @@ InstancesConnection::Stop(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> InstancesConnection::Stop(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::StopRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-InstancesConnection::Stop(google::cloud::ExperimentalTag,
+InstancesConnection::Stop(ExperimentalTag,
                           google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
@@ -875,7 +850,7 @@ InstancesConnection::Suspend(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::Suspend(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::SuspendRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -883,8 +858,7 @@ InstancesConnection::Suspend(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::Suspend(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -907,7 +881,7 @@ InstancesConnection::UpdateInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -915,8 +889,7 @@ InstancesConnection::UpdateInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -933,7 +906,7 @@ InstancesConnection::UpdateAccessConfig(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::UpdateAccessConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         UpdateAccessConfigRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -942,8 +915,7 @@ InstancesConnection::UpdateAccessConfig(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::UpdateAccessConfig(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -960,7 +932,7 @@ InstancesConnection::UpdateDisplayDevice(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::UpdateDisplayDevice(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         UpdateDisplayDeviceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -969,8 +941,7 @@ InstancesConnection::UpdateDisplayDevice(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::UpdateDisplayDevice(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -987,7 +958,7 @@ InstancesConnection::UpdateNetworkInterface(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::UpdateNetworkInterface(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         UpdateNetworkInterfaceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -996,8 +967,7 @@ InstancesConnection::UpdateNetworkInterface(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::UpdateNetworkInterface(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -1014,7 +984,7 @@ InstancesConnection::UpdateShieldedInstanceConfig(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstancesConnection::UpdateShieldedInstanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instances::v1::
         UpdateShieldedInstanceConfigRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -1023,8 +993,7 @@ InstancesConnection::UpdateShieldedInstanceConfig(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstancesConnection::UpdateShieldedInstanceConfig(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

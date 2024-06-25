@@ -21,11 +21,11 @@
 
 #include "google/cloud/discoveryengine/v1/engine_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/engine_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,11 +192,11 @@ class EngineServiceConnection {
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateEngine(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
-  CreateEngine(google::cloud::ExperimentalTag,
+  CreateEngine(ExperimentalTag,
                google::longrunning::Operation const& operation);
 
   virtual future<
@@ -205,12 +205,12 @@ class EngineServiceConnection {
       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteEngine(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-  DeleteEngine(google::cloud::ExperimentalTag,
+  DeleteEngine(ExperimentalTag,
                google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(

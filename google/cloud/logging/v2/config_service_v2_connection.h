@@ -21,11 +21,11 @@
 
 #include "google/cloud/logging/v2/config_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/logging/v2/internal/config_service_v2_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -198,23 +198,21 @@ class ConfigServiceV2Connection {
       google::logging::v2::CreateBucketRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateBucketAsync(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::logging::v2::CreateBucketRequest const& request);
 
   virtual future<StatusOr<google::logging::v2::LogBucket>> CreateBucketAsync(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
       google::logging::v2::UpdateBucketRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateBucketAsync(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::logging::v2::UpdateBucketRequest const& request);
 
   virtual future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::logging::v2::LogBucket> CreateBucket(
       google::logging::v2::CreateBucketRequest const& request);
@@ -262,23 +260,21 @@ class ConfigServiceV2Connection {
       google::logging::v2::CreateLinkRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateLink(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::logging::v2::CreateLinkRequest const& request);
 
   virtual future<StatusOr<google::logging::v2::Link>> CreateLink(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
       google::logging::v2::DeleteLinkRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteLink(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::logging::v2::DeleteLinkRequest const& request);
 
   virtual future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::logging::v2::Link> ListLinks(
       google::logging::v2::ListLinksRequest request);
@@ -317,11 +313,11 @@ class ConfigServiceV2Connection {
   CopyLogEntries(google::logging::v2::CopyLogEntriesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CopyLogEntries(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::logging::v2::CopyLogEntriesRequest const& request);
 
   virtual future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
-  CopyLogEntries(google::cloud::ExperimentalTag,
+  CopyLogEntries(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 };
 

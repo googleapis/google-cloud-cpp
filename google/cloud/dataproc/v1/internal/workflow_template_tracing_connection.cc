@@ -72,7 +72,7 @@ WorkflowTemplateServiceTracingConnection::InstantiateWorkflowTemplate(
   auto span = internal::MakeSpan(
       "dataproc_v1::WorkflowTemplateServiceConnection::"
       "InstantiateWorkflowTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InstantiateWorkflowTemplate(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -111,7 +111,7 @@ WorkflowTemplateServiceTracingConnection::InstantiateInlineWorkflowTemplate(
   auto span = internal::MakeSpan(
       "dataproc_v1::WorkflowTemplateServiceConnection::"
       "InstantiateInlineWorkflowTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InstantiateInlineWorkflowTemplate(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

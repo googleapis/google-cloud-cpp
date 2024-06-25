@@ -62,7 +62,7 @@ SecureSourceManagerConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerConnection::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securesourcemanager::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ SecureSourceManagerConnection::CreateInstance(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
 SecureSourceManagerConnection::CreateInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securesourcemanager::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ SecureSourceManagerConnection::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerConnection::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ SecureSourceManagerConnection::DeleteInstance(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerConnection::DeleteInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -124,7 +124,7 @@ SecureSourceManagerConnection::CreateRepository(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerConnection::CreateRepository(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -132,7 +132,7 @@ SecureSourceManagerConnection::CreateRepository(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
 SecureSourceManagerConnection::CreateRepository(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securesourcemanager::v1::Repository>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -148,7 +148,7 @@ SecureSourceManagerConnection::DeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerConnection::DeleteRepository(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -156,7 +156,7 @@ SecureSourceManagerConnection::DeleteRepository(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerConnection::DeleteRepository(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

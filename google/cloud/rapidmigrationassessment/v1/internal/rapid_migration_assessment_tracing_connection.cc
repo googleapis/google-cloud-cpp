@@ -56,7 +56,7 @@ RapidMigrationAssessmentTracingConnection::CreateCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "CreateCollector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCollector(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -94,7 +94,7 @@ RapidMigrationAssessmentTracingConnection::CreateAnnotation(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "CreateAnnotation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAnnotation(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -168,7 +168,7 @@ RapidMigrationAssessmentTracingConnection::UpdateCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "UpdateCollector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCollector(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -206,7 +206,7 @@ RapidMigrationAssessmentTracingConnection::DeleteCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "DeleteCollector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCollector(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -244,7 +244,7 @@ RapidMigrationAssessmentTracingConnection::ResumeCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "ResumeCollector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ResumeCollector(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -282,7 +282,7 @@ RapidMigrationAssessmentTracingConnection::RegisterCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "RegisterCollector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RegisterCollector(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -320,7 +320,7 @@ RapidMigrationAssessmentTracingConnection::PauseCollector(
   auto span = internal::MakeSpan(
       "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
       "PauseCollector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PauseCollector(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

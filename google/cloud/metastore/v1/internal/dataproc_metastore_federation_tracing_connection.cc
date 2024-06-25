@@ -70,7 +70,7 @@ DataprocMetastoreFederationTracingConnection::CreateFederation(
     google::cloud::metastore::v1::CreateFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::CreateFederation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateFederation(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -103,7 +103,7 @@ DataprocMetastoreFederationTracingConnection::UpdateFederation(
     google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::UpdateFederation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateFederation(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -136,7 +136,7 @@ DataprocMetastoreFederationTracingConnection::DeleteFederation(
     google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreFederationConnection::DeleteFederation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteFederation(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

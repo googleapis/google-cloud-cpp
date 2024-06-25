@@ -77,7 +77,7 @@ BigtableTableAdminTracingConnection::UpdateTable(
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UpdateTable");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTable(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -118,7 +118,7 @@ BigtableTableAdminTracingConnection::UndeleteTable(
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UndeleteTable");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UndeleteTable(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -152,7 +152,7 @@ BigtableTableAdminTracingConnection::CreateAuthorizedView(
     google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CreateAuthorizedView");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateAuthorizedView(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -207,7 +207,7 @@ BigtableTableAdminTracingConnection::UpdateAuthorizedView(
     google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UpdateAuthorizedView");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateAuthorizedView(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -284,7 +284,7 @@ BigtableTableAdminTracingConnection::CreateBackup(
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CreateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -354,7 +354,7 @@ BigtableTableAdminTracingConnection::RestoreTable(
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::RestoreTable");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RestoreTable(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -387,7 +387,7 @@ BigtableTableAdminTracingConnection::CopyBackup(
     google::bigtable::admin::v2::CopyBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CopyBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CopyBackup(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

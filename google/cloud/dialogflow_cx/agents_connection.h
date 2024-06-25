@@ -21,11 +21,11 @@
 
 #include "google/cloud/dialogflow_cx/agents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/agents_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -206,24 +206,22 @@ class AgentsConnection {
       google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ExportAgent(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-  ExportAgent(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation);
+  ExportAgent(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::protobuf::Struct>> RestoreAgent(
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RestoreAgent(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request);
 
   virtual future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
   ValidateAgent(

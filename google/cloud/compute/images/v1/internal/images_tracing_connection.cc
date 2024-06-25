@@ -50,7 +50,7 @@ ImagesTracingConnection::DeleteImage(
         request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::DeleteImage");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteImage(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -83,7 +83,7 @@ ImagesTracingConnection::Deprecate(
     google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::Deprecate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->Deprecate(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -147,7 +147,7 @@ ImagesTracingConnection::InsertImage(
         request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::InsertImage");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertImage(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -191,7 +191,7 @@ ImagesTracingConnection::PatchImage(
     google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::PatchImage");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchImage(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ ImagesTracingConnection::SetLabels(
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

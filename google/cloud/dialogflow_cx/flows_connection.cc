@@ -72,14 +72,14 @@ future<StatusOr<google::protobuf::Struct>> FlowsConnection::TrainFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsConnection::TrainFlow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::protobuf::Struct>> FlowsConnection::TrainFlow(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -105,14 +105,14 @@ FlowsConnection::ImportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsConnection::ImportFlow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-FlowsConnection::ImportFlow(google::cloud::ExperimentalTag,
+FlowsConnection::ImportFlow(ExperimentalTag,
                             google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>(
@@ -128,14 +128,14 @@ FlowsConnection::ExportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsConnection::ExportFlow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-FlowsConnection::ExportFlow(google::cloud::ExperimentalTag,
+FlowsConnection::ExportFlow(ExperimentalTag,
                             google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>(

@@ -48,7 +48,7 @@ BackupForGKEConnection::CreateBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnection::CreateBackupPlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ BackupForGKEConnection::CreateBackupPlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKEConnection::CreateBackupPlan(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::BackupPlan>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ BackupForGKEConnection::UpdateBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnection::UpdateBackupPlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ BackupForGKEConnection::UpdateBackupPlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKEConnection::UpdateBackupPlan(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::BackupPlan>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ BackupForGKEConnection::DeleteBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnection::DeleteBackupPlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ BackupForGKEConnection::DeleteBackupPlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnection::DeleteBackupPlan(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -133,14 +133,14 @@ BackupForGKEConnection::CreateBackup(
 }
 
 StatusOr<google::longrunning::Operation> BackupForGKEConnection::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-BackupForGKEConnection::CreateBackup(google::cloud::ExperimentalTag,
+BackupForGKEConnection::CreateBackup(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::Backup>>(
@@ -170,14 +170,14 @@ BackupForGKEConnection::UpdateBackup(
 }
 
 StatusOr<google::longrunning::Operation> BackupForGKEConnection::UpdateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-BackupForGKEConnection::UpdateBackup(google::cloud::ExperimentalTag,
+BackupForGKEConnection::UpdateBackup(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::Backup>>(
@@ -193,14 +193,14 @@ BackupForGKEConnection::DeleteBackup(
 }
 
 StatusOr<google::longrunning::Operation> BackupForGKEConnection::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEConnection::DeleteBackup(google::cloud::ExperimentalTag,
+BackupForGKEConnection::DeleteBackup(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
@@ -231,7 +231,7 @@ BackupForGKEConnection::CreateRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnection::CreateRestorePlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -239,7 +239,7 @@ BackupForGKEConnection::CreateRestorePlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKEConnection::CreateRestorePlan(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::RestorePlan>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -269,7 +269,7 @@ BackupForGKEConnection::UpdateRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnection::UpdateRestorePlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -277,7 +277,7 @@ BackupForGKEConnection::UpdateRestorePlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKEConnection::UpdateRestorePlan(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::RestorePlan>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -293,7 +293,7 @@ BackupForGKEConnection::DeleteRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnection::DeleteRestorePlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -301,7 +301,7 @@ BackupForGKEConnection::DeleteRestorePlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnection::DeleteRestorePlan(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -316,14 +316,14 @@ BackupForGKEConnection::CreateRestore(
 }
 
 StatusOr<google::longrunning::Operation> BackupForGKEConnection::CreateRestore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateRestoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-BackupForGKEConnection::CreateRestore(google::cloud::ExperimentalTag,
+BackupForGKEConnection::CreateRestore(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::Restore>>(
@@ -353,14 +353,14 @@ BackupForGKEConnection::UpdateRestore(
 }
 
 StatusOr<google::longrunning::Operation> BackupForGKEConnection::UpdateRestore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateRestoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-BackupForGKEConnection::UpdateRestore(google::cloud::ExperimentalTag,
+BackupForGKEConnection::UpdateRestore(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::Restore>>(
@@ -376,14 +376,14 @@ BackupForGKEConnection::DeleteRestore(
 }
 
 StatusOr<google::longrunning::Operation> BackupForGKEConnection::DeleteRestore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteRestoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-BackupForGKEConnection::DeleteRestore(google::cloud::ExperimentalTag,
+BackupForGKEConnection::DeleteRestore(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(

@@ -53,7 +53,7 @@ SnapshotSettingsConnection::PatchSnapshotSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotSettingsConnection::PatchSnapshotSettings(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::snapshot_settings::v1::
         PatchSnapshotSettingsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -62,8 +62,7 @@ SnapshotSettingsConnection::PatchSnapshotSettings(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsConnection::PatchSnapshotSettings(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

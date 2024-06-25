@@ -54,7 +54,7 @@ TargetSslProxiesTracingConnection::DeleteTargetSslProxy(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "DeleteTargetSslProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteTargetSslProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -104,7 +104,7 @@ TargetSslProxiesTracingConnection::InsertTargetSslProxy(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "InsertTargetSslProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertTargetSslProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -156,7 +156,7 @@ TargetSslProxiesTracingConnection::SetBackendService(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetBackendService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetBackendService(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -194,7 +194,7 @@ TargetSslProxiesTracingConnection::SetCertificateMap(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetCertificateMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetCertificateMap(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -232,7 +232,7 @@ TargetSslProxiesTracingConnection::SetProxyHeader(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetProxyHeader");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetProxyHeader(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -271,7 +271,7 @@ TargetSslProxiesTracingConnection::SetSslCertificates(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetSslCertificates");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetSslCertificates(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -309,7 +309,7 @@ TargetSslProxiesTracingConnection::SetSslPolicy(
   auto span = internal::MakeSpan(
       "compute_target_ssl_proxies_v1::TargetSslProxiesConnection::"
       "SetSslPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetSslPolicy(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

@@ -53,7 +53,7 @@ FleetRoutingConnection::BatchOptimizeTours(
 
 StatusOr<google::longrunning::Operation>
 FleetRoutingConnection::BatchOptimizeTours(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -61,7 +61,7 @@ FleetRoutingConnection::BatchOptimizeTours(
 
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
 FleetRoutingConnection::BatchOptimizeTours(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

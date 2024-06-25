@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_retry_traits.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -203,12 +203,12 @@ class RegionCommitmentsConnection {
                        InsertCommitmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_commitments::v1::
           InsertCommitmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertCommitment(google::cloud::ExperimentalTag,
+  InsertCommitment(ExperimentalTag,
                    google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Commitment>
@@ -220,12 +220,12 @@ class RegionCommitmentsConnection {
                        UpdateCommitmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_commitments::v1::
           UpdateCommitmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateCommitment(google::cloud::ExperimentalTag,
+  UpdateCommitment(ExperimentalTag,
                    google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

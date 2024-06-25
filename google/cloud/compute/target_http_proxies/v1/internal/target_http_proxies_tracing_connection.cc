@@ -70,7 +70,7 @@ TargetHttpProxiesTracingConnection::DeleteTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "DeleteTargetHttpProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteTargetHttpProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -120,7 +120,7 @@ TargetHttpProxiesTracingConnection::InsertTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "InsertTargetHttpProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertTargetHttpProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -173,7 +173,7 @@ TargetHttpProxiesTracingConnection::PatchTargetHttpProxy(
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "PatchTargetHttpProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchTargetHttpProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -209,7 +209,7 @@ TargetHttpProxiesTracingConnection::SetUrlMap(
         SetUrlMapRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::SetUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetUrlMap(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

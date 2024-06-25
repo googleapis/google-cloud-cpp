@@ -57,7 +57,7 @@ FleetRoutingTracingConnection::BatchOptimizeTours(
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
   auto span = internal::MakeSpan(
       "optimization_v1::FleetRoutingConnection::BatchOptimizeTours");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchOptimizeTours(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));

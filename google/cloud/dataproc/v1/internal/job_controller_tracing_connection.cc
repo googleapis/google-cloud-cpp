@@ -58,7 +58,7 @@ JobControllerTracingConnection::SubmitJobAsOperation(
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::JobControllerConnection::SubmitJobAsOperation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SubmitJobAsOperation(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

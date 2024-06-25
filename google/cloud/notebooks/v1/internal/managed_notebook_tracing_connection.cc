@@ -69,7 +69,7 @@ ManagedNotebookServiceTracingConnection::CreateRuntime(
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::CreateRuntime");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRuntime(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ ManagedNotebookServiceTracingConnection::UpdateRuntime(
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::UpdateRuntime");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateRuntime(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ ManagedNotebookServiceTracingConnection::DeleteRuntime(
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::DeleteRuntime");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRuntime(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -168,7 +168,7 @@ ManagedNotebookServiceTracingConnection::StartRuntime(
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::StartRuntime");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StartRuntime(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -201,7 +201,7 @@ ManagedNotebookServiceTracingConnection::StopRuntime(
     google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::StopRuntime");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StopRuntime(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ ManagedNotebookServiceTracingConnection::SwitchRuntime(
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::SwitchRuntime");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SwitchRuntime(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -267,7 +267,7 @@ ManagedNotebookServiceTracingConnection::ResetRuntime(
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::ResetRuntime");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ResetRuntime(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -300,7 +300,7 @@ ManagedNotebookServiceTracingConnection::UpgradeRuntime(
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::UpgradeRuntime");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpgradeRuntime(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -334,7 +334,7 @@ ManagedNotebookServiceTracingConnection::ReportRuntimeEvent(
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::ReportRuntimeEvent");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ReportRuntimeEvent(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -378,7 +378,7 @@ ManagedNotebookServiceTracingConnection::DiagnoseRuntime(
     google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::ManagedNotebookServiceConnection::DiagnoseRuntime");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DiagnoseRuntime(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

@@ -57,7 +57,7 @@ RegionNetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
   auto span = internal::MakeSpan(
       "compute_region_network_endpoint_groups_v1::"
       "RegionNetworkEndpointGroupsConnection::AttachNetworkEndpoints");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->AttachNetworkEndpoints(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -96,7 +96,7 @@ RegionNetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
   auto span = internal::MakeSpan(
       "compute_region_network_endpoint_groups_v1::"
       "RegionNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteNetworkEndpointGroup(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ RegionNetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
   auto span = internal::MakeSpan(
       "compute_region_network_endpoint_groups_v1::"
       "RegionNetworkEndpointGroupsConnection::DetachNetworkEndpoints");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DetachNetworkEndpoints(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -185,7 +185,7 @@ RegionNetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
   auto span = internal::MakeSpan(
       "compute_region_network_endpoint_groups_v1::"
       "RegionNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertNetworkEndpointGroup(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

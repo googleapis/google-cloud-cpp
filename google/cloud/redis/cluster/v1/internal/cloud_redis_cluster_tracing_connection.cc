@@ -69,7 +69,7 @@ CloudRedisClusterTracingConnection::UpdateCluster(
     google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "redis_cluster_v1::CloudRedisClusterConnection::UpdateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ CloudRedisClusterTracingConnection::DeleteCluster(
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "redis_cluster_v1::CloudRedisClusterConnection::DeleteCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ CloudRedisClusterTracingConnection::CreateCluster(
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "redis_cluster_v1::CloudRedisClusterConnection::CreateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

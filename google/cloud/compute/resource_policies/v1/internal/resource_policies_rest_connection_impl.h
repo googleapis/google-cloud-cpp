@@ -63,13 +63,13 @@ class ResourcePoliciesRestConnectionImpl
                            DeleteResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::resource_policies::v1::
           DeleteResourcePolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteResourcePolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
@@ -85,13 +85,13 @@ class ResourcePoliciesRestConnectionImpl
                            InsertResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::resource_policies::v1::
           InsertResourcePolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertResourcePolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
@@ -103,13 +103,13 @@ class ResourcePoliciesRestConnectionImpl
                           PatchResourcePolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::resource_policies::v1::
           PatchResourcePolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchResourcePolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(

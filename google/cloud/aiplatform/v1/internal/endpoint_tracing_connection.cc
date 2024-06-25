@@ -48,7 +48,7 @@ EndpointServiceTracingConnection::CreateEndpoint(
     google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::CreateEndpoint");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEndpoint(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -110,7 +110,7 @@ EndpointServiceTracingConnection::DeleteEndpoint(
     google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::DeleteEndpoint");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteEndpoint(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -143,7 +143,7 @@ EndpointServiceTracingConnection::DeployModel(
     google::cloud::aiplatform::v1::DeployModelRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::DeployModel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeployModel(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -176,7 +176,7 @@ EndpointServiceTracingConnection::UndeployModel(
     google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::UndeployModel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UndeployModel(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -210,7 +210,7 @@ EndpointServiceTracingConnection::MutateDeployedModel(
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::EndpointServiceConnection::MutateDeployedModel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->MutateDeployedModel(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

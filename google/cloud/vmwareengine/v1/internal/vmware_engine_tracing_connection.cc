@@ -70,7 +70,7 @@ VmwareEngineTracingConnection::CreatePrivateCloud(
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreatePrivateCloud");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreatePrivateCloud(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -104,7 +104,7 @@ VmwareEngineTracingConnection::UpdatePrivateCloud(
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateCloud");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdatePrivateCloud(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -138,7 +138,7 @@ VmwareEngineTracingConnection::DeletePrivateCloud(
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeletePrivateCloud");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeletePrivateCloud(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -174,7 +174,7 @@ VmwareEngineTracingConnection::UndeletePrivateCloud(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UndeletePrivateCloud");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UndeletePrivateCloud(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -227,7 +227,7 @@ VmwareEngineTracingConnection::CreateCluster(
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -260,7 +260,7 @@ VmwareEngineTracingConnection::UpdateCluster(
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -293,7 +293,7 @@ VmwareEngineTracingConnection::DeleteCluster(
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -384,7 +384,7 @@ VmwareEngineTracingConnection::CreateExternalAddress(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateExternalAddress");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateExternalAddress(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -420,7 +420,7 @@ VmwareEngineTracingConnection::UpdateExternalAddress(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAddress");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateExternalAddress(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -456,7 +456,7 @@ VmwareEngineTracingConnection::DeleteExternalAddress(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAddress");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteExternalAddress(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -509,7 +509,7 @@ VmwareEngineTracingConnection::UpdateSubnet(
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateSubnet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateSubnet(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -567,7 +567,7 @@ VmwareEngineTracingConnection::CreateExternalAccessRule(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateExternalAccessRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateExternalAccessRule(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -603,7 +603,7 @@ VmwareEngineTracingConnection::UpdateExternalAccessRule(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAccessRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateExternalAccessRule(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -639,7 +639,7 @@ VmwareEngineTracingConnection::DeleteExternalAccessRule(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAccessRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteExternalAccessRule(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -696,7 +696,7 @@ VmwareEngineTracingConnection::CreateLoggingServer(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateLoggingServer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateLoggingServer(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -732,7 +732,7 @@ VmwareEngineTracingConnection::UpdateLoggingServer(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateLoggingServer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateLoggingServer(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -768,7 +768,7 @@ VmwareEngineTracingConnection::DeleteLoggingServer(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteLoggingServer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteLoggingServer(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -844,7 +844,7 @@ VmwareEngineTracingConnection::ResetNsxCredentials(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ResetNsxCredentials");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ResetNsxCredentials(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -880,7 +880,7 @@ VmwareEngineTracingConnection::ResetVcenterCredentials(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ResetVcenterCredentials");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ResetVcenterCredentials(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -925,7 +925,7 @@ VmwareEngineTracingConnection::UpdateDnsForwarding(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateDnsForwarding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDnsForwarding(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -982,7 +982,7 @@ VmwareEngineTracingConnection::CreateNetworkPeering(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPeering");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateNetworkPeering(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1018,7 +1018,7 @@ VmwareEngineTracingConnection::DeleteNetworkPeering(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPeering");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteNetworkPeering(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1054,7 +1054,7 @@ VmwareEngineTracingConnection::UpdateNetworkPeering(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPeering");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateNetworkPeering(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1102,7 +1102,7 @@ VmwareEngineTracingConnection::CreateHcxActivationKey(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateHcxActivationKey");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateHcxActivationKey(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1181,7 +1181,7 @@ VmwareEngineTracingConnection::CreateNetworkPolicy(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateNetworkPolicy(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -1217,7 +1217,7 @@ VmwareEngineTracingConnection::UpdateNetworkPolicy(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateNetworkPolicy(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -1253,7 +1253,7 @@ VmwareEngineTracingConnection::DeleteNetworkPolicy(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteNetworkPolicy(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -1314,7 +1314,7 @@ VmwareEngineTracingConnection::CreateManagementDnsZoneBinding(
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "CreateManagementDnsZoneBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateManagementDnsZoneBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1353,7 +1353,7 @@ VmwareEngineTracingConnection::UpdateManagementDnsZoneBinding(
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "UpdateManagementDnsZoneBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateManagementDnsZoneBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1392,7 +1392,7 @@ VmwareEngineTracingConnection::DeleteManagementDnsZoneBinding(
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "DeleteManagementDnsZoneBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteManagementDnsZoneBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1431,7 +1431,7 @@ VmwareEngineTracingConnection::RepairManagementDnsZoneBinding(
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "RepairManagementDnsZoneBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RepairManagementDnsZoneBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1468,7 +1468,7 @@ VmwareEngineTracingConnection::CreateVmwareEngineNetwork(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateVmwareEngineNetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateVmwareEngineNetwork(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1504,7 +1504,7 @@ VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateVmwareEngineNetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateVmwareEngineNetwork(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1540,7 +1540,7 @@ VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteVmwareEngineNetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteVmwareEngineNetwork(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1598,7 +1598,7 @@ VmwareEngineTracingConnection::CreatePrivateConnection(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreatePrivateConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreatePrivateConnection(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1656,7 +1656,7 @@ VmwareEngineTracingConnection::UpdatePrivateConnection(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdatePrivateConnection(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1692,7 +1692,7 @@ VmwareEngineTracingConnection::DeletePrivateConnection(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeletePrivateConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeletePrivateConnection(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1742,7 +1742,7 @@ VmwareEngineTracingConnection::GrantDnsBindPermission(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::GrantDnsBindPermission");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->GrantDnsBindPermission(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1788,7 +1788,7 @@ VmwareEngineTracingConnection::RevokeDnsBindPermission(
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::RevokeDnsBindPermission");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RevokeDnsBindPermission(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

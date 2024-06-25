@@ -48,7 +48,7 @@ CatalogServiceTracingConnection::CreateEntryType(
     google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::CreateEntryType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEntryType(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -81,7 +81,7 @@ CatalogServiceTracingConnection::UpdateEntryType(
     google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::UpdateEntryType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateEntryType(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -114,7 +114,7 @@ CatalogServiceTracingConnection::DeleteEntryType(
     google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteEntryType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteEntryType(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -167,7 +167,7 @@ CatalogServiceTracingConnection::CreateAspectType(
     google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::CreateAspectType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAspectType(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -200,7 +200,7 @@ CatalogServiceTracingConnection::UpdateAspectType(
     google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::UpdateAspectType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAspectType(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -233,7 +233,7 @@ CatalogServiceTracingConnection::DeleteAspectType(
     google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteAspectType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAspectType(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -286,7 +286,7 @@ CatalogServiceTracingConnection::CreateEntryGroup(
     google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::CreateEntryGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEntryGroup(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -319,7 +319,7 @@ CatalogServiceTracingConnection::UpdateEntryGroup(
     google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::UpdateEntryGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateEntryGroup(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -352,7 +352,7 @@ CatalogServiceTracingConnection::DeleteEntryGroup(
     google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteEntryGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteEntryGroup(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

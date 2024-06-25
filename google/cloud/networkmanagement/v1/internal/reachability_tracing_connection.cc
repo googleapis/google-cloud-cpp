@@ -78,7 +78,7 @@ ReachabilityServiceTracingConnection::CreateConnectivityTest(
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "CreateConnectivityTest");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateConnectivityTest(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -117,7 +117,7 @@ ReachabilityServiceTracingConnection::UpdateConnectivityTest(
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "UpdateConnectivityTest");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateConnectivityTest(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -156,7 +156,7 @@ ReachabilityServiceTracingConnection::RerunConnectivityTest(
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "RerunConnectivityTest");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RerunConnectivityTest(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -195,7 +195,7 @@ ReachabilityServiceTracingConnection::DeleteConnectivityTest(
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "DeleteConnectivityTest");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteConnectivityTest(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

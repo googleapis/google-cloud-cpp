@@ -21,11 +21,11 @@
 
 #include "google/cloud/networkmanagement/v1/internal/reachability_retry_traits.h"
 #include "google/cloud/networkmanagement/v1/reachability_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -208,13 +208,13 @@ class ReachabilityServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateConnectivityTest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  CreateConnectivityTest(google::cloud::ExperimentalTag,
+  CreateConnectivityTest(ExperimentalTag,
                          google::longrunning::Operation const& operation);
 
   virtual future<
@@ -224,13 +224,13 @@ class ReachabilityServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  UpdateConnectivityTest(google::cloud::ExperimentalTag,
+  UpdateConnectivityTest(ExperimentalTag,
                          google::longrunning::Operation const& operation);
 
   virtual future<
@@ -240,13 +240,13 @@ class ReachabilityServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> RerunConnectivityTest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  RerunConnectivityTest(google::cloud::ExperimentalTag,
+  RerunConnectivityTest(ExperimentalTag,
                         google::longrunning::Operation const& operation);
 
   virtual future<
@@ -256,13 +256,13 @@ class ReachabilityServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-  DeleteConnectivityTest(google::cloud::ExperimentalTag,
+  DeleteConnectivityTest(ExperimentalTag,
                          google::longrunning::Operation const& operation);
 };
 

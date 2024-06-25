@@ -65,7 +65,7 @@ ContactCenterInsightsTracingConnection::UploadConversation(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "UploadConversation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UploadConversation(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -149,7 +149,7 @@ ContactCenterInsightsTracingConnection::CreateAnalysis(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "CreateAnalysis");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAnalysis(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -222,7 +222,7 @@ ContactCenterInsightsTracingConnection::BulkAnalyzeConversations(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "BulkAnalyzeConversations");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BulkAnalyzeConversations(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -263,7 +263,7 @@ ContactCenterInsightsTracingConnection::BulkDeleteConversations(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "BulkDeleteConversations");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BulkDeleteConversations(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -304,7 +304,7 @@ ContactCenterInsightsTracingConnection::IngestConversations(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "IngestConversations");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->IngestConversations(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -345,7 +345,7 @@ ContactCenterInsightsTracingConnection::ExportInsightsData(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "ExportInsightsData");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportInsightsData(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -384,7 +384,7 @@ ContactCenterInsightsTracingConnection::CreateIssueModel(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "CreateIssueModel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateIssueModel(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -456,7 +456,7 @@ ContactCenterInsightsTracingConnection::DeleteIssueModel(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "DeleteIssueModel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteIssueModel(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -496,7 +496,7 @@ ContactCenterInsightsTracingConnection::DeployIssueModel(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "DeployIssueModel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeployIssueModel(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -537,7 +537,7 @@ ContactCenterInsightsTracingConnection::UndeployIssueModel(
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "UndeployIssueModel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UndeployIssueModel(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));

@@ -63,7 +63,7 @@ AppGatewaysServiceConnection::CreateAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceConnection::CreateAppGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::beyondcorp::appgateways::v1::
         CreateAppGatewayRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -72,7 +72,7 @@ AppGatewaysServiceConnection::CreateAppGateway(
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
 AppGatewaysServiceConnection::CreateAppGateway(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -90,7 +90,7 @@ AppGatewaysServiceConnection::DeleteAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceConnection::DeleteAppGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::beyondcorp::appgateways::v1::
         DeleteAppGatewayRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -100,7 +100,7 @@ AppGatewaysServiceConnection::DeleteAppGateway(
 future<StatusOr<
     google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
 AppGatewaysServiceConnection::DeleteAppGateway(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

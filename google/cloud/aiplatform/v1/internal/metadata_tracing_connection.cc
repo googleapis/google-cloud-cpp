@@ -49,7 +49,7 @@ MetadataServiceTracingConnection::CreateMetadataStore(
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::CreateMetadataStore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateMetadataStore(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -105,7 +105,7 @@ MetadataServiceTracingConnection::DeleteMetadataStore(
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::DeleteMetadataStore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteMetadataStore(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -177,7 +177,7 @@ MetadataServiceTracingConnection::DeleteArtifact(
     google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::DeleteArtifact");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteArtifact(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -210,7 +210,7 @@ MetadataServiceTracingConnection::PurgeArtifacts(
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::PurgeArtifacts");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PurgeArtifacts(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -281,7 +281,7 @@ MetadataServiceTracingConnection::DeleteContext(
     google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::DeleteContext");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteContext(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -314,7 +314,7 @@ MetadataServiceTracingConnection::PurgeContexts(
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::PurgeContexts");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PurgeContexts(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -427,7 +427,7 @@ MetadataServiceTracingConnection::DeleteExecution(
     google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::DeleteExecution");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteExecution(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -460,7 +460,7 @@ MetadataServiceTracingConnection::PurgeExecutions(
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MetadataServiceConnection::PurgeExecutions");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PurgeExecutions(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

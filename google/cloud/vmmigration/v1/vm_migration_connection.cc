@@ -61,14 +61,14 @@ VmMigrationConnection::CreateSource(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::CreateSource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateSourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
-VmMigrationConnection::CreateSource(google::cloud::ExperimentalTag,
+VmMigrationConnection::CreateSource(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::Source>>(
@@ -84,14 +84,14 @@ VmMigrationConnection::UpdateSource(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::UpdateSource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateSourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
-VmMigrationConnection::UpdateSource(google::cloud::ExperimentalTag,
+VmMigrationConnection::UpdateSource(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::Source>>(
@@ -107,14 +107,14 @@ VmMigrationConnection::DeleteSource(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::DeleteSource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteSourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-VmMigrationConnection::DeleteSource(google::cloud::ExperimentalTag,
+VmMigrationConnection::DeleteSource(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
@@ -151,7 +151,7 @@ VmMigrationConnection::CreateUtilizationReport(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::CreateUtilizationReport(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -159,7 +159,7 @@ VmMigrationConnection::CreateUtilizationReport(
 
 future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
 VmMigrationConnection::CreateUtilizationReport(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -175,7 +175,7 @@ VmMigrationConnection::DeleteUtilizationReport(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::DeleteUtilizationReport(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -183,7 +183,7 @@ VmMigrationConnection::DeleteUtilizationReport(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnection::DeleteUtilizationReport(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -213,7 +213,7 @@ VmMigrationConnection::CreateDatacenterConnector(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::CreateDatacenterConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -221,7 +221,7 @@ VmMigrationConnection::CreateDatacenterConnector(
 
 future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
 VmMigrationConnection::CreateDatacenterConnector(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -237,7 +237,7 @@ VmMigrationConnection::DeleteDatacenterConnector(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::DeleteDatacenterConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -245,7 +245,7 @@ VmMigrationConnection::DeleteDatacenterConnector(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnection::DeleteDatacenterConnector(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -261,14 +261,14 @@ VmMigrationConnection::UpgradeAppliance(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::UpgradeAppliance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpgradeApplianceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
-VmMigrationConnection::UpgradeAppliance(google::cloud::ExperimentalTag,
+VmMigrationConnection::UpgradeAppliance(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>(
@@ -285,7 +285,7 @@ VmMigrationConnection::CreateMigratingVm(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::CreateMigratingVm(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -293,7 +293,7 @@ VmMigrationConnection::CreateMigratingVm(
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnection::CreateMigratingVm(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::MigratingVm>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -323,7 +323,7 @@ VmMigrationConnection::UpdateMigratingVm(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::UpdateMigratingVm(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -331,7 +331,7 @@ VmMigrationConnection::UpdateMigratingVm(
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationConnection::UpdateMigratingVm(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::MigratingVm>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -347,7 +347,7 @@ VmMigrationConnection::DeleteMigratingVm(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::DeleteMigratingVm(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -355,7 +355,7 @@ VmMigrationConnection::DeleteMigratingVm(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnection::DeleteMigratingVm(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -370,14 +370,14 @@ VmMigrationConnection::StartMigration(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::StartMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::StartMigrationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
-VmMigrationConnection::StartMigration(google::cloud::ExperimentalTag,
+VmMigrationConnection::StartMigration(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>(
@@ -393,14 +393,14 @@ VmMigrationConnection::ResumeMigration(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::ResumeMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::ResumeMigrationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
-VmMigrationConnection::ResumeMigration(google::cloud::ExperimentalTag,
+VmMigrationConnection::ResumeMigration(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>(
@@ -416,14 +416,14 @@ VmMigrationConnection::PauseMigration(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::PauseMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::PauseMigrationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
-VmMigrationConnection::PauseMigration(google::cloud::ExperimentalTag,
+VmMigrationConnection::PauseMigration(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>(
@@ -440,7 +440,7 @@ VmMigrationConnection::FinalizeMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::FinalizeMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -448,7 +448,7 @@ VmMigrationConnection::FinalizeMigration(
 
 future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
 VmMigrationConnection::FinalizeMigration(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -463,14 +463,14 @@ VmMigrationConnection::CreateCloneJob(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::CreateCloneJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateCloneJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
-VmMigrationConnection::CreateCloneJob(google::cloud::ExperimentalTag,
+VmMigrationConnection::CreateCloneJob(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::CloneJob>>(
@@ -486,14 +486,14 @@ VmMigrationConnection::CancelCloneJob(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::CancelCloneJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CancelCloneJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
-VmMigrationConnection::CancelCloneJob(google::cloud::ExperimentalTag,
+VmMigrationConnection::CancelCloneJob(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>(
@@ -524,14 +524,14 @@ VmMigrationConnection::CreateCutoverJob(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::CreateCutoverJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateCutoverJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
-VmMigrationConnection::CreateCutoverJob(google::cloud::ExperimentalTag,
+VmMigrationConnection::CreateCutoverJob(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::CutoverJob>>(
@@ -548,14 +548,14 @@ VmMigrationConnection::CancelCutoverJob(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::CancelCutoverJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
-VmMigrationConnection::CancelCutoverJob(google::cloud::ExperimentalTag,
+VmMigrationConnection::CancelCutoverJob(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>(
@@ -598,14 +598,14 @@ VmMigrationConnection::CreateGroup(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::CreateGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
-VmMigrationConnection::CreateGroup(google::cloud::ExperimentalTag,
+VmMigrationConnection::CreateGroup(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::Group>>(
@@ -621,14 +621,14 @@ VmMigrationConnection::UpdateGroup(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::UpdateGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
-VmMigrationConnection::UpdateGroup(google::cloud::ExperimentalTag,
+VmMigrationConnection::UpdateGroup(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::Group>>(
@@ -644,14 +644,14 @@ VmMigrationConnection::DeleteGroup(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationConnection::DeleteGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteGroupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-VmMigrationConnection::DeleteGroup(google::cloud::ExperimentalTag,
+VmMigrationConnection::DeleteGroup(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
@@ -668,7 +668,7 @@ VmMigrationConnection::AddGroupMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::AddGroupMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -676,7 +676,7 @@ VmMigrationConnection::AddGroupMigration(
 
 future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
 VmMigrationConnection::AddGroupMigration(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -692,7 +692,7 @@ VmMigrationConnection::RemoveGroupMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::RemoveGroupMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -700,7 +700,7 @@ VmMigrationConnection::RemoveGroupMigration(
 
 future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
 VmMigrationConnection::RemoveGroupMigration(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -730,7 +730,7 @@ VmMigrationConnection::CreateTargetProject(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::CreateTargetProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateTargetProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -738,7 +738,7 @@ VmMigrationConnection::CreateTargetProject(
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationConnection::CreateTargetProject(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::TargetProject>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -754,7 +754,7 @@ VmMigrationConnection::UpdateTargetProject(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::UpdateTargetProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -762,7 +762,7 @@ VmMigrationConnection::UpdateTargetProject(
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationConnection::UpdateTargetProject(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::TargetProject>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -778,7 +778,7 @@ VmMigrationConnection::DeleteTargetProject(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationConnection::DeleteTargetProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -786,7 +786,7 @@ VmMigrationConnection::DeleteTargetProject(
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationConnection::DeleteTargetProject(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

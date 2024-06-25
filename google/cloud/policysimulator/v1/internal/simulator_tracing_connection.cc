@@ -57,7 +57,7 @@ SimulatorTracingConnection::CreateReplay(
     google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
   auto span = internal::MakeSpan(
       "policysimulator_v1::SimulatorConnection::CreateReplay");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateReplay(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

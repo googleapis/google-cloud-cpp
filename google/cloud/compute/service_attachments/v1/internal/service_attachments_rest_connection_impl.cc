@@ -150,7 +150,7 @@ ServiceAttachmentsRestConnectionImpl::DeleteServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestConnectionImpl::DeleteServiceAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::service_attachments::v1::
         DeleteServiceAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -167,7 +167,7 @@ ServiceAttachmentsRestConnectionImpl::DeleteServiceAttachment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestConnectionImpl::DeleteServiceAttachment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -315,7 +315,7 @@ ServiceAttachmentsRestConnectionImpl::InsertServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestConnectionImpl::InsertServiceAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::service_attachments::v1::
         InsertServiceAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -332,7 +332,7 @@ ServiceAttachmentsRestConnectionImpl::InsertServiceAttachment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestConnectionImpl::InsertServiceAttachment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -488,7 +488,7 @@ ServiceAttachmentsRestConnectionImpl::PatchServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsRestConnectionImpl::PatchServiceAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::service_attachments::v1::
         PatchServiceAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -505,7 +505,7 @@ ServiceAttachmentsRestConnectionImpl::PatchServiceAttachment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsRestConnectionImpl::PatchServiceAttachment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -47,14 +47,14 @@ ServiceUsageConnection::EnableService(
 }
 
 StatusOr<google::longrunning::Operation> ServiceUsageConnection::EnableService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::serviceusage::v1::EnableServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-ServiceUsageConnection::EnableService(google::cloud::ExperimentalTag,
+ServiceUsageConnection::EnableService(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>(
@@ -70,14 +70,14 @@ ServiceUsageConnection::DisableService(
 }
 
 StatusOr<google::longrunning::Operation> ServiceUsageConnection::DisableService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::serviceusage::v1::DisableServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-ServiceUsageConnection::DisableService(google::cloud::ExperimentalTag,
+ServiceUsageConnection::DisableService(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>(
@@ -108,7 +108,7 @@ ServiceUsageConnection::BatchEnableServices(
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageConnection::BatchEnableServices(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::serviceusage::v1::BatchEnableServicesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,7 +116,7 @@ ServiceUsageConnection::BatchEnableServices(
 
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
 ServiceUsageConnection::BatchEnableServices(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

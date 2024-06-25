@@ -54,7 +54,7 @@ HttpsHealthChecksTracingConnection::DeleteHttpsHealthCheck(
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "DeleteHttpsHealthCheck");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteHttpsHealthCheck(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -104,7 +104,7 @@ HttpsHealthChecksTracingConnection::InsertHttpsHealthCheck(
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "InsertHttpsHealthCheck");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertHttpsHealthCheck(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -157,7 +157,7 @@ HttpsHealthChecksTracingConnection::PatchHttpsHealthCheck(
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "PatchHttpsHealthCheck");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchHttpsHealthCheck(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -196,7 +196,7 @@ HttpsHealthChecksTracingConnection::UpdateHttpsHealthCheck(
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "UpdateHttpsHealthCheck");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateHttpsHealthCheck(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

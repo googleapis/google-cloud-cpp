@@ -47,7 +47,7 @@ RegionUrlMapsConnection::DeleteUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsConnection::DeleteUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_url_maps::v1::
         DeleteUrlMapRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -56,8 +56,7 @@ RegionUrlMapsConnection::DeleteUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsConnection::DeleteUrlMap(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -80,7 +79,7 @@ RegionUrlMapsConnection::InsertUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsConnection::InsertUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_url_maps::v1::
         InsertUrlMapRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -89,8 +88,7 @@ RegionUrlMapsConnection::InsertUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsConnection::InsertUrlMap(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -115,7 +113,7 @@ RegionUrlMapsConnection::PatchUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsConnection::PatchUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_url_maps::v1::
         PatchUrlMapRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -124,8 +122,7 @@ RegionUrlMapsConnection::PatchUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsConnection::PatchUrlMap(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,7 +139,7 @@ RegionUrlMapsConnection::UpdateUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionUrlMapsConnection::UpdateUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_url_maps::v1::
         UpdateUrlMapRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -151,8 +148,7 @@ RegionUrlMapsConnection::UpdateUrlMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionUrlMapsConnection::UpdateUrlMap(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

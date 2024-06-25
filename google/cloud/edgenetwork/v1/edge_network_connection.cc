@@ -86,14 +86,14 @@ EdgeNetworkConnection::CreateNetwork(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkConnection::CreateNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::CreateNetworkRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
-EdgeNetworkConnection::CreateNetwork(google::cloud::ExperimentalTag,
+EdgeNetworkConnection::CreateNetwork(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::Network>>(
@@ -109,14 +109,14 @@ EdgeNetworkConnection::DeleteNetwork(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkConnection::DeleteNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::DeleteNetworkRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkConnection::DeleteNetwork(google::cloud::ExperimentalTag,
+EdgeNetworkConnection::DeleteNetwork(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>(
@@ -146,14 +146,14 @@ EdgeNetworkConnection::CreateSubnet(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkConnection::CreateSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::CreateSubnetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkConnection::CreateSubnet(google::cloud::ExperimentalTag,
+EdgeNetworkConnection::CreateSubnet(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::Subnet>>(
@@ -169,14 +169,14 @@ EdgeNetworkConnection::UpdateSubnet(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkConnection::UpdateSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::UpdateSubnetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkConnection::UpdateSubnet(google::cloud::ExperimentalTag,
+EdgeNetworkConnection::UpdateSubnet(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::Subnet>>(
@@ -192,14 +192,14 @@ EdgeNetworkConnection::DeleteSubnet(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkConnection::DeleteSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::DeleteSubnetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkConnection::DeleteSubnet(google::cloud::ExperimentalTag,
+EdgeNetworkConnection::DeleteSubnet(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>(
@@ -251,7 +251,7 @@ EdgeNetworkConnection::CreateInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnection::CreateInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::
         CreateInterconnectAttachmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -260,7 +260,7 @@ EdgeNetworkConnection::CreateInterconnectAttachment(
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
 EdgeNetworkConnection::CreateInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -277,7 +277,7 @@ EdgeNetworkConnection::DeleteInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnection::DeleteInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::
         DeleteInterconnectAttachmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -286,7 +286,7 @@ EdgeNetworkConnection::DeleteInterconnectAttachment(
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkConnection::DeleteInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -321,14 +321,14 @@ EdgeNetworkConnection::CreateRouter(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkConnection::CreateRouter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::CreateRouterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkConnection::CreateRouter(google::cloud::ExperimentalTag,
+EdgeNetworkConnection::CreateRouter(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::Router>>(
@@ -344,14 +344,14 @@ EdgeNetworkConnection::UpdateRouter(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkConnection::UpdateRouter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::UpdateRouterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkConnection::UpdateRouter(google::cloud::ExperimentalTag,
+EdgeNetworkConnection::UpdateRouter(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::Router>>(
@@ -367,14 +367,14 @@ EdgeNetworkConnection::DeleteRouter(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkConnection::DeleteRouter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::DeleteRouterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkConnection::DeleteRouter(google::cloud::ExperimentalTag,
+EdgeNetworkConnection::DeleteRouter(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>(

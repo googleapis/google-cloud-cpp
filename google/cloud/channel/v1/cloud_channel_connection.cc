@@ -91,7 +91,7 @@ CloudChannelServiceConnection::ProvisionCloudIdentity(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::ProvisionCloudIdentity(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -99,7 +99,7 @@ CloudChannelServiceConnection::ProvisionCloudIdentity(
 
 future<StatusOr<google::cloud::channel::v1::Customer>>
 CloudChannelServiceConnection::ProvisionCloudIdentity(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::Customer>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -145,7 +145,7 @@ CloudChannelServiceConnection::CreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::CreateEntitlement(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::CreateEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -153,7 +153,7 @@ CloudChannelServiceConnection::CreateEntitlement(
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnection::CreateEntitlement(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -169,7 +169,7 @@ CloudChannelServiceConnection::ChangeParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::ChangeParameters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ChangeParametersRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -177,7 +177,7 @@ CloudChannelServiceConnection::ChangeParameters(
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnection::ChangeParameters(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -193,7 +193,7 @@ CloudChannelServiceConnection::ChangeRenewalSettings(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::ChangeRenewalSettings(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -201,7 +201,7 @@ CloudChannelServiceConnection::ChangeRenewalSettings(
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnection::ChangeRenewalSettings(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -217,7 +217,7 @@ CloudChannelServiceConnection::ChangeOffer(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::ChangeOffer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ChangeOfferRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -225,7 +225,7 @@ CloudChannelServiceConnection::ChangeOffer(
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnection::ChangeOffer(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -241,7 +241,7 @@ CloudChannelServiceConnection::StartPaidService(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::StartPaidService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::StartPaidServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -249,7 +249,7 @@ CloudChannelServiceConnection::StartPaidService(
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnection::StartPaidService(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -265,7 +265,7 @@ CloudChannelServiceConnection::SuspendEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::SuspendEntitlement(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::SuspendEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -273,7 +273,7 @@ CloudChannelServiceConnection::SuspendEntitlement(
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnection::SuspendEntitlement(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -289,7 +289,7 @@ CloudChannelServiceConnection::CancelEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::CancelEntitlement(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::CancelEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -297,7 +297,7 @@ CloudChannelServiceConnection::CancelEntitlement(
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceConnection::CancelEntitlement(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -313,7 +313,7 @@ CloudChannelServiceConnection::ActivateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::ActivateEntitlement(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ActivateEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -321,7 +321,7 @@ CloudChannelServiceConnection::ActivateEntitlement(
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnection::ActivateEntitlement(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -337,7 +337,7 @@ CloudChannelServiceConnection::TransferEntitlements(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::TransferEntitlements(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::TransferEntitlementsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -345,7 +345,7 @@ CloudChannelServiceConnection::TransferEntitlements(
 
 future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
 CloudChannelServiceConnection::TransferEntitlements(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -361,7 +361,7 @@ CloudChannelServiceConnection::TransferEntitlementsToGoogle(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnection::TransferEntitlementsToGoogle(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -369,7 +369,7 @@ CloudChannelServiceConnection::TransferEntitlementsToGoogle(
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceConnection::TransferEntitlementsToGoogle(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

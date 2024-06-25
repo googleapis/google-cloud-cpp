@@ -94,7 +94,7 @@ IntentsTracingConnection::ImportIntents(
     google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::IntentsConnection::ImportIntents");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportIntents(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -127,7 +127,7 @@ IntentsTracingConnection::ExportIntents(
     google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::IntentsConnection::ExportIntents");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportIntents(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

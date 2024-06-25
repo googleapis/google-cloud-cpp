@@ -51,7 +51,7 @@ ConsumerProcurementServiceConnection::PlaceOrder(
 
 StatusOr<google::longrunning::Operation>
 ConsumerProcurementServiceConnection::PlaceOrder(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::commerce::consumer::procurement::v1::
         PlaceOrderRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -60,7 +60,7 @@ ConsumerProcurementServiceConnection::PlaceOrder(
 
 future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
 ConsumerProcurementServiceConnection::PlaceOrder(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

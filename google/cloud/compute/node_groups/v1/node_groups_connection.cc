@@ -46,7 +46,7 @@ NodeGroupsConnection::AddNodes(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsConnection::AddNodes(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,8 +54,7 @@ NodeGroupsConnection::AddNodes(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsConnection::AddNodes(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -80,8 +79,7 @@ NodeGroupsConnection::DeleteNodeGroup(google::cloud::cpp::compute::node_groups::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsConnection::DeleteNodeGroup(google::cloud::ExperimentalTag,
-                                      google::cloud::NoAwaitTag,
+NodeGroupsConnection::DeleteNodeGroup(ExperimentalTag, NoAwaitTag,
                                       google::cloud::cpp::compute::node_groups::
                                           v1::DeleteNodeGroupRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -90,8 +88,7 @@ NodeGroupsConnection::DeleteNodeGroup(google::cloud::ExperimentalTag,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsConnection::DeleteNodeGroup(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -107,7 +104,7 @@ NodeGroupsConnection::DeleteNodes(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsConnection::DeleteNodes(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -115,8 +112,7 @@ NodeGroupsConnection::DeleteNodes(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsConnection::DeleteNodes(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -143,8 +139,7 @@ NodeGroupsConnection::InsertNodeGroup(google::cloud::cpp::compute::node_groups::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsConnection::InsertNodeGroup(google::cloud::ExperimentalTag,
-                                      google::cloud::NoAwaitTag,
+NodeGroupsConnection::InsertNodeGroup(ExperimentalTag, NoAwaitTag,
                                       google::cloud::cpp::compute::node_groups::
                                           v1::InsertNodeGroupRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -153,8 +148,7 @@ NodeGroupsConnection::InsertNodeGroup(google::cloud::ExperimentalTag,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsConnection::InsertNodeGroup(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -185,8 +179,7 @@ NodeGroupsConnection::PatchNodeGroup(google::cloud::cpp::compute::node_groups::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsConnection::PatchNodeGroup(google::cloud::ExperimentalTag,
-                                     google::cloud::NoAwaitTag,
+NodeGroupsConnection::PatchNodeGroup(ExperimentalTag, NoAwaitTag,
                                      google::cloud::cpp::compute::node_groups::
                                          v1::PatchNodeGroupRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -195,8 +188,7 @@ NodeGroupsConnection::PatchNodeGroup(google::cloud::ExperimentalTag,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsConnection::PatchNodeGroup(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -213,7 +205,7 @@ NodeGroupsConnection::PerformMaintenance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsConnection::PerformMaintenance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::
         PerformMaintenanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -222,8 +214,7 @@ NodeGroupsConnection::PerformMaintenance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsConnection::PerformMaintenance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -244,8 +235,7 @@ NodeGroupsConnection::SetNodeTemplate(google::cloud::cpp::compute::node_groups::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeGroupsConnection::SetNodeTemplate(google::cloud::ExperimentalTag,
-                                      google::cloud::NoAwaitTag,
+NodeGroupsConnection::SetNodeTemplate(ExperimentalTag, NoAwaitTag,
                                       google::cloud::cpp::compute::node_groups::
                                           v1::SetNodeTemplateRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -254,8 +244,7 @@ NodeGroupsConnection::SetNodeTemplate(google::cloud::ExperimentalTag,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsConnection::SetNodeTemplate(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -272,7 +261,7 @@ NodeGroupsConnection::SimulateMaintenanceEvent(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsConnection::SimulateMaintenanceEvent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::
         SimulateMaintenanceEventRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -281,8 +270,7 @@ NodeGroupsConnection::SimulateMaintenanceEvent(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsConnection::SimulateMaintenanceEvent(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

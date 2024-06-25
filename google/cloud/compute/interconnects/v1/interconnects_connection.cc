@@ -47,7 +47,7 @@ InterconnectsConnection::DeleteInterconnect(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsConnection::DeleteInterconnect(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::interconnects::v1::
         DeleteInterconnectRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -56,8 +56,7 @@ InterconnectsConnection::DeleteInterconnect(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsConnection::DeleteInterconnect(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -95,7 +94,7 @@ InterconnectsConnection::InsertInterconnect(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsConnection::InsertInterconnect(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::interconnects::v1::
         InsertInterconnectRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -104,8 +103,7 @@ InterconnectsConnection::InsertInterconnect(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsConnection::InsertInterconnect(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -130,7 +128,7 @@ InterconnectsConnection::PatchInterconnect(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsConnection::PatchInterconnect(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::interconnects::v1::
         PatchInterconnectRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -139,8 +137,7 @@ InterconnectsConnection::PatchInterconnect(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsConnection::PatchInterconnect(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -156,7 +153,7 @@ InterconnectsConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsConnection::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -164,8 +161,7 @@ InterconnectsConnection::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsConnection::SetLabels(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -77,14 +77,14 @@ AgentsConnection::ExportAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsConnection::ExportAgent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-AgentsConnection::ExportAgent(google::cloud::ExperimentalTag,
+AgentsConnection::ExportAgent(ExperimentalTag,
                               google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>(
@@ -98,14 +98,14 @@ future<StatusOr<google::protobuf::Struct>> AgentsConnection::RestoreAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsConnection::RestoreAgent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::protobuf::Struct>> AgentsConnection::RestoreAgent(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }

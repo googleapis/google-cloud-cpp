@@ -140,7 +140,7 @@ ArtifactRegistryTracingConnection::ImportAptArtifacts(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportAptArtifacts");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportAptArtifacts(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -178,7 +178,7 @@ ArtifactRegistryTracingConnection::ImportYumArtifacts(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportYumArtifacts");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportYumArtifacts(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -236,7 +236,7 @@ ArtifactRegistryTracingConnection::CreateRepository(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::CreateRepository");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRepository(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -281,7 +281,7 @@ ArtifactRegistryTracingConnection::DeleteRepository(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRepository(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -337,7 +337,7 @@ ArtifactRegistryTracingConnection::DeletePackage(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeletePackage");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeletePackage(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -393,7 +393,7 @@ ArtifactRegistryTracingConnection::DeleteVersion(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteVersion(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -430,7 +430,7 @@ ArtifactRegistryTracingConnection::BatchDeleteVersions(
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::BatchDeleteVersions");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchDeleteVersions(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

@@ -160,7 +160,7 @@ AdminServiceTracingConnection::SeekSubscription(
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   auto span = internal::MakeSpan(
       "pubsublite::AdminServiceConnection::SeekSubscription");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SeekSubscription(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

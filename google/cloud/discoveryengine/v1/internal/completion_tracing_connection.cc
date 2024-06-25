@@ -62,7 +62,7 @@ CompletionServiceTracingConnection::ImportSuggestionDenyListEntries(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::CompletionServiceConnection::"
       "ImportSuggestionDenyListEntries");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ImportSuggestionDenyListEntries(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -103,7 +103,7 @@ CompletionServiceTracingConnection::PurgeSuggestionDenyListEntries(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::CompletionServiceConnection::"
       "PurgeSuggestionDenyListEntries");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PurgeSuggestionDenyListEntries(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -48,7 +48,7 @@ BackupForGKETracingConnection::CreateBackupPlan(
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::CreateBackupPlan");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBackupPlan(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ BackupForGKETracingConnection::UpdateBackupPlan(
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::UpdateBackupPlan");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateBackupPlan(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ BackupForGKETracingConnection::DeleteBackupPlan(
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::DeleteBackupPlan");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteBackupPlan(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -167,7 +167,7 @@ BackupForGKETracingConnection::CreateBackup(
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::CreateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -220,7 +220,7 @@ BackupForGKETracingConnection::UpdateBackup(
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::UpdateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -253,7 +253,7 @@ BackupForGKETracingConnection::DeleteBackup(
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::DeleteBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -307,7 +307,7 @@ BackupForGKETracingConnection::CreateRestorePlan(
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::CreateRestorePlan");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRestorePlan(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -361,7 +361,7 @@ BackupForGKETracingConnection::UpdateRestorePlan(
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::UpdateRestorePlan");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateRestorePlan(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -394,7 +394,7 @@ BackupForGKETracingConnection::DeleteRestorePlan(
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::DeleteRestorePlan");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRestorePlan(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -427,7 +427,7 @@ BackupForGKETracingConnection::CreateRestore(
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::CreateRestore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRestore(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -480,7 +480,7 @@ BackupForGKETracingConnection::UpdateRestore(
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::UpdateRestore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateRestore(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -513,7 +513,7 @@ BackupForGKETracingConnection::DeleteRestore(
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::DeleteRestore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRestore(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

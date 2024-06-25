@@ -48,7 +48,7 @@ DatastoreAdminConnection::ExportEntities(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminConnection::ExportEntities(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::ExportEntitiesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ DatastoreAdminConnection::ExportEntities(
 
 future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
 DatastoreAdminConnection::ExportEntities(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -72,7 +72,7 @@ DatastoreAdminConnection::ImportEntities(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminConnection::ImportEntities(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::ImportEntitiesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -80,7 +80,7 @@ DatastoreAdminConnection::ImportEntities(
 
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
 DatastoreAdminConnection::ImportEntities(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -95,14 +95,14 @@ DatastoreAdminConnection::CreateIndex(
 }
 
 StatusOr<google::longrunning::Operation> DatastoreAdminConnection::CreateIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::CreateIndexRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
-DatastoreAdminConnection::CreateIndex(google::cloud::ExperimentalTag,
+DatastoreAdminConnection::CreateIndex(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::datastore::admin::v1::Index>>(
@@ -118,14 +118,14 @@ DatastoreAdminConnection::DeleteIndex(
 }
 
 StatusOr<google::longrunning::Operation> DatastoreAdminConnection::DeleteIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::DeleteIndexRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
-DatastoreAdminConnection::DeleteIndex(google::cloud::ExperimentalTag,
+DatastoreAdminConnection::DeleteIndex(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::datastore::admin::v1::Index>>(

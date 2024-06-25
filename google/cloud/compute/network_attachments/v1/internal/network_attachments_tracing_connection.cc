@@ -71,7 +71,7 @@ NetworkAttachmentsTracingConnection::DeleteNetworkAttachment(
   auto span = internal::MakeSpan(
       "compute_network_attachments_v1::NetworkAttachmentsConnection::"
       "DeleteNetworkAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteNetworkAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -132,7 +132,7 @@ NetworkAttachmentsTracingConnection::InsertNetworkAttachment(
   auto span = internal::MakeSpan(
       "compute_network_attachments_v1::NetworkAttachmentsConnection::"
       "InsertNetworkAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertNetworkAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -185,7 +185,7 @@ NetworkAttachmentsTracingConnection::PatchNetworkAttachment(
   auto span = internal::MakeSpan(
       "compute_network_attachments_v1::NetworkAttachmentsConnection::"
       "PatchNetworkAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchNetworkAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

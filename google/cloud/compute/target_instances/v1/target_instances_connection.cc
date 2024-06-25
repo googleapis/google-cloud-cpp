@@ -57,7 +57,7 @@ TargetInstancesConnection::DeleteTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesConnection::DeleteTargetInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_instances::v1::
         DeleteTargetInstanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -66,8 +66,7 @@ TargetInstancesConnection::DeleteTargetInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesConnection::DeleteTargetInstance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -91,7 +90,7 @@ TargetInstancesConnection::InsertTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesConnection::InsertTargetInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_instances::v1::
         InsertTargetInstanceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -100,8 +99,7 @@ TargetInstancesConnection::InsertTargetInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesConnection::InsertTargetInstance(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -126,7 +124,7 @@ TargetInstancesConnection::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesConnection::SetSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_instances::v1::
         SetSecurityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -135,8 +133,7 @@ TargetInstancesConnection::SetSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesConnection::SetSecurityPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

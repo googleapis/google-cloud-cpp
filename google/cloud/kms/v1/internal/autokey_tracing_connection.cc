@@ -45,7 +45,7 @@ AutokeyTracingConnection::CreateKeyHandle(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
   auto span = internal::MakeSpan("kms_v1::AutokeyConnection::CreateKeyHandle");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateKeyHandle(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

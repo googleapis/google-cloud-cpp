@@ -56,7 +56,7 @@ RegionNetworkFirewallPoliciesTracingConnection::AddAssociation(
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::AddAssociation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddAssociation(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -94,7 +94,7 @@ RegionNetworkFirewallPoliciesTracingConnection::AddRule(
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::AddRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddRule(google::cloud::ExperimentalTag{},
                              google::cloud::NoAwaitTag{}, request));
@@ -132,7 +132,7 @@ RegionNetworkFirewallPoliciesTracingConnection::CloneRules(
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::CloneRules");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CloneRules(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -171,7 +171,7 @@ RegionNetworkFirewallPoliciesTracingConnection::DeleteFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::DeleteFirewallPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteFirewallPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -266,7 +266,7 @@ RegionNetworkFirewallPoliciesTracingConnection::InsertFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::InsertFirewallPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertFirewallPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -321,7 +321,7 @@ RegionNetworkFirewallPoliciesTracingConnection::PatchFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::PatchFirewallPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchFirewallPolicy(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -359,7 +359,7 @@ RegionNetworkFirewallPoliciesTracingConnection::PatchRule(
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::PatchRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchRule(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -397,7 +397,7 @@ RegionNetworkFirewallPoliciesTracingConnection::RemoveAssociation(
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::RemoveAssociation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemoveAssociation(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -435,7 +435,7 @@ RegionNetworkFirewallPoliciesTracingConnection::RemoveRule(
   auto span = internal::MakeSpan(
       "compute_region_network_firewall_policies_v1::"
       "RegionNetworkFirewallPoliciesConnection::RemoveRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemoveRule(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

@@ -56,7 +56,7 @@ RegionBackendServicesTracingConnection::DeleteBackendService(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "DeleteBackendService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteBackendService(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -128,7 +128,7 @@ RegionBackendServicesTracingConnection::InsertBackendService(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "InsertBackendService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertBackendService(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -195,7 +195,7 @@ RegionBackendServicesTracingConnection::PatchBackendService(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "PatchBackendService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchBackendService(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -244,7 +244,7 @@ RegionBackendServicesTracingConnection::SetSecurityPolicy(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "SetSecurityPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetSecurityPolicy(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -294,7 +294,7 @@ RegionBackendServicesTracingConnection::UpdateBackendService(
   auto span = internal::MakeSpan(
       "compute_region_backend_services_v1::RegionBackendServicesConnection::"
       "UpdateBackendService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateBackendService(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

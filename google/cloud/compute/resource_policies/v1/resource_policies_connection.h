@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/resource_policies/v1/internal/resource_policies_retry_traits.h"
 #include "google/cloud/compute/resource_policies/v1/resource_policies_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,14 +199,13 @@ class ResourcePoliciesConnection {
                            DeleteResourcePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteResourcePolicy(google::cloud::ExperimentalTag,
-                       google::cloud::NoAwaitTag,
+  DeleteResourcePolicy(ExperimentalTag, NoAwaitTag,
                        google::cloud::cpp::compute::resource_policies::v1::
                            DeleteResourcePolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteResourcePolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
@@ -222,14 +221,13 @@ class ResourcePoliciesConnection {
                            InsertResourcePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertResourcePolicy(google::cloud::ExperimentalTag,
-                       google::cloud::NoAwaitTag,
+  InsertResourcePolicy(ExperimentalTag, NoAwaitTag,
                        google::cloud::cpp::compute::resource_policies::v1::
                            InsertResourcePolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertResourcePolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
@@ -241,13 +239,13 @@ class ResourcePoliciesConnection {
                           PatchResourcePolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchResourcePolicy(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  PatchResourcePolicy(ExperimentalTag, NoAwaitTag,
                       google::cloud::cpp::compute::resource_policies::v1::
                           PatchResourcePolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchResourcePolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(

@@ -21,11 +21,11 @@
 
 #include "google/cloud/discoveryengine/v1/internal/schema_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/schema_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -198,11 +198,11 @@ class SchemaServiceConnection {
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateSchema(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  CreateSchema(google::cloud::ExperimentalTag,
+  CreateSchema(ExperimentalTag,
                google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
@@ -210,11 +210,11 @@ class SchemaServiceConnection {
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateSchema(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
-  UpdateSchema(google::cloud::ExperimentalTag,
+  UpdateSchema(ExperimentalTag,
                google::longrunning::Operation const& operation);
 
   virtual future<
@@ -223,12 +223,12 @@ class SchemaServiceConnection {
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteSchema(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(google::cloud::ExperimentalTag,
+  DeleteSchema(ExperimentalTag,
                google::longrunning::Operation const& operation);
 };
 

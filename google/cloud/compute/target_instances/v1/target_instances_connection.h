@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/target_instances/v1/internal/target_instances_retry_traits.h"
 #include "google/cloud/compute/target_instances/v1/target_instances_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,14 +199,13 @@ class TargetInstancesConnection {
                            DeleteTargetInstanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetInstance(google::cloud::ExperimentalTag,
-                       google::cloud::NoAwaitTag,
+  DeleteTargetInstance(ExperimentalTag, NoAwaitTag,
                        google::cloud::cpp::compute::target_instances::v1::
                            DeleteTargetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
@@ -218,14 +217,13 @@ class TargetInstancesConnection {
                            InsertTargetInstanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetInstance(google::cloud::ExperimentalTag,
-                       google::cloud::NoAwaitTag,
+  InsertTargetInstance(ExperimentalTag, NoAwaitTag,
                        google::cloud::cpp::compute::target_instances::v1::
                            InsertTargetInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
@@ -237,13 +235,13 @@ class TargetInstancesConnection {
                         SetSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetSecurityPolicy(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::target_instances::v1::
                         SetSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

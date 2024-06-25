@@ -56,7 +56,7 @@ ConsumerProcurementServiceTracingConnection::PlaceOrder(
   auto span = internal::MakeSpan(
       "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
       "PlaceOrder");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PlaceOrder(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

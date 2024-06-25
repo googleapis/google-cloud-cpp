@@ -21,11 +21,11 @@
 
 #include "google/cloud/resourcemanager/v3/internal/tag_values_retry_traits.h"
 #include "google/cloud/resourcemanager/v3/tag_values_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -203,11 +203,11 @@ class TagValuesConnection {
       google::cloud::resourcemanager::v3::CreateTagValueRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateTagValue(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagValueRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
-  CreateTagValue(google::cloud::ExperimentalTag,
+  CreateTagValue(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
@@ -215,11 +215,11 @@ class TagValuesConnection {
       google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateTagValue(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
-  UpdateTagValue(google::cloud::ExperimentalTag,
+  UpdateTagValue(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
@@ -227,11 +227,11 @@ class TagValuesConnection {
       google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteTagValue(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
-  DeleteTagValue(google::cloud::ExperimentalTag,
+  DeleteTagValue(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(

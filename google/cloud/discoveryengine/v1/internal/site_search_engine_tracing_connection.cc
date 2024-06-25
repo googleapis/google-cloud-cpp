@@ -65,7 +65,7 @@ SiteSearchEngineServiceTracingConnection::CreateTargetSite(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::"
       "CreateTargetSite");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTargetSite(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -105,7 +105,7 @@ SiteSearchEngineServiceTracingConnection::BatchCreateTargetSites(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::"
       "BatchCreateTargetSites");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchCreateTargetSites(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -153,7 +153,7 @@ SiteSearchEngineServiceTracingConnection::UpdateTargetSite(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::"
       "UpdateTargetSite");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTargetSite(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -191,7 +191,7 @@ SiteSearchEngineServiceTracingConnection::DeleteTargetSite(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::"
       "DeleteTargetSite");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTargetSite(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -243,7 +243,7 @@ SiteSearchEngineServiceTracingConnection::EnableAdvancedSiteSearch(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::"
       "EnableAdvancedSiteSearch");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->EnableAdvancedSiteSearch(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -284,7 +284,7 @@ SiteSearchEngineServiceTracingConnection::DisableAdvancedSiteSearch(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::"
       "DisableAdvancedSiteSearch");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DisableAdvancedSiteSearch(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -319,7 +319,7 @@ SiteSearchEngineServiceTracingConnection::RecrawlUris(
     google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::RecrawlUris");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RecrawlUris(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -358,7 +358,7 @@ SiteSearchEngineServiceTracingConnection::BatchVerifyTargetSites(
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SiteSearchEngineServiceConnection::"
       "BatchVerifyTargetSites");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchVerifyTargetSites(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

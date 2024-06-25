@@ -51,7 +51,7 @@ EnvironmentsTracingConnection::CreateEnvironment(
         CreateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::CreateEnvironment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEnvironment(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -111,7 +111,7 @@ EnvironmentsTracingConnection::UpdateEnvironment(
         UpdateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::UpdateEnvironment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateEnvironment(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -148,7 +148,7 @@ EnvironmentsTracingConnection::DeleteEnvironment(
         DeleteEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DeleteEnvironment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteEnvironment(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -348,7 +348,7 @@ EnvironmentsTracingConnection::SaveSnapshot(
         SaveSnapshotRequest const& request) {
   auto span =
       internal::MakeSpan("composer_v1::EnvironmentsConnection::SaveSnapshot");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SaveSnapshot(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -385,7 +385,7 @@ EnvironmentsTracingConnection::LoadSnapshot(
         LoadSnapshotRequest const& request) {
   auto span =
       internal::MakeSpan("composer_v1::EnvironmentsConnection::LoadSnapshot");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->LoadSnapshot(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -422,7 +422,7 @@ EnvironmentsTracingConnection::DatabaseFailover(
         DatabaseFailoverRequest const& request) {
   auto span = internal::MakeSpan(
       "composer_v1::EnvironmentsConnection::DatabaseFailover");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DatabaseFailover(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

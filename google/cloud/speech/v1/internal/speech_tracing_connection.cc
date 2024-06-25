@@ -56,7 +56,7 @@ SpeechTracingConnection::LongRunningRecognize(
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v1::SpeechConnection::LongRunningRecognize");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->LongRunningRecognize(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

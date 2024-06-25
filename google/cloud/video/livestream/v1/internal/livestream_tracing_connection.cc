@@ -48,7 +48,7 @@ LivestreamServiceTracingConnection::CreateChannel(
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::CreateChannel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateChannel(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ LivestreamServiceTracingConnection::DeleteChannel(
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::DeleteChannel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteChannel(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ LivestreamServiceTracingConnection::UpdateChannel(
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::UpdateChannel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateChannel(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -168,7 +168,7 @@ LivestreamServiceTracingConnection::StartChannel(
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::StartChannel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StartChannel(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -201,7 +201,7 @@ LivestreamServiceTracingConnection::StopChannel(
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::StopChannel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StopChannel(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ LivestreamServiceTracingConnection::CreateInput(
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::CreateInput");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInput(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -288,7 +288,7 @@ LivestreamServiceTracingConnection::DeleteInput(
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::DeleteInput");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInput(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -321,7 +321,7 @@ LivestreamServiceTracingConnection::UpdateInput(
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::UpdateInput");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateInput(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -392,7 +392,7 @@ LivestreamServiceTracingConnection::CreateAsset(
     google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::CreateAsset");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAsset(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -425,7 +425,7 @@ LivestreamServiceTracingConnection::DeleteAsset(
     google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::DeleteAsset");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAsset(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -488,7 +488,7 @@ LivestreamServiceTracingConnection::UpdatePool(
     google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "video_livestream_v1::LivestreamServiceConnection::UpdatePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdatePool(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

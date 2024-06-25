@@ -46,14 +46,14 @@ PipelineServiceConnection::RunPipeline(
 }
 
 StatusOr<google::longrunning::Operation> PipelineServiceConnection::RunPipeline(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contentwarehouse::v1::RunPipelineRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-PipelineServiceConnection::RunPipeline(google::cloud::ExperimentalTag,
+PipelineServiceConnection::RunPipeline(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>(

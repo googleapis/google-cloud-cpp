@@ -48,7 +48,7 @@ DatastoreAdminTracingConnection::ExportEntities(
     google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::ExportEntities");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportEntities(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -81,7 +81,7 @@ DatastoreAdminTracingConnection::ImportEntities(
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::ImportEntities");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportEntities(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -114,7 +114,7 @@ DatastoreAdminTracingConnection::CreateIndex(
     google::datastore::admin::v1::CreateIndexRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::CreateIndex");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateIndex(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -147,7 +147,7 @@ DatastoreAdminTracingConnection::DeleteIndex(
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::DeleteIndex");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteIndex(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));

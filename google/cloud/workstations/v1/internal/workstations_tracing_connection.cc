@@ -73,7 +73,7 @@ WorkstationsTracingConnection::CreateWorkstationCluster(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstationCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateWorkstationCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -109,7 +109,7 @@ WorkstationsTracingConnection::UpdateWorkstationCluster(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstationCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateWorkstationCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -145,7 +145,7 @@ WorkstationsTracingConnection::DeleteWorkstationCluster(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstationCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteWorkstationCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -216,7 +216,7 @@ WorkstationsTracingConnection::CreateWorkstationConfig(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstationConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateWorkstationConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -252,7 +252,7 @@ WorkstationsTracingConnection::UpdateWorkstationConfig(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstationConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateWorkstationConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -288,7 +288,7 @@ WorkstationsTracingConnection::DeleteWorkstationConfig(
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstationConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteWorkstationConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -354,7 +354,7 @@ WorkstationsTracingConnection::CreateWorkstation(
     google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateWorkstation(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -387,7 +387,7 @@ WorkstationsTracingConnection::UpdateWorkstation(
     google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateWorkstation(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -420,7 +420,7 @@ WorkstationsTracingConnection::DeleteWorkstation(
     google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteWorkstation(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -453,7 +453,7 @@ WorkstationsTracingConnection::StartWorkstation(
     google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::StartWorkstation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StartWorkstation(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -486,7 +486,7 @@ WorkstationsTracingConnection::StopWorkstation(
     google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::StopWorkstation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StopWorkstation(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

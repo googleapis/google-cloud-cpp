@@ -21,7 +21,6 @@
 
 #include "google/cloud/discoveryengine/v1/grounded_generation_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/grounded_generation_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

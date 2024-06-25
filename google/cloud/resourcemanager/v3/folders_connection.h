@@ -21,11 +21,11 @@
 
 #include "google/cloud/resourcemanager/v3/folders_connection_idempotency_policy.h"
 #include "google/cloud/resourcemanager/v3/internal/folders_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -198,11 +198,11 @@ class FoldersConnection {
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  CreateFolder(google::cloud::ExperimentalTag,
+  CreateFolder(ExperimentalTag,
                google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
@@ -210,11 +210,11 @@ class FoldersConnection {
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UpdateFolder(google::cloud::ExperimentalTag,
+  UpdateFolder(ExperimentalTag,
                google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
@@ -222,23 +222,22 @@ class FoldersConnection {
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> MoveFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  MoveFolder(google::cloud::ExperimentalTag,
-             google::longrunning::Operation const& operation);
+  MoveFolder(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
   DeleteFolder(
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  DeleteFolder(google::cloud::ExperimentalTag,
+  DeleteFolder(ExperimentalTag,
                google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
@@ -246,11 +245,11 @@ class FoldersConnection {
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UndeleteFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
-  UndeleteFolder(google::cloud::ExperimentalTag,
+  UndeleteFolder(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(

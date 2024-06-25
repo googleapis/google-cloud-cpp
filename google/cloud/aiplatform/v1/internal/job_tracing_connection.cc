@@ -77,7 +77,7 @@ JobServiceTracingConnection::DeleteCustomJob(
     google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteCustomJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCustomJob(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -152,7 +152,7 @@ JobServiceTracingConnection::DeleteDataLabelingJob(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteDataLabelingJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteDataLabelingJob(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -231,7 +231,7 @@ JobServiceTracingConnection::DeleteHyperparameterTuningJob(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteHyperparameterTuningJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteHyperparameterTuningJob(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -303,7 +303,7 @@ JobServiceTracingConnection::DeleteNasJob(
     google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::JobServiceConnection::DeleteNasJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteNasJob(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -400,7 +400,7 @@ JobServiceTracingConnection::DeleteBatchPredictionJob(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::DeleteBatchPredictionJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteBatchPredictionJob(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -498,7 +498,7 @@ JobServiceTracingConnection::UpdateModelDeploymentMonitoringJob(
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::"
       "UpdateModelDeploymentMonitoringJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateModelDeploymentMonitoringJob(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -537,7 +537,7 @@ JobServiceTracingConnection::DeleteModelDeploymentMonitoringJob(
   auto span = internal::MakeSpan(
       "aiplatform_v1::JobServiceConnection::"
       "DeleteModelDeploymentMonitoringJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteModelDeploymentMonitoringJob(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

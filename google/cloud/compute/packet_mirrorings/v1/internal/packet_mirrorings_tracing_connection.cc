@@ -70,7 +70,7 @@ PacketMirroringsTracingConnection::DeletePacketMirroring(
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "DeletePacketMirroring");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeletePacketMirroring(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -120,7 +120,7 @@ PacketMirroringsTracingConnection::InsertPacketMirroring(
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "InsertPacketMirroring");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertPacketMirroring(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -173,7 +173,7 @@ PacketMirroringsTracingConnection::PatchPacketMirroring(
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "PatchPacketMirroring");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchPacketMirroring(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

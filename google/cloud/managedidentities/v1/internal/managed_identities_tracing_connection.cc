@@ -56,7 +56,7 @@ ManagedIdentitiesServiceTracingConnection::CreateMicrosoftAdDomain(
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::"
       "CreateMicrosoftAdDomain");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateMicrosoftAdDomain(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -122,7 +122,7 @@ ManagedIdentitiesServiceTracingConnection::UpdateDomain(
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::UpdateDomain");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDomain(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -155,7 +155,7 @@ ManagedIdentitiesServiceTracingConnection::DeleteDomain(
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::DeleteDomain");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteDomain(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -188,7 +188,7 @@ ManagedIdentitiesServiceTracingConnection::AttachTrust(
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::AttachTrust");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AttachTrust(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -225,7 +225,7 @@ ManagedIdentitiesServiceTracingConnection::ReconfigureTrust(
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::"
       "ReconfigureTrust");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ReconfigureTrust(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -259,7 +259,7 @@ ManagedIdentitiesServiceTracingConnection::DetachTrust(
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::DetachTrust");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DetachTrust(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -294,7 +294,7 @@ ManagedIdentitiesServiceTracingConnection::ValidateTrust(
   auto span = internal::MakeSpan(
       "managedidentities_v1::ManagedIdentitiesServiceConnection::"
       "ValidateTrust");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ValidateTrust(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

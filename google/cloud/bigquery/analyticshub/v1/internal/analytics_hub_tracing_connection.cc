@@ -188,7 +188,7 @@ AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
   auto span = internal::MakeSpan(
       "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
       "SubscribeDataExchange");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SubscribeDataExchange(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -229,7 +229,7 @@ AnalyticsHubServiceTracingConnection::RefreshSubscription(
   auto span = internal::MakeSpan(
       "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
       "RefreshSubscription");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RefreshSubscription(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -319,7 +319,7 @@ AnalyticsHubServiceTracingConnection::DeleteSubscription(
   auto span = internal::MakeSpan(
       "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
       "DeleteSubscription");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSubscription(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));

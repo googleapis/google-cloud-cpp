@@ -46,14 +46,14 @@ AutokeyConnection::CreateKeyHandle(
 }
 
 StatusOr<google::longrunning::Operation> AutokeyConnection::CreateKeyHandle(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::kms::v1::CreateKeyHandleRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-AutokeyConnection::CreateKeyHandle(google::cloud::ExperimentalTag,
+AutokeyConnection::CreateKeyHandle(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::kms::v1::KeyHandle>>(

@@ -150,7 +150,7 @@ ResourcePoliciesRestConnectionImpl::DeleteResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesRestConnectionImpl::DeleteResourcePolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::resource_policies::v1::
         DeleteResourcePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -167,7 +167,7 @@ ResourcePoliciesRestConnectionImpl::DeleteResourcePolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesRestConnectionImpl::DeleteResourcePolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -315,7 +315,7 @@ ResourcePoliciesRestConnectionImpl::InsertResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesRestConnectionImpl::InsertResourcePolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::resource_policies::v1::
         InsertResourcePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -332,7 +332,7 @@ ResourcePoliciesRestConnectionImpl::InsertResourcePolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesRestConnectionImpl::InsertResourcePolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -487,7 +487,7 @@ ResourcePoliciesRestConnectionImpl::PatchResourcePolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ResourcePoliciesRestConnectionImpl::PatchResourcePolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::resource_policies::v1::
         PatchResourcePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -504,7 +504,7 @@ ResourcePoliciesRestConnectionImpl::PatchResourcePolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesRestConnectionImpl::PatchResourcePolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -62,7 +62,7 @@ DatabaseAdminTracingConnection::CreateDatabase(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::CreateDatabase");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateDatabase(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -106,7 +106,7 @@ DatabaseAdminTracingConnection::UpdateDatabase(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::UpdateDatabase");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDatabase(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -142,7 +142,7 @@ DatabaseAdminTracingConnection::UpdateDatabaseDdl(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::UpdateDatabaseDdl");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDatabaseDdl(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -219,7 +219,7 @@ DatabaseAdminTracingConnection::CreateBackup(
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::CreateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -252,7 +252,7 @@ DatabaseAdminTracingConnection::CopyBackup(
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   auto span =
       internal::MakeSpan("spanner_admin::DatabaseAdminConnection::CopyBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CopyBackup(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -325,7 +325,7 @@ DatabaseAdminTracingConnection::RestoreDatabase(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::RestoreDatabase");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RestoreDatabase(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

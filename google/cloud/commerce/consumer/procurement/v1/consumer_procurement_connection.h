@@ -22,11 +22,11 @@
 
 #include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_connection_idempotency_policy.h"
 #include "google/cloud/commerce/consumer/procurement/v1/internal/consumer_procurement_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -213,14 +213,13 @@ class ConsumerProcurementServiceConnection {
                  PlaceOrderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> PlaceOrder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::commerce::consumer::procurement::v1::
           PlaceOrderRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
-  PlaceOrder(google::cloud::ExperimentalTag,
-             google::longrunning::Operation const& operation);
+  PlaceOrder(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
   GetOrder(

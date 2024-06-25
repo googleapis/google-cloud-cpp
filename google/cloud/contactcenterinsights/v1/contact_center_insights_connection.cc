@@ -56,7 +56,7 @@ ContactCenterInsightsConnection::UploadConversation(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::UploadConversation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::
         UploadConversationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -65,7 +65,7 @@ ContactCenterInsightsConnection::UploadConversation(
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
 ContactCenterInsightsConnection::UploadConversation(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -108,7 +108,7 @@ ContactCenterInsightsConnection::CreateAnalysis(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::CreateAnalysis(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,7 +116,7 @@ ContactCenterInsightsConnection::CreateAnalysis(
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
 ContactCenterInsightsConnection::CreateAnalysis(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -154,7 +154,7 @@ ContactCenterInsightsConnection::BulkAnalyzeConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::BulkAnalyzeConversations(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::
         BulkAnalyzeConversationsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -164,7 +164,7 @@ ContactCenterInsightsConnection::BulkAnalyzeConversations(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
 ContactCenterInsightsConnection::BulkAnalyzeConversations(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::contactcenterinsights::v1::
                    BulkAnalyzeConversationsResponse>>(
@@ -184,7 +184,7 @@ ContactCenterInsightsConnection::BulkDeleteConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::BulkDeleteConversations(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::
         BulkDeleteConversationsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -194,7 +194,7 @@ ContactCenterInsightsConnection::BulkDeleteConversations(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
 ContactCenterInsightsConnection::BulkDeleteConversations(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::contactcenterinsights::v1::
                    BulkDeleteConversationsResponse>>(
@@ -213,7 +213,7 @@ ContactCenterInsightsConnection::IngestConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::IngestConversations(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::
         IngestConversationsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -223,7 +223,7 @@ ContactCenterInsightsConnection::IngestConversations(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsConnection::IngestConversations(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -241,7 +241,7 @@ ContactCenterInsightsConnection::ExportInsightsData(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::ExportInsightsData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::
         ExportInsightsDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -251,7 +251,7 @@ ContactCenterInsightsConnection::ExportInsightsData(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsConnection::ExportInsightsData(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -267,7 +267,7 @@ ContactCenterInsightsConnection::CreateIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::CreateIssueModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -275,7 +275,7 @@ ContactCenterInsightsConnection::CreateIssueModel(
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsConnection::CreateIssueModel(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -310,7 +310,7 @@ ContactCenterInsightsConnection::DeleteIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::DeleteIssueModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -319,7 +319,7 @@ ContactCenterInsightsConnection::DeleteIssueModel(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
 ContactCenterInsightsConnection::DeleteIssueModel(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -336,7 +336,7 @@ ContactCenterInsightsConnection::DeployIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::DeployIssueModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -345,7 +345,7 @@ ContactCenterInsightsConnection::DeployIssueModel(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
 ContactCenterInsightsConnection::DeployIssueModel(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -363,7 +363,7 @@ ContactCenterInsightsConnection::UndeployIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnection::UndeployIssueModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contactcenterinsights::v1::
         UndeployIssueModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -373,7 +373,7 @@ ContactCenterInsightsConnection::UndeployIssueModel(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
 ContactCenterInsightsConnection::UndeployIssueModel(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -77,7 +77,7 @@ AccessContextManagerTracingConnection::CreateAccessPolicy(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CreateAccessPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAccessPolicy(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -116,7 +116,7 @@ AccessContextManagerTracingConnection::UpdateAccessPolicy(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "UpdateAccessPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAccessPolicy(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -156,7 +156,7 @@ AccessContextManagerTracingConnection::DeleteAccessPolicy(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "DeleteAccessPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAccessPolicy(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -220,7 +220,7 @@ AccessContextManagerTracingConnection::CreateAccessLevel(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CreateAccessLevel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAccessLevel(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -258,7 +258,7 @@ AccessContextManagerTracingConnection::UpdateAccessLevel(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "UpdateAccessLevel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAccessLevel(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -297,7 +297,7 @@ AccessContextManagerTracingConnection::DeleteAccessLevel(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "DeleteAccessLevel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAccessLevel(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -338,7 +338,7 @@ AccessContextManagerTracingConnection::ReplaceAccessLevels(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ReplaceAccessLevels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ReplaceAccessLevels(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -403,7 +403,7 @@ AccessContextManagerTracingConnection::CreateServicePerimeter(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CreateServicePerimeter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateServicePerimeter(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -442,7 +442,7 @@ AccessContextManagerTracingConnection::UpdateServicePerimeter(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "UpdateServicePerimeter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateServicePerimeter(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -482,7 +482,7 @@ AccessContextManagerTracingConnection::DeleteServicePerimeter(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "DeleteServicePerimeter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteServicePerimeter(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -523,7 +523,7 @@ AccessContextManagerTracingConnection::ReplaceServicePerimeters(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ReplaceServicePerimeters");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ReplaceServicePerimeters(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -564,7 +564,7 @@ AccessContextManagerTracingConnection::CommitServicePerimeters(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CommitServicePerimeters");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CommitServicePerimeters(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -630,7 +630,7 @@ AccessContextManagerTracingConnection::CreateGcpUserAccessBinding(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "CreateGcpUserAccessBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateGcpUserAccessBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -671,7 +671,7 @@ AccessContextManagerTracingConnection::UpdateGcpUserAccessBinding(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "UpdateGcpUserAccessBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateGcpUserAccessBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -712,7 +712,7 @@ AccessContextManagerTracingConnection::DeleteGcpUserAccessBinding(
   auto span = internal::MakeSpan(
       "accesscontextmanager_v1::AccessContextManagerConnection::"
       "DeleteGcpUserAccessBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteGcpUserAccessBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

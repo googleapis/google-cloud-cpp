@@ -64,7 +64,7 @@ InstanceSettingsTracingConnection::PatchInstanceSettings(
   auto span = internal::MakeSpan(
       "compute_instance_settings_v1::InstanceSettingsConnection::"
       "PatchInstanceSettings");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchInstanceSettings(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -98,7 +98,7 @@ EntityTypesTracingConnection::BatchUpdateEntityTypes(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntityTypes");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchUpdateEntityTypes(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ EntityTypesTracingConnection::BatchDeleteEntityTypes(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchDeleteEntityTypes(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -168,7 +168,7 @@ EntityTypesTracingConnection::BatchCreateEntities(
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchCreateEntities(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -202,7 +202,7 @@ EntityTypesTracingConnection::BatchUpdateEntities(
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchUpdateEntities");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchUpdateEntities(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -236,7 +236,7 @@ EntityTypesTracingConnection::BatchDeleteEntities(
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::BatchDeleteEntities");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchDeleteEntities(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

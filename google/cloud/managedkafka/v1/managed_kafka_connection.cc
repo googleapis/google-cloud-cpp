@@ -61,14 +61,14 @@ ManagedKafkaConnection::CreateCluster(
 }
 
 StatusOr<google::longrunning::Operation> ManagedKafkaConnection::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedkafka::v1::CreateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-ManagedKafkaConnection::CreateCluster(google::cloud::ExperimentalTag,
+ManagedKafkaConnection::CreateCluster(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedkafka::v1::Cluster>>(
@@ -84,14 +84,14 @@ ManagedKafkaConnection::UpdateCluster(
 }
 
 StatusOr<google::longrunning::Operation> ManagedKafkaConnection::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedkafka::v1::UpdateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-ManagedKafkaConnection::UpdateCluster(google::cloud::ExperimentalTag,
+ManagedKafkaConnection::UpdateCluster(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedkafka::v1::Cluster>>(
@@ -107,14 +107,14 @@ ManagedKafkaConnection::DeleteCluster(
 }
 
 StatusOr<google::longrunning::Operation> ManagedKafkaConnection::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedkafka::v1::DeleteClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-ManagedKafkaConnection::DeleteCluster(google::cloud::ExperimentalTag,
+ManagedKafkaConnection::DeleteCluster(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>(

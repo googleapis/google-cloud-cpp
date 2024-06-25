@@ -50,7 +50,7 @@ RegionInstancesTracingConnection::BulkInsert(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_instances_v1::RegionInstancesConnection::BulkInsert");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BulkInsert(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

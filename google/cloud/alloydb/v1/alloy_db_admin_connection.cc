@@ -61,14 +61,14 @@ AlloyDBAdminConnection::CreateCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminConnection::CreateCluster(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::CreateCluster(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Cluster>>(
@@ -84,14 +84,14 @@ AlloyDBAdminConnection::UpdateCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::UpdateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminConnection::UpdateCluster(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::UpdateCluster(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Cluster>>(
@@ -107,14 +107,14 @@ AlloyDBAdminConnection::DeleteCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::DeleteClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-AlloyDBAdminConnection::DeleteCluster(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::DeleteCluster(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::OperationMetadata>>(
@@ -130,14 +130,14 @@ AlloyDBAdminConnection::PromoteCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::PromoteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::PromoteClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminConnection::PromoteCluster(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::PromoteCluster(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Cluster>>(
@@ -153,14 +153,14 @@ AlloyDBAdminConnection::RestoreCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::RestoreCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::RestoreClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
-AlloyDBAdminConnection::RestoreCluster(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::RestoreCluster(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Cluster>>(
@@ -177,7 +177,7 @@ AlloyDBAdminConnection::CreateSecondaryCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnection::CreateSecondaryCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -185,7 +185,7 @@ AlloyDBAdminConnection::CreateSecondaryCluster(
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnection::CreateSecondaryCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Cluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -214,14 +214,14 @@ AlloyDBAdminConnection::CreateInstance(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminConnection::CreateInstance(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::CreateInstance(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Instance>>(
@@ -238,7 +238,7 @@ AlloyDBAdminConnection::CreateSecondaryInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnection::CreateSecondaryInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -246,7 +246,7 @@ AlloyDBAdminConnection::CreateSecondaryInstance(
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnection::CreateSecondaryInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -262,7 +262,7 @@ AlloyDBAdminConnection::BatchCreateInstances(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnection::BatchCreateInstances(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -270,7 +270,7 @@ AlloyDBAdminConnection::BatchCreateInstances(
 
 future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
 AlloyDBAdminConnection::BatchCreateInstances(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -285,14 +285,14 @@ AlloyDBAdminConnection::UpdateInstance(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminConnection::UpdateInstance(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::UpdateInstance(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Instance>>(
@@ -308,14 +308,14 @@ AlloyDBAdminConnection::DeleteInstance(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-AlloyDBAdminConnection::DeleteInstance(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::DeleteInstance(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::OperationMetadata>>(
@@ -332,7 +332,7 @@ AlloyDBAdminConnection::FailoverInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnection::FailoverInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::FailoverInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -340,7 +340,7 @@ AlloyDBAdminConnection::FailoverInstance(
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnection::FailoverInstance(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -355,14 +355,14 @@ AlloyDBAdminConnection::InjectFault(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::InjectFault(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::InjectFaultRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminConnection::InjectFault(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::InjectFault(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Instance>>(
@@ -379,14 +379,14 @@ AlloyDBAdminConnection::RestartInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnection::RestartInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::RestartInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminConnection::RestartInstance(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::RestartInstance(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Instance>>(
@@ -415,14 +415,14 @@ AlloyDBAdminConnection::CreateBackup(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
-AlloyDBAdminConnection::CreateBackup(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::CreateBackup(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Backup>>(
@@ -438,14 +438,14 @@ AlloyDBAdminConnection::UpdateBackup(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::UpdateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::UpdateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
-AlloyDBAdminConnection::UpdateBackup(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::UpdateBackup(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::Backup>>(
@@ -461,14 +461,14 @@ AlloyDBAdminConnection::DeleteBackup(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminConnection::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::DeleteBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-AlloyDBAdminConnection::DeleteBackup(google::cloud::ExperimentalTag,
+AlloyDBAdminConnection::DeleteBackup(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::alloydb::v1::OperationMetadata>>(

@@ -21,11 +21,11 @@
 
 #include "google/cloud/appengine/v1/internal/versions_retry_traits.h"
 #include "google/cloud/appengine/v1/versions_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -195,33 +195,31 @@ class VersionsConnection {
       google::appengine::v1::CreateVersionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateVersion(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::CreateVersionRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::Version>> CreateVersion(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
       google::appengine::v1::UpdateVersionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateVersion(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateVersionRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteVersion(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DeleteVersionRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteVersion(google::cloud::ExperimentalTag,
+  DeleteVersion(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 };
 

@@ -46,7 +46,7 @@ SecurityPoliciesConnection::AddRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::AddRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,8 +54,7 @@ SecurityPoliciesConnection::AddRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesConnection::AddRule(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,7 +81,7 @@ SecurityPoliciesConnection::DeleteSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::DeleteSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::security_policies::v1::
         DeleteSecurityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -91,8 +90,7 @@ SecurityPoliciesConnection::DeleteSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesConnection::DeleteSecurityPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -122,7 +120,7 @@ SecurityPoliciesConnection::InsertSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::InsertSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::security_policies::v1::
         InsertSecurityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -131,8 +129,7 @@ SecurityPoliciesConnection::InsertSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesConnection::InsertSecurityPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -165,7 +162,7 @@ SecurityPoliciesConnection::PatchSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::PatchSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::security_policies::v1::
         PatchSecurityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -174,8 +171,7 @@ SecurityPoliciesConnection::PatchSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesConnection::PatchSecurityPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -192,7 +188,7 @@ SecurityPoliciesConnection::PatchRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::PatchRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::security_policies::v1::
         PatchRuleRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -201,8 +197,7 @@ SecurityPoliciesConnection::PatchRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesConnection::PatchRule(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -219,7 +214,7 @@ SecurityPoliciesConnection::RemoveRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::RemoveRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::security_policies::v1::
         RemoveRuleRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -228,8 +223,7 @@ SecurityPoliciesConnection::RemoveRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesConnection::RemoveRule(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -246,7 +240,7 @@ SecurityPoliciesConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SecurityPoliciesConnection::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::security_policies::v1::
         SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -255,8 +249,7 @@ SecurityPoliciesConnection::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SecurityPoliciesConnection::SetLabels(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

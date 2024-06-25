@@ -21,11 +21,11 @@
 
 #include "google/cloud/apikeys/v2/api_keys_connection_idempotency_policy.h"
 #include "google/cloud/apikeys/v2/internal/api_keys_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -188,12 +188,11 @@ class ApiKeysConnection {
       google::api::apikeys::v2::CreateKeyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::CreateKeyRequest const& request);
 
   virtual future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::api::apikeys::v2::Key> ListKeys(
       google::api::apikeys::v2::ListKeysRequest request);
@@ -208,34 +207,31 @@ class ApiKeysConnection {
       google::api::apikeys::v2::UpdateKeyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::UpdateKeyRequest const& request);
 
   virtual future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
       google::api::apikeys::v2::DeleteKeyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::DeleteKeyRequest const& request);
 
   virtual future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
       google::api::apikeys::v2::UndeleteKeyRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UndeleteKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::UndeleteKeyRequest const& request);
 
   virtual future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
       google::api::apikeys::v2::LookupKeyRequest const& request);

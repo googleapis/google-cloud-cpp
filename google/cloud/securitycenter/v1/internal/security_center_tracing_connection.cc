@@ -48,7 +48,7 @@ SecurityCenterTracingConnection::BulkMuteFindings(
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::BulkMuteFindings");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BulkMuteFindings(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -381,7 +381,7 @@ SecurityCenterTracingConnection::RunAssetDiscovery(
         request) {
   auto span = internal::MakeSpan(
       "securitycenter_v1::SecurityCenterConnection::RunAssetDiscovery");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RunAssetDiscovery(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));

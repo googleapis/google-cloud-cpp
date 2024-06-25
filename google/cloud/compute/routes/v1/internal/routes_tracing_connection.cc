@@ -50,7 +50,7 @@ RoutesTracingConnection::DeleteRoute(
         request) {
   auto span =
       internal::MakeSpan("compute_routes_v1::RoutesConnection::DeleteRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRoute(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -94,7 +94,7 @@ RoutesTracingConnection::InsertRoute(
         request) {
   auto span =
       internal::MakeSpan("compute_routes_v1::RoutesConnection::InsertRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertRoute(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));

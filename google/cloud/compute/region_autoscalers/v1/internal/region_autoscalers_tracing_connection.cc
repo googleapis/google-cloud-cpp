@@ -53,7 +53,7 @@ RegionAutoscalersTracingConnection::DeleteAutoscaler(
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "DeleteAutoscaler");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAutoscaler(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ RegionAutoscalersTracingConnection::InsertAutoscaler(
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "InsertAutoscaler");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertAutoscaler(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -154,7 +154,7 @@ RegionAutoscalersTracingConnection::PatchAutoscaler(
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "PatchAutoscaler");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchAutoscaler(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -192,7 +192,7 @@ RegionAutoscalersTracingConnection::UpdateAutoscaler(
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "UpdateAutoscaler");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAutoscaler(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

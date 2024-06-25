@@ -56,7 +56,7 @@ SecurityCenterConnection::BulkMuteFindings(
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterConnection::BulkMuteFindings(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -64,7 +64,7 @@ SecurityCenterConnection::BulkMuteFindings(
 
 future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
 SecurityCenterConnection::BulkMuteFindings(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

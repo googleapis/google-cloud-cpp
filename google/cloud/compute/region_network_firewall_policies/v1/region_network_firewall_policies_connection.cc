@@ -49,7 +49,7 @@ RegionNetworkFirewallPoliciesConnection::AddAssociation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNetworkFirewallPoliciesConnection::AddAssociation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         AddAssociationRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -58,8 +58,7 @@ RegionNetworkFirewallPoliciesConnection::AddAssociation(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::AddAssociation(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -76,7 +75,7 @@ RegionNetworkFirewallPoliciesConnection::AddRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNetworkFirewallPoliciesConnection::AddRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         AddRuleRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -85,8 +84,7 @@ RegionNetworkFirewallPoliciesConnection::AddRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::AddRule(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -103,7 +101,7 @@ RegionNetworkFirewallPoliciesConnection::CloneRules(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNetworkFirewallPoliciesConnection::CloneRules(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         CloneRulesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -112,8 +110,7 @@ RegionNetworkFirewallPoliciesConnection::CloneRules(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::CloneRules(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -130,7 +127,7 @@ RegionNetworkFirewallPoliciesConnection::DeleteFirewallPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNetworkFirewallPoliciesConnection::DeleteFirewallPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         DeleteFirewallPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -139,8 +136,7 @@ RegionNetworkFirewallPoliciesConnection::DeleteFirewallPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::DeleteFirewallPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -193,7 +189,7 @@ RegionNetworkFirewallPoliciesConnection::InsertFirewallPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNetworkFirewallPoliciesConnection::InsertFirewallPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         InsertFirewallPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -202,8 +198,7 @@ RegionNetworkFirewallPoliciesConnection::InsertFirewallPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::InsertFirewallPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -228,7 +223,7 @@ RegionNetworkFirewallPoliciesConnection::PatchFirewallPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNetworkFirewallPoliciesConnection::PatchFirewallPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         PatchFirewallPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -237,8 +232,7 @@ RegionNetworkFirewallPoliciesConnection::PatchFirewallPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::PatchFirewallPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -255,7 +249,7 @@ RegionNetworkFirewallPoliciesConnection::PatchRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNetworkFirewallPoliciesConnection::PatchRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         PatchRuleRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -264,8 +258,7 @@ RegionNetworkFirewallPoliciesConnection::PatchRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::PatchRule(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -282,7 +275,7 @@ RegionNetworkFirewallPoliciesConnection::RemoveAssociation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNetworkFirewallPoliciesConnection::RemoveAssociation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         RemoveAssociationRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -291,8 +284,7 @@ RegionNetworkFirewallPoliciesConnection::RemoveAssociation(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::RemoveAssociation(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -309,7 +301,7 @@ RegionNetworkFirewallPoliciesConnection::RemoveRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNetworkFirewallPoliciesConnection::RemoveRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
         RemoveRuleRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -318,8 +310,7 @@ RegionNetworkFirewallPoliciesConnection::RemoveRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesConnection::RemoveRule(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -67,7 +67,7 @@ EventarcTracingConnection::CreateTrigger(
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::CreateTrigger");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTrigger(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -100,7 +100,7 @@ EventarcTracingConnection::UpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateTrigger");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTrigger(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -133,7 +133,7 @@ EventarcTracingConnection::DeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteTrigger");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTrigger(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -185,7 +185,7 @@ EventarcTracingConnection::CreateChannel(
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::CreateChannel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateChannel(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -218,7 +218,7 @@ EventarcTracingConnection::UpdateChannel(
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateChannel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateChannel(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -251,7 +251,7 @@ EventarcTracingConnection::DeleteChannel(
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   auto span =
       internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteChannel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteChannel(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -328,7 +328,7 @@ EventarcTracingConnection::CreateChannelConnection(
         request) {
   auto span = internal::MakeSpan(
       "eventarc_v1::EventarcConnection::CreateChannelConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateChannelConnection(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -364,7 +364,7 @@ EventarcTracingConnection::DeleteChannelConnection(
         request) {
   auto span = internal::MakeSpan(
       "eventarc_v1::EventarcConnection::DeleteChannelConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteChannelConnection(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

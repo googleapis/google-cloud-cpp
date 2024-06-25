@@ -57,7 +57,7 @@ RegionNotificationEndpointsTracingConnection::DeleteNotificationEndpoint(
   auto span = internal::MakeSpan(
       "compute_region_notification_endpoints_v1::"
       "RegionNotificationEndpointsConnection::DeleteNotificationEndpoint");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteNotificationEndpoint(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -107,7 +107,7 @@ RegionNotificationEndpointsTracingConnection::InsertNotificationEndpoint(
   auto span = internal::MakeSpan(
       "compute_region_notification_endpoints_v1::"
       "RegionNotificationEndpointsConnection::InsertNotificationEndpoint");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertNotificationEndpoint(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

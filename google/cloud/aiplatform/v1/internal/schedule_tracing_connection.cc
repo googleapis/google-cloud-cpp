@@ -57,7 +57,7 @@ ScheduleServiceTracingConnection::DeleteSchedule(
     google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::ScheduleServiceConnection::DeleteSchedule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSchedule(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

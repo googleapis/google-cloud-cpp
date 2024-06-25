@@ -206,7 +206,7 @@ ProductSearchTracingConnection::ImportProductSets(
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   auto span = internal::MakeSpan(
       "vision_v1::ProductSearchConnection::ImportProductSets");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportProductSets(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -239,7 +239,7 @@ ProductSearchTracingConnection::PurgeProducts(
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   auto span =
       internal::MakeSpan("vision_v1::ProductSearchConnection::PurgeProducts");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PurgeProducts(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

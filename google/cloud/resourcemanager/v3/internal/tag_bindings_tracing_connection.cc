@@ -62,7 +62,7 @@ TagBindingsTracingConnection::CreateTagBinding(
         request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagBindingsConnection::CreateTagBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTagBinding(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -97,7 +97,7 @@ TagBindingsTracingConnection::DeleteTagBinding(
         request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagBindingsConnection::DeleteTagBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTagBinding(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -86,7 +86,7 @@ TranslationServiceTracingConnection::BatchTranslateText(
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::BatchTranslateText");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchTranslateText(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -122,7 +122,7 @@ TranslationServiceTracingConnection::BatchTranslateDocument(
         request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::BatchTranslateDocument");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchTranslateDocument(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -155,7 +155,7 @@ TranslationServiceTracingConnection::CreateGlossary(
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::CreateGlossary");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateGlossary(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -208,7 +208,7 @@ TranslationServiceTracingConnection::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   auto span = internal::MakeSpan(
       "translate_v3::TranslationServiceConnection::DeleteGlossary");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteGlossary(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

@@ -50,7 +50,7 @@ TargetPoolsTracingConnection::AddHealthCheck(
         request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::AddHealthCheck");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddHealthCheck(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -85,7 +85,7 @@ TargetPoolsTracingConnection::AddInstance(
         request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::AddInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddInstance(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ TargetPoolsTracingConnection::DeleteTargetPool(
         DeleteTargetPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::DeleteTargetPool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTargetPool(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -190,7 +190,7 @@ TargetPoolsTracingConnection::InsertTargetPool(
         InsertTargetPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::InsertTargetPool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertTargetPool(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -238,7 +238,7 @@ TargetPoolsTracingConnection::RemoveHealthCheck(
         RemoveHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::RemoveHealthCheck");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemoveHealthCheck(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -273,7 +273,7 @@ TargetPoolsTracingConnection::RemoveInstance(
         request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::RemoveInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemoveInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -308,7 +308,7 @@ TargetPoolsTracingConnection::SetBackup(
         request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::SetBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetBackup(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -343,7 +343,7 @@ TargetPoolsTracingConnection::SetSecurityPolicy(
         SetSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_pools_v1::TargetPoolsConnection::SetSecurityPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetSecurityPolicy(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));

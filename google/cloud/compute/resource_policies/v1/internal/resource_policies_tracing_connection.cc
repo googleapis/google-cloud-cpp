@@ -70,7 +70,7 @@ ResourcePoliciesTracingConnection::DeleteResourcePolicy(
   auto span = internal::MakeSpan(
       "compute_resource_policies_v1::ResourcePoliciesConnection::"
       "DeleteResourcePolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteResourcePolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -130,7 +130,7 @@ ResourcePoliciesTracingConnection::InsertResourcePolicy(
   auto span = internal::MakeSpan(
       "compute_resource_policies_v1::ResourcePoliciesConnection::"
       "InsertResourcePolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertResourcePolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -183,7 +183,7 @@ ResourcePoliciesTracingConnection::PatchResourcePolicy(
   auto span = internal::MakeSpan(
       "compute_resource_policies_v1::ResourcePoliciesConnection::"
       "PatchResourcePolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchResourcePolicy(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

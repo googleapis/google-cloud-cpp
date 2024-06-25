@@ -62,7 +62,7 @@ EnvironmentsConnection::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ EnvironmentsConnection::CreateEnvironment(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnection::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ EnvironmentsConnection::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::UpdateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ EnvironmentsConnection::UpdateEnvironment(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnection::UpdateEnvironment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::Environment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -123,7 +123,7 @@ EnvironmentsConnection::RunContinuousTest(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnection::RunContinuousTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -131,7 +131,7 @@ EnvironmentsConnection::RunContinuousTest(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
 EnvironmentsConnection::RunContinuousTest(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -154,14 +154,14 @@ EnvironmentsConnection::DeployFlow(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsConnection::DeployFlow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-EnvironmentsConnection::DeployFlow(google::cloud::ExperimentalTag,
+EnvironmentsConnection::DeployFlow(ExperimentalTag,
                                    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>(

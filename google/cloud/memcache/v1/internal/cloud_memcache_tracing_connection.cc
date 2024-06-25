@@ -68,7 +68,7 @@ CloudMemcacheTracingConnection::CreateInstance(
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::CreateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ CloudMemcacheTracingConnection::UpdateInstance(
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::UpdateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ CloudMemcacheTracingConnection::UpdateParameters(
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::UpdateParameters");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateParameters(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -167,7 +167,7 @@ CloudMemcacheTracingConnection::DeleteInstance(
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::DeleteInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -200,7 +200,7 @@ CloudMemcacheTracingConnection::ApplyParameters(
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::ApplyParameters");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ApplyParameters(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ CloudMemcacheTracingConnection::RescheduleMaintenance(
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::RescheduleMaintenance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RescheduleMaintenance(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

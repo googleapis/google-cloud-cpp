@@ -48,7 +48,7 @@ TensorboardServiceConnection::CreateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnection::CreateTensorboard(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateTensorboardRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ TensorboardServiceConnection::CreateTensorboard(
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnection::CreateTensorboard(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -78,7 +78,7 @@ TensorboardServiceConnection::UpdateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnection::UpdateTensorboard(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ TensorboardServiceConnection::UpdateTensorboard(
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnection::UpdateTensorboard(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::Tensorboard>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ TensorboardServiceConnection::DeleteTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnection::DeleteTensorboard(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ TensorboardServiceConnection::DeleteTensorboard(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboard(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -172,7 +172,7 @@ TensorboardServiceConnection::DeleteTensorboardExperiment(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnection::DeleteTensorboardExperiment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -180,7 +180,7 @@ TensorboardServiceConnection::DeleteTensorboardExperiment(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboardExperiment(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -228,7 +228,7 @@ TensorboardServiceConnection::DeleteTensorboardRun(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnection::DeleteTensorboardRun(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -236,7 +236,7 @@ TensorboardServiceConnection::DeleteTensorboardRun(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboardRun(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -286,7 +286,7 @@ TensorboardServiceConnection::DeleteTensorboardTimeSeries(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnection::DeleteTensorboardTimeSeries(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -294,7 +294,7 @@ TensorboardServiceConnection::DeleteTensorboardTimeSeries(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnection::DeleteTensorboardTimeSeries(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

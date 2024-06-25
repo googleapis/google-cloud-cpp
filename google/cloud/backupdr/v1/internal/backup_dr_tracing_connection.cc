@@ -70,7 +70,7 @@ BackupDRTracingConnection::CreateManagementServer(
     google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
   auto span = internal::MakeSpan(
       "backupdr_v1::BackupDRConnection::CreateManagementServer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateManagementServer(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -104,7 +104,7 @@ BackupDRTracingConnection::DeleteManagementServer(
     google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
   auto span = internal::MakeSpan(
       "backupdr_v1::BackupDRConnection::DeleteManagementServer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteManagementServer(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

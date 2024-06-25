@@ -57,14 +57,14 @@ BatchServiceConnection::DeleteJob(
 }
 
 StatusOr<google::longrunning::Operation> BatchServiceConnection::DeleteJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::batch::v1::DeleteJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
-BatchServiceConnection::DeleteJob(google::cloud::ExperimentalTag,
+BatchServiceConnection::DeleteJob(ExperimentalTag,
                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::batch::v1::OperationMetadata>>(

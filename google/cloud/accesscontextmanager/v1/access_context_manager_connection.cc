@@ -62,7 +62,7 @@ AccessContextManagerConnection::CreateAccessPolicy(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::CreateAccessPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::AccessPolicy const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ AccessContextManagerConnection::CreateAccessPolicy(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnection::CreateAccessPolicy(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,7 +87,7 @@ AccessContextManagerConnection::UpdateAccessPolicy(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::UpdateAccessPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         UpdateAccessPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -96,7 +96,7 @@ AccessContextManagerConnection::UpdateAccessPolicy(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnection::UpdateAccessPolicy(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -115,7 +115,7 @@ AccessContextManagerConnection::DeleteAccessPolicy(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::DeleteAccessPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         DeleteAccessPolicyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -125,7 +125,7 @@ AccessContextManagerConnection::DeleteAccessPolicy(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     AccessContextManagerOperationMetadata>>
 AccessContextManagerConnection::DeleteAccessPolicy(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::
                    AccessContextManagerOperationMetadata>>(
@@ -157,7 +157,7 @@ AccessContextManagerConnection::CreateAccessLevel(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::CreateAccessLevel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         CreateAccessLevelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -166,7 +166,7 @@ AccessContextManagerConnection::CreateAccessLevel(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnection::CreateAccessLevel(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -183,7 +183,7 @@ AccessContextManagerConnection::UpdateAccessLevel(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::UpdateAccessLevel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         UpdateAccessLevelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -192,7 +192,7 @@ AccessContextManagerConnection::UpdateAccessLevel(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnection::UpdateAccessLevel(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -211,7 +211,7 @@ AccessContextManagerConnection::DeleteAccessLevel(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::DeleteAccessLevel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         DeleteAccessLevelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -221,7 +221,7 @@ AccessContextManagerConnection::DeleteAccessLevel(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     AccessContextManagerOperationMetadata>>
 AccessContextManagerConnection::DeleteAccessLevel(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::
                    AccessContextManagerOperationMetadata>>(
@@ -240,7 +240,7 @@ AccessContextManagerConnection::ReplaceAccessLevels(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::ReplaceAccessLevels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -250,7 +250,7 @@ AccessContextManagerConnection::ReplaceAccessLevels(
 future<StatusOr<
     google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
 AccessContextManagerConnection::ReplaceAccessLevels(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -282,7 +282,7 @@ AccessContextManagerConnection::CreateServicePerimeter(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::CreateServicePerimeter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -291,7 +291,7 @@ AccessContextManagerConnection::CreateServicePerimeter(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnection::CreateServicePerimeter(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -308,7 +308,7 @@ AccessContextManagerConnection::UpdateServicePerimeter(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::UpdateServicePerimeter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -317,7 +317,7 @@ AccessContextManagerConnection::UpdateServicePerimeter(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnection::UpdateServicePerimeter(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -336,7 +336,7 @@ AccessContextManagerConnection::DeleteServicePerimeter(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::DeleteServicePerimeter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -346,7 +346,7 @@ AccessContextManagerConnection::DeleteServicePerimeter(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     AccessContextManagerOperationMetadata>>
 AccessContextManagerConnection::DeleteServicePerimeter(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::
                    AccessContextManagerOperationMetadata>>(
@@ -366,7 +366,7 @@ AccessContextManagerConnection::ReplaceServicePerimeters(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::ReplaceServicePerimeters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -376,7 +376,7 @@ AccessContextManagerConnection::ReplaceServicePerimeters(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     ReplaceServicePerimetersResponse>>
 AccessContextManagerConnection::ReplaceServicePerimeters(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::
                    ReplaceServicePerimetersResponse>>(
@@ -396,7 +396,7 @@ AccessContextManagerConnection::CommitServicePerimeters(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::CommitServicePerimeters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -406,7 +406,7 @@ AccessContextManagerConnection::CommitServicePerimeters(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     CommitServicePerimetersResponse>>
 AccessContextManagerConnection::CommitServicePerimeters(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::
                    CommitServicePerimetersResponse>>(
@@ -440,7 +440,7 @@ AccessContextManagerConnection::CreateGcpUserAccessBinding(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::CreateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -450,7 +450,7 @@ AccessContextManagerConnection::CreateGcpUserAccessBinding(
 future<
     StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerConnection::CreateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -468,7 +468,7 @@ AccessContextManagerConnection::UpdateGcpUserAccessBinding(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::UpdateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -478,7 +478,7 @@ AccessContextManagerConnection::UpdateGcpUserAccessBinding(
 future<
     StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerConnection::UpdateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -497,7 +497,7 @@ AccessContextManagerConnection::DeleteGcpUserAccessBinding(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnection::DeleteGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -507,7 +507,7 @@ AccessContextManagerConnection::DeleteGcpUserAccessBinding(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     GcpUserAccessBindingOperationMetadata>>
 AccessContextManagerConnection::DeleteGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::identity::accesscontextmanager::v1::
                    GcpUserAccessBindingOperationMetadata>>(

@@ -72,7 +72,7 @@ CertificateManagerTracingConnection::CreateCertificate(
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::CreateCertificate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCertificate(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -107,7 +107,7 @@ CertificateManagerTracingConnection::UpdateCertificate(
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::UpdateCertificate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCertificate(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -142,7 +142,7 @@ CertificateManagerTracingConnection::DeleteCertificate(
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::DeleteCertificate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCertificate(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -203,7 +203,7 @@ CertificateManagerTracingConnection::CreateCertificateMap(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateCertificateMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateCertificateMap(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -242,7 +242,7 @@ CertificateManagerTracingConnection::UpdateCertificateMap(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "UpdateCertificateMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateCertificateMap(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -281,7 +281,7 @@ CertificateManagerTracingConnection::DeleteCertificateMap(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteCertificateMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteCertificateMap(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -345,7 +345,7 @@ CertificateManagerTracingConnection::CreateCertificateMapEntry(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateCertificateMapEntry");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateCertificateMapEntry(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -384,7 +384,7 @@ CertificateManagerTracingConnection::UpdateCertificateMapEntry(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "UpdateCertificateMapEntry");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateCertificateMapEntry(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -423,7 +423,7 @@ CertificateManagerTracingConnection::DeleteCertificateMapEntry(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteCertificateMapEntry");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteCertificateMapEntry(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -487,7 +487,7 @@ CertificateManagerTracingConnection::CreateDnsAuthorization(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateDnsAuthorization");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateDnsAuthorization(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -526,7 +526,7 @@ CertificateManagerTracingConnection::UpdateDnsAuthorization(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "UpdateDnsAuthorization");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateDnsAuthorization(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -565,7 +565,7 @@ CertificateManagerTracingConnection::DeleteDnsAuthorization(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteDnsAuthorization");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteDnsAuthorization(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -631,7 +631,7 @@ CertificateManagerTracingConnection::CreateCertificateIssuanceConfig(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "CreateCertificateIssuanceConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateCertificateIssuanceConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -671,7 +671,7 @@ CertificateManagerTracingConnection::DeleteCertificateIssuanceConfig(
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::"
       "DeleteCertificateIssuanceConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteCertificateIssuanceConfig(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -729,7 +729,7 @@ CertificateManagerTracingConnection::CreateTrustConfig(
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::CreateTrustConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTrustConfig(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -764,7 +764,7 @@ CertificateManagerTracingConnection::UpdateTrustConfig(
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::UpdateTrustConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTrustConfig(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -799,7 +799,7 @@ CertificateManagerTracingConnection::DeleteTrustConfig(
         request) {
   auto span = internal::MakeSpan(
       "certificatemanager_v1::CertificateManagerConnection::DeleteTrustConfig");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTrustConfig(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));

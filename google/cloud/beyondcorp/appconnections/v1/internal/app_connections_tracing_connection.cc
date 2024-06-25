@@ -81,7 +81,7 @@ AppConnectionsServiceTracingConnection::CreateAppConnection(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
       "CreateAppConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAppConnection(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -120,7 +120,7 @@ AppConnectionsServiceTracingConnection::UpdateAppConnection(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
       "UpdateAppConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAppConnection(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -160,7 +160,7 @@ AppConnectionsServiceTracingConnection::DeleteAppConnection(
   auto span = internal::MakeSpan(
       "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
       "DeleteAppConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAppConnection(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

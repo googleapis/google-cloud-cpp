@@ -62,7 +62,7 @@ StatusOr<google::longrunning::Operation> IDSTracingConnection::CreateEndpoint(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
   auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEndpoint(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -91,7 +91,7 @@ StatusOr<google::longrunning::Operation> IDSTracingConnection::DeleteEndpoint(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
   auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteEndpoint(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

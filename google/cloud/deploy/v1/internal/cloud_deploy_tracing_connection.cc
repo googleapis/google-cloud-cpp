@@ -70,7 +70,7 @@ CloudDeployTracingConnection::CreateDeliveryPipeline(
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
   auto span = internal::MakeSpan(
       "deploy_v1::CloudDeployConnection::CreateDeliveryPipeline");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateDeliveryPipeline(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -104,7 +104,7 @@ CloudDeployTracingConnection::UpdateDeliveryPipeline(
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
   auto span = internal::MakeSpan(
       "deploy_v1::CloudDeployConnection::UpdateDeliveryPipeline");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateDeliveryPipeline(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -138,7 +138,7 @@ CloudDeployTracingConnection::DeleteDeliveryPipeline(
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
   auto span = internal::MakeSpan(
       "deploy_v1::CloudDeployConnection::DeleteDeliveryPipeline");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteDeliveryPipeline(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -199,7 +199,7 @@ CloudDeployTracingConnection::CreateTarget(
     google::cloud::deploy::v1::CreateTargetRequest const& request) {
   auto span =
       internal::MakeSpan("deploy_v1::CloudDeployConnection::CreateTarget");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTarget(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -232,7 +232,7 @@ CloudDeployTracingConnection::UpdateTarget(
     google::cloud::deploy::v1::UpdateTargetRequest const& request) {
   auto span =
       internal::MakeSpan("deploy_v1::CloudDeployConnection::UpdateTarget");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTarget(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -265,7 +265,7 @@ CloudDeployTracingConnection::DeleteTarget(
     google::cloud::deploy::v1::DeleteTargetRequest const& request) {
   auto span =
       internal::MakeSpan("deploy_v1::CloudDeployConnection::DeleteTarget");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTarget(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -320,7 +320,7 @@ CloudDeployTracingConnection::CreateCustomTargetType(
     google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "deploy_v1::CloudDeployConnection::CreateCustomTargetType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateCustomTargetType(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -354,7 +354,7 @@ CloudDeployTracingConnection::UpdateCustomTargetType(
     google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "deploy_v1::CloudDeployConnection::UpdateCustomTargetType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateCustomTargetType(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -388,7 +388,7 @@ CloudDeployTracingConnection::DeleteCustomTargetType(
     google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "deploy_v1::CloudDeployConnection::DeleteCustomTargetType");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteCustomTargetType(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -441,7 +441,7 @@ CloudDeployTracingConnection::CreateRelease(
     google::cloud::deploy::v1::CreateReleaseRequest const& request) {
   auto span =
       internal::MakeSpan("deploy_v1::CloudDeployConnection::CreateRelease");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRelease(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -530,7 +530,7 @@ CloudDeployTracingConnection::CreateRollout(
     google::cloud::deploy::v1::CreateRolloutRequest const& request) {
   auto span =
       internal::MakeSpan("deploy_v1::CloudDeployConnection::CreateRollout");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRollout(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -615,7 +615,7 @@ CloudDeployTracingConnection::CreateAutomation(
     google::cloud::deploy::v1::CreateAutomationRequest const& request) {
   auto span =
       internal::MakeSpan("deploy_v1::CloudDeployConnection::CreateAutomation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAutomation(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -648,7 +648,7 @@ CloudDeployTracingConnection::UpdateAutomation(
     google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
   auto span =
       internal::MakeSpan("deploy_v1::CloudDeployConnection::UpdateAutomation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAutomation(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -681,7 +681,7 @@ CloudDeployTracingConnection::DeleteAutomation(
     google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
   auto span =
       internal::MakeSpan("deploy_v1::CloudDeployConnection::DeleteAutomation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAutomation(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

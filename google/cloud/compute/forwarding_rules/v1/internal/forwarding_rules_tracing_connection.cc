@@ -69,7 +69,7 @@ ForwardingRulesTracingConnection::DeleteForwardingRule(
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::"
       "DeleteForwardingRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteForwardingRule(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -119,7 +119,7 @@ ForwardingRulesTracingConnection::InsertForwardingRule(
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::"
       "InsertForwardingRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertForwardingRule(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -172,7 +172,7 @@ ForwardingRulesTracingConnection::PatchForwardingRule(
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::"
       "PatchForwardingRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchForwardingRule(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -208,7 +208,7 @@ ForwardingRulesTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -243,7 +243,7 @@ ForwardingRulesTracingConnection::SetTarget(
         request) {
   auto span = internal::MakeSpan(
       "compute_forwarding_rules_v1::ForwardingRulesConnection::SetTarget");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetTarget(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

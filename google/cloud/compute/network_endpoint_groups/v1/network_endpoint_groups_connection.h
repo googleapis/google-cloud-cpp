@@ -22,11 +22,11 @@
 
 #include "google/cloud/compute/network_endpoint_groups/v1/internal/network_endpoint_groups_retry_traits.h"
 #include "google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -208,14 +208,13 @@ class NetworkEndpointGroupsConnection {
                              v1::AttachNetworkEndpointsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AttachNetworkEndpoints(google::cloud::ExperimentalTag,
-                         google::cloud::NoAwaitTag,
+  AttachNetworkEndpoints(ExperimentalTag, NoAwaitTag,
                          google::cloud::cpp::compute::network_endpoint_groups::
                              v1::AttachNetworkEndpointsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AttachNetworkEndpoints(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -225,13 +224,13 @@ class NetworkEndpointGroupsConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEndpointGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEndpointGroup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -239,14 +238,13 @@ class NetworkEndpointGroupsConnection {
                              v1::DetachNetworkEndpointsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DetachNetworkEndpoints(google::cloud::ExperimentalTag,
-                         google::cloud::NoAwaitTag,
+  DetachNetworkEndpoints(ExperimentalTag, NoAwaitTag,
                          google::cloud::cpp::compute::network_endpoint_groups::
                              v1::DetachNetworkEndpointsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DetachNetworkEndpoints(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -261,13 +259,13 @@ class NetworkEndpointGroupsConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEndpointGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           InsertNetworkEndpointGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkEndpointGroup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>

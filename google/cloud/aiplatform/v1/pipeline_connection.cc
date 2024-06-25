@@ -68,7 +68,7 @@ PipelineServiceConnection::DeleteTrainingPipeline(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnection::DeleteTrainingPipeline(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -76,7 +76,7 @@ PipelineServiceConnection::DeleteTrainingPipeline(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceConnection::DeleteTrainingPipeline(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -117,7 +117,7 @@ PipelineServiceConnection::DeletePipelineJob(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnection::DeletePipelineJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -125,7 +125,7 @@ PipelineServiceConnection::DeletePipelineJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceConnection::DeletePipelineJob(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -141,7 +141,7 @@ PipelineServiceConnection::BatchDeletePipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnection::BatchDeletePipelineJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -149,7 +149,7 @@ PipelineServiceConnection::BatchDeletePipelineJobs(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
 PipelineServiceConnection::BatchDeletePipelineJobs(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -170,7 +170,7 @@ PipelineServiceConnection::BatchCancelPipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnection::BatchCancelPipelineJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -178,7 +178,7 @@ PipelineServiceConnection::BatchCancelPipelineJobs(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
 PipelineServiceConnection::BatchCancelPipelineJobs(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

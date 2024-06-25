@@ -65,7 +65,7 @@ SubnetworksTracingConnection::DeleteSubnetwork(
         request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::DeleteSubnetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSubnetwork(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -100,7 +100,7 @@ SubnetworksTracingConnection::ExpandIpCidrRange(
         ExpandIpCidrRangeRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::ExpandIpCidrRange");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExpandIpCidrRange(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -155,7 +155,7 @@ SubnetworksTracingConnection::InsertSubnetwork(
         request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::InsertSubnetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertSubnetwork(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -215,7 +215,7 @@ SubnetworksTracingConnection::PatchSubnetwork(
         request) {
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::PatchSubnetwork");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchSubnetwork(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -263,7 +263,7 @@ SubnetworksTracingConnection::SetPrivateIpGoogleAccess(
   auto span = internal::MakeSpan(
       "compute_subnetworks_v1::SubnetworksConnection::"
       "SetPrivateIpGoogleAccess");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SetPrivateIpGoogleAccess(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

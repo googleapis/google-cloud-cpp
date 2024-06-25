@@ -49,7 +49,7 @@ CloudChannelReportsServiceTracingConnection::RunReportJob(
     google::cloud::channel::v1::RunReportJobRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelReportsServiceConnection::RunReportJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RunReportJob(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

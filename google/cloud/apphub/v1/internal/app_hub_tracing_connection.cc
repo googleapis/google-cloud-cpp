@@ -74,7 +74,7 @@ AppHubTracingConnection::CreateServiceProjectAttachment(
         request) {
   auto span = internal::MakeSpan(
       "apphub_v1::AppHubConnection::CreateServiceProjectAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateServiceProjectAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -120,7 +120,7 @@ AppHubTracingConnection::DeleteServiceProjectAttachment(
         request) {
   auto span = internal::MakeSpan(
       "apphub_v1::AppHubConnection::DeleteServiceProjectAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteServiceProjectAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -201,7 +201,7 @@ StatusOr<google::longrunning::Operation> AppHubTracingConnection::CreateService(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::apphub::v1::CreateServiceRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::CreateService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -238,7 +238,7 @@ StatusOr<google::longrunning::Operation> AppHubTracingConnection::UpdateService(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::apphub::v1::UpdateServiceRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -267,7 +267,7 @@ StatusOr<google::longrunning::Operation> AppHubTracingConnection::DeleteService(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::apphub::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -337,7 +337,7 @@ AppHubTracingConnection::CreateWorkload(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::CreateWorkload");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateWorkload(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -375,7 +375,7 @@ AppHubTracingConnection::UpdateWorkload(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateWorkload");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateWorkload(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -405,7 +405,7 @@ AppHubTracingConnection::DeleteWorkload(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteWorkload");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteWorkload(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -448,7 +448,7 @@ AppHubTracingConnection::CreateApplication(
     google::cloud::apphub::v1::CreateApplicationRequest const& request) {
   auto span =
       internal::MakeSpan("apphub_v1::AppHubConnection::CreateApplication");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateApplication(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -489,7 +489,7 @@ AppHubTracingConnection::UpdateApplication(
     google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
   auto span =
       internal::MakeSpan("apphub_v1::AppHubConnection::UpdateApplication");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateApplication(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -522,7 +522,7 @@ AppHubTracingConnection::DeleteApplication(
     google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
   auto span =
       internal::MakeSpan("apphub_v1::AppHubConnection::DeleteApplication");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteApplication(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));

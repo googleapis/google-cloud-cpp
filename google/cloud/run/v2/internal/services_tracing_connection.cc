@@ -46,7 +46,7 @@ ServicesTracingConnection::CreateService(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::run::v2::CreateServiceRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ServicesConnection::CreateService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -93,7 +93,7 @@ ServicesTracingConnection::UpdateService(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::run::v2::UpdateServiceRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ServicesConnection::UpdateService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -123,7 +123,7 @@ ServicesTracingConnection::DeleteService(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::run::v2::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan("run_v2::ServicesConnection::DeleteService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

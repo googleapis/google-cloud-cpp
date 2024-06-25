@@ -52,14 +52,14 @@ JobServiceConnection::BatchCreateJobs(
 }
 
 StatusOr<google::longrunning::Operation> JobServiceConnection::BatchCreateJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::talent::v4::BatchCreateJobsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-JobServiceConnection::BatchCreateJobs(google::cloud::ExperimentalTag,
+JobServiceConnection::BatchCreateJobs(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>(
@@ -85,14 +85,14 @@ JobServiceConnection::BatchUpdateJobs(
 }
 
 StatusOr<google::longrunning::Operation> JobServiceConnection::BatchUpdateJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::talent::v4::BatchUpdateJobsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-JobServiceConnection::BatchUpdateJobs(google::cloud::ExperimentalTag,
+JobServiceConnection::BatchUpdateJobs(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>(
@@ -113,14 +113,14 @@ JobServiceConnection::BatchDeleteJobs(
 }
 
 StatusOr<google::longrunning::Operation> JobServiceConnection::BatchDeleteJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::talent::v4::BatchDeleteJobsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-JobServiceConnection::BatchDeleteJobs(google::cloud::ExperimentalTag,
+JobServiceConnection::BatchDeleteJobs(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>(

@@ -55,7 +55,7 @@ InstanceGroupManagersTracingConnection::AbandonInstances(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "AbandonInstances");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AbandonInstances(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -111,7 +111,7 @@ InstanceGroupManagersTracingConnection::ApplyUpdatesToInstances(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "ApplyUpdatesToInstances");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ApplyUpdatesToInstances(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -149,7 +149,7 @@ InstanceGroupManagersTracingConnection::CreateInstances(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "CreateInstances");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstances(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -188,7 +188,7 @@ InstanceGroupManagersTracingConnection::DeleteInstanceGroupManager(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "DeleteInstanceGroupManager");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteInstanceGroupManager(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -226,7 +226,7 @@ InstanceGroupManagersTracingConnection::DeleteInstances(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "DeleteInstances");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstances(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -265,7 +265,7 @@ InstanceGroupManagersTracingConnection::DeletePerInstanceConfigs(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "DeletePerInstanceConfigs");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeletePerInstanceConfigs(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -315,7 +315,7 @@ InstanceGroupManagersTracingConnection::InsertInstanceGroupManager(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "InsertInstanceGroupManager");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertInstanceGroupManager(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -408,7 +408,7 @@ InstanceGroupManagersTracingConnection::PatchInstanceGroupManager(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "PatchInstanceGroupManager");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchInstanceGroupManager(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -447,7 +447,7 @@ InstanceGroupManagersTracingConnection::PatchPerInstanceConfigs(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "PatchPerInstanceConfigs");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchPerInstanceConfigs(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -485,7 +485,7 @@ InstanceGroupManagersTracingConnection::RecreateInstances(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "RecreateInstances");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RecreateInstances(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -523,7 +523,7 @@ InstanceGroupManagersTracingConnection::Resize(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "Resize");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->Resize(google::cloud::ExperimentalTag{},
                             google::cloud::NoAwaitTag{}, request));
@@ -562,7 +562,7 @@ InstanceGroupManagersTracingConnection::SetInstanceTemplate(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "SetInstanceTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetInstanceTemplate(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -600,7 +600,7 @@ InstanceGroupManagersTracingConnection::SetTargetPools(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "SetTargetPools");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetTargetPools(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -639,7 +639,7 @@ InstanceGroupManagersTracingConnection::UpdatePerInstanceConfigs(
   auto span = internal::MakeSpan(
       "compute_instance_group_managers_v1::InstanceGroupManagersConnection::"
       "UpdatePerInstanceConfigs");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdatePerInstanceConfigs(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

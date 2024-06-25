@@ -65,7 +65,7 @@ VpnGatewaysTracingConnection::DeleteVpnGateway(
         DeleteVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::DeleteVpnGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteVpnGateway(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -120,7 +120,7 @@ VpnGatewaysTracingConnection::InsertVpnGateway(
         InsertVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::InsertVpnGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertVpnGateway(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -168,7 +168,7 @@ VpnGatewaysTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

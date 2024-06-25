@@ -68,7 +68,7 @@ ConfigServiceV2TracingConnection::CreateBucketAsync(
     google::logging::v2::CreateBucketRequest const& request) {
   auto span = internal::MakeSpan(
       "logging_v2::ConfigServiceV2Connection::CreateBucketAsync");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBucketAsync(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ ConfigServiceV2TracingConnection::UpdateBucketAsync(
     google::logging::v2::UpdateBucketRequest const& request) {
   auto span = internal::MakeSpan(
       "logging_v2::ConfigServiceV2Connection::UpdateBucketAsync");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateBucketAsync(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -260,7 +260,7 @@ ConfigServiceV2TracingConnection::CreateLink(
     google::logging::v2::CreateLinkRequest const& request) {
   auto span =
       internal::MakeSpan("logging_v2::ConfigServiceV2Connection::CreateLink");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateLink(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -293,7 +293,7 @@ ConfigServiceV2TracingConnection::DeleteLink(
     google::logging::v2::DeleteLinkRequest const& request) {
   auto span =
       internal::MakeSpan("logging_v2::ConfigServiceV2Connection::DeleteLink");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteLink(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -427,7 +427,7 @@ ConfigServiceV2TracingConnection::CopyLogEntries(
     google::logging::v2::CopyLogEntriesRequest const& request) {
   auto span = internal::MakeSpan(
       "logging_v2::ConfigServiceV2Connection::CopyLogEntries");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CopyLogEntries(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

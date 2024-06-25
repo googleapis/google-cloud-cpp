@@ -69,7 +69,7 @@ CloudFunctionsServiceTracingConnection::CreateFunction(
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
   auto span = internal::MakeSpan(
       "functions_v1::CloudFunctionsServiceConnection::CreateFunction");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateFunction(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ CloudFunctionsServiceTracingConnection::UpdateFunction(
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
   auto span = internal::MakeSpan(
       "functions_v1::CloudFunctionsServiceConnection::UpdateFunction");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateFunction(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ CloudFunctionsServiceTracingConnection::DeleteFunction(
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
   auto span = internal::MakeSpan(
       "functions_v1::CloudFunctionsServiceConnection::DeleteFunction");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteFunction(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

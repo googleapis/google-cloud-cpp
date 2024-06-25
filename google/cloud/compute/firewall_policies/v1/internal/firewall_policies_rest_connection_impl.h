@@ -57,12 +57,12 @@ class FirewallPoliciesRestConnectionImpl
           AddAssociationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAssociation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           AddAssociationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAssociation(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
@@ -70,12 +70,12 @@ class FirewallPoliciesRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
@@ -83,12 +83,12 @@ class FirewallPoliciesRestConnectionImpl
           CloneRulesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> CloneRules(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           CloneRulesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -96,13 +96,13 @@ class FirewallPoliciesRestConnectionImpl
                            DeleteFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewallPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           DeleteFirewallPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteFirewallPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy> GetFirewallPolicy(
@@ -126,13 +126,13 @@ class FirewallPoliciesRestConnectionImpl
                            InsertFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewallPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           InsertFirewallPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertFirewallPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -149,12 +149,12 @@ class FirewallPoliciesRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -162,13 +162,13 @@ class FirewallPoliciesRestConnectionImpl
                           PatchFirewallPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewallPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           PatchFirewallPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchFirewallPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -176,12 +176,12 @@ class FirewallPoliciesRestConnectionImpl
           PatchRuleRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           PatchRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -189,13 +189,13 @@ class FirewallPoliciesRestConnectionImpl
                         RemoveAssociationRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveAssociation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           RemoveAssociationRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveAssociation(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -203,12 +203,12 @@ class FirewallPoliciesRestConnectionImpl
           RemoveRuleRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           RemoveRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(

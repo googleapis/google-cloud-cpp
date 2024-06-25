@@ -81,7 +81,7 @@ PolicyBasedRoutingServiceTracingConnection::CreatePolicyBasedRoute(
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::PolicyBasedRoutingServiceConnection::"
       "CreatePolicyBasedRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreatePolicyBasedRoute(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -120,7 +120,7 @@ PolicyBasedRoutingServiceTracingConnection::DeletePolicyBasedRoute(
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::PolicyBasedRoutingServiceConnection::"
       "DeletePolicyBasedRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeletePolicyBasedRoute(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

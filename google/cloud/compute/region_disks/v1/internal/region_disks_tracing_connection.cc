@@ -51,7 +51,7 @@ RegionDisksTracingConnection::AddResourcePolicies(
         AddResourcePoliciesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::AddResourcePolicies");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddResourcePolicies(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -86,7 +86,7 @@ RegionDisksTracingConnection::BulkInsert(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::BulkInsert");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BulkInsert(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -121,7 +121,7 @@ RegionDisksTracingConnection::CreateSnapshot(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::CreateSnapshot");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateSnapshot(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -156,7 +156,7 @@ RegionDisksTracingConnection::DeleteDisk(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::DeleteDisk");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteDisk(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -211,7 +211,7 @@ RegionDisksTracingConnection::InsertDisk(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::InsertDisk");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertDisk(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -259,7 +259,7 @@ RegionDisksTracingConnection::RemoveResourcePolicies(
         RemoveResourcePoliciesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::RemoveResourcePolicies");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RemoveResourcePolicies(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -294,7 +294,7 @@ RegionDisksTracingConnection::Resize(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::Resize");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->Resize(google::cloud::ExperimentalTag{},
                             google::cloud::NoAwaitTag{}, request));
@@ -339,7 +339,7 @@ RegionDisksTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -375,7 +375,7 @@ RegionDisksTracingConnection::StartAsyncReplication(
         StartAsyncReplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::StartAsyncReplication");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->StartAsyncReplication(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -411,7 +411,7 @@ RegionDisksTracingConnection::StopAsyncReplication(
         StopAsyncReplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::StopAsyncReplication");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->StopAsyncReplication(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -449,7 +449,7 @@ RegionDisksTracingConnection::StopGroupAsyncReplication(
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::"
       "StopGroupAsyncReplication");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->StopGroupAsyncReplication(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -495,7 +495,7 @@ RegionDisksTracingConnection::UpdateDisk(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_disks_v1::RegionDisksConnection::UpdateDisk");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDisk(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

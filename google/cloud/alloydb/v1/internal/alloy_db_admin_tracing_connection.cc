@@ -68,7 +68,7 @@ AlloyDBAdminTracingConnection::CreateCluster(
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ AlloyDBAdminTracingConnection::UpdateCluster(
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ AlloyDBAdminTracingConnection::DeleteCluster(
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -167,7 +167,7 @@ AlloyDBAdminTracingConnection::PromoteCluster(
     google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::PromoteCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PromoteCluster(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -200,7 +200,7 @@ AlloyDBAdminTracingConnection::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::RestoreCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RestoreCluster(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ AlloyDBAdminTracingConnection::CreateSecondaryCluster(
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::CreateSecondaryCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateSecondaryCluster(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -287,7 +287,7 @@ AlloyDBAdminTracingConnection::CreateInstance(
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -321,7 +321,7 @@ AlloyDBAdminTracingConnection::CreateSecondaryInstance(
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::CreateSecondaryInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateSecondaryInstance(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -355,7 +355,7 @@ AlloyDBAdminTracingConnection::BatchCreateInstances(
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::BatchCreateInstances");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchCreateInstances(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -388,7 +388,7 @@ AlloyDBAdminTracingConnection::UpdateInstance(
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -421,7 +421,7 @@ AlloyDBAdminTracingConnection::DeleteInstance(
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -454,7 +454,7 @@ AlloyDBAdminTracingConnection::FailoverInstance(
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "alloydb_v1::AlloyDBAdminConnection::FailoverInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->FailoverInstance(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -487,7 +487,7 @@ AlloyDBAdminTracingConnection::InjectFault(
     google::cloud::alloydb::v1::InjectFaultRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::InjectFault");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InjectFault(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -520,7 +520,7 @@ AlloyDBAdminTracingConnection::RestartInstance(
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::RestartInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RestartInstance(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -573,7 +573,7 @@ AlloyDBAdminTracingConnection::CreateBackup(
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::CreateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -606,7 +606,7 @@ AlloyDBAdminTracingConnection::UpdateBackup(
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::UpdateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -639,7 +639,7 @@ AlloyDBAdminTracingConnection::DeleteBackup(
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   auto span =
       internal::MakeSpan("alloydb_v1::AlloyDBAdminConnection::DeleteBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteBackup(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

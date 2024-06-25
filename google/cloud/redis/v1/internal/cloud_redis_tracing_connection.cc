@@ -76,7 +76,7 @@ CloudRedisTracingConnection::CreateInstance(
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("redis_v1::CloudRedisConnection::CreateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -109,7 +109,7 @@ CloudRedisTracingConnection::UpdateInstance(
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("redis_v1::CloudRedisConnection::UpdateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -142,7 +142,7 @@ CloudRedisTracingConnection::UpgradeInstance(
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("redis_v1::CloudRedisConnection::UpgradeInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpgradeInstance(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -175,7 +175,7 @@ CloudRedisTracingConnection::ImportInstance(
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("redis_v1::CloudRedisConnection::ImportInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -208,7 +208,7 @@ CloudRedisTracingConnection::ExportInstance(
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("redis_v1::CloudRedisConnection::ExportInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -241,7 +241,7 @@ CloudRedisTracingConnection::FailoverInstance(
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("redis_v1::CloudRedisConnection::FailoverInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->FailoverInstance(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -274,7 +274,7 @@ CloudRedisTracingConnection::DeleteInstance(
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("redis_v1::CloudRedisConnection::DeleteInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -308,7 +308,7 @@ CloudRedisTracingConnection::RescheduleMaintenance(
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
   auto span = internal::MakeSpan(
       "redis_v1::CloudRedisConnection::RescheduleMaintenance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RescheduleMaintenance(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

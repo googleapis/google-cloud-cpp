@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/instances/v1/instances_connection_idempotency_policy.h"
 #include "google/cloud/compute/instances/v1/internal/instances_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -191,12 +191,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddAccessConfig(google::cloud::ExperimentalTag,
+  AddAccessConfig(ExperimentalTag,
                   google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -204,13 +204,13 @@ class InstancesConnection {
                           AddResourcePoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddResourcePolicies(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  AddResourcePolicies(ExperimentalTag, NoAwaitTag,
                       google::cloud::cpp::compute::instances::v1::
                           AddResourcePoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddResourcePolicies(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<std::pair<
@@ -225,12 +225,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AttachDisk(google::cloud::ExperimentalTag,
+  AttachDisk(ExperimentalTag,
              google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -239,12 +239,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(google::cloud::ExperimentalTag,
+  BulkInsert(ExperimentalTag,
              google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -253,12 +253,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstance(google::cloud::ExperimentalTag,
+  DeleteInstance(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -266,13 +266,13 @@ class InstancesConnection {
                          DeleteAccessConfigRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAccessConfig(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  DeleteAccessConfig(ExperimentalTag, NoAwaitTag,
                      google::cloud::cpp::compute::instances::v1::
                          DeleteAccessConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteAccessConfig(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -281,12 +281,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DetachDisk(google::cloud::ExperimentalTag,
+  DetachDisk(ExperimentalTag,
              google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
@@ -325,12 +325,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstance(google::cloud::ExperimentalTag,
+  InsertInstance(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
@@ -344,13 +344,13 @@ class InstancesConnection {
                          PerformMaintenanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PerformMaintenance(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  PerformMaintenance(ExperimentalTag, NoAwaitTag,
                      google::cloud::cpp::compute::instances::v1::
                          PerformMaintenanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -358,36 +358,35 @@ class InstancesConnection {
                              RemoveResourcePoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveResourcePolicies(google::cloud::ExperimentalTag,
-                         google::cloud::NoAwaitTag,
+  RemoveResourcePolicies(ExperimentalTag, NoAwaitTag,
                          google::cloud::cpp::compute::instances::v1::
                              RemoveResourcePoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
       google::cloud::cpp::compute::instances::v1::ResumeRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::ResumeRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual Status SendDiagnosticInterrupt(
@@ -399,14 +398,13 @@ class InstancesConnection {
                             SetDeletionProtectionRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDeletionProtection(google::cloud::ExperimentalTag,
-                        google::cloud::NoAwaitTag,
+  SetDeletionProtection(ExperimentalTag, NoAwaitTag,
                         google::cloud::cpp::compute::instances::v1::
                             SetDeletionProtectionRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDeletionProtection(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -414,13 +412,13 @@ class InstancesConnection {
                         SetDiskAutoDeleteRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDiskAutoDelete(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetDiskAutoDelete(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::instances::v1::
                         SetDiskAutoDeleteRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDiskAutoDelete(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -432,12 +430,12 @@ class InstancesConnection {
                 request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::ExperimentalTag,
+  SetLabels(ExperimentalTag,
             google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -445,13 +443,13 @@ class InstancesConnection {
                           SetMachineResourcesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMachineResources(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetMachineResources(ExperimentalTag, NoAwaitTag,
                       google::cloud::cpp::compute::instances::v1::
                           SetMachineResourcesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetMachineResources(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -460,12 +458,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMachineType(google::cloud::ExperimentalTag,
+  SetMachineType(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -474,12 +472,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMetadata(google::cloud::ExperimentalTag,
+  SetMetadata(ExperimentalTag,
               google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -487,13 +485,13 @@ class InstancesConnection {
                         SetMinCpuPlatformRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMinCpuPlatform(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetMinCpuPlatform(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::instances::v1::
                         SetMinCpuPlatformRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetMinCpuPlatform(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
@@ -501,12 +499,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetNameRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -515,12 +513,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetScheduling(google::cloud::ExperimentalTag,
+  SetScheduling(ExperimentalTag,
                 google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -528,13 +526,13 @@ class InstancesConnection {
                         SetSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetSecurityPolicy(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::instances::v1::
                         SetSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -542,13 +540,13 @@ class InstancesConnection {
                         SetServiceAccountRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetServiceAccount(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetServiceAccount(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::instances::v1::
                         SetServiceAccountRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetServiceAccount(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -558,13 +556,13 @@ class InstancesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   SetShieldedInstanceIntegrityPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           SetShieldedInstanceIntegrityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetShieldedInstanceIntegrityPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
@@ -572,12 +570,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetTagsRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -585,25 +583,24 @@ class InstancesConnection {
                                SimulateMaintenanceEventRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SimulateMaintenanceEvent(google::cloud::ExperimentalTag,
-                           google::cloud::NoAwaitTag,
+  SimulateMaintenanceEvent(ExperimentalTag, NoAwaitTag,
                            google::cloud::cpp::compute::instances::v1::
                                SimulateMaintenanceEventRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SimulateMaintenanceEvent(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
       google::cloud::cpp::compute::instances::v1::StartRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::StartRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -611,25 +608,24 @@ class InstancesConnection {
                              StartWithEncryptionKeyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  StartWithEncryptionKey(google::cloud::ExperimentalTag,
-                         google::cloud::NoAwaitTag,
+  StartWithEncryptionKey(ExperimentalTag, NoAwaitTag,
                          google::cloud::cpp::compute::instances::v1::
                              StartWithEncryptionKeyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartWithEncryptionKey(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
       google::cloud::cpp::compute::instances::v1::StopRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::StopRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
@@ -637,12 +633,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SuspendRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -655,12 +651,12 @@ class InstancesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateInstance(google::cloud::ExperimentalTag,
+  UpdateInstance(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -668,13 +664,13 @@ class InstancesConnection {
                          UpdateAccessConfigRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateAccessConfig(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  UpdateAccessConfig(ExperimentalTag, NoAwaitTag,
                      google::cloud::cpp::compute::instances::v1::
                          UpdateAccessConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateAccessConfig(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -682,13 +678,13 @@ class InstancesConnection {
                           UpdateDisplayDeviceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateDisplayDevice(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  UpdateDisplayDevice(ExperimentalTag, NoAwaitTag,
                       google::cloud::cpp::compute::instances::v1::
                           UpdateDisplayDeviceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateDisplayDevice(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -696,14 +692,13 @@ class InstancesConnection {
                              UpdateNetworkInterfaceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateNetworkInterface(google::cloud::ExperimentalTag,
-                         google::cloud::NoAwaitTag,
+  UpdateNetworkInterface(ExperimentalTag, NoAwaitTag,
                          google::cloud::cpp::compute::instances::v1::
                              UpdateNetworkInterfaceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateNetworkInterface(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -713,13 +708,13 @@ class InstancesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   UpdateShieldedInstanceConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           UpdateShieldedInstanceConfigRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateShieldedInstanceConfig(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

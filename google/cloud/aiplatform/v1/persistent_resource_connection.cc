@@ -49,7 +49,7 @@ PersistentResourceServiceConnection::CreatePersistentResource(
 
 StatusOr<google::longrunning::Operation>
 PersistentResourceServiceConnection::CreatePersistentResource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -57,7 +57,7 @@ PersistentResourceServiceConnection::CreatePersistentResource(
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnection::CreatePersistentResource(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,7 +87,7 @@ PersistentResourceServiceConnection::DeletePersistentResource(
 
 StatusOr<google::longrunning::Operation>
 PersistentResourceServiceConnection::DeletePersistentResource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -95,7 +95,7 @@ PersistentResourceServiceConnection::DeletePersistentResource(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PersistentResourceServiceConnection::DeletePersistentResource(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -111,7 +111,7 @@ PersistentResourceServiceConnection::UpdatePersistentResource(
 
 StatusOr<google::longrunning::Operation>
 PersistentResourceServiceConnection::UpdatePersistentResource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -119,7 +119,7 @@ PersistentResourceServiceConnection::UpdatePersistentResource(
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnection::UpdatePersistentResource(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -135,7 +135,7 @@ PersistentResourceServiceConnection::RebootPersistentResource(
 
 StatusOr<google::longrunning::Operation>
 PersistentResourceServiceConnection::RebootPersistentResource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -143,7 +143,7 @@ PersistentResourceServiceConnection::RebootPersistentResource(
 
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnection::RebootPersistentResource(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

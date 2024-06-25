@@ -48,7 +48,7 @@ ClusterControllerTracingConnection::CreateCluster(
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::ClusterControllerConnection::CreateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -81,7 +81,7 @@ ClusterControllerTracingConnection::UpdateCluster(
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::ClusterControllerConnection::UpdateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -114,7 +114,7 @@ ClusterControllerTracingConnection::StopCluster(
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::ClusterControllerConnection::StopCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StopCluster(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -147,7 +147,7 @@ ClusterControllerTracingConnection::StartCluster(
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::ClusterControllerConnection::StartCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StartCluster(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -180,7 +180,7 @@ ClusterControllerTracingConnection::DeleteCluster(
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::ClusterControllerConnection::DeleteCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -233,7 +233,7 @@ ClusterControllerTracingConnection::DiagnoseCluster(
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::ClusterControllerConnection::DiagnoseCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DiagnoseCluster(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

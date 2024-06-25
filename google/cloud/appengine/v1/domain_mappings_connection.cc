@@ -62,7 +62,7 @@ DomainMappingsConnection::CreateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnection::CreateDomainMapping(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::CreateDomainMappingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ DomainMappingsConnection::CreateDomainMapping(
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnection::CreateDomainMapping(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::DomainMapping>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ DomainMappingsConnection::UpdateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnection::UpdateDomainMapping(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::UpdateDomainMappingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ DomainMappingsConnection::UpdateDomainMapping(
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnection::UpdateDomainMapping(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::DomainMapping>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ DomainMappingsConnection::DeleteDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnection::DeleteDomainMapping(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteDomainMappingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ DomainMappingsConnection::DeleteDomainMapping(
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsConnection::DeleteDomainMapping(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::OperationMetadataV1>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

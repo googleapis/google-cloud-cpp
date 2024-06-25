@@ -68,7 +68,7 @@ VmMigrationTracingConnection::CreateSource(
     google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
   auto span =
       internal::MakeSpan("vmmigration_v1::VmMigrationConnection::CreateSource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateSource(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ VmMigrationTracingConnection::UpdateSource(
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
   auto span =
       internal::MakeSpan("vmmigration_v1::VmMigrationConnection::UpdateSource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateSource(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ VmMigrationTracingConnection::DeleteSource(
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
   auto span =
       internal::MakeSpan("vmmigration_v1::VmMigrationConnection::DeleteSource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSource(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -201,7 +201,7 @@ VmMigrationTracingConnection::CreateUtilizationReport(
         request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::CreateUtilizationReport");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateUtilizationReport(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -237,7 +237,7 @@ VmMigrationTracingConnection::DeleteUtilizationReport(
         request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::DeleteUtilizationReport");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteUtilizationReport(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -295,7 +295,7 @@ VmMigrationTracingConnection::CreateDatacenterConnector(
         request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::CreateDatacenterConnector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateDatacenterConnector(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -331,7 +331,7 @@ VmMigrationTracingConnection::DeleteDatacenterConnector(
         request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::DeleteDatacenterConnector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteDatacenterConnector(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -364,7 +364,7 @@ VmMigrationTracingConnection::UpgradeAppliance(
     google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::UpgradeAppliance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpgradeAppliance(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -397,7 +397,7 @@ VmMigrationTracingConnection::CreateMigratingVm(
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::CreateMigratingVm");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateMigratingVm(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -451,7 +451,7 @@ VmMigrationTracingConnection::UpdateMigratingVm(
     google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::UpdateMigratingVm");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateMigratingVm(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -484,7 +484,7 @@ VmMigrationTracingConnection::DeleteMigratingVm(
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::DeleteMigratingVm");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteMigratingVm(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -517,7 +517,7 @@ VmMigrationTracingConnection::StartMigration(
     google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::StartMigration");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StartMigration(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -550,7 +550,7 @@ VmMigrationTracingConnection::ResumeMigration(
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::ResumeMigration");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ResumeMigration(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -583,7 +583,7 @@ VmMigrationTracingConnection::PauseMigration(
     google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::PauseMigration");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PauseMigration(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -616,7 +616,7 @@ VmMigrationTracingConnection::FinalizeMigration(
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::FinalizeMigration");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->FinalizeMigration(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -649,7 +649,7 @@ VmMigrationTracingConnection::CreateCloneJob(
     google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::CreateCloneJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCloneJob(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -682,7 +682,7 @@ VmMigrationTracingConnection::CancelCloneJob(
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::CancelCloneJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CancelCloneJob(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -735,7 +735,7 @@ VmMigrationTracingConnection::CreateCutoverJob(
     google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::CreateCutoverJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCutoverJob(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -768,7 +768,7 @@ VmMigrationTracingConnection::CancelCutoverJob(
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::CancelCutoverJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CancelCutoverJob(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -842,7 +842,7 @@ VmMigrationTracingConnection::CreateGroup(
     google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
   auto span =
       internal::MakeSpan("vmmigration_v1::VmMigrationConnection::CreateGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateGroup(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -875,7 +875,7 @@ VmMigrationTracingConnection::UpdateGroup(
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
   auto span =
       internal::MakeSpan("vmmigration_v1::VmMigrationConnection::UpdateGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateGroup(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -908,7 +908,7 @@ VmMigrationTracingConnection::DeleteGroup(
     google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
   auto span =
       internal::MakeSpan("vmmigration_v1::VmMigrationConnection::DeleteGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteGroup(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -941,7 +941,7 @@ VmMigrationTracingConnection::AddGroupMigration(
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::AddGroupMigration");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddGroupMigration(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -977,7 +977,7 @@ VmMigrationTracingConnection::RemoveGroupMigration(
         request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::RemoveGroupMigration");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RemoveGroupMigration(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -1032,7 +1032,7 @@ VmMigrationTracingConnection::CreateTargetProject(
     google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::CreateTargetProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTargetProject(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -1066,7 +1066,7 @@ VmMigrationTracingConnection::UpdateTargetProject(
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::UpdateTargetProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTargetProject(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -1100,7 +1100,7 @@ VmMigrationTracingConnection::DeleteTargetProject(
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "vmmigration_v1::VmMigrationConnection::DeleteTargetProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTargetProject(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

@@ -51,7 +51,7 @@ GlobalAddressesTracingConnection::DeleteAddress(
         DeleteAddressRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::DeleteAddress");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAddress(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -96,7 +96,7 @@ GlobalAddressesTracingConnection::InsertAddress(
         InsertAddressRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::InsertAddress");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertAddress(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -144,7 +144,7 @@ GlobalAddressesTracingConnection::Move(
         request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::Move");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span,
                            child_->Move(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -179,7 +179,7 @@ GlobalAddressesTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_global_addresses_v1::GlobalAddressesConnection::SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

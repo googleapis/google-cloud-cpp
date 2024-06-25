@@ -55,7 +55,7 @@ FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "CreateFeatureOnlineStore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateFeatureOnlineStore(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -118,7 +118,7 @@ FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "UpdateFeatureOnlineStore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateFeatureOnlineStore(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -157,7 +157,7 @@ FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "DeleteFeatureOnlineStore");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteFeatureOnlineStore(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -193,7 +193,7 @@ FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "CreateFeatureView");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateFeatureView(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -252,7 +252,7 @@ FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "UpdateFeatureView");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateFeatureView(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -288,7 +288,7 @@ FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "DeleteFeatureView");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteFeatureView(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));

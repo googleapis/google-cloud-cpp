@@ -146,7 +146,7 @@ VpnTunnelsRestConnectionImpl::DeleteVpnTunnel(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnTunnelsRestConnectionImpl::DeleteVpnTunnel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -163,7 +163,7 @@ VpnTunnelsRestConnectionImpl::DeleteVpnTunnel(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnTunnelsRestConnectionImpl::DeleteVpnTunnel(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -295,7 +295,7 @@ VpnTunnelsRestConnectionImpl::InsertVpnTunnel(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnTunnelsRestConnectionImpl::InsertVpnTunnel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -312,7 +312,7 @@ VpnTunnelsRestConnectionImpl::InsertVpnTunnel(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnTunnelsRestConnectionImpl::InsertVpnTunnel(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -465,7 +465,7 @@ VpnTunnelsRestConnectionImpl::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnTunnelsRestConnectionImpl::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -483,7 +483,7 @@ VpnTunnelsRestConnectionImpl::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnTunnelsRestConnectionImpl::SetLabels(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

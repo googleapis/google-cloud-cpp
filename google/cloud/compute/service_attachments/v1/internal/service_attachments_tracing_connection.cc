@@ -71,7 +71,7 @@ ServiceAttachmentsTracingConnection::DeleteServiceAttachment(
   auto span = internal::MakeSpan(
       "compute_service_attachments_v1::ServiceAttachmentsConnection::"
       "DeleteServiceAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteServiceAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -132,7 +132,7 @@ ServiceAttachmentsTracingConnection::InsertServiceAttachment(
   auto span = internal::MakeSpan(
       "compute_service_attachments_v1::ServiceAttachmentsConnection::"
       "InsertServiceAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertServiceAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -185,7 +185,7 @@ ServiceAttachmentsTracingConnection::PatchServiceAttachment(
   auto span = internal::MakeSpan(
       "compute_service_attachments_v1::ServiceAttachmentsConnection::"
       "PatchServiceAttachment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchServiceAttachment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -21,11 +21,11 @@
 
 #include "google/cloud/notebooks/v1/internal/managed_notebook_retry_traits.h"
 #include "google/cloud/notebooks/v1/managed_notebook_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -204,90 +204,84 @@ class ManagedNotebookServiceConnection {
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> CreateRuntime(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpdateRuntime(
       google::cloud::notebooks::v1::UpdateRuntimeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::UpdateRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpdateRuntime(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteRuntime(
       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteRuntime(google::cloud::ExperimentalTag,
+  DeleteRuntime(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> StartRuntime(
       google::cloud::notebooks::v1::StartRuntimeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> StartRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::StartRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> StartRuntime(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
       google::cloud::notebooks::v1::StopRuntimeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> StopRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::StopRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> SwitchRuntime(
       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> SwitchRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> SwitchRuntime(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> ResetRuntime(
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ResetRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> ResetRuntime(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
   UpgradeRuntime(
       google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpgradeRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
-  UpgradeRuntime(google::cloud::ExperimentalTag,
+  UpgradeRuntime(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -295,11 +289,11 @@ class ManagedNotebookServiceConnection {
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ReportRuntimeEvent(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
-  ReportRuntimeEvent(google::cloud::ExperimentalTag,
+  ReportRuntimeEvent(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual StatusOr<
@@ -313,11 +307,11 @@ class ManagedNotebookServiceConnection {
       google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DiagnoseRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
-  DiagnoseRuntime(google::cloud::ExperimentalTag,
+  DiagnoseRuntime(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 };
 

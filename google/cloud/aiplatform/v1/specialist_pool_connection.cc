@@ -48,7 +48,7 @@ SpecialistPoolServiceConnection::CreateSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceConnection::CreateSpecialistPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ SpecialistPoolServiceConnection::CreateSpecialistPool(
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceConnection::CreateSpecialistPool(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ SpecialistPoolServiceConnection::DeleteSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceConnection::DeleteSpecialistPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ SpecialistPoolServiceConnection::DeleteSpecialistPool(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 SpecialistPoolServiceConnection::DeleteSpecialistPool(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ SpecialistPoolServiceConnection::UpdateSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceConnection::UpdateSpecialistPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ SpecialistPoolServiceConnection::UpdateSpecialistPool(
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceConnection::UpdateSpecialistPool(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -59,14 +59,14 @@ IDSConnection::CreateEndpoint(
 }
 
 StatusOr<google::longrunning::Operation> IDSConnection::CreateEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::ids::v1::CreateEndpointRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>>
-IDSConnection::CreateEndpoint(google::cloud::ExperimentalTag,
+IDSConnection::CreateEndpoint(ExperimentalTag,
                               google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::ids::v1::Endpoint>>(
@@ -82,14 +82,14 @@ IDSConnection::DeleteEndpoint(
 }
 
 StatusOr<google::longrunning::Operation> IDSConnection::DeleteEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::ids::v1::DeleteEndpointRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-IDSConnection::DeleteEndpoint(google::cloud::ExperimentalTag,
+IDSConnection::DeleteEndpoint(ExperimentalTag,
                               google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::ids::v1::OperationMetadata>>(

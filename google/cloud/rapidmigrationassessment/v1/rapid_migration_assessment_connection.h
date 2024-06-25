@@ -22,11 +22,11 @@
 
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_retry_traits.h"
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -209,13 +209,13 @@ class RapidMigrationAssessmentConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  CreateCollector(google::cloud::ExperimentalTag,
+  CreateCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual future<
@@ -224,13 +224,13 @@ class RapidMigrationAssessmentConnection {
                        CreateAnnotationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAnnotation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           CreateAnnotationRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
-  CreateAnnotation(google::cloud::ExperimentalTag,
+  CreateAnnotation(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
@@ -255,13 +255,13 @@ class RapidMigrationAssessmentConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  UpdateCollector(google::cloud::ExperimentalTag,
+  UpdateCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual future<
@@ -271,13 +271,13 @@ class RapidMigrationAssessmentConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  DeleteCollector(google::cloud::ExperimentalTag,
+  DeleteCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual future<
@@ -287,13 +287,13 @@ class RapidMigrationAssessmentConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> ResumeCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  ResumeCollector(google::cloud::ExperimentalTag,
+  ResumeCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 
   virtual future<
@@ -302,13 +302,13 @@ class RapidMigrationAssessmentConnection {
                         RegisterCollectorRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RegisterCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           RegisterCollectorRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  RegisterCollector(google::cloud::ExperimentalTag,
+  RegisterCollector(ExperimentalTag,
                     google::longrunning::Operation const& operation);
 
   virtual future<
@@ -318,13 +318,13 @@ class RapidMigrationAssessmentConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> PauseCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  PauseCollector(google::cloud::ExperimentalTag,
+  PauseCollector(ExperimentalTag,
                  google::longrunning::Operation const& operation);
 };
 

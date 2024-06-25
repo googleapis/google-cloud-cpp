@@ -21,11 +21,11 @@
 
 #include "google/cloud/aiplatform/v1/feature_registry_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/feature_registry_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,11 +199,11 @@ class FeatureRegistryServiceConnection {
       google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateFeatureGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(google::cloud::ExperimentalTag,
+  CreateFeatureGroup(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
@@ -218,11 +218,11 @@ class FeatureRegistryServiceConnection {
       google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  UpdateFeatureGroup(google::cloud::ExperimentalTag,
+  UpdateFeatureGroup(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<
@@ -231,12 +231,12 @@ class FeatureRegistryServiceConnection {
       google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureGroup(google::cloud::ExperimentalTag,
+  DeleteFeatureGroup(ExperimentalTag,
                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
@@ -244,11 +244,11 @@ class FeatureRegistryServiceConnection {
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-  CreateFeature(google::cloud::ExperimentalTag,
+  CreateFeature(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
@@ -262,11 +262,11 @@ class FeatureRegistryServiceConnection {
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-  UpdateFeature(google::cloud::ExperimentalTag,
+  UpdateFeature(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual future<
@@ -275,12 +275,12 @@ class FeatureRegistryServiceConnection {
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::cloud::ExperimentalTag,
+  DeleteFeature(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 };
 

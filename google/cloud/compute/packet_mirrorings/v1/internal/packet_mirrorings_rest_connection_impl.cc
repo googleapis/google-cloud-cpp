@@ -150,7 +150,7 @@ PacketMirroringsRestConnectionImpl::DeletePacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestConnectionImpl::DeletePacketMirroring(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         DeletePacketMirroringRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -167,7 +167,7 @@ PacketMirroringsRestConnectionImpl::DeletePacketMirroring(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestConnectionImpl::DeletePacketMirroring(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -299,7 +299,7 @@ PacketMirroringsRestConnectionImpl::InsertPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestConnectionImpl::InsertPacketMirroring(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         InsertPacketMirroringRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -316,7 +316,7 @@ PacketMirroringsRestConnectionImpl::InsertPacketMirroring(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestConnectionImpl::InsertPacketMirroring(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -471,7 +471,7 @@ PacketMirroringsRestConnectionImpl::PatchPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsRestConnectionImpl::PatchPacketMirroring(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         PatchPacketMirroringRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -488,7 +488,7 @@ PacketMirroringsRestConnectionImpl::PatchPacketMirroring(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsRestConnectionImpl::PatchPacketMirroring(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

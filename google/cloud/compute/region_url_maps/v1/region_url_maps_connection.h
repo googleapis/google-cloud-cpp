@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/region_url_maps/v1/internal/region_url_maps_retry_traits.h"
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,12 +192,12 @@ class RegionUrlMapsConnection {
                    DeleteUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_url_maps::v1::
           DeleteUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteUrlMap(google::cloud::ExperimentalTag,
+  DeleteUrlMap(ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
@@ -209,12 +209,12 @@ class RegionUrlMapsConnection {
                    InsertUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_url_maps::v1::
           InsertUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertUrlMap(google::cloud::ExperimentalTag,
+  InsertUrlMap(ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::UrlMap>
@@ -227,12 +227,12 @@ class RegionUrlMapsConnection {
                   PatchUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_url_maps::v1::
           PatchUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchUrlMap(google::cloud::ExperimentalTag,
+  PatchUrlMap(ExperimentalTag,
               google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -240,12 +240,12 @@ class RegionUrlMapsConnection {
                    UpdateUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_url_maps::v1::
           UpdateUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateUrlMap(google::cloud::ExperimentalTag,
+  UpdateUrlMap(ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>

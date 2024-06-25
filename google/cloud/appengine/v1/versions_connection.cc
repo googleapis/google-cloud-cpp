@@ -59,14 +59,14 @@ VersionsConnection::CreateVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnection::CreateVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::CreateVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
-VersionsConnection::CreateVersion(google::cloud::ExperimentalTag,
+VersionsConnection::CreateVersion(ExperimentalTag,
                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::Version>>(
@@ -82,14 +82,14 @@ VersionsConnection::UpdateVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnection::UpdateVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::UpdateVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
-VersionsConnection::UpdateVersion(google::cloud::ExperimentalTag,
+VersionsConnection::UpdateVersion(ExperimentalTag,
                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::Version>>(
@@ -105,14 +105,14 @@ VersionsConnection::DeleteVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnection::DeleteVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-VersionsConnection::DeleteVersion(google::cloud::ExperimentalTag,
+VersionsConnection::DeleteVersion(ExperimentalTag,
                                   google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::OperationMetadataV1>>(

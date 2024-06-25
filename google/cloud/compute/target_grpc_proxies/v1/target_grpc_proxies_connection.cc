@@ -47,7 +47,7 @@ TargetGrpcProxiesConnection::DeleteTargetGrpcProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesConnection::DeleteTargetGrpcProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         DeleteTargetGrpcProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -56,8 +56,7 @@ TargetGrpcProxiesConnection::DeleteTargetGrpcProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesConnection::DeleteTargetGrpcProxy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -81,7 +80,7 @@ TargetGrpcProxiesConnection::InsertTargetGrpcProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesConnection::InsertTargetGrpcProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         InsertTargetGrpcProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -90,8 +89,7 @@ TargetGrpcProxiesConnection::InsertTargetGrpcProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesConnection::InsertTargetGrpcProxy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,7 +114,7 @@ TargetGrpcProxiesConnection::PatchTargetGrpcProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetGrpcProxiesConnection::PatchTargetGrpcProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         PatchTargetGrpcProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -125,8 +123,7 @@ TargetGrpcProxiesConnection::PatchTargetGrpcProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesConnection::PatchTargetGrpcProxy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

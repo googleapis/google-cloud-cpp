@@ -81,7 +81,7 @@ ProjectsTracingConnection::CreateProject(
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::CreateProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateProject(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -114,7 +114,7 @@ ProjectsTracingConnection::UpdateProject(
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::UpdateProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateProject(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -146,7 +146,7 @@ StatusOr<google::longrunning::Operation> ProjectsTracingConnection::MoveProject(
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::ProjectsConnection::MoveProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->MoveProject(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -179,7 +179,7 @@ ProjectsTracingConnection::DeleteProject(
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::DeleteProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteProject(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -212,7 +212,7 @@ ProjectsTracingConnection::UndeleteProject(
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::ProjectsConnection::UndeleteProject");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UndeleteProject(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

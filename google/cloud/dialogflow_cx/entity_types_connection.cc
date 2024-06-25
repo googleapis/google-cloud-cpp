@@ -79,7 +79,7 @@ EntityTypesConnection::ExportEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnection::ExportEntityTypes(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,7 +87,7 @@ EntityTypesConnection::ExportEntityTypes(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
 EntityTypesConnection::ExportEntityTypes(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -103,7 +103,7 @@ EntityTypesConnection::ImportEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnection::ImportEntityTypes(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -111,7 +111,7 @@ EntityTypesConnection::ImportEntityTypes(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
 EntityTypesConnection::ImportEntityTypes(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

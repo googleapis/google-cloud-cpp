@@ -69,7 +69,7 @@ EdgeContainerTracingConnection::CreateCluster(
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::CreateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ EdgeContainerTracingConnection::UpdateCluster(
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::UpdateCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ EdgeContainerTracingConnection::UpgradeCluster(
     google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::UpgradeCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpgradeCluster(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -168,7 +168,7 @@ EdgeContainerTracingConnection::DeleteCluster(
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::DeleteCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -242,7 +242,7 @@ EdgeContainerTracingConnection::CreateNodePool(
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::CreateNodePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateNodePool(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -275,7 +275,7 @@ EdgeContainerTracingConnection::UpdateNodePool(
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::UpdateNodePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateNodePool(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -308,7 +308,7 @@ EdgeContainerTracingConnection::DeleteNodePool(
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::DeleteNodePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteNodePool(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -386,7 +386,7 @@ EdgeContainerTracingConnection::CreateVpnConnection(
         request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::CreateVpnConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateVpnConnection(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -422,7 +422,7 @@ EdgeContainerTracingConnection::DeleteVpnConnection(
         request) {
   auto span = internal::MakeSpan(
       "edgecontainer_v1::EdgeContainerConnection::DeleteVpnConnection");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteVpnConnection(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

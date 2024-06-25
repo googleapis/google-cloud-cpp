@@ -64,7 +64,7 @@ RoutersTracingConnection::DeleteRouter(
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::DeleteRouter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRouter(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -138,7 +138,7 @@ RoutersTracingConnection::InsertRouter(
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::InsertRouter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertRouter(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -184,7 +184,7 @@ RoutersTracingConnection::PatchRouter(
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::PatchRouter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchRouter(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -228,7 +228,7 @@ RoutersTracingConnection::UpdateRouter(
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::UpdateRouter");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateRouter(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

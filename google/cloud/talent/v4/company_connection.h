@@ -21,7 +21,6 @@
 
 #include "google/cloud/talent/v4/company_connection_idempotency_policy.h"
 #include "google/cloud/talent/v4/internal/company_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

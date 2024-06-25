@@ -103,7 +103,7 @@ ProjectsRestConnectionImpl::DisableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::DisableXpnHost(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -120,7 +120,7 @@ ProjectsRestConnectionImpl::DisableXpnHost(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::DisableXpnHost(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -232,7 +232,7 @@ ProjectsRestConnectionImpl::DisableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::DisableXpnResource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -249,7 +249,7 @@ ProjectsRestConnectionImpl::DisableXpnResource(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::DisableXpnResource(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -362,7 +362,7 @@ ProjectsRestConnectionImpl::EnableXpnHost(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::EnableXpnHost(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -380,7 +380,7 @@ ProjectsRestConnectionImpl::EnableXpnHost(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::EnableXpnHost(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -492,7 +492,7 @@ ProjectsRestConnectionImpl::EnableXpnResource(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::EnableXpnResource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -509,7 +509,7 @@ ProjectsRestConnectionImpl::EnableXpnResource(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::EnableXpnResource(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -705,7 +705,7 @@ ProjectsRestConnectionImpl::MoveDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::MoveDisk(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -721,7 +721,7 @@ ProjectsRestConnectionImpl::MoveDisk(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::MoveDisk(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -834,7 +834,7 @@ ProjectsRestConnectionImpl::MoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::MoveInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -852,7 +852,7 @@ ProjectsRestConnectionImpl::MoveInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::MoveInstance(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -964,7 +964,7 @@ ProjectsRestConnectionImpl::SetCloudArmorTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::SetCloudArmorTier(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -981,7 +981,7 @@ ProjectsRestConnectionImpl::SetCloudArmorTier(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::SetCloudArmorTier(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1093,7 +1093,7 @@ ProjectsRestConnectionImpl::SetCommonInstanceMetadata(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::SetCommonInstanceMetadata(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         SetCommonInstanceMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1110,7 +1110,7 @@ ProjectsRestConnectionImpl::SetCommonInstanceMetadata(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::SetCommonInstanceMetadata(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1222,7 +1222,7 @@ ProjectsRestConnectionImpl::SetDefaultNetworkTier(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::SetDefaultNetworkTier(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         SetDefaultNetworkTierRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1239,7 +1239,7 @@ ProjectsRestConnectionImpl::SetDefaultNetworkTier(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::SetDefaultNetworkTier(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1351,7 +1351,7 @@ ProjectsRestConnectionImpl::SetUsageExportBucket(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ProjectsRestConnectionImpl::SetUsageExportBucket(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::projects::v1::
         SetUsageExportBucketRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1368,7 +1368,7 @@ ProjectsRestConnectionImpl::SetUsageExportBucket(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsRestConnectionImpl::SetUsageExportBucket(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

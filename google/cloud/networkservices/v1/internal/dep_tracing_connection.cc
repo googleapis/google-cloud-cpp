@@ -74,7 +74,7 @@ DepServiceTracingConnection::CreateLbTrafficExtension(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::CreateLbTrafficExtension");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateLbTrafficExtension(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -110,7 +110,7 @@ DepServiceTracingConnection::UpdateLbTrafficExtension(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::UpdateLbTrafficExtension");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateLbTrafficExtension(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -146,7 +146,7 @@ DepServiceTracingConnection::DeleteLbTrafficExtension(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::DeleteLbTrafficExtension");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteLbTrafficExtension(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -204,7 +204,7 @@ DepServiceTracingConnection::CreateLbRouteExtension(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::CreateLbRouteExtension");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateLbRouteExtension(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -240,7 +240,7 @@ DepServiceTracingConnection::UpdateLbRouteExtension(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::UpdateLbRouteExtension");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateLbRouteExtension(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -276,7 +276,7 @@ DepServiceTracingConnection::DeleteLbRouteExtension(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::DeleteLbRouteExtension");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteLbRouteExtension(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -48,7 +48,7 @@ IndexServiceTracingConnection::CreateIndex(
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::IndexServiceConnection::CreateIndex");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateIndex(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ IndexServiceTracingConnection::UpdateIndex(
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::IndexServiceConnection::UpdateIndex");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateIndex(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ IndexServiceTracingConnection::DeleteIndex(
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
   auto span =
       internal::MakeSpan("aiplatform_v1::IndexServiceConnection::DeleteIndex");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteIndex(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));

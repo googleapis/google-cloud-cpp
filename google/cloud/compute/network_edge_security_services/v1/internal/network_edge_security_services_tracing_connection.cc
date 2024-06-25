@@ -78,7 +78,7 @@ NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
       "DeleteNetworkEdgeSecurityService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteNetworkEdgeSecurityService(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -132,7 +132,7 @@ NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
       "InsertNetworkEdgeSecurityService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertNetworkEdgeSecurityService(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -172,7 +172,7 @@ NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchNetworkEdgeSecurityService(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

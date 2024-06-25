@@ -51,7 +51,7 @@ OsConfigZonalServiceTracingConnection::CreateOSPolicyAssignment(
         request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::CreateOSPolicyAssignment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateOSPolicyAssignment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -87,7 +87,7 @@ OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(
         request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::UpdateOSPolicyAssignment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateOSPolicyAssignment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -159,7 +159,7 @@ OsConfigZonalServiceTracingConnection::DeleteOSPolicyAssignment(
         request) {
   auto span = internal::MakeSpan(
       "osconfig_v1::OsConfigZonalServiceConnection::DeleteOSPolicyAssignment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteOSPolicyAssignment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

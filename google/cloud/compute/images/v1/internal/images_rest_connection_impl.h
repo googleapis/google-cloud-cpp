@@ -54,12 +54,12 @@ class ImagesRestConnectionImpl : public compute_images_v1::ImagesConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteImage(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImage(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
@@ -67,12 +67,12 @@ class ImagesRestConnectionImpl : public compute_images_v1::ImagesConnection {
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Deprecate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Image> GetImage(
@@ -92,12 +92,12 @@ class ImagesRestConnectionImpl : public compute_images_v1::ImagesConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertImage(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImage(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Image> ListImages(
@@ -109,12 +109,12 @@ class ImagesRestConnectionImpl : public compute_images_v1::ImagesConnection {
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchImage(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::PatchImageRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImage(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -126,12 +126,12 @@ class ImagesRestConnectionImpl : public compute_images_v1::ImagesConnection {
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

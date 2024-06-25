@@ -79,7 +79,7 @@ DataFusionTracingConnection::CreateInstance(
     google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("datafusion_v1::DataFusionConnection::CreateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -112,7 +112,7 @@ DataFusionTracingConnection::DeleteInstance(
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("datafusion_v1::DataFusionConnection::DeleteInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -145,7 +145,7 @@ DataFusionTracingConnection::UpdateInstance(
     google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
   auto span =
       internal::MakeSpan("datafusion_v1::DataFusionConnection::UpdateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -178,7 +178,7 @@ DataFusionTracingConnection::RestartInstance(
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "datafusion_v1::DataFusionConnection::RestartInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RestartInstance(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

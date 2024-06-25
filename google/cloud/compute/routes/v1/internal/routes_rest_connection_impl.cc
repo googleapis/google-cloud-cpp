@@ -104,7 +104,7 @@ RoutesRestConnectionImpl::DeleteRoute(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutesRestConnectionImpl::DeleteRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -121,7 +121,7 @@ RoutesRestConnectionImpl::DeleteRoute(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesRestConnectionImpl::DeleteRoute(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -249,7 +249,7 @@ RoutesRestConnectionImpl::InsertRoute(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutesRestConnectionImpl::InsertRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -266,7 +266,7 @@ RoutesRestConnectionImpl::InsertRoute(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesRestConnectionImpl::InsertRoute(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -157,7 +157,7 @@ InterconnectAttachmentsRestConnectionImpl::DeleteInterconnectAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsRestConnectionImpl::DeleteInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         DeleteInterconnectAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -175,7 +175,7 @@ InterconnectAttachmentsRestConnectionImpl::DeleteInterconnectAttachment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsRestConnectionImpl::DeleteInterconnectAttachment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -307,7 +307,7 @@ InterconnectAttachmentsRestConnectionImpl::InsertInterconnectAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsRestConnectionImpl::InsertInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         InsertInterconnectAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -325,7 +325,7 @@ InterconnectAttachmentsRestConnectionImpl::InsertInterconnectAttachment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsRestConnectionImpl::InsertInterconnectAttachment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -481,7 +481,7 @@ InterconnectAttachmentsRestConnectionImpl::PatchInterconnectAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsRestConnectionImpl::PatchInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         PatchInterconnectAttachmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -499,7 +499,7 @@ InterconnectAttachmentsRestConnectionImpl::PatchInterconnectAttachment(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsRestConnectionImpl::PatchInterconnectAttachment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -615,7 +615,7 @@ InterconnectAttachmentsRestConnectionImpl::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsRestConnectionImpl::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         SetLabelsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -632,7 +632,7 @@ InterconnectAttachmentsRestConnectionImpl::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsRestConnectionImpl::SetLabels(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -150,7 +150,7 @@ ForwardingRulesRestConnectionImpl::DeleteForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestConnectionImpl::DeleteForwardingRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::
         DeleteForwardingRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -167,7 +167,7 @@ ForwardingRulesRestConnectionImpl::DeleteForwardingRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestConnectionImpl::DeleteForwardingRule(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -299,7 +299,7 @@ ForwardingRulesRestConnectionImpl::InsertForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestConnectionImpl::InsertForwardingRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::
         InsertForwardingRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -316,7 +316,7 @@ ForwardingRulesRestConnectionImpl::InsertForwardingRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestConnectionImpl::InsertForwardingRule(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -470,7 +470,7 @@ ForwardingRulesRestConnectionImpl::PatchForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestConnectionImpl::PatchForwardingRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::
         PatchForwardingRuleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -487,7 +487,7 @@ ForwardingRulesRestConnectionImpl::PatchForwardingRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestConnectionImpl::PatchForwardingRule(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -603,7 +603,7 @@ ForwardingRulesRestConnectionImpl::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestConnectionImpl::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -620,7 +620,7 @@ ForwardingRulesRestConnectionImpl::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestConnectionImpl::SetLabels(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -736,7 +736,7 @@ ForwardingRulesRestConnectionImpl::SetTarget(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ForwardingRulesRestConnectionImpl::SetTarget(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -753,7 +753,7 @@ ForwardingRulesRestConnectionImpl::SetTarget(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ForwardingRulesRestConnectionImpl::SetTarget(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

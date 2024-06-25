@@ -120,7 +120,7 @@ SnapshotSettingsRestConnectionImpl::PatchSnapshotSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotSettingsRestConnectionImpl::PatchSnapshotSettings(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::snapshot_settings::v1::
         PatchSnapshotSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -137,7 +137,7 @@ SnapshotSettingsRestConnectionImpl::PatchSnapshotSettings(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsRestConnectionImpl::PatchSnapshotSettings(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

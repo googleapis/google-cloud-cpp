@@ -83,7 +83,7 @@ WebRiskServiceTracingConnection::SubmitUri(
     google::cloud::webrisk::v1::SubmitUriRequest const& request) {
   auto span =
       internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SubmitUri");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SubmitUri(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

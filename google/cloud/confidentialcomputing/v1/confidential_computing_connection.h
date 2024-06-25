@@ -21,7 +21,6 @@
 
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection_idempotency_policy.h"
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

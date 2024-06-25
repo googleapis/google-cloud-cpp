@@ -48,7 +48,7 @@ VpcAccessServiceTracingConnection::CreateConnector(
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::CreateConnector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateConnector(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ VpcAccessServiceTracingConnection::DeleteConnector(
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   auto span = internal::MakeSpan(
       "vpcaccess_v1::VpcAccessServiceConnection::DeleteConnector");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteConnector(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

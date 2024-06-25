@@ -22,11 +22,11 @@
 
 #include "google/cloud/compute/target_https_proxies/v1/internal/target_https_proxies_retry_traits.h"
 #include "google/cloud/compute/target_https_proxies/v1/target_https_proxies_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -203,14 +203,13 @@ class TargetHttpsProxiesConnection {
                              DeleteTargetHttpsProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteTargetHttpsProxy(google::cloud::ExperimentalTag,
-                         google::cloud::NoAwaitTag,
+  DeleteTargetHttpsProxy(ExperimentalTag, NoAwaitTag,
                          google::cloud::cpp::compute::target_https_proxies::v1::
                              DeleteTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetHttpsProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -222,14 +221,13 @@ class TargetHttpsProxiesConnection {
                              InsertTargetHttpsProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertTargetHttpsProxy(google::cloud::ExperimentalTag,
-                         google::cloud::NoAwaitTag,
+  InsertTargetHttpsProxy(ExperimentalTag, NoAwaitTag,
                          google::cloud::cpp::compute::target_https_proxies::v1::
                              InsertTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetHttpsProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -241,14 +239,13 @@ class TargetHttpsProxiesConnection {
                             PatchTargetHttpsProxyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchTargetHttpsProxy(google::cloud::ExperimentalTag,
-                        google::cloud::NoAwaitTag,
+  PatchTargetHttpsProxy(ExperimentalTag, NoAwaitTag,
                         google::cloud::cpp::compute::target_https_proxies::v1::
                             PatchTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetHttpsProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -256,13 +253,13 @@ class TargetHttpsProxiesConnection {
                         SetCertificateMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCertificateMap(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetCertificateMap(ExperimentalTag, NoAwaitTag,
                     google::cloud::cpp::compute::target_https_proxies::v1::
                         SetCertificateMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCertificateMap(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -270,12 +267,12 @@ class TargetHttpsProxiesConnection {
                       SetQuicOverrideRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetQuicOverride(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           SetQuicOverrideRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetQuicOverride(google::cloud::ExperimentalTag,
+  SetQuicOverride(ExperimentalTag,
                   google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -283,13 +280,13 @@ class TargetHttpsProxiesConnection {
                          SetSslCertificatesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSslCertificates(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetSslCertificates(ExperimentalTag, NoAwaitTag,
                      google::cloud::cpp::compute::target_https_proxies::v1::
                          SetSslCertificatesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslCertificates(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -297,12 +294,12 @@ class TargetHttpsProxiesConnection {
                    SetSslPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           SetSslPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSslPolicy(google::cloud::ExperimentalTag,
+  SetSslPolicy(ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -310,12 +307,12 @@ class TargetHttpsProxiesConnection {
                 SetUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           SetUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUrlMap(google::cloud::ExperimentalTag,
+  SetUrlMap(ExperimentalTag,
             google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

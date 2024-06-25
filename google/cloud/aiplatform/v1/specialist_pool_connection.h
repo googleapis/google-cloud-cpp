@@ -21,11 +21,11 @@
 
 #include "google/cloud/aiplatform/v1/internal/specialist_pool_retry_traits.h"
 #include "google/cloud/aiplatform/v1/specialist_pool_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -200,12 +200,12 @@ class SpecialistPoolServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(google::cloud::ExperimentalTag,
+  CreateSpecialistPool(ExperimentalTag,
                        google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
@@ -223,13 +223,13 @@ class SpecialistPoolServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(google::cloud::ExperimentalTag,
+  DeleteSpecialistPool(ExperimentalTag,
                        google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
@@ -238,12 +238,12 @@ class SpecialistPoolServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(google::cloud::ExperimentalTag,
+  UpdateSpecialistPool(ExperimentalTag,
                        google::longrunning::Operation const& operation);
 };
 

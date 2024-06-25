@@ -50,7 +50,7 @@ NodeGroupsTracingConnection::AddNodes(
         request) {
   auto span = internal::MakeSpan(
       "compute_node_groups_v1::NodeGroupsConnection::AddNodes");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddNodes(google::cloud::ExperimentalTag{},
                               google::cloud::NoAwaitTag{}, request));
@@ -99,7 +99,7 @@ NodeGroupsTracingConnection::DeleteNodeGroup(
         request) {
   auto span = internal::MakeSpan(
       "compute_node_groups_v1::NodeGroupsConnection::DeleteNodeGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteNodeGroup(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ NodeGroupsTracingConnection::DeleteNodes(
         request) {
   auto span = internal::MakeSpan(
       "compute_node_groups_v1::NodeGroupsConnection::DeleteNodes");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteNodes(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -189,7 +189,7 @@ NodeGroupsTracingConnection::InsertNodeGroup(
         request) {
   auto span = internal::MakeSpan(
       "compute_node_groups_v1::NodeGroupsConnection::InsertNodeGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertNodeGroup(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -249,7 +249,7 @@ NodeGroupsTracingConnection::PatchNodeGroup(
         request) {
   auto span = internal::MakeSpan(
       "compute_node_groups_v1::NodeGroupsConnection::PatchNodeGroup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchNodeGroup(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -285,7 +285,7 @@ NodeGroupsTracingConnection::PerformMaintenance(
         PerformMaintenanceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_node_groups_v1::NodeGroupsConnection::PerformMaintenance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PerformMaintenance(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -330,7 +330,7 @@ NodeGroupsTracingConnection::SetNodeTemplate(
         request) {
   auto span = internal::MakeSpan(
       "compute_node_groups_v1::NodeGroupsConnection::SetNodeTemplate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetNodeTemplate(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -366,7 +366,7 @@ NodeGroupsTracingConnection::SimulateMaintenanceEvent(
         SimulateMaintenanceEventRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_node_groups_v1::NodeGroupsConnection::SimulateMaintenanceEvent");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->SimulateMaintenanceEvent(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

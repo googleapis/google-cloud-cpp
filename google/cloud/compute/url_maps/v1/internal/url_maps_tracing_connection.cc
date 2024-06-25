@@ -64,7 +64,7 @@ UrlMapsTracingConnection::DeleteUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::DeleteUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteUrlMap(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -109,7 +109,7 @@ UrlMapsTracingConnection::InsertUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::InsertUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertUrlMap(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -144,7 +144,7 @@ UrlMapsTracingConnection::InvalidateCache(
         request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::InvalidateCache");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InvalidateCache(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -190,7 +190,7 @@ UrlMapsTracingConnection::PatchUrlMap(
         request) {
   auto span =
       internal::MakeSpan("compute_url_maps_v1::UrlMapsConnection::PatchUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchUrlMap(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -225,7 +225,7 @@ UrlMapsTracingConnection::UpdateUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_url_maps_v1::UrlMapsConnection::UpdateUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateUrlMap(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

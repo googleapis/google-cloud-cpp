@@ -56,7 +56,7 @@ CloudShellServiceTracingConnection::StartEnvironment(
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::StartEnvironment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StartEnvironment(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -90,7 +90,7 @@ CloudShellServiceTracingConnection::AuthorizeEnvironment(
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::AuthorizeEnvironment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->AuthorizeEnvironment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -123,7 +123,7 @@ CloudShellServiceTracingConnection::AddPublicKey(
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   auto span =
       internal::MakeSpan("shell_v1::CloudShellServiceConnection::AddPublicKey");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddPublicKey(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -156,7 +156,7 @@ CloudShellServiceTracingConnection::RemovePublicKey(
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::RemovePublicKey");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemovePublicKey(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

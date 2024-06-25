@@ -94,7 +94,7 @@ VizierServiceTracingConnection::SuggestTrials(
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::SuggestTrials");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SuggestTrials(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -186,7 +186,7 @@ VizierServiceTracingConnection::CheckTrialEarlyStoppingState(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::CheckTrialEarlyStoppingState");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CheckTrialEarlyStoppingState(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

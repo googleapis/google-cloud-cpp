@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/machine_images/v1/internal/machine_images_retry_traits.h"
 #include "google/cloud/compute/machine_images/v1/machine_images_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,13 +192,13 @@ class MachineImagesConnection {
                          DeleteMachineImageRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteMachineImage(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  DeleteMachineImage(ExperimentalTag, NoAwaitTag,
                      google::cloud::cpp::compute::machine_images::v1::
                          DeleteMachineImageRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteMachineImage(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::MachineImage>
@@ -214,13 +214,13 @@ class MachineImagesConnection {
                          InsertMachineImageRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertMachineImage(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  InsertMachineImage(ExperimentalTag, NoAwaitTag,
                      google::cloud::cpp::compute::machine_images::v1::
                          InsertMachineImageRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertMachineImage(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::MachineImage>

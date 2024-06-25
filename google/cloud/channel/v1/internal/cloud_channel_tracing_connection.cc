@@ -116,7 +116,7 @@ CloudChannelServiceTracingConnection::ProvisionCloudIdentity(
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ProvisionCloudIdentity");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ProvisionCloudIdentity(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -193,7 +193,7 @@ CloudChannelServiceTracingConnection::CreateEntitlement(
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::CreateEntitlement");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEntitlement(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -226,7 +226,7 @@ CloudChannelServiceTracingConnection::ChangeParameters(
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeParameters");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ChangeParameters(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -260,7 +260,7 @@ CloudChannelServiceTracingConnection::ChangeRenewalSettings(
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeRenewalSettings");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ChangeRenewalSettings(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -293,7 +293,7 @@ CloudChannelServiceTracingConnection::ChangeOffer(
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ChangeOffer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ChangeOffer(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -326,7 +326,7 @@ CloudChannelServiceTracingConnection::StartPaidService(
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::StartPaidService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StartPaidService(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -360,7 +360,7 @@ CloudChannelServiceTracingConnection::SuspendEntitlement(
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::SuspendEntitlement");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SuspendEntitlement(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -393,7 +393,7 @@ CloudChannelServiceTracingConnection::CancelEntitlement(
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::CancelEntitlement");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CancelEntitlement(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -427,7 +427,7 @@ CloudChannelServiceTracingConnection::ActivateEntitlement(
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::ActivateEntitlement");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ActivateEntitlement(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -461,7 +461,7 @@ CloudChannelServiceTracingConnection::TransferEntitlements(
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::TransferEntitlements");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->TransferEntitlements(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -499,7 +499,7 @@ CloudChannelServiceTracingConnection::TransferEntitlementsToGoogle(
   auto span = internal::MakeSpan(
       "channel_v1::CloudChannelServiceConnection::"
       "TransferEntitlementsToGoogle");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->TransferEntitlementsToGoogle(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

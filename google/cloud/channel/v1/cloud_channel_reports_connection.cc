@@ -49,7 +49,7 @@ CloudChannelReportsServiceConnection::RunReportJob(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelReportsServiceConnection::RunReportJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::RunReportJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -57,7 +57,7 @@ CloudChannelReportsServiceConnection::RunReportJob(
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
 CloudChannelReportsServiceConnection::RunReportJob(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::channel::v1::RunReportJobResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

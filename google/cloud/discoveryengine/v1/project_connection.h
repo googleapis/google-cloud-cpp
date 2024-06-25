@@ -21,11 +21,11 @@
 
 #include "google/cloud/discoveryengine/v1/internal/project_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/project_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,12 +192,12 @@ class ProjectServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> ProvisionProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject(google::cloud::ExperimentalTag,
+  ProvisionProject(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 };
 

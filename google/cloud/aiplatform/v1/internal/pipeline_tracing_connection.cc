@@ -82,7 +82,7 @@ PipelineServiceTracingConnection::DeleteTrainingPipeline(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::DeleteTrainingPipeline");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteTrainingPipeline(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -154,7 +154,7 @@ PipelineServiceTracingConnection::DeletePipelineJob(
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::DeletePipelineJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeletePipelineJob(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -190,7 +190,7 @@ PipelineServiceTracingConnection::BatchDeletePipelineJobs(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::BatchDeletePipelineJobs");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchDeletePipelineJobs(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -234,7 +234,7 @@ PipelineServiceTracingConnection::BatchCancelPipelineJobs(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::BatchCancelPipelineJobs");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchCancelPipelineJobs(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

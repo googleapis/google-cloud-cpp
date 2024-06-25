@@ -48,7 +48,7 @@ CloudBuildTracingConnection::CreateBuild(
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   auto span =
       internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::CreateBuild");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBuild(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -110,7 +110,7 @@ CloudBuildTracingConnection::RetryBuild(
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   auto span =
       internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::RetryBuild");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RetryBuild(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -143,7 +143,7 @@ CloudBuildTracingConnection::ApproveBuild(
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   auto span =
       internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::ApproveBuild");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ApproveBuild(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -226,7 +226,7 @@ CloudBuildTracingConnection::RunBuildTrigger(
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v1::CloudBuildConnection::RunBuildTrigger");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RunBuildTrigger(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -269,7 +269,7 @@ CloudBuildTracingConnection::CreateWorkerPool(
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v1::CloudBuildConnection::CreateWorkerPool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateWorkerPool(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -312,7 +312,7 @@ CloudBuildTracingConnection::DeleteWorkerPool(
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v1::CloudBuildConnection::DeleteWorkerPool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteWorkerPool(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -346,7 +346,7 @@ CloudBuildTracingConnection::UpdateWorkerPool(
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   auto span = internal::MakeSpan(
       "cloudbuild_v1::CloudBuildConnection::UpdateWorkerPool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateWorkerPool(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

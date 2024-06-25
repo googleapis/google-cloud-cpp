@@ -50,7 +50,7 @@ SnapshotsTracingConnection::DeleteSnapshot(
         request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::DeleteSnapshot");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSnapshot(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -105,7 +105,7 @@ SnapshotsTracingConnection::InsertSnapshot(
         request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::InsertSnapshot");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertSnapshot(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -162,7 +162,7 @@ SnapshotsTracingConnection::SetLabels(
         request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::SetLabels");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetLabels(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));

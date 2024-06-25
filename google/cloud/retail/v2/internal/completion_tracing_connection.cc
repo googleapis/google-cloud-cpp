@@ -57,7 +57,7 @@ CompletionServiceTracingConnection::ImportCompletionData(
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::CompletionServiceConnection::ImportCompletionData");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ImportCompletionData(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

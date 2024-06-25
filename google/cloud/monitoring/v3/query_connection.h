@@ -21,7 +21,6 @@
 
 #include "google/cloud/monitoring/v3/internal/query_retry_traits.h"
 #include "google/cloud/monitoring/v3/query_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

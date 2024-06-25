@@ -48,7 +48,7 @@ AzureClustersTracingConnection::CreateAzureClient(
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AzureClustersConnection::CreateAzureClient");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAzureClient(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ AzureClustersTracingConnection::DeleteAzureClient(
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AzureClustersConnection::DeleteAzureClient");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAzureClient(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -138,7 +138,7 @@ AzureClustersTracingConnection::CreateAzureCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AzureClustersConnection::CreateAzureCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAzureCluster(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -174,7 +174,7 @@ AzureClustersTracingConnection::UpdateAzureCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AzureClustersConnection::UpdateAzureCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAzureCluster(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -231,7 +231,7 @@ AzureClustersTracingConnection::DeleteAzureCluster(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AzureClustersConnection::DeleteAzureCluster");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAzureCluster(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -290,7 +290,7 @@ AzureClustersTracingConnection::CreateAzureNodePool(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AzureClustersConnection::CreateAzureNodePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAzureNodePool(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -326,7 +326,7 @@ AzureClustersTracingConnection::UpdateAzureNodePool(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AzureClustersConnection::UpdateAzureNodePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateAzureNodePool(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -383,7 +383,7 @@ AzureClustersTracingConnection::DeleteAzureNodePool(
         request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AzureClustersConnection::DeleteAzureNodePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAzureNodePool(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

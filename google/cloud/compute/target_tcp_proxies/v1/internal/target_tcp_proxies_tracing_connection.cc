@@ -70,7 +70,7 @@ TargetTcpProxiesTracingConnection::DeleteTargetTcpProxy(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "DeleteTargetTcpProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteTargetTcpProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -120,7 +120,7 @@ TargetTcpProxiesTracingConnection::InsertTargetTcpProxy(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "InsertTargetTcpProxy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertTargetTcpProxy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -172,7 +172,7 @@ TargetTcpProxiesTracingConnection::SetBackendService(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "SetBackendService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetBackendService(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -210,7 +210,7 @@ TargetTcpProxiesTracingConnection::SetProxyHeader(
   auto span = internal::MakeSpan(
       "compute_target_tcp_proxies_v1::TargetTcpProxiesConnection::"
       "SetProxyHeader");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SetProxyHeader(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

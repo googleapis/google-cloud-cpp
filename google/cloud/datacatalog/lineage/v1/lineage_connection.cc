@@ -81,14 +81,14 @@ LineageConnection::DeleteProcess(
 }
 
 StatusOr<google::longrunning::Operation> LineageConnection::DeleteProcess(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-LineageConnection::DeleteProcess(google::cloud::ExperimentalTag,
+LineageConnection::DeleteProcess(ExperimentalTag,
                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(
@@ -130,14 +130,14 @@ LineageConnection::DeleteRun(
 }
 
 StatusOr<google::longrunning::Operation> LineageConnection::DeleteRun(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-LineageConnection::DeleteRun(google::cloud::ExperimentalTag,
+LineageConnection::DeleteRun(ExperimentalTag,
                              google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>(

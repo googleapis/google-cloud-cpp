@@ -79,7 +79,7 @@ RegionCommitmentsTracingConnection::InsertCommitment(
   auto span = internal::MakeSpan(
       "compute_region_commitments_v1::RegionCommitmentsConnection::"
       "InsertCommitment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertCommitment(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -131,7 +131,7 @@ RegionCommitmentsTracingConnection::UpdateCommitment(
   auto span = internal::MakeSpan(
       "compute_region_commitments_v1::RegionCommitmentsConnection::"
       "UpdateCommitment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCommitment(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

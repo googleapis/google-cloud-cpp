@@ -56,7 +56,7 @@ ApplicationsTracingConnection::CreateApplication(
     google::appengine::v1::CreateApplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::ApplicationsConnection::CreateApplication");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateApplication(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -89,7 +89,7 @@ ApplicationsTracingConnection::UpdateApplication(
     google::appengine::v1::UpdateApplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::ApplicationsConnection::UpdateApplication");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateApplication(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -122,7 +122,7 @@ ApplicationsTracingConnection::RepairApplication(
     google::appengine::v1::RepairApplicationRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::ApplicationsConnection::RepairApplication");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RepairApplication(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));

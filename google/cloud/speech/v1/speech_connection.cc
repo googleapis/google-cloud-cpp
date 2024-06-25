@@ -52,14 +52,14 @@ SpeechConnection::LongRunningRecognize(
 }
 
 StatusOr<google::longrunning::Operation> SpeechConnection::LongRunningRecognize(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::speech::v1::LongRunningRecognizeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-SpeechConnection::LongRunningRecognize(google::cloud::ExperimentalTag,
+SpeechConnection::LongRunningRecognize(ExperimentalTag,
                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>(

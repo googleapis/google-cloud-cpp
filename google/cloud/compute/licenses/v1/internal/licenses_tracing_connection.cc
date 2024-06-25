@@ -50,7 +50,7 @@ LicensesTracingConnection::DeleteLicense(
         request) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::DeleteLicense");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteLicense(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -105,7 +105,7 @@ LicensesTracingConnection::InsertLicense(
         request) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::InsertLicense");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertLicense(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

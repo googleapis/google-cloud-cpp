@@ -149,7 +149,7 @@ StoragePoolsRestConnectionImpl::DeleteStoragePool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsRestConnectionImpl::DeleteStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::storage_pools::v1::
         DeleteStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -166,7 +166,7 @@ StoragePoolsRestConnectionImpl::DeleteStoragePool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsRestConnectionImpl::DeleteStoragePool(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -314,7 +314,7 @@ StoragePoolsRestConnectionImpl::InsertStoragePool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsRestConnectionImpl::InsertStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::storage_pools::v1::
         InsertStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -331,7 +331,7 @@ StoragePoolsRestConnectionImpl::InsertStoragePool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsRestConnectionImpl::InsertStoragePool(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -552,7 +552,7 @@ StoragePoolsRestConnectionImpl::UpdateStoragePool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsRestConnectionImpl::UpdateStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::storage_pools::v1::
         UpdateStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -569,7 +569,7 @@ StoragePoolsRestConnectionImpl::UpdateStoragePool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsRestConnectionImpl::UpdateStoragePool(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

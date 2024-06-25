@@ -48,7 +48,7 @@ SpeechTracingConnection::CreateRecognizer(
     google::cloud::speech::v2::CreateRecognizerRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::CreateRecognizer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateRecognizer(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -100,7 +100,7 @@ SpeechTracingConnection::UpdateRecognizer(
     google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UpdateRecognizer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateRecognizer(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -133,7 +133,7 @@ SpeechTracingConnection::DeleteRecognizer(
     google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::DeleteRecognizer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteRecognizer(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -167,7 +167,7 @@ SpeechTracingConnection::UndeleteRecognizer(
     google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UndeleteRecognizer");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UndeleteRecognizer(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -213,7 +213,7 @@ SpeechTracingConnection::BatchRecognize(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::speech::v2::BatchRecognizeRequest const& request) {
   auto span = internal::MakeSpan("speech_v2::SpeechConnection::BatchRecognize");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchRecognize(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -260,7 +260,7 @@ SpeechTracingConnection::CreateCustomClass(
     google::cloud::speech::v2::CreateCustomClassRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::CreateCustomClass");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateCustomClass(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -312,7 +312,7 @@ SpeechTracingConnection::UpdateCustomClass(
     google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UpdateCustomClass");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateCustomClass(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -345,7 +345,7 @@ SpeechTracingConnection::DeleteCustomClass(
     google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::DeleteCustomClass");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteCustomClass(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -379,7 +379,7 @@ SpeechTracingConnection::UndeleteCustomClass(
     google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UndeleteCustomClass");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UndeleteCustomClass(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -412,7 +412,7 @@ SpeechTracingConnection::CreatePhraseSet(
     google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::CreatePhraseSet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreatePhraseSet(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -463,7 +463,7 @@ SpeechTracingConnection::UpdatePhraseSet(
     google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UpdatePhraseSet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdatePhraseSet(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -496,7 +496,7 @@ SpeechTracingConnection::DeletePhraseSet(
     google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::DeletePhraseSet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeletePhraseSet(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -529,7 +529,7 @@ SpeechTracingConnection::UndeletePhraseSet(
     google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UndeletePhraseSet");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UndeletePhraseSet(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));

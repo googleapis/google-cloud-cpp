@@ -57,7 +57,7 @@ RegionHealthCheckServicesTracingConnection::DeleteHealthCheckService(
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::DeleteHealthCheckService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteHealthCheckService(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -107,7 +107,7 @@ RegionHealthCheckServicesTracingConnection::InsertHealthCheckService(
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::InsertHealthCheckService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertHealthCheckService(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -160,7 +160,7 @@ RegionHealthCheckServicesTracingConnection::PatchHealthCheckService(
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::PatchHealthCheckService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->PatchHealthCheckService(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -85,7 +85,7 @@ StatusOr<google::longrunning::Operation> FlowsTracingConnection::TrainFlow(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::TrainFlow");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->TrainFlow(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -132,7 +132,7 @@ StatusOr<google::longrunning::Operation> FlowsTracingConnection::ImportFlow(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::ImportFlow");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportFlow(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -161,7 +161,7 @@ StatusOr<google::longrunning::Operation> FlowsTracingConnection::ExportFlow(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::ExportFlow");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportFlow(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

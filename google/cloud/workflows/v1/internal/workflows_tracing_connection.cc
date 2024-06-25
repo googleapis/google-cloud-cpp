@@ -68,7 +68,7 @@ WorkflowsTracingConnection::CreateWorkflow(
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   auto span =
       internal::MakeSpan("workflows_v1::WorkflowsConnection::CreateWorkflow");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateWorkflow(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ WorkflowsTracingConnection::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   auto span =
       internal::MakeSpan("workflows_v1::WorkflowsConnection::DeleteWorkflow");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteWorkflow(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ WorkflowsTracingConnection::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   auto span =
       internal::MakeSpan("workflows_v1::WorkflowsConnection::UpdateWorkflow");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateWorkflow(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

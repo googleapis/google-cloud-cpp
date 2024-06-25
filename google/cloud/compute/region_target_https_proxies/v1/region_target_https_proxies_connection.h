@@ -22,11 +22,11 @@
 
 #include "google/cloud/compute/region_target_https_proxies/v1/internal/region_target_https_proxies_retry_traits.h"
 #include "google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -210,13 +210,13 @@ class RegionTargetHttpsProxiesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteTargetHttpsProxy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           DeleteTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetHttpsProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -230,13 +230,13 @@ class RegionTargetHttpsProxiesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertTargetHttpsProxy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           InsertTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetHttpsProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -251,13 +251,13 @@ class RegionTargetHttpsProxiesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchTargetHttpsProxy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           PatchTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetHttpsProxy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -265,13 +265,13 @@ class RegionTargetHttpsProxiesConnection {
                          v1::SetSslCertificatesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSslCertificates(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  SetSslCertificates(ExperimentalTag, NoAwaitTag,
                      google::cloud::cpp::compute::region_target_https_proxies::
                          v1::SetSslCertificatesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslCertificates(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -279,12 +279,12 @@ class RegionTargetHttpsProxiesConnection {
                 SetUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_target_https_proxies::v1::
           SetUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUrlMap(google::cloud::ExperimentalTag,
+  SetUrlMap(ExperimentalTag,
             google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

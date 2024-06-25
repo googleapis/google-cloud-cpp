@@ -105,7 +105,7 @@ HttpsHealthChecksRestConnectionImpl::DeleteHttpsHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpsHealthChecksRestConnectionImpl::DeleteHttpsHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::https_health_checks::v1::
         DeleteHttpsHealthCheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -122,7 +122,7 @@ HttpsHealthChecksRestConnectionImpl::DeleteHttpsHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpsHealthChecksRestConnectionImpl::DeleteHttpsHealthCheck(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -250,7 +250,7 @@ HttpsHealthChecksRestConnectionImpl::InsertHttpsHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpsHealthChecksRestConnectionImpl::InsertHttpsHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::https_health_checks::v1::
         InsertHttpsHealthCheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -267,7 +267,7 @@ HttpsHealthChecksRestConnectionImpl::InsertHttpsHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpsHealthChecksRestConnectionImpl::InsertHttpsHealthCheck(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -419,7 +419,7 @@ HttpsHealthChecksRestConnectionImpl::PatchHttpsHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpsHealthChecksRestConnectionImpl::PatchHttpsHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::https_health_checks::v1::
         PatchHttpsHealthCheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -436,7 +436,7 @@ HttpsHealthChecksRestConnectionImpl::PatchHttpsHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpsHealthChecksRestConnectionImpl::PatchHttpsHealthCheck(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -548,7 +548,7 @@ HttpsHealthChecksRestConnectionImpl::UpdateHttpsHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpsHealthChecksRestConnectionImpl::UpdateHttpsHealthCheck(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::https_health_checks::v1::
         UpdateHttpsHealthCheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -565,7 +565,7 @@ HttpsHealthChecksRestConnectionImpl::UpdateHttpsHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpsHealthChecksRestConnectionImpl::UpdateHttpsHealthCheck(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

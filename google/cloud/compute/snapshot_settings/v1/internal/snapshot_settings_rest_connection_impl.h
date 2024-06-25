@@ -61,13 +61,13 @@ class SnapshotSettingsRestConnectionImpl
           PatchSnapshotSettingsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::snapshot_settings::v1::
           PatchSnapshotSettingsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSnapshotSettings(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

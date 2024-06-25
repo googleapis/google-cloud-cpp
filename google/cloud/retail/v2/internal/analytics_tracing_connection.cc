@@ -48,7 +48,7 @@ AnalyticsServiceTracingConnection::ExportAnalyticsMetrics(
     google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::AnalyticsServiceConnection::ExportAnalyticsMetrics");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->ExportAnalyticsMetrics(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

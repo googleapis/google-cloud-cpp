@@ -62,7 +62,7 @@ PoliciesTracingConnection::CreatePolicy(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::iam::v2::CreatePolicyRequest const& request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::CreatePolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreatePolicy(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -92,7 +92,7 @@ PoliciesTracingConnection::UpdatePolicy(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::iam::v2::UpdatePolicyRequest const& request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::UpdatePolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdatePolicy(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -122,7 +122,7 @@ PoliciesTracingConnection::DeletePolicy(
     google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
     google::iam::v2::DeletePolicyRequest const& request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::DeletePolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeletePolicy(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

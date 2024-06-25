@@ -21,7 +21,6 @@
 
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_retry_traits.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

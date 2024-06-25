@@ -63,7 +63,7 @@ MigrationServiceTracingConnection::BatchMigrateResources(
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::MigrationServiceConnection::BatchMigrateResources");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->BatchMigrateResources(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

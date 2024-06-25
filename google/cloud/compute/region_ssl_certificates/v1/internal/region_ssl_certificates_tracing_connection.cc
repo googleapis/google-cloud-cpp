@@ -56,7 +56,7 @@ RegionSslCertificatesTracingConnection::DeleteSslCertificate(
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
       "DeleteSslCertificate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteSslCertificate(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -106,7 +106,7 @@ RegionSslCertificatesTracingConnection::InsertSslCertificate(
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
       "InsertSslCertificate");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertSslCertificate(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

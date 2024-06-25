@@ -48,7 +48,7 @@ RegionBackendServicesConnection::DeleteBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesConnection::DeleteBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_backend_services::v1::
         DeleteBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -57,8 +57,7 @@ RegionBackendServicesConnection::DeleteBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesConnection::DeleteBackendService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -96,7 +95,7 @@ RegionBackendServicesConnection::InsertBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesConnection::InsertBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_backend_services::v1::
         InsertBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -105,8 +104,7 @@ RegionBackendServicesConnection::InsertBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesConnection::InsertBackendService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -139,7 +137,7 @@ RegionBackendServicesConnection::PatchBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesConnection::PatchBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_backend_services::v1::
         PatchBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -148,8 +146,7 @@ RegionBackendServicesConnection::PatchBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesConnection::PatchBackendService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -173,7 +170,7 @@ RegionBackendServicesConnection::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesConnection::SetSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_backend_services::v1::
         SetSecurityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -182,8 +179,7 @@ RegionBackendServicesConnection::SetSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesConnection::SetSecurityPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -207,7 +203,7 @@ RegionBackendServicesConnection::UpdateBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesConnection::UpdateBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_backend_services::v1::
         UpdateBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -216,8 +212,7 @@ RegionBackendServicesConnection::UpdateBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesConnection::UpdateBackendService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

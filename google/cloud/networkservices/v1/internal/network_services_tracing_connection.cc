@@ -73,7 +73,7 @@ NetworkServicesTracingConnection::CreateEndpointPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateEndpointPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateEndpointPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -109,7 +109,7 @@ NetworkServicesTracingConnection::UpdateEndpointPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateEndpointPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateEndpointPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -145,7 +145,7 @@ NetworkServicesTracingConnection::DeleteEndpointPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteEndpointPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteEndpointPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -199,7 +199,7 @@ NetworkServicesTracingConnection::CreateGateway(
     google::cloud::networkservices::v1::CreateGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateGateway(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -232,7 +232,7 @@ NetworkServicesTracingConnection::UpdateGateway(
     google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateGateway(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -265,7 +265,7 @@ NetworkServicesTracingConnection::DeleteGateway(
     google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteGateway(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -319,7 +319,7 @@ NetworkServicesTracingConnection::CreateGrpcRoute(
     google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateGrpcRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateGrpcRoute(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -352,7 +352,7 @@ NetworkServicesTracingConnection::UpdateGrpcRoute(
     google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateGrpcRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateGrpcRoute(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -385,7 +385,7 @@ NetworkServicesTracingConnection::DeleteGrpcRoute(
     google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteGrpcRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteGrpcRoute(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -439,7 +439,7 @@ NetworkServicesTracingConnection::CreateHttpRoute(
     google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateHttpRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateHttpRoute(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -472,7 +472,7 @@ NetworkServicesTracingConnection::UpdateHttpRoute(
     google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateHttpRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateHttpRoute(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -505,7 +505,7 @@ NetworkServicesTracingConnection::DeleteHttpRoute(
     google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteHttpRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteHttpRoute(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -559,7 +559,7 @@ NetworkServicesTracingConnection::CreateTcpRoute(
     google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateTcpRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTcpRoute(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -592,7 +592,7 @@ NetworkServicesTracingConnection::UpdateTcpRoute(
     google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateTcpRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTcpRoute(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -625,7 +625,7 @@ NetworkServicesTracingConnection::DeleteTcpRoute(
     google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteTcpRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTcpRoute(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -679,7 +679,7 @@ NetworkServicesTracingConnection::CreateTlsRoute(
     google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateTlsRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTlsRoute(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -712,7 +712,7 @@ NetworkServicesTracingConnection::UpdateTlsRoute(
     google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateTlsRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTlsRoute(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -745,7 +745,7 @@ NetworkServicesTracingConnection::DeleteTlsRoute(
     google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteTlsRoute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTlsRoute(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -803,7 +803,7 @@ NetworkServicesTracingConnection::CreateServiceBinding(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateServiceBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateServiceBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -839,7 +839,7 @@ NetworkServicesTracingConnection::DeleteServiceBinding(
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteServiceBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteServiceBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -892,7 +892,7 @@ NetworkServicesTracingConnection::CreateMesh(
     google::cloud::networkservices::v1::CreateMeshRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::CreateMesh");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateMesh(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -925,7 +925,7 @@ NetworkServicesTracingConnection::UpdateMesh(
     google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::UpdateMesh");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateMesh(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -958,7 +958,7 @@ NetworkServicesTracingConnection::DeleteMesh(
     google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::NetworkServicesConnection::DeleteMesh");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteMesh(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

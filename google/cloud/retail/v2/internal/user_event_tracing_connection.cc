@@ -65,7 +65,7 @@ UserEventServiceTracingConnection::PurgeUserEvents(
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::PurgeUserEvents");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PurgeUserEvents(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -98,7 +98,7 @@ UserEventServiceTracingConnection::ImportUserEvents(
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::ImportUserEvents");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportUserEvents(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -131,7 +131,7 @@ UserEventServiceTracingConnection::RejoinUserEvents(
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::RejoinUserEvents");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RejoinUserEvents(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

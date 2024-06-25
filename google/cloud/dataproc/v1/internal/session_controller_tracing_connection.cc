@@ -48,7 +48,7 @@ SessionControllerTracingConnection::CreateSession(
     google::cloud::dataproc::v1::CreateSessionRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::CreateSession");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateSession(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ SessionControllerTracingConnection::TerminateSession(
     google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::TerminateSession");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->TerminateSession(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ SessionControllerTracingConnection::DeleteSession(
     google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::SessionControllerConnection::DeleteSession");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSession(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

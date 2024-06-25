@@ -65,7 +65,7 @@ SslPoliciesTracingConnection::DeleteSslPolicy(
         request) {
   auto span = internal::MakeSpan(
       "compute_ssl_policies_v1::SslPoliciesConnection::DeleteSslPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteSslPolicy(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -110,7 +110,7 @@ SslPoliciesTracingConnection::InsertSslPolicy(
         request) {
   auto span = internal::MakeSpan(
       "compute_ssl_policies_v1::SslPoliciesConnection::InsertSslPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertSslPolicy(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -169,7 +169,7 @@ SslPoliciesTracingConnection::PatchSslPolicy(
         request) {
   auto span = internal::MakeSpan(
       "compute_ssl_policies_v1::SslPoliciesConnection::PatchSslPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchSslPolicy(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/instance_groups/v1/instance_groups_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_groups/v1/internal/instance_groups_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,12 +192,12 @@ class InstanceGroupsConnection {
                    AddInstancesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_groups::v1::
           AddInstancesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddInstances(google::cloud::ExperimentalTag,
+  AddInstances(ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<std::pair<
@@ -211,13 +211,13 @@ class InstanceGroupsConnection {
                           DeleteInstanceGroupRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstanceGroup(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  DeleteInstanceGroup(ExperimentalTag, NoAwaitTag,
                       google::cloud::cpp::compute::instance_groups::v1::
                           DeleteInstanceGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -229,13 +229,13 @@ class InstanceGroupsConnection {
                           InsertInstanceGroupRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstanceGroup(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  InsertInstanceGroup(ExperimentalTag, NoAwaitTag,
                       google::cloud::cpp::compute::instance_groups::v1::
                           InsertInstanceGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceGroup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -252,12 +252,12 @@ class InstanceGroupsConnection {
                       RemoveInstancesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_groups::v1::
           RemoveInstancesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveInstances(google::cloud::ExperimentalTag,
+  RemoveInstances(ExperimentalTag,
                   google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -265,12 +265,12 @@ class InstanceGroupsConnection {
                     SetNamedPortsRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_groups::v1::
           SetNamedPortsRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetNamedPorts(google::cloud::ExperimentalTag,
+  SetNamedPorts(ExperimentalTag,
                 google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

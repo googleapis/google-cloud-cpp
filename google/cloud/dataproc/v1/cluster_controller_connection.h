@@ -21,11 +21,11 @@
 
 #include "google/cloud/dataproc/v1/cluster_controller_connection_idempotency_policy.h"
 #include "google/cloud/dataproc/v1/internal/cluster_controller_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -194,45 +194,41 @@ class ClusterControllerConnection {
       google::cloud::dataproc::v1::CreateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
       google::cloud::dataproc::v1::UpdateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::UpdateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
       google::cloud::dataproc::v1::StopClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> StopCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::StopClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
       google::cloud::dataproc::v1::StartClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> StartCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::StartClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
@@ -240,12 +236,12 @@ class ClusterControllerConnection {
       google::cloud::dataproc::v1::DeleteClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::DeleteClusterRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
-  DeleteCluster(google::cloud::ExperimentalTag,
+  DeleteCluster(ExperimentalTag,
                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
@@ -259,11 +255,11 @@ class ClusterControllerConnection {
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DiagnoseCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
-  DiagnoseCluster(google::cloud::ExperimentalTag,
+  DiagnoseCluster(ExperimentalTag,
                   google::longrunning::Operation const& operation);
 };
 

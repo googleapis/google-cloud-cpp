@@ -56,7 +56,7 @@ CompletionServiceConnection::ImportSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnection::ImportSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::
         ImportSuggestionDenyListEntriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -66,7 +66,7 @@ CompletionServiceConnection::ImportSuggestionDenyListEntries(
 future<StatusOr<google::cloud::discoveryengine::v1::
                     ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceConnection::ImportSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::
                    ImportSuggestionDenyListEntriesResponse>>(
@@ -86,7 +86,7 @@ CompletionServiceConnection::PurgeSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnection::PurgeSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::
         PurgeSuggestionDenyListEntriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -96,7 +96,7 @@ CompletionServiceConnection::PurgeSuggestionDenyListEntries(
 future<StatusOr<
     google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
 CompletionServiceConnection::PurgeSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::
                    PurgeSuggestionDenyListEntriesResponse>>(

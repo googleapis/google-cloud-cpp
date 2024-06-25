@@ -68,7 +68,7 @@ NotebookServiceTracingConnection::CreateInstance(
     google::cloud::notebooks::v2::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v2::NotebookServiceConnection::CreateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ NotebookServiceTracingConnection::UpdateInstance(
     google::cloud::notebooks::v2::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v2::NotebookServiceConnection::UpdateInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ NotebookServiceTracingConnection::DeleteInstance(
     google::cloud::notebooks::v2::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v2::NotebookServiceConnection::DeleteInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -167,7 +167,7 @@ NotebookServiceTracingConnection::StartInstance(
     google::cloud::notebooks::v2::StartInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v2::NotebookServiceConnection::StartInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StartInstance(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -200,7 +200,7 @@ NotebookServiceTracingConnection::StopInstance(
     google::cloud::notebooks::v2::StopInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v2::NotebookServiceConnection::StopInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->StopInstance(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -233,7 +233,7 @@ NotebookServiceTracingConnection::ResetInstance(
     google::cloud::notebooks::v2::ResetInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v2::NotebookServiceConnection::ResetInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ResetInstance(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -276,7 +276,7 @@ NotebookServiceTracingConnection::UpgradeInstance(
     google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v2::NotebookServiceConnection::UpgradeInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpgradeInstance(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -309,7 +309,7 @@ NotebookServiceTracingConnection::RollbackInstance(
     google::cloud::notebooks::v2::RollbackInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v2::NotebookServiceConnection::RollbackInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RollbackInstance(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -342,7 +342,7 @@ NotebookServiceTracingConnection::DiagnoseInstance(
     google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v2::NotebookServiceConnection::DiagnoseInstance");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DiagnoseInstance(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

@@ -77,7 +77,7 @@ AppGatewaysServiceTracingConnection::CreateAppGateway(
   auto span = internal::MakeSpan(
       "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
       "CreateAppGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateAppGateway(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -116,7 +116,7 @@ AppGatewaysServiceTracingConnection::DeleteAppGateway(
   auto span = internal::MakeSpan(
       "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
       "DeleteAppGateway");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteAppGateway(google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

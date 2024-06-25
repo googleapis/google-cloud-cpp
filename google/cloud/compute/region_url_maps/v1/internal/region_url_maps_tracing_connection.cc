@@ -50,7 +50,7 @@ RegionUrlMapsTracingConnection::DeleteUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_url_maps_v1::RegionUrlMapsConnection::DeleteUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteUrlMap(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -95,7 +95,7 @@ RegionUrlMapsTracingConnection::InsertUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_url_maps_v1::RegionUrlMapsConnection::InsertUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertUrlMap(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -142,7 +142,7 @@ RegionUrlMapsTracingConnection::PatchUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_url_maps_v1::RegionUrlMapsConnection::PatchUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchUrlMap(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -177,7 +177,7 @@ RegionUrlMapsTracingConnection::UpdateUrlMap(
         request) {
   auto span = internal::MakeSpan(
       "compute_region_url_maps_v1::RegionUrlMapsConnection::UpdateUrlMap");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateUrlMap(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

@@ -67,7 +67,7 @@ VersionsTracingConnection::CreateVersion(
     google::appengine::v1::CreateVersionRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::CreateVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateVersion(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -100,7 +100,7 @@ VersionsTracingConnection::UpdateVersion(
     google::appengine::v1::UpdateVersionRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::UpdateVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateVersion(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -133,7 +133,7 @@ VersionsTracingConnection::DeleteVersion(
     google::appengine::v1::DeleteVersionRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::DeleteVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteVersion(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

@@ -47,7 +47,7 @@ TargetSslProxiesConnection::DeleteTargetSslProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::DeleteTargetSslProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         DeleteTargetSslProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -56,8 +56,7 @@ TargetSslProxiesConnection::DeleteTargetSslProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesConnection::DeleteTargetSslProxy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -81,7 +80,7 @@ TargetSslProxiesConnection::InsertTargetSslProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::InsertTargetSslProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         InsertTargetSslProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -90,8 +89,7 @@ TargetSslProxiesConnection::InsertTargetSslProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesConnection::InsertTargetSslProxy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,7 +114,7 @@ TargetSslProxiesConnection::SetBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetBackendService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -125,8 +123,7 @@ TargetSslProxiesConnection::SetBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesConnection::SetBackendService(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -143,7 +140,7 @@ TargetSslProxiesConnection::SetCertificateMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetCertificateMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetCertificateMapRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -152,8 +149,7 @@ TargetSslProxiesConnection::SetCertificateMap(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesConnection::SetCertificateMap(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -170,7 +166,7 @@ TargetSslProxiesConnection::SetProxyHeader(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetProxyHeader(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetProxyHeaderRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -179,8 +175,7 @@ TargetSslProxiesConnection::SetProxyHeader(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesConnection::SetProxyHeader(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -197,7 +192,7 @@ TargetSslProxiesConnection::SetSslCertificates(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetSslCertificates(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetSslCertificatesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -206,8 +201,7 @@ TargetSslProxiesConnection::SetSslCertificates(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesConnection::SetSslCertificates(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -224,7 +218,7 @@ TargetSslProxiesConnection::SetSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetSslProxiesConnection::SetSslPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_ssl_proxies::v1::
         SetSslPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -233,8 +227,7 @@ TargetSslProxiesConnection::SetSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesConnection::SetSslPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

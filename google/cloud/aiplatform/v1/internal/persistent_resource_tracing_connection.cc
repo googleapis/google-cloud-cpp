@@ -55,7 +55,7 @@ PersistentResourceServiceTracingConnection::CreatePersistentResource(
   auto span = internal::MakeSpan(
       "aiplatform_v1::PersistentResourceServiceConnection::"
       "CreatePersistentResource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreatePersistentResource(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -118,7 +118,7 @@ PersistentResourceServiceTracingConnection::DeletePersistentResource(
   auto span = internal::MakeSpan(
       "aiplatform_v1::PersistentResourceServiceConnection::"
       "DeletePersistentResource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeletePersistentResource(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -157,7 +157,7 @@ PersistentResourceServiceTracingConnection::UpdatePersistentResource(
   auto span = internal::MakeSpan(
       "aiplatform_v1::PersistentResourceServiceConnection::"
       "UpdatePersistentResource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdatePersistentResource(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -196,7 +196,7 @@ PersistentResourceServiceTracingConnection::RebootPersistentResource(
   auto span = internal::MakeSpan(
       "aiplatform_v1::PersistentResourceServiceConnection::"
       "RebootPersistentResource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RebootPersistentResource(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

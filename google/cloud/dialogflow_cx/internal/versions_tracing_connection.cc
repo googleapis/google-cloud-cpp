@@ -69,7 +69,7 @@ VersionsTracingConnection::CreateVersion(
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::VersionsConnection::CreateVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateVersion(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -118,7 +118,7 @@ StatusOr<google::longrunning::Operation> VersionsTracingConnection::LoadVersion(
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::VersionsConnection::LoadVersion");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->LoadVersion(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));

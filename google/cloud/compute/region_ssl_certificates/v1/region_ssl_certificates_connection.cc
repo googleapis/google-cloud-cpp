@@ -48,7 +48,7 @@ RegionSslCertificatesConnection::DeleteSslCertificate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslCertificatesConnection::DeleteSslCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         DeleteSslCertificateRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -57,8 +57,7 @@ RegionSslCertificatesConnection::DeleteSslCertificate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesConnection::DeleteSslCertificate(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,7 +81,7 @@ RegionSslCertificatesConnection::InsertSslCertificate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslCertificatesConnection::InsertSslCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         InsertSslCertificateRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -91,8 +90,7 @@ RegionSslCertificatesConnection::InsertSslCertificate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesConnection::InsertSslCertificate(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

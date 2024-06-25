@@ -107,7 +107,7 @@ RegionSslPoliciesRestConnectionImpl::DeleteSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestConnectionImpl::DeleteSslPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_ssl_policies::v1::
         DeleteSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -124,7 +124,7 @@ RegionSslPoliciesRestConnectionImpl::DeleteSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestConnectionImpl::DeleteSslPolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -256,7 +256,7 @@ RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_ssl_policies::v1::
         InsertSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -273,7 +273,7 @@ RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -446,7 +446,7 @@ RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_ssl_policies::v1::
         PatchSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -463,7 +463,7 @@ RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

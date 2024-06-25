@@ -53,7 +53,7 @@ FirewallPoliciesTracingConnection::AddAssociation(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "AddAssociation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddAssociation(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -89,7 +89,7 @@ FirewallPoliciesTracingConnection::AddRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::AddRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->AddRule(google::cloud::ExperimentalTag{},
                              google::cloud::NoAwaitTag{}, request));
@@ -124,7 +124,7 @@ FirewallPoliciesTracingConnection::CloneRules(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::CloneRules");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CloneRules(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));
@@ -162,7 +162,7 @@ FirewallPoliciesTracingConnection::DeleteFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "DeleteFirewallPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteFirewallPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -243,7 +243,7 @@ FirewallPoliciesTracingConnection::InsertFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "InsertFirewallPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->InsertFirewallPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -305,7 +305,7 @@ FirewallPoliciesTracingConnection::Move(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::Move");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span,
                            child_->Move(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -343,7 +343,7 @@ FirewallPoliciesTracingConnection::PatchFirewallPolicy(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "PatchFirewallPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchFirewallPolicy(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -379,7 +379,7 @@ FirewallPoliciesTracingConnection::PatchRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::PatchRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->PatchRule(google::cloud::ExperimentalTag{},
                                google::cloud::NoAwaitTag{}, request));
@@ -416,7 +416,7 @@ FirewallPoliciesTracingConnection::RemoveAssociation(
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::"
       "RemoveAssociation");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemoveAssociation(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -452,7 +452,7 @@ FirewallPoliciesTracingConnection::RemoveRule(
         request) {
   auto span = internal::MakeSpan(
       "compute_firewall_policies_v1::FirewallPoliciesConnection::RemoveRule");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RemoveRule(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

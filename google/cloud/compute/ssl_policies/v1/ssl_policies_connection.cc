@@ -57,7 +57,7 @@ SslPoliciesConnection::DeleteSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslPoliciesConnection::DeleteSslPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::ssl_policies::v1::
         DeleteSslPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -66,8 +66,7 @@ SslPoliciesConnection::DeleteSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesConnection::DeleteSslPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -90,7 +89,7 @@ SslPoliciesConnection::InsertSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslPoliciesConnection::InsertSslPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::ssl_policies::v1::
         InsertSslPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -99,8 +98,7 @@ SslPoliciesConnection::InsertSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesConnection::InsertSslPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -133,7 +131,7 @@ SslPoliciesConnection::PatchSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslPoliciesConnection::PatchSslPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::ssl_policies::v1::
         PatchSslPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -142,8 +140,7 @@ SslPoliciesConnection::PatchSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesConnection::PatchSslPolicy(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -48,14 +48,14 @@ DatasetServiceConnection::CreateDataset(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnection::CreateDataset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
-DatasetServiceConnection::CreateDataset(google::cloud::ExperimentalTag,
+DatasetServiceConnection::CreateDataset(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::Dataset>>(
@@ -92,14 +92,14 @@ DatasetServiceConnection::DeleteDataset(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnection::DeleteDataset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-DatasetServiceConnection::DeleteDataset(google::cloud::ExperimentalTag,
+DatasetServiceConnection::DeleteDataset(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
@@ -115,14 +115,14 @@ DatasetServiceConnection::ImportData(
 }
 
 StatusOr<google::longrunning::Operation> DatasetServiceConnection::ImportData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::ImportDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-DatasetServiceConnection::ImportData(google::cloud::ExperimentalTag,
+DatasetServiceConnection::ImportData(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>(
@@ -138,14 +138,14 @@ DatasetServiceConnection::ExportData(
 }
 
 StatusOr<google::longrunning::Operation> DatasetServiceConnection::ExportData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::ExportDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-DatasetServiceConnection::ExportData(google::cloud::ExperimentalTag,
+DatasetServiceConnection::ExportData(ExperimentalTag,
                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>(
@@ -162,7 +162,7 @@ DatasetServiceConnection::CreateDatasetVersion(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnection::CreateDatasetVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -170,7 +170,7 @@ DatasetServiceConnection::CreateDatasetVersion(
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
 DatasetServiceConnection::CreateDatasetVersion(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -192,7 +192,7 @@ DatasetServiceConnection::DeleteDatasetVersion(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnection::DeleteDatasetVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -200,7 +200,7 @@ DatasetServiceConnection::DeleteDatasetVersion(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceConnection::DeleteDatasetVersion(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -230,7 +230,7 @@ DatasetServiceConnection::RestoreDatasetVersion(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnection::RestoreDatasetVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -238,7 +238,7 @@ DatasetServiceConnection::RestoreDatasetVersion(
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
 DatasetServiceConnection::RestoreDatasetVersion(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -278,7 +278,7 @@ DatasetServiceConnection::DeleteSavedQuery(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnection::DeleteSavedQuery(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -286,7 +286,7 @@ DatasetServiceConnection::DeleteSavedQuery(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceConnection::DeleteSavedQuery(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -302,7 +302,7 @@ DataCatalogTracingConnection::ReconcileTags(
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   auto span = internal::MakeSpan(
       "datacatalog_v1::DataCatalogConnection::ReconcileTags");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ReconcileTags(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -378,7 +378,7 @@ DataCatalogTracingConnection::ImportEntries(
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   auto span = internal::MakeSpan(
       "datacatalog_v1::DataCatalogConnection::ImportEntries");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportEntries(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));

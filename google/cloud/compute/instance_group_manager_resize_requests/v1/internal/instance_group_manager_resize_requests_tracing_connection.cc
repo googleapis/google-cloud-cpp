@@ -56,7 +56,7 @@ InstanceGroupManagerResizeRequestsTracingConnection::Cancel(
   auto span = internal::MakeSpan(
       "compute_instance_group_manager_resize_requests_v1::"
       "InstanceGroupManagerResizeRequestsConnection::Cancel");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->Cancel(google::cloud::ExperimentalTag{},
                             google::cloud::NoAwaitTag{}, request));
@@ -100,7 +100,7 @@ InstanceGroupManagerResizeRequestsTracingConnection::
       "compute_instance_group_manager_resize_requests_v1::"
       "InstanceGroupManagerResizeRequestsConnection::"
       "DeleteInstanceGroupManagerResizeRequest");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteInstanceGroupManagerResizeRequest(
                  google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{},
@@ -161,7 +161,7 @@ InstanceGroupManagerResizeRequestsTracingConnection::
       "compute_instance_group_manager_resize_requests_v1::"
       "InstanceGroupManagerResizeRequestsConnection::"
       "InsertInstanceGroupManagerResizeRequest");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertInstanceGroupManagerResizeRequest(
                  google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{},

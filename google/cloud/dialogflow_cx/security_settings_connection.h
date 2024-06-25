@@ -21,7 +21,6 @@
 
 #include "google/cloud/dialogflow_cx/internal/security_settings_retry_traits.h"
 #include "google/cloud/dialogflow_cx/security_settings_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

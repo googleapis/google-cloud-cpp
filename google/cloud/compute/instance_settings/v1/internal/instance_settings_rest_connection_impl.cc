@@ -122,7 +122,7 @@ InstanceSettingsRestConnectionImpl::PatchInstanceSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceSettingsRestConnectionImpl::PatchInstanceSettings(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_settings::v1::
         PatchInstanceSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -139,7 +139,7 @@ InstanceSettingsRestConnectionImpl::PatchInstanceSettings(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceSettingsRestConnectionImpl::PatchInstanceSettings(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -49,7 +49,7 @@ DataTaxonomyServiceTracingConnection::CreateDataTaxonomy(
     google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataTaxonomy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateDataTaxonomy(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -83,7 +83,7 @@ DataTaxonomyServiceTracingConnection::UpdateDataTaxonomy(
     google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataTaxonomy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDataTaxonomy(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -117,7 +117,7 @@ DataTaxonomyServiceTracingConnection::DeleteDataTaxonomy(
     google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataTaxonomy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteDataTaxonomy(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -174,7 +174,7 @@ DataTaxonomyServiceTracingConnection::CreateDataAttributeBinding(
         request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttributeBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateDataAttributeBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -210,7 +210,7 @@ DataTaxonomyServiceTracingConnection::UpdateDataAttributeBinding(
         request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttributeBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateDataAttributeBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -246,7 +246,7 @@ DataTaxonomyServiceTracingConnection::DeleteDataAttributeBinding(
         request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttributeBinding");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteDataAttributeBinding(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -302,7 +302,7 @@ DataTaxonomyServiceTracingConnection::CreateDataAttribute(
     google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::CreateDataAttribute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateDataAttribute(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -336,7 +336,7 @@ DataTaxonomyServiceTracingConnection::UpdateDataAttribute(
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::UpdateDataAttribute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDataAttribute(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));
@@ -370,7 +370,7 @@ DataTaxonomyServiceTracingConnection::DeleteDataAttribute(
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::DataTaxonomyServiceConnection::DeleteDataAttribute");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteDataAttribute(google::cloud::ExperimentalTag{},
                                          google::cloud::NoAwaitTag{}, request));

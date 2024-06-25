@@ -57,7 +57,7 @@ PacketMirroringsConnection::DeletePacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsConnection::DeletePacketMirroring(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         DeletePacketMirroringRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -66,8 +66,7 @@ PacketMirroringsConnection::DeletePacketMirroring(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsConnection::DeletePacketMirroring(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -91,7 +90,7 @@ PacketMirroringsConnection::InsertPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsConnection::InsertPacketMirroring(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         InsertPacketMirroringRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -100,8 +99,7 @@ PacketMirroringsConnection::InsertPacketMirroring(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsConnection::InsertPacketMirroring(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -126,7 +124,7 @@ PacketMirroringsConnection::PatchPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsConnection::PatchPacketMirroring(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         PatchPacketMirroringRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -135,8 +133,7 @@ PacketMirroringsConnection::PatchPacketMirroring(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsConnection::PatchPacketMirroring(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

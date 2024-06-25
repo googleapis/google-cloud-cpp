@@ -65,7 +65,7 @@ StoragePoolsTracingConnection::DeleteStoragePool(
         DeleteStoragePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_storage_pools_v1::StoragePoolsConnection::DeleteStoragePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteStoragePool(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -120,7 +120,7 @@ StoragePoolsTracingConnection::InsertStoragePool(
         InsertStoragePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_storage_pools_v1::StoragePoolsConnection::InsertStoragePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->InsertStoragePool(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -200,7 +200,7 @@ StoragePoolsTracingConnection::UpdateStoragePool(
         UpdateStoragePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_storage_pools_v1::StoragePoolsConnection::UpdateStoragePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateStoragePool(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));

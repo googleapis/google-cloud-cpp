@@ -48,7 +48,7 @@ AttachedClustersConnection::CreateAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersConnection::CreateAttachedCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ AttachedClustersConnection::CreateAttachedCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersConnection::CreateAttachedCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -72,7 +72,7 @@ AttachedClustersConnection::UpdateAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersConnection::UpdateAttachedCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -80,7 +80,7 @@ AttachedClustersConnection::UpdateAttachedCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersConnection::UpdateAttachedCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -96,7 +96,7 @@ AttachedClustersConnection::ImportAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersConnection::ImportAttachedCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -104,7 +104,7 @@ AttachedClustersConnection::ImportAttachedCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersConnection::ImportAttachedCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,7 +134,7 @@ AttachedClustersConnection::DeleteAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersConnection::DeleteAttachedCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,7 +142,7 @@ AttachedClustersConnection::DeleteAttachedCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AttachedClustersConnection::DeleteAttachedCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

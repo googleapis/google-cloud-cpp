@@ -21,7 +21,6 @@
 
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_retry_traits.h"
 #include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"

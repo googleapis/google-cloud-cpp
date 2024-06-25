@@ -47,14 +47,14 @@ IndexServiceConnection::CreateIndex(
 }
 
 StatusOr<google::longrunning::Operation> IndexServiceConnection::CreateIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateIndexRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceConnection::CreateIndex(google::cloud::ExperimentalTag,
+IndexServiceConnection::CreateIndex(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::Index>>(
@@ -83,14 +83,14 @@ IndexServiceConnection::UpdateIndex(
 }
 
 StatusOr<google::longrunning::Operation> IndexServiceConnection::UpdateIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateIndexRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
-IndexServiceConnection::UpdateIndex(google::cloud::ExperimentalTag,
+IndexServiceConnection::UpdateIndex(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::Index>>(
@@ -106,14 +106,14 @@ IndexServiceConnection::DeleteIndex(
 }
 
 StatusOr<google::longrunning::Operation> IndexServiceConnection::DeleteIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteIndexRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-IndexServiceConnection::DeleteIndex(google::cloud::ExperimentalTag,
+IndexServiceConnection::DeleteIndex(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(

@@ -55,7 +55,7 @@ DeploymentResourcePoolServiceTracingConnection::CreateDeploymentResourcePool(
   auto span = internal::MakeSpan(
       "aiplatform_v1::DeploymentResourcePoolServiceConnection::"
       "CreateDeploymentResourcePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateDeploymentResourcePool(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -118,7 +118,7 @@ DeploymentResourcePoolServiceTracingConnection::DeleteDeploymentResourcePool(
   auto span = internal::MakeSpan(
       "aiplatform_v1::DeploymentResourcePoolServiceConnection::"
       "DeleteDeploymentResourcePool");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteDeploymentResourcePool(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

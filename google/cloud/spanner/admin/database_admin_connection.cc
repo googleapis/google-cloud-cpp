@@ -56,14 +56,14 @@ DatabaseAdminConnection::CreateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnection::CreateDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
-DatabaseAdminConnection::CreateDatabase(google::cloud::ExperimentalTag,
+DatabaseAdminConnection::CreateDatabase(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::database::v1::Database>>(
@@ -86,14 +86,14 @@ DatabaseAdminConnection::UpdateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnection::UpdateDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
-DatabaseAdminConnection::UpdateDatabase(google::cloud::ExperimentalTag,
+DatabaseAdminConnection::UpdateDatabase(ExperimentalTag,
                                         google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::database::v1::Database>>(
@@ -111,7 +111,7 @@ DatabaseAdminConnection::UpdateDatabaseDdl(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnection::UpdateDatabaseDdl(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -120,7 +120,7 @@ DatabaseAdminConnection::UpdateDatabaseDdl(
 future<
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
 DatabaseAdminConnection::UpdateDatabaseDdl(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -162,14 +162,14 @@ DatabaseAdminConnection::CreateBackup(
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminConnection::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::CreateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
-DatabaseAdminConnection::CreateBackup(google::cloud::ExperimentalTag,
+DatabaseAdminConnection::CreateBackup(ExperimentalTag,
                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::database::v1::Backup>>(
@@ -185,14 +185,14 @@ DatabaseAdminConnection::CopyBackup(
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminConnection::CopyBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::CopyBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
-DatabaseAdminConnection::CopyBackup(google::cloud::ExperimentalTag,
+DatabaseAdminConnection::CopyBackup(ExperimentalTag,
                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::database::v1::Backup>>(
@@ -234,7 +234,7 @@ DatabaseAdminConnection::RestoreDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnection::RestoreDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -242,7 +242,7 @@ DatabaseAdminConnection::RestoreDatabase(
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminConnection::RestoreDatabase(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::spanner::admin::database::v1::Database>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

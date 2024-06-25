@@ -85,7 +85,7 @@ StorageControlTracingConnection::RenameFolder(
     google::storage::control::v2::RenameFolderRequest const& request) {
   auto span = internal::MakeSpan(
       "storagecontrol_v2::StorageControlConnection::RenameFolder");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RenameFolder(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

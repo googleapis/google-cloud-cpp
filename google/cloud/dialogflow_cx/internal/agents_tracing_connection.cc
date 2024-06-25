@@ -91,7 +91,7 @@ StatusOr<google::longrunning::Operation> AgentsTracingConnection::ExportAgent(
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::AgentsConnection::ExportAgent");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportAgent(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));
@@ -123,7 +123,7 @@ StatusOr<google::longrunning::Operation> AgentsTracingConnection::RestoreAgent(
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::AgentsConnection::RestoreAgent");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RestoreAgent(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

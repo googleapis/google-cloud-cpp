@@ -68,7 +68,7 @@ DocumentsTracingConnection::CreateDocument(
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::CreateDocument");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateDocument(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -101,7 +101,7 @@ DocumentsTracingConnection::ImportDocuments(
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::ImportDocuments");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ImportDocuments(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -134,7 +134,7 @@ DocumentsTracingConnection::DeleteDocument(
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::DeleteDocument");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteDocument(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -167,7 +167,7 @@ DocumentsTracingConnection::UpdateDocument(
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::UpdateDocument");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateDocument(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -200,7 +200,7 @@ DocumentsTracingConnection::ReloadDocument(
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::ReloadDocument");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ReloadDocument(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));
@@ -233,7 +233,7 @@ DocumentsTracingConnection::ExportDocument(
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::ExportDocument");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->ExportDocument(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

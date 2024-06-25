@@ -77,7 +77,7 @@ NetworkSecurityTracingConnection::CreateAuthorizationPolicy(
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "CreateAuthorizationPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateAuthorizationPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -116,7 +116,7 @@ NetworkSecurityTracingConnection::UpdateAuthorizationPolicy(
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "UpdateAuthorizationPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateAuthorizationPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -155,7 +155,7 @@ NetworkSecurityTracingConnection::DeleteAuthorizationPolicy(
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "DeleteAuthorizationPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteAuthorizationPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -214,7 +214,7 @@ NetworkSecurityTracingConnection::CreateServerTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::CreateServerTlsPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateServerTlsPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -250,7 +250,7 @@ NetworkSecurityTracingConnection::UpdateServerTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::UpdateServerTlsPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateServerTlsPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -286,7 +286,7 @@ NetworkSecurityTracingConnection::DeleteServerTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::DeleteServerTlsPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteServerTlsPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -344,7 +344,7 @@ NetworkSecurityTracingConnection::CreateClientTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::CreateClientTlsPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateClientTlsPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -380,7 +380,7 @@ NetworkSecurityTracingConnection::UpdateClientTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::UpdateClientTlsPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateClientTlsPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -416,7 +416,7 @@ NetworkSecurityTracingConnection::DeleteClientTlsPolicy(
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::DeleteClientTlsPolicy");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteClientTlsPolicy(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

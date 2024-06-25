@@ -21,11 +21,11 @@
 
 #include "google/cloud/pubsublite/admin_connection_idempotency_policy.h"
 #include "google/cloud/pubsublite/internal/admin_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -235,12 +235,12 @@ class AdminServiceConnection {
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> SeekSubscription(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription(google::cloud::ExperimentalTag,
+  SeekSubscription(ExperimentalTag,
                    google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::pubsublite::v1::Reservation>

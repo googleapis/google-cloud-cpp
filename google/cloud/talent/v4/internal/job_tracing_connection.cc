@@ -55,7 +55,7 @@ JobServiceTracingConnection::BatchCreateJobs(
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
   auto span =
       internal::MakeSpan("talent_v4::JobServiceConnection::BatchCreateJobs");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchCreateJobs(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ JobServiceTracingConnection::BatchUpdateJobs(
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
   auto span =
       internal::MakeSpan("talent_v4::JobServiceConnection::BatchUpdateJobs");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchUpdateJobs(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -142,7 +142,7 @@ JobServiceTracingConnection::BatchDeleteJobs(
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
   auto span =
       internal::MakeSpan("talent_v4::JobServiceConnection::BatchDeleteJobs");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->BatchDeleteJobs(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));

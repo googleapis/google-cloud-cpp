@@ -62,7 +62,7 @@ CloudRedisClusterConnection::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterConnection::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::cluster::v1::UpdateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ CloudRedisClusterConnection::UpdateCluster(
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterConnection::UpdateCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -85,7 +85,7 @@ CloudRedisClusterConnection::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterConnection::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::cluster::v1::DeleteClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -93,7 +93,7 @@ CloudRedisClusterConnection::DeleteCluster(
 
 future<StatusOr<google::protobuf::Any>>
 CloudRedisClusterConnection::DeleteCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<google::protobuf::Any>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -108,7 +108,7 @@ CloudRedisClusterConnection::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterConnection::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::cluster::v1::CreateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,7 +116,7 @@ CloudRedisClusterConnection::CreateCluster(
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterConnection::CreateCluster(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::redis::cluster::v1::Cluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

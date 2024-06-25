@@ -21,11 +21,11 @@
 
 #include "google/cloud/datastream/v1/datastream_connection_idempotency_policy.h"
 #include "google/cloud/datastream/v1/internal/datastream_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -201,12 +201,12 @@ class DatastreamConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateConnectionProfile(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreateConnectionProfileRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  CreateConnectionProfile(google::cloud::ExperimentalTag,
+  CreateConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
@@ -215,12 +215,12 @@ class DatastreamConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  UpdateConnectionProfile(google::cloud::ExperimentalTag,
+  UpdateConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
@@ -229,12 +229,12 @@ class DatastreamConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteConnectionProfile(google::cloud::ExperimentalTag,
+  DeleteConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual StatusOr<
@@ -253,34 +253,32 @@ class DatastreamConnection {
       google::cloud::datastream::v1::CreateStreamRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateStream(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreateStreamRequest const& request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
       google::cloud::datastream::v1::UpdateStreamRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateStream(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::UpdateStreamRequest const& request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteStream(
       google::cloud::datastream::v1::DeleteStreamRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteStream(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeleteStreamRequest const& request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteStream(google::cloud::ExperimentalTag,
+  DeleteStream(ExperimentalTag,
                google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
@@ -311,12 +309,12 @@ class DatastreamConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-  CreatePrivateConnection(google::cloud::ExperimentalTag,
+  CreatePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::datastream::v1::PrivateConnection>
@@ -334,24 +332,23 @@ class DatastreamConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeletePrivateConnection(google::cloud::ExperimentalTag,
+  DeletePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
       google::cloud::datastream::v1::CreateRouteRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateRoute(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreateRouteRequest const& request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation);
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::datastream::v1::Route> GetRoute(
       google::cloud::datastream::v1::GetRouteRequest const& request);
@@ -363,12 +360,11 @@ class DatastreamConnection {
   DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteRoute(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeleteRouteRequest const& request);
 
   virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteRoute(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation);
+  DeleteRoute(ExperimentalTag, google::longrunning::Operation const& operation);
 };
 
 /**

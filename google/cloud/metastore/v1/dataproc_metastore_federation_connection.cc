@@ -63,7 +63,7 @@ DataprocMetastoreFederationConnection::CreateFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationConnection::CreateFederation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::CreateFederationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -71,7 +71,7 @@ DataprocMetastoreFederationConnection::CreateFederation(
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationConnection::CreateFederation(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::metastore::v1::Federation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,7 +87,7 @@ DataprocMetastoreFederationConnection::UpdateFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationConnection::UpdateFederation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::UpdateFederationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -95,7 +95,7 @@ DataprocMetastoreFederationConnection::UpdateFederation(
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationConnection::UpdateFederation(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::metastore::v1::Federation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -111,7 +111,7 @@ DataprocMetastoreFederationConnection::DeleteFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationConnection::DeleteFederation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::DeleteFederationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -119,7 +119,7 @@ DataprocMetastoreFederationConnection::DeleteFederation(
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreFederationConnection::DeleteFederation(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

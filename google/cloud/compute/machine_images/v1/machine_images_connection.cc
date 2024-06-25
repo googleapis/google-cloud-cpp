@@ -47,7 +47,7 @@ MachineImagesConnection::DeleteMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesConnection::DeleteMachineImage(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::machine_images::v1::
         DeleteMachineImageRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -56,8 +56,7 @@ MachineImagesConnection::DeleteMachineImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesConnection::DeleteMachineImage(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -88,7 +87,7 @@ MachineImagesConnection::InsertMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesConnection::InsertMachineImage(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::machine_images::v1::
         InsertMachineImageRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -97,8 +96,7 @@ MachineImagesConnection::InsertMachineImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesConnection::InsertMachineImage(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

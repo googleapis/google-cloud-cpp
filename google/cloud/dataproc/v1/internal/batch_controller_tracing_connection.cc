@@ -48,7 +48,7 @@ BatchControllerTracingConnection::CreateBatch(
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
   auto span =
       internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateBatch(google::cloud::ExperimentalTag{},
                                  google::cloud::NoAwaitTag{}, request));

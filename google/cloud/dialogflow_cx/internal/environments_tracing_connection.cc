@@ -71,7 +71,7 @@ EnvironmentsTracingConnection::CreateEnvironment(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::CreateEnvironment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEnvironment(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -106,7 +106,7 @@ EnvironmentsTracingConnection::UpdateEnvironment(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::UpdateEnvironment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateEnvironment(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -163,7 +163,7 @@ EnvironmentsTracingConnection::RunContinuousTest(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::RunContinuousTest");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RunContinuousTest(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -209,7 +209,7 @@ EnvironmentsTracingConnection::DeployFlow(
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeployFlow");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeployFlow(google::cloud::ExperimentalTag{},
                                 google::cloud::NoAwaitTag{}, request));

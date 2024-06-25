@@ -21,11 +21,11 @@
 
 #include "google/cloud/compute/firewalls/v1/firewalls_connection_idempotency_policy.h"
 #include "google/cloud/compute/firewalls/v1/internal/firewalls_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -191,12 +191,12 @@ class FirewallsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewall(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteFirewall(google::cloud::ExperimentalTag,
+  DeleteFirewall(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewall(
@@ -209,12 +209,12 @@ class FirewallsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewall(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertFirewall(google::cloud::ExperimentalTag,
+  InsertFirewall(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
@@ -226,12 +226,12 @@ class FirewallsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewall(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchFirewall(google::cloud::ExperimentalTag,
+  PatchFirewall(ExperimentalTag,
                 google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -240,12 +240,12 @@ class FirewallsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewall(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateFirewall(google::cloud::ExperimentalTag,
+  UpdateFirewall(ExperimentalTag,
                  google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

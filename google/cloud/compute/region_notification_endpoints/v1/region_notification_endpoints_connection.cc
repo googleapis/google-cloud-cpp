@@ -49,7 +49,7 @@ RegionNotificationEndpointsConnection::DeleteNotificationEndpoint(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNotificationEndpointsConnection::DeleteNotificationEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         DeleteNotificationEndpointRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -58,8 +58,7 @@ RegionNotificationEndpointsConnection::DeleteNotificationEndpoint(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsConnection::DeleteNotificationEndpoint(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,7 +82,7 @@ RegionNotificationEndpointsConnection::InsertNotificationEndpoint(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNotificationEndpointsConnection::InsertNotificationEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         InsertNotificationEndpointRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -92,8 +91,7 @@ RegionNotificationEndpointsConnection::InsertNotificationEndpoint(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsConnection::InsertNotificationEndpoint(
-    google::cloud::ExperimentalTag,
-    google::cloud::cpp::compute::v1::Operation const&) {
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

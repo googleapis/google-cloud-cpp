@@ -48,7 +48,7 @@ EngineServiceTracingConnection::CreateEngine(
     google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::EngineServiceConnection::CreateEngine");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateEngine(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));
@@ -81,7 +81,7 @@ EngineServiceTracingConnection::DeleteEngine(
     google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::EngineServiceConnection::DeleteEngine");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteEngine(google::cloud::ExperimentalTag{},
                                   google::cloud::NoAwaitTag{}, request));

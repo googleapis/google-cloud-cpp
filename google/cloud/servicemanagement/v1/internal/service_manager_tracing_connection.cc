@@ -69,7 +69,7 @@ ServiceManagerTracingConnection::CreateService(
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::CreateService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -102,7 +102,7 @@ ServiceManagerTracingConnection::DeleteService(
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::DeleteService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteService(google::cloud::ExperimentalTag{},
                                    google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ ServiceManagerTracingConnection::UndeleteService(
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::UndeleteService");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UndeleteService(google::cloud::ExperimentalTag{},
                                      google::cloud::NoAwaitTag{}, request));
@@ -202,7 +202,7 @@ ServiceManagerTracingConnection::SubmitConfigSource(
         request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::SubmitConfigSource");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->SubmitConfigSource(google::cloud::ExperimentalTag{},
                                         google::cloud::NoAwaitTag{}, request));
@@ -260,7 +260,7 @@ ServiceManagerTracingConnection::CreateServiceRollout(
         request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::CreateServiceRollout");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateServiceRollout(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

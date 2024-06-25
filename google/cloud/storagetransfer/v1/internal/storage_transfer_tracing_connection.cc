@@ -120,7 +120,7 @@ StorageTransferServiceTracingConnection::RunTransferJob(
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   auto span = internal::MakeSpan(
       "storagetransfer_v1::StorageTransferServiceConnection::RunTransferJob");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->RunTransferJob(google::cloud::ExperimentalTag{},
                                     google::cloud::NoAwaitTag{}, request));

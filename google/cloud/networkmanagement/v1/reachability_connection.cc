@@ -63,7 +63,7 @@ ReachabilityServiceConnection::CreateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnection::CreateConnectivityTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkmanagement::v1::
         CreateConnectivityTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -72,7 +72,7 @@ ReachabilityServiceConnection::CreateConnectivityTest(
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::CreateConnectivityTest(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -89,7 +89,7 @@ ReachabilityServiceConnection::UpdateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnection::UpdateConnectivityTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkmanagement::v1::
         UpdateConnectivityTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -98,7 +98,7 @@ ReachabilityServiceConnection::UpdateConnectivityTest(
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::UpdateConnectivityTest(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -114,7 +114,7 @@ ReachabilityServiceConnection::RerunConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnection::RerunConnectivityTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -122,7 +122,7 @@ ReachabilityServiceConnection::RerunConnectivityTest(
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnection::RerunConnectivityTest(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -139,7 +139,7 @@ ReachabilityServiceConnection::DeleteConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnection::DeleteConnectivityTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkmanagement::v1::
         DeleteConnectivityTestRequest const&) {
   return StatusOr<google::longrunning::Operation>(
@@ -148,7 +148,7 @@ ReachabilityServiceConnection::DeleteConnectivityTest(
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceConnection::DeleteConnectivityTest(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

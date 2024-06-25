@@ -53,7 +53,7 @@ PredictionServiceConnection::BatchPredict(
 
 StatusOr<google::longrunning::Operation>
 PredictionServiceConnection::BatchPredict(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::BatchPredictRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -61,7 +61,7 @@ PredictionServiceConnection::BatchPredict(
 
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceConnection::BatchPredict(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::automl::v1::BatchPredictResult>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

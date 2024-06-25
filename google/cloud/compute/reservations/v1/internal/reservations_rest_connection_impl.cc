@@ -149,7 +149,7 @@ ReservationsRestConnectionImpl::DeleteReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsRestConnectionImpl::DeleteReservation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::reservations::v1::
         DeleteReservationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -166,7 +166,7 @@ ReservationsRestConnectionImpl::DeleteReservation(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestConnectionImpl::DeleteReservation(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -314,7 +314,7 @@ ReservationsRestConnectionImpl::InsertReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsRestConnectionImpl::InsertReservation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::reservations::v1::
         InsertReservationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -331,7 +331,7 @@ ReservationsRestConnectionImpl::InsertReservation(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestConnectionImpl::InsertReservation(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -485,7 +485,7 @@ ReservationsRestConnectionImpl::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsRestConnectionImpl::Resize(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -502,7 +502,7 @@ ReservationsRestConnectionImpl::Resize(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestConnectionImpl::Resize(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -650,7 +650,7 @@ ReservationsRestConnectionImpl::UpdateReservation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ReservationsRestConnectionImpl::UpdateReservation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::reservations::v1::
         UpdateReservationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -667,7 +667,7 @@ ReservationsRestConnectionImpl::UpdateReservation(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ReservationsRestConnectionImpl::UpdateReservation(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

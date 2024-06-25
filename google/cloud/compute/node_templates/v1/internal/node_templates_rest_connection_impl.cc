@@ -149,7 +149,7 @@ NodeTemplatesRestConnectionImpl::DeleteNodeTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesRestConnectionImpl::DeleteNodeTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::node_templates::v1::
         DeleteNodeTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -166,7 +166,7 @@ NodeTemplatesRestConnectionImpl::DeleteNodeTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesRestConnectionImpl::DeleteNodeTemplate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -314,7 +314,7 @@ NodeTemplatesRestConnectionImpl::InsertNodeTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesRestConnectionImpl::InsertNodeTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::node_templates::v1::
         InsertNodeTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -331,7 +331,7 @@ NodeTemplatesRestConnectionImpl::InsertNodeTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesRestConnectionImpl::InsertNodeTemplate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

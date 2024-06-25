@@ -48,7 +48,7 @@ TensorboardServiceTracingConnection::CreateTensorboard(
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::CreateTensorboard");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->CreateTensorboard(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -90,7 +90,7 @@ TensorboardServiceTracingConnection::UpdateTensorboard(
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::UpdateTensorboard");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->UpdateTensorboard(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -135,7 +135,7 @@ TensorboardServiceTracingConnection::DeleteTensorboard(
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboard");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
       *span, child_->DeleteTensorboard(google::cloud::ExperimentalTag{},
                                        google::cloud::NoAwaitTag{}, request));
@@ -236,7 +236,7 @@ TensorboardServiceTracingConnection::DeleteTensorboardExperiment(
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::"
       "DeleteTensorboardExperiment");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteTensorboardExperiment(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -321,7 +321,7 @@ TensorboardServiceTracingConnection::DeleteTensorboardRun(
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::DeleteTensorboardRun");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteTensorboardRun(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));
@@ -416,7 +416,7 @@ TensorboardServiceTracingConnection::DeleteTensorboardTimeSeries(
   auto span = internal::MakeSpan(
       "aiplatform_v1::TensorboardServiceConnection::"
       "DeleteTensorboardTimeSeries");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->DeleteTensorboardTimeSeries(
                                       google::cloud::ExperimentalTag{},
                                       google::cloud::NoAwaitTag{}, request));

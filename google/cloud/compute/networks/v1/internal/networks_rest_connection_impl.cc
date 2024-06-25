@@ -104,7 +104,7 @@ NetworksRestConnectionImpl::AddPeering(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestConnectionImpl::AddPeering(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -121,7 +121,7 @@ NetworksRestConnectionImpl::AddPeering(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestConnectionImpl::AddPeering(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -234,7 +234,7 @@ NetworksRestConnectionImpl::DeleteNetwork(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestConnectionImpl::DeleteNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -252,7 +252,7 @@ NetworksRestConnectionImpl::DeleteNetwork(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestConnectionImpl::DeleteNetwork(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -397,7 +397,7 @@ NetworksRestConnectionImpl::InsertNetwork(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestConnectionImpl::InsertNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -415,7 +415,7 @@ NetworksRestConnectionImpl::InsertNetwork(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestConnectionImpl::InsertNetwork(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -600,7 +600,7 @@ NetworksRestConnectionImpl::PatchNetwork(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestConnectionImpl::PatchNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -618,7 +618,7 @@ NetworksRestConnectionImpl::PatchNetwork(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestConnectionImpl::PatchNetwork(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -731,7 +731,7 @@ NetworksRestConnectionImpl::RemovePeering(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestConnectionImpl::RemovePeering(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -749,7 +749,7 @@ NetworksRestConnectionImpl::RemovePeering(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestConnectionImpl::RemovePeering(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -861,7 +861,7 @@ NetworksRestConnectionImpl::SwitchToCustomMode(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestConnectionImpl::SwitchToCustomMode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -878,7 +878,7 @@ NetworksRestConnectionImpl::SwitchToCustomMode(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestConnectionImpl::SwitchToCustomMode(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -991,7 +991,7 @@ NetworksRestConnectionImpl::UpdatePeering(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworksRestConnectionImpl::UpdatePeering(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1009,7 +1009,7 @@ NetworksRestConnectionImpl::UpdatePeering(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksRestConnectionImpl::UpdatePeering(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -22,11 +22,11 @@
 
 #include "google/cloud/compute/public_advertised_prefixes/v1/internal/public_advertised_prefixes_retry_traits.h"
 #include "google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes_connection_idempotency_policy.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -208,12 +208,12 @@ class PublicAdvertisedPrefixesConnection {
           AnnounceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Announce(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           AnnounceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -223,13 +223,13 @@ class PublicAdvertisedPrefixesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicAdvertisedPrefix(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           DeletePublicAdvertisedPrefixRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicAdvertisedPrefix(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -244,13 +244,13 @@ class PublicAdvertisedPrefixesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicAdvertisedPrefix(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           InsertPublicAdvertisedPrefixRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPublicAdvertisedPrefix(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -265,13 +265,13 @@ class PublicAdvertisedPrefixesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicAdvertisedPrefix(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           PatchPublicAdvertisedPrefixRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPublicAdvertisedPrefix(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
@@ -279,12 +279,12 @@ class PublicAdvertisedPrefixesConnection {
           WithdrawRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Withdraw(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           WithdrawRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
