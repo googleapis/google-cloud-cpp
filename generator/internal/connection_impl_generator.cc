@@ -489,7 +489,7 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
 
     // TODO(#14344): Remove experimental tag.
     std::string start_function =
-        absl::StrCat("\n", "StatusOr<$longrunning_operation_type$>", R"""(
+        absl::StrCat("StatusOr<$longrunning_operation_type$>", R"""(
 $connection_class_name$Impl::$method_name$(google::cloud::ExperimentalTag,
       google::cloud::NoAwaitTag, $request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();)""",
@@ -508,7 +508,7 @@ $connection_class_name$Impl::$method_name$(google::cloud::ExperimentalTag,
 
     // TODO(#14344): Remove experimental tag.
     std::string await_function =
-        absl::StrCat("\n", return_fragment, R"""(
+        absl::StrCat(return_fragment, R"""(
 $connection_class_name$Impl::$method_name$(google::cloud::ExperimentalTag,
       $longrunning_operation_type$ const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();)""",

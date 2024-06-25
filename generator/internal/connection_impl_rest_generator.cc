@@ -213,11 +213,11 @@ std::string ConnectionImplRestGenerator::MethodDeclaration(
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  $method_name$(ExperimentalTag, NoAwaitTag,
       $request_type$ const& request) override;
 
   future<Status>
-  $method_name$(google::cloud::ExperimentalTag,
+  $method_name$(ExperimentalTag,
       $longrunning_operation_type$ const& operation) override;
 
 )""");
@@ -227,11 +227,11 @@ std::string ConnectionImplRestGenerator::MethodDeclaration(
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  $method_name$(ExperimentalTag, NoAwaitTag,
       $request_type$ const& request) override;
 
   future<StatusOr<$longrunning_deduced_response_type$>>
-  $method_name$(google::cloud::ExperimentalTag,
+  $method_name$(ExperimentalTag,
       $longrunning_operation_type$ const& operation) override;
 )""");
   }
@@ -434,9 +434,9 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) 
 
     // TODO(#14344): Remove experimental tag.
     std::string start_function =
-        absl::StrCat("\n", "StatusOr<$longrunning_operation_type$>",
+        absl::StrCat("StatusOr<$longrunning_operation_type$>",
                      R"""(
-$connection_impl_rest_class_name$::$method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, $request_type$ const& request) {
+$connection_impl_rest_class_name$::$method_name$(ExperimentalTag, NoAwaitTag, $request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -467,9 +467,9 @@ $connection_impl_rest_class_name$::$method_name$(google::cloud::ExperimentalTag,
 
     // TODO(#14344): Remove experimental tag.
     std::string await_function = absl::StrCat(
-        "\n", return_fragment,
+        return_fragment,
         R"""(
-$connection_impl_rest_class_name$::$method_name$(google::cloud::ExperimentalTag,
+$connection_impl_rest_class_name$::$method_name$(ExperimentalTag,
     $longrunning_operation_type$ const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();)""",
         operation_check_fragment,

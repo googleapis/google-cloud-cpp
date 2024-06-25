@@ -33,7 +33,6 @@ add_library(
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     access_token.cc
     access_token.h
-    await_tag.h
     backoff_policy.h
     common_options.h
     credentials.cc
@@ -155,6 +154,7 @@ add_library(
     location.h
     log.cc
     log.h
+    no_await_tag.h
     opentelemetry_options.h
     optional.h
     options.cc

@@ -128,7 +128,6 @@ TEST(GoldenThingAdminTracingConnectionTest, CreateDatabaseStart) {
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, CreateDatabase(_, _, _)).WillOnce([] {
     EXPECT_TRUE(ThereIsAnActiveSpan());
-    EXPECT_TRUE(OTelContextCaptured());
     return StatusOr<google::longrunning::Operation>(
         internal::AbortedError("fail"));
   });

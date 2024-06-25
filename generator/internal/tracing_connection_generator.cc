@@ -324,7 +324,7 @@ $tracing_connection_class_name$::$method_name$(google::cloud::ExperimentalTag,
     google::cloud::NoAwaitTag, $request_type$ const& request) {
   auto span = internal::MakeSpan(
       "$product_namespace$::$connection_class_name$::$method_name$");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->$method_name$(
       google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
 }

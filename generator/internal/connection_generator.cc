@@ -52,7 +52,7 @@ Status ConnectionGenerator::GenerateHeader() {
   HeaderPrint("\n");
   HeaderLocalIncludes(
       {vars("idempotency_policy_header_path"), vars("retry_traits_header_path"),
-       "google/cloud/await_tag.h",
+       HasLongrunningMethod() ? "google/cloud/no_await_tag.h" : "",
        // TODO(#14344): Remove experimental tag.
        "google/cloud/experimental_tag.h", "google/cloud/backoff_policy.h",
        HasLongrunningMethod() || HasAsyncMethod() ? "google/cloud/future.h"
@@ -261,15 +261,15 @@ class $connection_class_name$ {
       "  virtual StatusOr<$longrunning_operation_type$>\n"},
                  // clang-format on
                  // TODO(#14344): Remove experimental tag.
-                 {"  $method_name$(google::cloud::ExperimentalTag, "
-                  "google::cloud::NoAwaitTag,"
+                 {"  $method_name$(ExperimentalTag, "
+                  "NoAwaitTag,"
                   " $request_type$ const& request);\n\n"},
                  {IsResponseTypeEmpty,
                   // clang-format off
       "  virtual future<Status>\n",
       "  virtual future<StatusOr<$longrunning_deduced_response_type$>>\n"},
                  // TODO(#14344): Remove experimental tag.
-     {"  $method_name$(google::cloud::ExperimentalTag,"
+     {"  $method_name$(ExperimentalTag,"
                   " $longrunning_operation_type$ const& operation);\n"}
                  // clang-format on
              },
@@ -407,11 +407,11 @@ $connection_class_name$::Async$method_name$() {
                  {"\n"},
                  {IsResponseTypeEmpty,
                   // clang-format off
-    "  Status\n",
-    "  StatusOr<$longrunning_operation_type$>\n"},
+    "Status\n",
+    "StatusOr<$longrunning_operation_type$>\n"},
                  // TODO(#14344): Remove experimental tag.
    {"$connection_class_name$::$method_name$(\n"
-    "    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,\n"
+    "    ExperimentalTag, NoAwaitTag,\n"
     "    $request_type$ const&) {\n"
     "  return StatusOr<$longrunning_operation_type$>(\n"
     "    Status(StatusCode::kUnimplemented, \"not implemented\"));\n"
@@ -421,11 +421,11 @@ $connection_class_name$::Async$method_name$() {
                  {"\n"},
                  {IsResponseTypeEmpty,
                   // clang-format off
-    "  future<Status>\n",
-    "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
+    "future<Status>\n",
+    "future<StatusOr<$longrunning_deduced_response_type$>>\n"},
                  // TODO(#14344): Remove experimental tag.
    {"$connection_class_name$::$method_name$(\n"
-    "    google::cloud::ExperimentalTag, $longrunning_operation_type$ const&) {\n"
+    "    ExperimentalTag, $longrunning_operation_type$ const&) {\n"
     "  return google::cloud::make_ready_future<\n"
     "    StatusOr<$longrunning_deduced_response_type$>>(\n"
     "    Status(StatusCode::kUnimplemented, \"not implemented\"));\n"
