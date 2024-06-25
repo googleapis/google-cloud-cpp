@@ -154,7 +154,7 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
   auto scope_filter =
       [authority = std::move(config.authority)](
           grpc::OpenTelemetryPluginBuilder::ChannelScope const& scope) {
-        return (scope.default_authority() == authority);
+        return scope.default_authority() == authority;
       };
   auto status =
       grpc::OpenTelemetryPluginBuilder()
