@@ -26,4 +26,10 @@ export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
-bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
+args+=(
+  # Do not use bzlmod
+  --noenable_bzlmod
+  # Only run the unit tests, no need to waste time running everything.
+  --test_tag_filters=-integration-test
+)
+bazel test "${args[@]}" -- "${BAZEL_TARGETS[@]}"

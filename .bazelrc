@@ -39,9 +39,6 @@ build --experimental_convenience_symlinks=ignore
 # frustrating when they fail and don't give any output. So, remove the limit.
 build --experimental_ui_max_stdouterr_bytes=-1
 
-# TODO(#11485) - enable bzlmod once it works
-common --noenable_bzlmod
-
 # TODO(#13311) - remove once gRPC works with Bazel v7 or when gRPC stops using
 #     `apple_rules`.
 common:macos --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1
