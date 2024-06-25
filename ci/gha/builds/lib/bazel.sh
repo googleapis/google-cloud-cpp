@@ -101,7 +101,6 @@ function bazel::prefetch() {
     "@local_config_platform//..."
     "@local_config_cc_toolchains//..."
     "@local_config_sh//..."
-    "@go_sdk//..."
   )
   local os_rules
   mapfile -t os_rules < <(os::prefetch)
