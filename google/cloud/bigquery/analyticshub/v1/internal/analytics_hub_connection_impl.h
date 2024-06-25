@@ -113,14 +113,14 @@ class AnalyticsHubServiceConnectionImpl
           SubscribeDataExchangeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SubscribeDataExchange(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::bigquery::analyticshub::v1::
           SubscribeDataExchangeRequest const& request) override;
 
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
   SubscribeDataExchange(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -129,13 +129,13 @@ class AnalyticsHubServiceConnectionImpl
                           RefreshSubscriptionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RefreshSubscription(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::bigquery::analyticshub::v1::
           RefreshSubscriptionRequest const& request) override;
 
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-  RefreshSubscription(google::cloud::ExperimentalTag,
+  RefreshSubscription(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -163,12 +163,12 @@ class AnalyticsHubServiceConnectionImpl
                          DeleteSubscriptionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSubscription(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::bigquery::analyticshub::v1::
           DeleteSubscriptionRequest const& request) override;
 
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-  DeleteSubscription(google::cloud::ExperimentalTag,
+  DeleteSubscription(ExperimentalTag,
                      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

@@ -107,7 +107,7 @@ ServiceUsageConnectionImpl::EnableService(
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageConnectionImpl::EnableService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -123,8 +123,7 @@ ServiceUsageConnectionImpl::EnableService(
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
 ServiceUsageConnectionImpl::EnableService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::api::serviceusage::v1::OperationMetadata>()) {
@@ -200,7 +199,7 @@ ServiceUsageConnectionImpl::DisableService(
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageConnectionImpl::DisableService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -216,8 +215,7 @@ ServiceUsageConnectionImpl::DisableService(
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
 ServiceUsageConnectionImpl::DisableService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::api::serviceusage::v1::OperationMetadata>()) {
@@ -342,7 +340,7 @@ ServiceUsageConnectionImpl::BatchEnableServices(
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageConnectionImpl::BatchEnableServices(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -358,8 +356,7 @@ ServiceUsageConnectionImpl::BatchEnableServices(
 
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
 ServiceUsageConnectionImpl::BatchEnableServices(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::api::serviceusage::v1::OperationMetadata>()) {

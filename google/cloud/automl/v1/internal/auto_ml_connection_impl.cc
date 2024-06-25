@@ -102,7 +102,7 @@ AutoMlConnectionImpl::CreateDataset(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::CreateDataset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -117,8 +117,7 @@ StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::CreateDataset(
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
 AutoMlConnectionImpl::CreateDataset(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {
@@ -253,7 +252,7 @@ AutoMlConnectionImpl::DeleteDataset(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::DeleteDataset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -268,8 +267,7 @@ StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::DeleteDataset(
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::DeleteDataset(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {
@@ -344,7 +342,7 @@ AutoMlConnectionImpl::ImportData(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::ImportData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::automl::v1::ImportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -359,8 +357,7 @@ StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::ImportData(
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::ImportData(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {
@@ -435,7 +432,7 @@ AutoMlConnectionImpl::ExportData(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::ExportData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::automl::v1::ExportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -450,8 +447,7 @@ StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::ExportData(
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::ExportData(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {
@@ -541,7 +537,7 @@ AutoMlConnectionImpl::CreateModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::CreateModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::automl::v1::CreateModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -556,8 +552,7 @@ StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::CreateModel(
 
 future<StatusOr<google::cloud::automl::v1::Model>>
 AutoMlConnectionImpl::CreateModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {
@@ -676,7 +671,7 @@ AutoMlConnectionImpl::DeleteModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::DeleteModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::automl::v1::DeleteModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -691,8 +686,7 @@ StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::DeleteModel(
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::DeleteModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {
@@ -780,7 +774,7 @@ AutoMlConnectionImpl::DeployModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::DeployModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::automl::v1::DeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -795,8 +789,7 @@ StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::DeployModel(
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::DeployModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {
@@ -871,7 +864,7 @@ AutoMlConnectionImpl::UndeployModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::UndeployModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::automl::v1::UndeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -886,8 +879,7 @@ StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::UndeployModel(
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::UndeployModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {
@@ -962,7 +954,7 @@ AutoMlConnectionImpl::ExportModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::ExportModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::automl::v1::ExportModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -977,8 +969,7 @@ StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::ExportModel(
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::ExportModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {

@@ -65,14 +65,14 @@ class MockInterconnectAttachmentsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteInterconnectAttachment,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::cpp::compute::interconnect_attachments::v1::
                    DeleteInterconnectAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInterconnectAttachment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -90,14 +90,14 @@ class MockInterconnectAttachmentsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertInterconnectAttachment,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::cpp::compute::interconnect_attachments::v1::
                    InsertInterconnectAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInterconnectAttachment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -116,14 +116,14 @@ class MockInterconnectAttachmentsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchInterconnectAttachment,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::cpp::compute::interconnect_attachments::v1::
                    PatchInterconnectAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchInterconnectAttachment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -134,14 +134,14 @@ class MockInterconnectAttachmentsConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::cpp::compute::interconnect_attachments::v1::
                    SetLabelsRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };

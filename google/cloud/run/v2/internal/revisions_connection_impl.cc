@@ -150,7 +150,7 @@ RevisionsConnectionImpl::DeleteRevision(
 
 StatusOr<google::longrunning::Operation>
 RevisionsConnectionImpl::DeleteRevision(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::run::v2::DeleteRevisionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -165,8 +165,7 @@ RevisionsConnectionImpl::DeleteRevision(
 
 future<StatusOr<google::cloud::run::v2::Revision>>
 RevisionsConnectionImpl::DeleteRevision(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Revision>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Revision>>(

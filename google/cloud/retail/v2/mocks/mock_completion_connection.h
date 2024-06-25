@@ -60,15 +60,14 @@ class MockCompletionServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportCompletionData,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::retail::v2::ImportCompletionDataRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
       ImportCompletionData,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

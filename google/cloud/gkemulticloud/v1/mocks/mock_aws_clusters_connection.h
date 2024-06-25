@@ -54,14 +54,14 @@ class MockAwsClustersConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAwsCluster,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
               CreateAwsCluster,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -72,14 +72,14 @@ class MockAwsClustersConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAwsCluster,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
               UpdateAwsCluster,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -102,7 +102,7 @@ class MockAwsClustersConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAwsCluster,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&
                    request),
               (override));
@@ -110,8 +110,7 @@ class MockAwsClustersConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAwsCluster,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::
@@ -136,14 +135,14 @@ class MockAwsClustersConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAwsNodePool,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               CreateAwsNodePool,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -154,14 +153,14 @@ class MockAwsClustersConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAwsNodePool,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               UpdateAwsNodePool,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -174,14 +173,14 @@ class MockAwsClustersConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RollbackAwsNodePoolUpdate,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               RollbackAwsNodePoolUpdate,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -204,7 +203,7 @@ class MockAwsClustersConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAwsNodePool,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
                    request),
               (override));
@@ -212,8 +211,7 @@ class MockAwsClustersConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAwsNodePool,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

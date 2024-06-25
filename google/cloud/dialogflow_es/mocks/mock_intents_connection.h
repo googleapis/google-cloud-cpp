@@ -78,7 +78,7 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchUpdateIntents,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request),
       (override));
 
@@ -86,8 +86,7 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
       future<
           StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
       BatchUpdateIntents,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -97,12 +96,12 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchDeleteIntents,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchDeleteIntents,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

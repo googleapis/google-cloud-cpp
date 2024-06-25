@@ -107,7 +107,7 @@ EnvironmentsConnectionImpl::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -125,8 +125,7 @@ EnvironmentsConnectionImpl::CreateEnvironment(
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnectionImpl::CreateEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::orchestration::airflow::service::v1::
@@ -259,7 +258,7 @@ EnvironmentsConnectionImpl::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::UpdateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -277,8 +276,7 @@ EnvironmentsConnectionImpl::UpdateEnvironment(
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnectionImpl::UpdateEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::orchestration::airflow::service::v1::
@@ -358,7 +356,7 @@ EnvironmentsConnectionImpl::DeleteEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::DeleteEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -376,8 +374,7 @@ EnvironmentsConnectionImpl::DeleteEnvironment(
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
 EnvironmentsConnectionImpl::DeleteEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::orchestration::airflow::service::v1::
@@ -763,7 +760,7 @@ EnvironmentsConnectionImpl::SaveSnapshot(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::SaveSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -781,8 +778,7 @@ EnvironmentsConnectionImpl::SaveSnapshot(
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
 EnvironmentsConnectionImpl::SaveSnapshot(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::orchestration::airflow::service::v1::
@@ -863,7 +859,7 @@ EnvironmentsConnectionImpl::LoadSnapshot(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::LoadSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -881,8 +877,7 @@ EnvironmentsConnectionImpl::LoadSnapshot(
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
 EnvironmentsConnectionImpl::LoadSnapshot(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::orchestration::airflow::service::v1::
@@ -964,7 +959,7 @@ EnvironmentsConnectionImpl::DatabaseFailover(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::DatabaseFailover(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::orchestration::airflow::service::v1::
         DatabaseFailoverRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -982,8 +977,7 @@ EnvironmentsConnectionImpl::DatabaseFailover(
 future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                     DatabaseFailoverResponse>>
 EnvironmentsConnectionImpl::DatabaseFailover(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::orchestration::airflow::service::v1::

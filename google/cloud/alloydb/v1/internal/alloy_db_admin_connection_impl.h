@@ -61,33 +61,33 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       google::cloud::alloydb::v1::CreateClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::CreateClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
       google::cloud::alloydb::v1::UpdateClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::UpdateClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
       google::cloud::alloydb::v1::DeleteClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::DeleteClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
@@ -95,12 +95,12 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       override;
 
   StatusOr<google::longrunning::Operation> PromoteCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::PromoteClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
@@ -108,12 +108,12 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RestoreCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::RestoreClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
@@ -121,12 +121,12 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateSecondaryCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::alloydb::v1::Instance> ListInstances(
@@ -140,12 +140,12 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::CreateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -154,13 +154,13 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateSecondaryInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>>
   CreateSecondaryInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
@@ -169,13 +169,13 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       override;
 
   StatusOr<google::longrunning::Operation> BatchCreateInstances(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
   BatchCreateInstances(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
@@ -183,12 +183,12 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::UpdateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -196,12 +196,12 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::DeleteInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::ExperimentalTag,
+  DeleteInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
@@ -209,23 +209,23 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       override;
 
   StatusOr<google::longrunning::Operation> FailoverInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
       google::cloud::alloydb::v1::InjectFaultRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> InjectFault(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::InjectFaultRequest const& request) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
@@ -233,12 +233,12 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RestartInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::RestartInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::alloydb::v1::Backup> ListBackups(
@@ -251,33 +251,33 @@ class AlloyDBAdminConnectionImpl : public alloydb_v1::AlloyDBAdminConnection {
       google::cloud::alloydb::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::CreateBackupRequest const& request) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Backup>> CreateBackup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
       google::cloud::alloydb::v1::UpdateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::UpdateBackupRequest const& request) override;
 
   future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
       google::cloud::alloydb::v1::DeleteBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::alloydb::v1::DeleteBackupRequest const& request) override;
 
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>

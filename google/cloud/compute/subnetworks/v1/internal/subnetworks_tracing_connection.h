@@ -51,12 +51,12 @@ class SubnetworksTracingConnection
           DeleteSubnetworkRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSubnetwork(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::subnetworks::v1::
           DeleteSubnetworkRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSubnetwork(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -64,13 +64,13 @@ class SubnetworksTracingConnection
                         ExpandIpCidrRangeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> ExpandIpCidrRange(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::subnetworks::v1::
           ExpandIpCidrRangeRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   ExpandIpCidrRange(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetwork(
@@ -86,12 +86,12 @@ class SubnetworksTracingConnection
           InsertSubnetworkRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSubnetwork(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::subnetworks::v1::
           InsertSubnetworkRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSubnetwork(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Subnetwork> ListSubnetworks(
@@ -107,12 +107,12 @@ class SubnetworksTracingConnection
           PatchSubnetworkRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSubnetwork(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::subnetworks::v1::
           PatchSubnetworkRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSubnetwork(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -125,13 +125,13 @@ class SubnetworksTracingConnection
           SetPrivateIpGoogleAccessRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetPrivateIpGoogleAccess(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::subnetworks::v1::
           SetPrivateIpGoogleAccessRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetPrivateIpGoogleAccess(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

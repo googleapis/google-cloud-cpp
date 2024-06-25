@@ -56,23 +56,23 @@ class GkeHubTracingConnection : public gkehub_v1::GkeHubConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateMembership(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::CreateMembershipRequest const& request)
       override;
 
   future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
       google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
 
   future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
@@ -80,23 +80,23 @@ class GkeHubTracingConnection : public gkehub_v1::GkeHubConnection {
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteMembership(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::DeleteMembershipRequest const& request)
       override;
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(google::cloud::ExperimentalTag,
+  DeleteMembership(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
@@ -104,23 +104,23 @@ class GkeHubTracingConnection : public gkehub_v1::GkeHubConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateMembership(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
       override;
 
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
 
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>

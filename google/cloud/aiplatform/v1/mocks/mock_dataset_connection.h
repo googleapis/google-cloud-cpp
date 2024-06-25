@@ -54,13 +54,13 @@ class MockDatasetServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDataset,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::CreateDatasetRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Dataset>>,
               CreateDataset,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -86,15 +86,14 @@ class MockDatasetServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDataset,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteDatasetRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDataset,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -104,15 +103,14 @@ class MockDatasetServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportData,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::ImportDataRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>,
       ImportData,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -122,15 +120,14 @@ class MockDatasetServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportData,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::ExportDataRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>,
       ExportData,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
@@ -140,14 +137,14 @@ class MockDatasetServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateDatasetVersion,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
               CreateDatasetVersion,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -165,7 +162,7 @@ class MockDatasetServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteDatasetVersion,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const&
                    request),
               (override));
@@ -173,8 +170,7 @@ class MockDatasetServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDatasetVersion,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -198,14 +194,14 @@ class MockDatasetServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestoreDatasetVersion,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
               RestoreDatasetVersion,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -232,15 +228,14 @@ class MockDatasetServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSavedQuery,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteSavedQuery,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

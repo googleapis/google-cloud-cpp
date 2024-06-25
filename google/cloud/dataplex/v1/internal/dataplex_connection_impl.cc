@@ -107,7 +107,7 @@ DataplexServiceConnectionImpl::CreateLake(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateLake(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::CreateLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -122,8 +122,7 @@ DataplexServiceConnectionImpl::CreateLake(
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
 DataplexServiceConnectionImpl::CreateLake(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -198,7 +197,7 @@ DataplexServiceConnectionImpl::UpdateLake(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateLake(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -213,8 +212,7 @@ DataplexServiceConnectionImpl::UpdateLake(
 
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
 DataplexServiceConnectionImpl::UpdateLake(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -289,7 +287,7 @@ DataplexServiceConnectionImpl::DeleteLake(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteLake(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -304,8 +302,7 @@ DataplexServiceConnectionImpl::DeleteLake(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteLake(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -462,7 +459,7 @@ DataplexServiceConnectionImpl::CreateZone(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateZone(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::CreateZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -477,8 +474,7 @@ DataplexServiceConnectionImpl::CreateZone(
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
 DataplexServiceConnectionImpl::CreateZone(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -553,7 +549,7 @@ DataplexServiceConnectionImpl::UpdateZone(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateZone(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -568,8 +564,7 @@ DataplexServiceConnectionImpl::UpdateZone(
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
 DataplexServiceConnectionImpl::UpdateZone(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -644,7 +639,7 @@ DataplexServiceConnectionImpl::DeleteZone(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteZone(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -659,8 +654,7 @@ DataplexServiceConnectionImpl::DeleteZone(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteZone(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -817,7 +811,7 @@ DataplexServiceConnectionImpl::CreateAsset(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateAsset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::CreateAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -832,8 +826,7 @@ DataplexServiceConnectionImpl::CreateAsset(
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
 DataplexServiceConnectionImpl::CreateAsset(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -908,7 +901,7 @@ DataplexServiceConnectionImpl::UpdateAsset(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateAsset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -923,8 +916,7 @@ DataplexServiceConnectionImpl::UpdateAsset(
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
 DataplexServiceConnectionImpl::UpdateAsset(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -999,7 +991,7 @@ DataplexServiceConnectionImpl::DeleteAsset(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteAsset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1014,8 +1006,7 @@ DataplexServiceConnectionImpl::DeleteAsset(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteAsset(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -1173,7 +1164,7 @@ DataplexServiceConnectionImpl::CreateTask(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateTask(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::CreateTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1188,8 +1179,7 @@ DataplexServiceConnectionImpl::CreateTask(
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
 DataplexServiceConnectionImpl::CreateTask(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -1264,7 +1254,7 @@ DataplexServiceConnectionImpl::UpdateTask(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateTask(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1279,8 +1269,7 @@ DataplexServiceConnectionImpl::UpdateTask(
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
 DataplexServiceConnectionImpl::UpdateTask(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -1355,7 +1344,7 @@ DataplexServiceConnectionImpl::DeleteTask(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteTask(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1370,8 +1359,7 @@ DataplexServiceConnectionImpl::DeleteTask(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteTask(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -1569,7 +1557,7 @@ DataplexServiceConnectionImpl::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1585,8 +1573,7 @@ DataplexServiceConnectionImpl::CreateEnvironment(
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
 DataplexServiceConnectionImpl::CreateEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -1663,7 +1650,7 @@ DataplexServiceConnectionImpl::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::UpdateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1679,8 +1666,7 @@ DataplexServiceConnectionImpl::UpdateEnvironment(
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
 DataplexServiceConnectionImpl::UpdateEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -1757,7 +1743,7 @@ DataplexServiceConnectionImpl::DeleteEnvironment(
 
 StatusOr<google::longrunning::Operation>
 DataplexServiceConnectionImpl::DeleteEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1773,8 +1759,7 @@ DataplexServiceConnectionImpl::DeleteEnvironment(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnectionImpl::DeleteEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {

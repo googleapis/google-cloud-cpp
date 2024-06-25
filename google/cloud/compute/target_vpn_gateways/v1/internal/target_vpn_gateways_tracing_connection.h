@@ -55,13 +55,13 @@ class TargetVpnGatewaysTracingConnection
           DeleteTargetVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateway(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           DeleteTargetVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetVpnGateway(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
@@ -74,13 +74,13 @@ class TargetVpnGatewaysTracingConnection
           InsertTargetVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateway(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           InsertTargetVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetVpnGateway(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
@@ -92,12 +92,12 @@ class TargetVpnGatewaysTracingConnection
           SetLabelsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           SetLabelsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

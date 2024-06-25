@@ -174,7 +174,7 @@ AppConnectionsServiceConnectionImpl::CreateAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnectionImpl::CreateAppConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::beyondcorp::appconnections::v1::
         CreateAppConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -191,8 +191,7 @@ AppConnectionsServiceConnectionImpl::CreateAppConnection(
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceConnectionImpl::CreateAppConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnections::v1::
@@ -270,7 +269,7 @@ AppConnectionsServiceConnectionImpl::UpdateAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnectionImpl::UpdateAppConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::beyondcorp::appconnections::v1::
         UpdateAppConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -287,8 +286,7 @@ AppConnectionsServiceConnectionImpl::UpdateAppConnection(
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceConnectionImpl::UpdateAppConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnections::v1::
@@ -369,7 +367,7 @@ AppConnectionsServiceConnectionImpl::DeleteAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnectionImpl::DeleteAppConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::beyondcorp::appconnections::v1::
         DeleteAppConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -387,8 +385,7 @@ AppConnectionsServiceConnectionImpl::DeleteAppConnection(
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                     AppConnectionOperationMetadata>>
 AppConnectionsServiceConnectionImpl::DeleteAppConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnections::v1::

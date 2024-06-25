@@ -132,7 +132,7 @@ CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::discoveryengine::v1::
         ImportSuggestionDenyListEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -151,8 +151,7 @@ CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
 future<StatusOr<google::cloud::discoveryengine::v1::
                     ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::
@@ -237,7 +236,7 @@ CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::discoveryengine::v1::
         PurgeSuggestionDenyListEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -255,8 +254,7 @@ CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
 future<StatusOr<
     google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
 CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::

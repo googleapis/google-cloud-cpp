@@ -152,7 +152,7 @@ WorkflowsConnectionImpl::CreateWorkflow(
 
 StatusOr<google::longrunning::Operation>
 WorkflowsConnectionImpl::CreateWorkflow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -168,8 +168,7 @@ WorkflowsConnectionImpl::CreateWorkflow(
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnectionImpl::CreateWorkflow(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::workflows::v1::OperationMetadata>()) {
@@ -244,7 +243,7 @@ WorkflowsConnectionImpl::DeleteWorkflow(
 
 StatusOr<google::longrunning::Operation>
 WorkflowsConnectionImpl::DeleteWorkflow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -260,8 +259,7 @@ WorkflowsConnectionImpl::DeleteWorkflow(
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsConnectionImpl::DeleteWorkflow(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::workflows::v1::OperationMetadata>()) {
@@ -337,7 +335,7 @@ WorkflowsConnectionImpl::UpdateWorkflow(
 
 StatusOr<google::longrunning::Operation>
 WorkflowsConnectionImpl::UpdateWorkflow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -353,8 +351,7 @@ WorkflowsConnectionImpl::UpdateWorkflow(
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnectionImpl::UpdateWorkflow(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::workflows::v1::OperationMetadata>()) {

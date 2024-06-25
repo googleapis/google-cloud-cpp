@@ -81,26 +81,23 @@ StorageControlTracingConnection::RenameFolder(
 
 StatusOr<google::longrunning::Operation>
 StorageControlTracingConnection::RenameFolder(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::storage::control::v2::RenameFolderRequest const& request) {
   auto span = internal::MakeSpan(
       "storagecontrol_v2::StorageControlConnection::RenameFolder");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RenameFolder(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->RenameFolder(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::storage::control::v2::Folder>>
 StorageControlTracingConnection::RenameFolder(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "storagecontrol_v2::StorageControlConnection::RenameFolder");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->RenameFolder(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RenameFolder(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::storage::control::v2::StorageLayout>

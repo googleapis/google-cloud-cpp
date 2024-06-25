@@ -55,13 +55,13 @@ class MockTensorboardServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateTensorboard,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::CreateTensorboardRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>,
               CreateTensorboard,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -78,13 +78,13 @@ class MockTensorboardServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateTensorboard,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>,
               UpdateTensorboard,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -101,15 +101,14 @@ class MockTensorboardServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTensorboard,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTensorboard,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -163,7 +162,7 @@ class MockTensorboardServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTensorboardExperiment,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
            request),
       (override));
@@ -171,8 +170,7 @@ class MockTensorboardServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTensorboardExperiment,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::TensorboardRun>,
@@ -215,7 +213,7 @@ class MockTensorboardServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteTensorboardRun,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
                    request),
               (override));
@@ -223,8 +221,7 @@ class MockTensorboardServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTensorboardRun,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
@@ -270,7 +267,7 @@ class MockTensorboardServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTensorboardTimeSeries,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
            request),
       (override));
@@ -278,8 +275,7 @@ class MockTensorboardServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTensorboardTimeSeries,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::

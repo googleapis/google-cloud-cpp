@@ -150,7 +150,7 @@ InstancesConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 InstancesConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -165,8 +165,7 @@ InstancesConnectionImpl::DeleteInstance(
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 InstancesConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {
@@ -241,7 +240,7 @@ InstancesConnectionImpl::DebugInstance(
 }
 
 StatusOr<google::longrunning::Operation> InstancesConnectionImpl::DebugInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::DebugInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -256,8 +255,7 @@ StatusOr<google::longrunning::Operation> InstancesConnectionImpl::DebugInstance(
 
 future<StatusOr<google::appengine::v1::Instance>>
 InstancesConnectionImpl::DebugInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {

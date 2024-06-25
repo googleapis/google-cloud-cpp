@@ -63,14 +63,14 @@ class MockServiceAttachmentsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteServiceAttachment,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::cpp::compute::service_attachments::v1::
                    DeleteServiceAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteServiceAttachment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -93,14 +93,14 @@ class MockServiceAttachmentsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertServiceAttachment,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::cpp::compute::service_attachments::v1::
                    InsertServiceAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertServiceAttachment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -118,14 +118,14 @@ class MockServiceAttachmentsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchServiceAttachment,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::cpp::compute::service_attachments::v1::
                    PatchServiceAttachmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchServiceAttachment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 

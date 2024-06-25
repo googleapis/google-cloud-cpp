@@ -50,12 +50,12 @@ class FleetRoutingTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> BatchOptimizeTours(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::optimization::v1::BatchOptimizeToursRequest const& request)
       override;
 
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
-  BatchOptimizeTours(google::cloud::ExperimentalTag,
+  BatchOptimizeTours(ExperimentalTag,
                      google::longrunning::Operation const& operation) override;
 
  private:

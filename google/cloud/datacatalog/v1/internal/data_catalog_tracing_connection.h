@@ -149,12 +149,12 @@ class DataCatalogTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> ReconcileTags(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-  ReconcileTags(google::cloud::ExperimentalTag,
+  ReconcileTags(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
@@ -178,12 +178,12 @@ class DataCatalogTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> ImportEntries(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-  ImportEntries(google::cloud::ExperimentalTag,
+  ImportEntries(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
  private:

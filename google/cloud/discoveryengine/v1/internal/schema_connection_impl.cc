@@ -158,7 +158,7 @@ SchemaServiceConnectionImpl::CreateSchema(
 
 StatusOr<google::longrunning::Operation>
 SchemaServiceConnectionImpl::CreateSchema(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -174,8 +174,7 @@ SchemaServiceConnectionImpl::CreateSchema(
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceConnectionImpl::CreateSchema(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::
@@ -253,7 +252,7 @@ SchemaServiceConnectionImpl::UpdateSchema(
 
 StatusOr<google::longrunning::Operation>
 SchemaServiceConnectionImpl::UpdateSchema(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -269,8 +268,7 @@ SchemaServiceConnectionImpl::UpdateSchema(
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceConnectionImpl::UpdateSchema(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::
@@ -348,7 +346,7 @@ SchemaServiceConnectionImpl::DeleteSchema(
 
 StatusOr<google::longrunning::Operation>
 SchemaServiceConnectionImpl::DeleteSchema(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -364,8 +362,7 @@ SchemaServiceConnectionImpl::DeleteSchema(
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
 SchemaServiceConnectionImpl::DeleteSchema(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::

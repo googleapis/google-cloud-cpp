@@ -168,7 +168,7 @@ CertificateManagerConnectionImpl::CreateCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::CreateCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::CreateCertificateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -186,8 +186,7 @@ CertificateManagerConnectionImpl::CreateCertificate(
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
 CertificateManagerConnectionImpl::CreateCertificate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -266,7 +265,7 @@ CertificateManagerConnectionImpl::UpdateCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::UpdateCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -284,8 +283,7 @@ CertificateManagerConnectionImpl::UpdateCertificate(
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
 CertificateManagerConnectionImpl::UpdateCertificate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -364,7 +362,7 @@ CertificateManagerConnectionImpl::DeleteCertificate(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::DeleteCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -382,8 +380,7 @@ CertificateManagerConnectionImpl::DeleteCertificate(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteCertificate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -513,7 +510,7 @@ CertificateManagerConnectionImpl::CreateCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::CreateCertificateMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -530,8 +527,7 @@ CertificateManagerConnectionImpl::CreateCertificateMap(
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
 CertificateManagerConnectionImpl::CreateCertificateMap(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -609,7 +605,7 @@ CertificateManagerConnectionImpl::UpdateCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::UpdateCertificateMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -626,8 +622,7 @@ CertificateManagerConnectionImpl::UpdateCertificateMap(
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
 CertificateManagerConnectionImpl::UpdateCertificateMap(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -705,7 +700,7 @@ CertificateManagerConnectionImpl::DeleteCertificateMap(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::DeleteCertificateMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -722,8 +717,7 @@ CertificateManagerConnectionImpl::DeleteCertificateMap(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteCertificateMap(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -856,7 +850,7 @@ CertificateManagerConnectionImpl::CreateCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::CreateCertificateMapEntry(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::
         CreateCertificateMapEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -873,8 +867,7 @@ CertificateManagerConnectionImpl::CreateCertificateMapEntry(
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
 CertificateManagerConnectionImpl::CreateCertificateMapEntry(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -952,7 +945,7 @@ CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::
         UpdateCertificateMapEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -969,8 +962,7 @@ CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
 CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -1048,7 +1040,7 @@ CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::
         DeleteCertificateMapEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1065,8 +1057,7 @@ CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -1198,7 +1189,7 @@ CertificateManagerConnectionImpl::CreateDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::CreateDnsAuthorization(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1215,8 +1206,7 @@ CertificateManagerConnectionImpl::CreateDnsAuthorization(
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
 CertificateManagerConnectionImpl::CreateDnsAuthorization(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -1294,7 +1284,7 @@ CertificateManagerConnectionImpl::UpdateDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::UpdateDnsAuthorization(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1311,8 +1301,7 @@ CertificateManagerConnectionImpl::UpdateDnsAuthorization(
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
 CertificateManagerConnectionImpl::UpdateDnsAuthorization(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -1390,7 +1379,7 @@ CertificateManagerConnectionImpl::DeleteDnsAuthorization(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::DeleteDnsAuthorization(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1407,8 +1396,7 @@ CertificateManagerConnectionImpl::DeleteDnsAuthorization(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteDnsAuthorization(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -1546,7 +1534,7 @@ CertificateManagerConnectionImpl::CreateCertificateIssuanceConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::CreateCertificateIssuanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::
         CreateCertificateIssuanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1565,8 +1553,7 @@ CertificateManagerConnectionImpl::CreateCertificateIssuanceConfig(
 future<
     StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
 CertificateManagerConnectionImpl::CreateCertificateIssuanceConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -1646,7 +1633,7 @@ CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::
         DeleteCertificateIssuanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1664,8 +1651,7 @@ CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -1796,7 +1782,7 @@ CertificateManagerConnectionImpl::CreateTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::CreateTrustConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1814,8 +1800,7 @@ CertificateManagerConnectionImpl::CreateTrustConfig(
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
 CertificateManagerConnectionImpl::CreateTrustConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -1894,7 +1879,7 @@ CertificateManagerConnectionImpl::UpdateTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::UpdateTrustConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1912,8 +1897,7 @@ CertificateManagerConnectionImpl::UpdateTrustConfig(
 
 future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
 CertificateManagerConnectionImpl::UpdateTrustConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::
@@ -1992,7 +1976,7 @@ CertificateManagerConnectionImpl::DeleteTrustConfig(
 
 StatusOr<google::longrunning::Operation>
 CertificateManagerConnectionImpl::DeleteTrustConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2010,8 +1994,7 @@ CertificateManagerConnectionImpl::DeleteTrustConfig(
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerConnectionImpl::DeleteTrustConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::certificatemanager::v1::

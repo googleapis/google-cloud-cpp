@@ -65,26 +65,24 @@ DomainMappingsTracingConnection::CreateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsTracingConnection::CreateDomainMapping(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::CreateDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::CreateDomainMapping");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateDomainMapping(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->CreateDomainMapping(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsTracingConnection::CreateDomainMapping(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::CreateDomainMapping");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateDomainMapping(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateDomainMapping(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
@@ -99,26 +97,24 @@ DomainMappingsTracingConnection::UpdateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsTracingConnection::UpdateDomainMapping(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::UpdateDomainMapping");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateDomainMapping(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->UpdateDomainMapping(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsTracingConnection::UpdateDomainMapping(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::UpdateDomainMapping");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateDomainMapping(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateDomainMapping(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
@@ -133,26 +129,24 @@ DomainMappingsTracingConnection::DeleteDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsTracingConnection::DeleteDomainMapping(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::DeleteDomainMapping");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteDomainMapping(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteDomainMapping(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsTracingConnection::DeleteDomainMapping(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "appengine_v1::DomainMappingsConnection::DeleteDomainMapping");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteDomainMapping(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteDomainMapping(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

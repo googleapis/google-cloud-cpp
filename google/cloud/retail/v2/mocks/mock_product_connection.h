@@ -74,15 +74,14 @@ class MockProductServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeProducts,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::retail::v2::PurgeProductsRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>,
       PurgeProducts,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -92,15 +91,14 @@ class MockProductServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportProducts,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::retail::v2::ImportProductsRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>,
       ImportProducts,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>,
@@ -109,13 +107,13 @@ class MockProductServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, SetInventory,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::retail::v2::SetInventoryRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>,
               SetInventory,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -127,15 +125,14 @@ class MockProductServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AddFulfillmentPlaces,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>,
       AddFulfillmentPlaces,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -147,7 +144,7 @@ class MockProductServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RemoveFulfillmentPlaces,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
                    request),
               (override));
@@ -156,8 +153,7 @@ class MockProductServiceConnection
       future<
           StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>,
       RemoveFulfillmentPlaces,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -168,15 +164,14 @@ class MockProductServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AddLocalInventories,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::retail::v2::AddLocalInventoriesRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>,
       AddLocalInventories,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -188,7 +183,7 @@ class MockProductServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RemoveLocalInventories,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request),
       (override));
 
@@ -196,8 +191,7 @@ class MockProductServiceConnection
       future<
           StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>,
       RemoveLocalInventories,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

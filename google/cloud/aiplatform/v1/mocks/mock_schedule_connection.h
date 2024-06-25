@@ -60,15 +60,14 @@ class MockScheduleServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSchedule,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteScheduleRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteSchedule,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

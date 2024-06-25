@@ -74,13 +74,13 @@ class MockWebRiskServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, SubmitUri,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::webrisk::v1::SubmitUriRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::webrisk::v1::Submission>>,
               SubmitUri,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

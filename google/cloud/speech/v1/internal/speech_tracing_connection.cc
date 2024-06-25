@@ -52,26 +52,24 @@ SpeechTracingConnection::LongRunningRecognize(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::LongRunningRecognize(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v1::SpeechConnection::LongRunningRecognize");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->LongRunningRecognize(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->LongRunningRecognize(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
 SpeechTracingConnection::LongRunningRecognize(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v1::SpeechConnection::LongRunningRecognize");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->LongRunningRecognize(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->LongRunningRecognize(
+                                                ExperimentalTag{}, operation));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

@@ -164,7 +164,7 @@ TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -181,8 +181,7 @@ TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
 TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::telcoautomation::v1::
@@ -260,7 +259,7 @@ TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -277,8 +276,7 @@ TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::telcoautomation::v1::
@@ -406,7 +404,7 @@ TelcoAutomationConnectionImpl::CreateEdgeSlm(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnectionImpl::CreateEdgeSlm(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -422,8 +420,7 @@ TelcoAutomationConnectionImpl::CreateEdgeSlm(
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
 TelcoAutomationConnectionImpl::CreateEdgeSlm(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::telcoautomation::v1::
@@ -501,7 +498,7 @@ TelcoAutomationConnectionImpl::DeleteEdgeSlm(
 
 StatusOr<google::longrunning::Operation>
 TelcoAutomationConnectionImpl::DeleteEdgeSlm(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -517,8 +514,7 @@ TelcoAutomationConnectionImpl::DeleteEdgeSlm(
 
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnectionImpl::DeleteEdgeSlm(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::telcoautomation::v1::

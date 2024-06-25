@@ -52,12 +52,12 @@ class SecurityCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
-  BulkMuteFindings(google::cloud::ExperimentalTag,
+  BulkMuteFindings(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>

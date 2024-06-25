@@ -168,7 +168,7 @@ AccessContextManagerConnectionImpl::CreateAccessPolicy(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::CreateAccessPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -184,8 +184,7 @@ AccessContextManagerConnectionImpl::CreateAccessPolicy(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnectionImpl::CreateAccessPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -263,7 +262,7 @@ AccessContextManagerConnectionImpl::UpdateAccessPolicy(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::UpdateAccessPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -280,8 +279,7 @@ AccessContextManagerConnectionImpl::UpdateAccessPolicy(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnectionImpl::UpdateAccessPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -362,7 +360,7 @@ AccessContextManagerConnectionImpl::DeleteAccessPolicy(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::DeleteAccessPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -380,8 +378,7 @@ AccessContextManagerConnectionImpl::DeleteAccessPolicy(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     AccessContextManagerOperationMetadata>>
 AccessContextManagerConnectionImpl::DeleteAccessPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -515,7 +512,7 @@ AccessContextManagerConnectionImpl::CreateAccessLevel(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::CreateAccessLevel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -532,8 +529,7 @@ AccessContextManagerConnectionImpl::CreateAccessLevel(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnectionImpl::CreateAccessLevel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -611,7 +607,7 @@ AccessContextManagerConnectionImpl::UpdateAccessLevel(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::UpdateAccessLevel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -628,8 +624,7 @@ AccessContextManagerConnectionImpl::UpdateAccessLevel(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnectionImpl::UpdateAccessLevel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -710,7 +705,7 @@ AccessContextManagerConnectionImpl::DeleteAccessLevel(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::DeleteAccessLevel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -728,8 +723,7 @@ AccessContextManagerConnectionImpl::DeleteAccessLevel(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     AccessContextManagerOperationMetadata>>
 AccessContextManagerConnectionImpl::DeleteAccessLevel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -812,7 +806,7 @@ AccessContextManagerConnectionImpl::ReplaceAccessLevels(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::ReplaceAccessLevels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -830,8 +824,7 @@ AccessContextManagerConnectionImpl::ReplaceAccessLevels(
 future<StatusOr<
     google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
 AccessContextManagerConnectionImpl::ReplaceAccessLevels(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -965,7 +958,7 @@ AccessContextManagerConnectionImpl::CreateServicePerimeter(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::CreateServicePerimeter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -982,8 +975,7 @@ AccessContextManagerConnectionImpl::CreateServicePerimeter(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnectionImpl::CreateServicePerimeter(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -1061,7 +1053,7 @@ AccessContextManagerConnectionImpl::UpdateServicePerimeter(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::UpdateServicePerimeter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1078,8 +1070,7 @@ AccessContextManagerConnectionImpl::UpdateServicePerimeter(
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnectionImpl::UpdateServicePerimeter(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -1160,7 +1151,7 @@ AccessContextManagerConnectionImpl::DeleteServicePerimeter(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::DeleteServicePerimeter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1178,8 +1169,7 @@ AccessContextManagerConnectionImpl::DeleteServicePerimeter(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     AccessContextManagerOperationMetadata>>
 AccessContextManagerConnectionImpl::DeleteServicePerimeter(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -1263,7 +1253,7 @@ AccessContextManagerConnectionImpl::ReplaceServicePerimeters(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::ReplaceServicePerimeters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1281,8 +1271,7 @@ AccessContextManagerConnectionImpl::ReplaceServicePerimeters(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     ReplaceServicePerimetersResponse>>
 AccessContextManagerConnectionImpl::ReplaceServicePerimeters(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -1366,7 +1355,7 @@ AccessContextManagerConnectionImpl::CommitServicePerimeters(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::CommitServicePerimeters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1384,8 +1373,7 @@ AccessContextManagerConnectionImpl::CommitServicePerimeters(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     CommitServicePerimetersResponse>>
 AccessContextManagerConnectionImpl::CommitServicePerimeters(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -1522,7 +1510,7 @@ AccessContextManagerConnectionImpl::CreateGcpUserAccessBinding(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::CreateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1540,8 +1528,7 @@ AccessContextManagerConnectionImpl::CreateGcpUserAccessBinding(
 future<
     StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerConnectionImpl::CreateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -1620,7 +1607,7 @@ AccessContextManagerConnectionImpl::UpdateGcpUserAccessBinding(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::UpdateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1638,8 +1625,7 @@ AccessContextManagerConnectionImpl::UpdateGcpUserAccessBinding(
 future<
     StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerConnectionImpl::UpdateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::
@@ -1720,7 +1706,7 @@ AccessContextManagerConnectionImpl::DeleteGcpUserAccessBinding(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerConnectionImpl::DeleteGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1738,8 +1724,7 @@ AccessContextManagerConnectionImpl::DeleteGcpUserAccessBinding(
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     GcpUserAccessBindingOperationMetadata>>
 AccessContextManagerConnectionImpl::DeleteGcpUserAccessBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::identity::accesscontextmanager::v1::

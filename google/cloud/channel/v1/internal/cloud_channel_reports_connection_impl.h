@@ -57,11 +57,11 @@ class CloudChannelReportsServiceConnectionImpl
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunReportJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-  RunReportJob(google::cloud::ExperimentalTag,
+  RunReportJob(ExperimentalTag,
                google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::channel::v1::Row> FetchReportResults(

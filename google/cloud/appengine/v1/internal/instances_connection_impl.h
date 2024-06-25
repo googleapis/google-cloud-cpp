@@ -61,22 +61,22 @@ class InstancesConnectionImpl : public appengine_v1::InstancesConnection {
       google::appengine::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::appengine::v1::DeleteInstanceRequest const& request) override;
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
       google::appengine::v1::DebugInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DebugInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::appengine::v1::DebugInstanceRequest const& request) override;
 
   future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

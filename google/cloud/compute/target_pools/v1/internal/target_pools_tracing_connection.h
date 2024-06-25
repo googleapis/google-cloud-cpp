@@ -45,12 +45,12 @@ class TargetPoolsTracingConnection
           AddHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           AddHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
@@ -58,12 +58,12 @@ class TargetPoolsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<std::pair<std::string,
@@ -77,12 +77,12 @@ class TargetPoolsTracingConnection
           DeleteTargetPoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           DeleteTargetPoolRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteTargetPool(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
@@ -98,12 +98,12 @@ class TargetPoolsTracingConnection
           InsertTargetPoolRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           InsertTargetPoolRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertTargetPool(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetPool> ListTargetPools(
@@ -115,13 +115,13 @@ class TargetPoolsTracingConnection
                         RemoveHealthCheckRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           RemoveHealthCheckRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
@@ -129,12 +129,12 @@ class TargetPoolsTracingConnection
           RemoveInstanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           RemoveInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
@@ -142,12 +142,12 @@ class TargetPoolsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetBackup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -155,13 +155,13 @@ class TargetPoolsTracingConnection
                         SetSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_pools::v1::
           SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

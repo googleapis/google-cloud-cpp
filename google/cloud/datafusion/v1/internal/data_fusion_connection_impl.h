@@ -67,12 +67,12 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::datafusion::v1::CreateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
@@ -80,12 +80,12 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::ExperimentalTag,
+  DeleteInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
@@ -93,12 +93,12 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
@@ -106,12 +106,12 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RestartInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::datafusion::v1::RestartInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

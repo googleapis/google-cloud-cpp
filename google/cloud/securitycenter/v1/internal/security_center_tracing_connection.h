@@ -46,12 +46,12 @@ class SecurityCenterTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
-  BulkMuteFindings(google::cloud::ExperimentalTag,
+  BulkMuteFindings(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   StatusOr<
@@ -184,12 +184,12 @@ class SecurityCenterTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> RunAssetDiscovery(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request) override;
 
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
-  RunAssetDiscovery(google::cloud::ExperimentalTag,
+  RunAssetDiscovery(ExperimentalTag,
                     google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(

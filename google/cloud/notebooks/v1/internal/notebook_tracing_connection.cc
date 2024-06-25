@@ -64,26 +64,23 @@ NotebookServiceTracingConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::CreateInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::CreateInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateInstance(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -97,26 +94,24 @@ NotebookServiceTracingConnection::RegisterInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::RegisterInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::RegisterInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::RegisterInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RegisterInstance(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->RegisterInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::RegisterInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::RegisterInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->RegisterInstance(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->RegisterInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -132,27 +127,25 @@ NotebookServiceTracingConnection::SetInstanceAccelerator(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::SetInstanceAccelerator(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&
         request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::SetInstanceAccelerator");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetInstanceAccelerator(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->SetInstanceAccelerator(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::SetInstanceAccelerator(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::SetInstanceAccelerator");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetInstanceAccelerator(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SetInstanceAccelerator(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -168,27 +161,25 @@ NotebookServiceTracingConnection::SetInstanceMachineType(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::SetInstanceMachineType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&
         request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::SetInstanceMachineType");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SetInstanceMachineType(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->SetInstanceMachineType(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::SetInstanceMachineType(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::SetInstanceMachineType");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetInstanceMachineType(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SetInstanceMachineType(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -203,26 +194,24 @@ NotebookServiceTracingConnection::UpdateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::UpdateInstanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpdateInstanceConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::UpdateInstanceConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateInstanceConfig(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->UpdateInstanceConfig(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::UpdateInstanceConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::UpdateInstanceConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateInstanceConfig(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateInstanceConfig(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -238,27 +227,26 @@ NotebookServiceTracingConnection::UpdateShieldedInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::UpdateShieldedInstanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&
         request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::UpdateShieldedInstanceConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateShieldedInstanceConfig(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UpdateShieldedInstanceConfig(ExperimentalTag{},
+                                                  NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::UpdateShieldedInstanceConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::UpdateShieldedInstanceConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateShieldedInstanceConfig(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateShieldedInstanceConfig(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -272,26 +260,24 @@ NotebookServiceTracingConnection::SetInstanceLabels(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::SetInstanceLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::SetInstanceLabels");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->SetInstanceLabels(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->SetInstanceLabels(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::SetInstanceLabels(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::SetInstanceLabels");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->SetInstanceLabels(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->SetInstanceLabels(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
@@ -315,26 +301,23 @@ NotebookServiceTracingConnection::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DeleteInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceTracingConnection::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DeleteInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteInstance(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -348,26 +331,23 @@ NotebookServiceTracingConnection::StartInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::StartInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::StartInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::StartInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->StartInstance(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->StartInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::StartInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::StartInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->StartInstance(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->StartInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -381,26 +361,23 @@ NotebookServiceTracingConnection::StopInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::StopInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::StopInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::StopInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->StopInstance(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->StopInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::StopInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::StopInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->StopInstance(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->StopInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -414,26 +391,23 @@ NotebookServiceTracingConnection::ResetInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::ResetInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::ResetInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::ResetInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ResetInstance(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->ResetInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::ResetInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::ResetInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->ResetInstance(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ResetInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -448,26 +422,24 @@ NotebookServiceTracingConnection::ReportInstanceInfo(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::ReportInstanceInfo(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::ReportInstanceInfo");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ReportInstanceInfo(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->ReportInstanceInfo(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::ReportInstanceInfo(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::ReportInstanceInfo");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->ReportInstanceInfo(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ReportInstanceInfo(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
@@ -499,26 +471,23 @@ NotebookServiceTracingConnection::UpgradeInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::UpgradeInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpgradeInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::UpgradeInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpgradeInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpgradeInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::UpgradeInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::UpgradeInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpgradeInstance(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpgradeInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -532,26 +501,24 @@ NotebookServiceTracingConnection::RollbackInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::RollbackInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::RollbackInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::RollbackInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RollbackInstance(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->RollbackInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::RollbackInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::RollbackInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->RollbackInstance(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->RollbackInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -565,26 +532,24 @@ NotebookServiceTracingConnection::DiagnoseInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::DiagnoseInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DiagnoseInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DiagnoseInstance(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DiagnoseInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::DiagnoseInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DiagnoseInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DiagnoseInstance(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DiagnoseInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -600,27 +565,25 @@ NotebookServiceTracingConnection::UpgradeInstanceInternal(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::UpgradeInstanceInternal(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
         request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::UpgradeInstanceInternal");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpgradeInstanceInternal(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UpgradeInstanceInternal(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceTracingConnection::UpgradeInstanceInternal(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::UpgradeInstanceInternal");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpgradeInstanceInternal(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpgradeInstanceInternal(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::notebooks::v1::Environment>
@@ -655,26 +618,24 @@ NotebookServiceTracingConnection::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::CreateEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::CreateEnvironment");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateEnvironment(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->CreateEnvironment(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Environment>>
 NotebookServiceTracingConnection::CreateEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::CreateEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateEnvironment(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateEnvironment(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -688,26 +649,24 @@ NotebookServiceTracingConnection::DeleteEnvironment(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::DeleteEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DeleteEnvironment");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteEnvironment(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteEnvironment(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceTracingConnection::DeleteEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DeleteEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteEnvironment(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteEnvironment(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::notebooks::v1::Schedule>
@@ -741,26 +700,23 @@ NotebookServiceTracingConnection::DeleteSchedule(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::DeleteSchedule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DeleteScheduleRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DeleteSchedule");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteSchedule(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteSchedule(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceTracingConnection::DeleteSchedule(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DeleteSchedule");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteSchedule(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteSchedule(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Schedule>>
@@ -774,26 +730,23 @@ NotebookServiceTracingConnection::CreateSchedule(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::CreateSchedule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::CreateScheduleRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::CreateSchedule");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateSchedule(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateSchedule(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Schedule>>
 NotebookServiceTracingConnection::CreateSchedule(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::CreateSchedule");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateSchedule(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateSchedule(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Schedule>>
@@ -807,26 +760,23 @@ NotebookServiceTracingConnection::TriggerSchedule(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::TriggerSchedule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::TriggerScheduleRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::TriggerSchedule");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->TriggerSchedule(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->TriggerSchedule(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Schedule>>
 NotebookServiceTracingConnection::TriggerSchedule(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::TriggerSchedule");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->TriggerSchedule(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->TriggerSchedule(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::notebooks::v1::Execution>
@@ -860,26 +810,23 @@ NotebookServiceTracingConnection::DeleteExecution(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::DeleteExecution(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DeleteExecutionRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DeleteExecution");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteExecution(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteExecution(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceTracingConnection::DeleteExecution(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::DeleteExecution");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteExecution(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteExecution(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Execution>>
@@ -893,26 +840,23 @@ NotebookServiceTracingConnection::CreateExecution(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceTracingConnection::CreateExecution(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::CreateExecutionRequest const& request) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::CreateExecution");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateExecution(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateExecution(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Execution>>
 NotebookServiceTracingConnection::CreateExecution(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "notebooks_v1::NotebookServiceConnection::CreateExecution");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateExecution(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateExecution(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

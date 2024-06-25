@@ -54,11 +54,11 @@ class ServicesConnectionImpl : public run_v2::ServicesConnection {
       google::cloud::run::v2::CreateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::run::v2::CreateServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::run::v2::Service> GetService(
@@ -71,22 +71,22 @@ class ServicesConnectionImpl : public run_v2::ServicesConnection {
       google::cloud::run::v2::UpdateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::run::v2::UpdateServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
       google::cloud::run::v2::DeleteServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::run::v2::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

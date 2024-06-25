@@ -45,12 +45,12 @@ class ProjectsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -58,13 +58,13 @@ class ProjectsTracingConnection
                          DisableXpnResourceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::
           DisableXpnResourceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DisableXpnResource(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
@@ -72,12 +72,12 @@ class ProjectsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -86,13 +86,13 @@ class ProjectsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   EnableXpnResource(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
@@ -117,12 +117,12 @@ class ProjectsTracingConnection
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
@@ -130,12 +130,12 @@ class ProjectsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -144,13 +144,13 @@ class ProjectsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCloudArmorTier(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -160,13 +160,13 @@ class ProjectsTracingConnection
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   SetCommonInstanceMetadata(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::
           SetCommonInstanceMetadataRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCommonInstanceMetadata(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -175,13 +175,13 @@ class ProjectsTracingConnection
           SetDefaultNetworkTierRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::
           SetDefaultNetworkTierRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDefaultNetworkTier(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -189,13 +189,13 @@ class ProjectsTracingConnection
                            SetUsageExportBucketRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::
           SetUsageExportBucketRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetUsageExportBucket(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

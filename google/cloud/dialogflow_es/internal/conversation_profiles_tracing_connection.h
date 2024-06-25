@@ -70,13 +70,13 @@ class ConversationProfilesTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   SetSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
@@ -85,13 +85,13 @@ class ConversationProfilesTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   ClearSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

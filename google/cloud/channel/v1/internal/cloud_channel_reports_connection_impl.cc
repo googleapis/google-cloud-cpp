@@ -115,7 +115,7 @@ CloudChannelReportsServiceConnectionImpl::RunReportJob(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelReportsServiceConnectionImpl::RunReportJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::channel::v1::RunReportJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -130,8 +130,7 @@ CloudChannelReportsServiceConnectionImpl::RunReportJob(
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
 CloudChannelReportsServiceConnectionImpl::RunReportJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::channel::v1::OperationMetadata>()) {

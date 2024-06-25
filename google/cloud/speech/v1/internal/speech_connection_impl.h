@@ -59,13 +59,13 @@ class SpeechConnectionImpl : public speech_v1::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> LongRunningRecognize(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
   LongRunningRecognize(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

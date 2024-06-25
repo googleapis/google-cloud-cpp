@@ -44,26 +44,24 @@ BackupForGKETracingConnection::CreateBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::CreateBackupPlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::CreateBackupPlan");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateBackupPlan(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->CreateBackupPlan(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKETracingConnection::CreateBackupPlan(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::CreateBackupPlan");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateBackupPlan(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateBackupPlan(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::gkebackup::v1::BackupPlan>
@@ -97,26 +95,24 @@ BackupForGKETracingConnection::UpdateBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::UpdateBackupPlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::UpdateBackupPlan");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateBackupPlan(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->UpdateBackupPlan(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKETracingConnection::UpdateBackupPlan(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::UpdateBackupPlan");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateBackupPlan(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateBackupPlan(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -130,26 +126,24 @@ BackupForGKETracingConnection::DeleteBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::DeleteBackupPlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::DeleteBackupPlan");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteBackupPlan(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteBackupPlan(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKETracingConnection::DeleteBackupPlan(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::DeleteBackupPlan");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteBackupPlan(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteBackupPlan(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
@@ -163,26 +157,23 @@ BackupForGKETracingConnection::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::CreateBackup");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateBackup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKETracingConnection::CreateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::CreateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateBackup(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBackup(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::gkebackup::v1::Backup>
@@ -216,26 +207,23 @@ BackupForGKETracingConnection::UpdateBackup(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::UpdateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::UpdateBackup");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateBackup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKETracingConnection::UpdateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::UpdateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateBackup(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateBackup(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -249,26 +237,23 @@ BackupForGKETracingConnection::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::DeleteBackup");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteBackup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKETracingConnection::DeleteBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::DeleteBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteBackup(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBackup(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::gkebackup::v1::VolumeBackup>
@@ -303,26 +288,24 @@ BackupForGKETracingConnection::CreateRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::CreateRestorePlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::CreateRestorePlan");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateRestorePlan(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->CreateRestorePlan(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKETracingConnection::CreateRestorePlan(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::CreateRestorePlan");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateRestorePlan(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateRestorePlan(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::gkebackup::v1::RestorePlan>
@@ -357,26 +340,24 @@ BackupForGKETracingConnection::UpdateRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::UpdateRestorePlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::UpdateRestorePlan");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateRestorePlan(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->UpdateRestorePlan(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKETracingConnection::UpdateRestorePlan(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::UpdateRestorePlan");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateRestorePlan(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateRestorePlan(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -390,26 +371,24 @@ BackupForGKETracingConnection::DeleteRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::DeleteRestorePlan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::DeleteRestorePlan");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteRestorePlan(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteRestorePlan(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKETracingConnection::DeleteRestorePlan(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "gkebackup_v1::BackupForGKEConnection::DeleteRestorePlan");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteRestorePlan(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteRestorePlan(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
@@ -423,26 +402,23 @@ BackupForGKETracingConnection::CreateRestore(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::CreateRestore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::CreateRestore");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateRestore(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateRestore(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
 BackupForGKETracingConnection::CreateRestore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::CreateRestore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateRestore(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateRestore(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::gkebackup::v1::Restore>
@@ -476,26 +452,23 @@ BackupForGKETracingConnection::UpdateRestore(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::UpdateRestore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::UpdateRestore");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateRestore(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateRestore(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
 BackupForGKETracingConnection::UpdateRestore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::UpdateRestore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateRestore(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateRestore(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
@@ -509,26 +482,23 @@ BackupForGKETracingConnection::DeleteRestore(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKETracingConnection::DeleteRestore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::DeleteRestore");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteRestore(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteRestore(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKETracingConnection::DeleteRestore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("gkebackup_v1::BackupForGKEConnection::DeleteRestore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteRestore(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteRestore(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::gkebackup::v1::VolumeRestore>

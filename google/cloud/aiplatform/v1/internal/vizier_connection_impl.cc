@@ -196,7 +196,7 @@ VizierServiceConnectionImpl::SuggestTrials(
 
 StatusOr<google::longrunning::Operation>
 VizierServiceConnectionImpl::SuggestTrials(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -212,8 +212,7 @@ VizierServiceConnectionImpl::SuggestTrials(
 
 future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
 VizierServiceConnectionImpl::SuggestTrials(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -397,7 +396,7 @@ VizierServiceConnectionImpl::CheckTrialEarlyStoppingState(
 
 StatusOr<google::longrunning::Operation>
 VizierServiceConnectionImpl::CheckTrialEarlyStoppingState(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -415,8 +414,7 @@ VizierServiceConnectionImpl::CheckTrialEarlyStoppingState(
 future<StatusOr<
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
 VizierServiceConnectionImpl::CheckTrialEarlyStoppingState(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

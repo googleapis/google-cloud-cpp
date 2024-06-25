@@ -53,12 +53,12 @@ class DataprocMetastoreFederationTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateFederation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateFederationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
@@ -66,12 +66,12 @@ class DataprocMetastoreFederationTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFederation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateFederationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -79,12 +79,12 @@ class DataprocMetastoreFederationTracingConnection
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFederation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteFederationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteFederation(google::cloud::ExperimentalTag,
+  DeleteFederation(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
  private:

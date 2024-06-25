@@ -55,11 +55,11 @@ class ModelServiceConnectionImpl : public retail_v2::ModelServiceConnection {
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::retail::v2::Model> GetModel(
@@ -84,11 +84,11 @@ class ModelServiceConnectionImpl : public retail_v2::ModelServiceConnection {
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> TuneModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::retail::v2::TuneModelRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

@@ -51,12 +51,12 @@ class DataprocMetastoreTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateServiceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
@@ -64,12 +64,12 @@ class DataprocMetastoreTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateServiceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -77,12 +77,12 @@ class DataprocMetastoreTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteServiceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteService(google::cloud::ExperimentalTag,
+  DeleteService(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::metastore::v1::MetadataImport> ListMetadataImports(
@@ -99,13 +99,13 @@ class DataprocMetastoreTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateMetadataImport(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateMetadataImportRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
   CreateMetadataImport(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -114,13 +114,13 @@ class DataprocMetastoreTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateMetadataImport(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateMetadataImportRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
   UpdateMetadataImport(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
@@ -128,12 +128,12 @@ class DataprocMetastoreTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> ExportMetadata(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::ExportMetadataRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
@@ -141,12 +141,12 @@ class DataprocMetastoreTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> RestoreService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::RestoreServiceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::metastore::v1::Backup> ListBackups(
@@ -160,12 +160,12 @@ class DataprocMetastoreTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateBackupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -173,12 +173,12 @@ class DataprocMetastoreTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteBackupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteBackup(google::cloud::ExperimentalTag,
+  DeleteBackup(ExperimentalTag,
                google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
@@ -186,12 +186,12 @@ class DataprocMetastoreTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> QueryMetadata(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::QueryMetadataRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
-  QueryMetadata(google::cloud::ExperimentalTag,
+  QueryMetadata(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
@@ -200,12 +200,12 @@ class DataprocMetastoreTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> MoveTableToDatabase(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request)
       override;
 
   future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
-  MoveTableToDatabase(google::cloud::ExperimentalTag,
+  MoveTableToDatabase(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -215,14 +215,14 @@ class DataprocMetastoreTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> AlterMetadataResourceLocation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
   AlterMetadataResourceLocation(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

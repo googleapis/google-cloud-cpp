@@ -196,7 +196,7 @@ IntentsConnectionImpl::BatchUpdateIntents(
 
 StatusOr<google::longrunning::Operation>
 IntentsConnectionImpl::BatchUpdateIntents(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -212,8 +212,7 @@ IntentsConnectionImpl::BatchUpdateIntents(
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
 IntentsConnectionImpl::BatchUpdateIntents(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<
@@ -289,7 +288,7 @@ IntentsConnectionImpl::BatchDeleteIntents(
 
 StatusOr<google::longrunning::Operation>
 IntentsConnectionImpl::BatchDeleteIntents(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -305,8 +304,7 @@ IntentsConnectionImpl::BatchDeleteIntents(
 
 future<StatusOr<google::protobuf::Struct>>
 IntentsConnectionImpl::BatchDeleteIntents(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(

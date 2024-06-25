@@ -169,7 +169,7 @@ ReachabilityServiceConnectionImpl::CreateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnectionImpl::CreateConnectivityTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -186,8 +186,7 @@ ReachabilityServiceConnectionImpl::CreateConnectivityTest(
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnectionImpl::CreateConnectivityTest(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkmanagement::v1::
@@ -265,7 +264,7 @@ ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -282,8 +281,7 @@ ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkmanagement::v1::
@@ -361,7 +359,7 @@ ReachabilityServiceConnectionImpl::RerunConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnectionImpl::RerunConnectivityTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -378,8 +376,7 @@ ReachabilityServiceConnectionImpl::RerunConnectivityTest(
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnectionImpl::RerunConnectivityTest(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkmanagement::v1::
@@ -457,7 +454,7 @@ ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -474,8 +471,7 @@ ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkmanagement::v1::

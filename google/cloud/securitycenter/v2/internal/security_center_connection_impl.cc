@@ -127,7 +127,7 @@ SecurityCenterConnectionImpl::BulkMuteFindings(
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterConnectionImpl::BulkMuteFindings(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -143,8 +143,7 @@ SecurityCenterConnectionImpl::BulkMuteFindings(
 
 future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
 SecurityCenterConnectionImpl::BulkMuteFindings(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Empty>()) {
     return make_ready_future<

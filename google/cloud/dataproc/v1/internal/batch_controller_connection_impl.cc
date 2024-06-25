@@ -107,7 +107,7 @@ BatchControllerConnectionImpl::CreateBatch(
 
 StatusOr<google::longrunning::Operation>
 BatchControllerConnectionImpl::CreateBatch(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -122,8 +122,7 @@ BatchControllerConnectionImpl::CreateBatch(
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerConnectionImpl::CreateBatch(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::

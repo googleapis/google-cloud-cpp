@@ -323,7 +323,7 @@ ArtifactRegistryConnectionImpl::ImportAptArtifacts(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryConnectionImpl::ImportAptArtifacts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -341,8 +341,7 @@ ArtifactRegistryConnectionImpl::ImportAptArtifacts(
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
 ArtifactRegistryConnectionImpl::ImportAptArtifacts(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::devtools::artifactregistry::v1::
@@ -421,7 +420,7 @@ ArtifactRegistryConnectionImpl::ImportYumArtifacts(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryConnectionImpl::ImportYumArtifacts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -439,8 +438,7 @@ ArtifactRegistryConnectionImpl::ImportYumArtifacts(
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
 ArtifactRegistryConnectionImpl::ImportYumArtifacts(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::devtools::artifactregistry::v1::
@@ -571,7 +569,7 @@ ArtifactRegistryConnectionImpl::CreateRepository(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryConnectionImpl::CreateRepository(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -589,8 +587,7 @@ ArtifactRegistryConnectionImpl::CreateRepository(
 
 future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
 ArtifactRegistryConnectionImpl::CreateRepository(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::devtools::artifactregistry::v1::
@@ -686,7 +683,7 @@ ArtifactRegistryConnectionImpl::DeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryConnectionImpl::DeleteRepository(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -704,8 +701,7 @@ ArtifactRegistryConnectionImpl::DeleteRepository(
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnectionImpl::DeleteRepository(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::devtools::artifactregistry::v1::
@@ -835,7 +831,7 @@ ArtifactRegistryConnectionImpl::DeletePackage(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryConnectionImpl::DeletePackage(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -852,8 +848,7 @@ ArtifactRegistryConnectionImpl::DeletePackage(
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnectionImpl::DeletePackage(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::devtools::artifactregistry::v1::
@@ -983,7 +978,7 @@ ArtifactRegistryConnectionImpl::DeleteVersion(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryConnectionImpl::DeleteVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1000,8 +995,7 @@ ArtifactRegistryConnectionImpl::DeleteVersion(
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnectionImpl::DeleteVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::devtools::artifactregistry::v1::
@@ -1080,7 +1074,7 @@ ArtifactRegistryConnectionImpl::BatchDeleteVersions(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryConnectionImpl::BatchDeleteVersions(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1098,8 +1092,7 @@ ArtifactRegistryConnectionImpl::BatchDeleteVersions(
 future<StatusOr<
     google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
 ArtifactRegistryConnectionImpl::BatchDeleteVersions(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::devtools::artifactregistry::v1::

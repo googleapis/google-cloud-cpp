@@ -66,26 +66,24 @@ DataMigrationServiceTracingConnection::CreateMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::CreateMigrationJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::CreateMigrationJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateMigrationJob(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->CreateMigrationJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::CreateMigrationJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::CreateMigrationJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateMigrationJob(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateMigrationJob(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -100,26 +98,24 @@ DataMigrationServiceTracingConnection::UpdateMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::UpdateMigrationJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::UpdateMigrationJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateMigrationJob(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->UpdateMigrationJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::UpdateMigrationJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::UpdateMigrationJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateMigrationJob(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateMigrationJob(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -134,26 +130,24 @@ DataMigrationServiceTracingConnection::DeleteMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::DeleteMigrationJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::DeleteMigrationJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteMigrationJob(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteMigrationJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceTracingConnection::DeleteMigrationJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::DeleteMigrationJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteMigrationJob(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteMigrationJob(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -167,26 +161,24 @@ DataMigrationServiceTracingConnection::StartMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::StartMigrationJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::StartMigrationJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->StartMigrationJob(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->StartMigrationJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::StartMigrationJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::StartMigrationJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->StartMigrationJob(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->StartMigrationJob(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -200,26 +192,24 @@ DataMigrationServiceTracingConnection::StopMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::StopMigrationJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::StopMigrationJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->StopMigrationJob(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->StopMigrationJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::StopMigrationJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::StopMigrationJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->StopMigrationJob(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->StopMigrationJob(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -234,26 +224,24 @@ DataMigrationServiceTracingConnection::ResumeMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::ResumeMigrationJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::ResumeMigrationJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ResumeMigrationJob(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->ResumeMigrationJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::ResumeMigrationJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::ResumeMigrationJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->ResumeMigrationJob(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ResumeMigrationJob(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -268,26 +256,24 @@ DataMigrationServiceTracingConnection::PromoteMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::PromoteMigrationJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::PromoteMigrationJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->PromoteMigrationJob(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->PromoteMigrationJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::PromoteMigrationJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::PromoteMigrationJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->PromoteMigrationJob(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PromoteMigrationJob(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -302,26 +288,24 @@ DataMigrationServiceTracingConnection::VerifyMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::VerifyMigrationJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::VerifyMigrationJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->VerifyMigrationJob(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->VerifyMigrationJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::VerifyMigrationJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::VerifyMigrationJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->VerifyMigrationJob(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->VerifyMigrationJob(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -336,26 +320,24 @@ DataMigrationServiceTracingConnection::RestartMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::RestartMigrationJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::RestartMigrationJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RestartMigrationJob(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->RestartMigrationJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::RestartMigrationJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::RestartMigrationJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->RestartMigrationJob(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RestartMigrationJob(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
@@ -413,29 +395,27 @@ DataMigrationServiceTracingConnection::CreateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::CreateConnectionProfile(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "CreateConnectionProfile");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateConnectionProfile(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateConnectionProfile(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceTracingConnection::CreateConnectionProfile(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "CreateConnectionProfile");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateConnectionProfile(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateConnectionProfile(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
@@ -452,29 +432,27 @@ DataMigrationServiceTracingConnection::UpdateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::UpdateConnectionProfile(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "UpdateConnectionProfile");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateConnectionProfile(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UpdateConnectionProfile(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceTracingConnection::UpdateConnectionProfile(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "UpdateConnectionProfile");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateConnectionProfile(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateConnectionProfile(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -491,29 +469,27 @@ DataMigrationServiceTracingConnection::DeleteConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::DeleteConnectionProfile(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "DeleteConnectionProfile");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteConnectionProfile(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteConnectionProfile(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceTracingConnection::DeleteConnectionProfile(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "DeleteConnectionProfile");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteConnectionProfile(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteConnectionProfile(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
@@ -530,29 +506,27 @@ DataMigrationServiceTracingConnection::CreatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::CreatePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "CreatePrivateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreatePrivateConnection(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreatePrivateConnection(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
 DataMigrationServiceTracingConnection::CreatePrivateConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "CreatePrivateConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreatePrivateConnection(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreatePrivateConnection(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
@@ -591,29 +565,27 @@ DataMigrationServiceTracingConnection::DeletePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::DeletePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "DeletePrivateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeletePrivateConnection(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeletePrivateConnection(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceTracingConnection::DeletePrivateConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "DeletePrivateConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeletePrivateConnection(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeletePrivateConnection(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -653,29 +625,27 @@ DataMigrationServiceTracingConnection::CreateConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::CreateConversionWorkspace(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "CreateConversionWorkspace");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateConversionWorkspace(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateConversionWorkspace(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceTracingConnection::CreateConversionWorkspace(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "CreateConversionWorkspace");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateConversionWorkspace(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateConversionWorkspace(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -692,29 +662,27 @@ DataMigrationServiceTracingConnection::UpdateConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::UpdateConversionWorkspace(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "UpdateConversionWorkspace");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateConversionWorkspace(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UpdateConversionWorkspace(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceTracingConnection::UpdateConversionWorkspace(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "UpdateConversionWorkspace");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateConversionWorkspace(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateConversionWorkspace(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
@@ -731,29 +699,27 @@ DataMigrationServiceTracingConnection::DeleteConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::DeleteConversionWorkspace(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "DeleteConversionWorkspace");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteConversionWorkspace(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteConversionWorkspace(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceTracingConnection::DeleteConversionWorkspace(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "DeleteConversionWorkspace");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteConversionWorkspace(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteConversionWorkspace(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
@@ -807,29 +773,27 @@ DataMigrationServiceTracingConnection::SeedConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::SeedConversionWorkspace(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "SeedConversionWorkspace");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SeedConversionWorkspace(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->SeedConversionWorkspace(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceTracingConnection::SeedConversionWorkspace(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "SeedConversionWorkspace");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SeedConversionWorkspace(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SeedConversionWorkspace(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -844,26 +808,24 @@ DataMigrationServiceTracingConnection::ImportMappingRules(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::ImportMappingRules(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::ImportMappingRules");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ImportMappingRules(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->ImportMappingRules(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceTracingConnection::ImportMappingRules(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::ImportMappingRules");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->ImportMappingRules(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ImportMappingRules(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -880,29 +842,27 @@ DataMigrationServiceTracingConnection::ConvertConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::ConvertConversionWorkspace(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "ConvertConversionWorkspace");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ConvertConversionWorkspace(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ConvertConversionWorkspace(ExperimentalTag{}, NoAwaitTag{},
+                                                request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceTracingConnection::ConvertConversionWorkspace(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "ConvertConversionWorkspace");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ConvertConversionWorkspace(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ConvertConversionWorkspace(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -919,29 +879,27 @@ DataMigrationServiceTracingConnection::CommitConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::CommitConversionWorkspace(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "CommitConversionWorkspace");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CommitConversionWorkspace(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CommitConversionWorkspace(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceTracingConnection::CommitConversionWorkspace(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "CommitConversionWorkspace");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CommitConversionWorkspace(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CommitConversionWorkspace(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -958,29 +916,27 @@ DataMigrationServiceTracingConnection::RollbackConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::RollbackConversionWorkspace(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "RollbackConversionWorkspace");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RollbackConversionWorkspace(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->RollbackConversionWorkspace(ExperimentalTag{},
+                                                 NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceTracingConnection::RollbackConversionWorkspace(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "RollbackConversionWorkspace");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->RollbackConversionWorkspace(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RollbackConversionWorkspace(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -997,29 +953,27 @@ DataMigrationServiceTracingConnection::ApplyConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceTracingConnection::ApplyConversionWorkspace(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "ApplyConversionWorkspace");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ApplyConversionWorkspace(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ApplyConversionWorkspace(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
 DataMigrationServiceTracingConnection::ApplyConversionWorkspace(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datamigration_v1::DataMigrationServiceConnection::"
       "ApplyConversionWorkspace");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ApplyConversionWorkspace(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ApplyConversionWorkspace(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::clouddms::v1::DatabaseEntity>

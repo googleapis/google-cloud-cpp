@@ -51,12 +51,12 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateKey,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::api::apikeys::v2::CreateKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, CreateKey,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -77,12 +77,12 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateKey,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::api::apikeys::v2::UpdateKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UpdateKey,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -91,12 +91,12 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteKey,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::api::apikeys::v2::DeleteKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, DeleteKey,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -105,12 +105,12 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeleteKey,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::api::apikeys::v2::UndeleteKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UndeleteKey,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

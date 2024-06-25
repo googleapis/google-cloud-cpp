@@ -46,27 +46,25 @@ ConversationModelsTracingConnection::CreateConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingConnection::CreateConversationModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::CreateConversationModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateConversationModel(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateConversationModel(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
 ConversationModelsTracingConnection::CreateConversationModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::CreateConversationModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateConversationModel(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateConversationModel(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
@@ -104,28 +102,26 @@ ConversationModelsTracingConnection::DeleteConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingConnection::DeleteConversationModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::DeleteConversationModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteConversationModel(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteConversationModel(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<
     google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
 ConversationModelsTracingConnection::DeleteConversationModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::DeleteConversationModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteConversationModel(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteConversationModel(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -142,28 +138,26 @@ ConversationModelsTracingConnection::DeployConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingConnection::DeployConversationModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::DeployConversationModelRequest const&
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::DeployConversationModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeployConversationModel(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeployConversationModel(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<
     google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
 ConversationModelsTracingConnection::DeployConversationModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::DeployConversationModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeployConversationModel(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeployConversationModel(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -180,28 +174,26 @@ ConversationModelsTracingConnection::UndeployConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingConnection::UndeployConversationModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::UndeployConversationModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UndeployConversationModel(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UndeployConversationModel(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
 }
 
 future<StatusOr<
     google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
 ConversationModelsTracingConnection::UndeployConversationModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::UndeployConversationModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UndeployConversationModel(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UndeployConversationModel(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -244,29 +236,28 @@ ConversationModelsTracingConnection::CreateConversationModelEvaluation(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsTracingConnection::CreateConversationModelEvaluation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::
         CreateConversationModelEvaluationRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::"
       "CreateConversationModelEvaluation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateConversationModelEvaluation(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateConversationModelEvaluation(ExperimentalTag{},
+                                                       NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
 ConversationModelsTracingConnection::CreateConversationModelEvaluation(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationModelsConnection::"
       "CreateConversationModelEvaluation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateConversationModelEvaluation(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateConversationModelEvaluation(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

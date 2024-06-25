@@ -45,27 +45,25 @@ FirewallsTracingConnection::DeleteFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsTracingConnection::DeleteFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::DeleteFirewall");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteFirewall(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteFirewall(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsTracingConnection::DeleteFirewall(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::DeleteFirewall");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteFirewall(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteFirewall(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
@@ -90,27 +88,25 @@ FirewallsTracingConnection::InsertFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsTracingConnection::InsertFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::InsertFirewall");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->InsertFirewall(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->InsertFirewall(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsTracingConnection::InsertFirewall(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::InsertFirewall");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->InsertFirewall(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->InsertFirewall(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Firewall>
@@ -137,27 +133,25 @@ FirewallsTracingConnection::PatchFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsTracingConnection::PatchFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::PatchFirewall");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->PatchFirewall(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->PatchFirewall(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsTracingConnection::PatchFirewall(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::PatchFirewall");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->PatchFirewall(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchFirewall(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -172,27 +166,25 @@ FirewallsTracingConnection::UpdateFirewall(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallsTracingConnection::UpdateFirewall(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::UpdateFirewall");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateFirewall(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateFirewall(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsTracingConnection::UpdateFirewall(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_firewalls_v1::FirewallsConnection::UpdateFirewall");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateFirewall(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateFirewall(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

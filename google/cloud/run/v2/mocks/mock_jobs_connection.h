@@ -51,12 +51,12 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::run::v2::CreateJobRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, CreateJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -72,12 +72,12 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::run::v2::UpdateJobRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, UpdateJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -86,12 +86,12 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::run::v2::DeleteJobRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, DeleteJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -100,12 +100,12 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RunJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::run::v2::RunJobRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, RunJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

@@ -153,7 +153,7 @@ CloudMemcacheConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -169,8 +169,7 @@ CloudMemcacheConnectionImpl::CreateInstance(
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
@@ -245,7 +244,7 @@ CloudMemcacheConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -261,8 +260,7 @@ CloudMemcacheConnectionImpl::UpdateInstance(
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
@@ -337,7 +335,7 @@ CloudMemcacheConnectionImpl::UpdateParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::UpdateParameters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -353,8 +351,7 @@ CloudMemcacheConnectionImpl::UpdateParameters(
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::UpdateParameters(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
@@ -429,7 +426,7 @@ CloudMemcacheConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -445,8 +442,7 @@ CloudMemcacheConnectionImpl::DeleteInstance(
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
@@ -522,7 +518,7 @@ CloudMemcacheConnectionImpl::ApplyParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::ApplyParameters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -538,8 +534,7 @@ CloudMemcacheConnectionImpl::ApplyParameters(
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::ApplyParameters(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
@@ -615,7 +610,7 @@ CloudMemcacheConnectionImpl::RescheduleMaintenance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::RescheduleMaintenance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -631,8 +626,7 @@ CloudMemcacheConnectionImpl::RescheduleMaintenance(
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::RescheduleMaintenance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {

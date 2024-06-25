@@ -69,15 +69,14 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCustomJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteCustomJob,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -113,7 +112,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDataLabelingJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
            request),
       (override));
@@ -121,8 +120,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDataLabelingJob,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -160,7 +158,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteHyperparameterTuningJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::
                    DeleteHyperparameterTuningJobRequest const& request),
               (override));
@@ -168,8 +166,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteHyperparameterTuningJob,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(Status, CancelHyperparameterTuningJob,
@@ -198,15 +195,14 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteNasJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteNasJobRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteNasJob,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -255,7 +251,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteBatchPredictionJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
            request),
       (override));
@@ -263,8 +259,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteBatchPredictionJob,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -312,7 +307,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateModelDeploymentMonitoringJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::
                    UpdateModelDeploymentMonitoringJobRequest const& request),
               (override));
@@ -320,7 +315,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
   MOCK_METHOD(future<StatusOr<
                   google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>,
               UpdateModelDeploymentMonitoringJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -333,7 +328,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteModelDeploymentMonitoringJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::
                    DeleteModelDeploymentMonitoringJobRequest const& request),
               (override));
@@ -341,8 +336,7 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteModelDeploymentMonitoringJob,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(Status, PauseModelDeploymentMonitoringJob,

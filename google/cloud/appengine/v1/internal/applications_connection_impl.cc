@@ -118,7 +118,7 @@ ApplicationsConnectionImpl::CreateApplication(
 
 StatusOr<google::longrunning::Operation>
 ApplicationsConnectionImpl::CreateApplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::CreateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -133,8 +133,7 @@ ApplicationsConnectionImpl::CreateApplication(
 
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnectionImpl::CreateApplication(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {
@@ -209,7 +208,7 @@ ApplicationsConnectionImpl::UpdateApplication(
 
 StatusOr<google::longrunning::Operation>
 ApplicationsConnectionImpl::UpdateApplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::UpdateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -224,8 +223,7 @@ ApplicationsConnectionImpl::UpdateApplication(
 
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnectionImpl::UpdateApplication(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {
@@ -300,7 +298,7 @@ ApplicationsConnectionImpl::RepairApplication(
 
 StatusOr<google::longrunning::Operation>
 ApplicationsConnectionImpl::RepairApplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::RepairApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -315,8 +313,7 @@ ApplicationsConnectionImpl::RepairApplication(
 
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnectionImpl::RepairApplication(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {

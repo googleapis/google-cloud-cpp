@@ -65,12 +65,12 @@ class UserEventServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ImportUserEvents(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
           request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
-  ImportUserEvents(google::cloud::ExperimentalTag,
+  ImportUserEvents(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
  private:

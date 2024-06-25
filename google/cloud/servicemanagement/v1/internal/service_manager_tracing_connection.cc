@@ -65,26 +65,23 @@ ServiceManagerTracingConnection::CreateService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerTracingConnection::CreateService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::CreateService");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateService(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
 ServiceManagerTracingConnection::CreateService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::CreateService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateService(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateService(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
@@ -98,26 +95,23 @@ ServiceManagerTracingConnection::DeleteService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerTracingConnection::DeleteService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::DeleteService");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteService(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
 ServiceManagerTracingConnection::DeleteService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::DeleteService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteService(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteService(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
@@ -131,26 +125,23 @@ ServiceManagerTracingConnection::UndeleteService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerTracingConnection::UndeleteService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::UndeleteService");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UndeleteService(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->UndeleteService(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
 ServiceManagerTracingConnection::UndeleteService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::UndeleteService");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UndeleteService(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UndeleteService(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::api::Service>
@@ -197,27 +188,25 @@ ServiceManagerTracingConnection::SubmitConfigSource(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerTracingConnection::SubmitConfigSource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::SubmitConfigSource");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->SubmitConfigSource(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->SubmitConfigSource(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
 ServiceManagerTracingConnection::SubmitConfigSource(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::SubmitConfigSource");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->SubmitConfigSource(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SubmitConfigSource(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::api::servicemanagement::v1::Rollout>
@@ -255,27 +244,25 @@ ServiceManagerTracingConnection::CreateServiceRollout(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerTracingConnection::CreateServiceRollout(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::CreateServiceRollout");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateServiceRollout(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->CreateServiceRollout(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::Rollout>>
 ServiceManagerTracingConnection::CreateServiceRollout(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "servicemanagement_v1::ServiceManagerConnection::CreateServiceRollout");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateServiceRollout(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateServiceRollout(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>

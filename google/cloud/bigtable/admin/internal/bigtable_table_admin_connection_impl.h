@@ -65,11 +65,11 @@ class BigtableTableAdminConnectionImpl
       google::bigtable::admin::v2::UpdateTableRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTable(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::bigtable::admin::v2::UpdateTableRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   Status DeleteTable(
@@ -80,12 +80,12 @@ class BigtableTableAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UndeleteTable(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::bigtable::admin::v2::UndeleteTableRequest const& request)
       override;
 
   future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
@@ -94,13 +94,13 @@ class BigtableTableAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
       override;
 
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
   CreateAuthorizedView(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::bigtable::admin::v2::AuthorizedView> ListAuthorizedViews(
@@ -116,13 +116,13 @@ class BigtableTableAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
       override;
 
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
   UpdateAuthorizedView(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   Status DeleteAuthorizedView(
@@ -149,11 +149,11 @@ class BigtableTableAdminConnectionImpl
       google::bigtable::admin::v2::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::bigtable::admin::v2::CreateBackupRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
@@ -172,22 +172,22 @@ class BigtableTableAdminConnectionImpl
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RestoreTable(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
       google::bigtable::admin::v2::CopyBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CopyBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::bigtable::admin::v2::CopyBackupRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

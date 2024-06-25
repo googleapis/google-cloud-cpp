@@ -153,7 +153,7 @@ AlloyDBAdminConnectionImpl::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -168,8 +168,7 @@ AlloyDBAdminConnectionImpl::CreateCluster(
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -244,7 +243,7 @@ AlloyDBAdminConnectionImpl::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -259,8 +258,7 @@ AlloyDBAdminConnectionImpl::UpdateCluster(
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -335,7 +333,7 @@ AlloyDBAdminConnectionImpl::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -350,8 +348,7 @@ AlloyDBAdminConnectionImpl::DeleteCluster(
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnectionImpl::DeleteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -427,7 +424,7 @@ AlloyDBAdminConnectionImpl::PromoteCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::PromoteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -442,8 +439,7 @@ AlloyDBAdminConnectionImpl::PromoteCluster(
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::PromoteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -518,7 +514,7 @@ AlloyDBAdminConnectionImpl::RestoreCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::RestoreCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -533,8 +529,7 @@ AlloyDBAdminConnectionImpl::RestoreCluster(
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::RestoreCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -610,7 +605,7 @@ AlloyDBAdminConnectionImpl::CreateSecondaryCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::CreateSecondaryCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -626,8 +621,7 @@ AlloyDBAdminConnectionImpl::CreateSecondaryCluster(
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::CreateSecondaryCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -750,7 +744,7 @@ AlloyDBAdminConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -765,8 +759,7 @@ AlloyDBAdminConnectionImpl::CreateInstance(
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -842,7 +835,7 @@ AlloyDBAdminConnectionImpl::CreateSecondaryInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::CreateSecondaryInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -858,8 +851,7 @@ AlloyDBAdminConnectionImpl::CreateSecondaryInstance(
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::CreateSecondaryInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -935,7 +927,7 @@ AlloyDBAdminConnectionImpl::BatchCreateInstances(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::BatchCreateInstances(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -951,8 +943,7 @@ AlloyDBAdminConnectionImpl::BatchCreateInstances(
 
 future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
 AlloyDBAdminConnectionImpl::BatchCreateInstances(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -1028,7 +1019,7 @@ AlloyDBAdminConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1043,8 +1034,7 @@ AlloyDBAdminConnectionImpl::UpdateInstance(
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -1119,7 +1109,7 @@ AlloyDBAdminConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1134,8 +1124,7 @@ AlloyDBAdminConnectionImpl::DeleteInstance(
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -1211,7 +1200,7 @@ AlloyDBAdminConnectionImpl::FailoverInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::FailoverInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1227,8 +1216,7 @@ AlloyDBAdminConnectionImpl::FailoverInstance(
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::FailoverInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -1303,7 +1291,7 @@ AlloyDBAdminConnectionImpl::InjectFault(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::InjectFault(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::InjectFaultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1318,8 +1306,7 @@ AlloyDBAdminConnectionImpl::InjectFault(
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::InjectFault(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -1394,7 +1381,7 @@ AlloyDBAdminConnectionImpl::RestartInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::RestartInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1410,8 +1397,7 @@ AlloyDBAdminConnectionImpl::RestartInstance(
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::RestartInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -1534,7 +1520,7 @@ AlloyDBAdminConnectionImpl::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1549,8 +1535,7 @@ AlloyDBAdminConnectionImpl::CreateBackup(
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminConnectionImpl::CreateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -1625,7 +1610,7 @@ AlloyDBAdminConnectionImpl::UpdateBackup(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::UpdateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1640,8 +1625,7 @@ AlloyDBAdminConnectionImpl::UpdateBackup(
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminConnectionImpl::UpdateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {
@@ -1716,7 +1700,7 @@ AlloyDBAdminConnectionImpl::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminConnectionImpl::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1731,8 +1715,7 @@ AlloyDBAdminConnectionImpl::DeleteBackup(
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnectionImpl::DeleteBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::alloydb::v1::OperationMetadata>()) {

@@ -100,12 +100,12 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
                        request) override;
 
   StatusOr<google::longrunning::Operation> SeekSubscription(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription(google::cloud::ExperimentalTag,
+  SeekSubscription(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(

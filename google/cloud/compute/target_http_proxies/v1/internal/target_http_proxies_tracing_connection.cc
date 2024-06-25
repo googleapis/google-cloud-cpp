@@ -64,29 +64,28 @@ TargetHttpProxiesTracingConnection::DeleteTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesTracingConnection::DeleteTargetHttpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         DeleteTargetHttpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "DeleteTargetHttpProxy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteTargetHttpProxy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->DeleteTargetHttpProxy(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesTracingConnection::DeleteTargetHttpProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "DeleteTargetHttpProxy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteTargetHttpProxy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteTargetHttpProxy(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -114,29 +113,28 @@ TargetHttpProxiesTracingConnection::InsertTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesTracingConnection::InsertTargetHttpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         InsertTargetHttpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "InsertTargetHttpProxy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertTargetHttpProxy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->InsertTargetHttpProxy(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesTracingConnection::InsertTargetHttpProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "InsertTargetHttpProxy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertTargetHttpProxy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InsertTargetHttpProxy(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -167,29 +165,28 @@ TargetHttpProxiesTracingConnection::PatchTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesTracingConnection::PatchTargetHttpProxy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         PatchTargetHttpProxyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "PatchTargetHttpProxy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PatchTargetHttpProxy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->PatchTargetHttpProxy(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesTracingConnection::PatchTargetHttpProxy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::"
       "PatchTargetHttpProxy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchTargetHttpProxy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PatchTargetHttpProxy(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -204,27 +201,25 @@ TargetHttpProxiesTracingConnection::SetUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesTracingConnection::SetUrlMap(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         SetUrlMapRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::SetUrlMap");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->SetUrlMap(google::cloud::ExperimentalTag{},
-                               google::cloud::NoAwaitTag{}, request));
+      *span, child_->SetUrlMap(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesTracingConnection::SetUrlMap(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_target_http_proxies_v1::TargetHttpProxiesConnection::SetUrlMap");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->SetUrlMap(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->SetUrlMap(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

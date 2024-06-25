@@ -64,26 +64,23 @@ DataprocMetastoreTracingConnection::CreateService(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::CreateService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::CreateServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateService");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateService(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreTracingConnection::CreateService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateService(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateService(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Service>>
@@ -97,26 +94,23 @@ DataprocMetastoreTracingConnection::UpdateService(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::UpdateService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::UpdateServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::UpdateService");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateService(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreTracingConnection::UpdateService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::UpdateService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateService(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateService(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -130,26 +124,23 @@ DataprocMetastoreTracingConnection::DeleteService(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::DeleteService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::DeleteService");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteService(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreTracingConnection::DeleteService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::DeleteService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteService(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteService(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::metastore::v1::MetadataImport>
@@ -185,26 +176,24 @@ DataprocMetastoreTracingConnection::CreateMetadataImport(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::CreateMetadataImport(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateMetadataImport");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateMetadataImport(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->CreateMetadataImport(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreTracingConnection::CreateMetadataImport(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateMetadataImport");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateMetadataImport(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateMetadataImport(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -219,26 +208,24 @@ DataprocMetastoreTracingConnection::UpdateMetadataImport(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::UpdateMetadataImport(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::UpdateMetadataImport");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateMetadataImport(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->UpdateMetadataImport(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreTracingConnection::UpdateMetadataImport(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::UpdateMetadataImport");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateMetadataImport(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateMetadataImport(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
@@ -252,26 +239,23 @@ DataprocMetastoreTracingConnection::ExportMetadata(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::ExportMetadata(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::ExportMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::ExportMetadata");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ExportMetadata(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->ExportMetadata(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
 DataprocMetastoreTracingConnection::ExportMetadata(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::ExportMetadata");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->ExportMetadata(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->ExportMetadata(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Restore>>
@@ -285,26 +269,23 @@ DataprocMetastoreTracingConnection::RestoreService(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::RestoreService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::RestoreServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::RestoreService");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RestoreService(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->RestoreService(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Restore>>
 DataprocMetastoreTracingConnection::RestoreService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::RestoreService");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->RestoreService(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->RestoreService(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::metastore::v1::Backup>
@@ -338,26 +319,23 @@ DataprocMetastoreTracingConnection::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateBackup");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateBackup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::Backup>>
 DataprocMetastoreTracingConnection::CreateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::CreateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateBackup(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBackup(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -371,26 +349,23 @@ DataprocMetastoreTracingConnection::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::DeleteBackup");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteBackup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreTracingConnection::DeleteBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::DeleteBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteBackup(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBackup(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
@@ -404,26 +379,23 @@ DataprocMetastoreTracingConnection::QueryMetadata(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::QueryMetadata(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::QueryMetadataRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::QueryMetadata");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->QueryMetadata(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->QueryMetadata(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
 DataprocMetastoreTracingConnection::QueryMetadata(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::QueryMetadata");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->QueryMetadata(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->QueryMetadata(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
@@ -438,26 +410,24 @@ DataprocMetastoreTracingConnection::MoveTableToDatabase(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::MoveTableToDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::MoveTableToDatabase");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->MoveTableToDatabase(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->MoveTableToDatabase(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
 DataprocMetastoreTracingConnection::MoveTableToDatabase(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::MoveTableToDatabase");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->MoveTableToDatabase(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->MoveTableToDatabase(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -475,30 +445,29 @@ DataprocMetastoreTracingConnection::AlterMetadataResourceLocation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreTracingConnection::AlterMetadataResourceLocation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
         request) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::"
       "AlterMetadataResourceLocation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->AlterMetadataResourceLocation(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->AlterMetadataResourceLocation(ExperimentalTag{},
+                                                   NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
 DataprocMetastoreTracingConnection::AlterMetadataResourceLocation(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "metastore_v1::DataprocMetastoreConnection::"
       "AlterMetadataResourceLocation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AlterMetadataResourceLocation(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(
+      std::move(span),
+      child_->AlterMetadataResourceLocation(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

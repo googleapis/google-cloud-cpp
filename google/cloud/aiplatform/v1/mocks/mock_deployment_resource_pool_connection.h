@@ -56,7 +56,7 @@ class MockDeploymentResourcePoolServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDeploymentResourcePool,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
            request),
       (override));
@@ -64,8 +64,7 @@ class MockDeploymentResourcePoolServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
       CreateDeploymentResourcePool,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -91,7 +90,7 @@ class MockDeploymentResourcePoolServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDeploymentResourcePool,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
            request),
       (override));
@@ -99,8 +98,7 @@ class MockDeploymentResourcePoolServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDeploymentResourcePool,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

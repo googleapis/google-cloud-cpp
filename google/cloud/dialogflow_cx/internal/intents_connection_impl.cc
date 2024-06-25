@@ -196,7 +196,7 @@ IntentsConnectionImpl::ImportIntents(
 }
 
 StatusOr<google::longrunning::Operation> IntentsConnectionImpl::ImportIntents(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -212,8 +212,7 @@ StatusOr<google::longrunning::Operation> IntentsConnectionImpl::ImportIntents(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
 IntentsConnectionImpl::ImportIntents(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::
@@ -290,7 +289,7 @@ IntentsConnectionImpl::ExportIntents(
 }
 
 StatusOr<google::longrunning::Operation> IntentsConnectionImpl::ExportIntents(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -306,8 +305,7 @@ StatusOr<google::longrunning::Operation> IntentsConnectionImpl::ExportIntents(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
 IntentsConnectionImpl::ExportIntents(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::

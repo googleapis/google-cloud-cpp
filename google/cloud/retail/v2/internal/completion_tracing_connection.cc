@@ -53,26 +53,24 @@ CompletionServiceTracingConnection::ImportCompletionData(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceTracingConnection::ImportCompletionData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::CompletionServiceConnection::ImportCompletionData");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ImportCompletionData(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->ImportCompletionData(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceTracingConnection::ImportCompletionData(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "retail_v2::CompletionServiceConnection::ImportCompletionData");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ImportCompletionData(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ImportCompletionData(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

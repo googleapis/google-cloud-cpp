@@ -45,12 +45,12 @@ class EngineServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateEngine(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
@@ -58,12 +58,12 @@ class EngineServiceTracingConnection
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEngine(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-  DeleteEngine(google::cloud::ExperimentalTag,
+  DeleteEngine(ExperimentalTag,
                google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(

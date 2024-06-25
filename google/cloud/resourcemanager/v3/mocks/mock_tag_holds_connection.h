@@ -54,13 +54,13 @@ class MockTagHoldsConnection : public resourcemanager_v3::TagHoldsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateTagHold,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>,
               CreateTagHold,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -73,7 +73,7 @@ class MockTagHoldsConnection : public resourcemanager_v3::TagHoldsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTagHold,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request),
       (override));
 
@@ -81,8 +81,7 @@ class MockTagHoldsConnection : public resourcemanager_v3::TagHoldsConnection {
       future<
           StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>,
       DeleteTagHold,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::resourcemanager::v3::TagHold>),

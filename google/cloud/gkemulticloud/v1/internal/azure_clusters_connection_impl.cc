@@ -109,7 +109,7 @@ AzureClustersConnectionImpl::CreateAzureClient(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnectionImpl::CreateAzureClient(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -125,8 +125,7 @@ AzureClustersConnectionImpl::CreateAzureClient(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
 AzureClustersConnectionImpl::CreateAzureClient(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -254,7 +253,7 @@ AzureClustersConnectionImpl::DeleteAzureClient(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnectionImpl::DeleteAzureClient(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -270,8 +269,7 @@ AzureClustersConnectionImpl::DeleteAzureClient(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AzureClustersConnectionImpl::DeleteAzureClient(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -350,7 +348,7 @@ AzureClustersConnectionImpl::CreateAzureCluster(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnectionImpl::CreateAzureCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -367,8 +365,7 @@ AzureClustersConnectionImpl::CreateAzureCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
 AzureClustersConnectionImpl::CreateAzureCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -447,7 +444,7 @@ AzureClustersConnectionImpl::UpdateAzureCluster(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnectionImpl::UpdateAzureCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -464,8 +461,7 @@ AzureClustersConnectionImpl::UpdateAzureCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
 AzureClustersConnectionImpl::UpdateAzureCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -593,7 +589,7 @@ AzureClustersConnectionImpl::DeleteAzureCluster(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnectionImpl::DeleteAzureCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -610,8 +606,7 @@ AzureClustersConnectionImpl::DeleteAzureCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AzureClustersConnectionImpl::DeleteAzureCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -723,7 +718,7 @@ AzureClustersConnectionImpl::CreateAzureNodePool(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnectionImpl::CreateAzureNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -740,8 +735,7 @@ AzureClustersConnectionImpl::CreateAzureNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
 AzureClustersConnectionImpl::CreateAzureNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -820,7 +814,7 @@ AzureClustersConnectionImpl::UpdateAzureNodePool(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnectionImpl::UpdateAzureNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -837,8 +831,7 @@ AzureClustersConnectionImpl::UpdateAzureNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
 AzureClustersConnectionImpl::UpdateAzureNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -967,7 +960,7 @@ AzureClustersConnectionImpl::DeleteAzureNodePool(
 
 StatusOr<google::longrunning::Operation>
 AzureClustersConnectionImpl::DeleteAzureNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -984,8 +977,7 @@ AzureClustersConnectionImpl::DeleteAzureNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AzureClustersConnectionImpl::DeleteAzureNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::

@@ -45,12 +45,12 @@ class FirewallsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewall(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewall(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Firewall> GetFirewall(
@@ -62,12 +62,12 @@ class FirewallsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewall(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewall(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Firewall> ListFirewalls(
@@ -79,12 +79,12 @@ class FirewallsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewall(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewall(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewall(
@@ -92,12 +92,12 @@ class FirewallsTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewall(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewall(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

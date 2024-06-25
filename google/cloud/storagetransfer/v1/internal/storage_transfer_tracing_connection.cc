@@ -116,26 +116,23 @@ StorageTransferServiceTracingConnection::RunTransferJob(
 
 StatusOr<google::longrunning::Operation>
 StorageTransferServiceTracingConnection::RunTransferJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   auto span = internal::MakeSpan(
       "storagetransfer_v1::StorageTransferServiceConnection::RunTransferJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RunTransferJob(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->RunTransferJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceTracingConnection::RunTransferJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "storagetransfer_v1::StorageTransferServiceConnection::RunTransferJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->RunTransferJob(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->RunTransferJob(ExperimentalTag{}, operation));
 }
 
 Status StorageTransferServiceTracingConnection::DeleteTransferJob(

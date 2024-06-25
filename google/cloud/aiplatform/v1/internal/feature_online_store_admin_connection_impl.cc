@@ -120,7 +120,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureOnlineStore(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureOnlineStore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -138,8 +138,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureOnlineStore(
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureOnlineStore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -271,7 +270,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureOnlineStore(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureOnlineStore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -289,8 +288,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureOnlineStore(
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureOnlineStore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -369,7 +367,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureOnlineStore(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureOnlineStore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -387,8 +385,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureOnlineStore(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureOnlineStore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -466,7 +463,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureView(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureView(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -482,8 +479,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureView(
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureView(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -611,7 +607,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureView(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureView(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -627,8 +623,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureView(
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureView(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -706,7 +701,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureView(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureView(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -722,8 +717,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureView(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureView(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

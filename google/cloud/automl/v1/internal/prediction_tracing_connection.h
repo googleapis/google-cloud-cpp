@@ -47,11 +47,11 @@ class PredictionServiceTracingConnection
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchPredict(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

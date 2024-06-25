@@ -56,12 +56,12 @@ class TagHoldsConnectionImpl : public resourcemanager_v3::TagHoldsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateTagHold(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
@@ -69,12 +69,12 @@ class TagHoldsConnectionImpl : public resourcemanager_v3::TagHoldsConnection {
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTagHold(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(google::cloud::ExperimentalTag,
+  DeleteTagHold(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::resourcemanager::v3::TagHold> ListTagHolds(

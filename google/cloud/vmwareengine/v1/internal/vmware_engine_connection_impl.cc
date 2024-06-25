@@ -158,7 +158,7 @@ VmwareEngineConnectionImpl::CreatePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreatePrivateCloud(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -174,8 +174,7 @@ VmwareEngineConnectionImpl::CreatePrivateCloud(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::CreatePrivateCloud(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -252,7 +251,7 @@ VmwareEngineConnectionImpl::UpdatePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdatePrivateCloud(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -268,8 +267,7 @@ VmwareEngineConnectionImpl::UpdatePrivateCloud(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::UpdatePrivateCloud(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -346,7 +344,7 @@ VmwareEngineConnectionImpl::DeletePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeletePrivateCloud(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -362,8 +360,7 @@ VmwareEngineConnectionImpl::DeletePrivateCloud(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::DeletePrivateCloud(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -441,7 +438,7 @@ VmwareEngineConnectionImpl::UndeletePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UndeletePrivateCloud(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -458,8 +455,7 @@ VmwareEngineConnectionImpl::UndeletePrivateCloud(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::UndeletePrivateCloud(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -585,7 +581,7 @@ VmwareEngineConnectionImpl::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -601,8 +597,7 @@ VmwareEngineConnectionImpl::CreateCluster(
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -679,7 +674,7 @@ VmwareEngineConnectionImpl::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -695,8 +690,7 @@ VmwareEngineConnectionImpl::UpdateCluster(
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -773,7 +767,7 @@ VmwareEngineConnectionImpl::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -789,8 +783,7 @@ VmwareEngineConnectionImpl::DeleteCluster(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -1008,7 +1001,7 @@ VmwareEngineConnectionImpl::CreateExternalAddress(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreateExternalAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1026,8 +1019,7 @@ VmwareEngineConnectionImpl::CreateExternalAddress(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
 VmwareEngineConnectionImpl::CreateExternalAddress(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -1105,7 +1097,7 @@ VmwareEngineConnectionImpl::UpdateExternalAddress(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateExternalAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1123,8 +1115,7 @@ VmwareEngineConnectionImpl::UpdateExternalAddress(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
 VmwareEngineConnectionImpl::UpdateExternalAddress(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -1202,7 +1193,7 @@ VmwareEngineConnectionImpl::DeleteExternalAddress(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeleteExternalAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1220,8 +1211,7 @@ VmwareEngineConnectionImpl::DeleteExternalAddress(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteExternalAddress(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -1345,7 +1335,7 @@ VmwareEngineConnectionImpl::UpdateSubnet(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1361,8 +1351,7 @@ VmwareEngineConnectionImpl::UpdateSubnet(
 
 future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
 VmwareEngineConnectionImpl::UpdateSubnet(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -1491,7 +1480,7 @@ VmwareEngineConnectionImpl::CreateExternalAccessRule(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreateExternalAccessRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1508,8 +1497,7 @@ VmwareEngineConnectionImpl::CreateExternalAccessRule(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
 VmwareEngineConnectionImpl::CreateExternalAccessRule(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -1586,7 +1574,7 @@ VmwareEngineConnectionImpl::UpdateExternalAccessRule(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateExternalAccessRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1603,8 +1591,7 @@ VmwareEngineConnectionImpl::UpdateExternalAccessRule(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
 VmwareEngineConnectionImpl::UpdateExternalAccessRule(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -1681,7 +1668,7 @@ VmwareEngineConnectionImpl::DeleteExternalAccessRule(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeleteExternalAccessRule(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1698,8 +1685,7 @@ VmwareEngineConnectionImpl::DeleteExternalAccessRule(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteExternalAccessRule(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -1826,7 +1812,7 @@ VmwareEngineConnectionImpl::CreateLoggingServer(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreateLoggingServer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1843,8 +1829,7 @@ VmwareEngineConnectionImpl::CreateLoggingServer(
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
 VmwareEngineConnectionImpl::CreateLoggingServer(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -1922,7 +1907,7 @@ VmwareEngineConnectionImpl::UpdateLoggingServer(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateLoggingServer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1939,8 +1924,7 @@ VmwareEngineConnectionImpl::UpdateLoggingServer(
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
 VmwareEngineConnectionImpl::UpdateLoggingServer(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -2018,7 +2002,7 @@ VmwareEngineConnectionImpl::DeleteLoggingServer(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeleteLoggingServer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2035,8 +2019,7 @@ VmwareEngineConnectionImpl::DeleteLoggingServer(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteLoggingServer(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -2195,7 +2178,7 @@ VmwareEngineConnectionImpl::ResetNsxCredentials(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::ResetNsxCredentials(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2212,8 +2195,7 @@ VmwareEngineConnectionImpl::ResetNsxCredentials(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::ResetNsxCredentials(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -2291,7 +2273,7 @@ VmwareEngineConnectionImpl::ResetVcenterCredentials(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::ResetVcenterCredentials(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2309,8 +2291,7 @@ VmwareEngineConnectionImpl::ResetVcenterCredentials(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::ResetVcenterCredentials(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -2403,7 +2384,7 @@ VmwareEngineConnectionImpl::UpdateDnsForwarding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateDnsForwarding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2420,8 +2401,7 @@ VmwareEngineConnectionImpl::UpdateDnsForwarding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
 VmwareEngineConnectionImpl::UpdateDnsForwarding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -2549,7 +2529,7 @@ VmwareEngineConnectionImpl::CreateNetworkPeering(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreateNetworkPeering(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2566,8 +2546,7 @@ VmwareEngineConnectionImpl::CreateNetworkPeering(
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
 VmwareEngineConnectionImpl::CreateNetworkPeering(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -2645,7 +2624,7 @@ VmwareEngineConnectionImpl::DeleteNetworkPeering(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeleteNetworkPeering(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2662,8 +2641,7 @@ VmwareEngineConnectionImpl::DeleteNetworkPeering(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteNetworkPeering(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -2741,7 +2719,7 @@ VmwareEngineConnectionImpl::UpdateNetworkPeering(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateNetworkPeering(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2758,8 +2736,7 @@ VmwareEngineConnectionImpl::UpdateNetworkPeering(
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
 VmwareEngineConnectionImpl::UpdateNetworkPeering(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -2872,7 +2849,7 @@ VmwareEngineConnectionImpl::CreateHcxActivationKey(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreateHcxActivationKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2890,8 +2867,7 @@ VmwareEngineConnectionImpl::CreateHcxActivationKey(
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
 VmwareEngineConnectionImpl::CreateHcxActivationKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3071,7 +3047,7 @@ VmwareEngineConnectionImpl::CreateNetworkPolicy(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreateNetworkPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -3088,8 +3064,7 @@ VmwareEngineConnectionImpl::CreateNetworkPolicy(
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineConnectionImpl::CreateNetworkPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3167,7 +3142,7 @@ VmwareEngineConnectionImpl::UpdateNetworkPolicy(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateNetworkPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -3184,8 +3159,7 @@ VmwareEngineConnectionImpl::UpdateNetworkPolicy(
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineConnectionImpl::UpdateNetworkPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3263,7 +3237,7 @@ VmwareEngineConnectionImpl::DeleteNetworkPolicy(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeleteNetworkPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -3280,8 +3254,7 @@ VmwareEngineConnectionImpl::DeleteNetworkPolicy(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteNetworkPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3414,7 +3387,7 @@ VmwareEngineConnectionImpl::CreateManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreateManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::
         CreateManagementDnsZoneBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -3431,8 +3404,7 @@ VmwareEngineConnectionImpl::CreateManagementDnsZoneBinding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineConnectionImpl::CreateManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3510,7 +3482,7 @@ VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::
         UpdateManagementDnsZoneBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -3527,8 +3499,7 @@ VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3606,7 +3577,7 @@ VmwareEngineConnectionImpl::DeleteManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeleteManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::
         DeleteManagementDnsZoneBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -3623,8 +3594,7 @@ VmwareEngineConnectionImpl::DeleteManagementDnsZoneBinding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3702,7 +3672,7 @@ VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::
         RepairManagementDnsZoneBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -3719,8 +3689,7 @@ VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3797,7 +3766,7 @@ VmwareEngineConnectionImpl::CreateVmwareEngineNetwork(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreateVmwareEngineNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -3814,8 +3783,7 @@ VmwareEngineConnectionImpl::CreateVmwareEngineNetwork(
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineConnectionImpl::CreateVmwareEngineNetwork(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3892,7 +3860,7 @@ VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -3909,8 +3877,7 @@ VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -3987,7 +3954,7 @@ VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -4004,8 +3971,7 @@ VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -4136,7 +4102,7 @@ VmwareEngineConnectionImpl::CreatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::CreatePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -4154,8 +4120,7 @@ VmwareEngineConnectionImpl::CreatePrivateConnection(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
 VmwareEngineConnectionImpl::CreatePrivateConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -4285,7 +4250,7 @@ VmwareEngineConnectionImpl::UpdatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::UpdatePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -4303,8 +4268,7 @@ VmwareEngineConnectionImpl::UpdatePrivateConnection(
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
 VmwareEngineConnectionImpl::UpdatePrivateConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -4382,7 +4346,7 @@ VmwareEngineConnectionImpl::DeletePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::DeletePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -4400,8 +4364,7 @@ VmwareEngineConnectionImpl::DeletePrivateConnection(
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeletePrivateConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -4519,7 +4482,7 @@ VmwareEngineConnectionImpl::GrantDnsBindPermission(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::GrantDnsBindPermission(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -4537,8 +4500,7 @@ VmwareEngineConnectionImpl::GrantDnsBindPermission(
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
 VmwareEngineConnectionImpl::GrantDnsBindPermission(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {
@@ -4632,7 +4594,7 @@ VmwareEngineConnectionImpl::RevokeDnsBindPermission(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineConnectionImpl::RevokeDnsBindPermission(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -4650,8 +4612,7 @@ VmwareEngineConnectionImpl::RevokeDnsBindPermission(
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
 VmwareEngineConnectionImpl::RevokeDnsBindPermission(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vmwareengine::v1::OperationMetadata>()) {

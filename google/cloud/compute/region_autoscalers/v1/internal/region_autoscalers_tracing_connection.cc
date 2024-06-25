@@ -47,7 +47,7 @@ RegionAutoscalersTracingConnection::DeleteAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersTracingConnection::DeleteAutoscaler(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_autoscalers::v1::
         DeleteAutoscalerRequest const& request) {
   auto span = internal::MakeSpan(
@@ -55,21 +55,20 @@ RegionAutoscalersTracingConnection::DeleteAutoscaler(
       "DeleteAutoscaler");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteAutoscaler(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteAutoscaler(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersTracingConnection::DeleteAutoscaler(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "DeleteAutoscaler");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteAutoscaler(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteAutoscaler(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Autoscaler>
@@ -96,7 +95,7 @@ RegionAutoscalersTracingConnection::InsertAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersTracingConnection::InsertAutoscaler(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_autoscalers::v1::
         InsertAutoscalerRequest const& request) {
   auto span = internal::MakeSpan(
@@ -104,21 +103,20 @@ RegionAutoscalersTracingConnection::InsertAutoscaler(
       "InsertAutoscaler");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->InsertAutoscaler(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->InsertAutoscaler(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersTracingConnection::InsertAutoscaler(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "InsertAutoscaler");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->InsertAutoscaler(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->InsertAutoscaler(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
@@ -148,7 +146,7 @@ RegionAutoscalersTracingConnection::PatchAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersTracingConnection::PatchAutoscaler(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_autoscalers::v1::
         PatchAutoscalerRequest const& request) {
   auto span = internal::MakeSpan(
@@ -156,21 +154,19 @@ RegionAutoscalersTracingConnection::PatchAutoscaler(
       "PatchAutoscaler");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->PatchAutoscaler(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->PatchAutoscaler(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersTracingConnection::PatchAutoscaler(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "PatchAutoscaler");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->PatchAutoscaler(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->PatchAutoscaler(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -186,7 +182,7 @@ RegionAutoscalersTracingConnection::UpdateAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersTracingConnection::UpdateAutoscaler(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_autoscalers::v1::
         UpdateAutoscalerRequest const& request) {
   auto span = internal::MakeSpan(
@@ -194,21 +190,20 @@ RegionAutoscalersTracingConnection::UpdateAutoscaler(
       "UpdateAutoscaler");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateAutoscaler(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->UpdateAutoscaler(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersTracingConnection::UpdateAutoscaler(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_autoscalers_v1::RegionAutoscalersConnection::"
       "UpdateAutoscaler");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateAutoscaler(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateAutoscaler(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

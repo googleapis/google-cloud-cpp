@@ -46,13 +46,13 @@ class ConversationModelsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateConversationModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
   CreateConversationModel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
@@ -72,14 +72,14 @@ class ConversationModelsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
   DeleteConversationModel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -89,14 +89,14 @@ class ConversationModelsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeployConversationModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
   DeployConversationModel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::
@@ -106,14 +106,14 @@ class ConversationModelsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UndeployConversationModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::
                       UndeployConversationModelOperationMetadata>>
   UndeployConversationModel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -132,13 +132,13 @@ class ConversationModelsTracingConnection
           CreateConversationModelEvaluationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::
           CreateConversationModelEvaluationRequest const& request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

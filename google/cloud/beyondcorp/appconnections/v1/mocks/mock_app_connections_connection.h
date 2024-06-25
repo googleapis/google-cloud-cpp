@@ -72,7 +72,7 @@ class MockAppConnectionsServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAppConnection,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::beyondcorp::appconnections::v1::
                    CreateAppConnectionRequest const& request),
               (override));
@@ -81,8 +81,7 @@ class MockAppConnectionsServiceConnection
       future<StatusOr<
           google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
       CreateAppConnection,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -94,7 +93,7 @@ class MockAppConnectionsServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAppConnection,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::beyondcorp::appconnections::v1::
                    UpdateAppConnectionRequest const& request),
               (override));
@@ -103,8 +102,7 @@ class MockAppConnectionsServiceConnection
       future<StatusOr<
           google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
       UpdateAppConnection,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
@@ -115,7 +113,7 @@ class MockAppConnectionsServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAppConnection,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::beyondcorp::appconnections::v1::
                    DeleteAppConnectionRequest const& request),
               (override));
@@ -123,7 +121,7 @@ class MockAppConnectionsServiceConnection
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                                   AppConnectionOperationMetadata>>,
               DeleteAppConnection,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

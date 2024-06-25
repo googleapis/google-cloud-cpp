@@ -64,29 +64,28 @@ InstanceTemplatesTracingConnection::DeleteInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesTracingConnection::DeleteInstanceTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_templates::v1::
         DeleteInstanceTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_templates_v1::InstanceTemplatesConnection::"
       "DeleteInstanceTemplate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteInstanceTemplate(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->DeleteInstanceTemplate(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesTracingConnection::DeleteInstanceTemplate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_instance_templates_v1::InstanceTemplatesConnection::"
       "DeleteInstanceTemplate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteInstanceTemplate(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteInstanceTemplate(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -125,29 +124,28 @@ InstanceTemplatesTracingConnection::InsertInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesTracingConnection::InsertInstanceTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::instance_templates::v1::
         InsertInstanceTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_instance_templates_v1::InstanceTemplatesConnection::"
       "InsertInstanceTemplate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertInstanceTemplate(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->InsertInstanceTemplate(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesTracingConnection::InsertInstanceTemplate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_instance_templates_v1::InstanceTemplatesConnection::"
       "InsertInstanceTemplate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertInstanceTemplate(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InsertInstanceTemplate(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>

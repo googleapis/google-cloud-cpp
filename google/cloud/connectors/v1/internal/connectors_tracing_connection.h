@@ -51,12 +51,12 @@ class ConnectorsTracingConnection : public connectors_v1::ConnectorsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::CreateConnectionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
@@ -64,12 +64,12 @@ class ConnectorsTracingConnection : public connectors_v1::ConnectorsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::UpdateConnectionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
@@ -77,12 +77,12 @@ class ConnectorsTracingConnection : public connectors_v1::ConnectorsConnection {
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::DeleteConnectionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-  DeleteConnection(google::cloud::ExperimentalTag,
+  DeleteConnection(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::connectors::v1::Provider> ListProviders(
@@ -119,13 +119,13 @@ class ConnectorsTracingConnection : public connectors_v1::ConnectorsConnection {
           RefreshConnectionSchemaMetadataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::
           RefreshConnectionSchemaMetadataRequest const& request) override;
 
   future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
   RefreshConnectionSchemaMetadata(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>

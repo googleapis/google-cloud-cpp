@@ -194,7 +194,7 @@ ProductServiceConnectionImpl::PurgeProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnectionImpl::PurgeProducts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::retail::v2::PurgeProductsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -209,8 +209,7 @@ ProductServiceConnectionImpl::PurgeProducts(
 
 future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
 ProductServiceConnectionImpl::PurgeProducts(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::PurgeProductsMetadata>()) {
@@ -286,7 +285,7 @@ ProductServiceConnectionImpl::ImportProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnectionImpl::ImportProducts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::retail::v2::ImportProductsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -301,8 +300,7 @@ ProductServiceConnectionImpl::ImportProducts(
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceConnectionImpl::ImportProducts(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::ImportMetadata>()) {
@@ -378,7 +376,7 @@ ProductServiceConnectionImpl::SetInventory(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnectionImpl::SetInventory(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::retail::v2::SetInventoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -393,8 +391,7 @@ ProductServiceConnectionImpl::SetInventory(
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceConnectionImpl::SetInventory(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::SetInventoryMetadata>()) {
@@ -471,7 +468,7 @@ ProductServiceConnectionImpl::AddFulfillmentPlaces(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnectionImpl::AddFulfillmentPlaces(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -487,8 +484,7 @@ ProductServiceConnectionImpl::AddFulfillmentPlaces(
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceConnectionImpl::AddFulfillmentPlaces(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::
@@ -566,7 +562,7 @@ ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -582,8 +578,7 @@ ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::
@@ -661,7 +656,7 @@ ProductServiceConnectionImpl::AddLocalInventories(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnectionImpl::AddLocalInventories(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -677,8 +672,7 @@ ProductServiceConnectionImpl::AddLocalInventories(
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
 ProductServiceConnectionImpl::AddLocalInventories(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::
@@ -756,7 +750,7 @@ ProductServiceConnectionImpl::RemoveLocalInventories(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceConnectionImpl::RemoveLocalInventories(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -772,8 +766,7 @@ ProductServiceConnectionImpl::RemoveLocalInventories(
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceConnectionImpl::RemoveLocalInventories(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::

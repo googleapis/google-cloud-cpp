@@ -64,13 +64,13 @@ class MockDomainMappingsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDomainMapping,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::appengine::v1::CreateDomainMappingRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
               CreateDomainMapping,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -82,13 +82,13 @@ class MockDomainMappingsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDomainMapping,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::appengine::v1::UpdateDomainMappingRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
               UpdateDomainMapping,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -100,13 +100,13 @@ class MockDomainMappingsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDomainMapping,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::appengine::v1::DeleteDomainMappingRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
               DeleteDomainMapping,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

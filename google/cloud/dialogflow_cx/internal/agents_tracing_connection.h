@@ -63,12 +63,12 @@ class AgentsTracingConnection : public dialogflow_cx::AgentsConnection {
                   request) override;
 
   StatusOr<google::longrunning::Operation> ExportAgent(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-  ExportAgent(google::cloud::ExperimentalTag,
+  ExportAgent(ExperimentalTag,
               google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
@@ -76,12 +76,12 @@ class AgentsTracingConnection : public dialogflow_cx::AgentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RestoreAgent(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request)
       override;
 
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>

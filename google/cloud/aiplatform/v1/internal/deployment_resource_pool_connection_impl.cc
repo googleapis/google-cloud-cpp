@@ -118,7 +118,7 @@ DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -135,8 +135,7 @@ DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
 DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -269,7 +268,7 @@ DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -286,8 +285,7 @@ DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

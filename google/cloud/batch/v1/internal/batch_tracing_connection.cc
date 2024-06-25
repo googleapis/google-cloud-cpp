@@ -58,24 +58,21 @@ BatchServiceTracingConnection::DeleteJob(
 
 StatusOr<google::longrunning::Operation>
 BatchServiceTracingConnection::DeleteJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::batch::v1::DeleteJobRequest const& request) {
   auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::DeleteJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteJob(google::cloud::ExperimentalTag{},
-                               google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
 BatchServiceTracingConnection::DeleteJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::DeleteJob");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteJob(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteJob(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::batch::v1::Job>

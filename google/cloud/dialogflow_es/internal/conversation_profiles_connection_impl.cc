@@ -212,7 +212,7 @@ ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -229,8 +229,7 @@ ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -308,7 +307,7 @@ ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -325,8 +324,7 @@ ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::

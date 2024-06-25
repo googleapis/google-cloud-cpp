@@ -57,12 +57,12 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreatePolicy,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::iam::v2::CreatePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, CreatePolicy,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -71,12 +71,12 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdatePolicy,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::iam::v2::UpdatePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, UpdatePolicy,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -85,12 +85,12 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeletePolicy,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::iam::v2::DeletePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

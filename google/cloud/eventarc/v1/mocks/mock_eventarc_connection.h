@@ -61,13 +61,13 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateTrigger,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::eventarc::v1::CreateTriggerRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Trigger>>,
               CreateTrigger,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -78,13 +78,13 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateTrigger,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::eventarc::v1::UpdateTriggerRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Trigger>>,
               UpdateTrigger,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -95,13 +95,13 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTrigger,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::eventarc::v1::DeleteTriggerRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Trigger>>,
               DeleteTrigger,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -120,13 +120,13 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateChannel,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::eventarc::v1::CreateChannelRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Channel>>,
               CreateChannel,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -137,13 +137,13 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateChannel,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::eventarc::v1::UpdateChannelRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Channel>>,
               UpdateChannel,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -154,13 +154,13 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteChannel,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::eventarc::v1::DeleteChannelRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Channel>>,
               DeleteChannel,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -194,14 +194,14 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateChannelConnection,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>,
               CreateChannelConnection,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -214,14 +214,14 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteChannelConnection,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>,
               DeleteChannelConnection,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

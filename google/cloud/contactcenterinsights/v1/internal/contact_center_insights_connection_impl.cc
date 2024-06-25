@@ -132,7 +132,7 @@ ContactCenterInsightsConnectionImpl::UploadConversation(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::UploadConversation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -149,8 +149,7 @@ ContactCenterInsightsConnectionImpl::UploadConversation(
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
 ContactCenterInsightsConnectionImpl::UploadConversation(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::
@@ -313,7 +312,7 @@ ContactCenterInsightsConnectionImpl::CreateAnalysis(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::CreateAnalysis(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -331,8 +330,7 @@ ContactCenterInsightsConnectionImpl::CreateAnalysis(
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
 ContactCenterInsightsConnectionImpl::CreateAnalysis(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::
@@ -481,7 +479,7 @@ ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::
         BulkAnalyzeConversationsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -499,8 +497,7 @@ ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
 ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::
@@ -583,7 +580,7 @@ ContactCenterInsightsConnectionImpl::BulkDeleteConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::BulkDeleteConversations(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::
         BulkDeleteConversationsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -601,8 +598,7 @@ ContactCenterInsightsConnectionImpl::BulkDeleteConversations(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
 ContactCenterInsightsConnectionImpl::BulkDeleteConversations(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::
@@ -684,7 +680,7 @@ ContactCenterInsightsConnectionImpl::IngestConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::IngestConversations(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -702,8 +698,7 @@ ContactCenterInsightsConnectionImpl::IngestConversations(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsConnectionImpl::IngestConversations(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::
@@ -783,7 +778,7 @@ ContactCenterInsightsConnectionImpl::ExportInsightsData(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::ExportInsightsData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -801,8 +796,7 @@ ContactCenterInsightsConnectionImpl::ExportInsightsData(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsConnectionImpl::ExportInsightsData(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::
@@ -880,7 +874,7 @@ ContactCenterInsightsConnectionImpl::CreateIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::CreateIssueModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -897,8 +891,7 @@ ContactCenterInsightsConnectionImpl::CreateIssueModel(
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsConnectionImpl::CreateIssueModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::
@@ -1026,7 +1019,7 @@ ContactCenterInsightsConnectionImpl::DeleteIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::DeleteIssueModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1044,8 +1037,7 @@ ContactCenterInsightsConnectionImpl::DeleteIssueModel(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
 ContactCenterInsightsConnectionImpl::DeleteIssueModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::
@@ -1124,7 +1116,7 @@ ContactCenterInsightsConnectionImpl::DeployIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::DeployIssueModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1142,8 +1134,7 @@ ContactCenterInsightsConnectionImpl::DeployIssueModel(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
 ContactCenterInsightsConnectionImpl::DeployIssueModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::
@@ -1222,7 +1213,7 @@ ContactCenterInsightsConnectionImpl::UndeployIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsConnectionImpl::UndeployIssueModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1240,8 +1231,7 @@ ContactCenterInsightsConnectionImpl::UndeployIssueModel(
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
 ContactCenterInsightsConnectionImpl::UndeployIssueModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::contactcenterinsights::v1::

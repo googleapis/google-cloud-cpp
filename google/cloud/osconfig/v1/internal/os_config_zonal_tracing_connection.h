@@ -46,13 +46,13 @@ class OsConfigZonalServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
           request) override;
 
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
   CreateOSPolicyAssignment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
@@ -61,13 +61,13 @@ class OsConfigZonalServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request) override;
 
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
   UpdateOSPolicyAssignment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -92,14 +92,14 @@ class OsConfigZonalServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
   DeleteOSPolicyAssignment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>

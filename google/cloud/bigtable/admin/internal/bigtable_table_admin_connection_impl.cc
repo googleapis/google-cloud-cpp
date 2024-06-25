@@ -172,7 +172,7 @@ BigtableTableAdminConnectionImpl::UpdateTable(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminConnectionImpl::UpdateTable(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -187,8 +187,7 @@ BigtableTableAdminConnectionImpl::UpdateTable(
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminConnectionImpl::UpdateTable(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::UpdateTableMetadata>()) {
@@ -276,7 +275,7 @@ BigtableTableAdminConnectionImpl::UndeleteTable(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminConnectionImpl::UndeleteTable(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -291,8 +290,7 @@ BigtableTableAdminConnectionImpl::UndeleteTable(
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminConnectionImpl::UndeleteTable(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::UndeleteTableMetadata>()) {
@@ -368,7 +366,7 @@ BigtableTableAdminConnectionImpl::CreateAuthorizedView(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminConnectionImpl::CreateAuthorizedView(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -384,8 +382,7 @@ BigtableTableAdminConnectionImpl::CreateAuthorizedView(
 
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
 BigtableTableAdminConnectionImpl::CreateAuthorizedView(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::
@@ -513,7 +510,7 @@ BigtableTableAdminConnectionImpl::UpdateAuthorizedView(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminConnectionImpl::UpdateAuthorizedView(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -529,8 +526,7 @@ BigtableTableAdminConnectionImpl::UpdateAuthorizedView(
 
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
 BigtableTableAdminConnectionImpl::UpdateAuthorizedView(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::
@@ -680,7 +676,7 @@ BigtableTableAdminConnectionImpl::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminConnectionImpl::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -695,8 +691,7 @@ BigtableTableAdminConnectionImpl::CreateBackup(
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminConnectionImpl::CreateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::CreateBackupMetadata>()) {
@@ -846,7 +841,7 @@ BigtableTableAdminConnectionImpl::RestoreTable(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminConnectionImpl::RestoreTable(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -861,8 +856,7 @@ BigtableTableAdminConnectionImpl::RestoreTable(
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminConnectionImpl::RestoreTable(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::RestoreTableMetadata>()) {
@@ -937,7 +931,7 @@ BigtableTableAdminConnectionImpl::CopyBackup(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminConnectionImpl::CopyBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::CopyBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -952,8 +946,7 @@ BigtableTableAdminConnectionImpl::CopyBackup(
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminConnectionImpl::CopyBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::CopyBackupMetadata>()) {

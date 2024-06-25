@@ -46,13 +46,13 @@ class ConversationDatasetsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateConversationDataset(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
   CreateConversationDataset(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
@@ -72,14 +72,14 @@ class ConversationDatasetsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConversationDataset(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
   DeleteConversationDataset(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -89,14 +89,14 @@ class ConversationDatasetsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> ImportConversationData(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ImportConversationDataRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
   ImportConversationData(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

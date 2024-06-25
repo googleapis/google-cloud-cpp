@@ -57,12 +57,12 @@ class ServiceUsageConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> EnableService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::api::serviceusage::v1::EnableServiceRequest const& request)
       override;
 
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-  EnableService(google::cloud::ExperimentalTag,
+  EnableService(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
@@ -70,12 +70,12 @@ class ServiceUsageConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DisableService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::api::serviceusage::v1::DisableServiceRequest const& request)
       override;
 
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-  DisableService(google::cloud::ExperimentalTag,
+  DisableService(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   StatusOr<google::api::serviceusage::v1::Service> GetService(
@@ -90,12 +90,12 @@ class ServiceUsageConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> BatchEnableServices(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
       override;
 
   future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-  BatchEnableServices(google::cloud::ExperimentalTag,
+  BatchEnableServices(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>

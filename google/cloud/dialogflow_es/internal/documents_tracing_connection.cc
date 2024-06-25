@@ -64,26 +64,23 @@ DocumentsTracingConnection::CreateDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::CreateDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::CreateDocument");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateDocument(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateDocument(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::CreateDocument(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::CreateDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateDocument(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateDocument(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
@@ -97,26 +94,23 @@ DocumentsTracingConnection::ImportDocuments(
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::ImportDocuments(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::ImportDocuments");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ImportDocuments(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->ImportDocuments(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
 DocumentsTracingConnection::ImportDocuments(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::ImportDocuments");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->ImportDocuments(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->ImportDocuments(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
@@ -130,26 +124,23 @@ DocumentsTracingConnection::DeleteDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::DeleteDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::DeleteDocument");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteDocument(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteDocument(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
 DocumentsTracingConnection::DeleteDocument(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::DeleteDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteDocument(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteDocument(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
@@ -163,26 +154,23 @@ DocumentsTracingConnection::UpdateDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::UpdateDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::UpdateDocument");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateDocument(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateDocument(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::UpdateDocument(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::UpdateDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateDocument(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateDocument(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
@@ -196,26 +184,23 @@ DocumentsTracingConnection::ReloadDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::ReloadDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::ReloadDocument");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ReloadDocument(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->ReloadDocument(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::ReloadDocument(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::ReloadDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->ReloadDocument(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->ReloadDocument(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
@@ -229,26 +214,23 @@ DocumentsTracingConnection::ExportDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsTracingConnection::ExportDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::ExportDocument");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ExportDocument(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->ExportDocument(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::ExportDocument(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_es::DocumentsConnection::ExportDocument");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->ExportDocument(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->ExportDocument(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -239,7 +239,7 @@ StorageTransferServiceConnectionImpl::RunTransferJob(
 
 StatusOr<google::longrunning::Operation>
 StorageTransferServiceConnectionImpl::RunTransferJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -255,8 +255,7 @@ StorageTransferServiceConnectionImpl::RunTransferJob(
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceConnectionImpl::RunTransferJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::storagetransfer::v1::TransferOperation>()) {

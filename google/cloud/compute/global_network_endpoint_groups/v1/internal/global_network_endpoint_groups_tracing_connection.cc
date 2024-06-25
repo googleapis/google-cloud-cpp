@@ -51,29 +51,28 @@ GlobalNetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalNetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         AttachNetworkEndpointsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
       "GlobalNetworkEndpointGroupsConnection::AttachNetworkEndpoints");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->AttachNetworkEndpoints(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->AttachNetworkEndpoints(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsTracingConnection::AttachNetworkEndpoints(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
       "GlobalNetworkEndpointGroupsConnection::AttachNetworkEndpoints");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AttachNetworkEndpoints(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->AttachNetworkEndpoints(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -90,29 +89,28 @@ GlobalNetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalNetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         DeleteNetworkEndpointGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
       "GlobalNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteNetworkEndpointGroup(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteNetworkEndpointGroup(ExperimentalTag{}, NoAwaitTag{},
+                                                request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsTracingConnection::DeleteNetworkEndpointGroup(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
       "GlobalNetworkEndpointGroupsConnection::DeleteNetworkEndpointGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteNetworkEndpointGroup(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteNetworkEndpointGroup(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -129,29 +127,28 @@ GlobalNetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalNetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         DetachNetworkEndpointsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
       "GlobalNetworkEndpointGroupsConnection::DetachNetworkEndpoints");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DetachNetworkEndpoints(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->DetachNetworkEndpoints(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsTracingConnection::DetachNetworkEndpoints(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
       "GlobalNetworkEndpointGroupsConnection::DetachNetworkEndpoints");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DetachNetworkEndpoints(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DetachNetworkEndpoints(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -179,29 +176,28 @@ GlobalNetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalNetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::global_network_endpoint_groups::v1::
         InsertNetworkEndpointGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
       "GlobalNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertNetworkEndpointGroup(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->InsertNetworkEndpointGroup(ExperimentalTag{}, NoAwaitTag{},
+                                                request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalNetworkEndpointGroupsTracingConnection::InsertNetworkEndpointGroup(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_global_network_endpoint_groups_v1::"
       "GlobalNetworkEndpointGroupsConnection::InsertNetworkEndpointGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertNetworkEndpointGroup(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InsertNetworkEndpointGroup(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>

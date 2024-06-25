@@ -55,13 +55,13 @@ class MockDataTaxonomyServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDataTaxonomy,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>,
               CreateDataTaxonomy,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -73,13 +73,13 @@ class MockDataTaxonomyServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDataTaxonomy,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>,
               UpdateDataTaxonomy,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -91,13 +91,13 @@ class MockDataTaxonomyServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDataTaxonomy,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteDataTaxonomy,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -120,7 +120,7 @@ class MockDataTaxonomyServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDataAttributeBinding,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
            request),
       (override));
@@ -128,8 +128,7 @@ class MockDataTaxonomyServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>,
       CreateDataAttributeBinding,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -141,7 +140,7 @@ class MockDataTaxonomyServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDataAttributeBinding,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
            request),
       (override));
@@ -149,8 +148,7 @@ class MockDataTaxonomyServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>,
       UpdateDataAttributeBinding,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -162,14 +160,14 @@ class MockDataTaxonomyServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDataAttributeBinding,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteDataAttributeBinding,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -194,13 +192,13 @@ class MockDataTaxonomyServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDataAttribute,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dataplex::v1::CreateDataAttributeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>,
               CreateDataAttribute,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -212,13 +210,13 @@ class MockDataTaxonomyServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDataAttribute,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>,
               UpdateDataAttribute,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -230,13 +228,13 @@ class MockDataTaxonomyServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDataAttribute,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteDataAttribute,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

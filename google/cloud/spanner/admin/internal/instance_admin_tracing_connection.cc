@@ -68,27 +68,25 @@ InstanceAdminTracingConnection::CreateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminTracingConnection::CreateInstanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::CreateInstanceConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateInstanceConfig(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->CreateInstanceConfig(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminTracingConnection::CreateInstanceConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::CreateInstanceConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateInstanceConfig(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateInstanceConfig(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -104,27 +102,25 @@ InstanceAdminTracingConnection::UpdateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminTracingConnection::UpdateInstanceConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::UpdateInstanceConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateInstanceConfig(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->UpdateInstanceConfig(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminTracingConnection::UpdateInstanceConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::UpdateInstanceConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateInstanceConfig(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateInstanceConfig(
+                                                ExperimentalTag{}, operation));
 }
 
 Status InstanceAdminTracingConnection::DeleteInstanceConfig(
@@ -194,27 +190,24 @@ InstanceAdminTracingConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminTracingConnection::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::CreateInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateInstance(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminTracingConnection::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::CreateInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateInstance(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -229,27 +222,24 @@ InstanceAdminTracingConnection::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminTracingConnection::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::UpdateInstance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminTracingConnection::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::UpdateInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateInstance(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateInstance(ExperimentalTag{}, operation));
 }
 
 Status InstanceAdminTracingConnection::DeleteInstance(
@@ -309,27 +299,25 @@ InstanceAdminTracingConnection::CreateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminTracingConnection::CreateInstancePartition(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::CreateInstancePartition");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateInstancePartition(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateInstancePartition(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminTracingConnection::CreateInstancePartition(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::CreateInstancePartition");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateInstancePartition(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateInstancePartition(
+                                                ExperimentalTag{}, operation));
 }
 
 Status InstanceAdminTracingConnection::DeleteInstancePartition(
@@ -354,27 +342,25 @@ InstanceAdminTracingConnection::UpdateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminTracingConnection::UpdateInstancePartition(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::UpdateInstancePartition");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateInstancePartition(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UpdateInstancePartition(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminTracingConnection::UpdateInstancePartition(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::UpdateInstancePartition");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateInstancePartition(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateInstancePartition(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::longrunning::Operation>

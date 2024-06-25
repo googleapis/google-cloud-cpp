@@ -69,7 +69,7 @@ class MockUserEventServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportUserEvents,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
            request),
       (override));
@@ -78,8 +78,7 @@ class MockUserEventServiceConnection
       future<StatusOr<
           google::cloud::discoveryengine::v1::ImportUserEventsResponse>>,
       ImportUserEvents,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

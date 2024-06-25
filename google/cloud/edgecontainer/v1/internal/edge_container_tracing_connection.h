@@ -52,12 +52,12 @@ class EdgeContainerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
@@ -65,12 +65,12 @@ class EdgeContainerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
@@ -78,12 +78,12 @@ class EdgeContainerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpgradeCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -91,12 +91,12 @@ class EdgeContainerTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteCluster(google::cloud::ExperimentalTag,
+  DeleteCluster(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -121,12 +121,12 @@ class EdgeContainerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateNodePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request)
       override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
@@ -134,12 +134,12 @@ class EdgeContainerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateNodePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request)
       override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -147,12 +147,12 @@ class EdgeContainerTracingConnection
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNodePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request)
       override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteNodePool(google::cloud::ExperimentalTag,
+  DeleteNodePool(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::edgecontainer::v1::Machine> ListMachines(
@@ -176,12 +176,12 @@ class EdgeContainerTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateVpnConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
-  CreateVpnConnection(google::cloud::ExperimentalTag,
+  CreateVpnConnection(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -190,12 +190,12 @@ class EdgeContainerTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVpnConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteVpnConnection(google::cloud::ExperimentalTag,
+  DeleteVpnConnection(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::edgecontainer::v1::ServerConfig> GetServerConfig(

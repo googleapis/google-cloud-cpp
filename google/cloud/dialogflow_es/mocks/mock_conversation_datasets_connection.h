@@ -56,7 +56,7 @@ class MockConversationDatasetsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateConversationDataset,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
            request),
       (override));
@@ -64,8 +64,7 @@ class MockConversationDatasetsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>,
       CreateConversationDataset,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -91,7 +90,7 @@ class MockConversationDatasetsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteConversationDataset,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
            request),
       (override));
@@ -99,7 +98,7 @@ class MockConversationDatasetsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
                                   DeleteConversationDatasetOperationMetadata>>,
               DeleteConversationDataset,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -113,7 +112,7 @@ class MockConversationDatasetsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportConversationData,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::v2::ImportConversationDataRequest const&
            request),
       (override));
@@ -121,7 +120,7 @@ class MockConversationDatasetsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
                                   ImportConversationDataOperationResponse>>,
               ImportConversationData,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

@@ -66,26 +66,24 @@ BackupDRTracingConnection::CreateManagementServer(
 
 StatusOr<google::longrunning::Operation>
 BackupDRTracingConnection::CreateManagementServer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
   auto span = internal::MakeSpan(
       "backupdr_v1::BackupDRConnection::CreateManagementServer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateManagementServer(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->CreateManagementServer(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
 BackupDRTracingConnection::CreateManagementServer(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "backupdr_v1::BackupDRConnection::CreateManagementServer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateManagementServer(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateManagementServer(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -100,26 +98,24 @@ BackupDRTracingConnection::DeleteManagementServer(
 
 StatusOr<google::longrunning::Operation>
 BackupDRTracingConnection::DeleteManagementServer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
   auto span = internal::MakeSpan(
       "backupdr_v1::BackupDRConnection::DeleteManagementServer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteManagementServer(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->DeleteManagementServer(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
 BackupDRTracingConnection::DeleteManagementServer(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "backupdr_v1::BackupDRConnection::DeleteManagementServer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteManagementServer(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteManagementServer(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

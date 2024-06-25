@@ -54,14 +54,14 @@ class MockSpecialistPoolServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSpecialistPool,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
               CreateSpecialistPool,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -85,7 +85,7 @@ class MockSpecialistPoolServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteSpecialistPool,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
                    request),
               (override));
@@ -93,8 +93,7 @@ class MockSpecialistPoolServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteSpecialistPool,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
@@ -104,14 +103,14 @@ class MockSpecialistPoolServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateSpecialistPool,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
               UpdateSpecialistPool,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

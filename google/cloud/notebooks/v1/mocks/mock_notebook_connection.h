@@ -63,13 +63,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::CreateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               CreateInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -81,13 +81,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RegisterInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::RegisterInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               RegisterInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -100,14 +100,14 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SetInstanceAccelerator,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               SetInstanceAccelerator,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -120,14 +120,14 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SetInstanceMachineType,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               SetInstanceMachineType,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -138,14 +138,14 @@ class MockNotebookServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateInstanceConfig,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::notebooks::v1::UpdateInstanceConfigRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               UpdateInstanceConfig,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -158,14 +158,14 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateShieldedInstanceConfig,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               UpdateShieldedInstanceConfig,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -177,13 +177,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SetInstanceLabels,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               SetInstanceLabels,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -203,13 +203,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::DeleteInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
               DeleteInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -220,13 +220,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StartInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::StartInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               StartInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -237,13 +237,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StopInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::StopInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               StopInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -254,13 +254,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResetInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::ResetInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               ResetInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -272,13 +272,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ReportInstanceInfo,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               ReportInstanceInfo,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -302,13 +302,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpgradeInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::UpgradeInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               UpgradeInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -320,13 +320,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RollbackInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::RollbackInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               RollbackInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -338,13 +338,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DiagnoseInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               DiagnoseInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -357,14 +357,14 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpgradeInstanceInternal,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               UpgradeInstanceInternal,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -386,13 +386,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEnvironment,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::CreateEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Environment>>,
               CreateEnvironment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -404,13 +404,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteEnvironment,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
               DeleteEnvironment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -431,13 +431,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSchedule,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::DeleteScheduleRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
               DeleteSchedule,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -448,13 +448,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateSchedule,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::CreateScheduleRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Schedule>>,
               CreateSchedule,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -465,13 +465,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, TriggerSchedule,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::TriggerScheduleRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Schedule>>,
               TriggerSchedule,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -493,13 +493,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteExecution,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::DeleteExecutionRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
               DeleteExecution,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -511,13 +511,13 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateExecution,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::notebooks::v1::CreateExecutionRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Execution>>,
               CreateExecution,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

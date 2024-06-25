@@ -45,12 +45,12 @@ class LicensesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::License> GetLicense(
@@ -66,12 +66,12 @@ class LicensesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::License> ListLicenses(

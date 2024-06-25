@@ -113,7 +113,7 @@ LivestreamServiceConnectionImpl::CreateChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::CreateChannel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -129,8 +129,7 @@ LivestreamServiceConnectionImpl::CreateChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceConnectionImpl::CreateChannel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -259,7 +258,7 @@ LivestreamServiceConnectionImpl::DeleteChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::DeleteChannel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -275,8 +274,7 @@ LivestreamServiceConnectionImpl::DeleteChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceConnectionImpl::DeleteChannel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -354,7 +352,7 @@ LivestreamServiceConnectionImpl::UpdateChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::UpdateChannel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -370,8 +368,7 @@ LivestreamServiceConnectionImpl::UpdateChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceConnectionImpl::UpdateChannel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -449,7 +446,7 @@ LivestreamServiceConnectionImpl::StartChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::StartChannel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -465,8 +462,7 @@ LivestreamServiceConnectionImpl::StartChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
 LivestreamServiceConnectionImpl::StartChannel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -544,7 +540,7 @@ LivestreamServiceConnectionImpl::StopChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::StopChannel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -560,8 +556,7 @@ LivestreamServiceConnectionImpl::StopChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
 LivestreamServiceConnectionImpl::StopChannel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -639,7 +634,7 @@ LivestreamServiceConnectionImpl::CreateInput(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::CreateInput(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -655,8 +650,7 @@ LivestreamServiceConnectionImpl::CreateInput(
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceConnectionImpl::CreateInput(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -785,7 +779,7 @@ LivestreamServiceConnectionImpl::DeleteInput(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::DeleteInput(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -801,8 +795,7 @@ LivestreamServiceConnectionImpl::DeleteInput(
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceConnectionImpl::DeleteInput(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -880,7 +873,7 @@ LivestreamServiceConnectionImpl::UpdateInput(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::UpdateInput(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -896,8 +889,7 @@ LivestreamServiceConnectionImpl::UpdateInput(
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceConnectionImpl::UpdateInput(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -1055,7 +1047,7 @@ LivestreamServiceConnectionImpl::CreateAsset(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::CreateAsset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1071,8 +1063,7 @@ LivestreamServiceConnectionImpl::CreateAsset(
 
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
 LivestreamServiceConnectionImpl::CreateAsset(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -1150,7 +1141,7 @@ LivestreamServiceConnectionImpl::DeleteAsset(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::DeleteAsset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1166,8 +1157,7 @@ LivestreamServiceConnectionImpl::DeleteAsset(
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceConnectionImpl::DeleteAsset(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::
@@ -1311,7 +1301,7 @@ LivestreamServiceConnectionImpl::UpdatePool(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnectionImpl::UpdatePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1327,8 +1317,7 @@ LivestreamServiceConnectionImpl::UpdatePool(
 
 future<StatusOr<google::cloud::video::livestream::v1::Pool>>
 LivestreamServiceConnectionImpl::UpdatePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::livestream::v1::

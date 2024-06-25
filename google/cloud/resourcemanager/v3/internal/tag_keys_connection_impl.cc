@@ -171,7 +171,7 @@ TagKeysConnectionImpl::CreateTagKey(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysConnectionImpl::CreateTagKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -187,8 +187,7 @@ StatusOr<google::longrunning::Operation> TagKeysConnectionImpl::CreateTagKey(
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysConnectionImpl::CreateTagKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -265,7 +264,7 @@ TagKeysConnectionImpl::UpdateTagKey(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysConnectionImpl::UpdateTagKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -281,8 +280,7 @@ StatusOr<google::longrunning::Operation> TagKeysConnectionImpl::UpdateTagKey(
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysConnectionImpl::UpdateTagKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -359,7 +357,7 @@ TagKeysConnectionImpl::DeleteTagKey(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysConnectionImpl::DeleteTagKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -375,8 +373,7 @@ StatusOr<google::longrunning::Operation> TagKeysConnectionImpl::DeleteTagKey(
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysConnectionImpl::DeleteTagKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::

@@ -168,7 +168,7 @@ AppGatewaysServiceConnectionImpl::CreateAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceConnectionImpl::CreateAppGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -185,8 +185,7 @@ AppGatewaysServiceConnectionImpl::CreateAppGateway(
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
 AppGatewaysServiceConnectionImpl::CreateAppGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appgateways::v1::
@@ -266,7 +265,7 @@ AppGatewaysServiceConnectionImpl::DeleteAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceConnectionImpl::DeleteAppGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -284,8 +283,7 @@ AppGatewaysServiceConnectionImpl::DeleteAppGateway(
 future<StatusOr<
     google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
 AppGatewaysServiceConnectionImpl::DeleteAppGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appgateways::v1::

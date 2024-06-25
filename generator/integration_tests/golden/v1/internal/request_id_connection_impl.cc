@@ -119,8 +119,8 @@ RequestIdServiceConnectionImpl::RenameFoo(google::test::requestid::v1::RenameFoo
 }
 
 StatusOr<google::longrunning::Operation>
-RequestIdServiceConnectionImpl::RenameFoo(google::cloud::ExperimentalTag,
-      google::cloud::NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request) {
+RequestIdServiceConnectionImpl::RenameFoo(ExperimentalTag,
+      NoAwaitlTag, google::test::requestid::v1::RenameFooRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -134,7 +134,7 @@ RequestIdServiceConnectionImpl::RenameFoo(google::cloud::ExperimentalTag,
 }
 
 future<StatusOr<google::test::requestid::v1::Foo>>
-RequestIdServiceConnectionImpl::RenameFoo(google::cloud::ExperimentalTag,
+RequestIdServiceConnectionImpl::RenameFoo(ExperimentalTag,
       google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::test::requestid::v1::RenameFooMetadata>()) {

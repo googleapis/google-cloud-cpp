@@ -64,12 +64,12 @@ class MockBigtableTableAdminConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateTable,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::bigtable::admin::v2::UpdateTableRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>, UpdateTable,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -84,13 +84,13 @@ class MockBigtableTableAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UndeleteTable,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::bigtable::admin::v2::UndeleteTableRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>,
               UndeleteTable,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -102,13 +102,13 @@ class MockBigtableTableAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAuthorizedView,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
               CreateAuthorizedView,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -130,13 +130,13 @@ class MockBigtableTableAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAuthorizedView,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
               UpdateAuthorizedView,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -173,13 +173,13 @@ class MockBigtableTableAdminConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBackup,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::bigtable::admin::v2::CreateBackupRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>,
               CreateBackup,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -205,13 +205,13 @@ class MockBigtableTableAdminConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RestoreTable,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::bigtable::admin::v2::RestoreTableRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>,
               RestoreTable,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -220,12 +220,12 @@ class MockBigtableTableAdminConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CopyBackup,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::bigtable::admin::v2::CopyBackupRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>, CopyBackup,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

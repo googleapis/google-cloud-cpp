@@ -50,12 +50,12 @@ class DatabaseAdminTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateDatabase(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) override;
 
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(google::cloud::ExperimentalTag,
+  CreateDatabase(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
@@ -68,12 +68,12 @@ class DatabaseAdminTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDatabase(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request) override;
 
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  UpdateDatabase(google::cloud::ExperimentalTag,
+  UpdateDatabase(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   future<
@@ -83,13 +83,13 @@ class DatabaseAdminTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) override;
 
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(google::cloud::ExperimentalTag,
+  UpdateDatabaseDdl(ExperimentalTag,
                     google::longrunning::Operation const& operation) override;
 
   Status DropDatabase(
@@ -115,12 +115,12 @@ class DatabaseAdminTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
@@ -128,12 +128,12 @@ class DatabaseAdminTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CopyBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::CopyBackupRequest const& request)
       override;
 
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
@@ -158,12 +158,12 @@ class DatabaseAdminTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> RestoreDatabase(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request) override;
 
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  RestoreDatabase(google::cloud::ExperimentalTag,
+  RestoreDatabase(ExperimentalTag,
                   google::longrunning::Operation const& operation) override;
 
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(

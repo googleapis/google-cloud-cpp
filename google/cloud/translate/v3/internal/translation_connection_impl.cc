@@ -170,7 +170,7 @@ TranslationServiceConnectionImpl::BatchTranslateText(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnectionImpl::BatchTranslateText(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -186,8 +186,7 @@ TranslationServiceConnectionImpl::BatchTranslateText(
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
 TranslationServiceConnectionImpl::BatchTranslateText(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::translation::v3::
@@ -266,7 +265,7 @@ TranslationServiceConnectionImpl::BatchTranslateDocument(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnectionImpl::BatchTranslateDocument(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -284,8 +283,7 @@ TranslationServiceConnectionImpl::BatchTranslateDocument(
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceConnectionImpl::BatchTranslateDocument(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::translation::v3::
@@ -363,7 +361,7 @@ TranslationServiceConnectionImpl::CreateGlossary(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnectionImpl::CreateGlossary(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -379,8 +377,7 @@ TranslationServiceConnectionImpl::CreateGlossary(
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnectionImpl::CreateGlossary(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::translation::v3::
@@ -507,7 +504,7 @@ TranslationServiceConnectionImpl::DeleteGlossary(
 
 StatusOr<google::longrunning::Operation>
 TranslationServiceConnectionImpl::DeleteGlossary(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -523,8 +520,7 @@ TranslationServiceConnectionImpl::DeleteGlossary(
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceConnectionImpl::DeleteGlossary(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::translation::v3::

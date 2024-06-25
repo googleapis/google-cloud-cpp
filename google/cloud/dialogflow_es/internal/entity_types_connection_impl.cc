@@ -200,7 +200,7 @@ EntityTypesConnectionImpl::BatchUpdateEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchUpdateEntityTypes(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -217,8 +217,7 @@ EntityTypesConnectionImpl::BatchUpdateEntityTypes(
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
 EntityTypesConnectionImpl::BatchUpdateEntityTypes(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<
@@ -295,7 +294,7 @@ EntityTypesConnectionImpl::BatchDeleteEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchDeleteEntityTypes(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -312,8 +311,7 @@ EntityTypesConnectionImpl::BatchDeleteEntityTypes(
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchDeleteEntityTypes(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(
@@ -388,7 +386,7 @@ EntityTypesConnectionImpl::BatchCreateEntities(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchCreateEntities(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -404,8 +402,7 @@ EntityTypesConnectionImpl::BatchCreateEntities(
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchCreateEntities(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(
@@ -480,7 +477,7 @@ EntityTypesConnectionImpl::BatchUpdateEntities(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchUpdateEntities(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -496,8 +493,7 @@ EntityTypesConnectionImpl::BatchUpdateEntities(
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchUpdateEntities(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(
@@ -572,7 +568,7 @@ EntityTypesConnectionImpl::BatchDeleteEntities(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchDeleteEntities(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -588,8 +584,7 @@ EntityTypesConnectionImpl::BatchDeleteEntities(
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchDeleteEntities(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(

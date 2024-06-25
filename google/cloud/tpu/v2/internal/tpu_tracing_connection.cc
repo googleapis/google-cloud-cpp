@@ -57,23 +57,20 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::CreateNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuTracingConnection::CreateNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::CreateNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::CreateNode");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateNode(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateNode(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::CreateNode(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::CreateNode");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateNode(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateNode(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
@@ -85,24 +82,21 @@ TpuTracingConnection::DeleteNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuTracingConnection::DeleteNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::DeleteNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::DeleteNode");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteNode(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteNode(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
 TpuTracingConnection::DeleteNode(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::DeleteNode");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteNode(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNode(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StopNode(
@@ -113,23 +107,20 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StopNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuTracingConnection::StopNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::StopNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::StopNode");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->StopNode(google::cloud::ExperimentalTag{},
-                              google::cloud::NoAwaitTag{}, request));
+      *span, child_->StopNode(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StopNode(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::StopNode");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->StopNode(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->StopNode(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StartNode(
@@ -140,23 +131,20 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StartNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuTracingConnection::StartNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::StartNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::StartNode");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->StartNode(google::cloud::ExperimentalTag{},
-                               google::cloud::NoAwaitTag{}, request));
+      *span, child_->StartNode(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StartNode(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::StartNode");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->StartNode(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->StartNode(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::UpdateNode(
@@ -167,23 +155,20 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::UpdateNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuTracingConnection::UpdateNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::UpdateNodeRequest const& request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::UpdateNode");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateNode(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateNode(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::UpdateNode(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::UpdateNode");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateNode(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateNode(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>

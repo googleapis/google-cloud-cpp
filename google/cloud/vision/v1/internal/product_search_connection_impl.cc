@@ -429,7 +429,7 @@ ProductSearchConnectionImpl::ImportProductSets(
 
 StatusOr<google::longrunning::Operation>
 ProductSearchConnectionImpl::ImportProductSets(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -445,8 +445,7 @@ ProductSearchConnectionImpl::ImportProductSets(
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
 ProductSearchConnectionImpl::ImportProductSets(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vision::v1::BatchOperationMetadata>()) {
@@ -522,7 +521,7 @@ ProductSearchConnectionImpl::PurgeProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductSearchConnectionImpl::PurgeProducts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -537,8 +536,7 @@ ProductSearchConnectionImpl::PurgeProducts(
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
 ProductSearchConnectionImpl::PurgeProducts(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vision::v1::BatchOperationMetadata>()) {

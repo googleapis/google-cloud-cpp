@@ -110,7 +110,7 @@ OsConfigZonalServiceConnectionImpl::CreateOSPolicyAssignment(
 
 StatusOr<google::longrunning::Operation>
 OsConfigZonalServiceConnectionImpl::CreateOSPolicyAssignment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -127,8 +127,7 @@ OsConfigZonalServiceConnectionImpl::CreateOSPolicyAssignment(
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceConnectionImpl::CreateOSPolicyAssignment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::osconfig::v1::
@@ -207,7 +206,7 @@ OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
 
 StatusOr<google::longrunning::Operation>
 OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -224,8 +223,7 @@ OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::osconfig::v1::
@@ -395,7 +393,7 @@ OsConfigZonalServiceConnectionImpl::DeleteOSPolicyAssignment(
 
 StatusOr<google::longrunning::Operation>
 OsConfigZonalServiceConnectionImpl::DeleteOSPolicyAssignment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -413,8 +411,7 @@ OsConfigZonalServiceConnectionImpl::DeleteOSPolicyAssignment(
 future<
     StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
 OsConfigZonalServiceConnectionImpl::DeleteOSPolicyAssignment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::osconfig::v1::

@@ -78,12 +78,12 @@ class DocumentServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ImportDocuments(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-  ImportDocuments(google::cloud::ExperimentalTag,
+  ImportDocuments(ExperimentalTag,
                   google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
@@ -92,12 +92,12 @@ class DocumentServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> PurgeDocuments(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-  PurgeDocuments(google::cloud::ExperimentalTag,
+  PurgeDocuments(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
  private:

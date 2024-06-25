@@ -51,12 +51,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::CreateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> CreateInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> RegisterInstance(
@@ -64,12 +64,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> RegisterInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::RegisterInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> RegisterInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -78,13 +78,13 @@ class NotebookServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> SetInstanceAccelerator(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&
           request) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
   SetInstanceAccelerator(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -93,13 +93,13 @@ class NotebookServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> SetInstanceMachineType(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&
           request) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
   SetInstanceMachineType(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> UpdateInstanceConfig(
@@ -107,12 +107,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::UpdateInstanceConfigRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> UpdateInstanceConfig(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -121,13 +121,13 @@ class NotebookServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateShieldedInstanceConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
   UpdateShieldedInstanceConfig(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> SetInstanceLabels(
@@ -135,12 +135,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> SetInstanceLabels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> SetInstanceLabels(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
@@ -153,12 +153,12 @@ class NotebookServiceTracingConnection
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::DeleteInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::ExperimentalTag,
+  DeleteInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> StartInstance(
@@ -166,12 +166,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> StartInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::StartInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> StartInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> StopInstance(
@@ -179,12 +179,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> StopInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::StopInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> StopInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> ResetInstance(
@@ -192,12 +192,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> ResetInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::ResetInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> ResetInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> ReportInstanceInfo(
@@ -205,12 +205,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> ReportInstanceInfo(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> ReportInstanceInfo(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
@@ -228,12 +228,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpgradeInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::UpgradeInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> UpgradeInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> RollbackInstance(
@@ -241,12 +241,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> RollbackInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::RollbackInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> RollbackInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> DiagnoseInstance(
@@ -254,12 +254,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DiagnoseInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> DiagnoseInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -268,13 +268,13 @@ class NotebookServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpgradeInstanceInternal(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
           request) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
   UpgradeInstanceInternal(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::notebooks::v1::Environment> ListEnvironments(
@@ -289,12 +289,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::CreateEnvironmentRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Environment>> CreateEnvironment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -303,12 +303,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteEnvironment(google::cloud::ExperimentalTag,
+  DeleteEnvironment(ExperimentalTag,
                     google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::notebooks::v1::Schedule> ListSchedules(
@@ -322,12 +322,12 @@ class NotebookServiceTracingConnection
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSchedule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::DeleteScheduleRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteSchedule(google::cloud::ExperimentalTag,
+  DeleteSchedule(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Schedule>> CreateSchedule(
@@ -335,12 +335,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateSchedule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::CreateScheduleRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Schedule>> CreateSchedule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Schedule>> TriggerSchedule(
@@ -348,12 +348,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> TriggerSchedule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::TriggerScheduleRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Schedule>> TriggerSchedule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::notebooks::v1::Execution> ListExecutions(
@@ -368,12 +368,12 @@ class NotebookServiceTracingConnection
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteExecution(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::DeleteExecutionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteExecution(google::cloud::ExperimentalTag,
+  DeleteExecution(ExperimentalTag,
                   google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Execution>> CreateExecution(
@@ -381,12 +381,12 @@ class NotebookServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateExecution(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::CreateExecutionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Execution>> CreateExecution(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

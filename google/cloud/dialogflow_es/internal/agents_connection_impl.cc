@@ -174,7 +174,7 @@ future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::TrainAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsConnectionImpl::TrainAgent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::TrainAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -188,8 +188,7 @@ StatusOr<google::longrunning::Operation> AgentsConnectionImpl::TrainAgent(
 }
 
 future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::TrainAgent(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(
@@ -262,7 +261,7 @@ AgentsConnectionImpl::ExportAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsConnectionImpl::ExportAgent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::ExportAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -277,8 +276,7 @@ StatusOr<google::longrunning::Operation> AgentsConnectionImpl::ExportAgent(
 
 future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
 AgentsConnectionImpl::ExportAgent(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<
@@ -351,7 +349,7 @@ future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::ImportAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsConnectionImpl::ImportAgent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::ImportAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -365,8 +363,7 @@ StatusOr<google::longrunning::Operation> AgentsConnectionImpl::ImportAgent(
 }
 
 future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::ImportAgent(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(
@@ -438,7 +435,7 @@ future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::RestoreAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsConnectionImpl::RestoreAgent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::RestoreAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -453,8 +450,7 @@ StatusOr<google::longrunning::Operation> AgentsConnectionImpl::RestoreAgent(
 }
 
 future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::RestoreAgent(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(

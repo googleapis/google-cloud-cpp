@@ -63,26 +63,23 @@ VersionsTracingConnection::CreateVersion(
 
 StatusOr<google::longrunning::Operation>
 VersionsTracingConnection::CreateVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::CreateVersionRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::CreateVersion");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateVersion(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateVersion(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
 VersionsTracingConnection::CreateVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::CreateVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateVersion(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateVersion(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
@@ -96,26 +93,23 @@ VersionsTracingConnection::UpdateVersion(
 
 StatusOr<google::longrunning::Operation>
 VersionsTracingConnection::UpdateVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::UpdateVersionRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::UpdateVersion");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateVersion(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateVersion(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
 VersionsTracingConnection::UpdateVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::UpdateVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateVersion(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateVersion(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
@@ -129,26 +123,23 @@ VersionsTracingConnection::DeleteVersion(
 
 StatusOr<google::longrunning::Operation>
 VersionsTracingConnection::DeleteVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteVersionRequest const& request) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::DeleteVersion");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteVersion(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteVersion(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 VersionsTracingConnection::DeleteVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("appengine_v1::VersionsConnection::DeleteVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteVersion(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteVersion(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

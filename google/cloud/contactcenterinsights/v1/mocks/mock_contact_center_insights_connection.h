@@ -61,7 +61,7 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UploadConversation,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::contactcenterinsights::v1::
                    UploadConversationRequest const& request),
               (override));
@@ -69,8 +69,7 @@ class MockContactCenterInsightsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>,
       UploadConversation,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::Conversation>,
@@ -107,7 +106,7 @@ class MockContactCenterInsightsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAnalysis,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
            request),
       (override));
@@ -115,8 +114,7 @@ class MockContactCenterInsightsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>,
       CreateAnalysis,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -146,7 +144,7 @@ class MockContactCenterInsightsConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               BulkAnalyzeConversations,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::contactcenterinsights::v1::
                    BulkAnalyzeConversationsRequest const& request),
               (override));
@@ -154,7 +152,7 @@ class MockContactCenterInsightsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   BulkAnalyzeConversationsResponse>>,
               BulkAnalyzeConversations,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -166,7 +164,7 @@ class MockContactCenterInsightsConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BulkDeleteConversations,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::contactcenterinsights::v1::
                    BulkDeleteConversationsRequest const& request),
               (override));
@@ -174,7 +172,7 @@ class MockContactCenterInsightsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   BulkDeleteConversationsResponse>>,
               BulkDeleteConversations,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -186,7 +184,7 @@ class MockContactCenterInsightsConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, IngestConversations,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::contactcenterinsights::v1::
                    IngestConversationsRequest const& request),
               (override));
@@ -194,7 +192,7 @@ class MockContactCenterInsightsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   IngestConversationsResponse>>,
               IngestConversations,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -206,7 +204,7 @@ class MockContactCenterInsightsConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportInsightsData,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::contactcenterinsights::v1::
                    ExportInsightsDataRequest const& request),
               (override));
@@ -214,7 +212,7 @@ class MockContactCenterInsightsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   ExportInsightsDataResponse>>,
               ExportInsightsData,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -227,7 +225,7 @@ class MockContactCenterInsightsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateIssueModel,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
            request),
       (override));
@@ -235,8 +233,7 @@ class MockContactCenterInsightsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>,
       CreateIssueModel,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -271,7 +268,7 @@ class MockContactCenterInsightsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteIssueModel,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
            request),
       (override));
@@ -280,8 +277,7 @@ class MockContactCenterInsightsConnection
       future<StatusOr<
           google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>,
       DeleteIssueModel,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -294,7 +290,7 @@ class MockContactCenterInsightsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeployIssueModel,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
            request),
       (override));
@@ -303,8 +299,7 @@ class MockContactCenterInsightsConnection
       future<StatusOr<
           google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>,
       DeployIssueModel,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -315,7 +310,7 @@ class MockContactCenterInsightsConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeployIssueModel,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::contactcenterinsights::v1::
                    UndeployIssueModelRequest const& request),
               (override));
@@ -323,7 +318,7 @@ class MockContactCenterInsightsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   UndeployIssueModelResponse>>,
               UndeployIssueModel,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

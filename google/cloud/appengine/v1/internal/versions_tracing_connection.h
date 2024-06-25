@@ -49,33 +49,33 @@ class VersionsTracingConnection : public appengine_v1::VersionsConnection {
       google::appengine::v1::CreateVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateVersion(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::CreateVersionRequest const& request) override;
 
   future<StatusOr<google::appengine::v1::Version>> CreateVersion(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
       google::appengine::v1::UpdateVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateVersion(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateVersionRequest const& request) override;
 
   future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVersion(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

@@ -52,26 +52,23 @@ PredictionServiceTracingConnection::BatchPredict(
 
 StatusOr<google::longrunning::Operation>
 PredictionServiceTracingConnection::BatchPredict(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::BatchPredictRequest const& request) {
   auto span = internal::MakeSpan(
       "automl_v1::PredictionServiceConnection::BatchPredict");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->BatchPredict(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->BatchPredict(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceTracingConnection::BatchPredict(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "automl_v1::PredictionServiceConnection::BatchPredict");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->BatchPredict(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchPredict(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

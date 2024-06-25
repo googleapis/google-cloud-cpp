@@ -67,11 +67,11 @@ class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> TrainAgent(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
 
   future<StatusOr<google::protobuf::Struct>> TrainAgent(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
@@ -79,12 +79,12 @@ class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ExportAgent(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::dialogflow::v2::ExportAgentRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
-  ExportAgent(google::cloud::ExperimentalTag,
+  ExportAgent(ExperimentalTag,
               google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::protobuf::Struct>> ImportAgent(
@@ -92,12 +92,12 @@ class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ImportAgent(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::dialogflow::v2::ImportAgentRequest const& request)
       override;
 
   future<StatusOr<google::protobuf::Struct>> ImportAgent(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
@@ -105,12 +105,12 @@ class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RestoreAgent(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request)
       override;
 
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::v2::ValidationResult> GetValidationResult(

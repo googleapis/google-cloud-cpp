@@ -59,12 +59,12 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> BatchCreateJobs(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::talent::v4::BatchCreateJobsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(google::cloud::ExperimentalTag,
+  BatchCreateJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::talent::v4::Job> GetJob(
@@ -78,12 +78,12 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> BatchUpdateJobs(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(google::cloud::ExperimentalTag,
+  BatchUpdateJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation) override;
 
   Status DeleteJob(
@@ -94,12 +94,12 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> BatchDeleteJobs(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(google::cloud::ExperimentalTag,
+  BatchDeleteJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::talent::v4::Job> ListJobs(

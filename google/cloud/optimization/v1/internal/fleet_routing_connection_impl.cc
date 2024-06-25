@@ -122,7 +122,7 @@ FleetRoutingConnectionImpl::BatchOptimizeTours(
 
 StatusOr<google::longrunning::Operation>
 FleetRoutingConnectionImpl::BatchOptimizeTours(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -138,8 +138,7 @@ FleetRoutingConnectionImpl::BatchOptimizeTours(
 
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
 FleetRoutingConnectionImpl::BatchOptimizeTours(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::optimization::v1::

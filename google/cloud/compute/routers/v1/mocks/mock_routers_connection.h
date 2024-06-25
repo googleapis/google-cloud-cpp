@@ -63,14 +63,14 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteRouter,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteRouter,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -109,14 +109,14 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertRouter,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertRouter,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -133,14 +133,14 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchRouter,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchRouter,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -159,14 +159,14 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, UpdateRouter,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateRouter,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };

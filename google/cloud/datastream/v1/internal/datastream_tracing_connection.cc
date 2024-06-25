@@ -67,27 +67,25 @@ DatastreamTracingConnection::CreateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::CreateConnectionProfile(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::CreateConnectionProfile");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateConnectionProfile(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateConnectionProfile(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamTracingConnection::CreateConnectionProfile(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::CreateConnectionProfile");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateConnectionProfile(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateConnectionProfile(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
@@ -103,27 +101,25 @@ DatastreamTracingConnection::UpdateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::UpdateConnectionProfile(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::UpdateConnectionProfile");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateConnectionProfile(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UpdateConnectionProfile(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamTracingConnection::UpdateConnectionProfile(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::UpdateConnectionProfile");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateConnectionProfile(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateConnectionProfile(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
@@ -139,27 +135,25 @@ DatastreamTracingConnection::DeleteConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::DeleteConnectionProfile(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::DeleteConnectionProfile");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteConnectionProfile(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteConnectionProfile(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamTracingConnection::DeleteConnectionProfile(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::DeleteConnectionProfile");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteConnectionProfile(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteConnectionProfile(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
@@ -203,26 +197,23 @@ DatastreamTracingConnection::CreateStream(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::CreateStream(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::CreateStreamRequest const& request) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::CreateStream");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateStream(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateStream(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamTracingConnection::CreateStream(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::CreateStream");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateStream(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateStream(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
@@ -236,26 +227,23 @@ DatastreamTracingConnection::UpdateStream(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::UpdateStream(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::UpdateStream");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateStream(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateStream(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamTracingConnection::UpdateStream(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::UpdateStream");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateStream(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateStream(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
@@ -269,26 +257,23 @@ DatastreamTracingConnection::DeleteStream(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::DeleteStream(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::DeleteStream");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteStream(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteStream(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamTracingConnection::DeleteStream(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::DeleteStream");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteStream(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteStream(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
@@ -362,27 +347,25 @@ DatastreamTracingConnection::CreatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::CreatePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::CreatePrivateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreatePrivateConnection(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreatePrivateConnection(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
 DatastreamTracingConnection::CreatePrivateConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::CreatePrivateConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreatePrivateConnection(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreatePrivateConnection(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
@@ -419,27 +402,25 @@ DatastreamTracingConnection::DeletePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::DeletePrivateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::DeletePrivateConnection");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeletePrivateConnection(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeletePrivateConnection(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamTracingConnection::DeletePrivateConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datastream_v1::DatastreamConnection::DeletePrivateConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeletePrivateConnection(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeletePrivateConnection(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
@@ -453,26 +434,23 @@ DatastreamTracingConnection::CreateRoute(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::CreateRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::CreateRoute");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateRoute(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateRoute(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
 DatastreamTracingConnection::CreateRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::CreateRoute");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateRoute(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateRoute(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::datastream::v1::Route>
@@ -506,26 +484,23 @@ DatastreamTracingConnection::DeleteRoute(
 
 StatusOr<google::longrunning::Operation>
 DatastreamTracingConnection::DeleteRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::DeleteRouteRequest const& request) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::DeleteRoute");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteRoute(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteRoute(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamTracingConnection::DeleteRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("datastream_v1::DatastreamConnection::DeleteRoute");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteRoute(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteRoute(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -56,30 +56,29 @@ CompletionServiceTracingConnection::ImportSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceTracingConnection::ImportSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::
         ImportSuggestionDenyListEntriesRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::CompletionServiceConnection::"
       "ImportSuggestionDenyListEntries");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->ImportSuggestionDenyListEntries(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->ImportSuggestionDenyListEntries(ExperimentalTag{},
+                                                     NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::
                     ImportSuggestionDenyListEntriesResponse>>
 CompletionServiceTracingConnection::ImportSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::CompletionServiceConnection::"
       "ImportSuggestionDenyListEntries");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->ImportSuggestionDenyListEntries(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(
+      std::move(span),
+      child_->ImportSuggestionDenyListEntries(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -97,30 +96,29 @@ CompletionServiceTracingConnection::PurgeSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceTracingConnection::PurgeSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::
         PurgeSuggestionDenyListEntriesRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::CompletionServiceConnection::"
       "PurgeSuggestionDenyListEntries");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PurgeSuggestionDenyListEntries(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->PurgeSuggestionDenyListEntries(ExperimentalTag{},
+                                                    NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
 CompletionServiceTracingConnection::PurgeSuggestionDenyListEntries(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::CompletionServiceConnection::"
       "PurgeSuggestionDenyListEntries");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PurgeSuggestionDenyListEntries(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(
+      std::move(span),
+      child_->PurgeSuggestionDenyListEntries(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

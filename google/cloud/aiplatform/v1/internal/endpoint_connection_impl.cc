@@ -108,7 +108,7 @@ EndpointServiceConnectionImpl::CreateEndpoint(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::CreateEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -124,8 +124,7 @@ EndpointServiceConnectionImpl::CreateEndpoint(
 
 future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
 EndpointServiceConnectionImpl::CreateEndpoint(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -264,7 +263,7 @@ EndpointServiceConnectionImpl::DeleteEndpoint(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::DeleteEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -280,8 +279,7 @@ EndpointServiceConnectionImpl::DeleteEndpoint(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 EndpointServiceConnectionImpl::DeleteEndpoint(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -358,7 +356,7 @@ EndpointServiceConnectionImpl::DeployModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::DeployModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -373,8 +371,7 @@ EndpointServiceConnectionImpl::DeployModel(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
 EndpointServiceConnectionImpl::DeployModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -451,7 +448,7 @@ EndpointServiceConnectionImpl::UndeployModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::UndeployModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -467,8 +464,7 @@ EndpointServiceConnectionImpl::UndeployModel(
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
 EndpointServiceConnectionImpl::UndeployModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -546,7 +542,7 @@ EndpointServiceConnectionImpl::MutateDeployedModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::MutateDeployedModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -562,8 +558,7 @@ EndpointServiceConnectionImpl::MutateDeployedModel(
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
 EndpointServiceConnectionImpl::MutateDeployedModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

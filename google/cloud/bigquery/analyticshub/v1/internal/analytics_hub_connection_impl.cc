@@ -373,7 +373,7 @@ AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::bigquery::analyticshub::v1::
         SubscribeDataExchangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -391,8 +391,7 @@ AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
 future<StatusOr<
     google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
 AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::bigquery::analyticshub::v1::
@@ -473,7 +472,7 @@ AnalyticsHubServiceConnectionImpl::RefreshSubscription(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnectionImpl::RefreshSubscription(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -491,8 +490,7 @@ AnalyticsHubServiceConnectionImpl::RefreshSubscription(
 future<StatusOr<
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
 AnalyticsHubServiceConnectionImpl::RefreshSubscription(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::bigquery::analyticshub::v1::
@@ -680,7 +678,7 @@ AnalyticsHubServiceConnectionImpl::DeleteSubscription(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceConnectionImpl::DeleteSubscription(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -697,8 +695,7 @@ AnalyticsHubServiceConnectionImpl::DeleteSubscription(
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
 AnalyticsHubServiceConnectionImpl::DeleteSubscription(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::bigquery::analyticshub::v1::

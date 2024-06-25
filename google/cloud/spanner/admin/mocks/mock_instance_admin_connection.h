@@ -70,7 +70,7 @@ class MockInstanceAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstanceConfig,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
            request),
       (override));
@@ -78,8 +78,7 @@ class MockInstanceAdminConnection
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
       CreateInstanceConfig,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -91,7 +90,7 @@ class MockInstanceAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstanceConfig,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
            request),
       (override));
@@ -99,8 +98,7 @@ class MockInstanceAdminConnection
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
       UpdateInstanceConfig,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -143,14 +141,14 @@ class MockInstanceAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::spanner::admin::instance::v1::CreateInstanceRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
               CreateInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -163,14 +161,14 @@ class MockInstanceAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::spanner::admin::instance::v1::UpdateInstanceRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
               UpdateInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -208,7 +206,7 @@ class MockInstanceAdminConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateInstancePartition,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::spanner::admin::instance::v1::
                    CreateInstancePartitionRequest const& request),
               (override));
@@ -216,8 +214,7 @@ class MockInstanceAdminConnection
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
       CreateInstancePartition,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(Status, DeleteInstancePartition,
@@ -233,7 +230,7 @@ class MockInstanceAdminConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateInstancePartition,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::spanner::admin::instance::v1::
                    UpdateInstancePartitionRequest const& request),
               (override));
@@ -241,8 +238,7 @@ class MockInstanceAdminConnection
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
       UpdateInstancePartition,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::longrunning::Operation>),

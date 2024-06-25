@@ -46,12 +46,12 @@ class FeatureRegistryServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateFeatureGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(google::cloud::ExperimentalTag,
+  CreateFeatureGroup(ExperimentalTag,
                      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
@@ -67,12 +67,12 @@ class FeatureRegistryServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  UpdateFeatureGroup(google::cloud::ExperimentalTag,
+  UpdateFeatureGroup(ExperimentalTag,
                      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -81,12 +81,12 @@ class FeatureRegistryServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureGroup(google::cloud::ExperimentalTag,
+  DeleteFeatureGroup(ExperimentalTag,
                      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
@@ -94,12 +94,12 @@ class FeatureRegistryServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
@@ -113,12 +113,12 @@ class FeatureRegistryServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> UpdateFeature(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -126,12 +126,12 @@ class FeatureRegistryServiceTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::cloud::ExperimentalTag,
+  DeleteFeature(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
  private:

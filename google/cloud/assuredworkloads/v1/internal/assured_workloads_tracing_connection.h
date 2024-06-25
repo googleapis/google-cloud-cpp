@@ -47,12 +47,12 @@ class AssuredWorkloadsServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
       override;
 
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(google::cloud::ExperimentalTag,
+  CreateWorkload(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::assuredworkloads::v1::Workload> UpdateWorkload(

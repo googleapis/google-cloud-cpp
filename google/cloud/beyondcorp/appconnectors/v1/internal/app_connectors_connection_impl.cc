@@ -171,7 +171,7 @@ AppConnectorsServiceConnectionImpl::CreateAppConnector(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnectionImpl::CreateAppConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::beyondcorp::appconnectors::v1::
         CreateAppConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -188,8 +188,7 @@ AppConnectorsServiceConnectionImpl::CreateAppConnector(
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::CreateAppConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnectors::v1::
@@ -267,7 +266,7 @@ AppConnectorsServiceConnectionImpl::UpdateAppConnector(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnectionImpl::UpdateAppConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::beyondcorp::appconnectors::v1::
         UpdateAppConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -284,8 +283,7 @@ AppConnectorsServiceConnectionImpl::UpdateAppConnector(
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::UpdateAppConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnectors::v1::
@@ -366,7 +364,7 @@ AppConnectorsServiceConnectionImpl::DeleteAppConnector(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnectionImpl::DeleteAppConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::beyondcorp::appconnectors::v1::
         DeleteAppConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -384,8 +382,7 @@ AppConnectorsServiceConnectionImpl::DeleteAppConnector(
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                     AppConnectorOperationMetadata>>
 AppConnectorsServiceConnectionImpl::DeleteAppConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnectors::v1::
@@ -465,7 +462,7 @@ AppConnectorsServiceConnectionImpl::ReportStatus(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceConnectionImpl::ReportStatus(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -482,8 +479,7 @@ AppConnectorsServiceConnectionImpl::ReportStatus(
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceConnectionImpl::ReportStatus(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::beyondcorp::appconnectors::v1::

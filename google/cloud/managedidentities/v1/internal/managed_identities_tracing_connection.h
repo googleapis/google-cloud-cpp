@@ -47,13 +47,13 @@ class ManagedIdentitiesServiceTracingConnection
           CreateMicrosoftAdDomainRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::
           CreateMicrosoftAdDomainRequest const& request) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   CreateMicrosoftAdDomain(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
@@ -74,12 +74,12 @@ class ManagedIdentitiesServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDomain(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request)
       override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
@@ -87,12 +87,12 @@ class ManagedIdentitiesServiceTracingConnection
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDomain(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::DeleteDomainRequest const& request)
       override;
 
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain(google::cloud::ExperimentalTag,
+  DeleteDomain(ExperimentalTag,
                google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
@@ -100,12 +100,12 @@ class ManagedIdentitiesServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> AttachTrust(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::AttachTrustRequest const& request)
       override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -114,12 +114,12 @@ class ManagedIdentitiesServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> ReconfigureTrust(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
           request) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ReconfigureTrust(google::cloud::ExperimentalTag,
+  ReconfigureTrust(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
@@ -127,12 +127,12 @@ class ManagedIdentitiesServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DetachTrust(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::DetachTrustRequest const& request)
       override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
@@ -140,12 +140,12 @@ class ManagedIdentitiesServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> ValidateTrust(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::ValidateTrustRequest const& request)
       override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

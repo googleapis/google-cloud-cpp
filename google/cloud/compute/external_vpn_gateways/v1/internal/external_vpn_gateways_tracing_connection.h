@@ -49,13 +49,13 @@ class ExternalVpnGatewaysTracingConnection
           DeleteExternalVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteExternalVpnGateway(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           DeleteExternalVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteExternalVpnGateway(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -69,13 +69,13 @@ class ExternalVpnGatewaysTracingConnection
           InsertExternalVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertExternalVpnGateway(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           InsertExternalVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertExternalVpnGateway(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -88,12 +88,12 @@ class ExternalVpnGatewaysTracingConnection
           SetLabelsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           SetLabelsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

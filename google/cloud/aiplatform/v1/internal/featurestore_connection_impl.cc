@@ -110,7 +110,7 @@ FeaturestoreServiceConnectionImpl::CreateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::CreateFeaturestore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -126,8 +126,7 @@ FeaturestoreServiceConnectionImpl::CreateFeaturestore(
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
 FeaturestoreServiceConnectionImpl::CreateFeaturestore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -255,7 +254,7 @@ FeaturestoreServiceConnectionImpl::UpdateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::UpdateFeaturestore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -271,8 +270,7 @@ FeaturestoreServiceConnectionImpl::UpdateFeaturestore(
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
 FeaturestoreServiceConnectionImpl::UpdateFeaturestore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -350,7 +348,7 @@ FeaturestoreServiceConnectionImpl::DeleteFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::DeleteFeaturestore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -366,8 +364,7 @@ FeaturestoreServiceConnectionImpl::DeleteFeaturestore(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceConnectionImpl::DeleteFeaturestore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -445,7 +442,7 @@ FeaturestoreServiceConnectionImpl::CreateEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::CreateEntityType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -461,8 +458,7 @@ FeaturestoreServiceConnectionImpl::CreateEntityType(
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
 FeaturestoreServiceConnectionImpl::CreateEntityType(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -604,7 +600,7 @@ FeaturestoreServiceConnectionImpl::DeleteEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::DeleteEntityType(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -620,8 +616,7 @@ FeaturestoreServiceConnectionImpl::DeleteEntityType(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceConnectionImpl::DeleteEntityType(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -698,7 +693,7 @@ FeaturestoreServiceConnectionImpl::CreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::CreateFeature(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -714,8 +709,7 @@ FeaturestoreServiceConnectionImpl::CreateFeature(
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
 FeaturestoreServiceConnectionImpl::CreateFeature(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -792,7 +786,7 @@ FeaturestoreServiceConnectionImpl::BatchCreateFeatures(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::BatchCreateFeatures(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -808,8 +802,7 @@ FeaturestoreServiceConnectionImpl::BatchCreateFeatures(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
 FeaturestoreServiceConnectionImpl::BatchCreateFeatures(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -949,7 +942,7 @@ FeaturestoreServiceConnectionImpl::DeleteFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::DeleteFeature(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -965,8 +958,7 @@ FeaturestoreServiceConnectionImpl::DeleteFeature(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceConnectionImpl::DeleteFeature(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -1044,7 +1036,7 @@ FeaturestoreServiceConnectionImpl::ImportFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::ImportFeatureValues(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1060,8 +1052,7 @@ FeaturestoreServiceConnectionImpl::ImportFeatureValues(
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
 FeaturestoreServiceConnectionImpl::ImportFeatureValues(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -1140,7 +1131,7 @@ FeaturestoreServiceConnectionImpl::BatchReadFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::BatchReadFeatureValues(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1157,8 +1148,7 @@ FeaturestoreServiceConnectionImpl::BatchReadFeatureValues(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
 FeaturestoreServiceConnectionImpl::BatchReadFeatureValues(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -1236,7 +1226,7 @@ FeaturestoreServiceConnectionImpl::ExportFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::ExportFeatureValues(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1252,8 +1242,7 @@ FeaturestoreServiceConnectionImpl::ExportFeatureValues(
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
 FeaturestoreServiceConnectionImpl::ExportFeatureValues(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -1331,7 +1320,7 @@ FeaturestoreServiceConnectionImpl::DeleteFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnectionImpl::DeleteFeatureValues(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1347,8 +1336,7 @@ FeaturestoreServiceConnectionImpl::DeleteFeatureValues(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
 FeaturestoreServiceConnectionImpl::DeleteFeatureValues(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

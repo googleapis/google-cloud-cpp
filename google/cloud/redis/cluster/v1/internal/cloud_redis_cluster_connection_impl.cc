@@ -159,7 +159,7 @@ CloudRedisClusterConnectionImpl::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -175,8 +175,7 @@ CloudRedisClusterConnectionImpl::UpdateCluster(
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Any>()) {
     return make_ready_future<
@@ -252,7 +251,7 @@ CloudRedisClusterConnectionImpl::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterConnectionImpl::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -268,8 +267,7 @@ CloudRedisClusterConnectionImpl::DeleteCluster(
 
 future<StatusOr<google::protobuf::Any>>
 CloudRedisClusterConnectionImpl::DeleteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Any>()) {
     return make_ready_future<StatusOr<google::protobuf::Any>>(
@@ -344,7 +342,7 @@ CloudRedisClusterConnectionImpl::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -360,8 +358,7 @@ CloudRedisClusterConnectionImpl::CreateCluster(
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Any>()) {
     return make_ready_future<

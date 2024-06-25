@@ -156,7 +156,7 @@ ApiGatewayServiceConnectionImpl::CreateGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnectionImpl::CreateGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -172,8 +172,7 @@ ApiGatewayServiceConnectionImpl::CreateGateway(
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceConnectionImpl::CreateGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
@@ -248,7 +247,7 @@ ApiGatewayServiceConnectionImpl::UpdateGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnectionImpl::UpdateGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -264,8 +263,7 @@ ApiGatewayServiceConnectionImpl::UpdateGateway(
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceConnectionImpl::UpdateGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
@@ -340,7 +338,7 @@ ApiGatewayServiceConnectionImpl::DeleteGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnectionImpl::DeleteGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -356,8 +354,7 @@ ApiGatewayServiceConnectionImpl::DeleteGateway(
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
@@ -479,7 +476,7 @@ ApiGatewayServiceConnectionImpl::CreateApi(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnectionImpl::CreateApi(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::apigateway::v1::CreateApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -494,8 +491,7 @@ ApiGatewayServiceConnectionImpl::CreateApi(
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceConnectionImpl::CreateApi(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
@@ -569,7 +565,7 @@ ApiGatewayServiceConnectionImpl::UpdateApi(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnectionImpl::UpdateApi(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -584,8 +580,7 @@ ApiGatewayServiceConnectionImpl::UpdateApi(
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceConnectionImpl::UpdateApi(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
@@ -659,7 +654,7 @@ ApiGatewayServiceConnectionImpl::DeleteApi(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnectionImpl::DeleteApi(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -674,8 +669,7 @@ ApiGatewayServiceConnectionImpl::DeleteApi(
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteApi(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
@@ -801,7 +795,7 @@ ApiGatewayServiceConnectionImpl::CreateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnectionImpl::CreateApiConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -817,8 +811,7 @@ ApiGatewayServiceConnectionImpl::CreateApiConfig(
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceConnectionImpl::CreateApiConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
@@ -895,7 +888,7 @@ ApiGatewayServiceConnectionImpl::UpdateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnectionImpl::UpdateApiConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -911,8 +904,7 @@ ApiGatewayServiceConnectionImpl::UpdateApiConfig(
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceConnectionImpl::UpdateApiConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
@@ -989,7 +981,7 @@ ApiGatewayServiceConnectionImpl::DeleteApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnectionImpl::DeleteApiConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1005,8 +997,7 @@ ApiGatewayServiceConnectionImpl::DeleteApiConfig(
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteApiConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {

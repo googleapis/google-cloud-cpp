@@ -56,12 +56,12 @@ class PipelineServiceConnectionImpl
                   request) override;
 
   StatusOr<google::longrunning::Operation> RunPipeline(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
       override;
 
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(google::cloud::ExperimentalTag,
+  RunPipeline(ExperimentalTag,
               google::longrunning::Operation const& operation) override;
 
  private:

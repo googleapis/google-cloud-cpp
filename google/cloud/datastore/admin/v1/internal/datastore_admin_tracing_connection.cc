@@ -44,26 +44,23 @@ DatastoreAdminTracingConnection::ExportEntities(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminTracingConnection::ExportEntities(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::ExportEntities");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ExportEntities(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->ExportEntities(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
 DatastoreAdminTracingConnection::ExportEntities(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::ExportEntities");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->ExportEntities(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->ExportEntities(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
@@ -77,26 +74,23 @@ DatastoreAdminTracingConnection::ImportEntities(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminTracingConnection::ImportEntities(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::ImportEntities");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ImportEntities(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->ImportEntities(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
 DatastoreAdminTracingConnection::ImportEntities(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::ImportEntities");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->ImportEntities(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->ImportEntities(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
@@ -110,26 +104,23 @@ DatastoreAdminTracingConnection::CreateIndex(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminTracingConnection::CreateIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::CreateIndexRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::CreateIndex");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateIndex(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateIndex(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
 DatastoreAdminTracingConnection::CreateIndex(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::CreateIndex");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateIndex(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateIndex(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
@@ -143,26 +134,23 @@ DatastoreAdminTracingConnection::DeleteIndex(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminTracingConnection::DeleteIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::DeleteIndex");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteIndex(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteIndex(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
 DatastoreAdminTracingConnection::DeleteIndex(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datastore_admin_v1::DatastoreAdminConnection::DeleteIndex");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteIndex(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteIndex(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::datastore::admin::v1::Index>

@@ -110,7 +110,7 @@ SpecialistPoolServiceConnectionImpl::CreateSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceConnectionImpl::CreateSpecialistPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -126,8 +126,7 @@ SpecialistPoolServiceConnectionImpl::CreateSpecialistPool(
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceConnectionImpl::CreateSpecialistPool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -255,7 +254,7 @@ SpecialistPoolServiceConnectionImpl::DeleteSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceConnectionImpl::DeleteSpecialistPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -271,8 +270,7 @@ SpecialistPoolServiceConnectionImpl::DeleteSpecialistPool(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 SpecialistPoolServiceConnectionImpl::DeleteSpecialistPool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -350,7 +348,7 @@ SpecialistPoolServiceConnectionImpl::UpdateSpecialistPool(
 
 StatusOr<google::longrunning::Operation>
 SpecialistPoolServiceConnectionImpl::UpdateSpecialistPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -366,8 +364,7 @@ SpecialistPoolServiceConnectionImpl::UpdateSpecialistPool(
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceConnectionImpl::UpdateSpecialistPool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

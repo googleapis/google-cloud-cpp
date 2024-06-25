@@ -107,7 +107,7 @@ DataScanServiceConnectionImpl::CreateDataScan(
 
 StatusOr<google::longrunning::Operation>
 DataScanServiceConnectionImpl::CreateDataScan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -123,8 +123,7 @@ DataScanServiceConnectionImpl::CreateDataScan(
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceConnectionImpl::CreateDataScan(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -199,7 +198,7 @@ DataScanServiceConnectionImpl::UpdateDataScan(
 
 StatusOr<google::longrunning::Operation>
 DataScanServiceConnectionImpl::UpdateDataScan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -215,8 +214,7 @@ DataScanServiceConnectionImpl::UpdateDataScan(
 
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceConnectionImpl::UpdateDataScan(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -291,7 +289,7 @@ DataScanServiceConnectionImpl::DeleteDataScan(
 
 StatusOr<google::longrunning::Operation>
 DataScanServiceConnectionImpl::DeleteDataScan(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -307,8 +305,7 @@ DataScanServiceConnectionImpl::DeleteDataScan(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataScanServiceConnectionImpl::DeleteDataScan(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {

@@ -118,7 +118,7 @@ CloudShellServiceConnectionImpl::StartEnvironment(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceConnectionImpl::StartEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -133,8 +133,7 @@ CloudShellServiceConnectionImpl::StartEnvironment(
 
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
 CloudShellServiceConnectionImpl::StartEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::shell::v1::StartEnvironmentMetadata>()) {
@@ -211,7 +210,7 @@ CloudShellServiceConnectionImpl::AuthorizeEnvironment(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceConnectionImpl::AuthorizeEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -227,8 +226,7 @@ CloudShellServiceConnectionImpl::AuthorizeEnvironment(
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceConnectionImpl::AuthorizeEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::shell::v1::
@@ -305,7 +303,7 @@ CloudShellServiceConnectionImpl::AddPublicKey(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceConnectionImpl::AddPublicKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -320,8 +318,7 @@ CloudShellServiceConnectionImpl::AddPublicKey(
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
 CloudShellServiceConnectionImpl::AddPublicKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::shell::v1::AddPublicKeyMetadata>()) {
@@ -397,7 +394,7 @@ CloudShellServiceConnectionImpl::RemovePublicKey(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceConnectionImpl::RemovePublicKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -412,8 +409,7 @@ CloudShellServiceConnectionImpl::RemovePublicKey(
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceConnectionImpl::RemovePublicKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::shell::v1::RemovePublicKeyMetadata>()) {

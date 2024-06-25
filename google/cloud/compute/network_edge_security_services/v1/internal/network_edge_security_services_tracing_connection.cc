@@ -71,7 +71,7 @@ NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         DeleteNetworkEdgeSecurityServiceRequest const& request) {
   auto span = internal::MakeSpan(
@@ -79,23 +79,23 @@ NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
       "NetworkEdgeSecurityServicesConnection::"
       "DeleteNetworkEdgeSecurityService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteNetworkEdgeSecurityService(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteNetworkEdgeSecurityService(ExperimentalTag{},
+                                                      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesTracingConnection::DeleteNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
       "DeleteNetworkEdgeSecurityService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteNetworkEdgeSecurityService(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteNetworkEdgeSecurityService(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
@@ -125,7 +125,7 @@ NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         InsertNetworkEdgeSecurityServiceRequest const& request) {
   auto span = internal::MakeSpan(
@@ -133,23 +133,23 @@ NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
       "NetworkEdgeSecurityServicesConnection::"
       "InsertNetworkEdgeSecurityService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertNetworkEdgeSecurityService(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->InsertNetworkEdgeSecurityService(ExperimentalTag{},
+                                                      NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesTracingConnection::InsertNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::"
       "InsertNetworkEdgeSecurityService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertNetworkEdgeSecurityService(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(
+      std::move(span),
+      child_->InsertNetworkEdgeSecurityService(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -166,29 +166,29 @@ NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_edge_security_services::v1::
         PatchNetworkEdgeSecurityServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PatchNetworkEdgeSecurityService(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->PatchNetworkEdgeSecurityService(ExperimentalTag{},
+                                                     NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesTracingConnection::PatchNetworkEdgeSecurityService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_edge_security_services_v1::"
       "NetworkEdgeSecurityServicesConnection::PatchNetworkEdgeSecurityService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchNetworkEdgeSecurityService(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(
+      std::move(span),
+      child_->PatchNetworkEdgeSecurityService(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

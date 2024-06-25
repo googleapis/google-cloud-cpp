@@ -115,7 +115,7 @@ ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -132,8 +132,7 @@ ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
@@ -278,7 +277,7 @@ ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -294,8 +293,7 @@ ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
@@ -372,7 +370,7 @@ ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -388,8 +386,7 @@ ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
@@ -466,7 +463,7 @@ ManagedIdentitiesServiceConnectionImpl::AttachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::AttachTrust(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -482,8 +479,7 @@ ManagedIdentitiesServiceConnectionImpl::AttachTrust(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::AttachTrust(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
@@ -561,7 +557,7 @@ ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -579,8 +575,7 @@ ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
@@ -657,7 +652,7 @@ ManagedIdentitiesServiceConnectionImpl::DetachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::DetachTrust(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -673,8 +668,7 @@ ManagedIdentitiesServiceConnectionImpl::DetachTrust(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::DetachTrust(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {
@@ -751,7 +745,7 @@ ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -767,8 +761,7 @@ ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedidentities::v1::OpMetadata>()) {

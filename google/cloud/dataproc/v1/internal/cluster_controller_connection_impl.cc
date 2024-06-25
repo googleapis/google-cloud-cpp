@@ -108,7 +108,7 @@ ClusterControllerConnectionImpl::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -123,8 +123,7 @@ ClusterControllerConnectionImpl::CreateCluster(
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::
@@ -200,7 +199,7 @@ ClusterControllerConnectionImpl::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -215,8 +214,7 @@ ClusterControllerConnectionImpl::UpdateCluster(
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::
@@ -292,7 +290,7 @@ ClusterControllerConnectionImpl::StopCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnectionImpl::StopCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -307,8 +305,7 @@ ClusterControllerConnectionImpl::StopCluster(
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::StopCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::
@@ -384,7 +381,7 @@ ClusterControllerConnectionImpl::StartCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnectionImpl::StartCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -399,8 +396,7 @@ ClusterControllerConnectionImpl::StartCluster(
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::StartCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::
@@ -476,7 +472,7 @@ ClusterControllerConnectionImpl::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnectionImpl::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -491,8 +487,7 @@ ClusterControllerConnectionImpl::DeleteCluster(
 
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerConnectionImpl::DeleteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::
@@ -617,7 +612,7 @@ ClusterControllerConnectionImpl::DiagnoseCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerConnectionImpl::DiagnoseCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -633,8 +628,7 @@ ClusterControllerConnectionImpl::DiagnoseCluster(
 
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerConnectionImpl::DiagnoseCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::

@@ -102,14 +102,14 @@ class MockMigrationCenterConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateImportJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::migrationcenter::v1::CreateImportJobRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>,
               CreateImportJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -132,7 +132,7 @@ class MockMigrationCenterConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteImportJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::migrationcenter::v1::DeleteImportJobRequest const&
                    request),
               (override));
@@ -140,8 +140,7 @@ class MockMigrationCenterConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteImportJob,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>,
@@ -151,14 +150,14 @@ class MockMigrationCenterConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateImportJob,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::migrationcenter::v1::UpdateImportJobRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>,
               UpdateImportJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -171,7 +170,7 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ValidateImportJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
            request),
       (override));
@@ -179,8 +178,7 @@ class MockMigrationCenterConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       ValidateImportJob,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -191,15 +189,14 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunImportJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::RunImportJobRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       RunImportJob,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -224,7 +221,7 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateImportDataFile,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
            request),
       (override));
@@ -232,8 +229,7 @@ class MockMigrationCenterConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>,
       CreateImportDataFile,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -245,7 +241,7 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteImportDataFile,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
            request),
       (override));
@@ -253,8 +249,7 @@ class MockMigrationCenterConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteImportDataFile,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::migrationcenter::v1::Group>),
@@ -274,13 +269,13 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateGroup,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::CreateGroupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
               CreateGroup,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -291,13 +286,13 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateGroup,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::UpdateGroupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
               UpdateGroup,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -309,15 +304,14 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteGroup,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::DeleteGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteGroup,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -329,14 +323,14 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AddAssetsToGroup,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
               AddAssetsToGroup,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -349,14 +343,14 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RemoveAssetsFromGroup,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
               RemoveAssetsFromGroup,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -389,13 +383,13 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateSource,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::CreateSourceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Source>>,
               CreateSource,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -407,13 +401,13 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateSource,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::UpdateSourceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Source>>,
               UpdateSource,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -425,15 +419,14 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSource,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::DeleteSourceRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteSource,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -458,7 +451,7 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreatePreferenceSet,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
            request),
       (override));
@@ -466,8 +459,7 @@ class MockMigrationCenterConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>,
       CreatePreferenceSet,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -479,7 +471,7 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdatePreferenceSet,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
            request),
       (override));
@@ -487,8 +479,7 @@ class MockMigrationCenterConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>,
       UpdatePreferenceSet,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -500,7 +491,7 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePreferenceSet,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
            request),
       (override));
@@ -508,8 +499,7 @@ class MockMigrationCenterConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeletePreferenceSet,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -524,14 +514,14 @@ class MockMigrationCenterConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateSettings,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::migrationcenter::v1::UpdateSettingsRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Settings>>,
               UpdateSettings,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -544,7 +534,7 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateReportConfig,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
            request),
       (override));
@@ -552,8 +542,7 @@ class MockMigrationCenterConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>,
       CreateReportConfig,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::migrationcenter::v1::ReportConfig>,
@@ -577,7 +566,7 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteReportConfig,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
            request),
       (override));
@@ -585,8 +574,7 @@ class MockMigrationCenterConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteReportConfig,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -597,13 +585,13 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateReport,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::CreateReportRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Report>>,
               CreateReport,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -625,15 +613,14 @@ class MockMigrationCenterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteReport,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::migrationcenter::v1::DeleteReportRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteReport,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

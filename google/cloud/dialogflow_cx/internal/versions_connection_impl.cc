@@ -153,7 +153,7 @@ VersionsConnectionImpl::CreateVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnectionImpl::CreateVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -169,8 +169,7 @@ StatusOr<google::longrunning::Operation> VersionsConnectionImpl::CreateVersion(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
 VersionsConnectionImpl::CreateVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::
@@ -275,7 +274,7 @@ future<StatusOr<google::protobuf::Struct>> VersionsConnectionImpl::LoadVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnectionImpl::LoadVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -290,8 +289,7 @@ StatusOr<google::longrunning::Operation> VersionsConnectionImpl::LoadVersion(
 }
 
 future<StatusOr<google::protobuf::Struct>> VersionsConnectionImpl::LoadVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(

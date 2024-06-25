@@ -167,7 +167,7 @@ SecureSourceManagerConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -185,8 +185,7 @@ SecureSourceManagerConnectionImpl::CreateInstance(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
 SecureSourceManagerConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::securesourcemanager::v1::
@@ -265,7 +264,7 @@ SecureSourceManagerConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -283,8 +282,7 @@ SecureSourceManagerConnectionImpl::DeleteInstance(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::securesourcemanager::v1::
@@ -415,7 +413,7 @@ SecureSourceManagerConnectionImpl::CreateRepository(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerConnectionImpl::CreateRepository(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -433,8 +431,7 @@ SecureSourceManagerConnectionImpl::CreateRepository(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
 SecureSourceManagerConnectionImpl::CreateRepository(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::securesourcemanager::v1::
@@ -513,7 +510,7 @@ SecureSourceManagerConnectionImpl::DeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 SecureSourceManagerConnectionImpl::DeleteRepository(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -531,8 +528,7 @@ SecureSourceManagerConnectionImpl::DeleteRepository(
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerConnectionImpl::DeleteRepository(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::securesourcemanager::v1::

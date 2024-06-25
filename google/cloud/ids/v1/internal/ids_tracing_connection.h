@@ -48,22 +48,22 @@ class IDSTracingConnection : public ids_v1::IDSConnection {
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

@@ -155,7 +155,7 @@ DomainMappingsConnectionImpl::CreateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnectionImpl::CreateDomainMapping(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::CreateDomainMappingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -170,8 +170,7 @@ DomainMappingsConnectionImpl::CreateDomainMapping(
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnectionImpl::CreateDomainMapping(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {
@@ -246,7 +245,7 @@ DomainMappingsConnectionImpl::UpdateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnectionImpl::UpdateDomainMapping(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -261,8 +260,7 @@ DomainMappingsConnectionImpl::UpdateDomainMapping(
 
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnectionImpl::UpdateDomainMapping(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {
@@ -337,7 +335,7 @@ DomainMappingsConnectionImpl::DeleteDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnectionImpl::DeleteDomainMapping(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -352,8 +350,7 @@ DomainMappingsConnectionImpl::DeleteDomainMapping(
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsConnectionImpl::DeleteDomainMapping(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {

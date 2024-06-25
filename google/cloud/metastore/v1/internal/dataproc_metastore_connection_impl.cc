@@ -156,7 +156,7 @@ DataprocMetastoreConnectionImpl::CreateService(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::CreateService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::CreateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -172,8 +172,7 @@ DataprocMetastoreConnectionImpl::CreateService(
 
 future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreConnectionImpl::CreateService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -248,7 +247,7 @@ DataprocMetastoreConnectionImpl::UpdateService(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::UpdateService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::UpdateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -264,8 +263,7 @@ DataprocMetastoreConnectionImpl::UpdateService(
 
 future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreConnectionImpl::UpdateService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -340,7 +338,7 @@ DataprocMetastoreConnectionImpl::DeleteService(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::DeleteService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -356,8 +354,7 @@ DataprocMetastoreConnectionImpl::DeleteService(
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreConnectionImpl::DeleteService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -484,7 +481,7 @@ DataprocMetastoreConnectionImpl::CreateMetadataImport(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::CreateMetadataImport(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -500,8 +497,7 @@ DataprocMetastoreConnectionImpl::CreateMetadataImport(
 
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreConnectionImpl::CreateMetadataImport(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -578,7 +574,7 @@ DataprocMetastoreConnectionImpl::UpdateMetadataImport(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::UpdateMetadataImport(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -594,8 +590,7 @@ DataprocMetastoreConnectionImpl::UpdateMetadataImport(
 
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreConnectionImpl::UpdateMetadataImport(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -671,7 +666,7 @@ DataprocMetastoreConnectionImpl::ExportMetadata(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::ExportMetadata(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::ExportMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -687,8 +682,7 @@ DataprocMetastoreConnectionImpl::ExportMetadata(
 
 future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
 DataprocMetastoreConnectionImpl::ExportMetadata(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -764,7 +758,7 @@ DataprocMetastoreConnectionImpl::RestoreService(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::RestoreService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::RestoreServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -780,8 +774,7 @@ DataprocMetastoreConnectionImpl::RestoreService(
 
 future<StatusOr<google::cloud::metastore::v1::Restore>>
 DataprocMetastoreConnectionImpl::RestoreService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -904,7 +897,7 @@ DataprocMetastoreConnectionImpl::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -919,8 +912,7 @@ DataprocMetastoreConnectionImpl::CreateBackup(
 
 future<StatusOr<google::cloud::metastore::v1::Backup>>
 DataprocMetastoreConnectionImpl::CreateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -995,7 +987,7 @@ DataprocMetastoreConnectionImpl::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1010,8 +1002,7 @@ DataprocMetastoreConnectionImpl::DeleteBackup(
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreConnectionImpl::DeleteBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -1087,7 +1078,7 @@ DataprocMetastoreConnectionImpl::QueryMetadata(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::QueryMetadata(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::QueryMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1103,8 +1094,7 @@ DataprocMetastoreConnectionImpl::QueryMetadata(
 
 future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
 DataprocMetastoreConnectionImpl::QueryMetadata(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -1181,7 +1171,7 @@ DataprocMetastoreConnectionImpl::MoveTableToDatabase(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::MoveTableToDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1197,8 +1187,7 @@ DataprocMetastoreConnectionImpl::MoveTableToDatabase(
 
 future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
 DataprocMetastoreConnectionImpl::MoveTableToDatabase(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {
@@ -1276,7 +1265,7 @@ DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1294,8 +1283,7 @@ DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
 future<StatusOr<
     google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
 DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::metastore::v1::OperationMetadata>()) {

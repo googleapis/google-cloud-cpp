@@ -110,7 +110,7 @@ ConversationModelsConnectionImpl::CreateConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::CreateConversationModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -128,8 +128,7 @@ ConversationModelsConnectionImpl::CreateConversationModel(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
 ConversationModelsConnectionImpl::CreateConversationModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -261,7 +260,7 @@ ConversationModelsConnectionImpl::DeleteConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::DeleteConversationModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -280,8 +279,7 @@ ConversationModelsConnectionImpl::DeleteConversationModel(
 future<StatusOr<
     google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
 ConversationModelsConnectionImpl::DeleteConversationModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -364,7 +362,7 @@ ConversationModelsConnectionImpl::DeployConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::DeployConversationModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::DeployConversationModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -383,8 +381,7 @@ ConversationModelsConnectionImpl::DeployConversationModel(
 future<StatusOr<
     google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
 ConversationModelsConnectionImpl::DeployConversationModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -468,7 +465,7 @@ ConversationModelsConnectionImpl::UndeployConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::UndeployConversationModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -487,8 +484,7 @@ ConversationModelsConnectionImpl::UndeployConversationModel(
 future<StatusOr<
     google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
 ConversationModelsConnectionImpl::UndeployConversationModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -626,7 +622,7 @@ ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::dialogflow::v2::
         CreateConversationModelEvaluationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -644,8 +640,7 @@ ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
 ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::

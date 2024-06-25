@@ -52,12 +52,12 @@ class ServiceManagerTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::CreateServiceRequest const& request)
       override;
 
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(google::cloud::ExperimentalTag,
+  CreateService(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
@@ -65,12 +65,12 @@ class ServiceManagerTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::DeleteServiceRequest const& request)
       override;
 
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(google::cloud::ExperimentalTag,
+  DeleteService(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
@@ -79,12 +79,12 @@ class ServiceManagerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UndeleteService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
       override;
 
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(google::cloud::ExperimentalTag,
+  UndeleteService(ExperimentalTag,
                   google::longrunning::Operation const& operation) override;
 
   StreamRange<google::api::Service> ListServiceConfigs(
@@ -106,13 +106,13 @@ class ServiceManagerTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
           request) override;
 
   future<
       StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource(google::cloud::ExperimentalTag,
+  SubmitConfigSource(ExperimentalTag,
                      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::api::servicemanagement::v1::Rollout> ListServiceRollouts(
@@ -129,13 +129,13 @@ class ServiceManagerTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
           request) override;
 
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
   CreateServiceRollout(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>

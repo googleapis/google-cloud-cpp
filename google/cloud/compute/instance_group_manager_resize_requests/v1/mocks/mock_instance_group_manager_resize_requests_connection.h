@@ -58,14 +58,14 @@ class MockInstanceGroupManagerResizeRequestsConnection
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, Cancel,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
            CancelRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Cancel,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -79,14 +79,14 @@ class MockInstanceGroupManagerResizeRequestsConnection
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>,
       DeleteInstanceGroupManagerResizeRequest,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
            DeleteInstanceGroupManagerResizeRequestRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceGroupManagerResizeRequest,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
@@ -108,14 +108,14 @@ class MockInstanceGroupManagerResizeRequestsConnection
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>,
       InsertInstanceGroupManagerResizeRequest,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
            InsertInstanceGroupManagerResizeRequestRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceGroupManagerResizeRequest,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 

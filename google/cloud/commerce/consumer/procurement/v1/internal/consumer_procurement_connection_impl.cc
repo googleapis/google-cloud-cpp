@@ -123,7 +123,7 @@ ConsumerProcurementServiceConnectionImpl::PlaceOrder(
 
 StatusOr<google::longrunning::Operation>
 ConsumerProcurementServiceConnectionImpl::PlaceOrder(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -140,8 +140,7 @@ ConsumerProcurementServiceConnectionImpl::PlaceOrder(
 
 future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
 ConsumerProcurementServiceConnectionImpl::PlaceOrder(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::commerce::consumer::procurement::v1::

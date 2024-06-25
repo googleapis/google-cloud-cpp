@@ -80,15 +80,14 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunTestCase,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
       RunTestCase,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -101,7 +100,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchRunTestCases,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
            request),
       (override));
@@ -110,8 +109,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
       BatchRunTestCases,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -130,7 +128,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportTestCases,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
                    request),
               (override));
@@ -139,8 +137,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>,
       ImportTestCases,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -152,7 +149,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportTestCases,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
                    request),
               (override));
@@ -161,8 +158,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>,
       ExportTestCases,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

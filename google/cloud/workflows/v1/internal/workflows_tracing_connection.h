@@ -50,12 +50,12 @@ class WorkflowsTracingConnection : public workflows_v1::WorkflowsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateWorkflow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::CreateWorkflowRequest const& request)
       override;
 
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
@@ -63,12 +63,12 @@ class WorkflowsTracingConnection : public workflows_v1::WorkflowsConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request)
       override;
 
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(google::cloud::ExperimentalTag,
+  DeleteWorkflow(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
@@ -76,12 +76,12 @@ class WorkflowsTracingConnection : public workflows_v1::WorkflowsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
       override;
 
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

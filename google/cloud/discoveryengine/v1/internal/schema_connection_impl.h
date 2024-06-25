@@ -64,12 +64,12 @@ class SchemaServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateSchema(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
@@ -77,12 +77,12 @@ class SchemaServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSchema(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
@@ -90,12 +90,12 @@ class SchemaServiceConnectionImpl
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSchema(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(google::cloud::ExperimentalTag,
+  DeleteSchema(ExperimentalTag,
                google::longrunning::Operation const& operation) override;
 
  private:

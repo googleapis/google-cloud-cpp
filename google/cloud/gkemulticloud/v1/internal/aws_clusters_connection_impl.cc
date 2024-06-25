@@ -108,7 +108,7 @@ AwsClustersConnectionImpl::CreateAwsCluster(
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::CreateAwsCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -124,8 +124,7 @@ AwsClustersConnectionImpl::CreateAwsCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersConnectionImpl::CreateAwsCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -203,7 +202,7 @@ AwsClustersConnectionImpl::UpdateAwsCluster(
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::UpdateAwsCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -219,8 +218,7 @@ AwsClustersConnectionImpl::UpdateAwsCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersConnectionImpl::UpdateAwsCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -348,7 +346,7 @@ AwsClustersConnectionImpl::DeleteAwsCluster(
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::DeleteAwsCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -364,8 +362,7 @@ AwsClustersConnectionImpl::DeleteAwsCluster(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersConnectionImpl::DeleteAwsCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -476,7 +473,7 @@ AwsClustersConnectionImpl::CreateAwsNodePool(
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::CreateAwsNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -492,8 +489,7 @@ AwsClustersConnectionImpl::CreateAwsNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnectionImpl::CreateAwsNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -571,7 +567,7 @@ AwsClustersConnectionImpl::UpdateAwsNodePool(
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::UpdateAwsNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -587,8 +583,7 @@ AwsClustersConnectionImpl::UpdateAwsNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnectionImpl::UpdateAwsNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -666,7 +661,7 @@ AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -683,8 +678,7 @@ AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::
@@ -812,7 +806,7 @@ AwsClustersConnectionImpl::DeleteAwsNodePool(
 
 StatusOr<google::longrunning::Operation>
 AwsClustersConnectionImpl::DeleteAwsNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -828,8 +822,7 @@ AwsClustersConnectionImpl::DeleteAwsNodePool(
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersConnectionImpl::DeleteAwsNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkemulticloud::v1::

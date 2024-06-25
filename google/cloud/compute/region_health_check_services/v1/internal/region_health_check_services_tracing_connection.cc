@@ -51,29 +51,28 @@ RegionHealthCheckServicesTracingConnection::DeleteHealthCheckService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthCheckServicesTracingConnection::DeleteHealthCheckService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_health_check_services::v1::
         DeleteHealthCheckServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::DeleteHealthCheckService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteHealthCheckService(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteHealthCheckService(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesTracingConnection::DeleteHealthCheckService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::DeleteHealthCheckService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteHealthCheckService(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteHealthCheckService(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
@@ -101,29 +100,28 @@ RegionHealthCheckServicesTracingConnection::InsertHealthCheckService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthCheckServicesTracingConnection::InsertHealthCheckService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_health_check_services::v1::
         InsertHealthCheckServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::InsertHealthCheckService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertHealthCheckService(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->InsertHealthCheckService(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesTracingConnection::InsertHealthCheckService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::InsertHealthCheckService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertHealthCheckService(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InsertHealthCheckService(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HealthCheckService>
@@ -154,29 +152,28 @@ RegionHealthCheckServicesTracingConnection::PatchHealthCheckService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthCheckServicesTracingConnection::PatchHealthCheckService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_health_check_services::v1::
         PatchHealthCheckServiceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::PatchHealthCheckService");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->PatchHealthCheckService(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->PatchHealthCheckService(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthCheckServicesTracingConnection::PatchHealthCheckService(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_health_check_services_v1::"
       "RegionHealthCheckServicesConnection::PatchHealthCheckService");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchHealthCheckService(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PatchHealthCheckService(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

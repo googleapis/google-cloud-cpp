@@ -127,7 +127,7 @@ BatchServiceConnectionImpl::DeleteJob(
 }
 
 StatusOr<google::longrunning::Operation> BatchServiceConnectionImpl::DeleteJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::batch::v1::DeleteJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -142,8 +142,7 @@ StatusOr<google::longrunning::Operation> BatchServiceConnectionImpl::DeleteJob(
 
 future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
 BatchServiceConnectionImpl::DeleteJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::batch::v1::OperationMetadata>()) {

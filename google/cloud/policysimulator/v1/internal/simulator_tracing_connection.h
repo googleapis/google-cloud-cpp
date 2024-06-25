@@ -49,12 +49,12 @@ class SimulatorTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateReplay(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::policysimulator::v1::CreateReplayRequest const& request)
       override;
 
   future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::policysimulator::v1::ReplayResult>

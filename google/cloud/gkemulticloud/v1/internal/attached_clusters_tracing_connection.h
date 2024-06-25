@@ -46,13 +46,13 @@ class AttachedClustersTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateAttachedCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   CreateAttachedCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -61,13 +61,13 @@ class AttachedClustersTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   UpdateAttachedCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -76,13 +76,13 @@ class AttachedClustersTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> ImportAttachedCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   ImportAttachedCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -101,13 +101,13 @@ class AttachedClustersTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAttachedCluster(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

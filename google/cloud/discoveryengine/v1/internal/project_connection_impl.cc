@@ -110,7 +110,7 @@ ProjectServiceConnectionImpl::ProvisionProject(
 
 StatusOr<google::longrunning::Operation>
 ProjectServiceConnectionImpl::ProvisionProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -127,8 +127,7 @@ ProjectServiceConnectionImpl::ProvisionProject(
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
 ProjectServiceConnectionImpl::ProvisionProject(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::

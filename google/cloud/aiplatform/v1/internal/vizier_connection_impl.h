@@ -74,12 +74,12 @@ class VizierServiceConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> SuggestTrials(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-  SuggestTrials(google::cloud::ExperimentalTag,
+  SuggestTrials(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
@@ -110,14 +110,14 @@ class VizierServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
   CheckTrialEarlyStoppingState(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> StopTrial(

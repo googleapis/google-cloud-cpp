@@ -105,7 +105,7 @@ IndexServiceConnectionImpl::CreateIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexServiceConnectionImpl::CreateIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -120,8 +120,7 @@ IndexServiceConnectionImpl::CreateIndex(
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
 IndexServiceConnectionImpl::CreateIndex(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -245,7 +244,7 @@ IndexServiceConnectionImpl::UpdateIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexServiceConnectionImpl::UpdateIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -260,8 +259,7 @@ IndexServiceConnectionImpl::UpdateIndex(
 
 future<StatusOr<google::cloud::aiplatform::v1::Index>>
 IndexServiceConnectionImpl::UpdateIndex(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -337,7 +335,7 @@ IndexServiceConnectionImpl::DeleteIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexServiceConnectionImpl::DeleteIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -352,8 +350,7 @@ IndexServiceConnectionImpl::DeleteIndex(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 IndexServiceConnectionImpl::DeleteIndex(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

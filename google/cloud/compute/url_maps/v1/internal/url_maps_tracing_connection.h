@@ -50,12 +50,12 @@ class UrlMapsTracingConnection : public compute_url_maps_v1::UrlMapsConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
@@ -67,12 +67,12 @@ class UrlMapsTracingConnection : public compute_url_maps_v1::UrlMapsConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InvalidateCache(
@@ -80,12 +80,12 @@ class UrlMapsTracingConnection : public compute_url_maps_v1::UrlMapsConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InvalidateCache(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InvalidateCache(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListUrlMaps(
@@ -97,12 +97,12 @@ class UrlMapsTracingConnection : public compute_url_maps_v1::UrlMapsConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMap(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
@@ -110,12 +110,12 @@ class UrlMapsTracingConnection : public compute_url_maps_v1::UrlMapsConnection {
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse> Validate(

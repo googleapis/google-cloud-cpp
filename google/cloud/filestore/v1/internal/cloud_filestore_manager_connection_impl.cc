@@ -157,7 +157,7 @@ CloudFilestoreManagerConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -173,8 +173,7 @@ CloudFilestoreManagerConnectionImpl::CreateInstance(
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -249,7 +248,7 @@ CloudFilestoreManagerConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -265,8 +264,7 @@ CloudFilestoreManagerConnectionImpl::UpdateInstance(
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -341,7 +339,7 @@ CloudFilestoreManagerConnectionImpl::RestoreInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::RestoreInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -357,8 +355,7 @@ CloudFilestoreManagerConnectionImpl::RestoreInstance(
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnectionImpl::RestoreInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -433,7 +430,7 @@ CloudFilestoreManagerConnectionImpl::RevertInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::RevertInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::RevertInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -449,8 +446,7 @@ CloudFilestoreManagerConnectionImpl::RevertInstance(
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnectionImpl::RevertInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -525,7 +521,7 @@ CloudFilestoreManagerConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -541,8 +537,7 @@ CloudFilestoreManagerConnectionImpl::DeleteInstance(
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -666,7 +661,7 @@ CloudFilestoreManagerConnectionImpl::CreateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::CreateSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -682,8 +677,7 @@ CloudFilestoreManagerConnectionImpl::CreateSnapshot(
 
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
 CloudFilestoreManagerConnectionImpl::CreateSnapshot(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -758,7 +752,7 @@ CloudFilestoreManagerConnectionImpl::DeleteSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::DeleteSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -774,8 +768,7 @@ CloudFilestoreManagerConnectionImpl::DeleteSnapshot(
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnectionImpl::DeleteSnapshot(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -851,7 +844,7 @@ CloudFilestoreManagerConnectionImpl::UpdateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::UpdateSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -867,8 +860,7 @@ CloudFilestoreManagerConnectionImpl::UpdateSnapshot(
 
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
 CloudFilestoreManagerConnectionImpl::UpdateSnapshot(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -991,7 +983,7 @@ CloudFilestoreManagerConnectionImpl::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1006,8 +998,7 @@ CloudFilestoreManagerConnectionImpl::CreateBackup(
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerConnectionImpl::CreateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -1082,7 +1073,7 @@ CloudFilestoreManagerConnectionImpl::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1097,8 +1088,7 @@ CloudFilestoreManagerConnectionImpl::DeleteBackup(
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnectionImpl::DeleteBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {
@@ -1174,7 +1164,7 @@ CloudFilestoreManagerConnectionImpl::UpdateBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnectionImpl::UpdateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::filestore::v1::UpdateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1189,8 +1179,7 @@ CloudFilestoreManagerConnectionImpl::UpdateBackup(
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerConnectionImpl::UpdateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::common::OperationMetadata>()) {

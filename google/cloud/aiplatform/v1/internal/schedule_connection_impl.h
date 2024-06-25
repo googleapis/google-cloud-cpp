@@ -61,12 +61,12 @@ class ScheduleServiceConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSchedule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSchedule(google::cloud::ExperimentalTag,
+  DeleteSchedule(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(

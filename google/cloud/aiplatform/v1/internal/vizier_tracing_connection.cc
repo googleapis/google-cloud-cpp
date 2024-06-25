@@ -90,26 +90,23 @@ VizierServiceTracingConnection::SuggestTrials(
 
 StatusOr<google::longrunning::Operation>
 VizierServiceTracingConnection::SuggestTrials(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::SuggestTrials");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->SuggestTrials(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->SuggestTrials(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
 VizierServiceTracingConnection::SuggestTrials(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::SuggestTrials");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->SuggestTrials(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->SuggestTrials(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
@@ -181,28 +178,27 @@ VizierServiceTracingConnection::CheckTrialEarlyStoppingState(
 
 StatusOr<google::longrunning::Operation>
 VizierServiceTracingConnection::CheckTrialEarlyStoppingState(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::CheckTrialEarlyStoppingState");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CheckTrialEarlyStoppingState(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CheckTrialEarlyStoppingState(ExperimentalTag{},
+                                                  NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
 VizierServiceTracingConnection::CheckTrialEarlyStoppingState(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::VizierServiceConnection::CheckTrialEarlyStoppingState");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CheckTrialEarlyStoppingState(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(
+      std::move(span),
+      child_->CheckTrialEarlyStoppingState(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>

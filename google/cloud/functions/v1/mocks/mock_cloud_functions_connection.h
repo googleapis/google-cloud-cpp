@@ -65,13 +65,13 @@ class MockCloudFunctionsServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateFunction,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::functions::v1::CreateFunctionRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::functions::v1::CloudFunction>>,
               CreateFunction,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -83,13 +83,13 @@ class MockCloudFunctionsServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateFunction,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::functions::v1::UpdateFunctionRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::functions::v1::CloudFunction>>,
               UpdateFunction,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -101,15 +101,14 @@ class MockCloudFunctionsServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteFunction,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::functions::v1::DeleteFunctionRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>,
       DeleteFunction,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

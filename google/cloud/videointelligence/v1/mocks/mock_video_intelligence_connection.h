@@ -55,7 +55,7 @@ class MockVideoIntelligenceServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, AnnotateVideo,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::videointelligence::v1::AnnotateVideoRequest const&
                    request),
               (override));
@@ -63,7 +63,7 @@ class MockVideoIntelligenceServiceConnection
   MOCK_METHOD(future<StatusOr<
                   google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
               AnnotateVideo,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

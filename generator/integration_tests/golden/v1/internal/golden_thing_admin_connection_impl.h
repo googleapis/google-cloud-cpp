@@ -59,11 +59,11 @@ class GoldenThingAdminConnectionImpl
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  CreateDatabase(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  CreateDatabase(ExperimentalTag, NoAwaitlTag,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>
-  CreateDatabase(google::cloud::ExperimentalTag,
+  CreateDatabase(ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::test::admin::database::v1::Database>
@@ -73,11 +73,11 @@ class GoldenThingAdminConnectionImpl
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  UpdateDatabaseDdl(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  UpdateDatabaseDdl(ExperimentalTag, NoAwaitlTag,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(google::cloud::ExperimentalTag,
+  UpdateDatabaseDdl(ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   Status
@@ -99,11 +99,11 @@ class GoldenThingAdminConnectionImpl
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  CreateBackup(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  CreateBackup(ExperimentalTag, NoAwaitlTag,
       google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Backup>>
-  CreateBackup(google::cloud::ExperimentalTag,
+  CreateBackup(ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::test::admin::database::v1::Backup>
@@ -122,11 +122,11 @@ class GoldenThingAdminConnectionImpl
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  RestoreDatabase(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  RestoreDatabase(ExperimentalTag, NoAwaitlTag,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>
-  RestoreDatabase(google::cloud::ExperimentalTag,
+  RestoreDatabase(ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::longrunning::Operation>
@@ -139,11 +139,11 @@ class GoldenThingAdminConnectionImpl
   LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  LongRunningWithoutRouting(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  LongRunningWithoutRouting(ExperimentalTag, NoAwaitlTag,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>
-  LongRunningWithoutRouting(google::cloud::ExperimentalTag,
+  LongRunningWithoutRouting(ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>

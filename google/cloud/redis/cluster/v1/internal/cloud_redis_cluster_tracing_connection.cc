@@ -65,26 +65,23 @@ CloudRedisClusterTracingConnection::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterTracingConnection::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "redis_cluster_v1::CloudRedisClusterConnection::UpdateCluster");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterTracingConnection::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "redis_cluster_v1::CloudRedisClusterConnection::UpdateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateCluster(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCluster(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::protobuf::Any>>
@@ -98,26 +95,23 @@ CloudRedisClusterTracingConnection::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterTracingConnection::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "redis_cluster_v1::CloudRedisClusterConnection::DeleteCluster");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::protobuf::Any>>
 CloudRedisClusterTracingConnection::DeleteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "redis_cluster_v1::CloudRedisClusterConnection::DeleteCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteCluster(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCluster(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
@@ -131,26 +125,23 @@ CloudRedisClusterTracingConnection::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterTracingConnection::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "redis_cluster_v1::CloudRedisClusterConnection::CreateCluster");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateCluster(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterTracingConnection::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "redis_cluster_v1::CloudRedisClusterConnection::CreateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateCluster(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCluster(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>

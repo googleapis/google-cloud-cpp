@@ -55,13 +55,13 @@ class WorkflowTemplateServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateWorkflowTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
@@ -70,13 +70,13 @@ class WorkflowTemplateServiceTracingConnection
           InstantiateInlineWorkflowTemplateRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateInlineWorkflowTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

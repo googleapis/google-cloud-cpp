@@ -62,12 +62,12 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateTrigger(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::eventarc::v1::CreateTriggerRequest const& request)
       override;
 
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
@@ -75,12 +75,12 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTrigger(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::eventarc::v1::UpdateTriggerRequest const& request)
       override;
 
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
@@ -88,12 +88,12 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTrigger(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request)
       override;
 
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
@@ -107,12 +107,12 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateChannel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::eventarc::v1::CreateChannelRequest const& request)
       override;
 
   future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
@@ -120,12 +120,12 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateChannel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::eventarc::v1::UpdateChannelRequest const& request)
       override;
 
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
@@ -133,12 +133,12 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteChannel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::eventarc::v1::DeleteChannelRequest const& request)
       override;
 
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
@@ -162,13 +162,13 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateChannelConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   CreateChannelConnection(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -177,13 +177,13 @@ class EventarcConnectionImpl : public eventarc_v1::EventarcConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteChannelConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   DeleteChannelConnection(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>

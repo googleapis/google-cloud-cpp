@@ -182,30 +182,28 @@ AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::bigquery::analyticshub::v1::
         SubscribeDataExchangeRequest const& request) {
   auto span = internal::MakeSpan(
       "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
       "SubscribeDataExchange");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->SubscribeDataExchange(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->SubscribeDataExchange(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
 AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
       "SubscribeDataExchange");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SubscribeDataExchange(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SubscribeDataExchange(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -223,7 +221,7 @@ AnalyticsHubServiceTracingConnection::RefreshSubscription(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceTracingConnection::RefreshSubscription(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -231,22 +229,20 @@ AnalyticsHubServiceTracingConnection::RefreshSubscription(
       "RefreshSubscription");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RefreshSubscription(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->RefreshSubscription(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
 AnalyticsHubServiceTracingConnection::RefreshSubscription(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
       "RefreshSubscription");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->RefreshSubscription(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RefreshSubscription(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -313,7 +309,7 @@ AnalyticsHubServiceTracingConnection::DeleteSubscription(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsHubServiceTracingConnection::DeleteSubscription(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -321,21 +317,19 @@ AnalyticsHubServiceTracingConnection::DeleteSubscription(
       "DeleteSubscription");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteSubscription(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteSubscription(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
 AnalyticsHubServiceTracingConnection::DeleteSubscription(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
       "DeleteSubscription");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteSubscription(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSubscription(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::iam::v1::Policy>

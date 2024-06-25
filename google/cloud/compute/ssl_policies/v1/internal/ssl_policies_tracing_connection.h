@@ -51,12 +51,12 @@ class SslPoliciesTracingConnection
           DeleteSslPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::ssl_policies::v1::
           DeleteSslPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
@@ -68,12 +68,12 @@ class SslPoliciesTracingConnection
           InsertSslPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::ssl_policies::v1::
           InsertSslPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
@@ -91,12 +91,12 @@ class SslPoliciesTracingConnection
           PatchSslPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::ssl_policies::v1::
           PatchSslPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

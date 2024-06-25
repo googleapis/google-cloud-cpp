@@ -58,15 +58,14 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchCreateJobs,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::talent::v4::BatchCreateJobsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>,
       BatchCreateJobs,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, GetJob,
@@ -85,15 +84,14 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchUpdateJobs,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::talent::v4::BatchUpdateJobsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>,
       BatchUpdateJobs,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(Status, DeleteJob,
@@ -108,15 +106,14 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchDeleteJobs,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::talent::v4::BatchDeleteJobsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>,
       BatchDeleteJobs,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::talent::v4::Job>), ListJobs,

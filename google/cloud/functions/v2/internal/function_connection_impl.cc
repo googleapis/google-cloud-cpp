@@ -155,7 +155,7 @@ FunctionServiceConnectionImpl::CreateFunction(
 
 StatusOr<google::longrunning::Operation>
 FunctionServiceConnectionImpl::CreateFunction(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::functions::v2::CreateFunctionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -171,8 +171,7 @@ FunctionServiceConnectionImpl::CreateFunction(
 
 future<StatusOr<google::cloud::functions::v2::Function>>
 FunctionServiceConnectionImpl::CreateFunction(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::functions::v2::OperationMetadata>()) {
@@ -247,7 +246,7 @@ FunctionServiceConnectionImpl::UpdateFunction(
 
 StatusOr<google::longrunning::Operation>
 FunctionServiceConnectionImpl::UpdateFunction(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::functions::v2::UpdateFunctionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -263,8 +262,7 @@ FunctionServiceConnectionImpl::UpdateFunction(
 
 future<StatusOr<google::cloud::functions::v2::Function>>
 FunctionServiceConnectionImpl::UpdateFunction(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::functions::v2::OperationMetadata>()) {
@@ -339,7 +337,7 @@ FunctionServiceConnectionImpl::DeleteFunction(
 
 StatusOr<google::longrunning::Operation>
 FunctionServiceConnectionImpl::DeleteFunction(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::functions::v2::DeleteFunctionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -355,8 +353,7 @@ FunctionServiceConnectionImpl::DeleteFunction(
 
 future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
 FunctionServiceConnectionImpl::DeleteFunction(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::functions::v2::OperationMetadata>()) {

@@ -49,12 +49,12 @@ class RegionSecurityPoliciesTracingConnection
           AddRuleRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           AddRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -63,13 +63,13 @@ class RegionSecurityPoliciesTracingConnection
           DeleteSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           DeleteSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSecurityPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy> GetSecurityPolicy(
@@ -86,13 +86,13 @@ class RegionSecurityPoliciesTracingConnection
           InsertSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           InsertSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSecurityPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -106,13 +106,13 @@ class RegionSecurityPoliciesTracingConnection
           PatchSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           PatchSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSecurityPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
@@ -120,12 +120,12 @@ class RegionSecurityPoliciesTracingConnection
           PatchRuleRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           PatchRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
@@ -133,12 +133,12 @@ class RegionSecurityPoliciesTracingConnection
           RemoveRuleRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           RemoveRuleRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

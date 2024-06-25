@@ -72,11 +72,11 @@ class ProductServiceConnectionImpl
       google::cloud::retail::v2::PurgeProductsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::retail::v2::PurgeProductsRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-  PurgeProducts(google::cloud::ExperimentalTag,
+  PurgeProducts(ExperimentalTag,
                 google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
@@ -84,11 +84,11 @@ class ProductServiceConnectionImpl
       google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportProducts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts(google::cloud::ExperimentalTag,
+  ImportProducts(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
@@ -96,11 +96,11 @@ class ProductServiceConnectionImpl
       google::cloud::retail::v2::SetInventoryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SetInventory(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::retail::v2::SetInventoryRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory(google::cloud::ExperimentalTag,
+  SetInventory(ExperimentalTag,
                google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
@@ -109,13 +109,13 @@ class ProductServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
@@ -124,13 +124,13 @@ class ProductServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
@@ -139,12 +139,12 @@ class ProductServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> AddLocalInventories(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::retail::v2::AddLocalInventoriesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories(google::cloud::ExperimentalTag,
+  AddLocalInventories(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
@@ -153,13 +153,13 @@ class ProductServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RemoveLocalInventories(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
   RemoveLocalInventories(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

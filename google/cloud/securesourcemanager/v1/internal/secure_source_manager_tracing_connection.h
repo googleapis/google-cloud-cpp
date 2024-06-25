@@ -55,12 +55,12 @@ class SecureSourceManagerTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-  CreateInstance(google::cloud::ExperimentalTag,
+  CreateInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -69,12 +69,12 @@ class SecureSourceManagerTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::ExperimentalTag,
+  DeleteInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::securesourcemanager::v1::Repository>
@@ -92,12 +92,12 @@ class SecureSourceManagerTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateRepository(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
           request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-  CreateRepository(google::cloud::ExperimentalTag,
+  CreateRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -106,12 +106,12 @@ class SecureSourceManagerTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
           request) override;
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteRepository(google::cloud::ExperimentalTag,
+  DeleteRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(

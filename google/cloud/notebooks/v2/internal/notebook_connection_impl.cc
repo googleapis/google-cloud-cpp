@@ -155,7 +155,7 @@ NotebookServiceConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::notebooks::v2::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -171,8 +171,7 @@ NotebookServiceConnectionImpl::CreateInstance(
 
 future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::notebooks::v2::OperationMetadata>()) {
@@ -247,7 +246,7 @@ NotebookServiceConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::notebooks::v2::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -263,8 +262,7 @@ NotebookServiceConnectionImpl::UpdateInstance(
 
 future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::notebooks::v2::OperationMetadata>()) {
@@ -339,7 +337,7 @@ NotebookServiceConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::notebooks::v2::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -355,8 +353,7 @@ NotebookServiceConnectionImpl::DeleteInstance(
 
 future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
 NotebookServiceConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::notebooks::v2::OperationMetadata>()) {
@@ -432,7 +429,7 @@ NotebookServiceConnectionImpl::StartInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnectionImpl::StartInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::notebooks::v2::StartInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -448,8 +445,7 @@ NotebookServiceConnectionImpl::StartInstance(
 
 future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::StartInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::notebooks::v2::OperationMetadata>()) {
@@ -524,7 +520,7 @@ NotebookServiceConnectionImpl::StopInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnectionImpl::StopInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::notebooks::v2::StopInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -539,8 +535,7 @@ NotebookServiceConnectionImpl::StopInstance(
 
 future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::StopInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::notebooks::v2::OperationMetadata>()) {
@@ -615,7 +610,7 @@ NotebookServiceConnectionImpl::ResetInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnectionImpl::ResetInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::notebooks::v2::ResetInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -631,8 +626,7 @@ NotebookServiceConnectionImpl::ResetInstance(
 
 future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::ResetInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::notebooks::v2::OperationMetadata>()) {
@@ -724,7 +718,7 @@ NotebookServiceConnectionImpl::UpgradeInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnectionImpl::UpgradeInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -740,8 +734,7 @@ NotebookServiceConnectionImpl::UpgradeInstance(
 
 future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::UpgradeInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::notebooks::v2::OperationMetadata>()) {
@@ -817,7 +810,7 @@ NotebookServiceConnectionImpl::RollbackInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnectionImpl::RollbackInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::notebooks::v2::RollbackInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -833,8 +826,7 @@ NotebookServiceConnectionImpl::RollbackInstance(
 
 future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::RollbackInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::notebooks::v2::OperationMetadata>()) {
@@ -910,7 +902,7 @@ NotebookServiceConnectionImpl::DiagnoseInstance(
 
 StatusOr<google::longrunning::Operation>
 NotebookServiceConnectionImpl::DiagnoseInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -926,8 +918,7 @@ NotebookServiceConnectionImpl::DiagnoseInstance(
 
 future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::DiagnoseInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::notebooks::v2::OperationMetadata>()) {

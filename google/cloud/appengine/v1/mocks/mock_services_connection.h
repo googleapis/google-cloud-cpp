@@ -58,12 +58,12 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateService,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::appengine::v1::UpdateServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Service>>, UpdateService,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -73,13 +73,13 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteService,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::appengine::v1::DeleteServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
               DeleteService,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

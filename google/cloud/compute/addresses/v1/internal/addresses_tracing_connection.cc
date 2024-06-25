@@ -59,27 +59,25 @@ AddressesTracingConnection::DeleteAddress(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesTracingConnection::DeleteAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::DeleteAddress");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteAddress(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteAddress(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesTracingConnection::DeleteAddress(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::DeleteAddress");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteAddress(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAddress(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
@@ -104,27 +102,25 @@ AddressesTracingConnection::InsertAddress(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesTracingConnection::InsertAddress(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::InsertAddress");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->InsertAddress(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->InsertAddress(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesTracingConnection::InsertAddress(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::InsertAddress");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->InsertAddress(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertAddress(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>
@@ -149,26 +145,24 @@ AddressesTracingConnection::Move(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesTracingConnection::Move(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::addresses::v1::MoveRequest const& request) {
   auto span =
       internal::MakeSpan("compute_addresses_v1::AddressesConnection::Move");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span,
-                           child_->Move(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->Move(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesTracingConnection::Move(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_addresses_v1::AddressesConnection::Move");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->Move(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->Move(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -183,27 +177,25 @@ AddressesTracingConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 AddressesTracingConnection::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::SetLabels");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->SetLabels(google::cloud::ExperimentalTag{},
-                               google::cloud::NoAwaitTag{}, request));
+      *span, child_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 AddressesTracingConnection::SetLabels(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_addresses_v1::AddressesConnection::SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->SetLabels(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->SetLabels(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

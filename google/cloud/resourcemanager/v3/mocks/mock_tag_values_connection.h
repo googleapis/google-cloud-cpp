@@ -71,14 +71,14 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateTagValue,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::resourcemanager::v3::CreateTagValueRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
               CreateTagValue,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -89,14 +89,14 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateTagValue,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
               UpdateTagValue,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -107,14 +107,14 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteTagValue,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::resourcemanager::v3::DeleteTagValueRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
               DeleteTagValue,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

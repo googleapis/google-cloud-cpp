@@ -110,7 +110,7 @@ DataStoreServiceConnectionImpl::CreateDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceConnectionImpl::CreateDataStore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -126,8 +126,7 @@ DataStoreServiceConnectionImpl::CreateDataStore(
 
 future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
 DataStoreServiceConnectionImpl::CreateDataStore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::
@@ -255,7 +254,7 @@ DataStoreServiceConnectionImpl::DeleteDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceConnectionImpl::DeleteDataStore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -271,8 +270,7 @@ DataStoreServiceConnectionImpl::DeleteDataStore(
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
 DataStoreServiceConnectionImpl::DeleteDataStore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::discoveryengine::v1::

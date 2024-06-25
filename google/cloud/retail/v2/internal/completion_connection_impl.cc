@@ -121,7 +121,7 @@ CompletionServiceConnectionImpl::ImportCompletionData(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::ImportCompletionData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -137,8 +137,7 @@ CompletionServiceConnectionImpl::ImportCompletionData(
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceConnectionImpl::ImportCompletionData(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::ImportMetadata>()) {

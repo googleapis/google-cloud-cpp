@@ -53,11 +53,11 @@ class AutokeyConnectionImpl : public kms_v1::AutokeyConnection {
       google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateKeyHandle(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::kms::v1::CreateKeyHandleRequest const& request) override;
 
   future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(

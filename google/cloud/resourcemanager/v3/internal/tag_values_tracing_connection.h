@@ -57,12 +57,12 @@ class TagValuesTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateTagValue(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> CreateTagValue(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
@@ -70,12 +70,12 @@ class TagValuesTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTagValue(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
@@ -83,12 +83,12 @@ class TagValuesTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTagValue(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

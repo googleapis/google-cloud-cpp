@@ -65,13 +65,13 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateMigrationJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::CreateMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               CreateMigrationJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -83,13 +83,13 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateMigrationJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               UpdateMigrationJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -101,13 +101,13 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteMigrationJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
               DeleteMigrationJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -119,13 +119,13 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StartMigrationJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::StartMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               StartMigrationJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -137,13 +137,13 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StopMigrationJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::StopMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               StopMigrationJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -155,13 +155,13 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ResumeMigrationJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               ResumeMigrationJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -173,13 +173,13 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PromoteMigrationJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               PromoteMigrationJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -191,13 +191,13 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, VerifyMigrationJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               VerifyMigrationJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -209,13 +209,13 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestartMigrationJob,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::RestartMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
               RestartMigrationJob,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -251,14 +251,14 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateConnectionProfile,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
               CreateConnectionProfile,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -271,14 +271,14 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateConnectionProfile,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
               UpdateConnectionProfile,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -291,14 +291,14 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteConnectionProfile,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
               DeleteConnectionProfile,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -311,14 +311,14 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreatePrivateConnection,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>,
               CreatePrivateConnection,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -343,14 +343,14 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePrivateConnection,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
               DeletePrivateConnection,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -375,7 +375,7 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateConversionWorkspace,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
            request),
       (override));
@@ -383,8 +383,7 @@ class MockDataMigrationServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       CreateConversionWorkspace,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -396,7 +395,7 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateConversionWorkspace,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
            request),
       (override));
@@ -404,8 +403,7 @@ class MockDataMigrationServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       UpdateConversionWorkspace,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -417,14 +415,14 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteConversionWorkspace,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
               DeleteConversionWorkspace,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -457,7 +455,7 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SeedConversionWorkspace,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
            request),
       (override));
@@ -465,8 +463,7 @@ class MockDataMigrationServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       SeedConversionWorkspace,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -477,15 +474,14 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportMappingRules,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::ImportMappingRulesRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ImportMappingRules,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -497,7 +493,7 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ConvertConversionWorkspace,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
            request),
       (override));
@@ -505,8 +501,7 @@ class MockDataMigrationServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ConvertConversionWorkspace,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -518,7 +513,7 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CommitConversionWorkspace,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
            request),
       (override));
@@ -526,8 +521,7 @@ class MockDataMigrationServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       CommitConversionWorkspace,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -539,7 +533,7 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RollbackConversionWorkspace,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
            request),
       (override));
@@ -547,8 +541,7 @@ class MockDataMigrationServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       RollbackConversionWorkspace,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -560,7 +553,7 @@ class MockDataMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ApplyConversionWorkspace,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
            request),
       (override));
@@ -568,8 +561,7 @@ class MockDataMigrationServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ApplyConversionWorkspace,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

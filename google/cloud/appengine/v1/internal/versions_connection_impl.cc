@@ -147,7 +147,7 @@ VersionsConnectionImpl::CreateVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnectionImpl::CreateVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::CreateVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -162,8 +162,7 @@ StatusOr<google::longrunning::Operation> VersionsConnectionImpl::CreateVersion(
 
 future<StatusOr<google::appengine::v1::Version>>
 VersionsConnectionImpl::CreateVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::CreateVersionMetadataV1>()) {
@@ -237,7 +236,7 @@ VersionsConnectionImpl::UpdateVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnectionImpl::UpdateVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::UpdateVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -252,8 +251,7 @@ StatusOr<google::longrunning::Operation> VersionsConnectionImpl::UpdateVersion(
 
 future<StatusOr<google::appengine::v1::Version>>
 VersionsConnectionImpl::UpdateVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {
@@ -327,7 +325,7 @@ VersionsConnectionImpl::DeleteVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnectionImpl::DeleteVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::appengine::v1::DeleteVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -342,8 +340,7 @@ StatusOr<google::longrunning::Operation> VersionsConnectionImpl::DeleteVersion(
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 VersionsConnectionImpl::DeleteVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::appengine::v1::OperationMetadataV1>()) {

@@ -68,13 +68,13 @@ class DepServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateLbTrafficExtension(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
   CreateLbTrafficExtension(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -83,13 +83,13 @@ class DepServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateLbTrafficExtension(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
   UpdateLbTrafficExtension(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -98,13 +98,13 @@ class DepServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteLbTrafficExtension(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbTrafficExtension(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
@@ -123,13 +123,13 @@ class DepServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateLbRouteExtension(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
   CreateLbRouteExtension(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -138,13 +138,13 @@ class DepServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateLbRouteExtension(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
   UpdateLbRouteExtension(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -153,13 +153,13 @@ class DepServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbRouteExtension(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

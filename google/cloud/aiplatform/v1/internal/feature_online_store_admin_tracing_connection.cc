@@ -49,29 +49,27 @@ FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "CreateFeatureOnlineStore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateFeatureOnlineStore(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateFeatureOnlineStore(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureOnlineStore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "CreateFeatureOnlineStore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateFeatureOnlineStore(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateFeatureOnlineStore(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
@@ -112,29 +110,27 @@ FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "UpdateFeatureOnlineStore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateFeatureOnlineStore(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UpdateFeatureOnlineStore(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureOnlineStore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "UpdateFeatureOnlineStore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateFeatureOnlineStore(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateFeatureOnlineStore(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -151,29 +147,27 @@ FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "DeleteFeatureOnlineStore");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteFeatureOnlineStore(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteFeatureOnlineStore(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureOnlineStore(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "DeleteFeatureOnlineStore");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteFeatureOnlineStore(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteFeatureOnlineStore(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
@@ -188,28 +182,26 @@ FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "CreateFeatureView");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateFeatureView(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->CreateFeatureView(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceTracingConnection::CreateFeatureView(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "CreateFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateFeatureView(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateFeatureView(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
@@ -247,28 +239,26 @@ FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "UpdateFeatureView");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateFeatureView(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->UpdateFeatureView(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceTracingConnection::UpdateFeatureView(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "UpdateFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateFeatureView(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateFeatureView(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -283,28 +273,26 @@ FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
 
 StatusOr<google::longrunning::Operation>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "DeleteFeatureView");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteFeatureView(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteFeatureView(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceTracingConnection::DeleteFeatureView(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::FeatureOnlineStoreAdminServiceConnection::"
       "DeleteFeatureView");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteFeatureView(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteFeatureView(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>

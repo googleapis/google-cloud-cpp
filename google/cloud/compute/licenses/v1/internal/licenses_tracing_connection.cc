@@ -45,27 +45,25 @@ LicensesTracingConnection::DeleteLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesTracingConnection::DeleteLicense(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::DeleteLicense");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteLicense(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteLicense(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesTracingConnection::DeleteLicense(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::DeleteLicense");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteLicense(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteLicense(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License>
@@ -100,27 +98,25 @@ LicensesTracingConnection::InsertLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesTracingConnection::InsertLicense(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::InsertLicense");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->InsertLicense(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->InsertLicense(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesTracingConnection::InsertLicense(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_licenses_v1::LicensesConnection::InsertLicense");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->InsertLicense(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertLicense(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::License>

@@ -231,7 +231,7 @@ EdgeNetworkConnectionImpl::CreateNetwork(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::CreateNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -247,8 +247,7 @@ EdgeNetworkConnectionImpl::CreateNetwork(
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
 EdgeNetworkConnectionImpl::CreateNetwork(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {
@@ -323,7 +322,7 @@ EdgeNetworkConnectionImpl::DeleteNetwork(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::DeleteNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -339,8 +338,7 @@ EdgeNetworkConnectionImpl::DeleteNetwork(
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkConnectionImpl::DeleteNetwork(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {
@@ -464,7 +462,7 @@ EdgeNetworkConnectionImpl::CreateSubnet(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::CreateSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -480,8 +478,7 @@ EdgeNetworkConnectionImpl::CreateSubnet(
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
 EdgeNetworkConnectionImpl::CreateSubnet(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {
@@ -556,7 +553,7 @@ EdgeNetworkConnectionImpl::UpdateSubnet(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::UpdateSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -572,8 +569,7 @@ EdgeNetworkConnectionImpl::UpdateSubnet(
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
 EdgeNetworkConnectionImpl::UpdateSubnet(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {
@@ -648,7 +644,7 @@ EdgeNetworkConnectionImpl::DeleteSubnet(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::DeleteSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -664,8 +660,7 @@ EdgeNetworkConnectionImpl::DeleteSubnet(
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkConnectionImpl::DeleteSubnet(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {
@@ -863,7 +858,7 @@ EdgeNetworkConnectionImpl::CreateInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::CreateInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -880,8 +875,7 @@ EdgeNetworkConnectionImpl::CreateInterconnectAttachment(
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
 EdgeNetworkConnectionImpl::CreateInterconnectAttachment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {
@@ -958,7 +952,7 @@ EdgeNetworkConnectionImpl::DeleteInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::DeleteInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -975,8 +969,7 @@ EdgeNetworkConnectionImpl::DeleteInterconnectAttachment(
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkConnectionImpl::DeleteInterconnectAttachment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {
@@ -1115,7 +1108,7 @@ EdgeNetworkConnectionImpl::CreateRouter(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::CreateRouter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1131,8 +1124,7 @@ EdgeNetworkConnectionImpl::CreateRouter(
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
 EdgeNetworkConnectionImpl::CreateRouter(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {
@@ -1207,7 +1199,7 @@ EdgeNetworkConnectionImpl::UpdateRouter(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::UpdateRouter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1223,8 +1215,7 @@ EdgeNetworkConnectionImpl::UpdateRouter(
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
 EdgeNetworkConnectionImpl::UpdateRouter(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {
@@ -1299,7 +1290,7 @@ EdgeNetworkConnectionImpl::DeleteRouter(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkConnectionImpl::DeleteRouter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1315,8 +1306,7 @@ EdgeNetworkConnectionImpl::DeleteRouter(
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkConnectionImpl::DeleteRouter(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::edgenetwork::v1::OperationMetadata>()) {

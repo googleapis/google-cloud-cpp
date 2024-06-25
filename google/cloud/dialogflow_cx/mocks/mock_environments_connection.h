@@ -67,14 +67,14 @@ class MockEnvironmentsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEnvironment,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
               CreateEnvironment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -87,14 +87,14 @@ class MockEnvironmentsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateEnvironment,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
               UpdateEnvironment,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -121,7 +121,7 @@ class MockEnvironmentsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunContinuousTest,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
            request),
       (override));
@@ -130,8 +130,7 @@ class MockEnvironmentsConnection
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
       RunContinuousTest,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -149,15 +148,14 @@ class MockEnvironmentsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeployFlow,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
       DeployFlow,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

@@ -50,29 +50,28 @@ RegionSslCertificatesTracingConnection::DeleteSslCertificate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslCertificatesTracingConnection::DeleteSslCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         DeleteSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
       "DeleteSslCertificate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteSslCertificate(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->DeleteSslCertificate(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesTracingConnection::DeleteSslCertificate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
       "DeleteSslCertificate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteSslCertificate(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSslCertificate(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
@@ -100,29 +99,28 @@ RegionSslCertificatesTracingConnection::InsertSslCertificate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslCertificatesTracingConnection::InsertSslCertificate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_ssl_certificates::v1::
         InsertSslCertificateRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
       "InsertSslCertificate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->InsertSslCertificate(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->InsertSslCertificate(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslCertificatesTracingConnection::InsertSslCertificate(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_ssl_certificates_v1::RegionSslCertificatesConnection::"
       "InsertSslCertificate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertSslCertificate(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InsertSslCertificate(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

@@ -97,7 +97,7 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::CreateJob(
 }
 
 StatusOr<google::longrunning::Operation> JobsConnectionImpl::CreateJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::run::v2::CreateJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -111,8 +111,7 @@ StatusOr<google::longrunning::Operation> JobsConnectionImpl::CreateJob(
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::CreateJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Job>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Job>>(
@@ -225,7 +224,7 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::UpdateJob(
 }
 
 StatusOr<google::longrunning::Operation> JobsConnectionImpl::UpdateJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::run::v2::UpdateJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -239,8 +238,7 @@ StatusOr<google::longrunning::Operation> JobsConnectionImpl::UpdateJob(
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::UpdateJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Job>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Job>>(
@@ -310,7 +308,7 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::DeleteJob(
 }
 
 StatusOr<google::longrunning::Operation> JobsConnectionImpl::DeleteJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::run::v2::DeleteJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -324,8 +322,7 @@ StatusOr<google::longrunning::Operation> JobsConnectionImpl::DeleteJob(
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::DeleteJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Job>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Job>>(
@@ -395,7 +392,7 @@ future<StatusOr<google::cloud::run::v2::Execution>> JobsConnectionImpl::RunJob(
 }
 
 StatusOr<google::longrunning::Operation> JobsConnectionImpl::RunJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::run::v2::RunJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -409,8 +406,7 @@ StatusOr<google::longrunning::Operation> JobsConnectionImpl::RunJob(
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>> JobsConnectionImpl::RunJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Execution>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Execution>>(

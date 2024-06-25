@@ -43,26 +43,23 @@ NodeGroupControllerTracingConnection::CreateNodeGroup(
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerTracingConnection::CreateNodeGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::CreateNodeGroup");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateNodeGroup(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateNodeGroup(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerTracingConnection::CreateNodeGroup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::CreateNodeGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateNodeGroup(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateNodeGroup(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
@@ -76,26 +73,23 @@ NodeGroupControllerTracingConnection::ResizeNodeGroup(
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerTracingConnection::ResizeNodeGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::ResizeNodeGroup");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ResizeNodeGroup(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->ResizeNodeGroup(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerTracingConnection::ResizeNodeGroup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataproc_v1::NodeGroupControllerConnection::ResizeNodeGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->ResizeNodeGroup(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->ResizeNodeGroup(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>

@@ -69,12 +69,12 @@ class AppConnectionsServiceConnectionImpl
                           CreateAppConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAppConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::beyondcorp::appconnections::v1::
           CreateAppConnectionRequest const& request) override;
 
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
-  CreateAppConnection(google::cloud::ExperimentalTag,
+  CreateAppConnection(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
@@ -82,12 +82,12 @@ class AppConnectionsServiceConnectionImpl
                           UpdateAppConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAppConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::beyondcorp::appconnections::v1::
           UpdateAppConnectionRequest const& request) override;
 
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
-  UpdateAppConnection(google::cloud::ExperimentalTag,
+  UpdateAppConnection(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
@@ -96,13 +96,13 @@ class AppConnectionsServiceConnectionImpl
                           DeleteAppConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAppConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::beyondcorp::appconnections::v1::
           DeleteAppConnectionRequest const& request) override;
 
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                       AppConnectionOperationMetadata>>
-  DeleteAppConnection(google::cloud::ExperimentalTag,
+  DeleteAppConnection(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::beyondcorp::appconnections::v1::

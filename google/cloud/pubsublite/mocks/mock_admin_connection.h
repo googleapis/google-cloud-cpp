@@ -113,15 +113,14 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SeekSubscription,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
       SeekSubscription,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

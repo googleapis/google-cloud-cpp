@@ -48,55 +48,55 @@ class TpuTracingConnection : public tpu_v1::TpuConnection {
       google::cloud::tpu::v1::CreateNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::CreateNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v1::Node>> CreateNode(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
       google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
       google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ReimageNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
       google::cloud::tpu::v1::StopNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StopNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::StopNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
       google::cloud::tpu::v1::StartNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StartNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::StartNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::tpu::v1::TensorFlowVersion> ListTensorFlowVersions(

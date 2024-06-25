@@ -71,29 +71,27 @@ NetworkSecurityTracingConnection::CreateAuthorizationPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityTracingConnection::CreateAuthorizationPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "CreateAuthorizationPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateAuthorizationPolicy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->CreateAuthorizationPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
 NetworkSecurityTracingConnection::CreateAuthorizationPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "CreateAuthorizationPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateAuthorizationPolicy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateAuthorizationPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
@@ -110,29 +108,27 @@ NetworkSecurityTracingConnection::UpdateAuthorizationPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityTracingConnection::UpdateAuthorizationPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "UpdateAuthorizationPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateAuthorizationPolicy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->UpdateAuthorizationPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
 NetworkSecurityTracingConnection::UpdateAuthorizationPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "UpdateAuthorizationPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateAuthorizationPolicy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateAuthorizationPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -149,29 +145,27 @@ NetworkSecurityTracingConnection::DeleteAuthorizationPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityTracingConnection::DeleteAuthorizationPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "DeleteAuthorizationPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteAuthorizationPolicy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->DeleteAuthorizationPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityTracingConnection::DeleteAuthorizationPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::"
       "DeleteAuthorizationPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteAuthorizationPolicy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteAuthorizationPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
@@ -209,27 +203,25 @@ NetworkSecurityTracingConnection::CreateServerTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityTracingConnection::CreateServerTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::CreateServerTlsPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateServerTlsPolicy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->CreateServerTlsPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
 NetworkSecurityTracingConnection::CreateServerTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::CreateServerTlsPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateServerTlsPolicy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateServerTlsPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
@@ -245,27 +237,25 @@ NetworkSecurityTracingConnection::UpdateServerTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityTracingConnection::UpdateServerTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::UpdateServerTlsPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateServerTlsPolicy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->UpdateServerTlsPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
 NetworkSecurityTracingConnection::UpdateServerTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::UpdateServerTlsPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateServerTlsPolicy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateServerTlsPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -281,27 +271,25 @@ NetworkSecurityTracingConnection::DeleteServerTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityTracingConnection::DeleteServerTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::DeleteServerTlsPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteServerTlsPolicy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->DeleteServerTlsPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityTracingConnection::DeleteServerTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::DeleteServerTlsPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteServerTlsPolicy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteServerTlsPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
@@ -339,27 +327,25 @@ NetworkSecurityTracingConnection::CreateClientTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityTracingConnection::CreateClientTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::CreateClientTlsPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateClientTlsPolicy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->CreateClientTlsPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
 NetworkSecurityTracingConnection::CreateClientTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::CreateClientTlsPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateClientTlsPolicy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateClientTlsPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
@@ -375,27 +361,25 @@ NetworkSecurityTracingConnection::UpdateClientTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityTracingConnection::UpdateClientTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::UpdateClientTlsPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateClientTlsPolicy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->UpdateClientTlsPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
 NetworkSecurityTracingConnection::UpdateClientTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::UpdateClientTlsPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateClientTlsPolicy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateClientTlsPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -411,27 +395,25 @@ NetworkSecurityTracingConnection::DeleteClientTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityTracingConnection::DeleteClientTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::DeleteClientTlsPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteClientTlsPolicy(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->DeleteClientTlsPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityTracingConnection::DeleteClientTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networksecurity_v1::NetworkSecurityConnection::DeleteClientTlsPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteClientTlsPolicy(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteClientTlsPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

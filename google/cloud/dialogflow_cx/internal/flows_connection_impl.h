@@ -73,12 +73,12 @@ class FlowsConnectionImpl : public dialogflow_cx::FlowsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> TrainFlow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request)
       override;
 
   future<StatusOr<google::protobuf::Struct>> TrainFlow(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
@@ -95,12 +95,12 @@ class FlowsConnectionImpl : public dialogflow_cx::FlowsConnection {
                  request) override;
 
   StatusOr<google::longrunning::Operation> ImportFlow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-  ImportFlow(google::cloud::ExperimentalTag,
+  ImportFlow(ExperimentalTag,
              google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
@@ -108,12 +108,12 @@ class FlowsConnectionImpl : public dialogflow_cx::FlowsConnection {
                  request) override;
 
   StatusOr<google::longrunning::Operation> ExportFlow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-  ExportFlow(google::cloud::ExperimentalTag,
+  ExportFlow(ExperimentalTag,
              google::longrunning::Operation const& operation) override;
 
  private:

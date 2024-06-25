@@ -52,26 +52,24 @@ CloudShellServiceTracingConnection::StartEnvironment(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceTracingConnection::StartEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::StartEnvironment");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->StartEnvironment(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->StartEnvironment(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
 CloudShellServiceTracingConnection::StartEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::StartEnvironment");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->StartEnvironment(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->StartEnvironment(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
@@ -86,26 +84,24 @@ CloudShellServiceTracingConnection::AuthorizeEnvironment(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceTracingConnection::AuthorizeEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::AuthorizeEnvironment");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->AuthorizeEnvironment(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->AuthorizeEnvironment(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceTracingConnection::AuthorizeEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::AuthorizeEnvironment");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AuthorizeEnvironment(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->AuthorizeEnvironment(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
@@ -119,26 +115,23 @@ CloudShellServiceTracingConnection::AddPublicKey(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceTracingConnection::AddPublicKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   auto span =
       internal::MakeSpan("shell_v1::CloudShellServiceConnection::AddPublicKey");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->AddPublicKey(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request));
+      *span, child_->AddPublicKey(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
 CloudShellServiceTracingConnection::AddPublicKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("shell_v1::CloudShellServiceConnection::AddPublicKey");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->AddPublicKey(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->AddPublicKey(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
@@ -152,26 +145,23 @@ CloudShellServiceTracingConnection::RemovePublicKey(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceTracingConnection::RemovePublicKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::RemovePublicKey");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RemovePublicKey(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request));
+      *span, child_->RemovePublicKey(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceTracingConnection::RemovePublicKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "shell_v1::CloudShellServiceConnection::RemovePublicKey");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->RemovePublicKey(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->RemovePublicKey(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

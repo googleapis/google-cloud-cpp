@@ -58,13 +58,13 @@ class SpecialistPoolServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
   CreateSpecialistPool(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
@@ -81,13 +81,13 @@ class SpecialistPoolServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSpecialistPool(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
@@ -96,13 +96,13 @@ class SpecialistPoolServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
   UpdateSpecialistPool(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

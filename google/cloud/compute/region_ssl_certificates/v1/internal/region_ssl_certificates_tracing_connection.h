@@ -50,13 +50,13 @@ class RegionSslCertificatesTracingConnection
           DeleteSslCertificateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_ssl_certificates::v1::
           DeleteSslCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSslCertificate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::SslCertificate> GetSslCertificate(
@@ -69,13 +69,13 @@ class RegionSslCertificatesTracingConnection
           InsertSslCertificateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_ssl_certificates::v1::
           InsertSslCertificateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSslCertificate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

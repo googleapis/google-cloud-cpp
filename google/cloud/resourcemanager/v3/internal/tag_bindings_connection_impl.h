@@ -62,12 +62,12 @@ class TagBindingsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateTagBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
           request) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-  CreateTagBinding(google::cloud::ExperimentalTag,
+  CreateTagBinding(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
@@ -76,12 +76,12 @@ class TagBindingsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitlTag,
       google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
           request) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-  DeleteTagBinding(google::cloud::ExperimentalTag,
+  DeleteTagBinding(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>

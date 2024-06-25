@@ -163,7 +163,7 @@ NetworkServicesConnectionImpl::CreateEndpointPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::CreateEndpointPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -181,8 +181,7 @@ NetworkServicesConnectionImpl::CreateEndpointPolicy(
 
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
 NetworkServicesConnectionImpl::CreateEndpointPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -261,7 +260,7 @@ NetworkServicesConnectionImpl::UpdateEndpointPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::UpdateEndpointPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -279,8 +278,7 @@ NetworkServicesConnectionImpl::UpdateEndpointPolicy(
 
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
 NetworkServicesConnectionImpl::UpdateEndpointPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -359,7 +357,7 @@ NetworkServicesConnectionImpl::DeleteEndpointPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::DeleteEndpointPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -377,8 +375,7 @@ NetworkServicesConnectionImpl::DeleteEndpointPolicy(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteEndpointPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -506,7 +503,7 @@ NetworkServicesConnectionImpl::CreateGateway(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::CreateGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::CreateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -522,8 +519,7 @@ NetworkServicesConnectionImpl::CreateGateway(
 
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
 NetworkServicesConnectionImpl::CreateGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -601,7 +597,7 @@ NetworkServicesConnectionImpl::UpdateGateway(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::UpdateGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -617,8 +613,7 @@ NetworkServicesConnectionImpl::UpdateGateway(
 
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
 NetworkServicesConnectionImpl::UpdateGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -696,7 +691,7 @@ NetworkServicesConnectionImpl::DeleteGateway(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::DeleteGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -712,8 +707,7 @@ NetworkServicesConnectionImpl::DeleteGateway(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -841,7 +835,7 @@ NetworkServicesConnectionImpl::CreateGrpcRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::CreateGrpcRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -857,8 +851,7 @@ NetworkServicesConnectionImpl::CreateGrpcRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
 NetworkServicesConnectionImpl::CreateGrpcRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -936,7 +929,7 @@ NetworkServicesConnectionImpl::UpdateGrpcRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::UpdateGrpcRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -952,8 +945,7 @@ NetworkServicesConnectionImpl::UpdateGrpcRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
 NetworkServicesConnectionImpl::UpdateGrpcRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -1031,7 +1023,7 @@ NetworkServicesConnectionImpl::DeleteGrpcRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::DeleteGrpcRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1047,8 +1039,7 @@ NetworkServicesConnectionImpl::DeleteGrpcRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteGrpcRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -1176,7 +1167,7 @@ NetworkServicesConnectionImpl::CreateHttpRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::CreateHttpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1192,8 +1183,7 @@ NetworkServicesConnectionImpl::CreateHttpRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
 NetworkServicesConnectionImpl::CreateHttpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -1271,7 +1261,7 @@ NetworkServicesConnectionImpl::UpdateHttpRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::UpdateHttpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1287,8 +1277,7 @@ NetworkServicesConnectionImpl::UpdateHttpRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
 NetworkServicesConnectionImpl::UpdateHttpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -1366,7 +1355,7 @@ NetworkServicesConnectionImpl::DeleteHttpRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::DeleteHttpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1382,8 +1371,7 @@ NetworkServicesConnectionImpl::DeleteHttpRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteHttpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -1511,7 +1499,7 @@ NetworkServicesConnectionImpl::CreateTcpRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::CreateTcpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1527,8 +1515,7 @@ NetworkServicesConnectionImpl::CreateTcpRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
 NetworkServicesConnectionImpl::CreateTcpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -1606,7 +1593,7 @@ NetworkServicesConnectionImpl::UpdateTcpRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::UpdateTcpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1622,8 +1609,7 @@ NetworkServicesConnectionImpl::UpdateTcpRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
 NetworkServicesConnectionImpl::UpdateTcpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -1701,7 +1687,7 @@ NetworkServicesConnectionImpl::DeleteTcpRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::DeleteTcpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1717,8 +1703,7 @@ NetworkServicesConnectionImpl::DeleteTcpRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteTcpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -1846,7 +1831,7 @@ NetworkServicesConnectionImpl::CreateTlsRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::CreateTlsRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1862,8 +1847,7 @@ NetworkServicesConnectionImpl::CreateTlsRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
 NetworkServicesConnectionImpl::CreateTlsRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -1941,7 +1925,7 @@ NetworkServicesConnectionImpl::UpdateTlsRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::UpdateTlsRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1957,8 +1941,7 @@ NetworkServicesConnectionImpl::UpdateTlsRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
 NetworkServicesConnectionImpl::UpdateTlsRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -2036,7 +2019,7 @@ NetworkServicesConnectionImpl::DeleteTlsRoute(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::DeleteTlsRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2052,8 +2035,7 @@ NetworkServicesConnectionImpl::DeleteTlsRoute(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteTlsRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -2183,7 +2165,7 @@ NetworkServicesConnectionImpl::CreateServiceBinding(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::CreateServiceBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::CreateServiceBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2201,8 +2183,7 @@ NetworkServicesConnectionImpl::CreateServiceBinding(
 
 future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
 NetworkServicesConnectionImpl::CreateServiceBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -2281,7 +2262,7 @@ NetworkServicesConnectionImpl::DeleteServiceBinding(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::DeleteServiceBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2299,8 +2280,7 @@ NetworkServicesConnectionImpl::DeleteServiceBinding(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteServiceBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -2427,7 +2407,7 @@ NetworkServicesConnectionImpl::CreateMesh(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::CreateMesh(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::CreateMeshRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2443,8 +2423,7 @@ NetworkServicesConnectionImpl::CreateMesh(
 
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>
 NetworkServicesConnectionImpl::CreateMesh(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -2522,7 +2501,7 @@ NetworkServicesConnectionImpl::UpdateMesh(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::UpdateMesh(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2538,8 +2517,7 @@ NetworkServicesConnectionImpl::UpdateMesh(
 
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>
 NetworkServicesConnectionImpl::UpdateMesh(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::
@@ -2617,7 +2595,7 @@ NetworkServicesConnectionImpl::DeleteMesh(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesConnectionImpl::DeleteMesh(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2633,8 +2611,7 @@ NetworkServicesConnectionImpl::DeleteMesh(
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteMesh(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkservices::v1::

@@ -114,7 +114,7 @@ VideoStitcherServiceConnectionImpl::CreateCdnKey(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::CreateCdnKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -130,8 +130,7 @@ VideoStitcherServiceConnectionImpl::CreateCdnKey(
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
 VideoStitcherServiceConnectionImpl::CreateCdnKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -259,7 +258,7 @@ VideoStitcherServiceConnectionImpl::DeleteCdnKey(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::DeleteCdnKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -275,8 +274,7 @@ VideoStitcherServiceConnectionImpl::DeleteCdnKey(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnectionImpl::DeleteCdnKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -354,7 +352,7 @@ VideoStitcherServiceConnectionImpl::UpdateCdnKey(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::UpdateCdnKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -370,8 +368,7 @@ VideoStitcherServiceConnectionImpl::UpdateCdnKey(
 
 future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
 VideoStitcherServiceConnectionImpl::UpdateCdnKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -640,7 +637,7 @@ VideoStitcherServiceConnectionImpl::CreateSlate(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::CreateSlate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -656,8 +653,7 @@ VideoStitcherServiceConnectionImpl::CreateSlate(
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
 VideoStitcherServiceConnectionImpl::CreateSlate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -785,7 +781,7 @@ VideoStitcherServiceConnectionImpl::UpdateSlate(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::UpdateSlate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -801,8 +797,7 @@ VideoStitcherServiceConnectionImpl::UpdateSlate(
 
 future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
 VideoStitcherServiceConnectionImpl::UpdateSlate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -880,7 +875,7 @@ VideoStitcherServiceConnectionImpl::DeleteSlate(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::DeleteSlate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -896,8 +891,7 @@ VideoStitcherServiceConnectionImpl::DeleteSlate(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnectionImpl::DeleteSlate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -1007,7 +1001,7 @@ VideoStitcherServiceConnectionImpl::CreateLiveConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::CreateLiveConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1024,8 +1018,7 @@ VideoStitcherServiceConnectionImpl::CreateLiveConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
 VideoStitcherServiceConnectionImpl::CreateLiveConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -1154,7 +1147,7 @@ VideoStitcherServiceConnectionImpl::DeleteLiveConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::DeleteLiveConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1171,8 +1164,7 @@ VideoStitcherServiceConnectionImpl::DeleteLiveConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnectionImpl::DeleteLiveConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -1251,7 +1243,7 @@ VideoStitcherServiceConnectionImpl::UpdateLiveConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::UpdateLiveConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1268,8 +1260,7 @@ VideoStitcherServiceConnectionImpl::UpdateLiveConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
 VideoStitcherServiceConnectionImpl::UpdateLiveConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -1347,7 +1338,7 @@ VideoStitcherServiceConnectionImpl::CreateVodConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::CreateVodConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1363,8 +1354,7 @@ VideoStitcherServiceConnectionImpl::CreateVodConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
 VideoStitcherServiceConnectionImpl::CreateVodConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -1493,7 +1483,7 @@ VideoStitcherServiceConnectionImpl::DeleteVodConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::DeleteVodConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1509,8 +1499,7 @@ VideoStitcherServiceConnectionImpl::DeleteVodConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
 VideoStitcherServiceConnectionImpl::DeleteVodConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::
@@ -1588,7 +1577,7 @@ VideoStitcherServiceConnectionImpl::UpdateVodConfig(
 
 StatusOr<google::longrunning::Operation>
 VideoStitcherServiceConnectionImpl::UpdateVodConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1604,8 +1593,7 @@ VideoStitcherServiceConnectionImpl::UpdateVodConfig(
 
 future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
 VideoStitcherServiceConnectionImpl::UpdateVodConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::video::stitcher::v1::

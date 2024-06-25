@@ -121,7 +121,7 @@ RapidMigrationAssessmentConnectionImpl::CreateCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnectionImpl::CreateCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -138,8 +138,7 @@ RapidMigrationAssessmentConnectionImpl::CreateCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnectionImpl::CreateCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::rapidmigrationassessment::v1::
@@ -217,7 +216,7 @@ RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -234,8 +233,7 @@ RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
 RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::rapidmigrationassessment::v1::
@@ -382,7 +380,7 @@ RapidMigrationAssessmentConnectionImpl::UpdateCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnectionImpl::UpdateCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -399,8 +397,7 @@ RapidMigrationAssessmentConnectionImpl::UpdateCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnectionImpl::UpdateCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::rapidmigrationassessment::v1::
@@ -478,7 +475,7 @@ RapidMigrationAssessmentConnectionImpl::DeleteCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnectionImpl::DeleteCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -495,8 +492,7 @@ RapidMigrationAssessmentConnectionImpl::DeleteCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnectionImpl::DeleteCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::rapidmigrationassessment::v1::
@@ -574,7 +570,7 @@ RapidMigrationAssessmentConnectionImpl::ResumeCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnectionImpl::ResumeCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -591,8 +587,7 @@ RapidMigrationAssessmentConnectionImpl::ResumeCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnectionImpl::ResumeCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::rapidmigrationassessment::v1::
@@ -670,7 +665,7 @@ RapidMigrationAssessmentConnectionImpl::RegisterCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnectionImpl::RegisterCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -687,8 +682,7 @@ RapidMigrationAssessmentConnectionImpl::RegisterCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnectionImpl::RegisterCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::rapidmigrationassessment::v1::
@@ -766,7 +760,7 @@ RapidMigrationAssessmentConnectionImpl::PauseCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentConnectionImpl::PauseCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -783,8 +777,7 @@ RapidMigrationAssessmentConnectionImpl::PauseCollector(
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnectionImpl::PauseCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::rapidmigrationassessment::v1::

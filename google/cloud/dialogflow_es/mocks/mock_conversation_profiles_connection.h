@@ -89,7 +89,7 @@ class MockConversationProfilesConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SetSuggestionFeatureConfig,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
            request),
       (override));
@@ -97,8 +97,7 @@ class MockConversationProfilesConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
       SetSuggestionFeatureConfig,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -110,7 +109,7 @@ class MockConversationProfilesConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ClearSuggestionFeatureConfig,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
            request),
       (override));
@@ -118,8 +117,7 @@ class MockConversationProfilesConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
       ClearSuggestionFeatureConfig,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

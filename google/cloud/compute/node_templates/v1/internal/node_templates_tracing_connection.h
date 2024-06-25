@@ -52,13 +52,13 @@ class NodeTemplatesTracingConnection
                          DeleteNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_templates::v1::
           DeleteNodeTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodeTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NodeTemplate> GetNodeTemplate(
@@ -74,13 +74,13 @@ class NodeTemplatesTracingConnection
                          InsertNodeTemplateRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_templates::v1::
           InsertNodeTemplateRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNodeTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NodeTemplate> ListNodeTemplates(

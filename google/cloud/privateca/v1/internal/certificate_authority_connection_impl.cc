@@ -218,7 +218,7 @@ CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -235,8 +235,7 @@ CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -314,7 +313,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -331,8 +330,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -410,7 +408,7 @@ CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -427,8 +425,7 @@ CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -506,7 +503,7 @@ CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -523,8 +520,7 @@ CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -676,7 +672,7 @@ CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -693,8 +689,7 @@ CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -772,7 +767,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -789,8 +784,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -868,7 +862,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -885,8 +879,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -965,7 +958,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::CreateCaPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -982,8 +975,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCaPool(
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceConnectionImpl::CreateCaPool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1062,7 +1054,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1079,8 +1071,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1209,7 +1200,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1226,8 +1217,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1381,7 +1371,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1400,8 +1390,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
 future<
     StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1479,7 +1468,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1496,8 +1485,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1575,7 +1563,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1592,8 +1580,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1726,7 +1713,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1743,8 +1730,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::

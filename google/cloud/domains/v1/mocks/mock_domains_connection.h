@@ -66,13 +66,13 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RegisterDomain,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::domains::v1::RegisterDomainRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
               RegisterDomain,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -91,13 +91,13 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, TransferDomain,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::domains::v1::TransferDomainRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
               TransferDomain,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -119,13 +119,13 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateRegistration,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::domains::v1::UpdateRegistrationRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
               UpdateRegistration,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -138,14 +138,14 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ConfigureManagementSettings,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
               ConfigureManagementSettings,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -157,13 +157,13 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ConfigureDnsSettings,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
               ConfigureDnsSettings,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -176,14 +176,14 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ConfigureContactSettings,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::domains::v1::ConfigureContactSettingsRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
               ConfigureContactSettings,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -195,13 +195,13 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportRegistration,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::domains::v1::ExportRegistrationRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
               ExportRegistration,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -213,13 +213,13 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteRegistration,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::domains::v1::DeleteRegistrationRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
               DeleteRegistration,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

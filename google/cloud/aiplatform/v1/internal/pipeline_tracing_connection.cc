@@ -77,27 +77,25 @@ PipelineServiceTracingConnection::DeleteTrainingPipeline(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceTracingConnection::DeleteTrainingPipeline(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::DeleteTrainingPipeline");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteTrainingPipeline(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span,
+      child_->DeleteTrainingPipeline(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceTracingConnection::DeleteTrainingPipeline(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::DeleteTrainingPipeline");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteTrainingPipeline(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteTrainingPipeline(
+                                                ExperimentalTag{}, operation));
 }
 
 Status PipelineServiceTracingConnection::CancelTrainingPipeline(
@@ -150,26 +148,24 @@ PipelineServiceTracingConnection::DeletePipelineJob(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceTracingConnection::DeletePipelineJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::DeletePipelineJob");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeletePipelineJob(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeletePipelineJob(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceTracingConnection::DeletePipelineJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::DeletePipelineJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeletePipelineJob(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeletePipelineJob(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
@@ -185,27 +181,25 @@ PipelineServiceTracingConnection::BatchDeletePipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceTracingConnection::BatchDeletePipelineJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::BatchDeletePipelineJobs");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchDeletePipelineJobs(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->BatchDeletePipelineJobs(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
 PipelineServiceTracingConnection::BatchDeletePipelineJobs(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::BatchDeletePipelineJobs");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchDeletePipelineJobs(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->BatchDeletePipelineJobs(
+                                                ExperimentalTag{}, operation));
 }
 
 Status PipelineServiceTracingConnection::CancelPipelineJob(
@@ -229,27 +223,25 @@ PipelineServiceTracingConnection::BatchCancelPipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceTracingConnection::BatchCancelPipelineJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::BatchCancelPipelineJobs");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->BatchCancelPipelineJobs(
-                                      google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+  return internal::EndSpan(
+      *span, child_->BatchCancelPipelineJobs(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
 PipelineServiceTracingConnection::BatchCancelPipelineJobs(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "aiplatform_v1::PipelineServiceConnection::BatchCancelPipelineJobs");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BatchCancelPipelineJobs(
-                               google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->BatchCancelPipelineJobs(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

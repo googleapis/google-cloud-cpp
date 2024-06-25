@@ -111,7 +111,7 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportAptArtifacts,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
            request),
       (override));
@@ -120,8 +120,7 @@ class MockArtifactRegistryConnection
       future<StatusOr<
           google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>,
       ImportAptArtifacts,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -134,7 +133,7 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportYumArtifacts,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
            request),
       (override));
@@ -143,8 +142,7 @@ class MockArtifactRegistryConnection
       future<StatusOr<
           google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>,
       ImportYumArtifacts,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -169,7 +167,7 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateRepository,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
            request),
       (override));
@@ -177,8 +175,7 @@ class MockArtifactRegistryConnection
   MOCK_METHOD(
       future<StatusOr<google::devtools::artifactregistry::v1::Repository>>,
       CreateRepository,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -198,7 +195,7 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteRepository,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
            request),
       (override));
@@ -207,8 +204,7 @@ class MockArtifactRegistryConnection
       future<
           StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
       DeleteRepository,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -233,7 +229,7 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePackage,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::artifactregistry::v1::DeletePackageRequest const&
            request),
       (override));
@@ -242,8 +238,7 @@ class MockArtifactRegistryConnection
       future<
           StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
       DeletePackage,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -268,7 +263,7 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteVersion,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::artifactregistry::v1::DeleteVersionRequest const&
            request),
       (override));
@@ -277,8 +272,7 @@ class MockArtifactRegistryConnection
       future<
           StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
       DeleteVersion,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -291,7 +285,7 @@ class MockArtifactRegistryConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchDeleteVersions,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
            request),
       (override));
@@ -300,8 +294,7 @@ class MockArtifactRegistryConnection
       future<StatusOr<
           google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>,
       BatchDeleteVersions,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

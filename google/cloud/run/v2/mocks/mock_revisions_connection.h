@@ -60,13 +60,13 @@ class MockRevisionsConnection : public run_v2::RevisionsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteRevision,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::run::v2::DeleteRevisionRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Revision>>,
               DeleteRevision,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

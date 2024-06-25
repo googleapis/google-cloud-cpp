@@ -51,12 +51,12 @@ class DocumentsTracingConnection : public dialogflow_es::DocumentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateDocument(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
@@ -64,12 +64,12 @@ class DocumentsTracingConnection : public dialogflow_es::DocumentsConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> ImportDocuments(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
-  ImportDocuments(google::cloud::ExperimentalTag,
+  ImportDocuments(ExperimentalTag,
                   google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
@@ -77,12 +77,12 @@ class DocumentsTracingConnection : public dialogflow_es::DocumentsConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDocument(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
-  DeleteDocument(google::cloud::ExperimentalTag,
+  DeleteDocument(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
@@ -90,12 +90,12 @@ class DocumentsTracingConnection : public dialogflow_es::DocumentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDocument(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
@@ -103,12 +103,12 @@ class DocumentsTracingConnection : public dialogflow_es::DocumentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ReloadDocument(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
@@ -116,12 +116,12 @@ class DocumentsTracingConnection : public dialogflow_es::DocumentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ExportDocument(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

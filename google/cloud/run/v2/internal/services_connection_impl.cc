@@ -102,7 +102,7 @@ ServicesConnectionImpl::CreateService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesConnectionImpl::CreateService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::run::v2::CreateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -117,8 +117,7 @@ StatusOr<google::longrunning::Operation> ServicesConnectionImpl::CreateService(
 
 future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnectionImpl::CreateService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Service>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Service>>(
@@ -237,7 +236,7 @@ ServicesConnectionImpl::UpdateService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesConnectionImpl::UpdateService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::run::v2::UpdateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -252,8 +251,7 @@ StatusOr<google::longrunning::Operation> ServicesConnectionImpl::UpdateService(
 
 future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnectionImpl::UpdateService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Service>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Service>>(
@@ -326,7 +324,7 @@ ServicesConnectionImpl::DeleteService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesConnectionImpl::DeleteService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::run::v2::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -341,8 +339,7 @@ StatusOr<google::longrunning::Operation> ServicesConnectionImpl::DeleteService(
 
 future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnectionImpl::DeleteService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::cloud::run::v2::Service>()) {
     return make_ready_future<StatusOr<google::cloud::run::v2::Service>>(

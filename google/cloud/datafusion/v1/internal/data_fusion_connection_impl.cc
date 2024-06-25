@@ -189,7 +189,7 @@ DataFusionConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 DataFusionConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -205,8 +205,7 @@ DataFusionConnectionImpl::CreateInstance(
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
@@ -281,7 +280,7 @@ DataFusionConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 DataFusionConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -297,8 +296,7 @@ DataFusionConnectionImpl::DeleteInstance(
 
 future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
 DataFusionConnectionImpl::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
@@ -374,7 +372,7 @@ DataFusionConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 DataFusionConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -390,8 +388,7 @@ DataFusionConnectionImpl::UpdateInstance(
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnectionImpl::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {
@@ -467,7 +464,7 @@ DataFusionConnectionImpl::RestartInstance(
 
 StatusOr<google::longrunning::Operation>
 DataFusionConnectionImpl::RestartInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -483,8 +480,7 @@ DataFusionConnectionImpl::RestartInstance(
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnectionImpl::RestartInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datafusion::v1::OperationMetadata>()) {

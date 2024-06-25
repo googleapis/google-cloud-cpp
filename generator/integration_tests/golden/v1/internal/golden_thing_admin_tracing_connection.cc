@@ -51,23 +51,23 @@ GoldenThingAdminTracingConnection::CreateDatabase(google::test::admin::database:
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminTracingConnection::CreateDatabase(google::cloud::ExperimentalTag,
-    google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+GoldenThingAdminTracingConnection::CreateDatabase(ExperimentalTag,
+    NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::CreateDatabase");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateDatabase(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
+      ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminTracingConnection::CreateDatabase(google::cloud::ExperimentalTag,
+GoldenThingAdminTracingConnection::CreateDatabase(ExperimentalTag,
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::CreateDatabase");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateDatabase(google::cloud::ExperimentalTag{}, operation));
+      child_->CreateDatabase(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::test::admin::database::v1::Database>
@@ -86,23 +86,23 @@ GoldenThingAdminTracingConnection::UpdateDatabaseDdl(google::test::admin::databa
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminTracingConnection::UpdateDatabaseDdl(google::cloud::ExperimentalTag,
-    google::cloud::NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+GoldenThingAdminTracingConnection::UpdateDatabaseDdl(ExperimentalTag,
+    NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::UpdateDatabaseDdl");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateDatabaseDdl(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
+      ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-GoldenThingAdminTracingConnection::UpdateDatabaseDdl(google::cloud::ExperimentalTag,
+GoldenThingAdminTracingConnection::UpdateDatabaseDdl(ExperimentalTag,
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::UpdateDatabaseDdl");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->UpdateDatabaseDdl(google::cloud::ExperimentalTag{}, operation));
+      child_->UpdateDatabaseDdl(ExperimentalTag{}, operation));
 }
 
 Status
@@ -149,23 +149,23 @@ GoldenThingAdminTracingConnection::CreateBackup(google::test::admin::database::v
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminTracingConnection::CreateBackup(google::cloud::ExperimentalTag,
-    google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request) {
+GoldenThingAdminTracingConnection::CreateBackup(ExperimentalTag,
+    NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::CreateBackup");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateBackup(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
+      ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::test::admin::database::v1::Backup>>
-GoldenThingAdminTracingConnection::CreateBackup(google::cloud::ExperimentalTag,
+GoldenThingAdminTracingConnection::CreateBackup(ExperimentalTag,
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::CreateBackup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->CreateBackup(google::cloud::ExperimentalTag{}, operation));
+      child_->CreateBackup(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
@@ -207,23 +207,23 @@ GoldenThingAdminTracingConnection::RestoreDatabase(google::test::admin::database
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminTracingConnection::RestoreDatabase(google::cloud::ExperimentalTag,
-    google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+GoldenThingAdminTracingConnection::RestoreDatabase(ExperimentalTag,
+    NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::RestoreDatabase");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RestoreDatabase(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
+      ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminTracingConnection::RestoreDatabase(google::cloud::ExperimentalTag,
+GoldenThingAdminTracingConnection::RestoreDatabase(ExperimentalTag,
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::RestoreDatabase");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->RestoreDatabase(google::cloud::ExperimentalTag{}, operation));
+      child_->RestoreDatabase(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::longrunning::Operation>
@@ -253,23 +253,23 @@ GoldenThingAdminTracingConnection::LongRunningWithoutRouting(google::test::admin
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminTracingConnection::LongRunningWithoutRouting(google::cloud::ExperimentalTag,
-    google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+GoldenThingAdminTracingConnection::LongRunningWithoutRouting(ExperimentalTag,
+    NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::LongRunningWithoutRouting");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->LongRunningWithoutRouting(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
+      ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminTracingConnection::LongRunningWithoutRouting(google::cloud::ExperimentalTag,
+GoldenThingAdminTracingConnection::LongRunningWithoutRouting(ExperimentalTag,
     google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::LongRunningWithoutRouting");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->LongRunningWithoutRouting(google::cloud::ExperimentalTag{}, operation));
+      child_->LongRunningWithoutRouting(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

@@ -69,7 +69,7 @@ class MockAppGatewaysServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAppGateway,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::beyondcorp::appgateways::v1::
                    CreateAppGatewayRequest const& request),
               (override));
@@ -77,8 +77,7 @@ class MockAppGatewaysServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
       CreateAppGateway,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
@@ -89,7 +88,7 @@ class MockAppGatewaysServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAppGateway,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::beyondcorp::appgateways::v1::
                    DeleteAppGatewayRequest const& request),
               (override));
@@ -97,7 +96,7 @@ class MockAppGatewaysServiceConnection
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
                                   AppGatewayOperationMetadata>>,
               DeleteAppGateway,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

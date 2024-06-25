@@ -53,55 +53,55 @@ class CloudRedisTracingConnection : public redis_v1::CloudRedisConnection {
       google::cloud::redis::v1::CreateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::CreateInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
       google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
       google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpgradeInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
       google::cloud::redis::v1::ImportInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::ImportInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
       google::cloud::redis::v1::ExportInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::ExportInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
@@ -109,23 +109,23 @@ class CloudRedisTracingConnection : public redis_v1::CloudRedisConnection {
       override;
 
   StatusOr<google::longrunning::Operation> FailoverInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::FailoverInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
@@ -133,12 +133,12 @@ class CloudRedisTracingConnection : public redis_v1::CloudRedisConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

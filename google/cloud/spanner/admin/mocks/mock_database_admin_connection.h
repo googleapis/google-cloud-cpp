@@ -62,14 +62,14 @@ class MockDatabaseAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDatabase,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::spanner::admin::database::v1::CreateDatabaseRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
               CreateDatabase,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -87,14 +87,14 @@ class MockDatabaseAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDatabase,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::spanner::admin::database::v1::UpdateDatabaseRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
               UpdateDatabase,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -108,7 +108,7 @@ class MockDatabaseAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDatabaseDdl,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
            request),
       (override));
@@ -117,8 +117,7 @@ class MockDatabaseAdminConnection
       future<StatusOr<
           google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
       UpdateDatabaseDdl,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(Status, DropDatabase,
@@ -153,14 +152,14 @@ class MockDatabaseAdminConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBackup,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::spanner::admin::database::v1::CreateBackupRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
               CreateBackup,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -172,13 +171,13 @@ class MockDatabaseAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CopyBackup,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::spanner::admin::database::v1::CopyBackupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
               CopyBackup,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -212,14 +211,14 @@ class MockDatabaseAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestoreDatabase,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::spanner::admin::database::v1::RestoreDatabaseRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
               RestoreDatabase,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

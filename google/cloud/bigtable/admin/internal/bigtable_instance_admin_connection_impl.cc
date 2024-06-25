@@ -112,7 +112,7 @@ BigtableInstanceAdminConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -128,8 +128,7 @@ BigtableInstanceAdminConnectionImpl::CreateInstance(
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnectionImpl::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::
@@ -248,7 +247,7 @@ BigtableInstanceAdminConnectionImpl::PartialUpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnectionImpl::PartialUpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -264,8 +263,7 @@ BigtableInstanceAdminConnectionImpl::PartialUpdateInstance(
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnectionImpl::PartialUpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::
@@ -355,7 +353,7 @@ BigtableInstanceAdminConnectionImpl::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -370,8 +368,7 @@ BigtableInstanceAdminConnectionImpl::CreateCluster(
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnectionImpl::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::CreateClusterMetadata>()) {
@@ -473,7 +470,7 @@ BigtableInstanceAdminConnectionImpl::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::Cluster const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -488,8 +485,7 @@ BigtableInstanceAdminConnectionImpl::UpdateCluster(
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnectionImpl::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::UpdateClusterMetadata>()) {
@@ -565,7 +561,7 @@ BigtableInstanceAdminConnectionImpl::PartialUpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnectionImpl::PartialUpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -581,8 +577,7 @@ BigtableInstanceAdminConnectionImpl::PartialUpdateCluster(
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnectionImpl::PartialUpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::
@@ -735,7 +730,7 @@ BigtableInstanceAdminConnectionImpl::UpdateAppProfile(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnectionImpl::UpdateAppProfile(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -751,8 +746,7 @@ BigtableInstanceAdminConnectionImpl::UpdateAppProfile(
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminConnectionImpl::UpdateAppProfile(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::bigtable::admin::v2::

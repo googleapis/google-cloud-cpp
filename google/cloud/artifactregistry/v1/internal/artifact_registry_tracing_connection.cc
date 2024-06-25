@@ -135,28 +135,26 @@ ArtifactRegistryTracingConnection::ImportAptArtifacts(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::ImportAptArtifacts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportAptArtifacts");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ImportAptArtifacts(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->ImportAptArtifacts(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
 ArtifactRegistryTracingConnection::ImportAptArtifacts(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportAptArtifacts");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->ImportAptArtifacts(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ImportAptArtifacts(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -173,28 +171,26 @@ ArtifactRegistryTracingConnection::ImportYumArtifacts(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::ImportYumArtifacts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportYumArtifacts");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ImportYumArtifacts(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->ImportYumArtifacts(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
 ArtifactRegistryTracingConnection::ImportYumArtifacts(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportYumArtifacts");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->ImportYumArtifacts(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ImportYumArtifacts(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
@@ -231,27 +227,25 @@ ArtifactRegistryTracingConnection::CreateRepository(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::CreateRepository(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::CreateRepository");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateRepository(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->CreateRepository(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
 ArtifactRegistryTracingConnection::CreateRepository(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::CreateRepository");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateRepository(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateRepository(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
@@ -276,27 +270,25 @@ ArtifactRegistryTracingConnection::DeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::DeleteRepository(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteRepository(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteRepository(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryTracingConnection::DeleteRepository(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteRepository(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteRepository(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Package>
@@ -332,27 +324,24 @@ ArtifactRegistryTracingConnection::DeletePackage(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::DeletePackage(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeletePackage");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeletePackage(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeletePackage(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryTracingConnection::DeletePackage(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeletePackage");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeletePackage(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePackage(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Version>
@@ -388,27 +377,24 @@ ArtifactRegistryTracingConnection::DeleteVersion(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::DeleteVersion(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteVersion");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteVersion(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeleteVersion(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryTracingConnection::DeleteVersion(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteVersion(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteVersion(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<
@@ -425,28 +411,26 @@ ArtifactRegistryTracingConnection::BatchDeleteVersions(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::BatchDeleteVersions(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::BatchDeleteVersions");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->BatchDeleteVersions(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->BatchDeleteVersions(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
 ArtifactRegistryTracingConnection::BatchDeleteVersions(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::BatchDeleteVersions");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->BatchDeleteVersions(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->BatchDeleteVersions(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::File>

@@ -90,26 +90,23 @@ IntentsTracingConnection::ImportIntents(
 
 StatusOr<google::longrunning::Operation>
 IntentsTracingConnection::ImportIntents(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::IntentsConnection::ImportIntents");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ImportIntents(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->ImportIntents(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
 IntentsTracingConnection::ImportIntents(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_cx::IntentsConnection::ImportIntents");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->ImportIntents(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ImportIntents(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
@@ -123,26 +120,23 @@ IntentsTracingConnection::ExportIntents(
 
 StatusOr<google::longrunning::Operation>
 IntentsTracingConnection::ExportIntents(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::IntentsConnection::ExportIntents");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ExportIntents(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->ExportIntents(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
 IntentsTracingConnection::ExportIntents(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_cx::IntentsConnection::ExportIntents");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->ExportIntents(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ExportIntents(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

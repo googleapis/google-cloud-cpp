@@ -53,13 +53,13 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateBuild,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::cloudbuild::v1::CreateBuildRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
               CreateBuild,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -85,13 +85,13 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RetryBuild,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::cloudbuild::v1::RetryBuildRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
               RetryBuild,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -102,13 +102,13 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ApproveBuild,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::cloudbuild::v1::ApproveBuildRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
               ApproveBuild,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -151,13 +151,13 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunBuildTrigger,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
               RunBuildTrigger,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -175,14 +175,14 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateWorkerPool,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>,
               CreateWorkerPool,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -200,7 +200,7 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteWorkerPool,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
                    request),
               (override));
@@ -209,8 +209,7 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
       future<StatusOr<
           google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>,
       DeleteWorkerPool,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>,
@@ -220,14 +219,14 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateWorkerPool,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>,
               UpdateWorkerPool,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 

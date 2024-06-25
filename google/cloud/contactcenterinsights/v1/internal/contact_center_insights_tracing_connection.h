@@ -52,12 +52,12 @@ class ContactCenterInsightsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UploadConversation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
           request) override;
 
   future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
-  UploadConversation(google::cloud::ExperimentalTag,
+  UploadConversation(ExperimentalTag,
                      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -85,12 +85,12 @@ class ContactCenterInsightsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateAnalysis(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
           request) override;
 
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
-  CreateAnalysis(google::cloud::ExperimentalTag,
+  CreateAnalysis(ExperimentalTag,
                  google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
@@ -112,14 +112,14 @@ class ContactCenterInsightsTracingConnection
           BulkAnalyzeConversationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BulkAnalyzeConversations(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::
           BulkAnalyzeConversationsRequest const& request) override;
 
   future<StatusOr<google::cloud::contactcenterinsights::v1::
                       BulkAnalyzeConversationsResponse>>
   BulkAnalyzeConversations(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -129,14 +129,14 @@ class ContactCenterInsightsTracingConnection
           BulkDeleteConversationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BulkDeleteConversations(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::
           BulkDeleteConversationsRequest const& request) override;
 
   future<StatusOr<google::cloud::contactcenterinsights::v1::
                       BulkDeleteConversationsResponse>>
   BulkDeleteConversations(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -145,13 +145,13 @@ class ContactCenterInsightsTracingConnection
                           IngestConversationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> IngestConversations(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::
           IngestConversationsRequest const& request) override;
 
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
-  IngestConversations(google::cloud::ExperimentalTag,
+  IngestConversations(ExperimentalTag,
                       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -161,13 +161,13 @@ class ContactCenterInsightsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> ExportInsightsData(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
-  ExportInsightsData(google::cloud::ExperimentalTag,
+  ExportInsightsData(ExperimentalTag,
                      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
@@ -176,12 +176,12 @@ class ContactCenterInsightsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateIssueModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
           request) override;
 
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
-  CreateIssueModel(google::cloud::ExperimentalTag,
+  CreateIssueModel(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -205,13 +205,13 @@ class ContactCenterInsightsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteIssueModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
-  DeleteIssueModel(google::cloud::ExperimentalTag,
+  DeleteIssueModel(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -221,13 +221,13 @@ class ContactCenterInsightsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeployIssueModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
-  DeployIssueModel(google::cloud::ExperimentalTag,
+  DeployIssueModel(ExperimentalTag,
                    google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -237,13 +237,13 @@ class ContactCenterInsightsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UndeployIssueModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request) override;
 
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
-  UndeployIssueModel(google::cloud::ExperimentalTag,
+  UndeployIssueModel(ExperimentalTag,
                      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(

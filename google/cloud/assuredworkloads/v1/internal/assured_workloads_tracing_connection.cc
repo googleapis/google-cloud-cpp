@@ -46,26 +46,23 @@ AssuredWorkloadsServiceTracingConnection::CreateWorkload(
 
 StatusOr<google::longrunning::Operation>
 AssuredWorkloadsServiceTracingConnection::CreateWorkload(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   auto span = internal::MakeSpan(
       "assuredworkloads_v1::AssuredWorkloadsServiceConnection::CreateWorkload");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateWorkload(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreateWorkload(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceTracingConnection::CreateWorkload(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "assuredworkloads_v1::AssuredWorkloadsServiceConnection::CreateWorkload");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateWorkload(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateWorkload(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>

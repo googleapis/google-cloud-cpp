@@ -60,27 +60,26 @@ StoragePoolsTracingConnection::DeleteStoragePool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsTracingConnection::DeleteStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::storage_pools::v1::
         DeleteStoragePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_storage_pools_v1::StoragePoolsConnection::DeleteStoragePool");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteStoragePool(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteStoragePool(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsTracingConnection::DeleteStoragePool(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_storage_pools_v1::StoragePoolsConnection::DeleteStoragePool");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteStoragePool(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteStoragePool(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
@@ -115,27 +114,26 @@ StoragePoolsTracingConnection::InsertStoragePool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsTracingConnection::InsertStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::storage_pools::v1::
         InsertStoragePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_storage_pools_v1::StoragePoolsConnection::InsertStoragePool");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->InsertStoragePool(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->InsertStoragePool(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsTracingConnection::InsertStoragePool(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_storage_pools_v1::StoragePoolsConnection::InsertStoragePool");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->InsertStoragePool(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->InsertStoragePool(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePool>
@@ -195,27 +193,26 @@ StoragePoolsTracingConnection::UpdateStoragePool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsTracingConnection::UpdateStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::storage_pools::v1::
         UpdateStoragePoolRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_storage_pools_v1::StoragePoolsConnection::UpdateStoragePool");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateStoragePool(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->UpdateStoragePool(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsTracingConnection::UpdateStoragePool(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_storage_pools_v1::StoragePoolsConnection::UpdateStoragePool");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateStoragePool(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateStoragePool(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

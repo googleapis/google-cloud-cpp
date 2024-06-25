@@ -144,7 +144,7 @@ TagBindingsConnectionImpl::CreateTagBinding(
 
 StatusOr<google::longrunning::Operation>
 TagBindingsConnectionImpl::CreateTagBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -161,8 +161,7 @@ TagBindingsConnectionImpl::CreateTagBinding(
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
 TagBindingsConnectionImpl::CreateTagBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -241,7 +240,7 @@ TagBindingsConnectionImpl::DeleteTagBinding(
 
 StatusOr<google::longrunning::Operation>
 TagBindingsConnectionImpl::DeleteTagBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -258,8 +257,7 @@ TagBindingsConnectionImpl::DeleteTagBinding(
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
 TagBindingsConnectionImpl::DeleteTagBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::

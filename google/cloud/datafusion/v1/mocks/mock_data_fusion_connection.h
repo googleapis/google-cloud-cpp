@@ -69,13 +69,13 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::datafusion::v1::CreateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::datafusion::v1::Instance>>,
               CreateInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -87,15 +87,14 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::datafusion::v1::DeleteInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>,
       DeleteInstance,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -105,13 +104,13 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::datafusion::v1::UpdateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::datafusion::v1::Instance>>,
               UpdateInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -123,13 +122,13 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestartInstance,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::datafusion::v1::RestartInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::datafusion::v1::Instance>>,
               RestartInstance,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 };

@@ -46,12 +46,12 @@ class InstanceGroupsTracingConnection
           AddInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_groups::v1::
           AddInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<std::pair<
@@ -65,13 +65,13 @@ class InstanceGroupsTracingConnection
                           DeleteInstanceGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_groups::v1::
           DeleteInstanceGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InstanceGroup> GetInstanceGroup(
@@ -83,13 +83,13 @@ class InstanceGroupsTracingConnection
                           InsertInstanceGroupRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_groups::v1::
           InsertInstanceGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceGroup(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>
@@ -106,12 +106,12 @@ class InstanceGroupsTracingConnection
           RemoveInstancesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_groups::v1::
           RemoveInstancesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstances(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
@@ -119,12 +119,12 @@ class InstanceGroupsTracingConnection
           SetNamedPortsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_groups::v1::
           SetNamedPortsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

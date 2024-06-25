@@ -135,7 +135,7 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -151,8 +151,7 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vision::v1::OperationMetadata>()) {
@@ -229,7 +228,7 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -245,8 +244,7 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vision::v1::OperationMetadata>()) {

@@ -63,26 +63,24 @@ ConfigTracingConnection::CreateDeployment(
 
 StatusOr<google::longrunning::Operation>
 ConfigTracingConnection::CreateDeployment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::CreateDeploymentRequest const& request) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::CreateDeployment");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateDeployment(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->CreateDeployment(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigTracingConnection::CreateDeployment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::CreateDeployment");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->CreateDeployment(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->CreateDeployment(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
@@ -96,26 +94,24 @@ ConfigTracingConnection::UpdateDeployment(
 
 StatusOr<google::longrunning::Operation>
 ConfigTracingConnection::UpdateDeployment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::UpdateDeploymentRequest const& request) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::UpdateDeployment");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateDeployment(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->UpdateDeployment(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigTracingConnection::UpdateDeployment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::UpdateDeployment");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UpdateDeployment(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UpdateDeployment(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
@@ -129,26 +125,24 @@ ConfigTracingConnection::DeleteDeployment(
 
 StatusOr<google::longrunning::Operation>
 ConfigTracingConnection::DeleteDeployment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::DeleteDeploymentRequest const& request) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::DeleteDeployment");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteDeployment(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->DeleteDeployment(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigTracingConnection::DeleteDeployment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::DeleteDeployment");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->DeleteDeployment(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->DeleteDeployment(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::config::v1::Revision>
@@ -233,24 +227,21 @@ ConfigTracingConnection::LockDeployment(
 
 StatusOr<google::longrunning::Operation>
 ConfigTracingConnection::LockDeployment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::LockDeploymentRequest const& request) {
   auto span = internal::MakeSpan("config_v1::ConfigConnection::LockDeployment");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->LockDeployment(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request));
+      *span, child_->LockDeployment(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigTracingConnection::LockDeployment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("config_v1::ConfigConnection::LockDeployment");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->LockDeployment(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->LockDeployment(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
@@ -264,26 +255,24 @@ ConfigTracingConnection::UnlockDeployment(
 
 StatusOr<google::longrunning::Operation>
 ConfigTracingConnection::UnlockDeployment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::UnlockDeploymentRequest const& request) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::UnlockDeployment");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UnlockDeployment(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request));
+      *span,
+      child_->UnlockDeployment(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigTracingConnection::UnlockDeployment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("config_v1::ConfigConnection::UnlockDeployment");
   internal::OTelScope scope(span);
   return internal::EndSpan(
-      std::move(span),
-      child_->UnlockDeployment(google::cloud::ExperimentalTag{}, operation));
+      std::move(span), child_->UnlockDeployment(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::config::v1::LockInfo>
@@ -303,24 +292,21 @@ ConfigTracingConnection::CreatePreview(
 }
 
 StatusOr<google::longrunning::Operation> ConfigTracingConnection::CreatePreview(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::CreatePreviewRequest const& request) {
   auto span = internal::MakeSpan("config_v1::ConfigConnection::CreatePreview");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreatePreview(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->CreatePreview(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::config::v1::Preview>>
 ConfigTracingConnection::CreatePreview(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("config_v1::ConfigConnection::CreatePreview");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreatePreview(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePreview(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::config::v1::Preview>
@@ -350,24 +336,21 @@ ConfigTracingConnection::DeletePreview(
 }
 
 StatusOr<google::longrunning::Operation> ConfigTracingConnection::DeletePreview(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::DeletePreviewRequest const& request) {
   auto span = internal::MakeSpan("config_v1::ConfigConnection::DeletePreview");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeletePreview(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request));
+      *span, child_->DeletePreview(ExperimentalTag{}, NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::config::v1::Preview>>
 ConfigTracingConnection::DeletePreview(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("config_v1::ConfigConnection::DeletePreview");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeletePreview(google::cloud::ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePreview(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>

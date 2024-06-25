@@ -55,13 +55,13 @@ class MockFeaturestoreServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateFeaturestore,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>,
               CreateFeaturestore,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -83,13 +83,13 @@ class MockFeaturestoreServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateFeaturestore,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>,
               UpdateFeaturestore,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -101,15 +101,14 @@ class MockFeaturestoreServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteFeaturestore,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeaturestore,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -120,13 +119,13 @@ class MockFeaturestoreServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEntityType,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::EntityType>>,
               CreateEntityType,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -153,15 +152,14 @@ class MockFeaturestoreServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteEntityType,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteEntityType,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -171,13 +169,13 @@ class MockFeaturestoreServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateFeature,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::CreateFeatureRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Feature>>,
               CreateFeature,
-              (google::cloud::ExperimentalTag,
+              (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
 
@@ -190,7 +188,7 @@ class MockFeaturestoreServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchCreateFeatures,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&
                    request),
               (override));
@@ -199,8 +197,7 @@ class MockFeaturestoreServiceConnection
       future<
           StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>,
       BatchCreateFeatures,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Feature>, GetFeature,
@@ -225,15 +222,14 @@ class MockFeaturestoreServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteFeature,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteFeatureRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeature,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -245,7 +241,7 @@ class MockFeaturestoreServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportFeatureValues,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::ImportFeatureValuesRequest const&
                    request),
               (override));
@@ -254,8 +250,7 @@ class MockFeaturestoreServiceConnection
       future<
           StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>,
       ImportFeatureValues,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -268,7 +263,7 @@ class MockFeaturestoreServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchReadFeatureValues,
-      (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      (ExperimentalTag, NoAwaitTag,
        google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
            request),
       (override));
@@ -277,8 +272,7 @@ class MockFeaturestoreServiceConnection
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>,
       BatchReadFeatureValues,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -290,7 +284,7 @@ class MockFeaturestoreServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportFeatureValues,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::ExportFeatureValuesRequest const&
                    request),
               (override));
@@ -299,8 +293,7 @@ class MockFeaturestoreServiceConnection
       future<
           StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>,
       ExportFeatureValues,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -312,7 +305,7 @@ class MockFeaturestoreServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteFeatureValues,
-              (google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+              (ExperimentalTag, NoAwaitTag,
                google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const&
                    request),
               (override));
@@ -321,8 +314,7 @@ class MockFeaturestoreServiceConnection
       future<
           StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>,
       DeleteFeatureValues,
-      (google::cloud::ExperimentalTag,
-       google::longrunning::Operation const& operation),
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::aiplatform::v1::Feature>),

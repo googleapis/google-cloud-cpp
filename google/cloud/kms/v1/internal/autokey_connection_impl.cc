@@ -101,7 +101,7 @@ AutokeyConnectionImpl::CreateKeyHandle(
 }
 
 StatusOr<google::longrunning::Operation> AutokeyConnectionImpl::CreateKeyHandle(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -116,8 +116,7 @@ StatusOr<google::longrunning::Operation> AutokeyConnectionImpl::CreateKeyHandle(
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
 AutokeyConnectionImpl::CreateKeyHandle(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::kms::v1::CreateKeyHandleMetadata>()) {

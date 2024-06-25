@@ -164,7 +164,7 @@ NetworkSecurityConnectionImpl::CreateAuthorizationPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityConnectionImpl::CreateAuthorizationPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -181,8 +181,7 @@ NetworkSecurityConnectionImpl::CreateAuthorizationPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
 NetworkSecurityConnectionImpl::CreateAuthorizationPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networksecurity::v1::
@@ -260,7 +259,7 @@ NetworkSecurityConnectionImpl::UpdateAuthorizationPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityConnectionImpl::UpdateAuthorizationPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -277,8 +276,7 @@ NetworkSecurityConnectionImpl::UpdateAuthorizationPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
 NetworkSecurityConnectionImpl::UpdateAuthorizationPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networksecurity::v1::
@@ -356,7 +354,7 @@ NetworkSecurityConnectionImpl::DeleteAuthorizationPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityConnectionImpl::DeleteAuthorizationPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -373,8 +371,7 @@ NetworkSecurityConnectionImpl::DeleteAuthorizationPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityConnectionImpl::DeleteAuthorizationPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networksecurity::v1::
@@ -504,7 +501,7 @@ NetworkSecurityConnectionImpl::CreateServerTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityConnectionImpl::CreateServerTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -521,8 +518,7 @@ NetworkSecurityConnectionImpl::CreateServerTlsPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
 NetworkSecurityConnectionImpl::CreateServerTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networksecurity::v1::
@@ -600,7 +596,7 @@ NetworkSecurityConnectionImpl::UpdateServerTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityConnectionImpl::UpdateServerTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -617,8 +613,7 @@ NetworkSecurityConnectionImpl::UpdateServerTlsPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
 NetworkSecurityConnectionImpl::UpdateServerTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networksecurity::v1::
@@ -696,7 +691,7 @@ NetworkSecurityConnectionImpl::DeleteServerTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityConnectionImpl::DeleteServerTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -713,8 +708,7 @@ NetworkSecurityConnectionImpl::DeleteServerTlsPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityConnectionImpl::DeleteServerTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networksecurity::v1::
@@ -844,7 +838,7 @@ NetworkSecurityConnectionImpl::CreateClientTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityConnectionImpl::CreateClientTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -861,8 +855,7 @@ NetworkSecurityConnectionImpl::CreateClientTlsPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
 NetworkSecurityConnectionImpl::CreateClientTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networksecurity::v1::
@@ -940,7 +933,7 @@ NetworkSecurityConnectionImpl::UpdateClientTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityConnectionImpl::UpdateClientTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -957,8 +950,7 @@ NetworkSecurityConnectionImpl::UpdateClientTlsPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
 NetworkSecurityConnectionImpl::UpdateClientTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networksecurity::v1::
@@ -1036,7 +1028,7 @@ NetworkSecurityConnectionImpl::DeleteClientTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityConnectionImpl::DeleteClientTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitlTag,
     google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1053,8 +1045,7 @@ NetworkSecurityConnectionImpl::DeleteClientTlsPolicy(
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityConnectionImpl::DeleteClientTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation) {
+    ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networksecurity::v1::
