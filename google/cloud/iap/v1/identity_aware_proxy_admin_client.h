@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_IDENTITY_AWARE_PROXY_ADMIN_CLIENT_H
 
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

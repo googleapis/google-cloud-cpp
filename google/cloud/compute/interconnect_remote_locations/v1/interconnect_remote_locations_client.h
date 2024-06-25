@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_REMOTE_LOCATIONS_V1_INTERCONNECT_REMOTE_LOCATIONS_CLIENT_H
 
 #include "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

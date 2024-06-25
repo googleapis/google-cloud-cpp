@@ -42,6 +42,18 @@ FirewallsClient::DeleteFirewall(std::string const& project,
   return connection_->DeleteFirewall(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsClient::DeleteFirewall(ExperimentalTag, NoAwaitTag,
+                                std::string const& project,
+                                std::string const& firewall, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest request;
+  request.set_project(project);
+  request.set_firewall(firewall);
+  return connection_->DeleteFirewall(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsClient::DeleteFirewall(
     google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
@@ -49,6 +61,26 @@ FirewallsClient::DeleteFirewall(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFirewall(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsClient::DeleteFirewall(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFirewall(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallsClient::DeleteFirewall(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFirewall(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Firewall>
@@ -82,6 +114,19 @@ FirewallsClient::InsertFirewall(
   return connection_->InsertFirewall(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsClient::InsertFirewall(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest request;
+  request.set_project(project);
+  *request.mutable_firewall_resource() = firewall_resource;
+  return connection_->InsertFirewall(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsClient::InsertFirewall(
     google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
@@ -89,6 +134,26 @@ FirewallsClient::InsertFirewall(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertFirewall(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsClient::InsertFirewall(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertFirewall(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallsClient::InsertFirewall(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertFirewall(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Firewall>
@@ -120,6 +185,21 @@ FirewallsClient::PatchFirewall(
   return connection_->PatchFirewall(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsClient::PatchFirewall(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& firewall,
+    google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest request;
+  request.set_project(project);
+  request.set_firewall(firewall);
+  *request.mutable_firewall_resource() = firewall_resource;
+  return connection_->PatchFirewall(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsClient::PatchFirewall(
     google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
@@ -127,6 +207,26 @@ FirewallsClient::PatchFirewall(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchFirewall(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsClient::PatchFirewall(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchFirewall(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallsClient::PatchFirewall(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchFirewall(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -142,6 +242,21 @@ FirewallsClient::UpdateFirewall(
   return connection_->UpdateFirewall(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsClient::UpdateFirewall(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& firewall,
+    google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest request;
+  request.set_project(project);
+  request.set_firewall(firewall);
+  *request.mutable_firewall_resource() = firewall_resource;
+  return connection_->UpdateFirewall(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallsClient::UpdateFirewall(
     google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
@@ -149,6 +264,26 @@ FirewallsClient::UpdateFirewall(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFirewall(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+FirewallsClient::UpdateFirewall(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFirewall(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+FirewallsClient::UpdateFirewall(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFirewall(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

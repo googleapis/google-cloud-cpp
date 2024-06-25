@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_V1_DATASTORE_CLIENT_H
 
 #include "google/cloud/datastore/v1/datastore_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

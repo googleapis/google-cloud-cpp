@@ -68,12 +68,39 @@ SecurityCenterClient::BulkMuteFindings(std::string const& parent,
   return connection_->BulkMuteFindings(request);
 }
 
+StatusOr<google::longrunning::Operation> SecurityCenterClient::BulkMuteFindings(
+    ExperimentalTag, NoAwaitTag, std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v2::BulkMuteFindingsRequest request;
+  request.set_parent(parent);
+  return connection_->BulkMuteFindings(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
 SecurityCenterClient::BulkMuteFindings(
     google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BulkMuteFindings(request);
+}
+
+StatusOr<google::longrunning::Operation> SecurityCenterClient::BulkMuteFindings(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkMuteFindings(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
+SecurityCenterClient::BulkMuteFindings(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkMuteFindings(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>

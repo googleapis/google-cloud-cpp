@@ -70,10 +70,38 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
   return connection_->CreateNode(request);
 }
 
+StatusOr<google::longrunning::Operation> TpuClient::CreateNode(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::tpu::v1::Node const& node, std::string const& node_id,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v1::CreateNodeRequest request;
+  request.set_parent(parent);
+  *request.mutable_node() = node;
+  request.set_node_id(node_id);
+  return connection_->CreateNode(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
     google::cloud::tpu::v1::CreateNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNode(request);
+}
+
+StatusOr<google::longrunning::Operation> TpuClient::CreateNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v1::CreateNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNode(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::CreateNode(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNode(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::DeleteNode(
@@ -84,10 +112,34 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::DeleteNode(
   return connection_->DeleteNode(request);
 }
 
+StatusOr<google::longrunning::Operation> TpuClient::DeleteNode(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::tpu::v1::DeleteNodeRequest request;
+  request.set_name(name);
+  return connection_->DeleteNode(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::DeleteNode(
     google::cloud::tpu::v1::DeleteNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNode(request);
+}
+
+StatusOr<google::longrunning::Operation> TpuClient::DeleteNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v1::DeleteNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNode(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::DeleteNode(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNode(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::ReimageNode(
@@ -96,16 +148,61 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::ReimageNode(
   return connection_->ReimageNode(request);
 }
 
+StatusOr<google::longrunning::Operation> TpuClient::ReimageNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v1::ReimageNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReimageNode(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::ReimageNode(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReimageNode(google::cloud::ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StopNode(
     google::cloud::tpu::v1::StopNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopNode(request);
 }
 
+StatusOr<google::longrunning::Operation> TpuClient::StopNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v1::StopNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopNode(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StopNode(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopNode(google::cloud::ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StartNode(
     google::cloud::tpu::v1::StartNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartNode(request);
+}
+
+StatusOr<google::longrunning::Operation> TpuClient::StartNode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::tpu::v1::StartNodeRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartNode(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::tpu::v1::Node>> TpuClient::StartNode(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartNode(google::cloud::ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::tpu::v1::TensorFlowVersion>

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_V1_WEB_SECURITY_SCANNER_CLIENT_H
 
 #include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

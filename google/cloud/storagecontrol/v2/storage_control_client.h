@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_STORAGE_CONTROL_CLIENT_H
 
 #include "google/cloud/storagecontrol/v2/storage_control_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -382,6 +384,10 @@ class StorageControlClient {
       std::string const& name, std::string const& destination_folder_id,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RenameFolder(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      std::string const& destination_folder_id, Options opts = {});
+
   // clang-format off
   ///
   /// Renames a source folder to a destination folder. This operation is only
@@ -422,6 +428,15 @@ class StorageControlClient {
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
       google::storage::control::v2::RenameFolderRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RenameFolder(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::storage::control::v2::RenameFolderRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

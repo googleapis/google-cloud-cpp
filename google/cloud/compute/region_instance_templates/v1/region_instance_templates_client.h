@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_TEMPLATES_V1_REGION_INSTANCE_TEMPLATES_CLIENT_H
 
 #include "google/cloud/compute/region_instance_templates/v1/region_instance_templates_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -127,6 +129,11 @@ class RegionInstanceTemplatesClient {
                          std::string const& instance_template,
                          Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& instance_template,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified instance template. Deleting an instance template is
@@ -166,6 +173,18 @@ class RegionInstanceTemplatesClient {
   DeleteInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
           DeleteInstanceTemplateRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_templates::v1::
+          DeleteInstanceTemplateRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstanceTemplate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -269,6 +288,13 @@ class RegionInstanceTemplatesClient {
           instance_template_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::InstanceTemplate const&
+          instance_template_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an instance template in the specified project and region using the
@@ -308,6 +334,18 @@ class RegionInstanceTemplatesClient {
   InsertInstanceTemplate(
       google::cloud::cpp::compute::region_instance_templates::v1::
           InsertInstanceTemplateRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_templates::v1::
+          InsertInstanceTemplateRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInstanceTemplate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off

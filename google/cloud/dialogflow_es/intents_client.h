@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTENTS_CLIENT_H
 
 #include "google/cloud/dialogflow_es/intents_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -625,6 +627,10 @@ class IntentsClient {
   BatchUpdateIntents(std::string const& parent,
                      std::string const& intent_batch_uri, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchUpdateIntents(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& intent_batch_uri, Options opts = {});
+
   // clang-format off
   ///
   /// Updates/Creates multiple intents in the specified agent.
@@ -672,6 +678,11 @@ class IntentsClient {
   future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
   BatchUpdateIntents(
       std::string const& parent,
+      google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchUpdateIntents(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline,
       Options opts = {});
 
@@ -727,6 +738,16 @@ class IntentsClient {
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchUpdateIntents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
+  BatchUpdateIntents(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Deletes intents in the specified agent.
@@ -774,6 +795,11 @@ class IntentsClient {
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
       std::string const& parent,
+      std::vector<google::cloud::dialogflow::v2::Intent> const& intents,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchDeleteIntents(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::Intent> const& intents,
       Options opts = {});
 
@@ -827,6 +853,15 @@ class IntentsClient {
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchDeleteIntents(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<IntentsConnection> connection_;

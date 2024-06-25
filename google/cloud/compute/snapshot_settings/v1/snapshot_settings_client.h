@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOT_SETTINGS_V1_SNAPSHOT_SETTINGS_CLIENT_H
 
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -184,6 +186,13 @@ class SnapshotSettingsClient {
                             snapshot_settings_resource,
                         Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& update_mask,
+      google::cloud::cpp::compute::v1::SnapshotSettings const&
+          snapshot_settings_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Patch snapshot settings.
@@ -222,6 +231,18 @@ class SnapshotSettingsClient {
   PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::
                             PatchSnapshotSettingsRequest const& request,
                         Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::snapshot_settings::v1::
+          PatchSnapshotSettingsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchSnapshotSettings(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<SnapshotSettingsConnection> connection_;

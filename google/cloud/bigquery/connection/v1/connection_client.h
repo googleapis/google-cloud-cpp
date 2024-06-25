@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_V1_CONNECTION_CLIENT_H
 
 #include "google/cloud/bigquery/connection/v1/connection_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

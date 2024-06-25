@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGE_FAMILY_VIEWS_V1_IMAGE_FAMILY_VIEWS_CLIENT_H
 
 #include "google/cloud/compute/image_family_views/v1/image_family_views_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

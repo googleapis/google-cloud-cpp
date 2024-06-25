@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPCONNECTIONS_V1_APP_CONNECTIONS_CLIENT_H
 
 #include "google/cloud/beyondcorp/appconnections/v1/app_connections_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -281,6 +283,12 @@ class AppConnectionsServiceClient {
           app_connection,
       std::string const& app_connection_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAppConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::beyondcorp::appconnections::v1::AppConnection const&
+          app_connection,
+      std::string const& app_connection_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new AppConnection in a given project and location.
@@ -318,6 +326,17 @@ class AppConnectionsServiceClient {
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
   CreateAppConnection(google::cloud::beyondcorp::appconnections::v1::
                           CreateAppConnectionRequest const& request,
+                      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateAppConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appconnections::v1::
+          CreateAppConnectionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+  CreateAppConnection(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -363,6 +382,12 @@ class AppConnectionsServiceClient {
           app_connection,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAppConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnections::v1::AppConnection const&
+          app_connection,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single AppConnection.
@@ -402,6 +427,17 @@ class AppConnectionsServiceClient {
                           UpdateAppConnectionRequest const& request,
                       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAppConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appconnections::v1::
+          UpdateAppConnectionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+  UpdateAppConnection(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single AppConnection.
@@ -435,6 +471,9 @@ class AppConnectionsServiceClient {
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                       AppConnectionOperationMetadata>>
   DeleteAppConnection(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAppConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -474,6 +513,18 @@ class AppConnectionsServiceClient {
                       AppConnectionOperationMetadata>>
   DeleteAppConnection(google::cloud::beyondcorp::appconnections::v1::
                           DeleteAppConnectionRequest const& request,
+                      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAppConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appconnections::v1::
+          DeleteAppConnectionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
+                      AppConnectionOperationMetadata>>
+  DeleteAppConnection(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off

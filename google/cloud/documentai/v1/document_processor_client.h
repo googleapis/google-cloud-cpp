@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_DOCUMENT_PROCESSOR_CLIENT_H
 
 #include "google/cloud/documentai/v1/document_processor_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -202,6 +204,9 @@ class DocumentProcessorServiceClient {
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
   BatchProcessDocuments(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchProcessDocuments(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// LRO endpoint to batch process many documents. The output is written
@@ -241,6 +246,16 @@ class DocumentProcessorServiceClient {
   BatchProcessDocuments(
       google::cloud::documentai::v1::BatchProcessRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchProcessDocuments(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::BatchProcessRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
+  BatchProcessDocuments(google::cloud::ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -609,6 +624,11 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::ProcessorVersion const& processor_version,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> TrainProcessorVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::documentai::v1::ProcessorVersion const& processor_version,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Trains a new processor version.
@@ -651,6 +671,17 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::TrainProcessorVersionRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> TrainProcessorVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+  TrainProcessorVersion(google::cloud::ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -819,6 +850,9 @@ class DocumentProcessorServiceClient {
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
   DeleteProcessorVersion(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the processor version, all artifacts under the processor version
@@ -861,6 +895,18 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+  DeleteProcessorVersion(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Deploys the processor version.
@@ -893,6 +939,9 @@ class DocumentProcessorServiceClient {
   future<
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
   DeployProcessorVersion(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeployProcessorVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -935,6 +984,18 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeployProcessorVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+  DeployProcessorVersion(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Undeploys the processor version.
@@ -967,6 +1028,9 @@ class DocumentProcessorServiceClient {
   future<
       StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
   UndeployProcessorVersion(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1008,6 +1072,18 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+  UndeployProcessorVersion(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -1124,6 +1200,9 @@ class DocumentProcessorServiceClient {
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
   DeleteProcessor(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteProcessor(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the processor, unloads all deployed model artifacts if it was
@@ -1164,6 +1243,16 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::DeleteProcessorRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteProcessor(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+  DeleteProcessor(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Enables a processor
@@ -1203,6 +1292,16 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::EnableProcessorRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> EnableProcessor(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::EnableProcessorRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
+  EnableProcessor(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Disables a processor
@@ -1241,6 +1340,16 @@ class DocumentProcessorServiceClient {
   DisableProcessor(
       google::cloud::documentai::v1::DisableProcessorRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DisableProcessor(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::DisableProcessorRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
+  DisableProcessor(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1290,6 +1399,18 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> SetDefaultProcessorVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+  SetDefaultProcessorVersion(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts = {});
+
   // clang-format off
   ///
   /// Send a document for Human Review. The input document should be processed by
@@ -1324,6 +1445,10 @@ class DocumentProcessorServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(std::string const& human_review_config, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ReviewDocument(
+      ExperimentalTag, NoAwaitTag, std::string const& human_review_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1365,6 +1490,16 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::ReviewDocumentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ReviewDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::ReviewDocumentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
+  ReviewDocument(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Evaluates a ProcessorVersion against annotated documents, producing an
@@ -1403,6 +1538,10 @@ class DocumentProcessorServiceClient {
       StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
   EvaluateProcessorVersion(std::string const& processor_version,
                            Options opts = {});
+
+  StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& processor_version,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1445,6 +1584,18 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+  EvaluateProcessorVersion(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///

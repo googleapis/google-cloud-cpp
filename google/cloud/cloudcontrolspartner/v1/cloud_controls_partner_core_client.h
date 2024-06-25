@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDCONTROLSPARTNER_V1_CLOUD_CONTROLS_PARTNER_CORE_CLIENT_H
 
 #include "google/cloud/cloudcontrolspartner/v1/cloud_controls_partner_core_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

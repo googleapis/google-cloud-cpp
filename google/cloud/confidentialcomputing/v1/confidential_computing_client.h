@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIDENTIALCOMPUTING_V1_CONFIDENTIAL_COMPUTING_CLIENT_H
 
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

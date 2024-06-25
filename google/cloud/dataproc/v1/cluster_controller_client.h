@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_CLUSTER_CONTROLLER_CLIENT_H
 
 #include "google/cloud/dataproc/v1/cluster_controller_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -128,6 +130,11 @@ class ClusterControllerClient {
       std::string const& project_id, std::string const& region,
       google::cloud::dataproc::v1::Cluster const& cluster, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& project_id,
+      std::string const& region,
+      google::cloud::dataproc::v1::Cluster const& cluster, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a cluster in a project. The returned
@@ -168,6 +175,15 @@ class ClusterControllerClient {
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
       google::cloud::dataproc::v1::CreateClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::CreateClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -222,6 +238,12 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& project_id,
+      std::string const& region, std::string const& cluster_name,
+      google::cloud::dataproc::v1::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a cluster in a project. The returned
@@ -267,6 +289,15 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Stops a cluster in a project.
@@ -304,6 +335,15 @@ class ClusterControllerClient {
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
       google::cloud::dataproc::v1::StopClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StopCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::StopClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -343,6 +383,15 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::StartClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StartCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::StartClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a cluster in a project. The returned
@@ -381,6 +430,11 @@ class ClusterControllerClient {
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
   DeleteCluster(std::string const& project_id, std::string const& region,
                 std::string const& cluster_name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& project_id,
+      std::string const& region, std::string const& cluster_name,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -423,6 +477,16 @@ class ClusterControllerClient {
   DeleteCluster(
       google::cloud::dataproc::v1::DeleteClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
+  DeleteCluster(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -661,6 +725,11 @@ class ClusterControllerClient {
   DiagnoseCluster(std::string const& project_id, std::string const& region,
                   std::string const& cluster_name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DiagnoseCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& project_id,
+      std::string const& region, std::string const& cluster_name,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Gets cluster diagnostic information. The returned
@@ -707,6 +776,16 @@ class ClusterControllerClient {
   DiagnoseCluster(
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DiagnoseCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
+  DiagnoseCluster(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
  private:
   std::shared_ptr<ClusterControllerConnection> connection_;

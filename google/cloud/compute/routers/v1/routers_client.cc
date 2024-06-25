@@ -64,6 +64,20 @@ RoutersClient::DeleteRouter(std::string const& project,
   return connection_->DeleteRouter(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::DeleteRouter(ExperimentalTag, NoAwaitTag,
+                            std::string const& project,
+                            std::string const& region,
+                            std::string const& router, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::DeleteRouterRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  return connection_->DeleteRouter(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersClient::DeleteRouter(
     google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
@@ -71,6 +85,25 @@ RoutersClient::DeleteRouter(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRouter(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::DeleteRouter(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRouter(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::DeleteRouter(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRouter(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Router> RoutersClient::GetRouter(
@@ -167,6 +200,21 @@ RoutersClient::InsertRouter(
   return connection_->InsertRouter(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::InsertRouter(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::Router const& router_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::InsertRouterRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_router_resource() = router_resource;
+  return connection_->InsertRouter(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersClient::InsertRouter(
     google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
@@ -174,6 +222,25 @@ RoutersClient::InsertRouter(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertRouter(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::InsertRouter(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertRouter(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::InsertRouter(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertRouter(google::cloud::ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Router> RoutersClient::ListRouters(
@@ -207,12 +274,44 @@ RoutersClient::PatchRouter(
   return connection_->PatchRouter(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation> RoutersClient::PatchRouter(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& router,
+    google::cloud::cpp::compute::v1::Router const& router_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::PatchRouterRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  *request.mutable_router_resource() = router_resource;
+  return connection_->PatchRouter(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersClient::PatchRouter(
     google::cloud::cpp::compute::routers::v1::PatchRouterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRouter(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation> RoutersClient::PatchRouter(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::PatchRouterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchRouter(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::PatchRouter(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchRouter(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
@@ -253,6 +352,22 @@ RoutersClient::UpdateRouter(
   return connection_->UpdateRouter(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::UpdateRouter(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& router,
+    google::cloud::cpp::compute::v1::Router const& router_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::routers::v1::UpdateRouterRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_router(router);
+  *request.mutable_router_resource() = router_resource;
+  return connection_->UpdateRouter(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersClient::UpdateRouter(
     google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
@@ -260,6 +375,25 @@ RoutersClient::UpdateRouter(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRouter(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutersClient::UpdateRouter(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRouter(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutersClient::UpdateRouter(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRouter(google::cloud::ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

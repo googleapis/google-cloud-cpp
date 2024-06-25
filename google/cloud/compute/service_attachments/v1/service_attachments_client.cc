@@ -66,6 +66,21 @@ ServiceAttachmentsClient::DeleteServiceAttachment(
   return connection_->DeleteServiceAttachment(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsClient::DeleteServiceAttachment(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& service_attachment,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::service_attachments::v1::
+      DeleteServiceAttachmentRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_service_attachment(service_attachment);
+  return connection_->DeleteServiceAttachment(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsClient::DeleteServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
@@ -73,6 +88,26 @@ ServiceAttachmentsClient::DeleteServiceAttachment(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteServiceAttachment(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsClient::DeleteServiceAttachment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::service_attachments::v1::
+        DeleteServiceAttachmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteServiceAttachment(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ServiceAttachmentsClient::DeleteServiceAttachment(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteServiceAttachment(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -135,6 +170,23 @@ ServiceAttachmentsClient::InsertServiceAttachment(
   return connection_->InsertServiceAttachment(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsClient::InsertServiceAttachment(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::ServiceAttachment const&
+        service_attachment_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::service_attachments::v1::
+      InsertServiceAttachmentRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_service_attachment_resource() = service_attachment_resource;
+  return connection_->InsertServiceAttachment(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsClient::InsertServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
@@ -142,6 +194,26 @@ ServiceAttachmentsClient::InsertServiceAttachment(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertServiceAttachment(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsClient::InsertServiceAttachment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::service_attachments::v1::
+        InsertServiceAttachmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertServiceAttachment(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ServiceAttachmentsClient::InsertServiceAttachment(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertServiceAttachment(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
@@ -182,6 +254,24 @@ ServiceAttachmentsClient::PatchServiceAttachment(
   return connection_->PatchServiceAttachment(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsClient::PatchServiceAttachment(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& service_attachment,
+    google::cloud::cpp::compute::v1::ServiceAttachment const&
+        service_attachment_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::service_attachments::v1::
+      PatchServiceAttachmentRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_service_attachment(service_attachment);
+  *request.mutable_service_attachment_resource() = service_attachment_resource;
+  return connection_->PatchServiceAttachment(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsClient::PatchServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
@@ -189,6 +279,26 @@ ServiceAttachmentsClient::PatchServiceAttachment(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchServiceAttachment(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsClient::PatchServiceAttachment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::service_attachments::v1::
+        PatchServiceAttachmentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchServiceAttachment(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ServiceAttachmentsClient::PatchServiceAttachment(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchServiceAttachment(google::cloud::ExperimentalTag{},
+                                             operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

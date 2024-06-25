@@ -50,11 +50,44 @@ future<StatusOr<google::appengine::v1::Service>> ServicesClient::UpdateService(
   return connection_->UpdateService(request);
 }
 
+StatusOr<google::longrunning::Operation> ServicesClient::UpdateService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::UpdateServiceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateService(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::Service>> ServicesClient::UpdateService(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateService(google::cloud::ExperimentalTag{},
+                                    operation);
+}
+
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 ServicesClient::DeleteService(
     google::appengine::v1::DeleteServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(request);
+}
+
+StatusOr<google::longrunning::Operation> ServicesClient::DeleteService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::DeleteServiceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteService(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+ServicesClient::DeleteService(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteService(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

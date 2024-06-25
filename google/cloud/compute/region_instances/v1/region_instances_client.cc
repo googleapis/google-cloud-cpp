@@ -47,6 +47,23 @@ RegionInstancesClient::BulkInsert(
   return connection_->BulkInsert(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstancesClient::BulkInsert(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::BulkInsertInstanceResource const&
+        bulk_insert_instance_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_bulk_insert_instance_resource() =
+      bulk_insert_instance_resource;
+  return connection_->BulkInsert(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstancesClient::BulkInsert(
     google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const&
@@ -54,6 +71,25 @@ RegionInstancesClient::BulkInsert(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BulkInsert(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionInstancesClient::BulkInsert(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkInsert(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionInstancesClient::BulkInsert(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkInsert(google::cloud::ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

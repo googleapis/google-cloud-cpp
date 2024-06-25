@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGLAKE_V1_METASTORE_CLIENT_H
 
 #include "google/cloud/bigquery/biglake/v1/metastore_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

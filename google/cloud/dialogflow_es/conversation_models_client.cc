@@ -44,6 +44,19 @@ ConversationModelsClient::CreateConversationModel(
   return connection_->CreateConversationModel(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsClient::CreateConversationModel(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::dialogflow::v2::ConversationModel const& conversation_model,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::CreateConversationModelRequest request;
+  request.set_parent(parent);
+  *request.mutable_conversation_model() = conversation_model;
+  return connection_->CreateConversationModel(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
 ConversationModelsClient::CreateConversationModel(
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&
@@ -51,6 +64,26 @@ ConversationModelsClient::CreateConversationModel(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversationModel(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsClient::CreateConversationModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConversationModel(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
+ConversationModelsClient::CreateConversationModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConversationModel(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
@@ -97,6 +130,17 @@ ConversationModelsClient::DeleteConversationModel(std::string const& name,
   return connection_->DeleteConversationModel(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsClient::DeleteConversationModel(ExperimentalTag, NoAwaitTag,
+                                                  std::string const& name,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::DeleteConversationModelRequest request;
+  request.set_name(name);
+  return connection_->DeleteConversationModel(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<
     google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
 ConversationModelsClient::DeleteConversationModel(
@@ -105,6 +149,27 @@ ConversationModelsClient::DeleteConversationModel(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConversationModel(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsClient::DeleteConversationModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteConversationModel(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+ConversationModelsClient::DeleteConversationModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteConversationModel(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 future<StatusOr<
@@ -117,6 +182,27 @@ ConversationModelsClient::DeployConversationModel(
   return connection_->DeployConversationModel(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsClient::DeployConversationModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeployConversationModel(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+ConversationModelsClient::DeployConversationModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeployConversationModel(google::cloud::ExperimentalTag{},
+                                              operation);
+}
+
 future<StatusOr<
     google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
 ConversationModelsClient::UndeployConversationModel(
@@ -125,6 +211,27 @@ ConversationModelsClient::UndeployConversationModel(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeployConversationModel(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsClient::UndeployConversationModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UndeployConversationModel(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
+ConversationModelsClient::UndeployConversationModel(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UndeployConversationModel(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -179,6 +286,22 @@ ConversationModelsClient::CreateConversationModelEvaluation(
   return connection_->CreateConversationModelEvaluation(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsClient::CreateConversationModelEvaluation(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::dialogflow::v2::ConversationModelEvaluation const&
+        conversation_model_evaluation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_conversation_model_evaluation() =
+      conversation_model_evaluation;
+  return connection_->CreateConversationModelEvaluation(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
 ConversationModelsClient::CreateConversationModelEvaluation(
     google::cloud::dialogflow::v2::
@@ -186,6 +309,26 @@ ConversationModelsClient::CreateConversationModelEvaluation(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversationModelEvaluation(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsClient::CreateConversationModelEvaluation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::
+        CreateConversationModelEvaluationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConversationModelEvaluation(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
+ConversationModelsClient::CreateConversationModelEvaluation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConversationModelEvaluation(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ALLOYDB_V1_ALLOY_DB_ADMIN_CLIENT_H
 
 #include "google/cloud/alloydb/v1/alloy_db_admin_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -258,6 +260,11 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::alloydb::v1::Cluster const& cluster,
+      std::string const& cluster_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Cluster in a given project and location.
@@ -296,6 +303,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::CreateClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Cluster.
@@ -331,6 +347,11 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
+      google::cloud::alloydb::v1::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -372,6 +393,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::UpdateClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Cluster.
@@ -404,6 +434,9 @@ class AlloyDBAdminClient {
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -443,6 +476,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::DeleteClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Promotes a SECONDARY cluster. This turns down replication
@@ -478,6 +520,9 @@ class AlloyDBAdminClient {
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PromoteCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -520,6 +565,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::PromoteClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> PromoteCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::PromoteClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Cluster in a given project and location, with a volume
@@ -560,6 +614,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::RestoreClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RestoreCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::RestoreClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a cluster of type SECONDARY in the given location using
@@ -595,6 +658,11 @@ class AlloyDBAdminClient {
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
       std::string const& parent,
+      google::cloud::alloydb::v1::Cluster const& cluster,
+      std::string const& cluster_id, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateSecondaryCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::alloydb::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
@@ -636,6 +704,15 @@ class AlloyDBAdminClient {
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
       google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateSecondaryCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -810,6 +887,11 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Instance const& instance,
       std::string const& instance_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::alloydb::v1::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Instance in a given project and location.
@@ -848,6 +930,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::CreateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new SECONDARY Instance in a given project and location.
@@ -884,6 +975,11 @@ class AlloyDBAdminClient {
   CreateSecondaryInstance(std::string const& parent,
                           google::cloud::alloydb::v1::Instance const& instance,
                           std::string const& instance_id, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateSecondaryInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::alloydb::v1::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
 
   // clang-format off
   ///
@@ -923,6 +1019,16 @@ class AlloyDBAdminClient {
   CreateSecondaryInstance(
       google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateSecondaryInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Instance>>
+  CreateSecondaryInstance(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -972,6 +1078,16 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchCreateInstances(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
+  BatchCreateInstances(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Instance.
@@ -1007,6 +1123,11 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
+      google::cloud::alloydb::v1::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1048,6 +1169,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Instance.
@@ -1080,6 +1210,9 @@ class AlloyDBAdminClient {
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
   DeleteInstance(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1120,6 +1253,16 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Forces a Failover for a highly available instance.
@@ -1154,6 +1297,9 @@ class AlloyDBAdminClient {
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> FailoverInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1195,6 +1341,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> FailoverInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::FailoverInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Injects fault in an instance.
@@ -1228,6 +1383,11 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
+      google::cloud::alloydb::v1::InjectFaultRequest::FaultType fault_type,
+      std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> InjectFault(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::InjectFaultRequest::FaultType fault_type,
       std::string const& name, Options opts = {});
 
@@ -1270,6 +1430,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::InjectFaultRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> InjectFault(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::InjectFaultRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Restart an Instance in a cluster.
@@ -1303,6 +1472,9 @@ class AlloyDBAdminClient {
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RestartInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1342,6 +1514,15 @@ class AlloyDBAdminClient {
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
       google::cloud::alloydb::v1::RestartInstanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RestartInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::RestartInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1509,6 +1690,11 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::alloydb::v1::Backup const& backup,
+      std::string const& backup_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Backup in a given project and location.
@@ -1547,6 +1733,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::CreateBackupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Backup>> CreateBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Backup.
@@ -1582,6 +1777,11 @@ class AlloyDBAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
+      google::cloud::alloydb::v1::Backup const& backup,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateBackup(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::Backup const& backup,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1623,6 +1823,15 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::UpdateBackupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Backup.
@@ -1655,6 +1864,11 @@ class AlloyDBAdminClient {
   // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1693,6 +1907,15 @@ class AlloyDBAdminClient {
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
       google::cloud::alloydb::v1::DeleteBackupRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::alloydb::v1::DeleteBackupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

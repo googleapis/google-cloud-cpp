@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_WEB_RISK_CLIENT_H
 
 #include "google/cloud/webrisk/v1/web_risk_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -424,6 +426,15 @@ class WebRiskServiceClient {
   future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
       google::cloud::webrisk::v1::SubmitUriRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> SubmitUri(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::webrisk::v1::SubmitUriRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<WebRiskServiceConnection> connection_;

@@ -119,12 +119,48 @@ IntentsClient::ImportIntents(
   return connection_->ImportIntents(request);
 }
 
+StatusOr<google::longrunning::Operation> IntentsClient::ImportIntents(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportIntents(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+IntentsClient::ImportIntents(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportIntents(google::cloud::ExperimentalTag{},
+                                    operation);
+}
+
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
 IntentsClient::ExportIntents(
     google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportIntents(request);
+}
+
+StatusOr<google::longrunning::Operation> IntentsClient::ExportIntents(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportIntents(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
+IntentsClient::ExportIntents(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportIntents(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

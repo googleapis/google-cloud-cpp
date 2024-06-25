@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_CLIENT_H
 
 #include "google/cloud/metastore/v1/dataproc_metastore_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -287,6 +289,11 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::Service const& service,
       std::string const& service_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateService(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::metastore::v1::Service const& service,
+      std::string const& service_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a metastore service in a project and location.
@@ -324,6 +331,15 @@ class DataprocMetastoreClient {
   future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
       google::cloud::metastore::v1::CreateServiceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::CreateServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -366,6 +382,11 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::Service const& service,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::Service const& service,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single service.
@@ -404,6 +425,15 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::UpdateServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single service.
@@ -438,6 +468,9 @@ class DataprocMetastoreClient {
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteService(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteService(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -477,6 +510,16 @@ class DataprocMetastoreClient {
   DeleteService(
       google::cloud::metastore::v1::DeleteServiceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::DeleteServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+  DeleteService(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -661,6 +704,11 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::MetadataImport const& metadata_import,
       std::string const& metadata_import_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateMetadataImport(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::metastore::v1::MetadataImport const& metadata_import,
+      std::string const& metadata_import_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new MetadataImport in a given project and location.
@@ -699,6 +747,16 @@ class DataprocMetastoreClient {
   CreateMetadataImport(
       google::cloud::metastore::v1::CreateMetadataImportRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateMetadataImport(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::CreateMetadataImportRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+  CreateMetadataImport(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -743,6 +801,11 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::MetadataImport const& metadata_import,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateMetadataImport(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::MetadataImport const& metadata_import,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a single import.
@@ -783,6 +846,16 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::UpdateMetadataImportRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateMetadataImport(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+  UpdateMetadataImport(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
+
   // clang-format off
   ///
   /// Exports metadata from a service.
@@ -820,6 +893,15 @@ class DataprocMetastoreClient {
   future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
       google::cloud::metastore::v1::ExportMetadataRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportMetadata(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::ExportMetadataRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -860,6 +942,10 @@ class DataprocMetastoreClient {
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
       std::string const& service, std::string const& backup, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RestoreService(
+      ExperimentalTag, NoAwaitTag, std::string const& service,
+      std::string const& backup, Options opts = {});
+
   // clang-format off
   ///
   /// Restores a service from a backup.
@@ -897,6 +983,15 @@ class DataprocMetastoreClient {
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
       google::cloud::metastore::v1::RestoreServiceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RestoreService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::RestoreServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1079,6 +1174,11 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::metastore::v1::Backup const& backup,
+      std::string const& backup_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new backup in a given project and location.
@@ -1117,6 +1217,15 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::CreateBackupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single backup.
@@ -1151,6 +1260,11 @@ class DataprocMetastoreClient {
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteBackup(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1188,6 +1302,16 @@ class DataprocMetastoreClient {
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteBackup(google::cloud::metastore::v1::DeleteBackupRequest const& request,
+               Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::DeleteBackupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+  DeleteBackup(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -1229,6 +1353,16 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::QueryMetadataRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> QueryMetadata(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::QueryMetadataRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+  QueryMetadata(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
+
   // clang-format off
   ///
   /// Move a table to another database.
@@ -1267,6 +1401,16 @@ class DataprocMetastoreClient {
   MoveTableToDatabase(
       google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> MoveTableToDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+  MoveTableToDatabase(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1311,6 +1455,18 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> AlterMetadataResourceLocation(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+  AlterMetadataResourceLocation(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts = {});
 
  private:
   std::shared_ptr<DataprocMetastoreConnection> connection_;

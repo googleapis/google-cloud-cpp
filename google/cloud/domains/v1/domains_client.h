@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOMAINS_V1_DOMAINS_CLIENT_H
 
 #include "google/cloud/domains/v1/domains_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -263,6 +265,11 @@ class DomainsClient {
       google::cloud::domains::v1::Registration const& registration,
       google::type::Money const& yearly_price, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RegisterDomain(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::domains::v1::Registration const& registration,
+      google::type::Money const& yearly_price, Options opts = {});
+
   // clang-format off
   ///
   /// Registers a new domain name and creates a corresponding `Registration`
@@ -312,6 +319,15 @@ class DomainsClient {
   future<StatusOr<google::cloud::domains::v1::Registration>> RegisterDomain(
       google::cloud::domains::v1::RegisterDomainRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RegisterDomain(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::RegisterDomainRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::domains::v1::Registration>> RegisterDomain(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -452,6 +468,13 @@ class DomainsClient {
       google::cloud::domains::v1::AuthorizationCode const& authorization_code,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> TransferDomain(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::domains::v1::Registration const& registration,
+      google::type::Money const& yearly_price,
+      google::cloud::domains::v1::AuthorizationCode const& authorization_code,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Transfers a domain name from another registrar to Cloud Domains.  For
@@ -509,6 +532,15 @@ class DomainsClient {
   future<StatusOr<google::cloud::domains::v1::Registration>> TransferDomain(
       google::cloud::domains::v1::TransferDomainRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> TransferDomain(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::TransferDomainRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::domains::v1::Registration>> TransferDomain(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -683,6 +715,11 @@ class DomainsClient {
       google::cloud::domains::v1::Registration const& registration,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateRegistration(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::domains::v1::Registration const& registration,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates select fields of a `Registration` resource, notably `labels`. To
@@ -726,6 +763,15 @@ class DomainsClient {
       google::cloud::domains::v1::UpdateRegistrationRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateRegistration(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::UpdateRegistrationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::domains::v1::Registration>> UpdateRegistration(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a `Registration`'s management settings.
@@ -763,6 +809,11 @@ class DomainsClient {
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureManagementSettings(
       std::string const& registration,
+      google::cloud::domains::v1::ManagementSettings const& management_settings,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
+      ExperimentalTag, NoAwaitTag, std::string const& registration,
       google::cloud::domains::v1::ManagementSettings const& management_settings,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -805,6 +856,17 @@ class DomainsClient {
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  ConfigureManagementSettings(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts = {});
 
   // clang-format off
   ///
@@ -852,6 +914,11 @@ class DomainsClient {
       google::cloud::domains::v1::DnsSettings const& dns_settings,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
+      ExperimentalTag, NoAwaitTag, std::string const& registration,
+      google::cloud::domains::v1::DnsSettings const& dns_settings,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a `Registration`'s DNS settings.
@@ -891,6 +958,16 @@ class DomainsClient {
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  ConfigureDnsSettings(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
+
   // clang-format off
   ///
   /// Updates a `Registration`'s contact settings. Some changes require
@@ -929,6 +1006,11 @@ class DomainsClient {
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureContactSettings(
       std::string const& registration,
+      google::cloud::domains::v1::ContactSettings const& contact_settings,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ConfigureContactSettings(
+      ExperimentalTag, NoAwaitTag, std::string const& registration,
       google::cloud::domains::v1::ContactSettings const& contact_settings,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -973,6 +1055,17 @@ class DomainsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ConfigureContactSettings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::domains::v1::Registration>>
+  ConfigureContactSettings(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Exports a `Registration` resource, such that it is no longer managed by
@@ -1013,6 +1106,9 @@ class DomainsClient {
   // clang-format on
   future<StatusOr<google::cloud::domains::v1::Registration>> ExportRegistration(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportRegistration(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1059,6 +1155,15 @@ class DomainsClient {
   future<StatusOr<google::cloud::domains::v1::Registration>> ExportRegistration(
       google::cloud::domains::v1::ExportRegistrationRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportRegistration(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::ExportRegistrationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::domains::v1::Registration>> ExportRegistration(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1110,6 +1215,9 @@ class DomainsClient {
   // clang-format on
   future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
   DeleteRegistration(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteRegistration(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1167,6 +1275,16 @@ class DomainsClient {
   DeleteRegistration(
       google::cloud::domains::v1::DeleteRegistrationRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteRegistration(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::domains::v1::DeleteRegistrationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
+  DeleteRegistration(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///

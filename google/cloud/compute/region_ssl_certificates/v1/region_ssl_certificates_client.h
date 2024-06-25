@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_SSL_CERTIFICATES_V1_REGION_SSL_CERTIFICATES_CLIENT_H
 
 #include "google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -125,6 +127,11 @@ class RegionSslCertificatesClient {
   DeleteSslCertificate(std::string const& project, std::string const& region,
                        std::string const& ssl_certificate, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificate(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& ssl_certificate,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified SslCertificate resource in the region.
@@ -163,6 +170,18 @@ class RegionSslCertificatesClient {
   DeleteSslCertificate(google::cloud::cpp::compute::region_ssl_certificates::
                            v1::DeleteSslCertificateRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_ssl_certificates::v1::
+          DeleteSslCertificateRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSslCertificate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -266,6 +285,13 @@ class RegionSslCertificatesClient {
                            ssl_certificate_resource,
                        Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificate(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::SslCertificate const&
+          ssl_certificate_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a SslCertificate resource in the specified project and region using
@@ -305,6 +331,18 @@ class RegionSslCertificatesClient {
   InsertSslCertificate(google::cloud::cpp::compute::region_ssl_certificates::
                            v1::InsertSslCertificateRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_ssl_certificates::v1::
+          InsertSslCertificateRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSslCertificate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

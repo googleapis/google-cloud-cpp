@@ -136,6 +136,15 @@ LineageClient::DeleteProcess(std::string const& name, Options opts) {
   return connection_->DeleteProcess(request);
 }
 
+StatusOr<google::longrunning::Operation> LineageClient::DeleteProcess(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datacatalog::lineage::v1::DeleteProcessRequest request;
+  request.set_name(name);
+  return connection_->DeleteProcess(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageClient::DeleteProcess(
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
@@ -143,6 +152,25 @@ LineageClient::DeleteProcess(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteProcess(request);
+}
+
+StatusOr<google::longrunning::Operation> LineageClient::DeleteProcess(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteProcess(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+LineageClient::DeleteProcess(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteProcess(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageClient::CreateRun(
@@ -218,12 +246,38 @@ LineageClient::DeleteRun(std::string const& name, Options opts) {
   return connection_->DeleteRun(request);
 }
 
+StatusOr<google::longrunning::Operation> LineageClient::DeleteRun(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datacatalog::lineage::v1::DeleteRunRequest request;
+  request.set_name(name);
+  return connection_->DeleteRun(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageClient::DeleteRun(
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRun(request);
+}
+
+StatusOr<google::longrunning::Operation> LineageClient::DeleteRun(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRun(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+LineageClient::DeleteRun(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRun(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>

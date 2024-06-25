@@ -124,12 +124,48 @@ ProductServiceClient::PurgeProducts(
   return connection_->PurgeProducts(request);
 }
 
+StatusOr<google::longrunning::Operation> ProductServiceClient::PurgeProducts(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::PurgeProductsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeProducts(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
+ProductServiceClient::PurgeProducts(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeProducts(google::cloud::ExperimentalTag{},
+                                    operation);
+}
+
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceClient::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportProducts(request);
+}
+
+StatusOr<google::longrunning::Operation> ProductServiceClient::ImportProducts(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::ImportProductsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportProducts(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
+ProductServiceClient::ImportProducts(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportProducts(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
@@ -143,12 +179,41 @@ ProductServiceClient::SetInventory(
   return connection_->SetInventory(request);
 }
 
+StatusOr<google::longrunning::Operation> ProductServiceClient::SetInventory(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::Product const& inventory,
+    google::protobuf::FieldMask const& set_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::retail::v2::SetInventoryRequest request;
+  *request.mutable_inventory() = inventory;
+  *request.mutable_set_mask() = set_mask;
+  return connection_->SetInventory(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceClient::SetInventory(
     google::cloud::retail::v2::SetInventoryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetInventory(request);
+}
+
+StatusOr<google::longrunning::Operation> ProductServiceClient::SetInventory(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::SetInventoryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetInventory(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
+ProductServiceClient::SetInventory(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetInventory(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
@@ -160,12 +225,42 @@ ProductServiceClient::AddFulfillmentPlaces(std::string const& product,
   return connection_->AddFulfillmentPlaces(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceClient::AddFulfillmentPlaces(ExperimentalTag, NoAwaitTag,
+                                           std::string const& product,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::retail::v2::AddFulfillmentPlacesRequest request;
+  request.set_product(product);
+  return connection_->AddFulfillmentPlaces(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceClient::AddFulfillmentPlaces(
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddFulfillmentPlaces(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceClient::AddFulfillmentPlaces(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddFulfillmentPlaces(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
+ProductServiceClient::AddFulfillmentPlaces(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddFulfillmentPlaces(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
@@ -177,12 +272,42 @@ ProductServiceClient::RemoveFulfillmentPlaces(std::string const& product,
   return connection_->RemoveFulfillmentPlaces(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceClient::RemoveFulfillmentPlaces(ExperimentalTag, NoAwaitTag,
+                                              std::string const& product,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::retail::v2::RemoveFulfillmentPlacesRequest request;
+  request.set_product(product);
+  return connection_->RemoveFulfillmentPlaces(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceClient::RemoveFulfillmentPlaces(
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveFulfillmentPlaces(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceClient::RemoveFulfillmentPlaces(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveFulfillmentPlaces(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
+ProductServiceClient::RemoveFulfillmentPlaces(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveFulfillmentPlaces(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
@@ -194,12 +319,42 @@ ProductServiceClient::AddLocalInventories(std::string const& product,
   return connection_->AddLocalInventories(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceClient::AddLocalInventories(ExperimentalTag, NoAwaitTag,
+                                          std::string const& product,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::retail::v2::AddLocalInventoriesRequest request;
+  request.set_product(product);
+  return connection_->AddLocalInventories(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
 ProductServiceClient::AddLocalInventories(
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddLocalInventories(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceClient::AddLocalInventories(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddLocalInventories(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+ProductServiceClient::AddLocalInventories(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddLocalInventories(google::cloud::ExperimentalTag{},
+                                          operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
@@ -211,12 +366,42 @@ ProductServiceClient::RemoveLocalInventories(std::string const& product,
   return connection_->RemoveLocalInventories(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceClient::RemoveLocalInventories(ExperimentalTag, NoAwaitTag,
+                                             std::string const& product,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::retail::v2::RemoveLocalInventoriesRequest request;
+  request.set_product(product);
+  return connection_->RemoveLocalInventories(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceClient::RemoveLocalInventories(
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveLocalInventories(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceClient::RemoveLocalInventories(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveLocalInventories(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+ProductServiceClient::RemoveLocalInventories(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveLocalInventories(google::cloud::ExperimentalTag{},
+                                             operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

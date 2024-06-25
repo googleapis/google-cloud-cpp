@@ -40,6 +40,25 @@ AnalyticsServiceClient::ExportAnalyticsMetrics(
   return connection_->ExportAnalyticsMetrics(request);
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsServiceClient::ExportAnalyticsMetrics(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportAnalyticsMetrics(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
+AnalyticsServiceClient::ExportAnalyticsMetrics(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportAnalyticsMetrics(google::cloud::ExperimentalTag{},
+                                             operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2
 }  // namespace cloud

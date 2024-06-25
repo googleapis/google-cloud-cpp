@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_VPN_GATEWAYS_V1_TARGET_VPN_GATEWAYS_CLIENT_H
 
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -211,6 +213,11 @@ class TargetVpnGatewaysClient {
                          std::string const& target_vpn_gateway,
                          Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateway(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& target_vpn_gateway,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified target VPN gateway.
@@ -249,6 +256,18 @@ class TargetVpnGatewaysClient {
   DeleteTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
                              DeleteTargetVpnGatewayRequest const& request,
                          Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          DeleteTargetVpnGatewayRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetVpnGateway(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -351,6 +370,13 @@ class TargetVpnGatewaysClient {
           target_vpn_gateway_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateway(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::TargetVpnGateway const&
+          target_vpn_gateway_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a target VPN gateway in the specified project and region using the
@@ -390,6 +416,18 @@ class TargetVpnGatewaysClient {
   InsertTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
                              InsertTargetVpnGatewayRequest const& request,
                          Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          InsertTargetVpnGatewayRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetVpnGateway(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -512,6 +550,13 @@ class TargetVpnGatewaysClient {
           region_set_labels_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+          region_set_labels_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the labels on a TargetVpnGateway. To learn more about labels, read the
@@ -550,6 +595,17 @@ class TargetVpnGatewaysClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           SetLabelsRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          SetLabelsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

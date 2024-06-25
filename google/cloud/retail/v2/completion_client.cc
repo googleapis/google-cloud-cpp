@@ -48,6 +48,25 @@ CompletionServiceClient::ImportCompletionData(
   return connection_->ImportCompletionData(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceClient::ImportCompletionData(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportCompletionData(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
+CompletionServiceClient::ImportCompletionData(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportCompletionData(google::cloud::ExperimentalTag{},
+                                           operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2
 }  // namespace cloud

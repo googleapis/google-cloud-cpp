@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_V1_ENVIRONMENTS_CLIENT_H
 
 #include "google/cloud/composer/v1/environments_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -126,6 +128,12 @@ class EnvironmentsClient {
           environment,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateEnvironment(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::orchestration::airflow::service::v1::Environment const&
+          environment,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Create a new environment.
@@ -164,6 +172,18 @@ class EnvironmentsClient {
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
                         CreateEnvironmentRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          CreateEnvironmentRequest const& request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -349,6 +369,12 @@ class EnvironmentsClient {
           environment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      google::cloud::orchestration::airflow::service::v1::Environment const&
+          environment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Update an environment.
@@ -389,6 +415,18 @@ class EnvironmentsClient {
                         UpdateEnvironmentRequest const& request,
                     Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateEnvironmentRequest const& request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Delete an environment.
@@ -422,6 +460,9 @@ class EnvironmentsClient {
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -461,6 +502,18 @@ class EnvironmentsClient {
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
                         DeleteEnvironmentRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteEnvironmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  DeleteEnvironment(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1390,6 +1443,18 @@ class EnvironmentsClient {
                    SaveSnapshotRequest const& request,
                Options opts = {});
 
+  StatusOr<google::longrunning::Operation> SaveSnapshot(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          SaveSnapshotRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation,
+               Options opts = {});
+
   // clang-format off
   ///
   /// Loads a snapshot of a Cloud Composer environment.
@@ -1433,6 +1498,18 @@ class EnvironmentsClient {
                    LoadSnapshotRequest const& request,
                Options opts = {});
 
+  StatusOr<google::longrunning::Operation> LoadSnapshot(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          LoadSnapshotRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation,
+               Options opts = {});
+
   // clang-format off
   ///
   /// Triggers database failover (only for highly resilient environments).
@@ -1471,6 +1548,18 @@ class EnvironmentsClient {
                       DatabaseFailoverResponse>>
   DatabaseFailover(google::cloud::orchestration::airflow::service::v1::
                        DatabaseFailoverRequest const& request,
+                   Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DatabaseFailover(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          DatabaseFailoverRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                      DatabaseFailoverResponse>>
+  DatabaseFailover(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off

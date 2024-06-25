@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_ARTIFACT_REGISTRY_CLIENT_H
 
 #include "google/cloud/artifactregistry/v1/artifact_registry_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -678,6 +680,18 @@ class ArtifactRegistryClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportAptArtifacts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Imports Yum (RPM) artifacts. The returned Operation will complete once the
@@ -721,6 +735,18 @@ class ArtifactRegistryClient {
       google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ImportYumArtifacts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -894,6 +920,11 @@ class ArtifactRegistryClient {
       google::devtools::artifactregistry::v1::Repository const& repository,
       std::string const& repository_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::devtools::artifactregistry::v1::Repository const& repository,
+      std::string const& repository_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a repository. The returned Operation will finish once the
@@ -934,6 +965,17 @@ class ArtifactRegistryClient {
       google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
+  CreateRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1030,6 +1072,9 @@ class ArtifactRegistryClient {
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteRepository(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a repository and all of its contents. The returned Operation will
@@ -1071,6 +1116,17 @@ class ArtifactRegistryClient {
       google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1235,6 +1291,9 @@ class ArtifactRegistryClient {
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeletePackage(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeletePackage(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a package and all of its versions and tags. The returned operation
@@ -1275,6 +1334,17 @@ class ArtifactRegistryClient {
       google::devtools::artifactregistry::v1::DeletePackageRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeletePackage(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeletePackage(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1439,6 +1509,9 @@ class ArtifactRegistryClient {
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteVersion(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a version and all of its content. The returned operation will
@@ -1480,6 +1553,17 @@ class ArtifactRegistryClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteVersion(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteVersion(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
+
   // clang-format off
   ///
   /// Deletes multiple versions across a repository. The returned operation will
@@ -1516,6 +1600,10 @@ class ArtifactRegistryClient {
       google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
   BatchDeleteVersions(std::string const& parent,
                       std::vector<std::string> const& names, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchDeleteVersions(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
   ///
@@ -1558,6 +1646,18 @@ class ArtifactRegistryClient {
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchDeleteVersions(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///

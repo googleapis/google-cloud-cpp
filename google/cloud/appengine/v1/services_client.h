@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_SERVICES_CLIENT_H
 
 #include "google/cloud/appengine/v1/services_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -193,6 +195,15 @@ class ServicesClient {
       google::appengine::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::UpdateServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::Service>> UpdateService(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified service and all enclosed versions.
@@ -230,6 +241,15 @@ class ServicesClient {
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
       google::appengine::v1::DeleteServiceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteService(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::DeleteServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ServicesConnection> connection_;

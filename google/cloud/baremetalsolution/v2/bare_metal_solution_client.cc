@@ -76,12 +76,44 @@ BareMetalSolutionClient::UpdateInstance(
   return connection_->UpdateInstance(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::UpdateInstanceRequest request;
+  *request.mutable_instance() = instance;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionClient::UpdateInstance(
     google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::UpdateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionClient::UpdateInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
@@ -111,12 +143,39 @@ BareMetalSolutionClient::ResetInstance(std::string const& name, Options opts) {
   return connection_->ResetInstance(request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::ResetInstance(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::ResetInstanceRequest request;
+  request.set_name(name);
+  return connection_->ResetInstance(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
 BareMetalSolutionClient::ResetInstance(
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResetInstance(request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::ResetInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResetInstance(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
+BareMetalSolutionClient::ResetInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResetInstance(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
@@ -127,12 +186,39 @@ BareMetalSolutionClient::StartInstance(std::string const& name, Options opts) {
   return connection_->StartInstance(request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::StartInstance(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::StartInstanceRequest request;
+  request.set_name(name);
+  return connection_->StartInstance(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
 BareMetalSolutionClient::StartInstance(
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartInstance(request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::StartInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartInstance(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+BareMetalSolutionClient::StartInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartInstance(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
@@ -143,12 +229,38 @@ BareMetalSolutionClient::StopInstance(std::string const& name, Options opts) {
   return connection_->StopInstance(request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::StopInstance(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::StopInstanceRequest request;
+  request.set_name(name);
+  return connection_->StopInstance(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
 BareMetalSolutionClient::StopInstance(
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopInstance(request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::StopInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopInstance(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
+BareMetalSolutionClient::StopInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopInstance(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -162,6 +274,19 @@ BareMetalSolutionClient::EnableInteractiveSerialConsole(std::string const& name,
   return connection_->EnableInteractiveSerialConsole(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::EnableInteractiveSerialConsole(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::EnableInteractiveSerialConsoleRequest
+      request;
+  request.set_name(name);
+  return connection_->EnableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::
                     EnableInteractiveSerialConsoleResponse>>
 BareMetalSolutionClient::EnableInteractiveSerialConsole(
@@ -170,6 +295,27 @@ BareMetalSolutionClient::EnableInteractiveSerialConsole(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EnableInteractiveSerialConsole(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::EnableInteractiveSerialConsole(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::
+        EnableInteractiveSerialConsoleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EnableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::
+                    EnableInteractiveSerialConsoleResponse>>
+BareMetalSolutionClient::EnableInteractiveSerialConsole(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EnableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::
@@ -183,6 +329,17 @@ BareMetalSolutionClient::DisableInteractiveSerialConsole(
   return connection_->DisableInteractiveSerialConsole(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::DisableInteractiveSerialConsole(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::DisableInteractiveSerialConsoleRequest
+      request;
+  request.set_name(name);
+  return connection_->DisableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::
                     DisableInteractiveSerialConsoleResponse>>
 BareMetalSolutionClient::DisableInteractiveSerialConsole(
@@ -191,6 +348,27 @@ BareMetalSolutionClient::DisableInteractiveSerialConsole(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DisableInteractiveSerialConsole(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::DisableInteractiveSerialConsole(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::
+        DisableInteractiveSerialConsoleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::
+                    DisableInteractiveSerialConsoleResponse>>
+BareMetalSolutionClient::DisableInteractiveSerialConsole(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
@@ -203,12 +381,40 @@ BareMetalSolutionClient::DetachLun(std::string const& instance,
   return connection_->DetachLun(request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::DetachLun(
+    ExperimentalTag, NoAwaitTag, std::string const& instance,
+    std::string const& lun, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::DetachLunRequest request;
+  request.set_instance(instance);
+  request.set_lun(lun);
+  return connection_->DetachLun(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionClient::DetachLun(
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetachLun(request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::DetachLun(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DetachLun(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionClient::DetachLun(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DetachLun(google::cloud::ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::SSHKey>
@@ -306,12 +512,41 @@ BareMetalSolutionClient::UpdateVolume(
   return connection_->UpdateVolume(request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::UpdateVolume(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::Volume const& volume,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::UpdateVolumeRequest request;
+  *request.mutable_volume() = volume;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateVolume(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionClient::UpdateVolume(
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVolume(request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::UpdateVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateVolume(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+BareMetalSolutionClient::UpdateVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateVolume(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
@@ -341,12 +576,38 @@ BareMetalSolutionClient::EvictVolume(std::string const& name, Options opts) {
   return connection_->EvictVolume(request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::EvictVolume(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::EvictVolumeRequest request;
+  request.set_name(name);
+  return connection_->EvictVolume(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionClient::EvictVolume(
     google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EvictVolume(request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::EvictVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EvictVolume(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+BareMetalSolutionClient::EvictVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EvictVolume(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
@@ -359,12 +620,40 @@ BareMetalSolutionClient::ResizeVolume(std::string const& volume,
   return connection_->ResizeVolume(request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::ResizeVolume(
+    ExperimentalTag, NoAwaitTag, std::string const& volume,
+    std::int64_t size_gib, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::ResizeVolumeRequest request;
+  request.set_volume(volume);
+  request.set_size_gib(size_gib);
+  return connection_->ResizeVolume(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionClient::ResizeVolume(
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResizeVolume(request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::ResizeVolume(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResizeVolume(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+BareMetalSolutionClient::ResizeVolume(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResizeVolume(google::cloud::ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::Network>
@@ -428,12 +717,42 @@ BareMetalSolutionClient::UpdateNetwork(
   return connection_->UpdateNetwork(request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::UpdateNetwork(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::Network const& network,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::UpdateNetworkRequest request;
+  *request.mutable_network() = network;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateNetwork(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
 BareMetalSolutionClient::UpdateNetwork(
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNetwork(request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::UpdateNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNetwork(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
+BareMetalSolutionClient::UpdateNetwork(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNetwork(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
@@ -466,6 +785,17 @@ BareMetalSolutionClient::RestoreVolumeSnapshot(
   return connection_->RestoreVolumeSnapshot(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::RestoreVolumeSnapshot(
+    ExperimentalTag, NoAwaitTag, std::string const& volume_snapshot,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest request;
+  request.set_volume_snapshot(volume_snapshot);
+  return connection_->RestoreVolumeSnapshot(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
 BareMetalSolutionClient::RestoreVolumeSnapshot(
     google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
@@ -473,6 +803,26 @@ BareMetalSolutionClient::RestoreVolumeSnapshot(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreVolumeSnapshot(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::RestoreVolumeSnapshot(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreVolumeSnapshot(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
+BareMetalSolutionClient::RestoreVolumeSnapshot(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreVolumeSnapshot(google::cloud::ExperimentalTag{},
+                                            operation);
 }
 
 Status BareMetalSolutionClient::DeleteVolumeSnapshot(std::string const& name,
@@ -566,12 +916,38 @@ BareMetalSolutionClient::EvictLun(std::string const& name, Options opts) {
   return connection_->EvictLun(request);
 }
 
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::EvictLun(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::EvictLunRequest request;
+  request.set_name(name);
+  return connection_->EvictLun(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionClient::EvictLun(
     google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->EvictLun(request);
+}
+
+StatusOr<google::longrunning::Operation> BareMetalSolutionClient::EvictLun(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EvictLun(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+BareMetalSolutionClient::EvictLun(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EvictLun(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
@@ -618,12 +994,44 @@ BareMetalSolutionClient::UpdateNfsShare(
   return connection_->UpdateNfsShare(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::UpdateNfsShare(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::UpdateNfsShareRequest request;
+  *request.mutable_nfs_share() = nfs_share;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateNfsShare(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionClient::UpdateNfsShare(
     google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateNfsShare(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::UpdateNfsShare(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNfsShare(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+BareMetalSolutionClient::UpdateNfsShare(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateNfsShare(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
@@ -638,12 +1046,44 @@ BareMetalSolutionClient::CreateNfsShare(
   return connection_->CreateNfsShare(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::CreateNfsShare(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::CreateNfsShareRequest request;
+  request.set_parent(parent);
+  *request.mutable_nfs_share() = nfs_share;
+  return connection_->CreateNfsShare(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionClient::CreateNfsShare(
     google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNfsShare(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::CreateNfsShare(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNfsShare(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+BareMetalSolutionClient::CreateNfsShare(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNfsShare(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
@@ -673,12 +1113,41 @@ BareMetalSolutionClient::DeleteNfsShare(std::string const& name, Options opts) {
   return connection_->DeleteNfsShare(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::DeleteNfsShare(ExperimentalTag, NoAwaitTag,
+                                        std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::baremetalsolution::v2::DeleteNfsShareRequest request;
+  request.set_name(name);
+  return connection_->DeleteNfsShare(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
 BareMetalSolutionClient::DeleteNfsShare(
     google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNfsShare(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionClient::DeleteNfsShare(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNfsShare(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+BareMetalSolutionClient::DeleteNfsShare(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNfsShare(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StreamRange<google::cloud::baremetalsolution::v2::ProvisioningQuota>

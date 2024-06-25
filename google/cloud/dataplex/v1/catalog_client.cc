@@ -45,12 +45,43 @@ CatalogServiceClient::CreateEntryType(
   return connection_->CreateEntryType(request);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceClient::CreateEntryType(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::EntryType const& entry_type,
+    std::string const& entry_type_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CreateEntryTypeRequest request;
+  request.set_parent(parent);
+  *request.mutable_entry_type() = entry_type;
+  request.set_entry_type_id(entry_type_id);
+  return connection_->CreateEntryType(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceClient::CreateEntryType(
     google::cloud::dataplex::v1::CreateEntryTypeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEntryType(request);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceClient::CreateEntryType(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateEntryTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateEntryType(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::EntryType>>
+CatalogServiceClient::CreateEntryType(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateEntryType(google::cloud::ExperimentalTag{},
+                                      operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
@@ -64,12 +95,42 @@ CatalogServiceClient::UpdateEntryType(
   return connection_->UpdateEntryType(request);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceClient::UpdateEntryType(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::EntryType const& entry_type,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::UpdateEntryTypeRequest request;
+  *request.mutable_entry_type() = entry_type;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateEntryType(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceClient::UpdateEntryType(
     google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEntryType(request);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceClient::UpdateEntryType(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEntryType(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::EntryType>>
+CatalogServiceClient::UpdateEntryType(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEntryType(google::cloud::ExperimentalTag{},
+                                      operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -80,12 +141,39 @@ CatalogServiceClient::DeleteEntryType(std::string const& name, Options opts) {
   return connection_->DeleteEntryType(request);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceClient::DeleteEntryType(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::DeleteEntryTypeRequest request;
+  request.set_name(name);
+  return connection_->DeleteEntryType(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceClient::DeleteEntryType(
     google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEntryType(request);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceClient::DeleteEntryType(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteEntryType(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceClient::DeleteEntryType(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteEntryType(google::cloud::ExperimentalTag{},
+                                      operation);
 }
 
 StreamRange<google::cloud::dataplex::v1::EntryType>
@@ -132,12 +220,43 @@ CatalogServiceClient::CreateAspectType(
   return connection_->CreateAspectType(request);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceClient::CreateAspectType(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::AspectType const& aspect_type,
+    std::string const& aspect_type_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CreateAspectTypeRequest request;
+  request.set_parent(parent);
+  *request.mutable_aspect_type() = aspect_type;
+  request.set_aspect_type_id(aspect_type_id);
+  return connection_->CreateAspectType(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceClient::CreateAspectType(
     google::cloud::dataplex::v1::CreateAspectTypeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAspectType(request);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceClient::CreateAspectType(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateAspectTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAspectType(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::AspectType>>
+CatalogServiceClient::CreateAspectType(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAspectType(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
@@ -151,12 +270,42 @@ CatalogServiceClient::UpdateAspectType(
   return connection_->UpdateAspectType(request);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceClient::UpdateAspectType(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::AspectType const& aspect_type,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::UpdateAspectTypeRequest request;
+  *request.mutable_aspect_type() = aspect_type;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAspectType(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceClient::UpdateAspectType(
     google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAspectType(request);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceClient::UpdateAspectType(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAspectType(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::AspectType>>
+CatalogServiceClient::UpdateAspectType(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAspectType(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -167,12 +316,39 @@ CatalogServiceClient::DeleteAspectType(std::string const& name, Options opts) {
   return connection_->DeleteAspectType(request);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceClient::DeleteAspectType(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::DeleteAspectTypeRequest request;
+  request.set_name(name);
+  return connection_->DeleteAspectType(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceClient::DeleteAspectType(
     google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAspectType(request);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceClient::DeleteAspectType(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAspectType(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceClient::DeleteAspectType(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAspectType(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 StreamRange<google::cloud::dataplex::v1::AspectType>
@@ -219,12 +395,43 @@ CatalogServiceClient::CreateEntryGroup(
   return connection_->CreateEntryGroup(request);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceClient::CreateEntryGroup(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::dataplex::v1::EntryGroup const& entry_group,
+    std::string const& entry_group_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::CreateEntryGroupRequest request;
+  request.set_parent(parent);
+  *request.mutable_entry_group() = entry_group;
+  request.set_entry_group_id(entry_group_id);
+  return connection_->CreateEntryGroup(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceClient::CreateEntryGroup(
     google::cloud::dataplex::v1::CreateEntryGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEntryGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceClient::CreateEntryGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::CreateEntryGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateEntryGroup(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
+CatalogServiceClient::CreateEntryGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateEntryGroup(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
@@ -238,12 +445,42 @@ CatalogServiceClient::UpdateEntryGroup(
   return connection_->UpdateEntryGroup(request);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceClient::UpdateEntryGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::EntryGroup const& entry_group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::UpdateEntryGroupRequest request;
+  *request.mutable_entry_group() = entry_group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateEntryGroup(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceClient::UpdateEntryGroup(
     google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateEntryGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceClient::UpdateEntryGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEntryGroup(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
+CatalogServiceClient::UpdateEntryGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEntryGroup(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -254,12 +491,39 @@ CatalogServiceClient::DeleteEntryGroup(std::string const& name, Options opts) {
   return connection_->DeleteEntryGroup(request);
 }
 
+StatusOr<google::longrunning::Operation> CatalogServiceClient::DeleteEntryGroup(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataplex::v1::DeleteEntryGroupRequest request;
+  request.set_name(name);
+  return connection_->DeleteEntryGroup(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceClient::DeleteEntryGroup(
     google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEntryGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> CatalogServiceClient::DeleteEntryGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteEntryGroup(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+CatalogServiceClient::DeleteEntryGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteEntryGroup(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 StreamRange<google::cloud::dataplex::v1::EntryGroup>

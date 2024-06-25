@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_FEDERATION_CLIENT_H
 
 #include "google/cloud/metastore/v1/dataproc_metastore_federation_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -285,6 +287,11 @@ class DataprocMetastoreFederationClient {
       google::cloud::metastore::v1::Federation const& federation,
       std::string const& federation_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateFederation(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::metastore::v1::Federation const& federation,
+      std::string const& federation_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a metastore federation in a project and location.
@@ -322,6 +329,15 @@ class DataprocMetastoreFederationClient {
   future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
       google::cloud::metastore::v1::CreateFederationRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateFederation(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::CreateFederationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -364,6 +380,11 @@ class DataprocMetastoreFederationClient {
       google::cloud::metastore::v1::Federation const& federation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFederation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::Federation const& federation,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the fields of a federation.
@@ -402,6 +423,15 @@ class DataprocMetastoreFederationClient {
       google::cloud::metastore::v1::UpdateFederationRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFederation(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::UpdateFederationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single federation.
@@ -436,6 +466,9 @@ class DataprocMetastoreFederationClient {
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteFederation(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFederation(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -475,6 +508,16 @@ class DataprocMetastoreFederationClient {
   DeleteFederation(
       google::cloud::metastore::v1::DeleteFederationRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFederation(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::metastore::v1::DeleteFederationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+  DeleteFederation(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
  private:
   std::shared_ptr<DataprocMetastoreFederationConnection> connection_;

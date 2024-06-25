@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_V2_POLICIES_CLIENT_H
 
 #include "google/cloud/iam/v2/policies_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -286,6 +288,11 @@ class PoliciesClient {
       std::string const& parent, google::iam::v2::Policy const& policy,
       std::string const& policy_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreatePolicy(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::iam::v2::Policy const& policy, std::string const& policy_id,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a policy.
@@ -322,6 +329,14 @@ class PoliciesClient {
   // clang-format on
   future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
       google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreatePolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
+
+  future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -371,6 +386,14 @@ class PoliciesClient {
   future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
       google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdatePolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
+
+  future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a policy. This action is permanent.
@@ -411,6 +434,11 @@ class PoliciesClient {
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeletePolicy(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a policy. This action is permanent.
@@ -447,6 +475,14 @@ class PoliciesClient {
   // clang-format on
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeletePolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
+
+  future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<PoliciesConnection> connection_;

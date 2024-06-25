@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V2_TPU_CLIENT_H
 
 #include "google/cloud/tpu/v2/tpu_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -250,6 +252,11 @@ class TpuClient {
       std::string const& parent, google::cloud::tpu::v2::Node const& node,
       std::string const& node_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNode(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::tpu::v2::Node const& node, std::string const& node_id,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a node.
@@ -288,6 +295,15 @@ class TpuClient {
       google::cloud::tpu::v2::CreateNodeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::CreateNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a node.
@@ -319,6 +335,11 @@ class TpuClient {
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteNode(ExperimentalTag,
+                                                      NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -358,6 +379,15 @@ class TpuClient {
       google::cloud::tpu::v2::DeleteNodeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::DeleteNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Stops a node. This operation is only available with single TPU nodes.
@@ -395,6 +425,15 @@ class TpuClient {
   future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
       google::cloud::tpu::v2::StopNodeRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StopNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::StopNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -434,6 +473,15 @@ class TpuClient {
       google::cloud::tpu::v2::StartNodeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StartNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::StartNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the configurations of a node.
@@ -468,6 +516,10 @@ class TpuClient {
   // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
       google::cloud::tpu::v2::Node const& node,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateNode(
+      ExperimentalTag, NoAwaitTag, google::cloud::tpu::v2::Node const& node,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -507,6 +559,15 @@ class TpuClient {
   future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
       google::cloud::tpu::v2::UpdateNodeRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateNode(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::tpu::v2::UpdateNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

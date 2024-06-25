@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCES_V1_REGION_INSTANCES_CLIENT_H
 
 #include "google/cloud/compute/region_instances/v1/region_instances_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -124,6 +126,13 @@ class RegionInstancesClient {
           bulk_insert_instance_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::BulkInsertInstanceResource const&
+          bulk_insert_instance_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates multiple instances in a given region. Count specifies the number of
@@ -162,6 +171,17 @@ class RegionInstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
       google::cloud::cpp::compute::region_instances::v1::
           BulkInsertRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_instances::v1::
+          BulkInsertRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

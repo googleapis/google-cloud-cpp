@@ -121,6 +121,22 @@ WebRiskServiceClient::SubmitUri(
   return connection_->SubmitUri(request);
 }
 
+StatusOr<google::longrunning::Operation> WebRiskServiceClient::SubmitUri(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SubmitUri(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::webrisk::v1::Submission>>
+WebRiskServiceClient::SubmitUri(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SubmitUri(google::cloud::ExperimentalTag{}, operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_v1
 }  // namespace cloud

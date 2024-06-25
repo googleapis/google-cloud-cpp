@@ -43,12 +43,41 @@ TagHoldsClient::CreateTagHold(
   return connection_->CreateTagHold(request);
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsClient::CreateTagHold(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::resourcemanager::v3::TagHold const& tag_hold, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::resourcemanager::v3::CreateTagHoldRequest request;
+  request.set_parent(parent);
+  *request.mutable_tag_hold() = tag_hold;
+  return connection_->CreateTagHold(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
 TagHoldsClient::CreateTagHold(
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTagHold(request);
+}
+
+StatusOr<google::longrunning::Operation> TagHoldsClient::CreateTagHold(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateTagHold(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
+TagHoldsClient::CreateTagHold(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateTagHold(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
@@ -59,12 +88,39 @@ TagHoldsClient::DeleteTagHold(std::string const& name, Options opts) {
   return connection_->DeleteTagHold(request);
 }
 
+StatusOr<google::longrunning::Operation> TagHoldsClient::DeleteTagHold(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::resourcemanager::v3::DeleteTagHoldRequest request;
+  request.set_name(name);
+  return connection_->DeleteTagHold(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
 TagHoldsClient::DeleteTagHold(
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTagHold(request);
+}
+
+StatusOr<google::longrunning::Operation> TagHoldsClient::DeleteTagHold(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTagHold(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
+TagHoldsClient::DeleteTagHold(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTagHold(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StreamRange<google::cloud::resourcemanager::v3::TagHold>

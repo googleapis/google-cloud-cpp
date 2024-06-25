@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HTTPS_HEALTH_CHECKS_V1_HTTPS_HEALTH_CHECKS_CLIENT_H
 
 #include "google/cloud/compute/https_health_checks/v1/https_health_checks_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -122,6 +124,10 @@ class HttpsHealthChecksClient {
                          std::string const& https_health_check,
                          Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpsHealthCheck(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& https_health_check, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified HttpsHealthCheck resource.
@@ -160,6 +166,18 @@ class HttpsHealthChecksClient {
   DeleteHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
                              DeleteHttpsHealthCheckRequest const& request,
                          Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpsHealthCheck(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::https_health_checks::v1::
+          DeleteHttpsHealthCheckRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteHttpsHealthCheck(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -260,6 +278,12 @@ class HttpsHealthChecksClient {
           https_health_check_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpsHealthCheck(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::HttpsHealthCheck const&
+          https_health_check_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a HttpsHealthCheck resource in the specified project using the data
@@ -299,6 +323,18 @@ class HttpsHealthChecksClient {
   InsertHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
                              InsertHttpsHealthCheckRequest const& request,
                          Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpsHealthCheck(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::https_health_checks::v1::
+          InsertHttpsHealthCheckRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertHttpsHealthCheck(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -419,6 +455,13 @@ class HttpsHealthChecksClient {
                             https_health_check_resource,
                         Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpsHealthCheck(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& https_health_check,
+      google::cloud::cpp::compute::v1::HttpsHealthCheck const&
+          https_health_check_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates a HttpsHealthCheck resource in the specified project using the data
@@ -460,6 +503,18 @@ class HttpsHealthChecksClient {
                             PatchHttpsHealthCheckRequest const& request,
                         Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpsHealthCheck(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::https_health_checks::v1::
+          PatchHttpsHealthCheckRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchHttpsHealthCheck(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates a HttpsHealthCheck resource in the specified project using the data
@@ -495,6 +550,13 @@ class HttpsHealthChecksClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHttpsHealthCheck(
       std::string const& project, std::string const& https_health_check,
+      google::cloud::cpp::compute::v1::HttpsHealthCheck const&
+          https_health_check_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpsHealthCheck(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& https_health_check,
       google::cloud::cpp::compute::v1::HttpsHealthCheck const&
           https_health_check_resource,
       Options opts = {});
@@ -538,6 +600,18 @@ class HttpsHealthChecksClient {
   UpdateHttpsHealthCheck(google::cloud::cpp::compute::https_health_checks::v1::
                              UpdateHttpsHealthCheckRequest const& request,
                          Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpsHealthCheck(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::https_health_checks::v1::
+          UpdateHttpsHealthCheckRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateHttpsHealthCheck(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<HttpsHealthChecksConnection> connection_;

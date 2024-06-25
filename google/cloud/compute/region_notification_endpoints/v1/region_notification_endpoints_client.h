@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_NOTIFICATION_ENDPOINTS_V1_REGION_NOTIFICATION_ENDPOINTS_CLIENT_H
 
 #include "google/cloud/compute/region_notification_endpoints/v1/region_notification_endpoints_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -129,6 +131,13 @@ class RegionNotificationEndpointsClient {
                              std::string const& notification_endpoint,
                              Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNotificationEndpoint(ExperimentalTag, NoAwaitTag,
+                             std::string const& project,
+                             std::string const& region,
+                             std::string const& notification_endpoint,
+                             Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified NotificationEndpoint in the given region
@@ -167,6 +176,19 @@ class RegionNotificationEndpointsClient {
   DeleteNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           DeleteNotificationEndpointRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNotificationEndpoint(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          DeleteNotificationEndpointRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNotificationEndpoint(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -272,6 +294,14 @@ class RegionNotificationEndpointsClient {
           notification_endpoint_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNotificationEndpoint(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::NotificationEndpoint const&
+          notification_endpoint_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Create a NotificationEndpoint in the specified project in the given region
@@ -311,6 +341,19 @@ class RegionNotificationEndpointsClient {
   InsertNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           InsertNotificationEndpointRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNotificationEndpoint(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          InsertNotificationEndpointRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNotificationEndpoint(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off

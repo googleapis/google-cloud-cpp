@@ -81,12 +81,45 @@ DataprocMetastoreFederationClient::CreateFederation(
   return connection_->CreateFederation(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationClient::CreateFederation(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::metastore::v1::Federation const& federation,
+    std::string const& federation_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::CreateFederationRequest request;
+  request.set_parent(parent);
+  *request.mutable_federation() = federation;
+  request.set_federation_id(federation_id);
+  return connection_->CreateFederation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationClient::CreateFederation(
     google::cloud::metastore::v1::CreateFederationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFederation(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationClient::CreateFederation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::CreateFederationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFederation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Federation>>
+DataprocMetastoreFederationClient::CreateFederation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFederation(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::metastore::v1::Federation>>
@@ -100,12 +133,44 @@ DataprocMetastoreFederationClient::UpdateFederation(
   return connection_->UpdateFederation(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationClient::UpdateFederation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::Federation const& federation,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::UpdateFederationRequest request;
+  *request.mutable_federation() = federation;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateFederation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationClient::UpdateFederation(
     google::cloud::metastore::v1::UpdateFederationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFederation(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationClient::UpdateFederation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::UpdateFederationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFederation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Federation>>
+DataprocMetastoreFederationClient::UpdateFederation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFederation(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -117,12 +182,42 @@ DataprocMetastoreFederationClient::DeleteFederation(std::string const& name,
   return connection_->DeleteFederation(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationClient::DeleteFederation(ExperimentalTag, NoAwaitTag,
+                                                    std::string const& name,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::DeleteFederationRequest request;
+  request.set_name(name);
+  return connection_->DeleteFederation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreFederationClient::DeleteFederation(
     google::cloud::metastore::v1::DeleteFederationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFederation(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreFederationClient::DeleteFederation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::metastore::v1::DeleteFederationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFederation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+DataprocMetastoreFederationClient::DeleteFederation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFederation(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

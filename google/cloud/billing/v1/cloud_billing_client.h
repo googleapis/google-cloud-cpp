@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_CLOUD_BILLING_CLIENT_H
 
 #include "google/cloud/billing/v1/cloud_billing_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"

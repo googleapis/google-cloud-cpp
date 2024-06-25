@@ -51,6 +51,25 @@ RegionSecurityPoliciesClient::AddRule(
   return connection_->AddRule(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::AddRule(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& security_policy,
+    google::cloud::cpp::compute::v1::SecurityPolicyRule const&
+        security_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::AddRuleRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_security_policy(security_policy);
+  *request.mutable_security_policy_rule_resource() =
+      security_policy_rule_resource;
+  return connection_->AddRule(google::cloud::ExperimentalTag{},
+                              google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesClient::AddRule(
     google::cloud::cpp::compute::region_security_policies::v1::
@@ -58,6 +77,25 @@ RegionSecurityPoliciesClient::AddRule(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::AddRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        AddRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddRule(google::cloud::ExperimentalTag{},
+                              google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::AddRule(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddRule(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -73,6 +111,21 @@ RegionSecurityPoliciesClient::DeleteSecurityPolicy(
   return connection_->DeleteSecurityPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::DeleteSecurityPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& security_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::
+      DeleteSecurityPolicyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_security_policy(security_policy);
+  return connection_->DeleteSecurityPolicy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesClient::DeleteSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
@@ -80,6 +133,26 @@ RegionSecurityPoliciesClient::DeleteSecurityPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSecurityPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::DeleteSecurityPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        DeleteSecurityPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSecurityPolicy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::DeleteSecurityPolicy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSecurityPolicy(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -142,6 +215,23 @@ RegionSecurityPoliciesClient::InsertSecurityPolicy(
   return connection_->InsertSecurityPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::InsertSecurityPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::SecurityPolicy const&
+        security_policy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::
+      InsertSecurityPolicyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_security_policy_resource() = security_policy_resource;
+  return connection_->InsertSecurityPolicy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesClient::InsertSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
@@ -149,6 +239,26 @@ RegionSecurityPoliciesClient::InsertSecurityPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSecurityPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::InsertSecurityPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        InsertSecurityPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertSecurityPolicy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::InsertSecurityPolicy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertSecurityPolicy(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -189,6 +299,26 @@ RegionSecurityPoliciesClient::PatchSecurityPolicy(
   return connection_->PatchSecurityPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::PatchSecurityPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& security_policy,
+    std::string const& update_mask,
+    google::cloud::cpp::compute::v1::SecurityPolicy const&
+        security_policy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::
+      PatchSecurityPolicyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_security_policy(security_policy);
+  request.set_update_mask(update_mask);
+  *request.mutable_security_policy_resource() = security_policy_resource;
+  return connection_->PatchSecurityPolicy(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesClient::PatchSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
@@ -196,6 +326,26 @@ RegionSecurityPoliciesClient::PatchSecurityPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSecurityPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::PatchSecurityPolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchSecurityPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchSecurityPolicy(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::PatchSecurityPolicy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchSecurityPolicy(google::cloud::ExperimentalTag{},
+                                          operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -216,6 +366,25 @@ RegionSecurityPoliciesClient::PatchRule(
   return connection_->PatchRule(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::PatchRule(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& security_policy,
+    google::cloud::cpp::compute::v1::SecurityPolicyRule const&
+        security_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::PatchRuleRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_security_policy(security_policy);
+  *request.mutable_security_policy_rule_resource() =
+      security_policy_rule_resource;
+  return connection_->PatchRule(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesClient::PatchRule(
     google::cloud::cpp::compute::region_security_policies::v1::
@@ -223,6 +392,25 @@ RegionSecurityPoliciesClient::PatchRule(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::PatchRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        PatchRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchRule(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::PatchRule(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchRule(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -239,6 +427,22 @@ RegionSecurityPoliciesClient::RemoveRule(std::string const& project,
   return connection_->RemoveRule(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::RemoveRule(ExperimentalTag, NoAwaitTag,
+                                         std::string const& project,
+                                         std::string const& region,
+                                         std::string const& security_policy,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_security_policies::v1::RemoveRuleRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_security_policy(security_policy);
+  return connection_->RemoveRule(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSecurityPoliciesClient::RemoveRule(
     google::cloud::cpp::compute::region_security_policies::v1::
@@ -246,6 +450,25 @@ RegionSecurityPoliciesClient::RemoveRule(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSecurityPoliciesClient::RemoveRule(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_security_policies::v1::
+        RemoveRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveRule(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSecurityPoliciesClient::RemoveRule(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveRule(google::cloud::ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

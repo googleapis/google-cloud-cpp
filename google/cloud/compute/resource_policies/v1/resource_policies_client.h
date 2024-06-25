@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESOURCE_POLICIES_V1_RESOURCE_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/resource_policies/v1/resource_policies_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -207,6 +209,11 @@ class ResourcePoliciesClient {
   DeleteResourcePolicy(std::string const& project, std::string const& region,
                        std::string const& resource_policy, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& resource_policy,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified resource policy.
@@ -245,6 +252,18 @@ class ResourcePoliciesClient {
   DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
                            DeleteResourcePolicyRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::resource_policies::v1::
+          DeleteResourcePolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteResourcePolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -409,6 +428,13 @@ class ResourcePoliciesClient {
                            resource_policy_resource,
                        Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::ResourcePolicy const&
+          resource_policy_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new resource policy.
@@ -447,6 +473,18 @@ class ResourcePoliciesClient {
   InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
                            InsertResourcePolicyRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::resource_policies::v1::
+          InsertResourcePolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertResourcePolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -570,6 +608,14 @@ class ResourcePoliciesClient {
                           resource_policy_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& resource_policy,
+      std::string const& update_mask,
+      google::cloud::cpp::compute::v1::ResourcePolicy const&
+          resource_policy_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Modify the specified resource policy.
@@ -608,6 +654,18 @@ class ResourcePoliciesClient {
   PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
                           PatchResourcePolicyRequest const& request,
                       Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::resource_policies::v1::
+          PatchResourcePolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchResourcePolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_CONTAINER_ANALYSIS_CLIENT_H
 
 #include "google/cloud/containeranalysis/v1/container_analysis_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"

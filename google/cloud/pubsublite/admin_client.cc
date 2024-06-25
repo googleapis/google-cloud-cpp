@@ -238,6 +238,24 @@ AdminServiceClient::SeekSubscription(
   return connection_->SeekSubscription(request);
 }
 
+StatusOr<google::longrunning::Operation> AdminServiceClient::SeekSubscription(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SeekSubscription(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
+AdminServiceClient::SeekSubscription(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SeekSubscription(google::cloud::ExperimentalTag{},
+                                       operation);
+}
+
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceClient::CreateReservation(
     std::string const& parent,

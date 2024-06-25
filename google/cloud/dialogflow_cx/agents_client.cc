@@ -118,11 +118,44 @@ AgentsClient::ExportAgent(
   return connection_->ExportAgent(request);
 }
 
+StatusOr<google::longrunning::Operation> AgentsClient::ExportAgent(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportAgent(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
+AgentsClient::ExportAgent(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportAgent(google::cloud::ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::protobuf::Struct>> AgentsClient::RestoreAgent(
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreAgent(request);
+}
+
+StatusOr<google::longrunning::Operation> AgentsClient::RestoreAgent(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreAgent(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::protobuf::Struct>> AgentsClient::RestoreAgent(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreAgent(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>

@@ -48,6 +48,21 @@ FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(
   return connection_->CreateFeatureOnlineStore(request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::FeatureOnlineStore const&
+        feature_online_store,
+    std::string const& feature_online_store_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest request;
+  request.set_parent(parent);
+  *request.mutable_feature_online_store() = feature_online_store;
+  request.set_feature_online_store_id(feature_online_store_id);
+  return connection_->CreateFeatureOnlineStore(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(
     google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
@@ -55,6 +70,26 @@ FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeatureOnlineStore(request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFeatureOnlineStore(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+FeatureOnlineStoreAdminServiceClient::CreateFeatureOnlineStore(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFeatureOnlineStore(google::cloud::ExperimentalTag{},
+                                               operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
@@ -103,6 +138,20 @@ FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(
   return connection_->UpdateFeatureOnlineStore(request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::FeatureOnlineStore const&
+        feature_online_store,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest request;
+  *request.mutable_feature_online_store() = feature_online_store;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateFeatureOnlineStore(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
 FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(
     google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
@@ -110,6 +159,26 @@ FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeatureOnlineStore(request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFeatureOnlineStore(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureOnlineStore(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFeatureOnlineStore(google::cloud::ExperimentalTag{},
+                                               operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -122,6 +191,18 @@ FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(
   return connection_->DeleteFeatureOnlineStore(request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(
+    ExperimentalTag, NoAwaitTag, std::string const& name, bool force,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest request;
+  request.set_name(name);
+  request.set_force(force);
+  return connection_->DeleteFeatureOnlineStore(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(
     google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
@@ -129,6 +210,26 @@ FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeatureOnlineStore(request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFeatureOnlineStore(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureOnlineStore(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFeatureOnlineStore(google::cloud::ExperimentalTag{},
+                                               operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
@@ -144,12 +245,45 @@ FeatureOnlineStoreAdminServiceClient::CreateFeatureView(
   return connection_->CreateFeatureView(request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::CreateFeatureView(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::FeatureView const& feature_view,
+    std::string const& feature_view_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CreateFeatureViewRequest request;
+  request.set_parent(parent);
+  *request.mutable_feature_view() = feature_view;
+  request.set_feature_view_id(feature_view_id);
+  return connection_->CreateFeatureView(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceClient::CreateFeatureView(
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateFeatureView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::CreateFeatureView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFeatureView(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+FeatureOnlineStoreAdminServiceClient::CreateFeatureView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateFeatureView(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
@@ -197,12 +331,44 @@ FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(
   return connection_->UpdateFeatureView(request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::FeatureView const& feature_view,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateFeatureViewRequest request;
+  *request.mutable_feature_view() = feature_view;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateFeatureView(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(
     google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateFeatureView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFeatureView(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+FeatureOnlineStoreAdminServiceClient::UpdateFeatureView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateFeatureView(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -214,12 +380,43 @@ FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(std::string const& name,
   return connection_->DeleteFeatureView(request);
 }
 
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteFeatureViewRequest request;
+  request.set_name(name);
+  return connection_->DeleteFeatureView(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFeatureView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFeatureView(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+FeatureOnlineStoreAdminServiceClient::DeleteFeatureView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFeatureView(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>

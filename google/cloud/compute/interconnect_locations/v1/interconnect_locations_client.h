@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_LOCATIONS_V1_INTERCONNECT_LOCATIONS_CLIENT_H
 
 #include "google/cloud/compute/interconnect_locations/v1/interconnect_locations_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

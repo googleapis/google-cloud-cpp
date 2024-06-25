@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICSHUB_V1_ANALYTICS_HUB_CLIENT_H
 
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -895,6 +897,9 @@ class AnalyticsHubServiceClient {
       google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
   SubscribeDataExchange(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> SubscribeDataExchange(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Subscription to a Data Exchange. This is a long-running operation
@@ -936,6 +941,18 @@ class AnalyticsHubServiceClient {
                             SubscribeDataExchangeRequest const& request,
                         Options opts = {});
 
+  StatusOr<google::longrunning::Operation> SubscribeDataExchange(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::bigquery::analyticshub::v1::
+          SubscribeDataExchangeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+  SubscribeDataExchange(google::cloud::ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
+
   // clang-format off
   ///
   /// Refreshes a Subscription to a Data Exchange. A Data Exchange can become
@@ -971,6 +988,9 @@ class AnalyticsHubServiceClient {
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
   RefreshSubscription(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RefreshSubscription(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1012,6 +1032,18 @@ class AnalyticsHubServiceClient {
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
   RefreshSubscription(google::cloud::bigquery::analyticshub::v1::
                           RefreshSubscriptionRequest const& request,
+                      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RefreshSubscription(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::bigquery::analyticshub::v1::
+          RefreshSubscriptionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+  RefreshSubscription(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -1323,6 +1355,9 @@ class AnalyticsHubServiceClient {
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
   DeleteSubscription(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteSubscription(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a subscription.
@@ -1360,6 +1395,17 @@ class AnalyticsHubServiceClient {
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
   DeleteSubscription(google::cloud::bigquery::analyticshub::v1::
                          DeleteSubscriptionRequest const& request,
+                     Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteSubscription(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::bigquery::analyticshub::v1::
+          DeleteSubscriptionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+  DeleteSubscription(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off

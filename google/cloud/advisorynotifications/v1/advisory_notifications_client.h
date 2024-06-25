@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_ADVISORY_NOTIFICATIONS_CLIENT_H
 
 #include "google/cloud/advisorynotifications/v1/advisory_notifications_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

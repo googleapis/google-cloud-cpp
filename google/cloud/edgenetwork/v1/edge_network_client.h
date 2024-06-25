@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGENETWORK_V1_EDGE_NETWORK_CLIENT_H
 
 #include "google/cloud/edgenetwork/v1/edge_network_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -506,6 +508,11 @@ class EdgeNetworkClient {
       google::cloud::edgenetwork::v1::Network const& network,
       std::string const& network_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNetwork(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::edgenetwork::v1::Network const& network,
+      std::string const& network_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Network in a given project and location.
@@ -544,6 +551,15 @@ class EdgeNetworkClient {
       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNetwork(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Network.
@@ -575,6 +591,9 @@ class EdgeNetworkClient {
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteNetwork(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteNetwork(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -614,6 +633,16 @@ class EdgeNetworkClient {
   DeleteNetwork(
       google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteNetwork(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteNetwork(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -783,6 +812,11 @@ class EdgeNetworkClient {
       google::cloud::edgenetwork::v1::Subnet const& subnet,
       std::string const& subnet_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateSubnet(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::edgenetwork::v1::Subnet const& subnet,
+      std::string const& subnet_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Subnet in a given project and location.
@@ -821,6 +855,15 @@ class EdgeNetworkClient {
       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateSubnet(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Subnet.
@@ -856,6 +899,11 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+      google::cloud::edgenetwork::v1::Subnet const& subnet,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateSubnet(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::Subnet const& subnet,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -897,6 +945,15 @@ class EdgeNetworkClient {
       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateSubnet(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Subnet.
@@ -928,6 +985,11 @@ class EdgeNetworkClient {
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteSubnet(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteSubnet(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -967,6 +1029,16 @@ class EdgeNetworkClient {
   DeleteSubnet(
       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteSubnet(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteSubnet(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -1330,6 +1402,12 @@ class EdgeNetworkClient {
           interconnect_attachment,
       std::string const& interconnect_attachment_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::edgenetwork::v1::InterconnectAttachment const&
+          interconnect_attachment,
+      std::string const& interconnect_attachment_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new InterconnectAttachment in a given project and location.
@@ -1370,6 +1448,17 @@ class EdgeNetworkClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
+  CreateInterconnectAttachment(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single InterconnectAttachment.
@@ -1401,6 +1490,9 @@ class EdgeNetworkClient {
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteInterconnectAttachment(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1441,6 +1533,17 @@ class EdgeNetworkClient {
       google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteInterconnectAttachment(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -1667,6 +1770,11 @@ class EdgeNetworkClient {
       google::cloud::edgenetwork::v1::Router const& router,
       std::string const& router_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateRouter(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::edgenetwork::v1::Router const& router,
+      std::string const& router_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Router in a given project and location.
@@ -1705,6 +1813,15 @@ class EdgeNetworkClient {
       google::cloud::edgenetwork::v1::CreateRouterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Router.
@@ -1740,6 +1857,11 @@ class EdgeNetworkClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+      google::cloud::edgenetwork::v1::Router const& router,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateRouter(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::Router const& router,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1781,6 +1903,15 @@ class EdgeNetworkClient {
       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Router.
@@ -1812,6 +1943,11 @@ class EdgeNetworkClient {
   // clang-format on
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteRouter(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteRouter(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1851,6 +1987,16 @@ class EdgeNetworkClient {
   DeleteRouter(
       google::cloud::edgenetwork::v1::DeleteRouterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteRouter(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation,
+               Options opts = {});
 
  private:
   std::shared_ptr<EdgeNetworkConnection> connection_;

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_VPN_TUNNELS_V1_VPN_TUNNELS_CLIENT_H
 
 #include "google/cloud/compute/vpn_tunnels/v1/vpn_tunnels_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -201,6 +203,11 @@ class VpnTunnelsClient {
       std::string const& project, std::string const& region,
       std::string const& vpn_tunnel, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnel(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& vpn_tunnel,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified VpnTunnel resource.
@@ -238,6 +245,17 @@ class VpnTunnelsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
       google::cloud::cpp::compute::vpn_tunnels::v1::
           DeleteVpnTunnelRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          DeleteVpnTunnelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -339,6 +357,12 @@ class VpnTunnelsClient {
       google::cloud::cpp::compute::v1::VpnTunnel const& vpn_tunnel_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnel(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::VpnTunnel const& vpn_tunnel_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a VpnTunnel resource in the specified project and region using the
@@ -377,6 +401,17 @@ class VpnTunnelsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
       google::cloud::cpp::compute::vpn_tunnels::v1::
           InsertVpnTunnelRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          InsertVpnTunnelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -499,6 +534,13 @@ class VpnTunnelsClient {
           region_set_labels_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+          region_set_labels_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the labels on a VpnTunnel. To learn more about labels, read the
@@ -537,6 +579,17 @@ class VpnTunnelsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

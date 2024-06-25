@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_MIGRATION_CLIENT_H
 
 #include "google/cloud/bigquery/migration/v2/migration_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

@@ -65,6 +65,20 @@ SslCertificatesClient::DeleteSslCertificate(std::string const& project,
   return connection_->DeleteSslCertificate(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslCertificatesClient::DeleteSslCertificate(ExperimentalTag, NoAwaitTag,
+                                            std::string const& project,
+                                            std::string const& ssl_certificate,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::ssl_certificates::v1::DeleteSslCertificateRequest
+      request;
+  request.set_project(project);
+  request.set_ssl_certificate(ssl_certificate);
+  return connection_->DeleteSslCertificate(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslCertificatesClient::DeleteSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
@@ -72,6 +86,26 @@ SslCertificatesClient::DeleteSslCertificate(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSslCertificate(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslCertificatesClient::DeleteSslCertificate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::ssl_certificates::v1::
+        DeleteSslCertificateRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSslCertificate(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SslCertificatesClient::DeleteSslCertificate(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSslCertificate(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslCertificate>
@@ -109,6 +143,21 @@ SslCertificatesClient::InsertSslCertificate(
   return connection_->InsertSslCertificate(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslCertificatesClient::InsertSslCertificate(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::SslCertificate const&
+        ssl_certificate_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::ssl_certificates::v1::InsertSslCertificateRequest
+      request;
+  request.set_project(project);
+  *request.mutable_ssl_certificate_resource() = ssl_certificate_resource;
+  return connection_->InsertSslCertificate(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslCertificatesClient::InsertSslCertificate(
     google::cloud::cpp::compute::ssl_certificates::v1::
@@ -116,6 +165,26 @@ SslCertificatesClient::InsertSslCertificate(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSslCertificate(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SslCertificatesClient::InsertSslCertificate(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::ssl_certificates::v1::
+        InsertSslCertificateRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertSslCertificate(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SslCertificatesClient::InsertSslCertificate(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertSslCertificate(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslCertificate>

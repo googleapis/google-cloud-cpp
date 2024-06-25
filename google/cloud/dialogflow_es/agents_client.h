@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_AGENTS_CLIENT_H
 
 #include "google/cloud/dialogflow_es/agents_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -391,6 +393,11 @@ class AgentsClient {
   future<StatusOr<google::protobuf::Struct>> TrainAgent(
       std::string const& parent, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> TrainAgent(ExperimentalTag,
+                                                      NoAwaitTag,
+                                                      std::string const& parent,
+                                                      Options opts = {});
+
   // clang-format off
   ///
   /// Trains the specified agent.
@@ -442,6 +449,15 @@ class AgentsClient {
       google::cloud::dialogflow::v2::TrainAgentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> TrainAgent(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::TrainAgentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> TrainAgent(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Exports the specified agent to a ZIP file.
@@ -483,6 +499,10 @@ class AgentsClient {
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
   ExportAgent(std::string const& parent, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportAgent(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -529,6 +549,16 @@ class AgentsClient {
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
   ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request,
+              Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportAgent(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::ExportAgentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
+  ExportAgent(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -596,6 +626,15 @@ class AgentsClient {
       google::cloud::dialogflow::v2::ImportAgentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportAgent(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> ImportAgent(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Restores the specified agent from a ZIP file.
@@ -658,6 +697,15 @@ class AgentsClient {
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RestoreAgent(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> RestoreAgent(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

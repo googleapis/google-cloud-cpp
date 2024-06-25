@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_V3_TRANSLATION_CLIENT_H
 
 #include "google/cloud/translate/v3/translation_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -477,6 +479,16 @@ class TranslationServiceClient {
       google::cloud::translation::v3::BatchTranslateTextRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchTranslateText(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateTextRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
+  BatchTranslateText(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Translates a large volume of document in asynchronous batch mode.
@@ -544,6 +556,17 @@ class TranslationServiceClient {
           output_config,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchTranslateDocument(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& source_language_code,
+      std::vector<std::string> const& target_language_codes,
+      std::vector<
+          google::cloud::translation::v3::BatchDocumentInputConfig> const&
+          input_configs,
+      google::cloud::translation::v3::BatchDocumentOutputConfig const&
+          output_config,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Translates a large volume of document in asynchronous batch mode.
@@ -591,6 +614,18 @@ class TranslationServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchTranslateDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+  BatchTranslateDocument(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Creates a glossary and returns the long-running operation. Returns
@@ -624,6 +659,11 @@ class TranslationServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
       std::string const& parent,
+      google::cloud::translation::v3::Glossary const& glossary,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateGlossary(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::translation::v3::Glossary const& glossary,
       Options opts = {});
 
@@ -665,6 +705,15 @@ class TranslationServiceClient {
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
       google::cloud::translation::v3::CreateGlossaryRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateGlossary(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::CreateGlossaryRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -834,6 +883,9 @@ class TranslationServiceClient {
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
   DeleteGlossary(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteGlossary(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a glossary, or cancels glossary construction
@@ -874,6 +926,16 @@ class TranslationServiceClient {
   DeleteGlossary(
       google::cloud::translation::v3::DeleteGlossaryRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteGlossary(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::translation::v3::DeleteGlossaryRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
+  DeleteGlossary(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///

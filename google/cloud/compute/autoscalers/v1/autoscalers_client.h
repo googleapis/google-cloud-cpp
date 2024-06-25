@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_AUTOSCALERS_V1_AUTOSCALERS_CLIENT_H
 
 #include "google/cloud/compute/autoscalers/v1/autoscalers_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -203,6 +205,11 @@ class AutoscalersClient {
       std::string const& project, std::string const& zone,
       std::string const& autoscaler, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& autoscaler,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified autoscaler.
@@ -240,6 +247,17 @@ class AutoscalersClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
       google::cloud::cpp::compute::autoscalers::v1::
           DeleteAutoscalerRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::autoscalers::v1::
+          DeleteAutoscalerRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -341,6 +359,12 @@ class AutoscalersClient {
       google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone,
+      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an autoscaler in the specified project using the data included in
@@ -379,6 +403,17 @@ class AutoscalersClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
       google::cloud::cpp::compute::autoscalers::v1::
           InsertAutoscalerRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::autoscalers::v1::
+          InsertAutoscalerRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -497,6 +532,12 @@ class AutoscalersClient {
       google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone,
+      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates an autoscaler in the specified project using the data included in
@@ -538,6 +579,17 @@ class AutoscalersClient {
           PatchAutoscalerRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::autoscalers::v1::
+          PatchAutoscalerRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates an autoscaler in the specified project using the data included in
@@ -572,6 +624,12 @@ class AutoscalersClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
       std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone,
       google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
       Options opts = {});
 
@@ -613,6 +671,17 @@ class AutoscalersClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
       google::cloud::cpp::compute::autoscalers::v1::
           UpdateAutoscalerRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::autoscalers::v1::
+          UpdateAutoscalerRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUPS_V1_INSTANCE_GROUPS_CLIENT_H
 
 #include "google/cloud/compute/instance_groups/v1/instance_groups_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -128,6 +130,13 @@ class InstanceGroupsClient {
           instance_groups_add_instances_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& instance_group,
+      google::cloud::cpp::compute::v1::InstanceGroupsAddInstancesRequest const&
+          instance_groups_add_instances_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Adds a list of instances to the specified instance group. All of the
@@ -167,6 +176,17 @@ class InstanceGroupsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
       google::cloud::cpp::compute::instance_groups::v1::
           AddInstancesRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstances(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::
+          AddInstancesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddInstances(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -290,6 +310,11 @@ class InstanceGroupsClient {
   DeleteInstanceGroup(std::string const& project, std::string const& zone,
                       std::string const& instance_group, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroup(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& instance_group,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified instance group. The instances in the group are not
@@ -330,6 +355,18 @@ class InstanceGroupsClient {
   DeleteInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
                           DeleteInstanceGroupRequest const& request,
                       Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceGroup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::
+          DeleteInstanceGroupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstanceGroup(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -437,6 +474,13 @@ class InstanceGroupsClient {
                           instance_group_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroup(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone,
+      google::cloud::cpp::compute::v1::InstanceGroup const&
+          instance_group_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an instance group in the specified project using the parameters
@@ -476,6 +520,18 @@ class InstanceGroupsClient {
   InsertInstanceGroup(google::cloud::cpp::compute::instance_groups::v1::
                           InsertInstanceGroupRequest const& request,
                       Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceGroup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::
+          InsertInstanceGroupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInstanceGroup(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -695,6 +751,14 @@ class InstanceGroupsClient {
               instance_groups_remove_instances_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& instance_group,
+      google::cloud::cpp::compute::v1::
+          InstanceGroupsRemoveInstancesRequest const&
+              instance_groups_remove_instances_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Removes one or more instances from the specified instance group, but does
@@ -737,6 +801,17 @@ class InstanceGroupsClient {
           RemoveInstancesRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstances(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::
+          RemoveInstancesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveInstances(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the named ports for the specified instance group.
@@ -772,6 +847,13 @@ class InstanceGroupsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
       std::string const& project, std::string const& zone,
       std::string const& instance_group,
+      google::cloud::cpp::compute::v1::InstanceGroupsSetNamedPortsRequest const&
+          instance_groups_set_named_ports_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& instance_group,
       google::cloud::cpp::compute::v1::InstanceGroupsSetNamedPortsRequest const&
           instance_groups_set_named_ports_request_resource,
       Options opts = {});
@@ -813,6 +895,17 @@ class InstanceGroupsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
       google::cloud::cpp::compute::instance_groups::v1::
           SetNamedPortsRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instance_groups::v1::
+          SetNamedPortsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

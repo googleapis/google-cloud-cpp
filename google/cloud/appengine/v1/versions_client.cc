@@ -50,10 +50,42 @@ future<StatusOr<google::appengine::v1::Version>> VersionsClient::CreateVersion(
   return connection_->CreateVersion(request);
 }
 
+StatusOr<google::longrunning::Operation> VersionsClient::CreateVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::CreateVersionRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateVersion(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::Version>> VersionsClient::CreateVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateVersion(google::cloud::ExperimentalTag{},
+                                    operation);
+}
+
 future<StatusOr<google::appengine::v1::Version>> VersionsClient::UpdateVersion(
     google::appengine::v1::UpdateVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVersion(request);
+}
+
+StatusOr<google::longrunning::Operation> VersionsClient::UpdateVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::UpdateVersionRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateVersion(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::Version>> VersionsClient::UpdateVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateVersion(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
@@ -61,6 +93,23 @@ VersionsClient::DeleteVersion(
     google::appengine::v1::DeleteVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVersion(request);
+}
+
+StatusOr<google::longrunning::Operation> VersionsClient::DeleteVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::appengine::v1::DeleteVersionRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteVersion(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+VersionsClient::DeleteVersion(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteVersion(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

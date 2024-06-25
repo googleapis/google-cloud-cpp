@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_ZONAL_CLIENT_H
 
 #include "google/cloud/osconfig/v1/os_config_zonal_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -146,6 +148,12 @@ class OsConfigZonalServiceClient {
           os_policy_assignment,
       std::string const& os_policy_assignment_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::osconfig::v1::OSPolicyAssignment const&
+          os_policy_assignment,
+      std::string const& os_policy_assignment_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create an OS policy assignment.
@@ -194,6 +202,17 @@ class OsConfigZonalServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+  CreateOSPolicyAssignment(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Update an existing OS policy assignment.
@@ -235,6 +254,12 @@ class OsConfigZonalServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
   UpdateOSPolicyAssignment(
+      google::cloud::osconfig::v1::OSPolicyAssignment const&
+          os_policy_assignment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::OSPolicyAssignment const&
           os_policy_assignment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -286,6 +311,17 @@ class OsConfigZonalServiceClient {
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+  UpdateOSPolicyAssignment(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -554,6 +590,9 @@ class OsConfigZonalServiceClient {
       google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
   DeleteOSPolicyAssignment(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Delete the OS policy assignment.
@@ -605,6 +644,18 @@ class OsConfigZonalServiceClient {
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+  DeleteOSPolicyAssignment(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///

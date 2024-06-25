@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_CLIENT_H
 
 #include "google/cloud/kms/v1/autokey_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -149,6 +151,11 @@ class AutokeyClient {
       google::cloud::kms::v1::KeyHandle const& key_handle,
       std::string const& key_handle_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateKeyHandle(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::kms::v1::KeyHandle const& key_handle,
+      std::string const& key_handle_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new [KeyHandle][google.cloud.kms.v1.KeyHandle], triggering the
@@ -192,6 +199,15 @@ class AutokeyClient {
   future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
       google::cloud::kms::v1::CreateKeyHandleRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateKeyHandle(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::kms::v1::CreateKeyHandleRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

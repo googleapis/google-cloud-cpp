@@ -67,6 +67,21 @@ PublicDelegatedPrefixesClient::Announce(
   return connection_->Announce(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::Announce(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& public_delegated_prefix,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::public_delegated_prefixes::v1::AnnounceRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_public_delegated_prefix(public_delegated_prefix);
+  return connection_->Announce(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesClient::Announce(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
@@ -74,6 +89,25 @@ PublicDelegatedPrefixesClient::Announce(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Announce(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::Announce(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        AnnounceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Announce(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicDelegatedPrefixesClient::Announce(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Announce(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -89,6 +123,21 @@ PublicDelegatedPrefixesClient::DeletePublicDelegatedPrefix(
   return connection_->DeletePublicDelegatedPrefix(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::DeletePublicDelegatedPrefix(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& public_delegated_prefix,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::public_delegated_prefixes::v1::
+      DeletePublicDelegatedPrefixRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_public_delegated_prefix(public_delegated_prefix);
+  return connection_->DeletePublicDelegatedPrefix(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesClient::DeletePublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
@@ -96,6 +145,26 @@ PublicDelegatedPrefixesClient::DeletePublicDelegatedPrefix(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePublicDelegatedPrefix(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::DeletePublicDelegatedPrefix(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        DeletePublicDelegatedPrefixRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePublicDelegatedPrefix(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicDelegatedPrefixesClient::DeletePublicDelegatedPrefix(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePublicDelegatedPrefix(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -136,6 +205,24 @@ PublicDelegatedPrefixesClient::InsertPublicDelegatedPrefix(
   return connection_->InsertPublicDelegatedPrefix(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::InsertPublicDelegatedPrefix(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
+        public_delegated_prefix_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::public_delegated_prefixes::v1::
+      InsertPublicDelegatedPrefixRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_public_delegated_prefix_resource() =
+      public_delegated_prefix_resource;
+  return connection_->InsertPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesClient::InsertPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
@@ -143,6 +230,26 @@ PublicDelegatedPrefixesClient::InsertPublicDelegatedPrefix(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertPublicDelegatedPrefix(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::InsertPublicDelegatedPrefix(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        InsertPublicDelegatedPrefixRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicDelegatedPrefixesClient::InsertPublicDelegatedPrefix(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -183,6 +290,25 @@ PublicDelegatedPrefixesClient::PatchPublicDelegatedPrefix(
   return connection_->PatchPublicDelegatedPrefix(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::PatchPublicDelegatedPrefix(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& public_delegated_prefix,
+    google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
+        public_delegated_prefix_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::public_delegated_prefixes::v1::
+      PatchPublicDelegatedPrefixRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_public_delegated_prefix(public_delegated_prefix);
+  *request.mutable_public_delegated_prefix_resource() =
+      public_delegated_prefix_resource;
+  return connection_->PatchPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesClient::PatchPublicDelegatedPrefix(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
@@ -190,6 +316,26 @@ PublicDelegatedPrefixesClient::PatchPublicDelegatedPrefix(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchPublicDelegatedPrefix(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::PatchPublicDelegatedPrefix(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        PatchPublicDelegatedPrefixRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicDelegatedPrefixesClient::PatchPublicDelegatedPrefix(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchPublicDelegatedPrefix(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -205,6 +351,21 @@ PublicDelegatedPrefixesClient::Withdraw(
   return connection_->Withdraw(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::Withdraw(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& public_delegated_prefix,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::public_delegated_prefixes::v1::WithdrawRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_public_delegated_prefix(public_delegated_prefix);
+  return connection_->Withdraw(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesClient::Withdraw(
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
@@ -212,6 +373,25 @@ PublicDelegatedPrefixesClient::Withdraw(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Withdraw(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+PublicDelegatedPrefixesClient::Withdraw(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::public_delegated_prefixes::v1::
+        WithdrawRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Withdraw(google::cloud::ExperimentalTag{},
+                               google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+PublicDelegatedPrefixesClient::Withdraw(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Withdraw(google::cloud::ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

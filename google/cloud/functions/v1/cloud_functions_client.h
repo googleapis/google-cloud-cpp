@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_CLOUD_FUNCTIONS_CLIENT_H
 
 #include "google/cloud/functions/v1/cloud_functions_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -224,6 +226,11 @@ class CloudFunctionsServiceClient {
       google::cloud::functions::v1::CloudFunction const& function,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateFunction(
+      ExperimentalTag, NoAwaitTag, std::string const& location,
+      google::cloud::functions::v1::CloudFunction const& function,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new function. If a function with the given name already exists in
@@ -264,6 +271,15 @@ class CloudFunctionsServiceClient {
       google::cloud::functions::v1::CreateFunctionRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateFunction(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::functions::v1::CreateFunctionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates existing function.
@@ -294,6 +310,11 @@ class CloudFunctionsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
+      google::cloud::functions::v1::CloudFunction const& function,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateFunction(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v1::CloudFunction const& function,
       Options opts = {});
 
@@ -335,6 +356,15 @@ class CloudFunctionsServiceClient {
       google::cloud::functions::v1::UpdateFunctionRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFunction(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::functions::v1::UpdateFunctionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a function with the given name from the specified project. If the
@@ -368,6 +398,9 @@ class CloudFunctionsServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
   DeleteFunction(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFunction(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -409,6 +442,16 @@ class CloudFunctionsServiceClient {
   DeleteFunction(
       google::cloud::functions::v1::DeleteFunctionRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFunction(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::functions::v1::DeleteFunctionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
+  DeleteFunction(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///

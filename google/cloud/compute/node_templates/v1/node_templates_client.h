@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TEMPLATES_V1_NODE_TEMPLATES_CLIENT_H
 
 #include "google/cloud/compute/node_templates/v1/node_templates_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -203,6 +205,11 @@ class NodeTemplatesClient {
   DeleteNodeTemplate(std::string const& project, std::string const& region,
                      std::string const& node_template, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& node_template,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified NodeTemplate resource.
@@ -241,6 +248,18 @@ class NodeTemplatesClient {
   DeleteNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
                          DeleteNodeTemplateRequest const& request,
                      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::node_templates::v1::
+          DeleteNodeTemplateRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNodeTemplate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -406,6 +425,13 @@ class NodeTemplatesClient {
                          node_template_resource,
                      Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::NodeTemplate const&
+          node_template_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a NodeTemplate resource in the specified project using the data
@@ -445,6 +471,18 @@ class NodeTemplatesClient {
   InsertNodeTemplate(google::cloud::cpp::compute::node_templates::v1::
                          InsertNodeTemplateRequest const& request,
                      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::node_templates::v1::
+          InsertNodeTemplateRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNodeTemplate(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_AGENTS_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/agents_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -451,6 +453,16 @@ class AgentsClient {
       google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ExportAgent(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
+  ExportAgent(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation,
+              Options opts = {});
+
   // clang-format off
   ///
   /// Restores the specified agent from a binary file.
@@ -504,6 +516,15 @@ class AgentsClient {
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RestoreAgent(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> RestoreAgent(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

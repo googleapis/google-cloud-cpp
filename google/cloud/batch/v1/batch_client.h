@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BATCH_V1_BATCH_CLIENT_H
 
 #include "google/cloud/batch/v1/batch_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -245,6 +247,11 @@ class BatchServiceClient {
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
       std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteJob(ExperimentalTag,
+                                                     NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
+
   // clang-format off
   ///
   /// Delete a Job.
@@ -282,6 +289,15 @@ class BatchServiceClient {
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
       google::cloud::batch::v1::DeleteJobRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::batch::v1::DeleteJobRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

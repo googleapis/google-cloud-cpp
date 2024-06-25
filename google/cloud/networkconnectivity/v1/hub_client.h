@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_HUB_CLIENT_H
 
 #include "google/cloud/networkconnectivity/v1/hub_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -253,6 +255,11 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::Hub const& hub,
       std::string const& hub_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateHub(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::networkconnectivity::v1::Hub const& hub,
+      std::string const& hub_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Network Connectivity Center hub in the specified project.
@@ -291,6 +298,15 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateHub(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the description and/or labels of a Network Connectivity Center
@@ -327,6 +343,11 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
+      google::cloud::networkconnectivity::v1::Hub const& hub,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateHub(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::Hub const& hub,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -369,6 +390,15 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateHub(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a Network Connectivity Center hub.
@@ -400,6 +430,11 @@ class HubServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteHub(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteHub(ExperimentalTag,
+                                                     NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -439,6 +474,15 @@ class HubServiceClient {
   DeleteHub(
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteHub(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteHub(google::cloud::ExperimentalTag,
+            google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -686,6 +730,11 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::Spoke const& spoke,
       std::string const& spoke_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateSpoke(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::networkconnectivity::v1::Spoke const& spoke,
+      std::string const& spoke_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Network Connectivity Center spoke.
@@ -724,6 +773,15 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateSpoke(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a Network Connectivity Center spoke.
@@ -759,6 +817,11 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
+      google::cloud::networkconnectivity::v1::Spoke const& spoke,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateSpoke(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::Spoke const& spoke,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -800,6 +863,15 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateSpoke(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Rejects a Network Connectivity Center spoke from being attached to a hub.
@@ -837,6 +909,10 @@ class HubServiceClient {
       StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
   RejectHubSpoke(std::string const& name, std::string const& spoke_uri,
                  Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RejectHubSpoke(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      std::string const& spoke_uri, Options opts = {});
 
   // clang-format off
   ///
@@ -882,6 +958,18 @@ class HubServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RejectHubSpoke(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Accepts a proposal to attach a Network Connectivity Center spoke
@@ -917,6 +1005,10 @@ class HubServiceClient {
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
   AcceptHubSpoke(std::string const& name, std::string const& spoke_uri,
                  Options opts = {});
+
+  StatusOr<google::longrunning::Operation> AcceptHubSpoke(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      std::string const& spoke_uri, Options opts = {});
 
   // clang-format off
   ///
@@ -960,6 +1052,18 @@ class HubServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> AcceptHubSpoke(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a Network Connectivity Center spoke.
@@ -991,6 +1095,11 @@ class HubServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteSpoke(ExperimentalTag,
+                                                       NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -1030,6 +1139,16 @@ class HubServiceClient {
   DeleteSpoke(
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteSpoke(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteSpoke(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///

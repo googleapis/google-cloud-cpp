@@ -43,6 +43,19 @@ GlobalAddressesClient::DeleteAddress(std::string const& project,
   return connection_->DeleteAddress(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesClient::DeleteAddress(ExperimentalTag, NoAwaitTag,
+                                     std::string const& project,
+                                     std::string const& address, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::global_addresses::v1::DeleteAddressRequest
+      request;
+  request.set_project(project);
+  request.set_address(address);
+  return connection_->DeleteAddress(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesClient::DeleteAddress(
     google::cloud::cpp::compute::global_addresses::v1::
@@ -50,6 +63,26 @@ GlobalAddressesClient::DeleteAddress(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAddress(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesClient::DeleteAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::
+        DeleteAddressRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAddress(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesClient::DeleteAddress(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAddress(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Address>
@@ -84,6 +117,20 @@ GlobalAddressesClient::InsertAddress(
   return connection_->InsertAddress(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesClient::InsertAddress(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::Address const& address_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::global_addresses::v1::InsertAddressRequest
+      request;
+  request.set_project(project);
+  *request.mutable_address_resource() = address_resource;
+  return connection_->InsertAddress(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesClient::InsertAddress(
     google::cloud::cpp::compute::global_addresses::v1::
@@ -91,6 +138,26 @@ GlobalAddressesClient::InsertAddress(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertAddress(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesClient::InsertAddress(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::
+        InsertAddressRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertAddress(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesClient::InsertAddress(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertAddress(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Address>
@@ -127,6 +194,23 @@ GlobalAddressesClient::Move(
   return connection_->Move(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesClient::Move(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& address,
+    google::cloud::cpp::compute::v1::GlobalAddressesMoveRequest const&
+        global_addresses_move_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::global_addresses::v1::MoveRequest request;
+  request.set_project(project);
+  request.set_address(address);
+  *request.mutable_global_addresses_move_request_resource() =
+      global_addresses_move_request_resource;
+  return connection_->Move(google::cloud::ExperimentalTag{},
+                           google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesClient::Move(
     google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
@@ -134,6 +218,25 @@ GlobalAddressesClient::Move(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Move(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesClient::Move(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Move(google::cloud::ExperimentalTag{},
+                           google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesClient::Move(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Move(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -151,6 +254,23 @@ GlobalAddressesClient::SetLabels(
   return connection_->SetLabels(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesClient::SetLabels(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& resource,
+    google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+        global_set_labels_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest request;
+  request.set_project(project);
+  request.set_resource(resource);
+  *request.mutable_global_set_labels_request_resource() =
+      global_set_labels_request_resource;
+  return connection_->SetLabels(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesClient::SetLabels(
     google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
@@ -158,6 +278,25 @@ GlobalAddressesClient::SetLabels(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+GlobalAddressesClient::SetLabels(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+GlobalAddressesClient::SetLabels(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(google::cloud::ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

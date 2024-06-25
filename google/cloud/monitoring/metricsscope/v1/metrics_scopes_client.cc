@@ -71,6 +71,20 @@ MetricsScopesClient::CreateMonitoredProject(
   return connection_->CreateMonitoredProject(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MetricsScopesClient::CreateMonitoredProject(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::monitoring::metricsscope::v1::MonitoredProject const&
+        monitored_project,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest request;
+  request.set_parent(parent);
+  *request.mutable_monitored_project() = monitored_project;
+  return connection_->CreateMonitoredProject(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesClient::CreateMonitoredProject(
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
@@ -78,6 +92,26 @@ MetricsScopesClient::CreateMonitoredProject(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMonitoredProject(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MetricsScopesClient::CreateMonitoredProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMonitoredProject(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
+MetricsScopesClient::CreateMonitoredProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMonitoredProject(google::cloud::ExperimentalTag{},
+                                             operation);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
@@ -89,6 +123,17 @@ MetricsScopesClient::DeleteMonitoredProject(std::string const& name,
   return connection_->DeleteMonitoredProject(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MetricsScopesClient::DeleteMonitoredProject(ExperimentalTag, NoAwaitTag,
+                                            std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest request;
+  request.set_name(name);
+  return connection_->DeleteMonitoredProject(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesClient::DeleteMonitoredProject(
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
@@ -96,6 +141,26 @@ MetricsScopesClient::DeleteMonitoredProject(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteMonitoredProject(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MetricsScopesClient::DeleteMonitoredProject(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMonitoredProject(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
+MetricsScopesClient::DeleteMonitoredProject(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteMonitoredProject(google::cloud::ExperimentalTag{},
+                                             operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

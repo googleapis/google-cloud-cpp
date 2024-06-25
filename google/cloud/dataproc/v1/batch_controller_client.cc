@@ -44,12 +44,42 @@ BatchControllerClient::CreateBatch(
   return connection_->CreateBatch(request);
 }
 
+StatusOr<google::longrunning::Operation> BatchControllerClient::CreateBatch(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::dataproc::v1::Batch const& batch,
+    std::string const& batch_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataproc::v1::CreateBatchRequest request;
+  request.set_parent(parent);
+  *request.mutable_batch() = batch;
+  request.set_batch_id(batch_id);
+  return connection_->CreateBatch(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerClient::CreateBatch(
     google::cloud::dataproc::v1::CreateBatchRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBatch(request);
+}
+
+StatusOr<google::longrunning::Operation> BatchControllerClient::CreateBatch(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::CreateBatchRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBatch(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Batch>>
+BatchControllerClient::CreateBatch(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBatch(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerClient::GetBatch(

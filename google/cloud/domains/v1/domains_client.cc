@@ -83,12 +83,43 @@ DomainsClient::RegisterDomain(
   return connection_->RegisterDomain(request);
 }
 
+StatusOr<google::longrunning::Operation> DomainsClient::RegisterDomain(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::domains::v1::Registration const& registration,
+    google::type::Money const& yearly_price, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::domains::v1::RegisterDomainRequest request;
+  request.set_parent(parent);
+  *request.mutable_registration() = registration;
+  *request.mutable_yearly_price() = yearly_price;
+  return connection_->RegisterDomain(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsClient::RegisterDomain(
     google::cloud::domains::v1::RegisterDomainRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RegisterDomain(request);
+}
+
+StatusOr<google::longrunning::Operation> DomainsClient::RegisterDomain(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::domains::v1::RegisterDomainRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RegisterDomain(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsClient::RegisterDomain(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RegisterDomain(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
@@ -127,12 +158,46 @@ DomainsClient::TransferDomain(
   return connection_->TransferDomain(request);
 }
 
+StatusOr<google::longrunning::Operation> DomainsClient::TransferDomain(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::domains::v1::Registration const& registration,
+    google::type::Money const& yearly_price,
+    google::cloud::domains::v1::AuthorizationCode const& authorization_code,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::domains::v1::TransferDomainRequest request;
+  request.set_parent(parent);
+  *request.mutable_registration() = registration;
+  *request.mutable_yearly_price() = yearly_price;
+  *request.mutable_authorization_code() = authorization_code;
+  return connection_->TransferDomain(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsClient::TransferDomain(
     google::cloud::domains::v1::TransferDomainRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TransferDomain(request);
+}
+
+StatusOr<google::longrunning::Operation> DomainsClient::TransferDomain(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::domains::v1::TransferDomainRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TransferDomain(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsClient::TransferDomain(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TransferDomain(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StreamRange<google::cloud::domains::v1::Registration>
@@ -178,12 +243,42 @@ DomainsClient::UpdateRegistration(
   return connection_->UpdateRegistration(request);
 }
 
+StatusOr<google::longrunning::Operation> DomainsClient::UpdateRegistration(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::domains::v1::Registration const& registration,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::domains::v1::UpdateRegistrationRequest request;
+  *request.mutable_registration() = registration;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateRegistration(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsClient::UpdateRegistration(
     google::cloud::domains::v1::UpdateRegistrationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRegistration(request);
+}
+
+StatusOr<google::longrunning::Operation> DomainsClient::UpdateRegistration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRegistration(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsClient::UpdateRegistration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRegistration(google::cloud::ExperimentalTag{},
+                                         operation);
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -199,6 +294,20 @@ DomainsClient::ConfigureManagementSettings(
   return connection_->ConfigureManagementSettings(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainsClient::ConfigureManagementSettings(
+    ExperimentalTag, NoAwaitTag, std::string const& registration,
+    google::cloud::domains::v1::ManagementSettings const& management_settings,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::domains::v1::ConfigureManagementSettingsRequest request;
+  request.set_registration(registration);
+  *request.mutable_management_settings() = management_settings;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->ConfigureManagementSettings(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsClient::ConfigureManagementSettings(
     google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
@@ -206,6 +315,26 @@ DomainsClient::ConfigureManagementSettings(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ConfigureManagementSettings(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DomainsClient::ConfigureManagementSettings(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConfigureManagementSettings(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsClient::ConfigureManagementSettings(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConfigureManagementSettings(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -221,12 +350,43 @@ DomainsClient::ConfigureDnsSettings(
   return connection_->ConfigureDnsSettings(request);
 }
 
+StatusOr<google::longrunning::Operation> DomainsClient::ConfigureDnsSettings(
+    ExperimentalTag, NoAwaitTag, std::string const& registration,
+    google::cloud::domains::v1::DnsSettings const& dns_settings,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::domains::v1::ConfigureDnsSettingsRequest request;
+  request.set_registration(registration);
+  *request.mutable_dns_settings() = dns_settings;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->ConfigureDnsSettings(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsClient::ConfigureDnsSettings(
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ConfigureDnsSettings(request);
+}
+
+StatusOr<google::longrunning::Operation> DomainsClient::ConfigureDnsSettings(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConfigureDnsSettings(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsClient::ConfigureDnsSettings(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConfigureDnsSettings(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -242,12 +402,45 @@ DomainsClient::ConfigureContactSettings(
   return connection_->ConfigureContactSettings(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainsClient::ConfigureContactSettings(
+    ExperimentalTag, NoAwaitTag, std::string const& registration,
+    google::cloud::domains::v1::ContactSettings const& contact_settings,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::domains::v1::ConfigureContactSettingsRequest request;
+  request.set_registration(registration);
+  *request.mutable_contact_settings() = contact_settings;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->ConfigureContactSettings(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsClient::ConfigureContactSettings(
     google::cloud::domains::v1::ConfigureContactSettingsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ConfigureContactSettings(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DomainsClient::ConfigureContactSettings(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConfigureContactSettings(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsClient::ConfigureContactSettings(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ConfigureContactSettings(google::cloud::ExperimentalTag{},
+                                               operation);
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -258,12 +451,39 @@ DomainsClient::ExportRegistration(std::string const& name, Options opts) {
   return connection_->ExportRegistration(request);
 }
 
+StatusOr<google::longrunning::Operation> DomainsClient::ExportRegistration(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::domains::v1::ExportRegistrationRequest request;
+  request.set_name(name);
+  return connection_->ExportRegistration(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsClient::ExportRegistration(
     google::cloud::domains::v1::ExportRegistrationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportRegistration(request);
+}
+
+StatusOr<google::longrunning::Operation> DomainsClient::ExportRegistration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportRegistration(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsClient::ExportRegistration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportRegistration(google::cloud::ExperimentalTag{},
+                                         operation);
 }
 
 future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
@@ -274,12 +494,39 @@ DomainsClient::DeleteRegistration(std::string const& name, Options opts) {
   return connection_->DeleteRegistration(request);
 }
 
+StatusOr<google::longrunning::Operation> DomainsClient::DeleteRegistration(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::domains::v1::DeleteRegistrationRequest request;
+  request.set_name(name);
+  return connection_->DeleteRegistration(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
 DomainsClient::DeleteRegistration(
     google::cloud::domains::v1::DeleteRegistrationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRegistration(request);
+}
+
+StatusOr<google::longrunning::Operation> DomainsClient::DeleteRegistration(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRegistration(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
+DomainsClient::DeleteRegistration(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRegistration(google::cloud::ExperimentalTag{},
+                                         operation);
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>

@@ -40,6 +40,23 @@ AssetServiceClient::ExportAssets(
   return connection_->ExportAssets(request);
 }
 
+StatusOr<google::longrunning::Operation> AssetServiceClient::ExportAssets(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::asset::v1::ExportAssetsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportAssets(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
+AssetServiceClient::ExportAssets(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportAssets(google::cloud::ExperimentalTag{}, operation);
+}
+
 StreamRange<google::cloud::asset::v1::Asset> AssetServiceClient::ListAssets(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -184,6 +201,25 @@ AssetServiceClient::AnalyzeIamPolicyLongrunning(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeIamPolicyLongrunning(request);
+}
+
+StatusOr<google::longrunning::Operation>
+AssetServiceClient::AnalyzeIamPolicyLongrunning(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AnalyzeIamPolicyLongrunning(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
+AssetServiceClient::AnalyzeIamPolicyLongrunning(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AnalyzeIamPolicyLongrunning(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>

@@ -45,12 +45,45 @@ NodeGroupControllerClient::CreateNodeGroup(
   return connection_->CreateNodeGroup(request);
 }
 
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerClient::CreateNodeGroup(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::dataproc::v1::NodeGroup const& node_group,
+    std::string const& node_group_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataproc::v1::CreateNodeGroupRequest request;
+  request.set_parent(parent);
+  *request.mutable_node_group() = node_group;
+  request.set_node_group_id(node_group_id);
+  return connection_->CreateNodeGroup(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerClient::CreateNodeGroup(
     google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNodeGroup(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerClient::CreateNodeGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNodeGroup(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+NodeGroupControllerClient::CreateNodeGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNodeGroup(google::cloud::ExperimentalTag{},
+                                      operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
@@ -63,12 +96,43 @@ NodeGroupControllerClient::ResizeNodeGroup(std::string const& name,
   return connection_->ResizeNodeGroup(request);
 }
 
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerClient::ResizeNodeGroup(ExperimentalTag, NoAwaitTag,
+                                           std::string const& name,
+                                           std::int32_t size, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataproc::v1::ResizeNodeGroupRequest request;
+  request.set_name(name);
+  request.set_size(size);
+  return connection_->ResizeNodeGroup(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerClient::ResizeNodeGroup(
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ResizeNodeGroup(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerClient::ResizeNodeGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResizeNodeGroup(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+NodeGroupControllerClient::ResizeNodeGroup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResizeNodeGroup(google::cloud::ExperimentalTag{},
+                                      operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>

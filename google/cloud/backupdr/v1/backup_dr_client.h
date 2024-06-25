@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BACKUPDR_V1_BACKUP_DR_CLIENT_H
 
 #include "google/cloud/backupdr/v1/backup_dr_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -262,6 +264,11 @@ class BackupDRClient {
       google::cloud::backupdr::v1::ManagementServer const& management_server,
       std::string const& management_server_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateManagementServer(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::backupdr::v1::ManagementServer const& management_server,
+      std::string const& management_server_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new ManagementServer in a given project and location.
@@ -301,6 +308,16 @@ class BackupDRClient {
       google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateManagementServer(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
+  CreateManagementServer(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single ManagementServer.
@@ -332,6 +349,9 @@ class BackupDRClient {
   // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteManagementServer(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteManagementServer(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -371,6 +391,16 @@ class BackupDRClient {
   DeleteManagementServer(
       google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteManagementServer(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteManagementServer(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
  private:
   std::shared_ptr<BackupDRConnection> connection_;

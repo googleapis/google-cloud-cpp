@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_ADMIN_SUBSCRIPTION_ADMIN_CLIENT_H
 
 #include "google/cloud/pubsub/admin/subscription_admin_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

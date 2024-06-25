@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_DEP_CLIENT_H
 
 #include "google/cloud/networkservices/v1/dep_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -264,6 +266,12 @@ class DepServiceClient {
           lb_traffic_extension,
       std::string const& lb_traffic_extension_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateLbTrafficExtension(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::LbTrafficExtension const&
+          lb_traffic_extension,
+      std::string const& lb_traffic_extension_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new `LbTrafficExtension` resource in a given project and
@@ -305,6 +313,17 @@ class DepServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateLbTrafficExtension(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
+  CreateLbTrafficExtension(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of the specified `LbTrafficExtension` resource.
@@ -341,6 +360,12 @@ class DepServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
   UpdateLbTrafficExtension(
+      google::cloud::networkservices::v1::LbTrafficExtension const&
+          lb_traffic_extension,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateLbTrafficExtension(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::LbTrafficExtension const&
           lb_traffic_extension,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -385,6 +410,17 @@ class DepServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateLbTrafficExtension(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
+  UpdateLbTrafficExtension(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified `LbTrafficExtension` resource.
@@ -418,6 +454,9 @@ class DepServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbTrafficExtension(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteLbTrafficExtension(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -458,6 +497,17 @@ class DepServiceClient {
       google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteLbTrafficExtension(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbTrafficExtension(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -636,6 +686,12 @@ class DepServiceClient {
           lb_route_extension,
       std::string const& lb_route_extension_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateLbRouteExtension(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::networkservices::v1::LbRouteExtension const&
+          lb_route_extension,
+      std::string const& lb_route_extension_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new `LbRouteExtension` resource in a given project and location.
@@ -676,6 +732,17 @@ class DepServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateLbRouteExtension(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
+  CreateLbRouteExtension(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of the specified `LbRouteExtension` resource.
@@ -712,6 +779,12 @@ class DepServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
   UpdateLbRouteExtension(
+      google::cloud::networkservices::v1::LbRouteExtension const&
+          lb_route_extension,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateLbRouteExtension(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::LbRouteExtension const&
           lb_route_extension,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -756,6 +829,17 @@ class DepServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateLbRouteExtension(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
+  UpdateLbRouteExtension(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified `LbRouteExtension` resource.
@@ -789,6 +873,9 @@ class DepServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbRouteExtension(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -829,6 +916,17 @@ class DepServiceClient {
       google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbRouteExtension(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
  private:
   std::shared_ptr<DepServiceConnection> connection_;

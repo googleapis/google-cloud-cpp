@@ -20,9 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_INSTANCE_ADMIN_CLIENT_H
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -147,6 +149,14 @@ class BigtableInstanceAdminClient {
           clusters,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& instance_id,
+      google::bigtable::admin::v2::Instance const& instance,
+      std::map<std::string, google::bigtable::admin::v2::Cluster> const&
+          clusters,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Create an instance within a project.
@@ -190,6 +200,15 @@ class BigtableInstanceAdminClient {
   future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
       google::bigtable::admin::v2::CreateInstanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -372,6 +391,11 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> PartialUpdateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::bigtable::admin::v2::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Partially updates an instance within a project. This method can modify all
@@ -410,6 +434,15 @@ class BigtableInstanceAdminClient {
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PartialUpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -506,6 +539,11 @@ class BigtableInstanceAdminClient {
       std::string const& parent, std::string const& cluster_id,
       google::bigtable::admin::v2::Cluster const& cluster, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& cluster_id,
+      google::bigtable::admin::v2::Cluster const& cluster, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a cluster within an instance.
@@ -549,6 +587,15 @@ class BigtableInstanceAdminClient {
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       google::bigtable::admin::v2::CreateClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::CreateClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -707,6 +754,14 @@ class BigtableInstanceAdminClient {
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       google::bigtable::admin::v2::Cluster const& request, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::Cluster const& request, Options opts = {});
+
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Partially updates a cluster within a project. This method is the preferred
@@ -750,6 +805,11 @@ class BigtableInstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
+      google::bigtable::admin::v2::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PartialUpdateCluster(
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -801,6 +861,15 @@ class BigtableInstanceAdminClient {
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PartialUpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1086,6 +1155,11 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::AppProfile const& app_profile,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAppProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::bigtable::admin::v2::AppProfile const& app_profile,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an app profile within an instance.
@@ -1123,6 +1197,15 @@ class BigtableInstanceAdminClient {
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAppProfile(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

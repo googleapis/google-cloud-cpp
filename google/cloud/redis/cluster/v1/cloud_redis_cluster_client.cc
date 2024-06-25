@@ -75,12 +75,42 @@ CloudRedisClusterClient::UpdateCluster(
   return connection_->UpdateCluster(request);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::UpdateCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::redis::cluster::v1::Cluster const& cluster,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::UpdateClusterRequest request;
+  *request.mutable_cluster() = cluster;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterClient::UpdateCluster(
     google::cloud::redis::cluster::v1::UpdateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::UpdateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterClient::UpdateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 future<StatusOr<google::protobuf::Any>> CloudRedisClusterClient::DeleteCluster(
@@ -91,11 +121,37 @@ future<StatusOr<google::protobuf::Any>> CloudRedisClusterClient::DeleteCluster(
   return connection_->DeleteCluster(request);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::DeleteCluster(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::DeleteClusterRequest request;
+  request.set_name(name);
+  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::protobuf::Any>> CloudRedisClusterClient::DeleteCluster(
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::DeleteCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::protobuf::Any>> CloudRedisClusterClient::DeleteCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
@@ -111,12 +167,43 @@ CloudRedisClusterClient::CreateCluster(
   return connection_->CreateCluster(request);
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::CreateCluster(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::redis::cluster::v1::Cluster const& cluster,
+    std::string const& cluster_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::redis::cluster::v1::CreateClusterRequest request;
+  request.set_parent(parent);
+  *request.mutable_cluster() = cluster;
+  request.set_cluster_id(cluster_id);
+  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterClient::CreateCluster(
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisClusterClient::CreateCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::redis::cluster::v1::CreateClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
+CloudRedisClusterClient::CreateCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>

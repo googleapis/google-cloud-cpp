@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_ORG_POLICY_CLIENT_H
 
 #include "google/cloud/orgpolicy/v2/org_policy_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

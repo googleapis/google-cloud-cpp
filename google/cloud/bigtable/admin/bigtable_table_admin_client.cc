@@ -94,12 +94,41 @@ BigtableTableAdminClient::UpdateTable(
   return connection_->UpdateTable(request);
 }
 
+StatusOr<google::longrunning::Operation> BigtableTableAdminClient::UpdateTable(
+    ExperimentalTag, NoAwaitTag,
+    google::bigtable::admin::v2::Table const& table,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateTableRequest request;
+  *request.mutable_table() = table;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateTable(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminClient::UpdateTable(
     google::bigtable::admin::v2::UpdateTableRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTable(request);
+}
+
+StatusOr<google::longrunning::Operation> BigtableTableAdminClient::UpdateTable(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UpdateTableRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTable(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UpdateTable(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTable(google::cloud::ExperimentalTag{}, operation);
 }
 
 Status BigtableTableAdminClient::DeleteTable(std::string const& name,
@@ -125,12 +154,41 @@ BigtableTableAdminClient::UndeleteTable(std::string const& name, Options opts) {
   return connection_->UndeleteTable(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminClient::UndeleteTable(ExperimentalTag, NoAwaitTag,
+                                        std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UndeleteTableRequest request;
+  request.set_name(name);
+  return connection_->UndeleteTable(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminClient::UndeleteTable(
     google::bigtable::admin::v2::UndeleteTableRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteTable(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminClient::UndeleteTable(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UndeleteTableRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UndeleteTable(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UndeleteTable(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UndeleteTable(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
@@ -146,12 +204,45 @@ BigtableTableAdminClient::CreateAuthorizedView(
   return connection_->CreateAuthorizedView(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminClient::CreateAuthorizedView(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::bigtable::admin::v2::AuthorizedView const& authorized_view,
+    std::string const& authorized_view_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::CreateAuthorizedViewRequest request;
+  request.set_parent(parent);
+  *request.mutable_authorized_view() = authorized_view;
+  request.set_authorized_view_id(authorized_view_id);
+  return connection_->CreateAuthorizedView(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
 BigtableTableAdminClient::CreateAuthorizedView(
     google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAuthorizedView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminClient::CreateAuthorizedView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAuthorizedView(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminClient::CreateAuthorizedView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAuthorizedView(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 StreamRange<google::bigtable::admin::v2::AuthorizedView>
@@ -199,12 +290,44 @@ BigtableTableAdminClient::UpdateAuthorizedView(
   return connection_->UpdateAuthorizedView(request);
 }
 
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminClient::UpdateAuthorizedView(
+    ExperimentalTag, NoAwaitTag,
+    google::bigtable::admin::v2::AuthorizedView const& authorized_view,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateAuthorizedViewRequest request;
+  *request.mutable_authorized_view() = authorized_view;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAuthorizedView(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
 BigtableTableAdminClient::UpdateAuthorizedView(
     google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAuthorizedView(request);
+}
+
+StatusOr<google::longrunning::Operation>
+BigtableTableAdminClient::UpdateAuthorizedView(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAuthorizedView(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminClient::UpdateAuthorizedView(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAuthorizedView(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 Status BigtableTableAdminClient::DeleteAuthorizedView(std::string const& name,
@@ -299,12 +422,42 @@ BigtableTableAdminClient::CreateBackup(
   return connection_->CreateBackup(request);
 }
 
+StatusOr<google::longrunning::Operation> BigtableTableAdminClient::CreateBackup(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    std::string const& backup_id,
+    google::bigtable::admin::v2::Backup const& backup, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::CreateBackupRequest request;
+  request.set_parent(parent);
+  request.set_backup_id(backup_id);
+  *request.mutable_backup() = backup;
+  return connection_->CreateBackup(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminClient::CreateBackup(
     google::bigtable::admin::v2::CreateBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackup(request);
+}
+
+StatusOr<google::longrunning::Operation> BigtableTableAdminClient::CreateBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CreateBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackup(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminClient::CreateBackup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackup(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
@@ -380,6 +533,23 @@ BigtableTableAdminClient::RestoreTable(
   return connection_->RestoreTable(request);
 }
 
+StatusOr<google::longrunning::Operation> BigtableTableAdminClient::RestoreTable(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::RestoreTableRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreTable(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::RestoreTable(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreTable(google::cloud::ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminClient::CopyBackup(
     std::string const& parent, std::string const& backup_id,
@@ -394,12 +564,43 @@ BigtableTableAdminClient::CopyBackup(
   return connection_->CopyBackup(request);
 }
 
+StatusOr<google::longrunning::Operation> BigtableTableAdminClient::CopyBackup(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    std::string const& backup_id, std::string const& source_backup,
+    google::protobuf::Timestamp const& expire_time, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::CopyBackupRequest request;
+  request.set_parent(parent);
+  request.set_backup_id(backup_id);
+  request.set_source_backup(source_backup);
+  *request.mutable_expire_time() = expire_time;
+  return connection_->CopyBackup(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminClient::CopyBackup(
     google::bigtable::admin::v2::CopyBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CopyBackup(request);
+}
+
+StatusOr<google::longrunning::Operation> BigtableTableAdminClient::CopyBackup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::bigtable::admin::v2::CopyBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CopyBackup(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Backup>>
+BigtableTableAdminClient::CopyBackup(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CopyBackup(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::GetIamPolicy(

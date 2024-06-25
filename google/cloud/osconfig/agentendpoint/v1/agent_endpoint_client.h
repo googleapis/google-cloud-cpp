@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_AGENTENDPOINT_V1_AGENT_ENDPOINT_CLIENT_H
 
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

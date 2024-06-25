@@ -75,12 +75,43 @@ ConfigClient::CreateDeployment(
   return connection_->CreateDeployment(request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigClient::CreateDeployment(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::config::v1::Deployment const& deployment,
+    std::string const& deployment_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::CreateDeploymentRequest request;
+  request.set_parent(parent);
+  *request.mutable_deployment() = deployment;
+  request.set_deployment_id(deployment_id);
+  return connection_->CreateDeployment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigClient::CreateDeployment(
     google::cloud::config::v1::CreateDeploymentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::CreateDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::CreateDeploymentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDeployment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigClient::CreateDeployment(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDeployment(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
@@ -94,12 +125,42 @@ ConfigClient::UpdateDeployment(
   return connection_->UpdateDeployment(request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigClient::UpdateDeployment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::config::v1::Deployment const& deployment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::UpdateDeploymentRequest request;
+  *request.mutable_deployment() = deployment;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDeployment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigClient::UpdateDeployment(
     google::cloud::config::v1::UpdateDeploymentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::UpdateDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::UpdateDeploymentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeployment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigClient::UpdateDeployment(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeployment(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
@@ -110,12 +171,39 @@ ConfigClient::DeleteDeployment(std::string const& name, Options opts) {
   return connection_->DeleteDeployment(request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigClient::DeleteDeployment(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::DeleteDeploymentRequest request;
+  request.set_name(name);
+  return connection_->DeleteDeployment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigClient::DeleteDeployment(
     google::cloud::config::v1::DeleteDeploymentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::DeleteDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::DeleteDeploymentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDeployment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigClient::DeleteDeployment(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDeployment(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 StreamRange<google::cloud::config::v1::Revision> ConfigClient::ListRevisions(
@@ -230,12 +318,39 @@ ConfigClient::LockDeployment(std::string const& name, Options opts) {
   return connection_->LockDeployment(request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigClient::LockDeployment(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::LockDeploymentRequest request;
+  request.set_name(name);
+  return connection_->LockDeployment(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigClient::LockDeployment(
     google::cloud::config::v1::LockDeploymentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LockDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::LockDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::LockDeploymentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LockDeployment(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigClient::LockDeployment(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LockDeployment(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 future<StatusOr<google::cloud::config::v1::Deployment>>
@@ -248,12 +363,41 @@ ConfigClient::UnlockDeployment(std::string const& name, std::int64_t lock_id,
   return connection_->UnlockDeployment(request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigClient::UnlockDeployment(
+    ExperimentalTag, NoAwaitTag, std::string const& name, std::int64_t lock_id,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::UnlockDeploymentRequest request;
+  request.set_name(name);
+  request.set_lock_id(lock_id);
+  return connection_->UnlockDeployment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::config::v1::Deployment>>
 ConfigClient::UnlockDeployment(
     google::cloud::config::v1::UnlockDeploymentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UnlockDeployment(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::UnlockDeployment(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::UnlockDeploymentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnlockDeployment(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::Deployment>>
+ConfigClient::UnlockDeployment(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnlockDeployment(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> ConfigClient::ExportLockInfo(
@@ -282,12 +426,41 @@ ConfigClient::CreatePreview(std::string const& parent,
   return connection_->CreatePreview(request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigClient::CreatePreview(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::config::v1::Preview const& preview, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::CreatePreviewRequest request;
+  request.set_parent(parent);
+  *request.mutable_preview() = preview;
+  return connection_->CreatePreview(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::config::v1::Preview>>
 ConfigClient::CreatePreview(
     google::cloud::config::v1::CreatePreviewRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePreview(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::CreatePreview(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::CreatePreviewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePreview(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigClient::CreatePreview(google::cloud::ExperimentalTag,
+                            google::longrunning::Operation const& operation,
+                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePreview(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StatusOr<google::cloud::config::v1::Preview> ConfigClient::GetPreview(
@@ -326,12 +499,39 @@ ConfigClient::DeletePreview(std::string const& name, Options opts) {
   return connection_->DeletePreview(request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigClient::DeletePreview(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::config::v1::DeletePreviewRequest request;
+  request.set_name(name);
+  return connection_->DeletePreview(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::config::v1::Preview>>
 ConfigClient::DeletePreview(
     google::cloud::config::v1::DeletePreviewRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePreview(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigClient::DeletePreview(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::config::v1::DeletePreviewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePreview(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::config::v1::Preview>>
+ConfigClient::DeletePreview(google::cloud::ExperimentalTag,
+                            google::longrunning::Operation const& operation,
+                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePreview(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>

@@ -20,9 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V2_SECURITY_CENTER_CLIENT_H
 
 #include "google/cloud/securitycenter/v2/security_center_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -202,6 +204,10 @@ class SecurityCenterClient {
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
   BulkMuteFindings(std::string const& parent, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Kicks off an LRO to bulk mute findings for a parent based on a filter. If
@@ -243,6 +249,16 @@ class SecurityCenterClient {
   BulkMuteFindings(
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
+  BulkMuteFindings(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///

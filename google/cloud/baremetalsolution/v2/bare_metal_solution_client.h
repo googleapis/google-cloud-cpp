@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_BARE_METAL_SOLUTION_CLIENT_H
 
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -267,6 +269,11 @@ class BareMetalSolutionClient {
                  google::protobuf::FieldMask const& update_mask,
                  Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::baremetalsolution::v2::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Update details of a single server.
@@ -306,6 +313,17 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+  UpdateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -402,6 +420,9 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
   ResetInstance(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ResetInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Perform an ungraceful, hard reset on a server. Equivalent to shutting the
@@ -442,6 +463,16 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ResetInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
+  ResetInstance(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
+
   // clang-format off
   ///
   /// Starts a server that was shutdown.
@@ -473,6 +504,9 @@ class BareMetalSolutionClient {
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
   StartInstance(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StartInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -513,6 +547,16 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StartInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+  StartInstance(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
+
   // clang-format off
   ///
   /// Stop a running server.
@@ -544,6 +588,11 @@ class BareMetalSolutionClient {
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
   StopInstance(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StopInstance(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -584,6 +633,16 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StopInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
+  StopInstance(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation,
+               Options opts = {});
+
   // clang-format off
   ///
   /// Enable the interactive serial console feature on an instance.
@@ -616,6 +675,9 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::
                       EnableInteractiveSerialConsoleResponse>>
   EnableInteractiveSerialConsole(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> EnableInteractiveSerialConsole(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -658,6 +720,18 @@ class BareMetalSolutionClient {
           EnableInteractiveSerialConsoleRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> EnableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      EnableInteractiveSerialConsoleResponse>>
+  EnableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Disable the interactive serial console feature on an instance.
@@ -690,6 +764,9 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::
                       DisableInteractiveSerialConsoleResponse>>
   DisableInteractiveSerialConsole(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DisableInteractiveSerialConsole(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -732,6 +809,18 @@ class BareMetalSolutionClient {
           DisableInteractiveSerialConsoleRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DisableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::
+                      DisableInteractiveSerialConsoleResponse>>
+  DisableInteractiveSerialConsole(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Detach LUN from Instance.
@@ -764,6 +853,10 @@ class BareMetalSolutionClient {
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
       std::string const& instance, std::string const& lun, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DetachLun(
+      ExperimentalTag, NoAwaitTag, std::string const& instance,
+      std::string const& lun, Options opts = {});
 
   // clang-format off
   ///
@@ -802,6 +895,15 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DetachLun(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1165,6 +1267,11 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::Volume const& volume,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateVolume(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::baremetalsolution::v2::Volume const& volume,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Update details of a single storage volume.
@@ -1202,6 +1309,15 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1297,6 +1413,11 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   EvictVolume(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> EvictVolume(ExperimentalTag,
+                                                       NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
+
   // clang-format off
   ///
   /// Skips volume's cooloff and deletes it now.
@@ -1337,6 +1458,16 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> EvictVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictVolume(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation,
+              Options opts = {});
+
   // clang-format off
   ///
   /// Emergency Volume resize.
@@ -1369,6 +1500,10 @@ class BareMetalSolutionClient {
   // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
       std::string const& volume, std::int64_t size_gib, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ResizeVolume(
+      ExperimentalTag, NoAwaitTag, std::string const& volume,
+      std::int64_t size_gib, Options opts = {});
 
   // clang-format off
   ///
@@ -1407,6 +1542,15 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ResizeVolume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1637,6 +1781,11 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::Network const& network,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateNetwork(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::baremetalsolution::v2::Network const& network,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Update details of a single network.
@@ -1674,6 +1823,15 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateNetwork(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1774,6 +1932,10 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
   RestoreVolumeSnapshot(std::string const& volume_snapshot, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RestoreVolumeSnapshot(
+      ExperimentalTag, NoAwaitTag, std::string const& volume_snapshot,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Uses the specified snapshot to restore its parent volume.
@@ -1814,6 +1976,17 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RestoreVolumeSnapshot(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
+  RestoreVolumeSnapshot(google::cloud::ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -2169,6 +2342,10 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   EvictLun(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> EvictLun(ExperimentalTag, NoAwaitTag,
+                                                    std::string const& name,
+                                                    Options opts = {});
+
   // clang-format off
   ///
   /// Skips lun's cooloff and deletes it now.
@@ -2207,6 +2384,15 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   EvictLun(google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
            Options opts = {});
+
+  StatusOr<google::longrunning::Operation> EvictLun(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  EvictLun(google::cloud::ExperimentalTag,
+           google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2379,6 +2565,11 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateNfsShare(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Update details of a single NFS share.
@@ -2419,6 +2610,17 @@ class BareMetalSolutionClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateNfsShare(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  UpdateNfsShare(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Create an NFS share.
@@ -2452,6 +2654,11 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
   CreateNfsShare(
       std::string const& parent,
+      google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateNfsShare(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
       Options opts = {});
 
@@ -2494,6 +2701,17 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateNfsShare(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+  CreateNfsShare(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -2589,6 +2807,9 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   DeleteNfsShare(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteNfsShare(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Delete an NFS share. The underlying volume is automatically deleted.
@@ -2628,6 +2849,17 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteNfsShare(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+  DeleteNfsShare(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///

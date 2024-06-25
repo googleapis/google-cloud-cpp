@@ -47,12 +47,45 @@ NetworksClient::AddPeering(
   return connection_->AddPeering(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation> NetworksClient::AddPeering(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& network,
+    google::cloud::cpp::compute::v1::NetworksAddPeeringRequest const&
+        networks_add_peering_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::AddPeeringRequest request;
+  request.set_project(project);
+  request.set_network(network);
+  *request.mutable_networks_add_peering_request_resource() =
+      networks_add_peering_request_resource;
+  return connection_->AddPeering(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksClient::AddPeering(
     google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddPeering(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation> NetworksClient::AddPeering(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddPeering(google::cloud::ExperimentalTag{},
+                                 google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::AddPeering(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddPeering(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -65,6 +98,18 @@ NetworksClient::DeleteNetwork(std::string const& project,
   return connection_->DeleteNetwork(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::DeleteNetwork(ExperimentalTag, NoAwaitTag,
+                              std::string const& project,
+                              std::string const& network, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest request;
+  request.set_project(project);
+  request.set_network(network);
+  return connection_->DeleteNetwork(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksClient::DeleteNetwork(
     google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
@@ -72,6 +117,26 @@ NetworksClient::DeleteNetwork(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetwork(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::DeleteNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetwork(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::DeleteNetwork(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetwork(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Network> NetworksClient::GetNetwork(
@@ -123,6 +188,19 @@ NetworksClient::InsertNetwork(
   return connection_->InsertNetwork(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::InsertNetwork(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::Network const& network_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::InsertNetworkRequest request;
+  request.set_project(project);
+  *request.mutable_network_resource() = network_resource;
+  return connection_->InsertNetwork(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksClient::InsertNetwork(
     google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
@@ -130,6 +208,26 @@ NetworksClient::InsertNetwork(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertNetwork(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::InsertNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertNetwork(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::InsertNetwork(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertNetwork(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Network>
@@ -179,6 +277,21 @@ NetworksClient::PatchNetwork(
   return connection_->PatchNetwork(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::PatchNetwork(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& network,
+    google::cloud::cpp::compute::v1::Network const& network_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::PatchNetworkRequest request;
+  request.set_project(project);
+  request.set_network(network);
+  *request.mutable_network_resource() = network_resource;
+  return connection_->PatchNetwork(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksClient::PatchNetwork(
     google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
@@ -186,6 +299,25 @@ NetworksClient::PatchNetwork(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchNetwork(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::PatchNetwork(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchNetwork(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::PatchNetwork(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchNetwork(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -203,6 +335,23 @@ NetworksClient::RemovePeering(
   return connection_->RemovePeering(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::RemovePeering(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& network,
+    google::cloud::cpp::compute::v1::NetworksRemovePeeringRequest const&
+        networks_remove_peering_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::RemovePeeringRequest request;
+  request.set_project(project);
+  request.set_network(network);
+  *request.mutable_networks_remove_peering_request_resource() =
+      networks_remove_peering_request_resource;
+  return connection_->RemovePeering(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksClient::RemovePeering(
     google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
@@ -210,6 +359,26 @@ NetworksClient::RemovePeering(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemovePeering(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::RemovePeering(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemovePeering(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::RemovePeering(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemovePeering(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -222,6 +391,18 @@ NetworksClient::SwitchToCustomMode(std::string const& project,
   return connection_->SwitchToCustomMode(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::SwitchToCustomMode(ExperimentalTag, NoAwaitTag,
+                                   std::string const& project,
+                                   std::string const& network, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest request;
+  request.set_project(project);
+  request.set_network(network);
+  return connection_->SwitchToCustomMode(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksClient::SwitchToCustomMode(
     google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
@@ -229,6 +410,26 @@ NetworksClient::SwitchToCustomMode(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SwitchToCustomMode(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::SwitchToCustomMode(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SwitchToCustomMode(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::SwitchToCustomMode(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SwitchToCustomMode(google::cloud::ExperimentalTag{},
+                                         operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -246,6 +447,23 @@ NetworksClient::UpdatePeering(
   return connection_->UpdatePeering(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::UpdatePeering(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& network,
+    google::cloud::cpp::compute::v1::NetworksUpdatePeeringRequest const&
+        networks_update_peering_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest request;
+  request.set_project(project);
+  request.set_network(network);
+  *request.mutable_networks_update_peering_request_resource() =
+      networks_update_peering_request_resource;
+  return connection_->UpdatePeering(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksClient::UpdatePeering(
     google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
@@ -253,6 +471,26 @@ NetworksClient::UpdatePeering(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePeering(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksClient::UpdatePeering(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePeering(google::cloud::ExperimentalTag{},
+                                    google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksClient::UpdatePeering(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePeering(google::cloud::ExperimentalTag{},
+                                    operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

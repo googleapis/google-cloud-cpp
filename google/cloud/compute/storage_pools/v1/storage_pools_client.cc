@@ -67,6 +67,22 @@ StoragePoolsClient::DeleteStoragePool(std::string const& project,
   return connection_->DeleteStoragePool(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsClient::DeleteStoragePool(ExperimentalTag, NoAwaitTag,
+                                      std::string const& project,
+                                      std::string const& zone,
+                                      std::string const& storage_pool,
+                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::storage_pools::v1::DeleteStoragePoolRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_storage_pool(storage_pool);
+  return connection_->DeleteStoragePool(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsClient::DeleteStoragePool(
     google::cloud::cpp::compute::storage_pools::v1::
@@ -74,6 +90,26 @@ StoragePoolsClient::DeleteStoragePool(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStoragePool(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsClient::DeleteStoragePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::storage_pools::v1::
+        DeleteStoragePoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteStoragePool(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+StoragePoolsClient::DeleteStoragePool(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteStoragePool(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
@@ -133,6 +169,22 @@ StoragePoolsClient::InsertStoragePool(
   return connection_->InsertStoragePool(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsClient::InsertStoragePool(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& zone,
+    google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::storage_pools::v1::InsertStoragePoolRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  *request.mutable_storage_pool_resource() = storage_pool_resource;
+  return connection_->InsertStoragePool(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsClient::InsertStoragePool(
     google::cloud::cpp::compute::storage_pools::v1::
@@ -140,6 +192,26 @@ StoragePoolsClient::InsertStoragePool(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertStoragePool(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsClient::InsertStoragePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::storage_pools::v1::
+        InsertStoragePoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertStoragePool(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+StoragePoolsClient::InsertStoragePool(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertStoragePool(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::StoragePool>
@@ -252,6 +324,25 @@ StoragePoolsClient::UpdateStoragePool(
   return connection_->UpdateStoragePool(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsClient::UpdateStoragePool(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& zone, std::string const& storage_pool,
+    std::string const& update_mask,
+    google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::storage_pools::v1::UpdateStoragePoolRequest
+      request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_storage_pool(storage_pool);
+  request.set_update_mask(update_mask);
+  *request.mutable_storage_pool_resource() = storage_pool_resource;
+  return connection_->UpdateStoragePool(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsClient::UpdateStoragePool(
     google::cloud::cpp::compute::storage_pools::v1::
@@ -259,6 +350,26 @@ StoragePoolsClient::UpdateStoragePool(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateStoragePool(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsClient::UpdateStoragePool(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::storage_pools::v1::
+        UpdateStoragePoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateStoragePool(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+StoragePoolsClient::UpdateStoragePool(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateStoragePool(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

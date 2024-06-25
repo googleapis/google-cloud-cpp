@@ -44,6 +44,19 @@ TargetGrpcProxiesClient::DeleteTargetGrpcProxy(
   return connection_->DeleteTargetGrpcProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetGrpcProxiesClient::DeleteTargetGrpcProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_grpc_proxy, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_grpc_proxies::v1::
+      DeleteTargetGrpcProxyRequest request;
+  request.set_project(project);
+  request.set_target_grpc_proxy(target_grpc_proxy);
+  return connection_->DeleteTargetGrpcProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesClient::DeleteTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
@@ -51,6 +64,26 @@ TargetGrpcProxiesClient::DeleteTargetGrpcProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetGrpcProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetGrpcProxiesClient::DeleteTargetGrpcProxy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        DeleteTargetGrpcProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetGrpcProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetGrpcProxiesClient::DeleteTargetGrpcProxy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetGrpcProxy(google::cloud::ExperimentalTag{},
+                                            operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -88,6 +121,21 @@ TargetGrpcProxiesClient::InsertTargetGrpcProxy(
   return connection_->InsertTargetGrpcProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetGrpcProxiesClient::InsertTargetGrpcProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::TargetGrpcProxy const&
+        target_grpc_proxy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_grpc_proxies::v1::
+      InsertTargetGrpcProxyRequest request;
+  request.set_project(project);
+  *request.mutable_target_grpc_proxy_resource() = target_grpc_proxy_resource;
+  return connection_->InsertTargetGrpcProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesClient::InsertTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
@@ -95,6 +143,26 @@ TargetGrpcProxiesClient::InsertTargetGrpcProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetGrpcProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetGrpcProxiesClient::InsertTargetGrpcProxy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        InsertTargetGrpcProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetGrpcProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetGrpcProxiesClient::InsertTargetGrpcProxy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetGrpcProxy(google::cloud::ExperimentalTag{},
+                                            operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -131,6 +199,23 @@ TargetGrpcProxiesClient::PatchTargetGrpcProxy(
   return connection_->PatchTargetGrpcProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetGrpcProxiesClient::PatchTargetGrpcProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_grpc_proxy,
+    google::cloud::cpp::compute::v1::TargetGrpcProxy const&
+        target_grpc_proxy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_grpc_proxies::v1::
+      PatchTargetGrpcProxyRequest request;
+  request.set_project(project);
+  request.set_target_grpc_proxy(target_grpc_proxy);
+  *request.mutable_target_grpc_proxy_resource() = target_grpc_proxy_resource;
+  return connection_->PatchTargetGrpcProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetGrpcProxiesClient::PatchTargetGrpcProxy(
     google::cloud::cpp::compute::target_grpc_proxies::v1::
@@ -138,6 +223,26 @@ TargetGrpcProxiesClient::PatchTargetGrpcProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchTargetGrpcProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetGrpcProxiesClient::PatchTargetGrpcProxy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::target_grpc_proxies::v1::
+        PatchTargetGrpcProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchTargetGrpcProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetGrpcProxiesClient::PatchTargetGrpcProxy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchTargetGrpcProxy(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

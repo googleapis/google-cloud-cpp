@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_NODE_GROUP_CONTROLLER_CLIENT_H
 
 #include "google/cloud/dataproc/v1/node_group_controller_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -134,6 +136,11 @@ class NodeGroupControllerClient {
       google::cloud::dataproc::v1::NodeGroup const& node_group,
       std::string const& node_group_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNodeGroup(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::dataproc::v1::NodeGroup const& node_group,
+      std::string const& node_group_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a node group in a cluster. The returned
@@ -175,6 +182,15 @@ class NodeGroupControllerClient {
       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNodeGroup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Resizes a node group in a cluster. The returned
@@ -214,6 +230,10 @@ class NodeGroupControllerClient {
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
       std::string const& name, std::int32_t size, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ResizeNodeGroup(
+      ExperimentalTag, NoAwaitTag, std::string const& name, std::int32_t size,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -255,6 +275,15 @@ class NodeGroupControllerClient {
   future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ResizeNodeGroup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

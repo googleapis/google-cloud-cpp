@@ -81,6 +81,21 @@ WorkstationsClient::CreateWorkstationCluster(
   return connection_->CreateWorkstationCluster(request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::CreateWorkstationCluster(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::workstations::v1::WorkstationCluster const&
+        workstation_cluster,
+    std::string const& workstation_cluster_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::CreateWorkstationClusterRequest request;
+  request.set_parent(parent);
+  *request.mutable_workstation_cluster() = workstation_cluster;
+  request.set_workstation_cluster_id(workstation_cluster_id);
+  return connection_->CreateWorkstationCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsClient::CreateWorkstationCluster(
     google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
@@ -88,6 +103,26 @@ WorkstationsClient::CreateWorkstationCluster(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkstationCluster(request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::CreateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWorkstationCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsClient::CreateWorkstationCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWorkstationCluster(google::cloud::ExperimentalTag{},
+                                               operation);
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -102,6 +137,20 @@ WorkstationsClient::UpdateWorkstationCluster(
   return connection_->UpdateWorkstationCluster(request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::UpdateWorkstationCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workstations::v1::WorkstationCluster const&
+        workstation_cluster,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::UpdateWorkstationClusterRequest request;
+  *request.mutable_workstation_cluster() = workstation_cluster;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateWorkstationCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsClient::UpdateWorkstationCluster(
     google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
@@ -109,6 +158,26 @@ WorkstationsClient::UpdateWorkstationCluster(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkstationCluster(request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::UpdateWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWorkstationCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsClient::UpdateWorkstationCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWorkstationCluster(google::cloud::ExperimentalTag{},
+                                               operation);
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -120,6 +189,17 @@ WorkstationsClient::DeleteWorkstationCluster(std::string const& name,
   return connection_->DeleteWorkstationCluster(request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::DeleteWorkstationCluster(ExperimentalTag, NoAwaitTag,
+                                             std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::DeleteWorkstationClusterRequest request;
+  request.set_name(name);
+  return connection_->DeleteWorkstationCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsClient::DeleteWorkstationCluster(
     google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
@@ -127,6 +207,26 @@ WorkstationsClient::DeleteWorkstationCluster(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkstationCluster(request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::DeleteWorkstationCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWorkstationCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+WorkstationsClient::DeleteWorkstationCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWorkstationCluster(google::cloud::ExperimentalTag{},
+                                               operation);
 }
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -195,6 +295,21 @@ WorkstationsClient::CreateWorkstationConfig(
   return connection_->CreateWorkstationConfig(request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::CreateWorkstationConfig(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::workstations::v1::WorkstationConfig const&
+        workstation_config,
+    std::string const& workstation_config_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::CreateWorkstationConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_workstation_config() = workstation_config;
+  request.set_workstation_config_id(workstation_config_id);
+  return connection_->CreateWorkstationConfig(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsClient::CreateWorkstationConfig(
     google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
@@ -202,6 +317,26 @@ WorkstationsClient::CreateWorkstationConfig(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkstationConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::CreateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWorkstationConfig(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsClient::CreateWorkstationConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWorkstationConfig(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -216,6 +351,20 @@ WorkstationsClient::UpdateWorkstationConfig(
   return connection_->UpdateWorkstationConfig(request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::UpdateWorkstationConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workstations::v1::WorkstationConfig const&
+        workstation_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::UpdateWorkstationConfigRequest request;
+  *request.mutable_workstation_config() = workstation_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateWorkstationConfig(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsClient::UpdateWorkstationConfig(
     google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
@@ -223,6 +372,26 @@ WorkstationsClient::UpdateWorkstationConfig(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkstationConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::UpdateWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWorkstationConfig(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsClient::UpdateWorkstationConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWorkstationConfig(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -234,6 +403,17 @@ WorkstationsClient::DeleteWorkstationConfig(std::string const& name,
   return connection_->DeleteWorkstationConfig(request);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::DeleteWorkstationConfig(ExperimentalTag, NoAwaitTag,
+                                            std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::DeleteWorkstationConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteWorkstationConfig(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsClient::DeleteWorkstationConfig(
     google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
@@ -241,6 +421,26 @@ WorkstationsClient::DeleteWorkstationConfig(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkstationConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkstationsClient::DeleteWorkstationConfig(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWorkstationConfig(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+WorkstationsClient::DeleteWorkstationConfig(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWorkstationConfig(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 StatusOr<google::cloud::workstations::v1::Workstation>
@@ -305,12 +505,43 @@ WorkstationsClient::CreateWorkstation(
   return connection_->CreateWorkstation(request);
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsClient::CreateWorkstation(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::workstations::v1::Workstation const& workstation,
+    std::string const& workstation_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::CreateWorkstationRequest request;
+  request.set_parent(parent);
+  *request.mutable_workstation() = workstation;
+  request.set_workstation_id(workstation_id);
+  return connection_->CreateWorkstation(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsClient::CreateWorkstation(
     google::cloud::workstations::v1::CreateWorkstationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkstation(request);
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsClient::CreateWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::CreateWorkstationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWorkstation(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsClient::CreateWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWorkstation(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -324,12 +555,42 @@ WorkstationsClient::UpdateWorkstation(
   return connection_->UpdateWorkstation(request);
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsClient::UpdateWorkstation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workstations::v1::Workstation const& workstation,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::UpdateWorkstationRequest request;
+  *request.mutable_workstation() = workstation;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateWorkstation(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsClient::UpdateWorkstation(
     google::cloud::workstations::v1::UpdateWorkstationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkstation(request);
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsClient::UpdateWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::UpdateWorkstationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWorkstation(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsClient::UpdateWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWorkstation(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -340,12 +601,39 @@ WorkstationsClient::DeleteWorkstation(std::string const& name, Options opts) {
   return connection_->DeleteWorkstation(request);
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsClient::DeleteWorkstation(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::DeleteWorkstationRequest request;
+  request.set_name(name);
+  return connection_->DeleteWorkstation(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsClient::DeleteWorkstation(
     google::cloud::workstations::v1::DeleteWorkstationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkstation(request);
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsClient::DeleteWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::DeleteWorkstationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWorkstation(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsClient::DeleteWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWorkstation(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -356,12 +644,39 @@ WorkstationsClient::StartWorkstation(std::string const& name, Options opts) {
   return connection_->StartWorkstation(request);
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsClient::StartWorkstation(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::StartWorkstationRequest request;
+  request.set_name(name);
+  return connection_->StartWorkstation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsClient::StartWorkstation(
     google::cloud::workstations::v1::StartWorkstationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartWorkstation(request);
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsClient::StartWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::StartWorkstationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartWorkstation(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsClient::StartWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartWorkstation(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -372,12 +687,39 @@ WorkstationsClient::StopWorkstation(std::string const& name, Options opts) {
   return connection_->StopWorkstation(request);
 }
 
+StatusOr<google::longrunning::Operation> WorkstationsClient::StopWorkstation(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workstations::v1::StopWorkstationRequest request;
+  request.set_name(name);
+  return connection_->StopWorkstation(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsClient::StopWorkstation(
     google::cloud::workstations::v1::StopWorkstationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StopWorkstation(request);
+}
+
+StatusOr<google::longrunning::Operation> WorkstationsClient::StopWorkstation(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::workstations::v1::StopWorkstationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopWorkstation(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workstations::v1::Workstation>>
+WorkstationsClient::StopWorkstation(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopWorkstation(google::cloud::ExperimentalTag{},
+                                      operation);
 }
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>

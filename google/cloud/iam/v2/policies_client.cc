@@ -71,16 +71,59 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesClient::CreatePolicy(
   return connection_->CreatePolicy(request);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesClient::CreatePolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::iam::v2::Policy const& policy, std::string const& policy_id,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v2::CreatePolicyRequest request;
+  request.set_parent(parent);
+  *request.mutable_policy() = policy;
+  request.set_policy_id(policy_id);
+  return connection_->CreatePolicy(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::iam::v2::Policy>> PoliciesClient::CreatePolicy(
     google::iam::v2::CreatePolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePolicy(request);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesClient::CreatePolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::iam::v2::CreatePolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePolicy(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::iam::v2::Policy>> PoliciesClient::CreatePolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePolicy(google::cloud::ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::iam::v2::Policy>> PoliciesClient::UpdatePolicy(
     google::iam::v2::UpdatePolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> PoliciesClient::UpdatePolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::iam::v2::UpdatePolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePolicy(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::iam::v2::Policy>> PoliciesClient::UpdatePolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePolicy(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::iam::v2::Policy>> PoliciesClient::DeletePolicy(
@@ -91,10 +134,34 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesClient::DeletePolicy(
   return connection_->DeletePolicy(request);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesClient::DeletePolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::v2::DeletePolicyRequest request;
+  request.set_name(name);
+  return connection_->DeletePolicy(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::iam::v2::Policy>> PoliciesClient::DeletePolicy(
     google::iam::v2::DeletePolicyRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePolicy(request);
+}
+
+StatusOr<google::longrunning::Operation> PoliciesClient::DeletePolicy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::iam::v2::DeletePolicyRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePolicy(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::iam::v2::Policy>> PoliciesClient::DeletePolicy(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePolicy(google::cloud::ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

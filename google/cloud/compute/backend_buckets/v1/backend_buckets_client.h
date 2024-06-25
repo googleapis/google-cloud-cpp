@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_BUCKETS_V1_BACKEND_BUCKETS_CLIENT_H
 
 #include "google/cloud/compute/backend_buckets/v1/backend_buckets_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -125,6 +127,13 @@ class BackendBucketsClient {
           signed_url_key_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& backend_bucket,
+      google::cloud::cpp::compute::v1::SignedUrlKey const&
+          signed_url_key_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Adds a key for validating requests with signed URLs for this backend
@@ -165,6 +174,17 @@ class BackendBucketsClient {
           AddSignedUrlKeyRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          AddSignedUrlKeyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified BackendBucket resource.
@@ -198,6 +218,10 @@ class BackendBucketsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteBackendBucket(std::string const& project,
                       std::string const& backend_bucket, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendBucket(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& backend_bucket, Options opts = {});
 
   // clang-format off
   ///
@@ -238,6 +262,18 @@ class BackendBucketsClient {
                           DeleteBackendBucketRequest const& request,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendBucket(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          DeleteBackendBucketRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteBackendBucket(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a key for validating requests with signed URLs for this backend
@@ -275,6 +311,11 @@ class BackendBucketsClient {
   DeleteSignedUrlKey(std::string const& project,
                      std::string const& backend_bucket,
                      std::string const& key_name, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& backend_bucket, std::string const& key_name,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -315,6 +356,18 @@ class BackendBucketsClient {
   DeleteSignedUrlKey(google::cloud::cpp::compute::backend_buckets::v1::
                          DeleteSignedUrlKeyRequest const& request,
                      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          DeleteSignedUrlKeyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSignedUrlKey(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -477,6 +530,12 @@ class BackendBucketsClient {
                           backend_bucket_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendBucket(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::BackendBucket const&
+          backend_bucket_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a BackendBucket resource in the specified project using the data
@@ -516,6 +575,18 @@ class BackendBucketsClient {
   InsertBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
                           InsertBackendBucketRequest const& request,
                       Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendBucket(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          InsertBackendBucketRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertBackendBucket(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -636,6 +707,13 @@ class BackendBucketsClient {
                          backend_bucket_resource,
                      Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendBucket(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& backend_bucket,
+      google::cloud::cpp::compute::v1::BackendBucket const&
+          backend_bucket_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified BackendBucket resource with the data included in the
@@ -677,6 +755,18 @@ class BackendBucketsClient {
                          PatchBackendBucketRequest const& request,
                      Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendBucket(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          PatchBackendBucketRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchBackendBucket(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the edge security policy for the specified backend bucket.
@@ -712,6 +802,13 @@ class BackendBucketsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(
       std::string const& project, std::string const& backend_bucket,
+      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+          security_policy_reference_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& backend_bucket,
       google::cloud::cpp::compute::v1::SecurityPolicyReference const&
           security_policy_reference_resource,
       Options opts = {});
@@ -754,6 +851,18 @@ class BackendBucketsClient {
   SetEdgeSecurityPolicy(google::cloud::cpp::compute::backend_buckets::v1::
                             SetEdgeSecurityPolicyRequest const& request,
                         Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          SetEdgeSecurityPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetEdgeSecurityPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -925,6 +1034,13 @@ class BackendBucketsClient {
                           backend_bucket_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendBucket(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& backend_bucket,
+      google::cloud::cpp::compute::v1::BackendBucket const&
+          backend_bucket_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified BackendBucket resource with the data included in the
@@ -964,6 +1080,18 @@ class BackendBucketsClient {
   UpdateBackendBucket(google::cloud::cpp::compute::backend_buckets::v1::
                           UpdateBackendBucketRequest const& request,
                       Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendBucket(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::backend_buckets::v1::
+          UpdateBackendBucketRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateBackendBucket(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<BackendBucketsConnection> connection_;

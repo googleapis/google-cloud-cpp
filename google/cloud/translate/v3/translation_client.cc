@@ -128,6 +128,25 @@ TranslationServiceClient::BatchTranslateText(
   return connection_->BatchTranslateText(request);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceClient::BatchTranslateText(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateTextRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchTranslateText(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
+TranslationServiceClient::BatchTranslateText(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchTranslateText(google::cloud::ExperimentalTag{},
+                                         operation);
+}
+
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceClient::BatchTranslateDocument(
     std::string const& parent, std::string const& source_language_code,
@@ -149,6 +168,29 @@ TranslationServiceClient::BatchTranslateDocument(
   return connection_->BatchTranslateDocument(request);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceClient::BatchTranslateDocument(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    std::string const& source_language_code,
+    std::vector<std::string> const& target_language_codes,
+    std::vector<google::cloud::translation::v3::BatchDocumentInputConfig> const&
+        input_configs,
+    google::cloud::translation::v3::BatchDocumentOutputConfig const&
+        output_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::translation::v3::BatchTranslateDocumentRequest request;
+  request.set_parent(parent);
+  request.set_source_language_code(source_language_code);
+  *request.mutable_target_language_codes() = {target_language_codes.begin(),
+                                              target_language_codes.end()};
+  *request.mutable_input_configs() = {input_configs.begin(),
+                                      input_configs.end()};
+  *request.mutable_output_config() = output_config;
+  return connection_->BatchTranslateDocument(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
 TranslationServiceClient::BatchTranslateDocument(
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
@@ -156,6 +198,26 @@ TranslationServiceClient::BatchTranslateDocument(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchTranslateDocument(request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceClient::BatchTranslateDocument(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchTranslateDocument(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
+TranslationServiceClient::BatchTranslateDocument(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchTranslateDocument(google::cloud::ExperimentalTag{},
+                                             operation);
 }
 
 future<StatusOr<google::cloud::translation::v3::Glossary>>
@@ -169,12 +231,43 @@ TranslationServiceClient::CreateGlossary(
   return connection_->CreateGlossary(request);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceClient::CreateGlossary(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::translation::v3::Glossary const& glossary, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::translation::v3::CreateGlossaryRequest request;
+  request.set_parent(parent);
+  *request.mutable_glossary() = glossary;
+  return connection_->CreateGlossary(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceClient::CreateGlossary(
     google::cloud::translation::v3::CreateGlossaryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGlossary(request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceClient::CreateGlossary(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::CreateGlossaryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGlossary(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::translation::v3::Glossary>>
+TranslationServiceClient::CreateGlossary(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGlossary(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StreamRange<google::cloud::translation::v3::Glossary>
@@ -219,12 +312,42 @@ TranslationServiceClient::DeleteGlossary(std::string const& name,
   return connection_->DeleteGlossary(request);
 }
 
+StatusOr<google::longrunning::Operation>
+TranslationServiceClient::DeleteGlossary(ExperimentalTag, NoAwaitTag,
+                                         std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::translation::v3::DeleteGlossaryRequest request;
+  request.set_name(name);
+  return connection_->DeleteGlossary(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceClient::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGlossary(request);
+}
+
+StatusOr<google::longrunning::Operation>
+TranslationServiceClient::DeleteGlossary(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::translation::v3::DeleteGlossaryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGlossary(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
+TranslationServiceClient::DeleteGlossary(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGlossary(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>

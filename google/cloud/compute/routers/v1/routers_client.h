@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTERS_V1_ROUTERS_CLIENT_H
 
 #include "google/cloud/compute/routers/v1/routers_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -202,6 +204,10 @@ class RoutersClient {
       std::string const& project, std::string const& region,
       std::string const& router, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& router, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified Router resource.
@@ -239,6 +245,17 @@ class RoutersClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -529,6 +546,12 @@ class RoutersClient {
       google::cloud::cpp::compute::v1::Router const& router_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::Router const& router_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Router resource in the specified project and region using the
@@ -567,6 +590,17 @@ class RoutersClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
       google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -686,6 +720,12 @@ class RoutersClient {
       google::cloud::cpp::compute::v1::Router const& router_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& router,
+      google::cloud::cpp::compute::v1::Router const& router_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Patches the specified Router resource with the data included in the
@@ -725,6 +765,17 @@ class RoutersClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -834,6 +885,12 @@ class RoutersClient {
       google::cloud::cpp::compute::v1::Router const& router_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& router,
+      google::cloud::cpp::compute::v1::Router const& router_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified Router resource with the data included in the
@@ -874,6 +931,17 @@ class RoutersClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

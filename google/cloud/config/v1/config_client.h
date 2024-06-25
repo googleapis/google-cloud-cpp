@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONFIG_V1_CONFIG_CLIENT_H
 
 #include "google/cloud/config/v1/config_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -259,6 +261,11 @@ class ConfigClient {
       google::cloud::config::v1::Deployment const& deployment,
       std::string const& deployment_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDeployment(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::config::v1::Deployment const& deployment,
+      std::string const& deployment_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a [Deployment][google.cloud.config.v1.Deployment].
@@ -296,6 +303,15 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Deployment>> CreateDeployment(
       google::cloud::config::v1::CreateDeploymentRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateDeployment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::config::v1::CreateDeploymentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::config::v1::Deployment>> CreateDeployment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -340,6 +356,11 @@ class ConfigClient {
       google::cloud::config::v1::Deployment const& deployment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateDeployment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::config::v1::Deployment const& deployment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a [Deployment][google.cloud.config.v1.Deployment].
@@ -378,6 +399,15 @@ class ConfigClient {
       google::cloud::config::v1::UpdateDeploymentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateDeployment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::config::v1::UpdateDeploymentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::config::v1::Deployment>> UpdateDeployment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a [Deployment][google.cloud.config.v1.Deployment].
@@ -410,6 +440,9 @@ class ConfigClient {
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDeployment(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -448,6 +481,15 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
       google::cloud::config::v1::DeleteDeploymentRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDeployment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::config::v1::DeleteDeploymentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -925,6 +967,9 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
       std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> LockDeployment(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Locks a deployment.
@@ -963,6 +1008,15 @@ class ConfigClient {
       google::cloud::config::v1::LockDeploymentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> LockDeployment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::config::v1::LockDeploymentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Unlocks a locked deployment.
@@ -996,6 +1050,10 @@ class ConfigClient {
   // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
       std::string const& name, std::int64_t lock_id, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UnlockDeployment(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      std::int64_t lock_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1034,6 +1092,15 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
       google::cloud::config::v1::UnlockDeploymentRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UnlockDeployment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::config::v1::UnlockDeploymentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1127,6 +1194,10 @@ class ConfigClient {
       std::string const& parent,
       google::cloud::config::v1::Preview const& preview, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreatePreview(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::config::v1::Preview const& preview, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a [Preview][google.cloud.config.v1.Preview].
@@ -1164,6 +1235,15 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
       google::cloud::config::v1::CreatePreviewRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreatePreview(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::config::v1::CreatePreviewRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1332,6 +1412,9 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
       std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeletePreview(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a [Preview][google.cloud.config.v1.Preview].
@@ -1369,6 +1452,15 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
       google::cloud::config::v1::DeletePreviewRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeletePreview(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::config::v1::DeletePreviewRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

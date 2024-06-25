@@ -45,6 +45,20 @@ AttachedClustersClient::CreateAttachedCluster(
   return connection_->CreateAttachedCluster(request);
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersClient::CreateAttachedCluster(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
+    std::string const& attached_cluster_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest request;
+  request.set_parent(parent);
+  *request.mutable_attached_cluster() = attached_cluster;
+  request.set_attached_cluster_id(attached_cluster_id);
+  return connection_->CreateAttachedCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersClient::CreateAttachedCluster(
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
@@ -52,6 +66,26 @@ AttachedClustersClient::CreateAttachedCluster(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAttachedCluster(request);
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersClient::CreateAttachedCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAttachedCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+AttachedClustersClient::CreateAttachedCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAttachedCluster(google::cloud::ExperimentalTag{},
+                                            operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -65,6 +99,19 @@ AttachedClustersClient::UpdateAttachedCluster(
   return connection_->UpdateAttachedCluster(request);
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersClient::UpdateAttachedCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest request;
+  *request.mutable_attached_cluster() = attached_cluster;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAttachedCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersClient::UpdateAttachedCluster(
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
@@ -72,6 +119,26 @@ AttachedClustersClient::UpdateAttachedCluster(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAttachedCluster(request);
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersClient::UpdateAttachedCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAttachedCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+AttachedClustersClient::UpdateAttachedCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAttachedCluster(google::cloud::ExperimentalTag{},
+                                            operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -85,6 +152,18 @@ AttachedClustersClient::ImportAttachedCluster(
   return connection_->ImportAttachedCluster(request);
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersClient::ImportAttachedCluster(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    std::string const& fleet_membership, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest request;
+  request.set_parent(parent);
+  request.set_fleet_membership(fleet_membership);
+  return connection_->ImportAttachedCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersClient::ImportAttachedCluster(
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
@@ -92,6 +171,26 @@ AttachedClustersClient::ImportAttachedCluster(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportAttachedCluster(request);
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersClient::ImportAttachedCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportAttachedCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+AttachedClustersClient::ImportAttachedCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportAttachedCluster(google::cloud::ExperimentalTag{},
+                                            operation);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -137,6 +236,17 @@ AttachedClustersClient::DeleteAttachedCluster(std::string const& name,
   return connection_->DeleteAttachedCluster(request);
 }
 
+StatusOr<google::longrunning::Operation>
+AttachedClustersClient::DeleteAttachedCluster(ExperimentalTag, NoAwaitTag,
+                                              std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest request;
+  request.set_name(name);
+  return connection_->DeleteAttachedCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AttachedClustersClient::DeleteAttachedCluster(
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
@@ -144,6 +254,26 @@ AttachedClustersClient::DeleteAttachedCluster(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAttachedCluster(request);
+}
+
+StatusOr<google::longrunning::Operation>
+AttachedClustersClient::DeleteAttachedCluster(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAttachedCluster(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+AttachedClustersClient::DeleteAttachedCluster(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAttachedCluster(google::cloud::ExperimentalTag{},
+                                            operation);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

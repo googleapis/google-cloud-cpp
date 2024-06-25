@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_SERVICE_HEALTH_CLIENT_H
 
 #include "google/cloud/servicehealth/v1/service_health_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

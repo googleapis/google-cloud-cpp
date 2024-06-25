@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_CONFIG_SERVICE_V2_CLIENT_H
 
 #include "google/cloud/logging/v2/config_service_v2_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -238,6 +240,15 @@ class ConfigServiceV2Client {
       google::logging::v2::CreateBucketRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateBucketAsync(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::logging::v2::CreateBucketRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::logging::v2::LogBucket>> CreateBucketAsync(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a log bucket asynchronously.
@@ -280,6 +291,15 @@ class ConfigServiceV2Client {
   future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
       google::logging::v2::UpdateBucketRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateBucketAsync(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::logging::v2::UpdateBucketRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1063,6 +1083,11 @@ class ConfigServiceV2Client {
       std::string const& parent, google::logging::v2::Link const& link,
       std::string const& link_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateLink(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::logging::v2::Link const& link, std::string const& link_id,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Asynchronously creates a linked dataset in BigQuery which makes it possible
@@ -1102,6 +1127,14 @@ class ConfigServiceV2Client {
   future<StatusOr<google::logging::v2::Link>> CreateLink(
       google::logging::v2::CreateLinkRequest const& request, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateLink(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::logging::v2::CreateLinkRequest const& request, Options opts = {});
+
+  future<StatusOr<google::logging::v2::Link>> CreateLink(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a link. This will also delete the corresponding BigQuery linked
@@ -1140,6 +1173,11 @@ class ConfigServiceV2Client {
   future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
       std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteLink(ExperimentalTag,
+                                                      NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a link. This will also delete the corresponding BigQuery linked
@@ -1177,6 +1215,14 @@ class ConfigServiceV2Client {
   // clang-format on
   future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
       google::logging::v2::DeleteLinkRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteLink(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::logging::v2::DeleteLinkRequest const& request, Options opts = {});
+
+  future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1981,6 +2027,15 @@ class ConfigServiceV2Client {
   future<StatusOr<google::logging::v2::CopyLogEntriesResponse>> CopyLogEntries(
       google::logging::v2::CopyLogEntriesRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CopyLogEntries(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::logging::v2::CopyLogEntriesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::logging::v2::CopyLogEntriesResponse>> CopyLogEntries(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ConfigServiceV2Connection> connection_;

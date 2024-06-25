@@ -65,6 +65,19 @@ TargetTcpProxiesClient::DeleteTargetTcpProxy(
   return connection_->DeleteTargetTcpProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesClient::DeleteTargetTcpProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_tcp_proxy, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_tcp_proxies::v1::
+      DeleteTargetTcpProxyRequest request;
+  request.set_project(project);
+  request.set_target_tcp_proxy(target_tcp_proxy);
+  return connection_->DeleteTargetTcpProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesClient::DeleteTargetTcpProxy(
     google::cloud::cpp::compute::target_tcp_proxies::v1::
@@ -72,6 +85,26 @@ TargetTcpProxiesClient::DeleteTargetTcpProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetTcpProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesClient::DeleteTargetTcpProxy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        DeleteTargetTcpProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetTcpProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetTcpProxiesClient::DeleteTargetTcpProxy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetTcpProxy(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
@@ -109,6 +142,21 @@ TargetTcpProxiesClient::InsertTargetTcpProxy(
   return connection_->InsertTargetTcpProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesClient::InsertTargetTcpProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::TargetTcpProxy const&
+        target_tcp_proxy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_tcp_proxies::v1::
+      InsertTargetTcpProxyRequest request;
+  request.set_project(project);
+  *request.mutable_target_tcp_proxy_resource() = target_tcp_proxy_resource;
+  return connection_->InsertTargetTcpProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesClient::InsertTargetTcpProxy(
     google::cloud::cpp::compute::target_tcp_proxies::v1::
@@ -116,6 +164,26 @@ TargetTcpProxiesClient::InsertTargetTcpProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetTcpProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesClient::InsertTargetTcpProxy(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        InsertTargetTcpProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetTcpProxy(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetTcpProxiesClient::InsertTargetTcpProxy(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetTcpProxy(google::cloud::ExperimentalTag{},
+                                           operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>
@@ -154,6 +222,25 @@ TargetTcpProxiesClient::SetBackendService(
   return connection_->SetBackendService(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesClient::SetBackendService(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_tcp_proxy,
+    google::cloud::cpp::compute::v1::
+        TargetTcpProxiesSetBackendServiceRequest const&
+            target_tcp_proxies_set_backend_service_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_tcp_proxies::v1::SetBackendServiceRequest
+      request;
+  request.set_project(project);
+  request.set_target_tcp_proxy(target_tcp_proxy);
+  *request.mutable_target_tcp_proxies_set_backend_service_request_resource() =
+      target_tcp_proxies_set_backend_service_request_resource;
+  return connection_->SetBackendService(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesClient::SetBackendService(
     google::cloud::cpp::compute::target_tcp_proxies::v1::
@@ -161,6 +248,26 @@ TargetTcpProxiesClient::SetBackendService(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetBackendService(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesClient::SetBackendService(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        SetBackendServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetBackendService(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetTcpProxiesClient::SetBackendService(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetBackendService(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -180,6 +287,25 @@ TargetTcpProxiesClient::SetProxyHeader(
   return connection_->SetProxyHeader(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesClient::SetProxyHeader(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_tcp_proxy,
+    google::cloud::cpp::compute::v1::
+        TargetTcpProxiesSetProxyHeaderRequest const&
+            target_tcp_proxies_set_proxy_header_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_tcp_proxies::v1::SetProxyHeaderRequest
+      request;
+  request.set_project(project);
+  request.set_target_tcp_proxy(target_tcp_proxy);
+  *request.mutable_target_tcp_proxies_set_proxy_header_request_resource() =
+      target_tcp_proxies_set_proxy_header_request_resource;
+  return connection_->SetProxyHeader(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesClient::SetProxyHeader(
     google::cloud::cpp::compute::target_tcp_proxies::v1::
@@ -187,6 +313,26 @@ TargetTcpProxiesClient::SetProxyHeader(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetProxyHeader(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesClient::SetProxyHeader(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        SetProxyHeaderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetProxyHeader(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetTcpProxiesClient::SetProxyHeader(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetProxyHeader(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

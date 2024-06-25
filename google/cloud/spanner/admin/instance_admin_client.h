@@ -20,9 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CLIENT_H
 
 #include "google/cloud/spanner/admin/instance_admin_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -337,6 +339,12 @@ class InstanceAdminClient {
           instance_config,
       std::string const& instance_config_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::spanner::admin::instance::v1::InstanceConfig const&
+          instance_config,
+      std::string const& instance_config_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates an instance config and begins preparing it to be used. The
@@ -422,6 +430,17 @@ class InstanceAdminClient {
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  CreateInstanceConfig(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -520,6 +539,12 @@ class InstanceAdminClient {
           instance_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::instance::v1::InstanceConfig const&
+          instance_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an instance config. The returned
@@ -609,6 +634,17 @@ class InstanceAdminClient {
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(google::cloud::ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -1062,6 +1098,12 @@ class InstanceAdminClient {
                  google::spanner::admin::instance::v1::Instance const& instance,
                  Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& instance_id,
+      google::spanner::admin::instance::v1::Instance const& instance,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an instance and begins preparing it to begin serving. The
@@ -1138,6 +1180,17 @@ class InstanceAdminClient {
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  CreateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1227,6 +1280,11 @@ class InstanceAdminClient {
                  google::protobuf::FieldMask const& field_mask,
                  Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::instance::v1::Instance const& instance,
+      google::protobuf::FieldMask const& field_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an instance, and begins allocating or releasing resources
@@ -1311,6 +1369,17 @@ class InstanceAdminClient {
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  UpdateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1760,6 +1829,12 @@ class InstanceAdminClient {
           instance_partition,
       std::string const& instance_partition_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::spanner::admin::instance::v1::InstancePartition const&
+          instance_partition,
+      std::string const& instance_partition_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates an instance partition and begins preparing it to be used. The
@@ -1837,6 +1912,17 @@ class InstanceAdminClient {
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
   CreateInstancePartition(google::spanner::admin::instance::v1::
                               CreateInstancePartitionRequest const& request,
+                          Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  CreateInstancePartition(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -1999,6 +2085,12 @@ class InstanceAdminClient {
           instance_partition,
       google::protobuf::FieldMask const& field_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::instance::v1::InstancePartition const&
+          instance_partition,
+      google::protobuf::FieldMask const& field_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an instance partition, and begins allocating or releasing resources
@@ -2085,6 +2177,17 @@ class InstanceAdminClient {
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
   UpdateInstancePartition(google::spanner::admin::instance::v1::
                               UpdateInstancePartitionRequest const& request,
+                          Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  UpdateInstancePartition(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off

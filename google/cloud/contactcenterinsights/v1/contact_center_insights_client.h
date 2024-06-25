@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_CONTACT_CENTER_INSIGHTS_CLIENT_H
 
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -200,6 +202,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UploadConversation(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+  UploadConversation(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -484,6 +497,11 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::Analysis const& analysis,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAnalysis(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::contactcenterinsights::v1::Analysis const& analysis,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an analysis. The long running operation is done when the analysis
@@ -524,6 +542,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateAnalysis(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
+  CreateAnalysis(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -743,6 +772,10 @@ class ContactCenterInsightsClient {
   BulkAnalyzeConversations(std::string const& parent, std::string const& filter,
                            float analysis_percentage, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BulkAnalyzeConversations(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& filter, float analysis_percentage, Options opts = {});
+
   // clang-format off
   ///
   /// Analyzes multiple conversations in a single request.
@@ -783,6 +816,18 @@ class ContactCenterInsightsClient {
                                BulkAnalyzeConversationsRequest const& request,
                            Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BulkAnalyzeConversations(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkAnalyzeConversationsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkAnalyzeConversationsResponse>>
+  BulkAnalyzeConversations(google::cloud::ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Deletes multiple conversations in a single request.
@@ -819,6 +864,10 @@ class ContactCenterInsightsClient {
                       BulkDeleteConversationsResponse>>
   BulkDeleteConversations(std::string const& parent, std::string const& filter,
                           Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BulkDeleteConversations(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -860,6 +909,18 @@ class ContactCenterInsightsClient {
                               BulkDeleteConversationsRequest const& request,
                           Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BulkDeleteConversations(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkDeleteConversationsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkDeleteConversationsResponse>>
+  BulkDeleteConversations(google::cloud::ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
+
   // clang-format off
   ///
   /// Imports conversations and processes them according to the user's
@@ -893,6 +954,10 @@ class ContactCenterInsightsClient {
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
   IngestConversations(std::string const& parent, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> IngestConversations(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -935,6 +1000,18 @@ class ContactCenterInsightsClient {
                           IngestConversationsRequest const& request,
                       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> IngestConversations(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          IngestConversationsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+  IngestConversations(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
+
   // clang-format off
   ///
   /// Export insights data to a destination defined in the request body.
@@ -967,6 +1044,10 @@ class ContactCenterInsightsClient {
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
   ExportInsightsData(std::string const& parent, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportInsightsData(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1009,6 +1090,18 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ExportInsightsData(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+  ExportInsightsData(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Creates an issue model.
@@ -1042,6 +1135,11 @@ class ContactCenterInsightsClient {
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
   CreateIssueModel(
       std::string const& parent,
+      google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateIssueModel(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
       Options opts = {});
 
@@ -1084,6 +1182,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateIssueModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
+  CreateIssueModel(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1294,6 +1403,9 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
   DeleteIssueModel(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteIssueModel(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an issue model.
@@ -1335,6 +1447,18 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteIssueModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+  DeleteIssueModel(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Deploys an issue model. Returns an error if a model is already deployed.
@@ -1368,6 +1492,9 @@ class ContactCenterInsightsClient {
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
   DeployIssueModel(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeployIssueModel(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1411,6 +1538,18 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeployIssueModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+  DeployIssueModel(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Undeploys an issue model.
@@ -1444,6 +1583,9 @@ class ContactCenterInsightsClient {
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
   UndeployIssueModel(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UndeployIssueModel(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1486,6 +1628,18 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UndeployIssueModel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+  UndeployIssueModel(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_APPLICATIONS_CLIENT_H
 
 #include "google/cloud/appengine/v1/applications_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -186,6 +188,15 @@ class ApplicationsClient {
       google::appengine::v1::CreateApplicationRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateApplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::CreateApplicationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::Application>> CreateApplication(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified Application resource.
@@ -228,6 +239,15 @@ class ApplicationsClient {
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
       google::appengine::v1::UpdateApplicationRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateApplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::UpdateApplicationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -275,6 +295,15 @@ class ApplicationsClient {
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
       google::appengine::v1::RepairApplicationRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RepairApplication(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::appengine::v1::RepairApplicationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::Application>> RepairApplication(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ApplicationsConnection> connection_;

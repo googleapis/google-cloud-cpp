@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_METRICS_SERVICE_V2_CLIENT_H
 
 #include "google/cloud/logging/v2/metrics_service_v2_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

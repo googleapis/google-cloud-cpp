@@ -91,12 +91,39 @@ JobServiceClient::DeleteCustomJob(std::string const& name, Options opts) {
   return connection_->DeleteCustomJob(request);
 }
 
+StatusOr<google::longrunning::Operation> JobServiceClient::DeleteCustomJob(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteCustomJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteCustomJob(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceClient::DeleteCustomJob(
     google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCustomJob(request);
+}
+
+StatusOr<google::longrunning::Operation> JobServiceClient::DeleteCustomJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCustomJob(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+JobServiceClient::DeleteCustomJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCustomJob(google::cloud::ExperimentalTag{},
+                                      operation);
 }
 
 Status JobServiceClient::CancelCustomJob(std::string const& name,
@@ -175,12 +202,41 @@ JobServiceClient::DeleteDataLabelingJob(std::string const& name, Options opts) {
   return connection_->DeleteDataLabelingJob(request);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceClient::DeleteDataLabelingJob(ExperimentalTag, NoAwaitTag,
+                                        std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteDataLabelingJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceClient::DeleteDataLabelingJob(
     google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataLabelingJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceClient::DeleteDataLabelingJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDataLabelingJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+JobServiceClient::DeleteDataLabelingJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDataLabelingJob(google::cloud::ExperimentalTag{},
+                                            operation);
 }
 
 Status JobServiceClient::CancelDataLabelingJob(std::string const& name,
@@ -264,6 +320,17 @@ JobServiceClient::DeleteHyperparameterTuningJob(std::string const& name,
   return connection_->DeleteHyperparameterTuningJob(request);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceClient::DeleteHyperparameterTuningJob(ExperimentalTag, NoAwaitTag,
+                                                std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteHyperparameterTuningJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceClient::DeleteHyperparameterTuningJob(
     google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
@@ -271,6 +338,26 @@ JobServiceClient::DeleteHyperparameterTuningJob(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteHyperparameterTuningJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceClient::DeleteHyperparameterTuningJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHyperparameterTuningJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+JobServiceClient::DeleteHyperparameterTuningJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHyperparameterTuningJob(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 Status JobServiceClient::CancelHyperparameterTuningJob(std::string const& name,
@@ -344,12 +431,38 @@ JobServiceClient::DeleteNasJob(std::string const& name, Options opts) {
   return connection_->DeleteNasJob(request);
 }
 
+StatusOr<google::longrunning::Operation> JobServiceClient::DeleteNasJob(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteNasJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteNasJob(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceClient::DeleteNasJob(
     google::cloud::aiplatform::v1::DeleteNasJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNasJob(request);
+}
+
+StatusOr<google::longrunning::Operation> JobServiceClient::DeleteNasJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteNasJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNasJob(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+JobServiceClient::DeleteNasJob(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNasJob(google::cloud::ExperimentalTag{}, operation);
 }
 
 Status JobServiceClient::CancelNasJob(std::string const& name, Options opts) {
@@ -462,6 +575,17 @@ JobServiceClient::DeleteBatchPredictionJob(std::string const& name,
   return connection_->DeleteBatchPredictionJob(request);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceClient::DeleteBatchPredictionJob(ExperimentalTag, NoAwaitTag,
+                                           std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteBatchPredictionJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceClient::DeleteBatchPredictionJob(
     google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
@@ -469,6 +593,26 @@ JobServiceClient::DeleteBatchPredictionJob(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBatchPredictionJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceClient::DeleteBatchPredictionJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBatchPredictionJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+JobServiceClient::DeleteBatchPredictionJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBatchPredictionJob(google::cloud::ExperimentalTag{},
+                                               operation);
 }
 
 Status JobServiceClient::CancelBatchPredictionJob(std::string const& name,
@@ -584,6 +728,22 @@ JobServiceClient::UpdateModelDeploymentMonitoringJob(
   return connection_->UpdateModelDeploymentMonitoringJob(request);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceClient::UpdateModelDeploymentMonitoringJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob const&
+        model_deployment_monitoring_job,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateModelDeploymentMonitoringJobRequest
+      request;
+  *request.mutable_model_deployment_monitoring_job() =
+      model_deployment_monitoring_job;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
 JobServiceClient::UpdateModelDeploymentMonitoringJob(
     google::cloud::aiplatform::v1::
@@ -591,6 +751,26 @@ JobServiceClient::UpdateModelDeploymentMonitoringJob(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateModelDeploymentMonitoringJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceClient::UpdateModelDeploymentMonitoringJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::
+        UpdateModelDeploymentMonitoringJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
+JobServiceClient::UpdateModelDeploymentMonitoringJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -603,6 +783,19 @@ JobServiceClient::DeleteModelDeploymentMonitoringJob(std::string const& name,
   return connection_->DeleteModelDeploymentMonitoringJob(request);
 }
 
+StatusOr<google::longrunning::Operation>
+JobServiceClient::DeleteModelDeploymentMonitoringJob(ExperimentalTag,
+                                                     NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteModelDeploymentMonitoringJobRequest
+      request;
+  request.set_name(name);
+  return connection_->DeleteModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceClient::DeleteModelDeploymentMonitoringJob(
     google::cloud::aiplatform::v1::
@@ -610,6 +803,26 @@ JobServiceClient::DeleteModelDeploymentMonitoringJob(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModelDeploymentMonitoringJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+JobServiceClient::DeleteModelDeploymentMonitoringJob(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::
+        DeleteModelDeploymentMonitoringJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+JobServiceClient::DeleteModelDeploymentMonitoringJob(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteModelDeploymentMonitoringJob(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 Status JobServiceClient::PauseModelDeploymentMonitoringJob(

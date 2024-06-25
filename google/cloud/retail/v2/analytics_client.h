@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_ANALYTICS_CLIENT_H
 
 #include "google/cloud/retail/v2/analytics_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -129,6 +131,16 @@ class AnalyticsServiceClient {
   ExportAnalyticsMetrics(
       google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
+  ExportAnalyticsMetrics(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
  private:
   std::shared_ptr<AnalyticsServiceConnection> connection_;

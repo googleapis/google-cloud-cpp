@@ -65,6 +65,20 @@ HealthChecksClient::DeleteHealthCheck(std::string const& project,
   return connection_->DeleteHealthCheck(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+HealthChecksClient::DeleteHealthCheck(ExperimentalTag, NoAwaitTag,
+                                      std::string const& project,
+                                      std::string const& health_check,
+                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::health_checks::v1::DeleteHealthCheckRequest
+      request;
+  request.set_project(project);
+  request.set_health_check(health_check);
+  return connection_->DeleteHealthCheck(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksClient::DeleteHealthCheck(
     google::cloud::cpp::compute::health_checks::v1::
@@ -72,6 +86,26 @@ HealthChecksClient::DeleteHealthCheck(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteHealthCheck(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+HealthChecksClient::DeleteHealthCheck(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::health_checks::v1::
+        DeleteHealthCheckRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHealthCheck(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+HealthChecksClient::DeleteHealthCheck(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteHealthCheck(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
@@ -107,6 +141,20 @@ HealthChecksClient::InsertHealthCheck(
   return connection_->InsertHealthCheck(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+HealthChecksClient::InsertHealthCheck(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::health_checks::v1::InsertHealthCheckRequest
+      request;
+  request.set_project(project);
+  *request.mutable_health_check_resource() = health_check_resource;
+  return connection_->InsertHealthCheck(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksClient::InsertHealthCheck(
     google::cloud::cpp::compute::health_checks::v1::
@@ -114,6 +162,26 @@ HealthChecksClient::InsertHealthCheck(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertHealthCheck(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+HealthChecksClient::InsertHealthCheck(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::health_checks::v1::
+        InsertHealthCheckRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertHealthCheck(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+HealthChecksClient::InsertHealthCheck(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertHealthCheck(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HealthCheck>
@@ -148,6 +216,22 @@ HealthChecksClient::PatchHealthCheck(
   return connection_->PatchHealthCheck(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+HealthChecksClient::PatchHealthCheck(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& health_check,
+    google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::health_checks::v1::PatchHealthCheckRequest
+      request;
+  request.set_project(project);
+  request.set_health_check(health_check);
+  *request.mutable_health_check_resource() = health_check_resource;
+  return connection_->PatchHealthCheck(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksClient::PatchHealthCheck(
     google::cloud::cpp::compute::health_checks::v1::
@@ -155,6 +239,26 @@ HealthChecksClient::PatchHealthCheck(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchHealthCheck(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+HealthChecksClient::PatchHealthCheck(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::health_checks::v1::
+        PatchHealthCheckRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchHealthCheck(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+HealthChecksClient::PatchHealthCheck(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchHealthCheck(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -171,6 +275,22 @@ HealthChecksClient::UpdateHealthCheck(
   return connection_->UpdateHealthCheck(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+HealthChecksClient::UpdateHealthCheck(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& health_check,
+    google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::health_checks::v1::UpdateHealthCheckRequest
+      request;
+  request.set_project(project);
+  request.set_health_check(health_check);
+  *request.mutable_health_check_resource() = health_check_resource;
+  return connection_->UpdateHealthCheck(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksClient::UpdateHealthCheck(
     google::cloud::cpp::compute::health_checks::v1::
@@ -178,6 +298,26 @@ HealthChecksClient::UpdateHealthCheck(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateHealthCheck(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+HealthChecksClient::UpdateHealthCheck(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::health_checks::v1::
+        UpdateHealthCheckRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateHealthCheck(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+HealthChecksClient::UpdateHealthCheck(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateHealthCheck(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

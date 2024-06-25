@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_COMPLETION_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/completion_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -163,6 +165,18 @@ class CompletionServiceClient {
           ImportSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      ImportSuggestionDenyListEntriesResponse>>
+  ImportSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Permanently deletes all
@@ -206,6 +220,18 @@ class CompletionServiceClient {
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::
+                      PurgeSuggestionDenyListEntriesResponse>>
+  PurgeSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<CompletionServiceConnection> connection_;

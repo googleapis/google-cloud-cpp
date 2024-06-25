@@ -73,12 +73,41 @@ DocumentsClient::CreateDocument(
   return connection_->CreateDocument(request);
 }
 
+StatusOr<google::longrunning::Operation> DocumentsClient::CreateDocument(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::dialogflow::v2::Document const& document, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::CreateDocumentRequest request;
+  request.set_parent(parent);
+  *request.mutable_document() = document;
+  return connection_->CreateDocument(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsClient::CreateDocument(
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDocument(request);
+}
+
+StatusOr<google::longrunning::Operation> DocumentsClient::CreateDocument(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDocument(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::Document>>
+DocumentsClient::CreateDocument(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDocument(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
@@ -89,6 +118,24 @@ DocumentsClient::ImportDocuments(
   return connection_->ImportDocuments(request);
 }
 
+StatusOr<google::longrunning::Operation> DocumentsClient::ImportDocuments(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::ImportDocumentsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportDocuments(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
+DocumentsClient::ImportDocuments(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportDocuments(google::cloud::ExperimentalTag{},
+                                      operation);
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
 DocumentsClient::DeleteDocument(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -97,12 +144,39 @@ DocumentsClient::DeleteDocument(std::string const& name, Options opts) {
   return connection_->DeleteDocument(request);
 }
 
+StatusOr<google::longrunning::Operation> DocumentsClient::DeleteDocument(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::DeleteDocumentRequest request;
+  request.set_name(name);
+  return connection_->DeleteDocument(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
 DocumentsClient::DeleteDocument(
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDocument(request);
+}
+
+StatusOr<google::longrunning::Operation> DocumentsClient::DeleteDocument(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::DeleteDocumentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDocument(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
+DocumentsClient::DeleteDocument(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDocument(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
@@ -116,12 +190,42 @@ DocumentsClient::UpdateDocument(
   return connection_->UpdateDocument(request);
 }
 
+StatusOr<google::longrunning::Operation> DocumentsClient::UpdateDocument(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::Document const& document,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::UpdateDocumentRequest request;
+  *request.mutable_document() = document;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDocument(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsClient::UpdateDocument(
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateDocument(request);
+}
+
+StatusOr<google::longrunning::Operation> DocumentsClient::UpdateDocument(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDocument(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::Document>>
+DocumentsClient::UpdateDocument(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDocument(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
@@ -134,6 +238,17 @@ DocumentsClient::ReloadDocument(std::string const& name,
   return connection_->ReloadDocument(request);
 }
 
+StatusOr<google::longrunning::Operation> DocumentsClient::ReloadDocument(
+    ExperimentalTag, NoAwaitTag, std::string const& name,
+    std::string const& content_uri, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::ReloadDocumentRequest request;
+  request.set_name(name);
+  request.set_content_uri(content_uri);
+  return connection_->ReloadDocument(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsClient::ReloadDocument(
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
@@ -142,12 +257,48 @@ DocumentsClient::ReloadDocument(
   return connection_->ReloadDocument(request);
 }
 
+StatusOr<google::longrunning::Operation> DocumentsClient::ReloadDocument(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReloadDocument(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::Document>>
+DocumentsClient::ReloadDocument(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReloadDocument(google::cloud::ExperimentalTag{},
+                                     operation);
+}
+
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsClient::ExportDocument(
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportDocument(request);
+}
+
+StatusOr<google::longrunning::Operation> DocumentsClient::ExportDocument(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportDocument(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::Document>>
+DocumentsClient::ExportDocument(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportDocument(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

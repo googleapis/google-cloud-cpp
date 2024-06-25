@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_V1_CLOUD_SCHEDULER_CLIENT_H
 
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"

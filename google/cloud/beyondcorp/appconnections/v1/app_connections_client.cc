@@ -86,6 +86,22 @@ AppConnectionsServiceClient::CreateAppConnection(
   return connection_->CreateAppConnection(request);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceClient::CreateAppConnection(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::beyondcorp::appconnections::v1::AppConnection const&
+        app_connection,
+    std::string const& app_connection_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::beyondcorp::appconnections::v1::CreateAppConnectionRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_app_connection() = app_connection;
+  request.set_app_connection_id(app_connection_id);
+  return connection_->CreateAppConnection(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceClient::CreateAppConnection(
     google::cloud::beyondcorp::appconnections::v1::
@@ -93,6 +109,26 @@ AppConnectionsServiceClient::CreateAppConnection(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateAppConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceClient::CreateAppConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        CreateAppConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAppConnection(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+AppConnectionsServiceClient::CreateAppConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAppConnection(google::cloud::ExperimentalTag{},
+                                          operation);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
@@ -108,6 +144,21 @@ AppConnectionsServiceClient::UpdateAppConnection(
   return connection_->UpdateAppConnection(request);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceClient::UpdateAppConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::AppConnection const&
+        app_connection,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::beyondcorp::appconnections::v1::UpdateAppConnectionRequest
+      request;
+  *request.mutable_app_connection() = app_connection;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAppConnection(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceClient::UpdateAppConnection(
     google::cloud::beyondcorp::appconnections::v1::
@@ -115,6 +166,26 @@ AppConnectionsServiceClient::UpdateAppConnection(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateAppConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceClient::UpdateAppConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        UpdateAppConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAppConnection(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+AppConnectionsServiceClient::UpdateAppConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAppConnection(google::cloud::ExperimentalTag{},
+                                          operation);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
@@ -128,6 +199,18 @@ AppConnectionsServiceClient::DeleteAppConnection(std::string const& name,
   return connection_->DeleteAppConnection(request);
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceClient::DeleteAppConnection(ExperimentalTag, NoAwaitTag,
+                                                 std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::beyondcorp::appconnections::v1::DeleteAppConnectionRequest
+      request;
+  request.set_name(name);
+  return connection_->DeleteAppConnection(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                     AppConnectionOperationMetadata>>
 AppConnectionsServiceClient::DeleteAppConnection(
@@ -136,6 +219,27 @@ AppConnectionsServiceClient::DeleteAppConnection(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAppConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceClient::DeleteAppConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        DeleteAppConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAppConnection(google::cloud::ExperimentalTag{},
+                                          google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
+                    AppConnectionOperationMetadata>>
+AppConnectionsServiceClient::DeleteAppConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAppConnection(google::cloud::ExperimentalTag{},
+                                          operation);
 }
 
 StreamRange<google::cloud::beyondcorp::appconnections::v1::

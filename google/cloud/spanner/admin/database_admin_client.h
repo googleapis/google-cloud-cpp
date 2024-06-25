@@ -20,9 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CLIENT_H
 
 #include "google/cloud/spanner/admin/database_admin_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -219,6 +221,10 @@ class DatabaseAdminClient {
   CreateDatabase(std::string const& parent, std::string const& create_statement,
                  Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDatabase(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& create_statement, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Cloud Spanner database and starts to prepare it for serving.
@@ -269,6 +275,17 @@ class DatabaseAdminClient {
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  CreateDatabase(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -406,6 +423,11 @@ class DatabaseAdminClient {
                  google::protobuf::FieldMask const& update_mask,
                  Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateDatabase(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::database::v1::Database const& database,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a Cloud Spanner database. The returned
@@ -487,6 +509,17 @@ class DatabaseAdminClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  UpdateDatabase(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Updates the schema of a Cloud Spanner database by
@@ -531,6 +564,10 @@ class DatabaseAdminClient {
   UpdateDatabaseDdl(std::string const& database,
                     std::vector<std::string> const& statements,
                     Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      ExperimentalTag, NoAwaitTag, std::string const& database,
+      std::vector<std::string> const& statements, Options opts = {});
 
   // clang-format off
   ///
@@ -581,6 +618,18 @@ class DatabaseAdminClient {
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -1014,6 +1063,11 @@ class DatabaseAdminClient {
       google::spanner::admin::database::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::spanner::admin::database::v1::Backup const& backup,
+      std::string const& backup_id, Options opts = {});
+
   // clang-format off
   ///
   /// Starts creating a new Cloud Spanner Backup.
@@ -1066,6 +1120,15 @@ class DatabaseAdminClient {
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       google::spanner::admin::database::v1::CreateBackupRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1132,6 +1195,11 @@ class DatabaseAdminClient {
       std::string const& source_backup,
       google::protobuf::Timestamp const& expire_time, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CopyBackup(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& backup_id, std::string const& source_backup,
+      google::protobuf::Timestamp const& expire_time, Options opts = {});
+
   // clang-format off
   ///
   /// Starts copying a Cloud Spanner Backup.
@@ -1185,6 +1253,15 @@ class DatabaseAdminClient {
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
       google::spanner::admin::database::v1::CopyBackupRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CopyBackup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1510,6 +1587,11 @@ class DatabaseAdminClient {
   RestoreDatabase(std::string const& parent, std::string const& database_id,
                   std::string const& backup, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& database_id, std::string const& backup,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Create a new database by restoring from a completed backup. The new
@@ -1569,6 +1651,17 @@ class DatabaseAdminClient {
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  RestoreDatabase(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///

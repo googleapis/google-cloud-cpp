@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CLIENT_H
 
 #include "google/cloud/video/livestream/v1/livestream_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -132,6 +134,11 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Channel const& channel,
       std::string const& channel_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateChannel(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::video::livestream::v1::Channel const& channel,
+      std::string const& channel_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a channel with the provided unique ID in the specified
@@ -170,6 +177,15 @@ class LivestreamServiceClient {
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
       google::cloud::video::livestream::v1::CreateChannelRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateChannel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateChannelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -336,6 +352,9 @@ class LivestreamServiceClient {
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteChannel(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteChannel(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified channel.
@@ -374,6 +393,16 @@ class LivestreamServiceClient {
   DeleteChannel(
       google::cloud::video::livestream::v1::DeleteChannelRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteChannel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteChannelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteChannel(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -428,6 +457,11 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Channel const& channel,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateChannel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::Channel const& channel,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified channel.
@@ -466,6 +500,15 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateChannel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Starts the specified channel. Part of the video pipeline will be created
@@ -500,6 +543,11 @@ class LivestreamServiceClient {
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StartChannel(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StartChannel(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -542,6 +590,17 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::StartChannelRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StartChannel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::StartChannelRequest const& request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartChannel(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation,
+               Options opts = {});
+
   // clang-format off
   ///
   /// Stops the specified channel. Part of the video pipeline will be released
@@ -576,6 +635,11 @@ class LivestreamServiceClient {
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StopChannel(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StopChannel(ExperimentalTag,
+                                                       NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -618,6 +682,17 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::StopChannelRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StopChannel(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::StopChannelRequest const& request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopChannel(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation,
+              Options opts = {});
+
   // clang-format off
   ///
   /// Creates an input with the provided unique ID in the specified region.
@@ -654,6 +729,11 @@ class LivestreamServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
       std::string const& parent,
+      google::cloud::video::livestream::v1::Input const& input,
+      std::string const& input_id, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateInput(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::video::livestream::v1::Input const& input,
       std::string const& input_id, Options opts = {});
 
@@ -694,6 +774,15 @@ class LivestreamServiceClient {
   future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
       google::cloud::video::livestream::v1::CreateInputRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateInput(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateInputRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -860,6 +949,11 @@ class LivestreamServiceClient {
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteInput(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteInput(ExperimentalTag,
+                                                       NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified input.
@@ -898,6 +992,16 @@ class LivestreamServiceClient {
   DeleteInput(
       google::cloud::video::livestream::v1::DeleteInputRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInput(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteInput(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -944,6 +1048,11 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Input const& input,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInput(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::Input const& input,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified input.
@@ -981,6 +1090,15 @@ class LivestreamServiceClient {
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::cloud::video::livestream::v1::UpdateInputRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateInput(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1267,6 +1385,11 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Asset const& asset,
       std::string const& asset_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAsset(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::video::livestream::v1::Asset const& asset,
+      std::string const& asset_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Asset with the provided unique ID in the specified
@@ -1306,6 +1429,15 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::CreateAssetRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAsset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified asset if it is not used.
@@ -1338,6 +1470,11 @@ class LivestreamServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteAsset(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAsset(ExperimentalTag,
+                                                       NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -1377,6 +1514,16 @@ class LivestreamServiceClient {
   DeleteAsset(
       google::cloud::video::livestream::v1::DeleteAssetRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAsset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteAsset(google::cloud::ExperimentalTag,
+              google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -1607,6 +1754,11 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Pool const& pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdatePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::Pool const& pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified pool.
@@ -1644,6 +1796,15 @@ class LivestreamServiceClient {
   future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
       google::cloud::video::livestream::v1::UpdatePoolRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdatePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<LivestreamServiceConnection> connection_;

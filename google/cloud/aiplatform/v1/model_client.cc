@@ -43,12 +43,40 @@ ModelServiceClient::UploadModel(
   return connection_->UploadModel(request);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceClient::UploadModel(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::Model const& model, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UploadModelRequest request;
+  request.set_parent(parent);
+  *request.mutable_model() = model;
+  return connection_->UploadModel(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
 ModelServiceClient::UploadModel(
     google::cloud::aiplatform::v1::UploadModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UploadModel(request);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceClient::UploadModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UploadModelRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UploadModel(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
+ModelServiceClient::UploadModel(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UploadModel(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceClient::GetModel(
@@ -124,6 +152,17 @@ ModelServiceClient::UpdateExplanationDataset(std::string const& model,
   return connection_->UpdateExplanationDataset(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::UpdateExplanationDataset(ExperimentalTag, NoAwaitTag,
+                                             std::string const& model,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest request;
+  request.set_model(model);
+  return connection_->UpdateExplanationDataset(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<
     StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
 ModelServiceClient::UpdateExplanationDataset(
@@ -134,12 +173,42 @@ ModelServiceClient::UpdateExplanationDataset(
   return connection_->UpdateExplanationDataset(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceClient::UpdateExplanationDataset(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateExplanationDataset(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceClient::UpdateExplanationDataset(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateExplanationDataset(google::cloud::ExperimentalTag{},
+                                               operation);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceClient::DeleteModel(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteModelRequest request;
   request.set_name(name);
   return connection_->DeleteModel(request);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModel(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteModelRequest request;
+  request.set_name(name);
+  return connection_->DeleteModel(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -150,6 +219,23 @@ ModelServiceClient::DeleteModel(
   return connection_->DeleteModel(request);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteModelRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteModel(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+ModelServiceClient::DeleteModel(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteModel(google::cloud::ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceClient::DeleteModelVersion(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -158,12 +244,39 @@ ModelServiceClient::DeleteModelVersion(std::string const& name, Options opts) {
   return connection_->DeleteModelVersion(request);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModelVersion(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteModelVersionRequest request;
+  request.set_name(name);
+  return connection_->DeleteModelVersion(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceClient::DeleteModelVersion(
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModelVersion(request);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceClient::DeleteModelVersion(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteModelVersion(google::cloud::ExperimentalTag{},
+                                         google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+ModelServiceClient::DeleteModelVersion(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteModelVersion(google::cloud::ExperimentalTag{},
+                                         operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
@@ -199,12 +312,42 @@ ModelServiceClient::ExportModel(
   return connection_->ExportModel(request);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceClient::ExportModel(
+    ExperimentalTag, NoAwaitTag, std::string const& name,
+    google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const&
+        output_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::ExportModelRequest request;
+  request.set_name(name);
+  *request.mutable_output_config() = output_config;
+  return connection_->ExportModel(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
 ModelServiceClient::ExportModel(
     google::cloud::aiplatform::v1::ExportModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportModel(request);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceClient::ExportModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::ExportModelRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportModel(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
+ModelServiceClient::ExportModel(google::cloud::ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportModel(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
@@ -217,12 +360,40 @@ ModelServiceClient::CopyModel(std::string const& parent,
   return connection_->CopyModel(request);
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceClient::CopyModel(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    std::string const& source_model, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CopyModelRequest request;
+  request.set_parent(parent);
+  request.set_source_model(source_model);
+  return connection_->CopyModel(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
 ModelServiceClient::CopyModel(
     google::cloud::aiplatform::v1::CopyModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CopyModel(request);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceClient::CopyModel(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::aiplatform::v1::CopyModelRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CopyModel(google::cloud::ExperimentalTag{},
+                                google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
+ModelServiceClient::CopyModel(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CopyModel(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>

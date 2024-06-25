@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_CLIENT_H
 
 #include "google/cloud/gkemulticloud/v1/aws_clusters_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -147,6 +149,11 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       std::string const& aws_cluster_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAwsCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
+      std::string const& aws_cluster_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
@@ -192,6 +199,16 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAwsCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  CreateAwsCluster(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Updates an [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster].
@@ -228,6 +245,11 @@ class AwsClustersClient {
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(
+      google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAwsCluster(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -269,6 +291,16 @@ class AwsClustersClient {
   UpdateAwsCluster(
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAwsCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  UpdateAwsCluster(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -468,6 +500,9 @@ class AwsClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteAwsCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a specific [AwsCluster][google.cloud.gkemulticloud.v1.AwsCluster]
@@ -517,6 +552,16 @@ class AwsClustersClient {
   DeleteAwsCluster(
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAwsCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsCluster(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -647,6 +692,11 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       std::string const& aws_node_pool_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAwsNodePool(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
+      std::string const& aws_node_pool_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool],
@@ -693,6 +743,16 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAwsNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  CreateAwsNodePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Updates an [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool].
@@ -729,6 +789,11 @@ class AwsClustersClient {
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
+      google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -770,6 +835,16 @@ class AwsClustersClient {
   UpdateAwsNodePool(
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  UpdateAwsNodePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -816,6 +891,9 @@ class AwsClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Rolls back a previously aborted or failed
@@ -860,6 +938,17 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(google::cloud::ExperimentalTag,
+                            google::longrunning::Operation const& operation,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -1060,6 +1149,9 @@ class AwsClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a specific [AwsNodePool][google.cloud.gkemulticloud.v1.AwsNodePool]
@@ -1105,6 +1197,16 @@ class AwsClustersClient {
   DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsNodePool(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///

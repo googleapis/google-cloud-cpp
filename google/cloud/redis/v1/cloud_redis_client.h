@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_V1_CLOUD_REDIS_CLIENT_H
 
 #include "google/cloud/redis/v1/cloud_redis_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -368,6 +370,11 @@ class CloudRedisClient {
       std::string const& parent, std::string const& instance_id,
       google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& instance_id,
+      google::cloud::redis::v1::Instance const& instance, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Redis instance based on the specified tier and memory size.
@@ -417,6 +424,15 @@ class CloudRedisClient {
       google::cloud::redis::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::redis::v1::CreateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the metadata and configuration of a specific Redis instance.
@@ -464,6 +480,11 @@ class CloudRedisClient {
       google::protobuf::FieldMask const& update_mask,
       google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::protobuf::FieldMask const& update_mask,
+      google::cloud::redis::v1::Instance const& instance, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the metadata and configuration of a specific Redis instance.
@@ -506,6 +527,15 @@ class CloudRedisClient {
       google::cloud::redis::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::redis::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Upgrades Redis instance to the newer Redis version specified in the
@@ -542,6 +572,10 @@ class CloudRedisClient {
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
       std::string const& name, std::string const& redis_version,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpgradeInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      std::string const& redis_version, Options opts = {});
 
   // clang-format off
   ///
@@ -581,6 +615,15 @@ class CloudRedisClient {
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
       google::cloud::redis::v1::UpgradeInstanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpgradeInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::redis::v1::UpgradeInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -623,6 +666,11 @@ class CloudRedisClient {
   // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
       std::string const& name,
+      google::cloud::redis::v1::InputConfig const& input_config,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ImportInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::redis::v1::InputConfig const& input_config,
       Options opts = {});
 
@@ -671,6 +719,15 @@ class CloudRedisClient {
       google::cloud::redis::v1::ImportInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::redis::v1::ImportInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Export Redis instance data into a Redis RDB format file in Cloud Storage.
@@ -710,6 +767,11 @@ class CloudRedisClient {
   // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
       std::string const& name,
+      google::cloud::redis::v1::OutputConfig const& output_config,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::redis::v1::OutputConfig const& output_config,
       Options opts = {});
 
@@ -756,6 +818,15 @@ class CloudRedisClient {
       google::cloud::redis::v1::ExportInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ExportInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::redis::v1::ExportInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Initiates a failover of the primary node to current replica node for a
@@ -792,6 +863,12 @@ class CloudRedisClient {
   // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
       std::string const& name,
+      google::cloud::redis::v1::FailoverInstanceRequest::DataProtectionMode
+          data_protection_mode,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> FailoverInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::redis::v1::FailoverInstanceRequest::DataProtectionMode
           data_protection_mode,
       Options opts = {});
@@ -835,6 +912,15 @@ class CloudRedisClient {
       google::cloud::redis::v1::FailoverInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> FailoverInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::redis::v1::FailoverInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a specific Redis instance.  Instance stops serving and data is
@@ -869,6 +955,9 @@ class CloudRedisClient {
   // clang-format on
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -908,6 +997,15 @@ class CloudRedisClient {
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
       google::cloud::redis::v1::DeleteInstanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::redis::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -952,6 +1050,12 @@ class CloudRedisClient {
           reschedule_type,
       google::protobuf::Timestamp const& schedule_time, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest::RescheduleType
+          reschedule_type,
+      google::protobuf::Timestamp const& schedule_time, Options opts = {});
+
   // clang-format off
   ///
   /// Reschedule maintenance for a given instance in a given project and
@@ -990,6 +1094,15 @@ class CloudRedisClient {
   future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<CloudRedisConnection> connection_;

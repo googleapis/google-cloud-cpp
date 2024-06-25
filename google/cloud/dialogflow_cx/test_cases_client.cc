@@ -127,12 +127,47 @@ TestCasesClient::RunTestCase(
   return connection_->RunTestCase(request);
 }
 
+StatusOr<google::longrunning::Operation> TestCasesClient::RunTestCase(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunTestCase(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
+TestCasesClient::RunTestCase(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunTestCase(google::cloud::ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
 TestCasesClient::BatchRunTestCases(
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchRunTestCases(request);
+}
+
+StatusOr<google::longrunning::Operation> TestCasesClient::BatchRunTestCases(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchRunTestCases(google::cloud::ExperimentalTag{},
+                                        google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
+TestCasesClient::BatchRunTestCases(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchRunTestCases(google::cloud::ExperimentalTag{},
+                                        operation);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -151,12 +186,48 @@ TestCasesClient::ImportTestCases(
   return connection_->ImportTestCases(request);
 }
 
+StatusOr<google::longrunning::Operation> TestCasesClient::ImportTestCases(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportTestCases(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
+TestCasesClient::ImportTestCases(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportTestCases(google::cloud::ExperimentalTag{},
+                                      operation);
+}
+
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
 TestCasesClient::ExportTestCases(
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportTestCases(request);
+}
+
+StatusOr<google::longrunning::Operation> TestCasesClient::ExportTestCases(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportTestCases(google::cloud::ExperimentalTag{},
+                                      google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
+TestCasesClient::ExportTestCases(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportTestCases(google::cloud::ExperimentalTag{},
+                                      operation);
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>

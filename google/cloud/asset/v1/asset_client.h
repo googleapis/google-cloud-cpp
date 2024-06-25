@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_ASSET_CLIENT_H
 
 #include "google/cloud/asset/v1/asset_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -136,6 +138,15 @@ class AssetServiceClient {
   future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
       google::cloud::asset::v1::ExportAssetsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportAssets(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::asset::v1::ExportAssetsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -845,6 +856,18 @@ class AssetServiceClient {
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
+  AnalyzeIamPolicyLongrunning(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts = {});
 
   // clang-format off
   ///

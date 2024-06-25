@@ -45,12 +45,45 @@ RepositoryManagerClient::CreateConnection(
   return connection_->CreateConnection(request);
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::CreateConnection(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::devtools::cloudbuild::v2::Connection const& connection,
+    std::string const& connection_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v2::CreateConnectionRequest request;
+  request.set_parent(parent);
+  *request.mutable_connection() = connection;
+  request.set_connection_id(connection_id);
+  return connection_->CreateConnection(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerClient::CreateConnection(
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::CreateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::cloudbuild::v2::CreateConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConnection(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
+RepositoryManagerClient::CreateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConnection(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
@@ -97,12 +130,44 @@ RepositoryManagerClient::UpdateConnection(
   return connection_->UpdateConnection(request);
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::UpdateConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v2::Connection const& connection,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v2::UpdateConnectionRequest request;
+  *request.mutable_connection() = connection;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateConnection(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerClient::UpdateConnection(
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::UpdateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateConnection(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
+RepositoryManagerClient::UpdateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateConnection(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
@@ -114,12 +179,42 @@ RepositoryManagerClient::DeleteConnection(std::string const& name,
   return connection_->DeleteConnection(request);
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::DeleteConnection(ExperimentalTag, NoAwaitTag,
+                                          std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v2::DeleteConnectionRequest request;
+  request.set_name(name);
+  return connection_->DeleteConnection(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerClient::DeleteConnection(
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::DeleteConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteConnection(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
+RepositoryManagerClient::DeleteConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteConnection(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
@@ -135,12 +230,45 @@ RepositoryManagerClient::CreateRepository(
   return connection_->CreateRepository(request);
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::CreateRepository(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::devtools::cloudbuild::v2::Repository const& repository,
+    std::string const& repository_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v2::CreateRepositoryRequest request;
+  request.set_parent(parent);
+  *request.mutable_repository() = repository;
+  request.set_repository_id(repository_id);
+  return connection_->CreateRepository(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
 RepositoryManagerClient::CreateRepository(
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRepository(request);
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::CreateRepository(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRepository(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
+RepositoryManagerClient::CreateRepository(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRepository(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<
@@ -158,6 +286,21 @@ RepositoryManagerClient::BatchCreateRepositories(
   return connection_->BatchCreateRepositories(request);
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::BatchCreateRepositories(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    std::vector<
+        google::devtools::cloudbuild::v2::CreateRepositoryRequest> const&
+        requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest request;
+  request.set_parent(parent);
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  return connection_->BatchCreateRepositories(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<
     StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
 RepositoryManagerClient::BatchCreateRepositories(
@@ -166,6 +309,27 @@ RepositoryManagerClient::BatchCreateRepositories(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateRepositories(request);
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::BatchCreateRepositories(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateRepositories(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<
+    StatusOr<google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+RepositoryManagerClient::BatchCreateRepositories(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateRepositories(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
@@ -210,12 +374,42 @@ RepositoryManagerClient::DeleteRepository(std::string const& name,
   return connection_->DeleteRepository(request);
 }
 
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::DeleteRepository(ExperimentalTag, NoAwaitTag,
+                                          std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudbuild::v2::DeleteRepositoryRequest request;
+  request.set_name(name);
+  return connection_->DeleteRepository(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerClient::DeleteRepository(
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(request);
+}
+
+StatusOr<google::longrunning::Operation>
+RepositoryManagerClient::DeleteRepository(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRepository(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
+RepositoryManagerClient::DeleteRepository(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRepository(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>

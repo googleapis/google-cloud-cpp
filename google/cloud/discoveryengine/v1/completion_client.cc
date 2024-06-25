@@ -50,6 +50,27 @@ CompletionServiceClient::ImportSuggestionDenyListEntries(
   return connection_->ImportSuggestionDenyListEntries(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceClient::ImportSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::
+        ImportSuggestionDenyListEntriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::
+                    ImportSuggestionDenyListEntriesResponse>>
+CompletionServiceClient::ImportSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag{}, operation);
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
 CompletionServiceClient::PurgeSuggestionDenyListEntries(
@@ -58,6 +79,27 @@ CompletionServiceClient::PurgeSuggestionDenyListEntries(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PurgeSuggestionDenyListEntries(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceClient::PurgeSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::discoveryengine::v1::
+        PurgeSuggestionDenyListEntriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::PurgeSuggestionDenyListEntriesResponse>>
+CompletionServiceClient::PurgeSuggestionDenyListEntries(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeSuggestionDenyListEntries(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

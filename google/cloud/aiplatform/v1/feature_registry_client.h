@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_FEATURE_REGISTRY_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/feature_registry_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -136,6 +138,11 @@ class FeatureRegistryServiceClient {
       google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
       std::string const& feature_group_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateFeatureGroup(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
+      std::string const& feature_group_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new FeatureGroup in a given project and location.
@@ -174,6 +181,16 @@ class FeatureRegistryServiceClient {
   CreateFeatureGroup(
       google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateFeatureGroup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
+  CreateFeatureGroup(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -354,6 +371,11 @@ class FeatureRegistryServiceClient {
       google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single FeatureGroup.
@@ -393,6 +415,16 @@ class FeatureRegistryServiceClient {
       google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
+  UpdateFeatureGroup(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single FeatureGroup.
@@ -429,6 +461,10 @@ class FeatureRegistryServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureGroup(std::string const& name, bool force, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
+      ExperimentalTag, NoAwaitTag, std::string const& name, bool force,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -468,6 +504,16 @@ class FeatureRegistryServiceClient {
   DeleteFeatureGroup(
       google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureGroup(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -515,6 +561,11 @@ class FeatureRegistryServiceClient {
       google::cloud::aiplatform::v1::Feature const& feature,
       std::string const& feature_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Feature const& feature,
+      std::string const& feature_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Feature in a given FeatureGroup.
@@ -552,6 +603,15 @@ class FeatureRegistryServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -741,6 +801,11 @@ class FeatureRegistryServiceClient {
       google::cloud::aiplatform::v1::Feature const& feature,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::Feature const& feature,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Feature.
@@ -779,6 +844,15 @@ class FeatureRegistryServiceClient {
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFeature(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>> UpdateFeature(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Feature.
@@ -813,6 +887,9 @@ class FeatureRegistryServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeature(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeature(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -852,6 +929,16 @@ class FeatureRegistryServiceClient {
   DeleteFeature(
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeature(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeature(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
  private:
   std::shared_ptr<FeatureRegistryServiceConnection> connection_;

@@ -48,6 +48,21 @@ RegionNotificationEndpointsClient::DeleteNotificationEndpoint(
   return connection_->DeleteNotificationEndpoint(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNotificationEndpointsClient::DeleteNotificationEndpoint(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& notification_endpoint,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_notification_endpoints::v1::
+      DeleteNotificationEndpointRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_notification_endpoint(notification_endpoint);
+  return connection_->DeleteNotificationEndpoint(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsClient::DeleteNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
@@ -55,6 +70,26 @@ RegionNotificationEndpointsClient::DeleteNotificationEndpoint(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNotificationEndpoint(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNotificationEndpointsClient::DeleteNotificationEndpoint(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        DeleteNotificationEndpointRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNotificationEndpoint(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNotificationEndpointsClient::DeleteNotificationEndpoint(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNotificationEndpoint(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -95,6 +130,24 @@ RegionNotificationEndpointsClient::InsertNotificationEndpoint(
   return connection_->InsertNotificationEndpoint(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNotificationEndpointsClient::InsertNotificationEndpoint(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::NotificationEndpoint const&
+        notification_endpoint_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_notification_endpoints::v1::
+      InsertNotificationEndpointRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_notification_endpoint_resource() =
+      notification_endpoint_resource;
+  return connection_->InsertNotificationEndpoint(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsClient::InsertNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
@@ -102,6 +155,26 @@ RegionNotificationEndpointsClient::InsertNotificationEndpoint(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertNotificationEndpoint(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNotificationEndpointsClient::InsertNotificationEndpoint(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::region_notification_endpoints::v1::
+        InsertNotificationEndpointRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertNotificationEndpoint(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNotificationEndpointsClient::InsertNotificationEndpoint(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertNotificationEndpoint(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
