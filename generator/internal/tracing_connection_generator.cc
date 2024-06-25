@@ -204,11 +204,11 @@ std::string TracingConnectionGenerator::MethodDeclaration(
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  $method_name$(ExperimentalTag, NoAwaitTag,
       $request_type$ const& request) override;
 
   future<Status>
-  $method_name$(google::cloud::ExperimentalTag,
+  $method_name$(ExperimentalTag,
       $longrunning_operation_type$ const& operation) override;
 )""";
     }
@@ -218,11 +218,11 @@ std::string TracingConnectionGenerator::MethodDeclaration(
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  $method_name$(ExperimentalTag, NoAwaitTag,
       $request_type$ const& request) override;
 
   future<StatusOr<$longrunning_deduced_response_type$>>
-  $method_name$(google::cloud::ExperimentalTag,
+  $method_name$(ExperimentalTag,
       $longrunning_operation_type$ const& operation) override;
 )""";
   }
@@ -320,13 +320,13 @@ $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
 StatusOr<$longrunning_operation_type$>)""",
         // TODO(#14344): Remove experimental tag.
         R"""(
-$tracing_connection_class_name$::$method_name$(google::cloud::ExperimentalTag,
-    google::cloud::NoAwaitTag, $request_type$ const& request) {
+$tracing_connection_class_name$::$method_name$(ExperimentalTag,
+    NoAwaitTag, $request_type$ const& request) {
   auto span = internal::MakeSpan(
       "$product_namespace$::$connection_class_name$::$method_name$");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->$method_name$(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
+      ExperimentalTag{}, NoAwaitTag{}, request));
 }
 )""",
         IsResponseTypeEmpty(method) ?
@@ -337,13 +337,13 @@ future<Status>)"""
 future<StatusOr<$longrunning_deduced_response_type$>>)""",
         // TODO(#14344): Remove experimental tag.
         R"""(
-$tracing_connection_class_name$::$method_name$(google::cloud::ExperimentalTag,
+$tracing_connection_class_name$::$method_name$(ExperimentalTag,
     $longrunning_operation_type$ const& operation) {
   auto span = internal::MakeSpan(
       "$product_namespace$::$connection_class_name$::$method_name$");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
-      child_->$method_name$(google::cloud::ExperimentalTag{}, operation));
+      child_->$method_name$(ExperimentalTag{}, operation));
 }
     )""");
   }

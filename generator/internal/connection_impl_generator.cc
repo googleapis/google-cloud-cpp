@@ -284,11 +284,11 @@ std::string ConnectionImplGenerator::MethodDeclaration(
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  $method_name$(ExperimentalTag, NoAwaitlTag,
       $request_type$ const& request) override;
 
   future<Status>
-  $method_name$(google::cloud::ExperimentalTag,
+  $method_name$(ExperimentalTag,
       $longrunning_operation_type$ const& operation) override;
 )""";
     }
@@ -298,11 +298,11 @@ std::string ConnectionImplGenerator::MethodDeclaration(
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+  $method_name$(ExperimentalTag, NoAwaitlTag,
       $request_type$ const& request) override;
 
   future<StatusOr<$longrunning_deduced_response_type$>>
-  $method_name$(google::cloud::ExperimentalTag,
+  $method_name$(ExperimentalTag,
       $longrunning_operation_type$ const& operation) override;
 )""";
   }
@@ -490,8 +490,8 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
     // TODO(#14344): Remove experimental tag.
     std::string start_function =
         absl::StrCat("StatusOr<$longrunning_operation_type$>", R"""(
-$connection_class_name$Impl::$method_name$(google::cloud::ExperimentalTag,
-      google::cloud::NoAwaitTag, $request_type$ const& request) {
+$connection_class_name$Impl::$method_name$(ExperimentalTag,
+      NoAwaitlTag, $request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();)""",
                      R"""(
   return google::cloud::internal::RetryLoop(
@@ -509,7 +509,7 @@ $connection_class_name$Impl::$method_name$(google::cloud::ExperimentalTag,
     // TODO(#14344): Remove experimental tag.
     std::string await_function =
         absl::StrCat(return_fragment, R"""(
-$connection_class_name$Impl::$method_name$(google::cloud::ExperimentalTag,
+$connection_class_name$Impl::$method_name$(ExperimentalTag,
       $longrunning_operation_type$ const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();)""",
                      R"""(

@@ -74,7 +74,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client = google::cloud::$product_namespace$::$client_class_name$()""");
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+  if (IsExperimental()) HeaderPrint("ExperimentalTag{},");
   if (HasGenerateGrpcTransport()) {
     HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$()""");
@@ -82,7 +82,7 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
     HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
   }
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+  if (IsExperimental()) HeaderPrint("ExperimentalTag{},");
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
       HeaderPrint(R"""("unused", )""");
@@ -129,7 +129,7 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
     HeaderPrint(R"""(
   auto connection = google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
   }
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{}, ");
+  if (IsExperimental()) HeaderPrint("ExperimentalTag{}, ");
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
       HeaderPrint(R"""("location-unused-in-this-example", )""");
@@ -144,14 +144,14 @@ void SetRetryPolicy(std::vector<std::string> const& argv) {
 
   // c1 and c2 share the same retry policies
   auto c1 = google::cloud::$product_namespace$::$client_class_name$(
-    google::cloud::ExperimentalTag{}, connection);
+    ExperimentalTag{}, connection);
   auto c2 = google::cloud::$product_namespace$::$client_class_name$(
-    google::cloud::ExperimentalTag{}, connection);
+    ExperimentalTag{}, connection);
 
   // You can override any of the policies in a new client. This new client
   // will share the policies from c1 (or c2) *except* for the retry policy.
   auto c3 = google::cloud::$product_namespace$::$client_class_name$(
-    google::cloud::ExperimentalTag{}, connection,
+    ExperimentalTag{}, connection,
     google::cloud::Options{}.set<google::cloud::$product_namespace$::$retry_policy_name$Option>(
       google::cloud::$product_namespace$::$limited_time_retry_policy_name$(std::chrono::minutes(5)).clone()));
 
@@ -218,7 +218,7 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
       HeaderPrint(R"""(
   auto connection = google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
     }
-    if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{}, ");
+    if (IsExperimental()) HeaderPrint("ExperimentalTag{}, ");
     switch (endpoint_location_style) {
       case ServiceConfiguration::LOCATION_DEPENDENT:
         HeaderPrint(R"""("location-unused-in-this-example", )""");
@@ -233,9 +233,9 @@ void SetPollingPolicy(std::vector<std::string> const& argv) {
 
   // c1 and c2 share the same polling policies.
   auto c1 = google::cloud::$product_namespace$::$client_class_name$(
-    google::cloud::ExperimentalTag{}, connection);
+    ExperimentalTag{}, connection);
   auto c2 = google::cloud::$product_namespace$::$client_class_name$(
-    google::cloud::ExperimentalTag{}, connection);
+    ExperimentalTag{}, connection);
   //! [set-polling-policy]
 }
 )""");
@@ -263,7 +263,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::$product_namespace$::$client_class_name$()""");
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+  if (IsExperimental()) HeaderPrint("ExperimentalTag{},");
   if (HasGenerateGrpcTransport()) {
     HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$()""");
@@ -271,7 +271,7 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     HeaderPrint(R"""(
       google::cloud::$product_namespace$::Make$connection_class_name$Rest()""");
   }
-  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+  if (IsExperimental()) HeaderPrint("ExperimentalTag{},");
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
       HeaderPrint(R"""("us-west1" /* regional service region */, )""");
