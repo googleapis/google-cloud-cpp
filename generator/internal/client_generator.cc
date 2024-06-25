@@ -76,9 +76,10 @@ Status ClientGenerator::GenerateHeader() {
   HeaderLocalIncludes(
       {HasGenerateGrpcTransport() ? vars("connection_header_path")
                                   : vars("connection_rest_header_path"),
-       IsExperimental() ? "google/cloud/experimental_tag.h" : "",
-       "google/cloud/future.h", "google/cloud/options.h",
-       "google/cloud/polling_policy.h",
+       HasLongrunningMethod() ? "google/cloud/no_await_tag.h" : "",
+       // TODO(#14344): Restore conditional experimental tag include.
+       "google/cloud/experimental_tag.h", "google/cloud/future.h",
+       "google/cloud/options.h", "google/cloud/polling_policy.h",
        HasIamPolicyExtension() ? "google/cloud/internal/make_status.h" : "",
        "google/cloud/status_or.h", "google/cloud/version.h"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
@@ -146,6 +147,9 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       if (OmitMethodSignature(method, i)) continue;
       std::string const method_string = absl::StrCat(
           "  $method_name$($method_signature", i, "$Options opts = {});\n");
+      std::string const start_method_string = absl::StrCat(
+          "  $method_name$(ExperimentalTag, NoAwaitTag, $method_signature", i,
+          "$Options opts = {});\n");
       std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
           method,
@@ -169,7 +173,14 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                     "  future<Status>\n",
                     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
                 // clang-format on
-                {method_string}},
+                {method_string},
+                {"\n"},
+                {IsResponseTypeEmpty,
+                 // clang-format off
+                    "  Status\n",
+                    "  StatusOr<$longrunning_operation_type$>\n"},
+                // clang-format on
+                {start_method_string}},
                All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
            MethodPattern(
                {
@@ -253,7 +264,22 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                   // clang-format off
     "  future<Status>\n",
     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"  $method_name$($request_type$ const& request, Options opts = {});\n"}
+   {"  $method_name$($request_type$ const& request, Options opts = {});\n"},
+   {"\n"},
+                 // clang-format on
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "  Status\n",
+    "  StatusOr<$longrunning_operation_type$>\n"},
+   {"  $method_name$(google::cloud::ExperimentalTag, "
+    "google::cloud::NoAwaitTag, "
+    "$request_type$ const& request, Options opts = {});\n\n"},
+                 // clang-format on
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "  future<Status>\n",
+    "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
+   {"  $method_name$(google::cloud::ExperimentalTag, $longrunning_operation_type$ const& operation, Options opts = {});\n"}
                  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
@@ -402,6 +428,10 @@ $client_class_name$::Async$method_name$(Options opts) {
       std::string method_string =
           absl::StrCat("$client_class_name$::$method_name$($method_signature",
                        i, "$Options opts) {\n");
+      std::string start_method_string = absl::StrCat(
+          "$client_class_name$::$method_name$(ExperimentalTag, NoAwaitTag, "
+          "$method_signature",
+          i, "$Options opts) {\n");
       std::string method_request_string =
           absl::StrCat("$method_request_setters", i, "$");
       CcPrintMethod(
@@ -435,6 +465,18 @@ $client_class_name$::Async$method_name$(Options opts) {
                   {"  $request_type$ request;\n"},
                    {method_request_string},
                   {"  return connection_->$method_name$(request);\n"
+                  "}\n"},
+                   // clang-format on
+                   {IsResponseTypeEmpty,
+                    // clang-format off
+                    "\nStatus\n",
+                    "\nStatusOr<$longrunning_operation_type$>\n"},
+                  {start_method_string},
+                  {"  internal::OptionsSpan span(internal::MergeOptions("
+                   "std::move(opts), options_));\n"},
+                  {"  $request_type$ request;\n"},
+                   {method_request_string},
+                  {"  return connection_->$method_name$(google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);\n"
                   "}\n"}
                    // clang-format on
                },
@@ -557,7 +599,31 @@ $client_class_name$::Async$method_name$(Options opts) {
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
     "  return connection_->$method_name$(request);\n"
-    "}\n"}
+    "}\n"},
+                 // clang-format on
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "\nStatus\n",
+    "\nStatusOr<$longrunning_operation_type$>\n"},
+   {"$client_class_name$::$method_name$(google::cloud::ExperimentalTag"
+    ", google::cloud::NoAwaitTag"
+    ", $request_type$ const& request"
+    ", Options opts) {\n"
+    "  internal::OptionsSpan span(internal::MergeOptions("
+    "std::move(opts), options_));\n"
+    "  return connection_->$method_name$(google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);\n"
+    "}\n"},
+                 // clang-format on
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "\nfuture<Status>\n",
+    "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
+   {"$client_class_name$::$method_name$(google::cloud::ExperimentalTag"
+    ", $longrunning_operation_type$ const& operation, Options opts) {\n"
+    "  internal::OptionsSpan span(internal::MergeOptions("
+    "std::move(opts), options_));\n"
+    "  return connection_->$method_name$(google::cloud::ExperimentalTag{}, operation);\n"},
+   {"}\n"}
                  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
