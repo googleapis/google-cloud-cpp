@@ -60,10 +60,44 @@ MetricsScopesConnection::CreateMonitoredProject(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MetricsScopesConnection::CreateMonitoredProject(
+    ExperimentalTag, NoAwaitTag,
+    google::monitoring::metricsscope::v1::
+        CreateMonitoredProjectRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
+MetricsScopesConnection::CreateMonitoredProject(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesConnection::DeleteMonitoredProject(
     google::monitoring::metricsscope::v1::
         DeleteMonitoredProjectRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MetricsScopesConnection::DeleteMonitoredProject(
+    ExperimentalTag, NoAwaitTag,
+    google::monitoring::metricsscope::v1::
+        DeleteMonitoredProjectRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
+MetricsScopesConnection::DeleteMonitoredProject(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -22,8 +22,10 @@
 #include "google/cloud/compute/routes/v1/internal/routes_retry_traits.h"
 #include "google/cloud/compute/routes/v1/routes_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -184,12 +186,30 @@ class RoutesConnection {
   DeleteRoute(google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
                   request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRoute(ExperimentalTag,
+              google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Route> GetRoute(
       google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertRoute(google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
                   request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRoute(ExperimentalTag,
+              google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Route> ListRoutes(
       google::cloud::cpp::compute::routes::v1::ListRoutesRequest request);

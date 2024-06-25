@@ -159,6 +159,15 @@ class DataCatalogConnectionImpl : public datacatalog_v1::DataCatalogConnection {
   ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const&
                     request) override;
 
+  StatusOr<google::longrunning::Operation> ReconcileTags(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+  ReconcileTags(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
 
@@ -178,6 +187,15 @@ class DataCatalogConnectionImpl : public datacatalog_v1::DataCatalogConnection {
   future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
   ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const&
                     request) override;
+
+  StatusOr<google::longrunning::Operation> ImportEntries(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+  ImportEntries(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

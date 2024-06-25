@@ -53,6 +53,19 @@ class MockHttpsHealthChecksConnection
                    DeleteHttpsHealthCheckRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteHttpsHealthCheck,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::https_health_checks::v1::
+                   DeleteHttpsHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteHttpsHealthCheck,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>,
               GetHttpsHealthCheck,
               (google::cloud::cpp::compute::https_health_checks::v1::
@@ -63,6 +76,19 @@ class MockHttpsHealthChecksConnection
               InsertHttpsHealthCheck,
               (google::cloud::cpp::compute::https_health_checks::v1::
                    InsertHttpsHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertHttpsHealthCheck,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::https_health_checks::v1::
+                   InsertHttpsHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertHttpsHealthCheck,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>),
@@ -77,10 +103,36 @@ class MockHttpsHealthChecksConnection
                    PatchHttpsHealthCheckRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PatchHttpsHealthCheck,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::https_health_checks::v1::
+                   PatchHttpsHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchHttpsHealthCheck,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateHttpsHealthCheck,
               (google::cloud::cpp::compute::https_health_checks::v1::
                    UpdateHttpsHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              UpdateHttpsHealthCheck,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::https_health_checks::v1::
+                   UpdateHttpsHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              UpdateHttpsHealthCheck,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

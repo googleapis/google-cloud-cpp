@@ -63,13 +63,40 @@ class CloudRedisClusterConnectionImpl
       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::protobuf::Any>> DeleteCluster(
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::protobuf::Any>> DeleteCluster(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
   GetClusterCertificateAuthority(

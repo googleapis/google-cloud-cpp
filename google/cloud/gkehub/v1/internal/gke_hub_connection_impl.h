@@ -66,22 +66,73 @@ class GkeHubConnectionImpl : public gkehub_v1::GkeHubConnection {
       google::cloud::gkehub::v1::CreateMembershipRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateMembership(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::CreateMembershipRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
       google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::CreateFeatureRequest const& request) override;
+
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteMembership(google::cloud::gkehub::v1::DeleteMembershipRequest const&
                        request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteMembership(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteMembershipRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteMembership(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteFeatureRequest const& request) override;
+
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateMembership(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::UpdateMembershipRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::UpdateFeatureRequest const& request) override;
+
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
   GenerateConnectManifest(

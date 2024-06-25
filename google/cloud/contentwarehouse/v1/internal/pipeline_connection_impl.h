@@ -55,6 +55,15 @@ class PipelineServiceConnectionImpl
   RunPipeline(google::cloud::contentwarehouse::v1::RunPipelineRequest const&
                   request) override;
 
+  StatusOr<google::longrunning::Operation> RunPipeline(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
+  RunPipeline(ExperimentalTag,
+              google::longrunning::Operation const& operation) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<contentwarehouse_v1_internal::PipelineServiceStub> stub_;

@@ -61,6 +61,19 @@ class MockDatabaseAdminConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDatabase,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::database::v1::CreateDatabaseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
+              CreateDatabase,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::spanner::admin::database::v1::Database>, GetDatabase,
       (google::spanner::admin::database::v1::GetDatabaseRequest const& request),
       (override));
@@ -73,11 +86,38 @@ class MockDatabaseAdminConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDatabase,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
+              UpdateDatabase,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
       UpdateDatabaseDdl,
       (google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDatabaseDdl,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
+      UpdateDatabaseDdl,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(Status, DropDatabase,
@@ -111,11 +151,35 @@ class MockDatabaseAdminConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBackup,
+              (ExperimentalTag, NoAwaitTag,
+               google::spanner::admin::database::v1::CreateBackupRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
+              CreateBackup,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Backup>>,
       CopyBackup,
       (google::spanner::admin::database::v1::CopyBackupRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CopyBackup,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::database::v1::CopyBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
+              CopyBackup,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::spanner::admin::database::v1::Backup>, GetBackup,
@@ -144,6 +208,19 @@ class MockDatabaseAdminConnection
       (google::spanner::admin::database::v1::RestoreDatabaseRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RestoreDatabase,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
+              RestoreDatabase,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       (StreamRange<google::longrunning::Operation>), ListDatabaseOperations,

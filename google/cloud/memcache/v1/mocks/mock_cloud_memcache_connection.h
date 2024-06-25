@@ -62,14 +62,50 @@ class MockCloudMemcacheConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::memcache::v1::CreateInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+              CreateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateInstance,
       (google::cloud::memcache::v1::UpdateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::memcache::v1::UpdateInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+              UpdateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateParameters,
       (google::cloud::memcache::v1::UpdateParametersRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateParameters,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::memcache::v1::UpdateParametersRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+              UpdateParameters,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>,
@@ -78,14 +114,50 @@ class MockCloudMemcacheConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::memcache::v1::DeleteInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>,
+              DeleteInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::memcache::v1::Instance>>, ApplyParameters,
       (google::cloud::memcache::v1::ApplyParametersRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ApplyParameters,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::memcache::v1::ApplyParametersRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+              ApplyParameters,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
               RescheduleMaintenance,
               (google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, RescheduleMaintenance,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+              RescheduleMaintenance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 };
 

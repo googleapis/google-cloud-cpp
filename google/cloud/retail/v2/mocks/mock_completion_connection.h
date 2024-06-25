@@ -57,6 +57,18 @@ class MockCompletionServiceConnection
       ImportCompletionData,
       (google::cloud::retail::v2::ImportCompletionDataRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportCompletionData,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::retail::v2::ImportCompletionDataRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
+      ImportCompletionData,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

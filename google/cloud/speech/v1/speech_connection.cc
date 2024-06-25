@@ -51,6 +51,21 @@ SpeechConnection::LongRunningRecognize(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> SpeechConnection::LongRunningRecognize(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
+SpeechConnection::LongRunningRecognize(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>

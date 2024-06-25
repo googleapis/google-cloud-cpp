@@ -22,8 +22,10 @@
 #include "google/cloud/dataproc/v1/internal/node_group_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/node_group_controller_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,9 +194,25 @@ class NodeGroupControllerConnection {
   CreateNodeGroup(
       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateNodeGroup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataproc::v1::CreateNodeGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  CreateNodeGroup(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
   ResizeNodeGroup(
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ResizeNodeGroup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+  ResizeNodeGroup(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
       google::cloud::dataproc::v1::GetNodeGroupRequest const& request);

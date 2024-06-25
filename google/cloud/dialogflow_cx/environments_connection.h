@@ -22,8 +22,10 @@
 #include "google/cloud/dialogflow_cx/environments_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/environments_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -200,10 +202,28 @@ class EnvironmentsConnection {
       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
+  CreateEnvironment(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   UpdateEnvironment(
       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
+  UpdateEnvironment(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual Status DeleteEnvironment(
       google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
@@ -220,6 +240,16 @@ class EnvironmentsConnection {
       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> RunContinuousTest(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
+  RunContinuousTest(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
   ListContinuousTestResults(
       google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
@@ -229,6 +259,14 @@ class EnvironmentsConnection {
       StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
   DeployFlow(
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeployFlow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
+  DeployFlow(ExperimentalTag, google::longrunning::Operation const& operation);
 };
 
 /**

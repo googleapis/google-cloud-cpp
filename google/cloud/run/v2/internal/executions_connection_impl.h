@@ -59,8 +59,24 @@ class ExecutionsConnectionImpl : public run_v2::ExecutionsConnection {
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::DeleteExecutionRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CancelExecution(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::CancelExecutionRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

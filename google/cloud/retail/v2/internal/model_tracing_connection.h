@@ -42,6 +42,14 @@ class ModelServiceTracingConnection : public retail_v2::ModelServiceConnection {
   future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::retail::v2::CreateModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::retail::v2::Model> GetModel(
       google::cloud::retail::v2::GetModelRequest const& request) override;
 
@@ -62,6 +70,14 @@ class ModelServiceTracingConnection : public retail_v2::ModelServiceConnection {
 
   future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
       google::cloud::retail::v2::TuneModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> TuneModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::retail::v2::TuneModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<retail_v2::ModelServiceConnection> child_;

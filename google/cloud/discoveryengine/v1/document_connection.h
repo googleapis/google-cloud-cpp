@@ -22,8 +22,10 @@
 #include "google/cloud/discoveryengine/v1/document_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/document_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -208,10 +210,29 @@ class DocumentServiceConnection {
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> ImportDocuments(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
+  ImportDocuments(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
   PurgeDocuments(
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> PurgeDocuments(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
+  PurgeDocuments(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 };
 
 /**

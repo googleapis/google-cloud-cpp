@@ -22,8 +22,10 @@
 #include "google/cloud/kms/v1/autokey_connection_idempotency_policy.h"
 #include "google/cloud/kms/v1/internal/autokey_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -183,6 +185,13 @@ class AutokeyConnection {
 
   virtual future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
       google::cloud::kms::v1::CreateKeyHandleRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateKeyHandle(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::kms::v1::CreateKeyHandleRequest const& request);
+
+  virtual future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
       google::cloud::kms::v1::GetKeyHandleRequest const& request);

@@ -296,6 +296,27 @@ DataCatalogTracingConnection::ReconcileTags(
   return internal::EndSpan(std::move(span), child_->ReconcileTags(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataCatalogTracingConnection::ReconcileTags(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::DataCatalogConnection::ReconcileTags");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ReconcileTags(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+DataCatalogTracingConnection::ReconcileTags(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::DataCatalogConnection::ReconcileTags");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ReconcileTags(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogTracingConnection::StarEntry(
     google::cloud::datacatalog::v1::StarEntryRequest const& request) {
@@ -346,6 +367,27 @@ DataCatalogTracingConnection::ImportEntries(
       "datacatalog_v1::DataCatalogConnection::ImportEntries");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ImportEntries(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataCatalogTracingConnection::ImportEntries(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::DataCatalogConnection::ImportEntries");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ImportEntries(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+DataCatalogTracingConnection::ImportEntries(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::DataCatalogConnection::ImportEntries");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportEntries(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

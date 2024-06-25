@@ -103,10 +103,44 @@ ArtifactRegistryConnection::ImportAptArtifacts(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnection::ImportAptArtifacts(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+ArtifactRegistryConnection::ImportAptArtifacts(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
 ArtifactRegistryConnection::ImportYumArtifacts(
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnection::ImportYumArtifacts(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+ArtifactRegistryConnection::ImportYumArtifacts(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,6 +168,22 @@ ArtifactRegistryConnection::CreateRepository(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnection::CreateRepository(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
+ArtifactRegistryConnection::CreateRepository(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::Repository>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryConnection::UpdateRepository(
     google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&) {
@@ -143,6 +193,22 @@ ArtifactRegistryConnection::UpdateRepository(
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryConnection::DeleteRepository(
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnection::DeleteRepository(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnection::DeleteRepository(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -170,6 +236,22 @@ ArtifactRegistryConnection::DeletePackage(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnection::DeletePackage(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnection::DeletePackage(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryConnection::ListVersions(
     google::devtools::artifactregistry::v1::
@@ -192,10 +274,43 @@ ArtifactRegistryConnection::DeleteVersion(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnection::DeleteVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+ArtifactRegistryConnection::DeleteVersion(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
 ArtifactRegistryConnection::BatchDeleteVersions(
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ArtifactRegistryConnection::BatchDeleteVersions(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+ArtifactRegistryConnection::BatchDeleteVersions(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

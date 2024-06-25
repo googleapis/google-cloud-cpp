@@ -53,6 +53,19 @@ class MockRegionUrlMapsConnection
                    DeleteUrlMapRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteUrlMap,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_url_maps::v1::
+                   DeleteUrlMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteUrlMap,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::UrlMap>, GetUrlMap,
       (google::cloud::cpp::compute::region_url_maps::v1::GetUrlMapRequest const&
@@ -63,6 +76,19 @@ class MockRegionUrlMapsConnection
               InsertUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
                    InsertUrlMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertUrlMap,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_url_maps::v1::
+                   InsertUrlMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertUrlMap,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::UrlMap>),
@@ -77,10 +103,35 @@ class MockRegionUrlMapsConnection
                    PatchUrlMapRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchUrlMap,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_url_maps::v1::
+                   PatchUrlMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchUrlMap,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
                    UpdateUrlMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              UpdateUrlMap,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_url_maps::v1::
+                   UpdateUrlMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              UpdateUrlMap,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

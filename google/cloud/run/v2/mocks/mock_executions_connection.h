@@ -59,9 +59,31 @@ class MockExecutionsConnection : public run_v2::ExecutionsConnection {
               (google::cloud::run::v2::DeleteExecutionRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteExecution,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::run::v2::DeleteExecutionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
+              DeleteExecution,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
               CancelExecution,
               (google::cloud::run::v2::CancelExecutionRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CancelExecution,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::run::v2::CancelExecutionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
+              CancelExecution,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 };
 

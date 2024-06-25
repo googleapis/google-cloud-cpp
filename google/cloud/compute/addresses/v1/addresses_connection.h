@@ -22,8 +22,10 @@
 #include "google/cloud/compute/addresses/v1/addresses_connection_idempotency_policy.h"
 #include "google/cloud/compute/addresses/v1/internal/addresses_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -194,6 +196,15 @@ class AddressesConnection {
       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAddress(ExperimentalTag,
+                google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request);
@@ -203,15 +214,41 @@ class AddressesConnection {
       google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAddress(ExperimentalTag,
+                google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
       google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
       google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetLabels(google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
                 request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(ExperimentalTag,
+            google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

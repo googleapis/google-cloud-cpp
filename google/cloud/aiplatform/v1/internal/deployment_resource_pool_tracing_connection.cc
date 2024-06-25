@@ -47,6 +47,32 @@ DeploymentResourcePoolServiceTracingConnection::CreateDeploymentResourcePool(
                            child_->CreateDeploymentResourcePool(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceTracingConnection::CreateDeploymentResourcePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DeploymentResourcePoolServiceConnection::"
+      "CreateDeploymentResourcePool");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateDeploymentResourcePool(ExperimentalTag{},
+                                                  NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+DeploymentResourcePoolServiceTracingConnection::CreateDeploymentResourcePool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DeploymentResourcePoolServiceConnection::"
+      "CreateDeploymentResourcePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateDeploymentResourcePool(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceTracingConnection::GetDeploymentResourcePool(
     google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
@@ -81,6 +107,32 @@ DeploymentResourcePoolServiceTracingConnection::DeleteDeploymentResourcePool(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteDeploymentResourcePool(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceTracingConnection::DeleteDeploymentResourcePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DeploymentResourcePoolServiceConnection::"
+      "DeleteDeploymentResourcePool");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDeploymentResourcePool(ExperimentalTag{},
+                                                  NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DeploymentResourcePoolServiceTracingConnection::DeleteDeploymentResourcePool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DeploymentResourcePoolServiceConnection::"
+      "DeleteDeploymentResourcePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteDeploymentResourcePool(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

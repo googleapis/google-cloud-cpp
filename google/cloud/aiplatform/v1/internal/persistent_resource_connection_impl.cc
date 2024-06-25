@@ -116,6 +116,62 @@ PersistentResourceServiceConnectionImpl::CreatePersistentResource(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceConnectionImpl::CreatePersistentResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePersistentResource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+              request) {
+        return stub_->CreatePersistentResource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+PersistentResourceServiceConnectionImpl::CreatePersistentResource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::aiplatform::v1::
+                   CreatePersistentResourceOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreatePersistentResource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::aiplatform::v1::PersistentResource>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::PersistentResource>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
 PersistentResourceServiceConnectionImpl::GetPersistentResource(
     google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
@@ -210,6 +266,62 @@ PersistentResourceServiceConnectionImpl::DeletePersistentResource(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceConnectionImpl::DeletePersistentResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePersistentResource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+              request) {
+        return stub_->DeletePersistentResource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+PersistentResourceServiceConnectionImpl::DeletePersistentResource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::aiplatform::v1::
+                   DeleteOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeletePersistentResource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::aiplatform::v1::DeleteOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::aiplatform::v1::DeleteOperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnectionImpl::UpdatePersistentResource(
     google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
@@ -251,6 +363,62 @@ PersistentResourceServiceConnectionImpl::UpdatePersistentResource(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceConnectionImpl::UpdatePersistentResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePersistentResource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+              request) {
+        return stub_->UpdatePersistentResource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+PersistentResourceServiceConnectionImpl::UpdatePersistentResource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::aiplatform::v1::
+                   UpdatePersistentResourceOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdatePersistentResource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::aiplatform::v1::PersistentResource>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::PersistentResource>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceConnectionImpl::RebootPersistentResource(
     google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
@@ -289,6 +457,62 @@ PersistentResourceServiceConnectionImpl::RebootPersistentResource(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::PersistentResource>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceConnectionImpl::RebootPersistentResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RebootPersistentResource(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+              request) {
+        return stub_->RebootPersistentResource(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+PersistentResourceServiceConnectionImpl::RebootPersistentResource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::aiplatform::v1::
+                   RebootPersistentResourceOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::aiplatform::v1::PersistentResource>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RebootPersistentResource",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::aiplatform::v1::PersistentResource>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::aiplatform::v1::PersistentResource>,
       polling_policy(*current), __func__);
 }
 

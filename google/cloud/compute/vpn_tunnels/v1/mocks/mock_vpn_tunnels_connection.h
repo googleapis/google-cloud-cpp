@@ -62,6 +62,19 @@ class MockVpnTunnelsConnection
                    DeleteVpnTunnelRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteVpnTunnel,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::vpn_tunnels::v1::
+                   DeleteVpnTunnelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteVpnTunnel,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>, GetVpnTunnel,
       (google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
@@ -72,6 +85,19 @@ class MockVpnTunnelsConnection
               InsertVpnTunnel,
               (google::cloud::cpp::compute::vpn_tunnels::v1::
                    InsertVpnTunnelRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertVpnTunnel,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::vpn_tunnels::v1::
+                   InsertVpnTunnelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertVpnTunnel,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -85,6 +111,19 @@ class MockVpnTunnelsConnection
       (google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetLabels,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

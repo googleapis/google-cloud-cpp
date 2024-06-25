@@ -22,8 +22,10 @@
 #include "google/cloud/metastore/v1/dataproc_metastore_connection_idempotency_policy.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -195,12 +197,34 @@ class DataprocMetastoreConnection {
   virtual future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
       google::cloud::metastore::v1::CreateServiceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::CreateServiceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
       google::cloud::metastore::v1::UpdateServiceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::UpdateServiceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteService(
       google::cloud::metastore::v1::DeleteServiceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::DeleteServiceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+  DeleteService(ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::metastore::v1::MetadataImport>
   ListMetadataImports(
@@ -214,17 +238,49 @@ class DataprocMetastoreConnection {
   CreateMetadataImport(
       google::cloud::metastore::v1::CreateMetadataImportRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateMetadataImport(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::CreateMetadataImportRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+  CreateMetadataImport(ExperimentalTag,
+                       google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
   UpdateMetadataImport(
       google::cloud::metastore::v1::UpdateMetadataImportRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateMetadataImport(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::UpdateMetadataImportRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+  UpdateMetadataImport(ExperimentalTag,
+                       google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
   ExportMetadata(
       google::cloud::metastore::v1::ExportMetadataRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ExportMetadata(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::ExportMetadataRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
+  ExportMetadata(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::metastore::v1::Restore>>
   RestoreService(
       google::cloud::metastore::v1::RestoreServiceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RestoreService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::RestoreServiceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::Restore>>
+  RestoreService(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::metastore::v1::Backup> ListBackups(
       google::cloud::metastore::v1::ListBackupsRequest request);
@@ -235,24 +291,67 @@ class DataprocMetastoreConnection {
   virtual future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
       google::cloud::metastore::v1::CreateBackupRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::CreateBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteBackup(
       google::cloud::metastore::v1::DeleteBackupRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::DeleteBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+  DeleteBackup(ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
   QueryMetadata(
       google::cloud::metastore::v1::QueryMetadataRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> QueryMetadata(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::QueryMetadataRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+  QueryMetadata(ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
   MoveTableToDatabase(
       google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> MoveTableToDatabase(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+  MoveTableToDatabase(ExperimentalTag,
+                      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
   AlterMetadataResourceLocation(
       google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  AlterMetadataResourceLocation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+  AlterMetadataResourceLocation(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 };
 
 /**

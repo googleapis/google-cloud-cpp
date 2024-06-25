@@ -53,6 +53,18 @@ class MockEndpointServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEndpoint,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateEndpointRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>,
+              CreateEndpoint,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Endpoint>, GetEndpoint,
       (google::cloud::aiplatform::v1::GetEndpointRequest const& request),
       (override));
@@ -74,9 +86,33 @@ class MockEndpointServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteEndpoint,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteEndpoint,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
       DeployModel,
       (google::cloud::aiplatform::v1::DeployModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeployModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeployModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
+      DeployModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -86,11 +122,36 @@ class MockEndpointServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UndeployModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::UndeployModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
+      UndeployModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>,
       MutateDeployedModel,
       (google::cloud::aiplatform::v1::MutateDeployedModelRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, MutateDeployedModel,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::aiplatform::v1::MutateDeployedModelRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>,
+      MutateDeployedModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

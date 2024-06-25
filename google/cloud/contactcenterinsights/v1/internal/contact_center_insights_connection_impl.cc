@@ -130,6 +130,61 @@ ContactCenterInsightsConnectionImpl::UploadConversation(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::UploadConversation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UploadConversation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 UploadConversationRequest const& request) {
+        return stub_->UploadConversation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+ContactCenterInsightsConnectionImpl::UploadConversation(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   UploadConversationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UploadConversation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::Conversation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::Conversation>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsConnectionImpl::UpdateConversation(
     google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
@@ -255,6 +310,62 @@ ContactCenterInsightsConnectionImpl::CreateAnalysis(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::CreateAnalysis(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAnalysis(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+              request) {
+        return stub_->CreateAnalysis(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
+ContactCenterInsightsConnectionImpl::CreateAnalysis(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   CreateAnalysisOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAnalysis",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::Analysis>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::Analysis>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsConnectionImpl::GetAnalysis(
     google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
@@ -366,6 +477,64 @@ ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BulkAnalyzeConversations(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 BulkAnalyzeConversationsRequest const& request) {
+        return stub_->BulkAnalyzeConversations(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   BulkAnalyzeConversationsMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                          BulkAnalyzeConversationsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BulkAnalyzeConversations",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::
+          BulkAnalyzeConversationsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::
+              BulkAnalyzeConversationsResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
 ContactCenterInsightsConnectionImpl::BulkDeleteConversations(
@@ -406,6 +575,64 @@ ContactCenterInsightsConnectionImpl::BulkDeleteConversations(
           google::cloud::contactcenterinsights::v1::
               BulkDeleteConversationsResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::BulkDeleteConversations(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::
+        BulkDeleteConversationsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BulkDeleteConversations(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 BulkDeleteConversationsRequest const& request) {
+        return stub_->BulkDeleteConversations(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
+ContactCenterInsightsConnectionImpl::BulkDeleteConversations(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   BulkDeleteConversationsMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                          BulkDeleteConversationsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BulkDeleteConversations",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::
+          BulkDeleteConversationsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::
+              BulkDeleteConversationsResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -451,6 +678,63 @@ ContactCenterInsightsConnectionImpl::IngestConversations(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::IngestConversations(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->IngestConversations(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 IngestConversationsRequest const& request) {
+        return stub_->IngestConversations(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+ContactCenterInsightsConnectionImpl::IngestConversations(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   IngestConversationsMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to IngestConversations",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::
+              IngestConversationsResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsConnectionImpl::ExportInsightsData(
@@ -492,6 +776,62 @@ ContactCenterInsightsConnectionImpl::ExportInsightsData(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::ExportInsightsData(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportInsightsData(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 ExportInsightsDataRequest const& request) {
+        return stub_->ExportInsightsData(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+ContactCenterInsightsConnectionImpl::ExportInsightsData(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   ExportInsightsDataMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportInsightsData",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsConnectionImpl::CreateIssueModel(
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
@@ -529,6 +869,61 @@ ContactCenterInsightsConnectionImpl::CreateIssueModel(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::IssueModel>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::CreateIssueModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateIssueModel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 CreateIssueModelRequest const& request) {
+        return stub_->CreateIssueModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
+ContactCenterInsightsConnectionImpl::CreateIssueModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   CreateIssueModelMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateIssueModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::IssueModel>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::IssueModel>,
       polling_policy(*current), __func__);
 }
 
@@ -622,6 +1017,62 @@ ContactCenterInsightsConnectionImpl::DeleteIssueModel(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::DeleteIssueModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteIssueModel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 DeleteIssueModelRequest const& request) {
+        return stub_->DeleteIssueModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+ContactCenterInsightsConnectionImpl::DeleteIssueModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   DeleteIssueModelMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteIssueModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
 ContactCenterInsightsConnectionImpl::DeployIssueModel(
@@ -663,6 +1114,62 @@ ContactCenterInsightsConnectionImpl::DeployIssueModel(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::DeployIssueModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeployIssueModel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 DeployIssueModelRequest const& request) {
+        return stub_->DeployIssueModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+ContactCenterInsightsConnectionImpl::DeployIssueModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   DeployIssueModelMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeployIssueModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
 ContactCenterInsightsConnectionImpl::UndeployIssueModel(
@@ -701,6 +1208,62 @@ ContactCenterInsightsConnectionImpl::UndeployIssueModel(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ContactCenterInsightsConnectionImpl::UndeployIssueModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UndeployIssueModel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::contactcenterinsights::v1::
+                 UndeployIssueModelRequest const& request) {
+        return stub_->UndeployIssueModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+ContactCenterInsightsConnectionImpl::UndeployIssueModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::contactcenterinsights::v1::
+                   UndeployIssueModelMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UndeployIssueModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>,
       polling_policy(*current), __func__);
 }
 

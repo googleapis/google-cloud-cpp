@@ -77,6 +77,21 @@ VizierServiceConnection::SuggestTrials(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> VizierServiceConnection::SuggestTrials(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
+VizierServiceConnection::SuggestTrials(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceConnection::CreateTrial(
     google::cloud::aiplatform::v1::CreateTrialRequest const&) {
@@ -118,6 +133,23 @@ future<StatusOr<
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
 VizierServiceConnection::CheckTrialEarlyStoppingState(
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+VizierServiceConnection::CheckTrialEarlyStoppingState(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+VizierServiceConnection::CheckTrialEarlyStoppingState(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

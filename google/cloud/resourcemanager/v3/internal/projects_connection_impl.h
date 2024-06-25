@@ -66,21 +66,66 @@ class ProjectsConnectionImpl : public resourcemanager_v3::ProjectsConnection {
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateProject(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateProject(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> MoveProject(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteProject(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UndeleteProject(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override;

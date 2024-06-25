@@ -66,6 +66,29 @@ InstanceAdminTracingConnection::CreateInstanceConfig(
                            child_->CreateInstanceConfig(request));
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::CreateInstanceConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstanceConfig");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateInstanceConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminTracingConnection::CreateInstanceConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstanceConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateInstanceConfig(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminTracingConnection::UpdateInstanceConfig(
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
@@ -75,6 +98,29 @@ InstanceAdminTracingConnection::UpdateInstanceConfig(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateInstanceConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::UpdateInstanceConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstanceConfig");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->UpdateInstanceConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminTracingConnection::UpdateInstanceConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstanceConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateInstanceConfig(
+                                                ExperimentalTag{}, operation));
 }
 
 Status InstanceAdminTracingConnection::DeleteInstanceConfig(
@@ -142,6 +188,28 @@ InstanceAdminTracingConnection::CreateInstance(
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::CreateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+InstanceAdminTracingConnection::CreateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateInstance(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminTracingConnection::UpdateInstance(
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
@@ -150,6 +218,28 @@ InstanceAdminTracingConnection::UpdateInstance(
       "spanner_admin::InstanceAdminConnection::UpdateInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+InstanceAdminTracingConnection::UpdateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateInstance(ExperimentalTag{}, operation));
 }
 
 Status InstanceAdminTracingConnection::DeleteInstance(
@@ -207,6 +297,29 @@ InstanceAdminTracingConnection::CreateInstancePartition(
                            child_->CreateInstancePartition(request));
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::CreateInstancePartition(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstancePartition");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateInstancePartition(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminTracingConnection::CreateInstancePartition(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstancePartition");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateInstancePartition(
+                                                ExperimentalTag{}, operation));
+}
+
 Status InstanceAdminTracingConnection::DeleteInstancePartition(
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
         request) {
@@ -225,6 +338,29 @@ InstanceAdminTracingConnection::UpdateInstancePartition(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateInstancePartition(request));
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminTracingConnection::UpdateInstancePartition(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstancePartition");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateInstancePartition(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminTracingConnection::UpdateInstancePartition(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstancePartition");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateInstancePartition(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::longrunning::Operation>

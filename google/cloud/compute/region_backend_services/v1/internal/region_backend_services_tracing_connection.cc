@@ -48,6 +48,32 @@ RegionBackendServicesTracingConnection::DeleteBackendService(
                            child_->DeleteBackendService(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesTracingConnection::DeleteBackendService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        DeleteBackendServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "DeleteBackendService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteBackendService(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesTracingConnection::DeleteBackendService(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "DeleteBackendService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteBackendService(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::BackendService>
 RegionBackendServicesTracingConnection::GetBackendService(
     google::cloud::cpp::compute::region_backend_services::v1::
@@ -93,6 +119,32 @@ RegionBackendServicesTracingConnection::InsertBackendService(
                            child_->InsertBackendService(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesTracingConnection::InsertBackendService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        InsertBackendServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "InsertBackendService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->InsertBackendService(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesTracingConnection::InsertBackendService(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "InsertBackendService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->InsertBackendService(
+                                                ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::BackendService>
 RegionBackendServicesTracingConnection::ListRegionBackendServices(
     google::cloud::cpp::compute::region_backend_services::v1::
@@ -133,6 +185,32 @@ RegionBackendServicesTracingConnection::PatchBackendService(
                            child_->PatchBackendService(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesTracingConnection::PatchBackendService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        PatchBackendServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "PatchBackendService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->PatchBackendService(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesTracingConnection::PatchBackendService(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "PatchBackendService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PatchBackendService(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Policy>
 RegionBackendServicesTracingConnection::SetIamPolicy(
     google::cloud::cpp::compute::region_backend_services::v1::
@@ -153,6 +231,32 @@ RegionBackendServicesTracingConnection::SetSecurityPolicy(
       "SetSecurityPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesTracingConnection::SetSecurityPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        SetSecurityPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "SetSecurityPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->SetSecurityPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesTracingConnection::SetSecurityPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "SetSecurityPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->SetSecurityPolicy(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -176,6 +280,32 @@ RegionBackendServicesTracingConnection::UpdateBackendService(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateBackendService(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionBackendServicesTracingConnection::UpdateBackendService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_backend_services::v1::
+        UpdateBackendServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "UpdateBackendService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->UpdateBackendService(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionBackendServicesTracingConnection::UpdateBackendService(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_region_backend_services_v1::RegionBackendServicesConnection::"
+      "UpdateBackendService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBackendService(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -67,6 +67,30 @@ AppHubTracingConnection::CreateServiceProjectAttachment(
                            child_->CreateServiceProjectAttachment(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubTracingConnection::CreateServiceProjectAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::CreateServiceProjectAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateServiceProjectAttachment(ExperimentalTag{},
+                                                    NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
+AppHubTracingConnection::CreateServiceProjectAttachment(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::CreateServiceProjectAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CreateServiceProjectAttachment(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
 AppHubTracingConnection::GetServiceProjectAttachment(
     google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
@@ -86,6 +110,30 @@ AppHubTracingConnection::DeleteServiceProjectAttachment(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteServiceProjectAttachment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AppHubTracingConnection::DeleteServiceProjectAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::DeleteServiceProjectAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteServiceProjectAttachment(ExperimentalTag{},
+                                                    NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+AppHubTracingConnection::DeleteServiceProjectAttachment(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "apphub_v1::AppHubConnection::DeleteServiceProjectAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->DeleteServiceProjectAttachment(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -147,6 +195,24 @@ AppHubTracingConnection::CreateService(
   return internal::EndSpan(std::move(span), child_->CreateService(request));
 }
 
+StatusOr<google::longrunning::Operation> AppHubTracingConnection::CreateService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::CreateServiceRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::CreateService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::Service>>
+AppHubTracingConnection::CreateService(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::CreateService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateService(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::apphub::v1::Service>
 AppHubTracingConnection::GetService(
     google::cloud::apphub::v1::GetServiceRequest const& request) {
@@ -163,12 +229,48 @@ AppHubTracingConnection::UpdateService(
   return internal::EndSpan(std::move(span), child_->UpdateService(request));
 }
 
+StatusOr<google::longrunning::Operation> AppHubTracingConnection::UpdateService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::Service>>
+AppHubTracingConnection::UpdateService(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateService(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubTracingConnection::DeleteService(
     google::cloud::apphub::v1::DeleteServiceRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteService(request));
+}
+
+StatusOr<google::longrunning::Operation> AppHubTracingConnection::DeleteService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+AppHubTracingConnection::DeleteService(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteService(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
@@ -219,6 +321,25 @@ AppHubTracingConnection::CreateWorkload(
   return internal::EndSpan(std::move(span), child_->CreateWorkload(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubTracingConnection::CreateWorkload(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::CreateWorkload");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateWorkload(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::Workload>>
+AppHubTracingConnection::CreateWorkload(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::CreateWorkload");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateWorkload(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::apphub::v1::Workload>
 AppHubTracingConnection::GetWorkload(
     google::cloud::apphub::v1::GetWorkloadRequest const& request) {
@@ -235,12 +356,50 @@ AppHubTracingConnection::UpdateWorkload(
   return internal::EndSpan(std::move(span), child_->UpdateWorkload(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubTracingConnection::UpdateWorkload(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateWorkload");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateWorkload(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::Workload>>
+AppHubTracingConnection::UpdateWorkload(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::UpdateWorkload");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateWorkload(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubTracingConnection::DeleteWorkload(
     google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
   auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteWorkload");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteWorkload(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AppHubTracingConnection::DeleteWorkload(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteWorkload");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteWorkload(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+AppHubTracingConnection::DeleteWorkload(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("apphub_v1::AppHubConnection::DeleteWorkload");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteWorkload(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::apphub::v1::Application>
@@ -263,6 +422,28 @@ AppHubTracingConnection::CreateApplication(
   return internal::EndSpan(std::move(span), child_->CreateApplication(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubTracingConnection::CreateApplication(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+  auto span =
+      internal::MakeSpan("apphub_v1::AppHubConnection::CreateApplication");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateApplication(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::Application>>
+AppHubTracingConnection::CreateApplication(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("apphub_v1::AppHubConnection::CreateApplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateApplication(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::apphub::v1::Application>
 AppHubTracingConnection::GetApplication(
     google::cloud::apphub::v1::GetApplicationRequest const& request) {
@@ -280,6 +461,28 @@ AppHubTracingConnection::UpdateApplication(
   return internal::EndSpan(std::move(span), child_->UpdateApplication(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubTracingConnection::UpdateApplication(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+  auto span =
+      internal::MakeSpan("apphub_v1::AppHubConnection::UpdateApplication");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->UpdateApplication(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::Application>>
+AppHubTracingConnection::UpdateApplication(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("apphub_v1::AppHubConnection::UpdateApplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateApplication(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubTracingConnection::DeleteApplication(
     google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
@@ -287,6 +490,28 @@ AppHubTracingConnection::DeleteApplication(
       internal::MakeSpan("apphub_v1::AppHubConnection::DeleteApplication");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteApplication(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AppHubTracingConnection::DeleteApplication(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+  auto span =
+      internal::MakeSpan("apphub_v1::AppHubConnection::DeleteApplication");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteApplication(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+AppHubTracingConnection::DeleteApplication(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("apphub_v1::AppHubConnection::DeleteApplication");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteApplication(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

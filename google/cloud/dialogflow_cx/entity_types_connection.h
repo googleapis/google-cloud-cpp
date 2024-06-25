@@ -22,8 +22,10 @@
 #include "google/cloud/dialogflow_cx/entity_types_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/entity_types_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -212,11 +214,31 @@ class EntityTypesConnection {
       google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> ExportEntityTypes(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+  ExportEntityTypes(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
   ImportEntityTypes(
       google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportEntityTypes(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+  ImportEntityTypes(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 };
 
 /**

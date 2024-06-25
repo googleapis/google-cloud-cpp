@@ -60,6 +60,15 @@ class VpnTunnelsRestConnectionImpl
       google::cloud::cpp::compute::vpn_tunnels::v1::
           DeleteVpnTunnelRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          DeleteVpnTunnelRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
       google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
           request) override;
@@ -68,6 +77,15 @@ class VpnTunnelsRestConnectionImpl
       google::cloud::cpp::compute::vpn_tunnels::v1::
           InsertVpnTunnelRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::
+          InsertVpnTunnelRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
       google::cloud::cpp::compute::vpn_tunnels::v1::ListVpnTunnelsRequest
           request) override;
@@ -75,6 +93,15 @@ class VpnTunnelsRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_vpn_tunnels_v1::VpnTunnelsRetryPolicy>

@@ -102,6 +102,57 @@ ModelServiceConnectionImpl::CreateModel(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceConnectionImpl::CreateModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::CreateModelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateModel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::CreateModelRequest const& request) {
+        return stub_->CreateModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::Model>>
+ModelServiceConnectionImpl::CreateModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::CreateModelMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::retail::v2::Model>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::Model>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::Model>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::retail::v2::Model> ModelServiceConnectionImpl::GetModel(
     google::cloud::retail::v2::GetModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -238,6 +289,57 @@ ModelServiceConnectionImpl::TuneModel(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::TuneModelResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceConnectionImpl::TuneModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::TuneModelRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TuneModel(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::TuneModelRequest const& request) {
+        return stub_->TuneModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
+ModelServiceConnectionImpl::TuneModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::TuneModelMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::TuneModelResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to TuneModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::TuneModelResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::TuneModelResponse>,
       polling_policy(*current), __func__);
 }
 

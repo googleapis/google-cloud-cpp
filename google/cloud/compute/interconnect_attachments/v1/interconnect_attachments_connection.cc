@@ -57,6 +57,23 @@ InterconnectAttachmentsConnection::DeleteInterconnectAttachment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsConnection::DeleteInterconnectAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        DeleteInterconnectAttachmentRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectAttachmentsConnection::DeleteInterconnectAttachment(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
 InterconnectAttachmentsConnection::GetInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
@@ -68,6 +85,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsConnection::InsertInterconnectAttachment(
     google::cloud::cpp::compute::interconnect_attachments::v1::
         InsertInterconnectAttachmentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsConnection::InsertInterconnectAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        InsertInterconnectAttachmentRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectAttachmentsConnection::InsertInterconnectAttachment(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -90,10 +124,44 @@ InterconnectAttachmentsConnection::PatchInterconnectAttachment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsConnection::PatchInterconnectAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        PatchInterconnectAttachmentRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectAttachmentsConnection::PatchInterconnectAttachment(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsConnection::SetLabels(
     google::cloud::cpp::compute::interconnect_attachments::v1::
         SetLabelsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+InterconnectAttachmentsConnection::SetLabels(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::interconnect_attachments::v1::
+        SetLabelsRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+InterconnectAttachmentsConnection::SetLabels(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

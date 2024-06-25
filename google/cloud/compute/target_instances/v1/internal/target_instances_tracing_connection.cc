@@ -61,6 +61,32 @@ TargetInstancesTracingConnection::DeleteTargetInstance(
                            child_->DeleteTargetInstance(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetInstancesTracingConnection::DeleteTargetInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_instances::v1::
+        DeleteTargetInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_instances_v1::TargetInstancesConnection::"
+      "DeleteTargetInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteTargetInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetInstancesTracingConnection::DeleteTargetInstance(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_target_instances_v1::TargetInstancesConnection::"
+      "DeleteTargetInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteTargetInstance(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
 TargetInstancesTracingConnection::GetTargetInstance(
     google::cloud::cpp::compute::target_instances::v1::
@@ -82,6 +108,32 @@ TargetInstancesTracingConnection::InsertTargetInstance(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertTargetInstance(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetInstancesTracingConnection::InsertTargetInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_instances::v1::
+        InsertTargetInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_instances_v1::TargetInstancesConnection::"
+      "InsertTargetInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->InsertTargetInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetInstancesTracingConnection::InsertTargetInstance(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_target_instances_v1::TargetInstancesConnection::"
+      "InsertTargetInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->InsertTargetInstance(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
@@ -107,6 +159,32 @@ TargetInstancesTracingConnection::SetSecurityPolicy(
       "SetSecurityPolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetSecurityPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetInstancesTracingConnection::SetSecurityPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_instances::v1::
+        SetSecurityPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_target_instances_v1::TargetInstancesConnection::"
+      "SetSecurityPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->SetSecurityPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetInstancesTracingConnection::SetSecurityPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_target_instances_v1::TargetInstancesConnection::"
+      "SetSecurityPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->SetSecurityPolicy(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -50,36 +50,116 @@ class ManagedNotebookServiceTracingConnection
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateRuntime(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::CreateRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> CreateRuntime(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpdateRuntime(
       google::cloud::notebooks::v1::UpdateRuntimeRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateRuntime(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::UpdateRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpdateRuntime(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteRuntime(google::cloud::notebooks::v1::DeleteRuntimeRequest const&
                     request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteRuntime(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::DeleteRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
+  DeleteRuntime(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StartRuntime(
       google::cloud::notebooks::v1::StartRuntimeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> StartRuntime(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::StartRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> StartRuntime(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
       google::cloud::notebooks::v1::StopRuntimeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> StopRuntime(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::StopRuntimeRequest const& request) override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> SwitchRuntime(
       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> SwitchRuntime(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::SwitchRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> SwitchRuntime(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> ResetRuntime(
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> ResetRuntime(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::ResetRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> ResetRuntime(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpgradeRuntime(
       google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpgradeRuntime(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpgradeRuntime(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> ReportRuntimeEvent(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> ReportRuntimeEvent(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
   RefreshRuntimeTokenInternal(
@@ -89,6 +169,15 @@ class ManagedNotebookServiceTracingConnection
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> DiagnoseRuntime(
       google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DiagnoseRuntime(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> DiagnoseRuntime(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<notebooks_v1::ManagedNotebookServiceConnection> child_;

@@ -22,8 +22,10 @@
 #include "google/cloud/dataplex/v1/dataplex_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/dataplex_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -189,11 +191,32 @@ class DataplexServiceConnection {
   virtual future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
       google::cloud::dataplex::v1::CreateLakeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateLake(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateLakeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
       google::cloud::dataplex::v1::UpdateLakeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateLake(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateLakeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteLake(google::cloud::dataplex::v1::DeleteLakeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteLake(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteLakeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteLake(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
       google::cloud::dataplex::v1::ListLakesRequest request);
@@ -207,11 +230,32 @@ class DataplexServiceConnection {
   virtual future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
       google::cloud::dataplex::v1::CreateZoneRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateZone(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateZoneRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
       google::cloud::dataplex::v1::UpdateZoneRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateZone(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateZoneRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteZone(google::cloud::dataplex::v1::DeleteZoneRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteZone(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteZoneRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteZone(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::Zone> ListZones(
       google::cloud::dataplex::v1::ListZonesRequest request);
@@ -225,11 +269,32 @@ class DataplexServiceConnection {
   virtual future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
       google::cloud::dataplex::v1::CreateAssetRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateAsset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateAssetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
       google::cloud::dataplex::v1::UpdateAssetRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateAsset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateAssetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteAsset(google::cloud::dataplex::v1::DeleteAssetRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAsset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteAssetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteAsset(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
       google::cloud::dataplex::v1::ListAssetsRequest request);
@@ -243,11 +308,32 @@ class DataplexServiceConnection {
   virtual future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
       google::cloud::dataplex::v1::CreateTaskRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateTask(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateTaskRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
       google::cloud::dataplex::v1::UpdateTaskRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateTask(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateTaskRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteTask(google::cloud::dataplex::v1::DeleteTaskRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTask(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteTaskRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteTask(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::Task> ListTasks(
       google::cloud::dataplex::v1::ListTasksRequest request);
@@ -271,13 +357,37 @@ class DataplexServiceConnection {
   CreateEnvironment(
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
+  CreateEnvironment(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
   UpdateEnvironment(
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::Environment>>
+  UpdateEnvironment(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEnvironment(
       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteEnvironment(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::Environment>
   ListEnvironments(

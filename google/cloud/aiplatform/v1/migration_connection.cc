@@ -54,6 +54,22 @@ MigrationServiceConnection::BatchMigrateResources(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationServiceConnection::BatchMigrateResources(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
+MigrationServiceConnection::BatchMigrateResources(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<MigrationServiceConnection> MakeMigrationServiceConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

@@ -44,6 +44,15 @@ class BackupForGKETracingConnection
       google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateBackupPlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
       google::cloud::gkebackup::v1::ListBackupPlansRequest request) override;
 
@@ -55,13 +64,40 @@ class BackupForGKETracingConnection
       google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateBackupPlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteBackupPlan(google::cloud::gkebackup::v1::DeleteBackupPlanRequest const&
                        request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteBackupPlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteBackupPlan(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
       google::cloud::gkebackup::v1::CreateBackupRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
       google::cloud::gkebackup::v1::ListBackupsRequest request) override;
@@ -73,9 +109,27 @@ class BackupForGKETracingConnection
       google::cloud::gkebackup::v1::UpdateBackupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteBackup(google::cloud::gkebackup::v1::DeleteBackupRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteBackup(ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::gkebackup::v1::VolumeBackup> ListVolumeBackups(
       google::cloud::gkebackup::v1::ListVolumeBackupsRequest request) override;
@@ -88,6 +142,15 @@ class BackupForGKETracingConnection
       google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateRestorePlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> CreateRestorePlan(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::gkebackup::v1::RestorePlan> ListRestorePlans(
       google::cloud::gkebackup::v1::ListRestorePlansRequest request) override;
 
@@ -99,14 +162,41 @@ class BackupForGKETracingConnection
       google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateRestorePlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteRestorePlan(
       google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteRestorePlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteRestorePlan(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
       google::cloud::gkebackup::v1::CreateRestoreRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateRestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateRestoreRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::gkebackup::v1::Restore> ListRestores(
       google::cloud::gkebackup::v1::ListRestoresRequest request) override;
@@ -118,9 +208,27 @@ class BackupForGKETracingConnection
       google::cloud::gkebackup::v1::UpdateRestoreRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateRestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateRestoreRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteRestore(google::cloud::gkebackup::v1::DeleteRestoreRequest const&
                     request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteRestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteRestoreRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteRestore(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::gkebackup::v1::VolumeRestore> ListVolumeRestores(
       google::cloud::gkebackup::v1::ListVolumeRestoresRequest request) override;

@@ -49,6 +49,15 @@ class DatabaseAdminTracingConnection
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDatabase(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::database::v1::CreateDatabaseRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  CreateDatabase(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       google::spanner::admin::database::v1::GetDatabaseRequest const& request)
       override;
@@ -58,11 +67,30 @@ class DatabaseAdminTracingConnection
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateDatabase(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  UpdateDatabase(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   Status DropDatabase(
       google::spanner::admin::database::v1::DropDatabaseRequest const& request)
@@ -86,9 +114,27 @@ class DatabaseAdminTracingConnection
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
       google::spanner::admin::database::v1::CopyBackupRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CopyBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::database::v1::CopyBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request)
@@ -110,6 +156,15 @@ class DatabaseAdminTracingConnection
   RestoreDatabase(
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  RestoreDatabase(ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
   StreamRange<google::longrunning::Operation> ListDatabaseOperations(
       google::spanner::admin::database::v1::ListDatabaseOperationsRequest

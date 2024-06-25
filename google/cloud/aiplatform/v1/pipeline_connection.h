@@ -22,8 +22,10 @@
 #include "google/cloud/aiplatform/v1/internal/pipeline_retry_traits.h"
 #include "google/cloud/aiplatform/v1/pipeline_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -206,6 +208,16 @@ class PipelineServiceConnection {
       google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTrainingPipeline(ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual Status CancelTrainingPipeline(
       google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
           request);
@@ -226,11 +238,30 @@ class PipelineServiceConnection {
   DeletePipelineJob(
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeletePipelineJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePipelineJob(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
   BatchDeletePipelineJobs(
       google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(ExperimentalTag,
+                          google::longrunning::Operation const& operation);
 
   virtual Status CancelPipelineJob(
       google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request);
@@ -240,6 +271,16 @@ class PipelineServiceConnection {
   BatchCancelPipelineJobs(
       google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(ExperimentalTag,
+                          google::longrunning::Operation const& operation);
 };
 
 /**

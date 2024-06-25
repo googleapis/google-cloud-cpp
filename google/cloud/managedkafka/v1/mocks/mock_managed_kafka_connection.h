@@ -63,14 +63,50 @@ class MockManagedKafkaConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::managedkafka::v1::CreateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
+              CreateCluster,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::managedkafka::v1::Cluster>>, UpdateCluster,
       (google::cloud::managedkafka::v1::UpdateClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::managedkafka::v1::UpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedkafka::v1::Cluster>>,
+              UpdateCluster,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>,
       DeleteCluster,
       (google::cloud::managedkafka::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::managedkafka::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>,
+      DeleteCluster,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::managedkafka::v1::Topic>), ListTopics,

@@ -42,6 +42,27 @@ DataStoreServiceTracingConnection::CreateDataStore(
   return internal::EndSpan(std::move(span), child_->CreateDataStore(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataStoreServiceTracingConnection::CreateDataStore(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::CreateDataStore");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateDataStore(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
+DataStoreServiceTracingConnection::CreateDataStore(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::CreateDataStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateDataStore(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
 DataStoreServiceTracingConnection::GetDataStore(
     google::cloud::discoveryengine::v1::GetDataStoreRequest const& request) {
@@ -70,6 +91,27 @@ DataStoreServiceTracingConnection::DeleteDataStore(
       "discoveryengine_v1::DataStoreServiceConnection::DeleteDataStore");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteDataStore(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataStoreServiceTracingConnection::DeleteDataStore(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::DeleteDataStore");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteDataStore(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
+DataStoreServiceTracingConnection::DeleteDataStore(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::DataStoreServiceConnection::DeleteDataStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteDataStore(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>

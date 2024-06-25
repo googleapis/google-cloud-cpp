@@ -153,6 +153,59 @@ BackupDRConnectionImpl::CreateManagementServer(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BackupDRConnectionImpl::CreateManagementServer(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateManagementServer(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::CreateManagementServerRequest const&
+                 request) {
+        return stub_->CreateManagementServer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
+BackupDRConnectionImpl::CreateManagementServer(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::backupdr::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::backupdr::v1::ManagementServer>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateManagementServer",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::backupdr::v1::ManagementServer>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::backupdr::v1::ManagementServer>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
 BackupDRConnectionImpl::DeleteManagementServer(
     google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
@@ -190,6 +243,59 @@ BackupDRConnectionImpl::DeleteManagementServer(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::backupdr::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BackupDRConnectionImpl::DeleteManagementServer(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteManagementServer(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::backupdr::v1::DeleteManagementServerRequest const&
+                 request) {
+        return stub_->DeleteManagementServer(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRConnectionImpl::DeleteManagementServer(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::backupdr::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::backupdr::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteManagementServer",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::backupdr::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::backupdr::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

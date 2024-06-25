@@ -61,6 +61,15 @@ class SslPoliciesRestConnectionImpl
       google::cloud::cpp::compute::ssl_policies::v1::
           DeleteSslPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::ssl_policies::v1::
+          DeleteSslPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::SslPolicy> GetSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
           request) override;
@@ -68,6 +77,15 @@ class SslPoliciesRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
           InsertSslPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::ssl_policies::v1::
+          InsertSslPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::SslPolicy> ListSslPolicies(
       google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest
@@ -82,6 +100,15 @@ class SslPoliciesRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
           PatchSslPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::ssl_policies::v1::
+          PatchSslPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_ssl_policies_v1::SslPoliciesRetryPolicy>

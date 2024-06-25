@@ -23,8 +23,10 @@
 #include "google/cloud/compute/region_instance_groups/v1/internal/region_instance_groups_retry_traits.h"
 #include "google/cloud/compute/region_instance_groups/v1/region_instance_groups_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -207,6 +209,15 @@ class RegionInstanceGroupsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetNamedPorts(google::cloud::cpp::compute::region_instance_groups::v1::
                     SetNamedPortsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_groups::v1::
+          SetNamedPortsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetNamedPorts(ExperimentalTag,
+                google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

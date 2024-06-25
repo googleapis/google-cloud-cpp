@@ -70,6 +70,15 @@ class RegionInstanceGroupsRestConnectionImpl
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_groups::v1::
+          SetNamedPortsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   static std::unique_ptr<
       compute_region_instance_groups_v1::RegionInstanceGroupsRetryPolicy>

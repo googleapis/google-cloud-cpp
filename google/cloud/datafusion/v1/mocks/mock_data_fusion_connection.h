@@ -68,9 +68,33 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::datafusion::v1::CreateInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::datafusion::v1::Instance>>,
+              CreateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>,
       DeleteInstance,
       (google::cloud::datafusion::v1::DeleteInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::datafusion::v1::DeleteInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>,
+      DeleteInstance,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -79,10 +103,34 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::datafusion::v1::UpdateInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::datafusion::v1::Instance>>,
+              UpdateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::Instance>>,
       RestartInstance,
       (google::cloud::datafusion::v1::RestartInstanceRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RestartInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::datafusion::v1::RestartInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::datafusion::v1::Instance>>,
+              RestartInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -118,6 +118,51 @@ RequestIdServiceConnectionImpl::RenameFoo(google::test::requestid::v1::RenameFoo
     polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+RequestIdServiceConnectionImpl::RenameFoo(ExperimentalTag,
+      NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RenameFoo(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::test::requestid::v1::RenameFooRequest const& request) {
+        return stub_->RenameFoo(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::test::requestid::v1::Foo>>
+RequestIdServiceConnectionImpl::RenameFoo(ExperimentalTag,
+      google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::test::requestid::v1::RenameFooMetadata>()) {
+    return make_ready_future<StatusOr<google::test::requestid::v1::Foo>>(
+        internal::InvalidArgumentError("operation does not correspond to RenameFoo",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<google::test::requestid::v1::Foo>(
+    background_->cq(), current, operation,
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+     return stub->AsyncGetOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](google::cloud::CompletionQueue& cq,
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+     return stub->AsyncCancelOperation(
+         cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::test::requestid::v1::Foo>,
+    polling_policy(*current), __func__);
+}
+
 StreamRange<google::test::requestid::v1::Foo>
 RequestIdServiceConnectionImpl::ListFoos(google::test::requestid::v1::ListFoosRequest request) {
   request.clear_page_token();

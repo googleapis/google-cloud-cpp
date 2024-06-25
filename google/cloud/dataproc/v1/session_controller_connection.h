@@ -22,8 +22,10 @@
 #include "google/cloud/dataproc/v1/internal/session_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/session_controller_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -191,6 +193,13 @@ class SessionControllerConnection {
   virtual future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
       google::cloud::dataproc::v1::CreateSessionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateSession(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataproc::v1::CreateSessionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::dataproc::v1::Session> GetSession(
       google::cloud::dataproc::v1::GetSessionRequest const& request);
 
@@ -201,8 +210,23 @@ class SessionControllerConnection {
   TerminateSession(
       google::cloud::dataproc::v1::TerminateSessionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> TerminateSession(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataproc::v1::TerminateSessionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataproc::v1::Session>>
+  TerminateSession(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
       google::cloud::dataproc::v1::DeleteSessionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSession(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataproc::v1::DeleteSessionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 };
 
 /**

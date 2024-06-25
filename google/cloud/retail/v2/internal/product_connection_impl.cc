@@ -192,6 +192,58 @@ ProductServiceConnectionImpl::PurgeProducts(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceConnectionImpl::PurgeProducts(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::PurgeProductsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PurgeProducts(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::PurgeProductsRequest const& request) {
+        return stub_->PurgeProducts(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
+ProductServiceConnectionImpl::PurgeProducts(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::PurgeProductsMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to PurgeProducts",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::PurgeProductsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::PurgeProductsResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceConnectionImpl::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request) {
@@ -231,6 +283,58 @@ ProductServiceConnectionImpl::ImportProducts(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceConnectionImpl::ImportProducts(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::ImportProductsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportProducts(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::ImportProductsRequest const& request) {
+        return stub_->ImportProducts(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
+ProductServiceConnectionImpl::ImportProducts(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::ImportMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::ImportProductsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportProducts",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::ImportProductsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::ImportProductsResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceConnectionImpl::SetInventory(
     google::cloud::retail::v2::SetInventoryRequest const& request) {
@@ -267,6 +371,58 @@ ProductServiceConnectionImpl::SetInventory(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::SetInventoryResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceConnectionImpl::SetInventory(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::SetInventoryRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SetInventory(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::SetInventoryRequest const& request) {
+        return stub_->SetInventory(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
+ProductServiceConnectionImpl::SetInventory(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::SetInventoryMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::SetInventoryResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SetInventory",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::SetInventoryResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::SetInventoryResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -310,6 +466,60 @@ ProductServiceConnectionImpl::AddFulfillmentPlaces(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceConnectionImpl::AddFulfillmentPlaces(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddFulfillmentPlaces(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::AddFulfillmentPlacesRequest const&
+                 request) {
+        return stub_->AddFulfillmentPlaces(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
+ProductServiceConnectionImpl::AddFulfillmentPlaces(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::
+                   AddFulfillmentPlacesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AddFulfillmentPlaces",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::AddFulfillmentPlacesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::AddFulfillmentPlacesResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
@@ -347,6 +557,60 @@ ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemoveFulfillmentPlaces(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
+                 request) {
+        return stub_->RemoveFulfillmentPlaces(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
+ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::
+                   RemoveFulfillmentPlacesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RemoveFulfillmentPlaces",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -390,6 +654,60 @@ ProductServiceConnectionImpl::AddLocalInventories(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ProductServiceConnectionImpl::AddLocalInventories(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->AddLocalInventories(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::AddLocalInventoriesRequest const&
+                 request) {
+        return stub_->AddLocalInventories(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+ProductServiceConnectionImpl::AddLocalInventories(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::
+                   AddLocalInventoriesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to AddLocalInventories",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::AddLocalInventoriesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::AddLocalInventoriesResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceConnectionImpl::RemoveLocalInventories(
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
@@ -427,6 +745,60 @@ ProductServiceConnectionImpl::RemoveLocalInventories(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::RemoveLocalInventoriesResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ProductServiceConnectionImpl::RemoveLocalInventories(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RemoveLocalInventories(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::RemoveLocalInventoriesRequest const&
+                 request) {
+        return stub_->RemoveLocalInventories(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+ProductServiceConnectionImpl::RemoveLocalInventories(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::
+                   RemoveLocalInventoriesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RemoveLocalInventories",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::RemoveLocalInventoriesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::RemoveLocalInventoriesResponse>,
       polling_policy(*current), __func__);
 }
 

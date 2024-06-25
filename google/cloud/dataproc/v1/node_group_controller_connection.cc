@@ -45,9 +45,41 @@ NodeGroupControllerConnection::CreateNodeGroup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerConnection::CreateNodeGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::CreateNodeGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+NodeGroupControllerConnection::CreateNodeGroup(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnection::ResizeNodeGroup(
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+NodeGroupControllerConnection::ResizeNodeGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::ResizeNodeGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
+NodeGroupControllerConnection::ResizeNodeGroup(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataproc::v1::NodeGroup>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

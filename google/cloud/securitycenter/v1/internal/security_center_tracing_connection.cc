@@ -42,6 +42,28 @@ SecurityCenterTracingConnection::BulkMuteFindings(
   return internal::EndSpan(std::move(span), child_->BulkMuteFindings(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SecurityCenterTracingConnection::BulkMuteFindings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "securitycenter_v1::SecurityCenterConnection::BulkMuteFindings");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->BulkMuteFindings(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
+SecurityCenterTracingConnection::BulkMuteFindings(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securitycenter_v1::SecurityCenterConnection::BulkMuteFindings");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->BulkMuteFindings(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterTracingConnection::CreateSecurityHealthAnalyticsCustomModule(
     google::cloud::securitycenter::v1::
@@ -348,6 +370,29 @@ SecurityCenterTracingConnection::RunAssetDiscovery(
       "securitycenter_v1::SecurityCenterConnection::RunAssetDiscovery");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RunAssetDiscovery(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecurityCenterTracingConnection::RunAssetDiscovery(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securitycenter_v1::SecurityCenterConnection::RunAssetDiscovery");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->RunAssetDiscovery(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
+SecurityCenterTracingConnection::RunAssetDiscovery(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securitycenter_v1::SecurityCenterConnection::RunAssetDiscovery");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->RunAssetDiscovery(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>

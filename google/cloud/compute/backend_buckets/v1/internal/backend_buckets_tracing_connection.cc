@@ -43,6 +43,29 @@ BackendBucketsTracingConnection::AddSignedUrlKey(
   return internal::EndSpan(std::move(span), child_->AddSignedUrlKey(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsTracingConnection::AddSignedUrlKey(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        AddSignedUrlKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::AddSignedUrlKey");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->AddSignedUrlKey(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+BackendBucketsTracingConnection::AddSignedUrlKey(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::AddSignedUrlKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->AddSignedUrlKey(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsTracingConnection::DeleteBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
@@ -55,6 +78,32 @@ BackendBucketsTracingConnection::DeleteBackendBucket(
                            child_->DeleteBackendBucket(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsTracingConnection::DeleteBackendBucket(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteBackendBucketRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "DeleteBackendBucket");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteBackendBucket(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+BackendBucketsTracingConnection::DeleteBackendBucket(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "DeleteBackendBucket");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteBackendBucket(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsTracingConnection::DeleteSignedUrlKey(
     google::cloud::cpp::compute::backend_buckets::v1::
@@ -65,6 +114,32 @@ BackendBucketsTracingConnection::DeleteSignedUrlKey(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteSignedUrlKey(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsTracingConnection::DeleteSignedUrlKey(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        DeleteSignedUrlKeyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "DeleteSignedUrlKey");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteSignedUrlKey(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+BackendBucketsTracingConnection::DeleteSignedUrlKey(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "DeleteSignedUrlKey");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteSignedUrlKey(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
@@ -99,6 +174,32 @@ BackendBucketsTracingConnection::InsertBackendBucket(
                            child_->InsertBackendBucket(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsTracingConnection::InsertBackendBucket(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        InsertBackendBucketRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "InsertBackendBucket");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->InsertBackendBucket(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+BackendBucketsTracingConnection::InsertBackendBucket(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "InsertBackendBucket");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->InsertBackendBucket(
+                                                ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
 BackendBucketsTracingConnection::ListBackendBuckets(
     google::cloud::cpp::compute::backend_buckets::v1::ListBackendBucketsRequest
@@ -125,6 +226,32 @@ BackendBucketsTracingConnection::PatchBackendBucket(
                            child_->PatchBackendBucket(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsTracingConnection::PatchBackendBucket(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        PatchBackendBucketRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "PatchBackendBucket");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->PatchBackendBucket(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+BackendBucketsTracingConnection::PatchBackendBucket(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "PatchBackendBucket");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PatchBackendBucket(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsTracingConnection::SetEdgeSecurityPolicy(
     google::cloud::cpp::compute::backend_buckets::v1::
@@ -135,6 +262,32 @@ BackendBucketsTracingConnection::SetEdgeSecurityPolicy(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetEdgeSecurityPolicy(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsTracingConnection::SetEdgeSecurityPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        SetEdgeSecurityPolicyRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "SetEdgeSecurityPolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->SetEdgeSecurityPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+BackendBucketsTracingConnection::SetEdgeSecurityPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "SetEdgeSecurityPolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SetEdgeSecurityPolicy(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -168,6 +321,32 @@ BackendBucketsTracingConnection::UpdateBackendBucket(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateBackendBucket(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+BackendBucketsTracingConnection::UpdateBackendBucket(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::backend_buckets::v1::
+        UpdateBackendBucketRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "UpdateBackendBucket");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->UpdateBackendBucket(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+BackendBucketsTracingConnection::UpdateBackendBucket(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_backend_buckets_v1::BackendBucketsConnection::"
+      "UpdateBackendBucket");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateBackendBucket(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

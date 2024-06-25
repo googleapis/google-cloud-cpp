@@ -55,6 +55,23 @@ StoragePoolsConnection::DeleteStoragePool(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsConnection::DeleteStoragePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::storage_pools::v1::
+        DeleteStoragePoolRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+StoragePoolsConnection::DeleteStoragePool(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
 StoragePoolsConnection::GetStoragePool(
     google::cloud::cpp::compute::storage_pools::v1::
@@ -73,6 +90,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsConnection::InsertStoragePool(
     google::cloud::cpp::compute::storage_pools::v1::
         InsertStoragePoolRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsConnection::InsertStoragePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::storage_pools::v1::
+        InsertStoragePoolRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+StoragePoolsConnection::InsertStoragePool(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -112,6 +146,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsConnection::UpdateStoragePool(
     google::cloud::cpp::compute::storage_pools::v1::
         UpdateStoragePoolRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+StoragePoolsConnection::UpdateStoragePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::storage_pools::v1::
+        UpdateStoragePoolRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+StoragePoolsConnection::UpdateStoragePool(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

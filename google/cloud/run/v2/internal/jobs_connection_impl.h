@@ -53,6 +53,14 @@ class JobsConnectionImpl : public run_v2::JobsConnection {
   future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::CreateJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::run::v2::Job> GetJob(
       google::cloud::run::v2::GetJobRequest const& request) override;
 
@@ -62,11 +70,35 @@ class JobsConnectionImpl : public run_v2::JobsConnection {
   future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
       google::cloud::run::v2::UpdateJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::UpdateJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
       google::cloud::run::v2::DeleteJobRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::DeleteJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::cloud::run::v2::RunJobRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RunJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::RunJobRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override;

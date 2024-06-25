@@ -42,6 +42,27 @@ LivestreamServiceTracingConnection::CreateChannel(
   return internal::EndSpan(std::move(span), child_->CreateChannel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::CreateChannel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::CreateChannel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateChannel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Channel>>
+LivestreamServiceTracingConnection::CreateChannel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::CreateChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateChannel(ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::video::livestream::v1::Channel>
 LivestreamServiceTracingConnection::ListChannels(
     google::cloud::video::livestream::v1::ListChannelsRequest request) {
@@ -72,6 +93,27 @@ LivestreamServiceTracingConnection::DeleteChannel(
   return internal::EndSpan(std::move(span), child_->DeleteChannel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::DeleteChannel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::DeleteChannel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteChannel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceTracingConnection::DeleteChannel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::DeleteChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteChannel(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceTracingConnection::UpdateChannel(
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
@@ -79,6 +121,27 @@ LivestreamServiceTracingConnection::UpdateChannel(
       "video_livestream_v1::LivestreamServiceConnection::UpdateChannel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateChannel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::UpdateChannel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::UpdateChannel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateChannel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Channel>>
+LivestreamServiceTracingConnection::UpdateChannel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::UpdateChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateChannel(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -90,6 +153,27 @@ LivestreamServiceTracingConnection::StartChannel(
   return internal::EndSpan(std::move(span), child_->StartChannel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::StartChannel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::StartChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StartChannel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->StartChannel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceTracingConnection::StartChannel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StartChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StartChannel(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
 LivestreamServiceTracingConnection::StopChannel(
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
@@ -99,6 +183,27 @@ LivestreamServiceTracingConnection::StopChannel(
   return internal::EndSpan(std::move(span), child_->StopChannel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::StopChannel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::StopChannelRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StopChannel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->StopChannel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+LivestreamServiceTracingConnection::StopChannel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::StopChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->StopChannel(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceTracingConnection::CreateInput(
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
@@ -106,6 +211,27 @@ LivestreamServiceTracingConnection::CreateInput(
       "video_livestream_v1::LivestreamServiceConnection::CreateInput");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateInput(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::CreateInput(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::CreateInputRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::CreateInput");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateInput(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Input>>
+LivestreamServiceTracingConnection::CreateInput(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::CreateInput");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateInput(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::video::livestream::v1::Input>
@@ -138,6 +264,27 @@ LivestreamServiceTracingConnection::DeleteInput(
   return internal::EndSpan(std::move(span), child_->DeleteInput(request));
 }
 
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::DeleteInput(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::DeleteInput");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteInput(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceTracingConnection::DeleteInput(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::DeleteInput");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteInput(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceTracingConnection::UpdateInput(
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
@@ -145,6 +292,27 @@ LivestreamServiceTracingConnection::UpdateInput(
       "video_livestream_v1::LivestreamServiceConnection::UpdateInput");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateInput(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::UpdateInput(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::UpdateInput");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateInput(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Input>>
+LivestreamServiceTracingConnection::UpdateInput(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::UpdateInput");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateInput(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
@@ -194,6 +362,27 @@ LivestreamServiceTracingConnection::CreateAsset(
   return internal::EndSpan(std::move(span), child_->CreateAsset(request));
 }
 
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::CreateAsset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::CreateAsset");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateAsset(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+LivestreamServiceTracingConnection::CreateAsset(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::CreateAsset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAsset(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceTracingConnection::DeleteAsset(
     google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
@@ -201,6 +390,27 @@ LivestreamServiceTracingConnection::DeleteAsset(
       "video_livestream_v1::LivestreamServiceConnection::DeleteAsset");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteAsset(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::DeleteAsset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::DeleteAsset");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteAsset(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+LivestreamServiceTracingConnection::DeleteAsset(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::DeleteAsset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAsset(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
@@ -240,6 +450,27 @@ LivestreamServiceTracingConnection::UpdatePool(
       "video_livestream_v1::LivestreamServiceConnection::UpdatePool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdatePool(request));
+}
+
+StatusOr<google::longrunning::Operation>
+LivestreamServiceTracingConnection::UpdatePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::UpdatePool");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdatePool(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+LivestreamServiceTracingConnection::UpdatePool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "video_livestream_v1::LivestreamServiceConnection::UpdatePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePool(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

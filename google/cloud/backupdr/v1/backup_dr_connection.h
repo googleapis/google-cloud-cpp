@@ -22,8 +22,10 @@
 #include "google/cloud/backupdr/v1/backup_dr_connection_idempotency_policy.h"
 #include "google/cloud/backupdr/v1/internal/backup_dr_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -195,10 +197,28 @@ class BackupDRConnection {
       google::cloud::backupdr::v1::CreateManagementServerRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateManagementServer(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::backupdr::v1::CreateManagementServerRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
+  CreateManagementServer(ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteManagementServer(
       google::cloud::backupdr::v1::DeleteManagementServerRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteManagementServer(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::backupdr::v1::DeleteManagementServerRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+  DeleteManagementServer(ExperimentalTag,
+                         google::longrunning::Operation const& operation);
 };
 
 /**

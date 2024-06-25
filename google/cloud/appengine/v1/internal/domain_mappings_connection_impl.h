@@ -62,13 +62,40 @@ class DomainMappingsConnectionImpl
       google::appengine::v1::CreateDomainMappingRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDomainMapping(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::CreateDomainMappingRequest const& request)
+      override;
+
+  future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
       google::appengine::v1::UpdateDomainMappingRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateDomainMapping(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::UpdateDomainMappingRequest const& request)
+      override;
+
+  future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteDomainMapping(google::appengine::v1::DeleteDomainMappingRequest const&
                           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteDomainMapping(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::DeleteDomainMappingRequest const& request)
+      override;
+
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteDomainMapping(ExperimentalTag,
+                      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

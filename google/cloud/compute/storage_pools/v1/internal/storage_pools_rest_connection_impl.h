@@ -61,6 +61,16 @@ class StoragePoolsRestConnectionImpl
   DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::
                         DeleteStoragePoolRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::storage_pools::v1::
+          DeleteStoragePoolRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteStoragePool(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::StoragePool> GetStoragePool(
       google::cloud::cpp::compute::storage_pools::v1::
           GetStoragePoolRequest const& request) override;
@@ -72,6 +82,16 @@ class StoragePoolsRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::
                         InsertStoragePoolRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::storage_pools::v1::
+          InsertStoragePoolRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertStoragePool(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::StoragePool> ListStoragePools(
       google::cloud::cpp::compute::storage_pools::v1::ListStoragePoolsRequest
@@ -92,6 +112,16 @@ class StoragePoolsRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::
                         UpdateStoragePoolRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::storage_pools::v1::
+          UpdateStoragePoolRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateStoragePool(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_storage_pools_v1::StoragePoolsRetryPolicy>

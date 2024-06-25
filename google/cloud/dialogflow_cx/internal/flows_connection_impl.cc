@@ -190,6 +190,55 @@ future<StatusOr<google::protobuf::Struct>> FlowsConnectionImpl::TrainFlow(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> FlowsConnectionImpl::TrainFlow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TrainFlow(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
+        return stub_->TrainFlow(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::protobuf::Struct>> FlowsConnectionImpl::TrainFlow(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
+    return make_ready_future<StatusOr<google::protobuf::Struct>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to TrainFlow",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::protobuf::Struct>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::protobuf::Struct>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsConnectionImpl::ValidateFlow(
     google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) {
@@ -260,6 +309,57 @@ FlowsConnectionImpl::ImportFlow(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> FlowsConnectionImpl::ImportFlow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportFlow(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
+        return stub_->ImportFlow(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
+FlowsConnectionImpl::ImportFlow(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportFlow",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::cx::v3::ImportFlowResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::cx::v3::ImportFlowResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
 FlowsConnectionImpl::ExportFlow(
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
@@ -296,6 +396,57 @@ FlowsConnectionImpl::ExportFlow(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::ExportFlowResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> FlowsConnectionImpl::ExportFlow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportFlow(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
+        return stub_->ExportFlow(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
+FlowsConnectionImpl::ExportFlow(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportFlow",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::cx::v3::ExportFlowResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::cx::v3::ExportFlowResponse>,
       polling_policy(*current), __func__);
 }
 

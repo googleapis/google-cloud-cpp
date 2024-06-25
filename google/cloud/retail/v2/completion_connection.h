@@ -22,8 +22,10 @@
 #include "google/cloud/retail/v2/completion_connection_idempotency_policy.h"
 #include "google/cloud/retail/v2/internal/completion_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,6 +194,15 @@ class CompletionServiceConnection {
       StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
   ImportCompletionData(
       google::cloud::retail::v2::ImportCompletionDataRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportCompletionData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
+  ImportCompletionData(ExperimentalTag,
+                       google::longrunning::Operation const& operation);
 };
 
 /**

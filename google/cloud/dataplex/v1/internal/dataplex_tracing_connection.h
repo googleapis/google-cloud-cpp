@@ -43,11 +43,35 @@ class DataplexServiceTracingConnection
   future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
       google::cloud::dataplex::v1::CreateLakeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateLake(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateLakeRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
       google::cloud::dataplex::v1::UpdateLakeRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateLake(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateLakeRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
       google::cloud::dataplex::v1::DeleteLakeRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteLake(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteLakeRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
       google::cloud::dataplex::v1::ListLakesRequest request) override;
@@ -61,11 +85,35 @@ class DataplexServiceTracingConnection
   future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
       google::cloud::dataplex::v1::CreateZoneRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateZone(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateZoneRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
       google::cloud::dataplex::v1::UpdateZoneRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateZone(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateZoneRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
       google::cloud::dataplex::v1::DeleteZoneRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteZone(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteZoneRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::Zone> ListZones(
       google::cloud::dataplex::v1::ListZonesRequest request) override;
@@ -79,11 +127,35 @@ class DataplexServiceTracingConnection
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
       google::cloud::dataplex::v1::CreateAssetRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateAsset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateAssetRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
       google::cloud::dataplex::v1::UpdateAssetRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateAsset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateAssetRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
       google::cloud::dataplex::v1::DeleteAssetRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAsset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteAssetRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
       google::cloud::dataplex::v1::ListAssetsRequest request) override;
@@ -97,11 +169,35 @@ class DataplexServiceTracingConnection
   future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
       google::cloud::dataplex::v1::CreateTaskRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateTask(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateTaskRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
       google::cloud::dataplex::v1::UpdateTaskRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateTask(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateTaskRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
       google::cloud::dataplex::v1::DeleteTaskRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteTask(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteTaskRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::Task> ListTasks(
       google::cloud::dataplex::v1::ListTasksRequest request) override;
@@ -125,13 +221,40 @@ class DataplexServiceTracingConnection
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEnvironment(google::cloud::dataplex::v1::DeleteEnvironmentRequest const&
                         request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteEnvironment(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
       google::cloud::dataplex::v1::ListEnvironmentsRequest request) override;

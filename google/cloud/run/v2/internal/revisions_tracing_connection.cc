@@ -59,6 +59,25 @@ RevisionsTracingConnection::DeleteRevision(
   return internal::EndSpan(std::move(span), child_->DeleteRevision(request));
 }
 
+StatusOr<google::longrunning::Operation>
+RevisionsTracingConnection::DeleteRevision(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  auto span = internal::MakeSpan("run_v2::RevisionsConnection::DeleteRevision");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteRevision(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Revision>>
+RevisionsTracingConnection::DeleteRevision(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("run_v2::RevisionsConnection::DeleteRevision");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteRevision(ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<run_v2::RevisionsConnection> MakeRevisionsTracingConnection(

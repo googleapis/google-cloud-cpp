@@ -60,6 +60,15 @@ class AddressesRestConnectionImpl
       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
       google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
           request) override;
@@ -67,6 +76,15 @@ class AddressesRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
       google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Address> ListAddresses(
       google::cloud::cpp::compute::addresses::v1::ListAddressesRequest request)
@@ -76,9 +94,27 @@ class AddressesRestConnectionImpl
       google::cloud::cpp::compute::addresses::v1::MoveRequest const& request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::MoveRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_addresses_v1::AddressesRetryPolicy>

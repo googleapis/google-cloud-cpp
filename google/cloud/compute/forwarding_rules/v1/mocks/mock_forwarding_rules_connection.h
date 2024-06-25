@@ -61,6 +61,19 @@ class MockForwardingRulesConnection
                    DeleteForwardingRuleRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteForwardingRule,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::forwarding_rules::v1::
+                   DeleteForwardingRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteForwardingRule,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>,
               GetForwardingRule,
               (google::cloud::cpp::compute::forwarding_rules::v1::
@@ -71,6 +84,19 @@ class MockForwardingRulesConnection
               InsertForwardingRule,
               (google::cloud::cpp::compute::forwarding_rules::v1::
                    InsertForwardingRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertForwardingRule,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::forwarding_rules::v1::
+                   InsertForwardingRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertForwardingRule,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>),
@@ -85,16 +111,53 @@ class MockForwardingRulesConnection
                    PatchForwardingRuleRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PatchForwardingRule,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::forwarding_rules::v1::
+                   PatchForwardingRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchForwardingRule,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::forwarding_rules::v1::
                    SetLabelsRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::forwarding_rules::v1::
+                   SetLabelsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetLabels,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetTarget,
               (google::cloud::cpp::compute::forwarding_rules::v1::
                    SetTargetRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetTarget,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::forwarding_rules::v1::
+                   SetTargetRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetTarget,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

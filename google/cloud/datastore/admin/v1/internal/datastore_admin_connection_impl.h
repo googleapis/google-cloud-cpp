@@ -56,15 +56,49 @@ class DatastoreAdminConnectionImpl
   ExportEntities(google::datastore::admin::v1::ExportEntitiesRequest const&
                      request) override;
 
+  StatusOr<google::longrunning::Operation> ExportEntities(
+      ExperimentalTag, NoAwaitTag,
+      google::datastore::admin::v1::ExportEntitiesRequest const& request)
+      override;
+
+  future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
+  ExportEntities(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
   ImportEntities(google::datastore::admin::v1::ImportEntitiesRequest const&
                      request) override;
 
+  StatusOr<google::longrunning::Operation> ImportEntities(
+      ExperimentalTag, NoAwaitTag,
+      google::datastore::admin::v1::ImportEntitiesRequest const& request)
+      override;
+
+  future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
+  ImportEntities(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
       google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateIndex(
+      ExperimentalTag, NoAwaitTag,
+      google::datastore::admin::v1::CreateIndexRequest const& request) override;
+
+  future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
       google::datastore::admin::v1::DeleteIndexRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteIndex(
+      ExperimentalTag, NoAwaitTag,
+      google::datastore::admin::v1::DeleteIndexRequest const& request) override;
+
+  future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::datastore::admin::v1::Index> GetIndex(
       google::datastore::admin::v1::GetIndexRequest const& request) override;

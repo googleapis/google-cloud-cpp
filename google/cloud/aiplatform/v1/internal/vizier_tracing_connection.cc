@@ -88,6 +88,27 @@ VizierServiceTracingConnection::SuggestTrials(
   return internal::EndSpan(std::move(span), child_->SuggestTrials(request));
 }
 
+StatusOr<google::longrunning::Operation>
+VizierServiceTracingConnection::SuggestTrials(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::VizierServiceConnection::SuggestTrials");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->SuggestTrials(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
+VizierServiceTracingConnection::SuggestTrials(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::VizierServiceConnection::SuggestTrials");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SuggestTrials(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Trial>
 VizierServiceTracingConnection::CreateTrial(
     google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
@@ -153,6 +174,31 @@ VizierServiceTracingConnection::CheckTrialEarlyStoppingState(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CheckTrialEarlyStoppingState(request));
+}
+
+StatusOr<google::longrunning::Operation>
+VizierServiceTracingConnection::CheckTrialEarlyStoppingState(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::VizierServiceConnection::CheckTrialEarlyStoppingState");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CheckTrialEarlyStoppingState(ExperimentalTag{},
+                                                  NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
+VizierServiceTracingConnection::CheckTrialEarlyStoppingState(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::VizierServiceConnection::CheckTrialEarlyStoppingState");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->CheckTrialEarlyStoppingState(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>

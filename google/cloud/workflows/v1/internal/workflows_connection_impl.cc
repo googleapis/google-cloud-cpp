@@ -150,6 +150,58 @@ WorkflowsConnectionImpl::CreateWorkflow(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowsConnectionImpl::CreateWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkflow(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+        return stub_->CreateWorkflow(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workflows::v1::Workflow>>
+WorkflowsConnectionImpl::CreateWorkflow(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workflows::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::workflows::v1::Workflow>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateWorkflow",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workflows::v1::Workflow>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workflows::v1::Workflow>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsConnectionImpl::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
@@ -189,6 +241,59 @@ WorkflowsConnectionImpl::DeleteWorkflow(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowsConnectionImpl::DeleteWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkflow(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+        return stub_->DeleteWorkflow(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
+WorkflowsConnectionImpl::DeleteWorkflow(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workflows::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::workflows::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteWorkflow",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workflows::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::workflows::v1::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnectionImpl::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
@@ -225,6 +330,58 @@ WorkflowsConnectionImpl::UpdateWorkflow(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::workflows::v1::Workflow>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkflowsConnectionImpl::UpdateWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkflow(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+        return stub_->UpdateWorkflow(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::workflows::v1::Workflow>>
+WorkflowsConnectionImpl::UpdateWorkflow(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::workflows::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::workflows::v1::Workflow>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateWorkflow",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::workflows::v1::Workflow>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::workflows::v1::Workflow>,
       polling_policy(*current), __func__);
 }
 

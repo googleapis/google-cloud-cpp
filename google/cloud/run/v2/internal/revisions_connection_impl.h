@@ -59,6 +59,14 @@ class RevisionsConnectionImpl : public run_v2::RevisionsConnection {
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteRevision(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::DeleteRevisionRequest const& request) override;
+
+  future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<run_v2_internal::RevisionsStub> stub_;

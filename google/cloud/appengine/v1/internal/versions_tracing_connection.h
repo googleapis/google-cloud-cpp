@@ -48,11 +48,35 @@ class VersionsTracingConnection : public appengine_v1::VersionsConnection {
   future<StatusOr<google::appengine::v1::Version>> CreateVersion(
       google::appengine::v1::CreateVersionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::CreateVersionRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
       google::appengine::v1::UpdateVersionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::UpdateVersionRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
       google::appengine::v1::DeleteVersionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::DeleteVersionRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<appengine_v1::VersionsConnection> child_;

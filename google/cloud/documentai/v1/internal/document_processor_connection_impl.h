@@ -61,6 +61,16 @@ class DocumentProcessorServiceConnectionImpl
       google::cloud::documentai::v1::BatchProcessRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchProcessDocuments(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::BatchProcessRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
+  BatchProcessDocuments(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
   FetchProcessorTypes(
       google::cloud::documentai::v1::FetchProcessorTypesRequest const& request)
@@ -86,6 +96,16 @@ class DocumentProcessorServiceConnectionImpl
       google::cloud::documentai::v1::TrainProcessorVersionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> TrainProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+  TrainProcessorVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
       google::cloud::documentai::v1::GetProcessorVersionRequest const& request)
       override;
@@ -101,17 +121,50 @@ class DocumentProcessorServiceConnectionImpl
       google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+  DeleteProcessorVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
   DeployProcessorVersion(
       google::cloud::documentai::v1::DeployProcessorVersionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeployProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+  DeployProcessorVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<
       StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
   UndeployProcessorVersion(
       google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+  UndeployProcessorVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
       google::cloud::documentai::v1::CreateProcessorRequest const& request)
@@ -121,13 +174,40 @@ class DocumentProcessorServiceConnectionImpl
   DeleteProcessor(google::cloud::documentai::v1::DeleteProcessorRequest const&
                       request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteProcessor(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+  DeleteProcessor(ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
   EnableProcessor(google::cloud::documentai::v1::EnableProcessorRequest const&
                       request) override;
 
+  StatusOr<google::longrunning::Operation> EnableProcessor(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::EnableProcessorRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
+  EnableProcessor(ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
   DisableProcessor(google::cloud::documentai::v1::DisableProcessorRequest const&
                        request) override;
+
+  StatusOr<google::longrunning::Operation> DisableProcessor(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::DisableProcessorRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
+  DisableProcessor(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
       google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
@@ -135,15 +215,46 @@ class DocumentProcessorServiceConnectionImpl
       google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> SetDefaultProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+  SetDefaultProcessorVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(google::cloud::documentai::v1::ReviewDocumentRequest const&
                      request) override;
+
+  StatusOr<google::longrunning::Operation> ReviewDocument(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::ReviewDocumentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
+  ReviewDocument(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
 
   future<
       StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
   EvaluateProcessorVersion(
       google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+  EvaluateProcessorVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
       google::cloud::documentai::v1::GetEvaluationRequest const& request)

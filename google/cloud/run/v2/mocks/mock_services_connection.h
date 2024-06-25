@@ -50,6 +50,16 @@ class MockServicesConnection : public run_v2::ServicesConnection {
               (google::cloud::run::v2::CreateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateService,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::run::v2::CreateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, CreateService,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::run::v2::Service>, GetService,
               (google::cloud::run::v2::GetServiceRequest const& request),
               (override));
@@ -62,8 +72,28 @@ class MockServicesConnection : public run_v2::ServicesConnection {
               (google::cloud::run::v2::UpdateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateService,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::run::v2::UpdateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, UpdateService,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, DeleteService,
               (google::cloud::run::v2::DeleteServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteService,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::run::v2::DeleteServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, DeleteService,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,

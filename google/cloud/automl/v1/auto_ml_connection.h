@@ -22,8 +22,10 @@
 #include "google/cloud/automl/v1/auto_ml_connection_idempotency_policy.h"
 #include "google/cloud/automl/v1/internal/auto_ml_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -185,6 +187,13 @@ class AutoMlConnection {
   virtual future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
       google::cloud::automl::v1::CreateDatasetRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::CreateDatasetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
       google::cloud::automl::v1::GetDatasetRequest const& request);
 
@@ -197,17 +206,46 @@ class AutoMlConnection {
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   DeleteDataset(google::cloud::automl::v1::DeleteDatasetRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::DeleteDatasetRequest const& request);
+
+  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+  DeleteDataset(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   ImportData(google::cloud::automl::v1::ImportDataRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ImportData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::ImportDataRequest const& request);
+
+  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+  ImportData(ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   ExportData(google::cloud::automl::v1::ExportDataRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::ExportDataRequest const& request);
+
+  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+  ExportData(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
       google::cloud::automl::v1::GetAnnotationSpecRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       google::cloud::automl::v1::CreateModelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::CreateModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::automl::v1::Model> GetModel(
       google::cloud::automl::v1::GetModelRequest const& request);
@@ -218,17 +256,46 @@ class AutoMlConnection {
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   DeleteModel(google::cloud::automl::v1::DeleteModelRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::DeleteModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+  DeleteModel(ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::automl::v1::Model> UpdateModel(
       google::cloud::automl::v1::UpdateModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   DeployModel(google::cloud::automl::v1::DeployModelRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeployModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::DeployModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+  DeployModel(ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   UndeployModel(google::cloud::automl::v1::UndeployModelRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UndeployModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::UndeployModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+  UndeployModel(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
   ExportModel(google::cloud::automl::v1::ExportModelRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::ExportModelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+  ExportModel(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::automl::v1::ModelEvaluation>
   GetModelEvaluation(

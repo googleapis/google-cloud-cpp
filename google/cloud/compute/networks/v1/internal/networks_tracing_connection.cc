@@ -43,6 +43,29 @@ NetworksTracingConnection::AddPeering(
   return internal::EndSpan(std::move(span), child_->AddPeering(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksTracingConnection::AddPeering(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("compute_networks_v1::NetworksConnection::AddPeering");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->AddPeering(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksTracingConnection::AddPeering(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("compute_networks_v1::NetworksConnection::AddPeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddPeering(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksTracingConnection::DeleteNetwork(
     google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
@@ -51,6 +74,29 @@ NetworksTracingConnection::DeleteNetwork(
       "compute_networks_v1::NetworksConnection::DeleteNetwork");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteNetwork(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksTracingConnection::DeleteNetwork(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::DeleteNetwork");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteNetwork(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksTracingConnection::DeleteNetwork(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::DeleteNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetwork(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Network>
@@ -81,6 +127,29 @@ NetworksTracingConnection::InsertNetwork(
       "compute_networks_v1::NetworksConnection::InsertNetwork");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertNetwork(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksTracingConnection::InsertNetwork(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::InsertNetwork");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertNetwork(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksTracingConnection::InsertNetwork(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::InsertNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InsertNetwork(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Network>
@@ -117,6 +186,29 @@ NetworksTracingConnection::PatchNetwork(
   return internal::EndSpan(std::move(span), child_->PatchNetwork(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksTracingConnection::PatchNetwork(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::PatchNetwork");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->PatchNetwork(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksTracingConnection::PatchNetwork(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::PatchNetwork");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PatchNetwork(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksTracingConnection::RemovePeering(
     google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
@@ -125,6 +217,29 @@ NetworksTracingConnection::RemovePeering(
       "compute_networks_v1::NetworksConnection::RemovePeering");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RemovePeering(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksTracingConnection::RemovePeering(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::RemovePeering");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RemovePeering(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksTracingConnection::RemovePeering(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::RemovePeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RemovePeering(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -138,6 +253,30 @@ NetworksTracingConnection::SwitchToCustomMode(
                            child_->SwitchToCustomMode(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksTracingConnection::SwitchToCustomMode(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::SwitchToCustomModeRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::SwitchToCustomMode");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->SwitchToCustomMode(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksTracingConnection::SwitchToCustomMode(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::SwitchToCustomMode");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SwitchToCustomMode(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworksTracingConnection::UpdatePeering(
     google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
@@ -146,6 +285,29 @@ NetworksTracingConnection::UpdatePeering(
       "compute_networks_v1::NetworksConnection::UpdatePeering");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdatePeering(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworksTracingConnection::UpdatePeering(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::UpdatePeering");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdatePeering(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworksTracingConnection::UpdatePeering(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_networks_v1::NetworksConnection::UpdatePeering");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePeering(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

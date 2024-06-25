@@ -62,6 +62,16 @@ class ResourcePoliciesRestConnectionImpl
   DeleteResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
                            DeleteResourcePolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::resource_policies::v1::
+          DeleteResourcePolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteResourcePolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy> GetResourcePolicy(
       google::cloud::cpp::compute::resource_policies::v1::
           GetResourcePolicyRequest const& request) override;
@@ -74,6 +84,16 @@ class ResourcePoliciesRestConnectionImpl
   InsertResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
                            InsertResourcePolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::resource_policies::v1::
+          InsertResourcePolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertResourcePolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
   ListResourcePolicies(google::cloud::cpp::compute::resource_policies::v1::
                            ListResourcePoliciesRequest request) override;
@@ -81,6 +101,16 @@ class ResourcePoliciesRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchResourcePolicy(google::cloud::cpp::compute::resource_policies::v1::
                           PatchResourcePolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::resource_policies::v1::
+          PatchResourcePolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchResourcePolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::resource_policies::v1::

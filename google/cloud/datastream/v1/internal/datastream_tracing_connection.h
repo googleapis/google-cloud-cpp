@@ -54,15 +54,45 @@ class DatastreamTracingConnection : public datastream_v1::DatastreamConnection {
       google::cloud::datastream::v1::CreateConnectionProfileRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+  CreateConnectionProfile(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
   UpdateConnectionProfile(
       google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+  UpdateConnectionProfile(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteConnectionProfile(
       google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+  DeleteConnectionProfile(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
   DiscoverConnectionProfile(
@@ -79,13 +109,40 @@ class DatastreamTracingConnection : public datastream_v1::DatastreamConnection {
       google::cloud::datastream::v1::CreateStreamRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateStream(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::CreateStreamRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
       google::cloud::datastream::v1::UpdateStreamRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateStream(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::UpdateStreamRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteStream(google::cloud::datastream::v1::DeleteStreamRequest const&
                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteStream(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::DeleteStreamRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+  DeleteStream(ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
       google::cloud::datastream::v1::GetStreamObjectRequest const& request)
@@ -114,6 +171,16 @@ class DatastreamTracingConnection : public datastream_v1::DatastreamConnection {
       google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
+  CreatePrivateConnection(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::datastream::v1::PrivateConnection>
   GetPrivateConnection(
       google::cloud::datastream::v1::GetPrivateConnectionRequest const& request)
@@ -129,9 +196,28 @@ class DatastreamTracingConnection : public datastream_v1::DatastreamConnection {
       google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+  DeletePrivateConnection(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
       google::cloud::datastream::v1::CreateRouteRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::CreateRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::datastream::v1::Route> GetRoute(
       google::cloud::datastream::v1::GetRouteRequest const& request) override;
@@ -142,6 +228,15 @@ class DatastreamTracingConnection : public datastream_v1::DatastreamConnection {
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::DeleteRouteRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+  DeleteRoute(ExperimentalTag,
+              google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<datastream_v1::DatastreamConnection> child_;

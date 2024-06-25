@@ -22,8 +22,10 @@
 #include "google/cloud/ids/v1/ids_connection_idempotency_policy.h"
 #include "google/cloud/ids/v1/internal/ids_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -190,8 +192,23 @@ class IDSConnection {
   virtual future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
       google::cloud::ids::v1::CreateEndpointRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::ids::v1::CreateEndpointRequest const& request);
+
+  virtual future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
   DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::ids::v1::DeleteEndpointRequest const& request);
+
+  virtual future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
+  DeleteEndpoint(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 };
 
 /**

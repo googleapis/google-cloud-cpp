@@ -45,6 +45,31 @@ ConversationDatasetsTracingConnection::CreateConversationDataset(
                            child_->CreateConversationDataset(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationDatasetsTracingConnection::CreateConversationDataset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::"
+      "CreateConversationDataset");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateConversationDataset(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
+ConversationDatasetsTracingConnection::CreateConversationDataset(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::"
+      "CreateConversationDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateConversationDataset(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsTracingConnection::GetConversationDataset(
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
@@ -81,6 +106,32 @@ ConversationDatasetsTracingConnection::DeleteConversationDataset(
                            child_->DeleteConversationDataset(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationDatasetsTracingConnection::DeleteConversationDataset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::"
+      "DeleteConversationDataset");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteConversationDataset(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
+}
+
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
+ConversationDatasetsTracingConnection::DeleteConversationDataset(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::"
+      "DeleteConversationDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteConversationDataset(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
 ConversationDatasetsTracingConnection::ImportConversationData(
@@ -91,6 +142,30 @@ ConversationDatasetsTracingConnection::ImportConversationData(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->ImportConversationData(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationDatasetsTracingConnection::ImportConversationData(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::ImportConversationData");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->ImportConversationData(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+ConversationDatasetsTracingConnection::ImportConversationData(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::ImportConversationData");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportConversationData(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

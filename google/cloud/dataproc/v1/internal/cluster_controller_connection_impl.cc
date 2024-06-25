@@ -106,6 +106,58 @@ ClusterControllerConnectionImpl::CreateCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ClusterControllerConnectionImpl::CreateCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::CreateClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::CreateClusterRequest const& request) {
+        return stub_->CreateCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerConnectionImpl::CreateCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   ClusterOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataproc::v1::Cluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::Cluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Cluster>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::UpdateCluster(
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
@@ -142,6 +194,58 @@ ClusterControllerConnectionImpl::UpdateCluster(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::Cluster>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ClusterControllerConnectionImpl::UpdateCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
+        return stub_->UpdateCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerConnectionImpl::UpdateCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   ClusterOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataproc::v1::Cluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::Cluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Cluster>,
       polling_policy(*current), __func__);
 }
 
@@ -184,6 +288,58 @@ ClusterControllerConnectionImpl::StopCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ClusterControllerConnectionImpl::StopCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::StopClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StopCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::StopClusterRequest const& request) {
+        return stub_->StopCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerConnectionImpl::StopCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   ClusterOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataproc::v1::Cluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StopCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::Cluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Cluster>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::StartCluster(
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
@@ -223,6 +379,58 @@ ClusterControllerConnectionImpl::StartCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ClusterControllerConnectionImpl::StartCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::StartClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::StartClusterRequest const& request) {
+        return stub_->StartCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerConnectionImpl::StartCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   ClusterOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataproc::v1::Cluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StartCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::Cluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Cluster>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerConnectionImpl::DeleteCluster(
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
@@ -259,6 +467,59 @@ ClusterControllerConnectionImpl::DeleteCluster(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::dataproc::v1::ClusterOperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ClusterControllerConnectionImpl::DeleteCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
+        return stub_->DeleteCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
+ClusterControllerConnectionImpl::DeleteCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   ClusterOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::ClusterOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataproc::v1::ClusterOperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -346,6 +607,60 @@ ClusterControllerConnectionImpl::DiagnoseCluster(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::DiagnoseClusterResults>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ClusterControllerConnectionImpl::DiagnoseCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DiagnoseCluster(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
+        return stub_->DiagnoseCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
+ClusterControllerConnectionImpl::DiagnoseCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::
+                   ClusterOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DiagnoseCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::DiagnoseClusterResults>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::DiagnoseClusterResults>,
       polling_policy(*current), __func__);
 }
 

@@ -22,8 +22,10 @@
 #include "google/cloud/dialogflow_es/agents_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/agents_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -198,14 +200,42 @@ class AgentsConnection {
   virtual future<StatusOr<google::protobuf::Struct>> TrainAgent(
       google::cloud::dialogflow::v2::TrainAgentRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> TrainAgent(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::TrainAgentRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Struct>> TrainAgent(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
   ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ExportAgent(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::ExportAgentRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
+  ExportAgent(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::protobuf::Struct>> ImportAgent(
       google::cloud::dialogflow::v2::ImportAgentRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ImportAgent(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportAgentRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Struct>> ImportAgent(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::protobuf::Struct>> RestoreAgent(
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RestoreAgent(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::RestoreAgentRequest const& request);
+
+  virtual future<StatusOr<google::protobuf::Struct>> RestoreAgent(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dialogflow::v2::ValidationResult>
   GetValidationResult(

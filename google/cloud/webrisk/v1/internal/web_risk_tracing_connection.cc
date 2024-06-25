@@ -77,6 +77,27 @@ WebRiskServiceTracingConnection::SubmitUri(
   return internal::EndSpan(std::move(span), child_->SubmitUri(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WebRiskServiceTracingConnection::SubmitUri(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::webrisk::v1::SubmitUriRequest const& request) {
+  auto span =
+      internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SubmitUri");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->SubmitUri(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::webrisk::v1::Submission>>
+WebRiskServiceTracingConnection::SubmitUri(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("webrisk_v1::WebRiskServiceConnection::SubmitUri");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SubmitUri(ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<webrisk_v1::WebRiskServiceConnection>

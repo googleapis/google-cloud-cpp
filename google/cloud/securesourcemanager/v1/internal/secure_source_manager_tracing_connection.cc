@@ -65,6 +65,28 @@ SecureSourceManagerTracingConnection::CreateInstance(
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::CreateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CreateInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
+SecureSourceManagerTracingConnection::CreateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::CreateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateInstance(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerTracingConnection::DeleteInstance(
     google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
@@ -73,6 +95,28 @@ SecureSourceManagerTracingConnection::DeleteInstance(
       "securesourcemanager_v1::SecureSourceManagerConnection::DeleteInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::DeleteInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::DeleteInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::DeleteInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteInstance(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::securesourcemanager::v1::Repository>
@@ -109,6 +153,31 @@ SecureSourceManagerTracingConnection::CreateRepository(
   return internal::EndSpan(std::move(span), child_->CreateRepository(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::CreateRepository(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreateRepository");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateRepository(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerTracingConnection::CreateRepository(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "CreateRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateRepository(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerTracingConnection::DeleteRepository(
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
@@ -118,6 +187,31 @@ SecureSourceManagerTracingConnection::DeleteRepository(
       "DeleteRepository");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteRepository(request));
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerTracingConnection::DeleteRepository(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeleteRepository");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteRepository(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerTracingConnection::DeleteRepository(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "securesourcemanager_v1::SecureSourceManagerConnection::"
+      "DeleteRepository");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteRepository(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::iam::v1::Policy>

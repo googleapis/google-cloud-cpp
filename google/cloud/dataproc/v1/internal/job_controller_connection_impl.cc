@@ -117,6 +117,57 @@ JobControllerConnectionImpl::SubmitJobAsOperation(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+JobControllerConnectionImpl::SubmitJobAsOperation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SubmitJobAsOperation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+        return stub_->SubmitJobAsOperation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Job>>
+JobControllerConnectionImpl::SubmitJobAsOperation(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::JobMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataproc::v1::Job>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SubmitJobAsOperation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::Job>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataproc::v1::Job>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerConnectionImpl::GetJob(
     google::cloud::dataproc::v1::GetJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

@@ -67,10 +67,32 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
               (google::cloud::dialogflow::v2::TrainAgentRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, TrainAgent,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::dialogflow::v2::TrainAgentRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, TrainAgent,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>,
       ExportAgent,
       (google::cloud::dialogflow::v2::ExportAgentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportAgent,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::ExportAgentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>,
+      ExportAgent,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -79,9 +101,31 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportAgent,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::ImportAgentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, ImportAgent,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
       (google::cloud::dialogflow::v2::RestoreAgentRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RestoreAgent,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::RestoreAgentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::ValidationResult>,
               GetValidationResult,

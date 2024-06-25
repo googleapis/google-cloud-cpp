@@ -82,12 +82,38 @@ class MockDocumentServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportDocuments,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::discoveryengine::v1::ImportDocumentsResponse>>,
+              ImportDocuments,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,
       PurgeDocuments,
       (google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeDocuments,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,
+      PurgeDocuments,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

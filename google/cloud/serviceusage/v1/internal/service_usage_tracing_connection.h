@@ -44,9 +44,27 @@ class ServiceUsageTracingConnection
   EnableService(google::api::serviceusage::v1::EnableServiceRequest const&
                     request) override;
 
+  StatusOr<google::longrunning::Operation> EnableService(
+      ExperimentalTag, NoAwaitTag,
+      google::api::serviceusage::v1::EnableServiceRequest const& request)
+      override;
+
+  future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
+  EnableService(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
   DisableService(google::api::serviceusage::v1::DisableServiceRequest const&
                      request) override;
+
+  StatusOr<google::longrunning::Operation> DisableService(
+      ExperimentalTag, NoAwaitTag,
+      google::api::serviceusage::v1::DisableServiceRequest const& request)
+      override;
+
+  future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
+  DisableService(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
 
   StatusOr<google::api::serviceusage::v1::Service> GetService(
       google::api::serviceusage::v1::GetServiceRequest const& request) override;
@@ -58,6 +76,15 @@ class ServiceUsageTracingConnection
   BatchEnableServices(
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> BatchEnableServices(
+      ExperimentalTag, NoAwaitTag,
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
+      override;
+
+  future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
+  BatchEnableServices(ExperimentalTag,
+                      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
   BatchGetServices(google::api::serviceusage::v1::BatchGetServicesRequest const&

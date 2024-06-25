@@ -94,6 +94,22 @@ MigrationCenterConnection::CreateImportJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::CreateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateImportJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
+MigrationCenterConnection::CreateImportJob(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::ImportJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::migrationcenter::v1::ImportJob>
 MigrationCenterConnection::ListImportJobs(
     google::cloud::migrationcenter::v1::
@@ -116,9 +132,41 @@ MigrationCenterConnection::DeleteImportJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::DeleteImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteImportJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterConnection::DeleteImportJob(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
 MigrationCenterConnection::UpdateImportJob(
     google::cloud::migrationcenter::v1::UpdateImportJobRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::ImportJob>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::UpdateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateImportJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
+MigrationCenterConnection::UpdateImportJob(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::ImportJob>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -132,9 +180,41 @@ MigrationCenterConnection::ValidateImportJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::ValidateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::ValidateImportJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterConnection::ValidateImportJob(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterConnection::RunImportJob(
     google::cloud::migrationcenter::v1::RunImportJobRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::RunImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::RunImportJobRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterConnection::RunImportJob(ExperimentalTag,
+                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -162,9 +242,41 @@ MigrationCenterConnection::CreateImportDataFile(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::CreateImportDataFile(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>
+MigrationCenterConnection::CreateImportDataFile(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterConnection::DeleteImportDataFile(
     google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::DeleteImportDataFile(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterConnection::DeleteImportDataFile(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -192,9 +304,39 @@ MigrationCenterConnection::CreateGroup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterConnection::CreateGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterConnection::CreateGroup(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::Group>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
 MigrationCenterConnection::UpdateGroup(
     google::cloud::migrationcenter::v1::UpdateGroupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::Group>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterConnection::UpdateGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterConnection::UpdateGroup(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::Group>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -208,6 +350,21 @@ MigrationCenterConnection::DeleteGroup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterConnection::DeleteGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterConnection::DeleteGroup(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
 MigrationCenterConnection::AddAssetsToGroup(
     google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&) {
@@ -216,9 +373,41 @@ MigrationCenterConnection::AddAssetsToGroup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::AddAssetsToGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterConnection::AddAssetsToGroup(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::Group>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
 MigrationCenterConnection::RemoveAssetsFromGroup(
     google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::Group>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::RemoveAssetsFromGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterConnection::RemoveAssetsFromGroup(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::Group>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -260,6 +449,22 @@ MigrationCenterConnection::CreateSource(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::CreateSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateSourceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Source>>
+MigrationCenterConnection::CreateSource(ExperimentalTag,
+                                        google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::Source>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Source>>
 MigrationCenterConnection::UpdateSource(
     google::cloud::migrationcenter::v1::UpdateSourceRequest const&) {
@@ -268,9 +473,41 @@ MigrationCenterConnection::UpdateSource(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::UpdateSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateSourceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Source>>
+MigrationCenterConnection::UpdateSource(ExperimentalTag,
+                                        google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::Source>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterConnection::DeleteSource(
     google::cloud::migrationcenter::v1::DeleteSourceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::DeleteSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteSourceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterConnection::DeleteSource(ExperimentalTag,
+                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -298,6 +535,22 @@ MigrationCenterConnection::CreatePreferenceSet(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::CreatePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
+MigrationCenterConnection::CreatePreferenceSet(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
 MigrationCenterConnection::UpdatePreferenceSet(
     google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&) {
@@ -306,9 +559,41 @@ MigrationCenterConnection::UpdatePreferenceSet(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::UpdatePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
+MigrationCenterConnection::UpdatePreferenceSet(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterConnection::DeletePreferenceSet(
     google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::DeletePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterConnection::DeletePreferenceSet(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -328,9 +613,41 @@ MigrationCenterConnection::UpdateSettings(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::UpdateSettings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateSettingsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Settings>>
+MigrationCenterConnection::UpdateSettings(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::Settings>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
 MigrationCenterConnection::CreateReportConfig(
     google::cloud::migrationcenter::v1::CreateReportConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::CreateReportConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateReportConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
+MigrationCenterConnection::CreateReportConfig(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -358,9 +675,41 @@ MigrationCenterConnection::DeleteReportConfig(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::DeleteReportConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterConnection::DeleteReportConfig(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Report>>
 MigrationCenterConnection::CreateReport(
     google::cloud::migrationcenter::v1::CreateReportRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::Report>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::CreateReport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateReportRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Report>>
+MigrationCenterConnection::CreateReport(ExperimentalTag,
+                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::Report>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -383,6 +732,22 @@ MigrationCenterConnection::ListReports(
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterConnection::DeleteReport(
     google::cloud::migrationcenter::v1::DeleteReportRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterConnection::DeleteReport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteReportRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterConnection::DeleteReport(ExperimentalTag,
+                                        google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

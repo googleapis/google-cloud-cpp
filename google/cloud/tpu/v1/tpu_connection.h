@@ -22,8 +22,10 @@
 #include "google/cloud/tpu/v1/internal/tpu_retry_traits.h"
 #include "google/cloud/tpu/v1/tpu_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -190,17 +192,52 @@ class TpuConnection {
   virtual future<StatusOr<google::cloud::tpu::v1::Node>> CreateNode(
       google::cloud::tpu::v1::CreateNodeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::CreateNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v1::Node>> CreateNode(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
       google::cloud::tpu::v1::DeleteNodeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::DeleteNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
       google::cloud::tpu::v1::ReimageNodeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ReimageNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::ReimageNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
       google::cloud::tpu::v1::StopNodeRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> StopNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::StopNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
       google::cloud::tpu::v1::StartNodeRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> StartNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::StartNodeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
   ListTensorFlowVersions(

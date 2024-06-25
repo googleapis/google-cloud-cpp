@@ -22,8 +22,10 @@
 #include "google/cloud/serviceusage/v1/internal/service_usage_retry_traits.h"
 #include "google/cloud/serviceusage/v1/service_usage_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -189,10 +191,27 @@ class ServiceUsageConnection {
   EnableService(
       google::api::serviceusage::v1::EnableServiceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> EnableService(
+      ExperimentalTag, NoAwaitTag,
+      google::api::serviceusage::v1::EnableServiceRequest const& request);
+
+  virtual future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
+  EnableService(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
   DisableService(
       google::api::serviceusage::v1::DisableServiceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DisableService(
+      ExperimentalTag, NoAwaitTag,
+      google::api::serviceusage::v1::DisableServiceRequest const& request);
+
+  virtual future<
+      StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
+  DisableService(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::api::serviceusage::v1::Service> GetService(
       google::api::serviceusage::v1::GetServiceRequest const& request);
@@ -204,6 +223,15 @@ class ServiceUsageConnection {
       StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
   BatchEnableServices(
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchEnableServices(
+      ExperimentalTag, NoAwaitTag,
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request);
+
+  virtual future<
+      StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
+  BatchEnableServices(ExperimentalTag,
+                      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
   BatchGetServices(

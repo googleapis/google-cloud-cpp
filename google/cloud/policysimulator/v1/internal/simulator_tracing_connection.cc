@@ -51,6 +51,27 @@ SimulatorTracingConnection::CreateReplay(
   return internal::EndSpan(std::move(span), child_->CreateReplay(request));
 }
 
+StatusOr<google::longrunning::Operation>
+SimulatorTracingConnection::CreateReplay(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
+  auto span = internal::MakeSpan(
+      "policysimulator_v1::SimulatorConnection::CreateReplay");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateReplay(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::policysimulator::v1::Replay>>
+SimulatorTracingConnection::CreateReplay(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "policysimulator_v1::SimulatorConnection::CreateReplay");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateReplay(ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::policysimulator::v1::ReplayResult>
 SimulatorTracingConnection::ListReplayResults(
     google::cloud::policysimulator::v1::ListReplayResultsRequest request) {

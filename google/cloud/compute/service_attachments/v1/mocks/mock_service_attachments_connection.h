@@ -61,6 +61,19 @@ class MockServiceAttachmentsConnection
                    DeleteServiceAttachmentRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteServiceAttachment,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::service_attachments::v1::
+                   DeleteServiceAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteServiceAttachment,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>,
               GetServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
@@ -78,6 +91,19 @@ class MockServiceAttachmentsConnection
                    InsertServiceAttachmentRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertServiceAttachment,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::service_attachments::v1::
+                   InsertServiceAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertServiceAttachment,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>),
               ListServiceAttachments,
               (google::cloud::cpp::compute::service_attachments::v1::
@@ -88,6 +114,19 @@ class MockServiceAttachmentsConnection
               PatchServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
                    PatchServiceAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PatchServiceAttachment,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::service_attachments::v1::
+                   PatchServiceAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchServiceAttachment,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,

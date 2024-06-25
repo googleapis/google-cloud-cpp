@@ -45,6 +45,23 @@ RegionSslPoliciesConnection::DeleteSslPolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesConnection::DeleteSslPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        DeleteSslPolicyRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSslPoliciesConnection::DeleteSslPolicy(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
 RegionSslPoliciesConnection::GetSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -56,6 +73,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesConnection::InsertSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
         InsertSslPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesConnection::InsertSslPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        InsertSslPolicyRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSslPoliciesConnection::InsertSslPolicy(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -81,6 +115,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesConnection::PatchSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
         PatchSslPolicyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesConnection::PatchSslPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        PatchSslPolicyRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSslPoliciesConnection::PatchSslPolicy(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

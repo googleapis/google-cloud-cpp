@@ -44,6 +44,29 @@ OsConfigZonalServiceTracingConnection::CreateOSPolicyAssignment(
                            child_->CreateOSPolicyAssignment(request));
 }
 
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceTracingConnection::CreateOSPolicyAssignment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigZonalServiceConnection::CreateOSPolicyAssignment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateOSPolicyAssignment(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
+}
+
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+OsConfigZonalServiceTracingConnection::CreateOSPolicyAssignment(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigZonalServiceConnection::CreateOSPolicyAssignment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateOSPolicyAssignment(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
@@ -53,6 +76,29 @@ OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateOSPolicyAssignment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigZonalServiceConnection::UpdateOSPolicyAssignment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateOSPolicyAssignment(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
+}
+
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+OsConfigZonalServiceTracingConnection::UpdateOSPolicyAssignment(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigZonalServiceConnection::UpdateOSPolicyAssignment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateOSPolicyAssignment(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -100,6 +146,30 @@ OsConfigZonalServiceTracingConnection::DeleteOSPolicyAssignment(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteOSPolicyAssignment(request));
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceTracingConnection::DeleteOSPolicyAssignment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigZonalServiceConnection::DeleteOSPolicyAssignment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteOSPolicyAssignment(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
+}
+
+future<
+    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+OsConfigZonalServiceTracingConnection::DeleteOSPolicyAssignment(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "osconfig_v1::OsConfigZonalServiceConnection::DeleteOSPolicyAssignment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteOSPolicyAssignment(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>

@@ -103,6 +103,58 @@ CloudBuildConnectionImpl::CreateBuild(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildConnectionImpl::CreateBuild(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBuild(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+        return stub_->CreateBuild(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildConnectionImpl::CreateBuild(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::cloudbuild::v1::
+                   BuildOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::devtools::cloudbuild::v1::Build>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateBuild",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::cloudbuild::v1::Build>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::cloudbuild::v1::Build>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildConnectionImpl::GetBuild(
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
@@ -205,6 +257,58 @@ CloudBuildConnectionImpl::RetryBuild(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> CloudBuildConnectionImpl::RetryBuild(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RetryBuild(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+        return stub_->RetryBuild(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildConnectionImpl::RetryBuild(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::cloudbuild::v1::
+                   BuildOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::devtools::cloudbuild::v1::Build>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RetryBuild",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::cloudbuild::v1::Build>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::cloudbuild::v1::Build>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::ApproveBuild(
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
@@ -242,6 +346,58 @@ CloudBuildConnectionImpl::ApproveBuild(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v1::Build>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> CloudBuildConnectionImpl::ApproveBuild(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ApproveBuild(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::cloudbuild::v1::ApproveBuildRequest const&
+                 request) {
+        return stub_->ApproveBuild(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildConnectionImpl::ApproveBuild(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::cloudbuild::v1::
+                   BuildOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::devtools::cloudbuild::v1::Build>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ApproveBuild",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::cloudbuild::v1::Build>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::cloudbuild::v1::Build>,
       polling_policy(*current), __func__);
 }
 
@@ -381,6 +537,59 @@ CloudBuildConnectionImpl::RunBuildTrigger(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudBuildConnectionImpl::RunBuildTrigger(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RunBuildTrigger(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::cloudbuild::v1::RunBuildTriggerRequest const&
+                 request) {
+        return stub_->RunBuildTrigger(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildConnectionImpl::RunBuildTrigger(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::cloudbuild::v1::
+                   BuildOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::devtools::cloudbuild::v1::Build>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RunBuildTrigger",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::cloudbuild::v1::Build>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::cloudbuild::v1::Build>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildConnectionImpl::ReceiveTriggerWebhook(
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
@@ -435,6 +644,60 @@ CloudBuildConnectionImpl::CreateWorkerPool(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v1::WorkerPool>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudBuildConnectionImpl::CreateWorkerPool(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkerPool(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
+                 request) {
+        return stub_->CreateWorkerPool(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
+CloudBuildConnectionImpl::CreateWorkerPool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::cloudbuild::v1::
+                   CreateWorkerPoolOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateWorkerPool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::cloudbuild::v1::WorkerPool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::cloudbuild::v1::WorkerPool>,
       polling_policy(*current), __func__);
 }
 
@@ -494,6 +757,61 @@ CloudBuildConnectionImpl::DeleteWorkerPool(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudBuildConnectionImpl::DeleteWorkerPool(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkerPool(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
+                 request) {
+        return stub_->DeleteWorkerPool(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
+CloudBuildConnectionImpl::DeleteWorkerPool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::cloudbuild::v1::
+                   DeleteWorkerPoolOperationMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteWorkerPool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildConnectionImpl::UpdateWorkerPool(
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
@@ -531,6 +849,60 @@ CloudBuildConnectionImpl::UpdateWorkerPool(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v1::WorkerPool>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudBuildConnectionImpl::UpdateWorkerPool(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkerPool(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
+                 request) {
+        return stub_->UpdateWorkerPool(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
+CloudBuildConnectionImpl::UpdateWorkerPool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::devtools::cloudbuild::v1::
+                   UpdateWorkerPoolOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateWorkerPool",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::devtools::cloudbuild::v1::WorkerPool>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::devtools::cloudbuild::v1::WorkerPool>,
       polling_policy(*current), __func__);
 }
 

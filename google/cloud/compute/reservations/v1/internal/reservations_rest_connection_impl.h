@@ -61,6 +61,16 @@ class ReservationsRestConnectionImpl
   DeleteReservation(google::cloud::cpp::compute::reservations::v1::
                         DeleteReservationRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::
+          DeleteReservationRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteReservation(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
       google::cloud::cpp::compute::reservations::v1::
           GetReservationRequest const& request) override;
@@ -73,6 +83,16 @@ class ReservationsRestConnectionImpl
   InsertReservation(google::cloud::cpp::compute::reservations::v1::
                         InsertReservationRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::
+          InsertReservationRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertReservation(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::Reservation> ListReservations(
       google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
           request) override;
@@ -80,6 +100,15 @@ class ReservationsRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
@@ -92,6 +121,16 @@ class ReservationsRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateReservation(google::cloud::cpp::compute::reservations::v1::
                         UpdateReservationRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::
+          UpdateReservationRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateReservation(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_reservations_v1::ReservationsRetryPolicy>

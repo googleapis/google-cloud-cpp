@@ -119,6 +119,59 @@ CompletionServiceConnectionImpl::ImportCompletionData(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceConnectionImpl::ImportCompletionData(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportCompletionData(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::retail::v2::ImportCompletionDataRequest const&
+                 request) {
+        return stub_->ImportCompletionData(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
+CompletionServiceConnectionImpl::ImportCompletionData(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::retail::v2::ImportMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportCompletionData",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::retail::v2::ImportCompletionDataResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::retail::v2::ImportCompletionDataResponse>,
+      polling_policy(*current), __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_v2_internal
 }  // namespace cloud

@@ -43,6 +43,28 @@ IndexEndpointServiceTracingConnection::CreateIndexEndpoint(
                            child_->CreateIndexEndpoint(request));
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceTracingConnection::CreateIndexEndpoint(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::CreateIndexEndpoint");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateIndexEndpoint(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
+IndexEndpointServiceTracingConnection::CreateIndexEndpoint(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::CreateIndexEndpoint");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateIndexEndpoint(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceTracingConnection::GetIndexEndpoint(
     google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
@@ -83,6 +105,28 @@ IndexEndpointServiceTracingConnection::DeleteIndexEndpoint(
                            child_->DeleteIndexEndpoint(request));
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceTracingConnection::DeleteIndexEndpoint(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::DeleteIndexEndpoint");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteIndexEndpoint(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+IndexEndpointServiceTracingConnection::DeleteIndexEndpoint(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::DeleteIndexEndpoint");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteIndexEndpoint(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
 IndexEndpointServiceTracingConnection::DeployIndex(
     google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
@@ -90,6 +134,27 @@ IndexEndpointServiceTracingConnection::DeployIndex(
       "aiplatform_v1::IndexEndpointServiceConnection::DeployIndex");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeployIndex(request));
+}
+
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceTracingConnection::DeployIndex(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeployIndexRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::DeployIndex");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeployIndex(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
+IndexEndpointServiceTracingConnection::DeployIndex(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::DeployIndex");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeployIndex(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
@@ -101,6 +166,27 @@ IndexEndpointServiceTracingConnection::UndeployIndex(
   return internal::EndSpan(std::move(span), child_->UndeployIndex(request));
 }
 
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceTracingConnection::UndeployIndex(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::UndeployIndexRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::UndeployIndex");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UndeployIndex(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
+IndexEndpointServiceTracingConnection::UndeployIndex(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::UndeployIndex");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UndeployIndex(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
 IndexEndpointServiceTracingConnection::MutateDeployedIndex(
     google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
@@ -109,6 +195,28 @@ IndexEndpointServiceTracingConnection::MutateDeployedIndex(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->MutateDeployedIndex(request));
+}
+
+StatusOr<google::longrunning::Operation>
+IndexEndpointServiceTracingConnection::MutateDeployedIndex(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::MutateDeployedIndex");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->MutateDeployedIndex(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
+IndexEndpointServiceTracingConnection::MutateDeployedIndex(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::IndexEndpointServiceConnection::MutateDeployedIndex");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->MutateDeployedIndex(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

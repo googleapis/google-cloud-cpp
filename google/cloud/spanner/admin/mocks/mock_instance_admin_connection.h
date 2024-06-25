@@ -69,10 +69,36 @@ class MockInstanceAdminConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstanceConfig,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
+      CreateInstanceConfig,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
       UpdateInstanceConfig,
       (google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstanceConfig,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
+      UpdateInstanceConfig,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -114,11 +140,37 @@ class MockInstanceAdminConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::instance::v1::CreateInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
+              CreateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
       UpdateInstance,
       (google::spanner::admin::instance::v1::UpdateInstanceRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
+              UpdateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       Status, DeleteInstance,
@@ -153,6 +205,18 @@ class MockInstanceAdminConnection
            CreateInstancePartitionRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateInstancePartition,
+              (ExperimentalTag, NoAwaitTag,
+               google::spanner::admin::instance::v1::
+                   CreateInstancePartitionRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
+      CreateInstancePartition,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(Status, DeleteInstancePartition,
               (google::spanner::admin::instance::v1::
                    DeleteInstancePartitionRequest const& request),
@@ -163,6 +227,18 @@ class MockInstanceAdminConnection
       UpdateInstancePartition,
       (google::spanner::admin::instance::v1::
            UpdateInstancePartitionRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateInstancePartition,
+              (ExperimentalTag, NoAwaitTag,
+               google::spanner::admin::instance::v1::
+                   UpdateInstancePartitionRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
+      UpdateInstancePartition,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::longrunning::Operation>),

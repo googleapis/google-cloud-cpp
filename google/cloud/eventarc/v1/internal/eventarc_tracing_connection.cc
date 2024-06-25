@@ -61,6 +61,27 @@ EventarcTracingConnection::CreateTrigger(
   return internal::EndSpan(std::move(span), child_->CreateTrigger(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::CreateTrigger(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateTrigger");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateTrigger(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+EventarcTracingConnection::CreateTrigger(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateTrigger(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcTracingConnection::UpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
@@ -70,6 +91,27 @@ EventarcTracingConnection::UpdateTrigger(
   return internal::EndSpan(std::move(span), child_->UpdateTrigger(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::UpdateTrigger(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateTrigger");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateTrigger(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+EventarcTracingConnection::UpdateTrigger(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateTrigger(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcTracingConnection::DeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
@@ -77,6 +119,27 @@ EventarcTracingConnection::DeleteTrigger(
       internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteTrigger");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTrigger(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::DeleteTrigger(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteTrigger");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteTrigger(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Trigger>>
+EventarcTracingConnection::DeleteTrigger(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTrigger(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel>
@@ -107,6 +170,27 @@ EventarcTracingConnection::CreateChannel(
   return internal::EndSpan(std::move(span), child_->CreateChannel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::CreateChannel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateChannel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateChannel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Channel>>
+EventarcTracingConnection::CreateChannel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateChannel(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcTracingConnection::UpdateChannel(
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
@@ -116,6 +200,27 @@ EventarcTracingConnection::UpdateChannel(
   return internal::EndSpan(std::move(span), child_->UpdateChannel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::UpdateChannel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateChannel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateChannel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Channel>>
+EventarcTracingConnection::UpdateChannel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateChannel(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcTracingConnection::DeleteChannel(
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
@@ -123,6 +228,27 @@ EventarcTracingConnection::DeleteChannel(
       internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteChannel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteChannel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::DeleteChannel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteChannel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteChannel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::Channel>>
+EventarcTracingConnection::DeleteChannel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteChannel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteChannel(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider>
@@ -177,6 +303,29 @@ EventarcTracingConnection::CreateChannelConnection(
                            child_->CreateChannelConnection(request));
 }
 
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::CreateChannelConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::CreateChannelConnection");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateChannelConnection(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+EventarcTracingConnection::CreateChannelConnection(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::CreateChannelConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateChannelConnection(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcTracingConnection::DeleteChannelConnection(
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
@@ -186,6 +335,29 @@ EventarcTracingConnection::DeleteChannelConnection(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteChannelConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+EventarcTracingConnection::DeleteChannelConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::DeleteChannelConnection");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteChannelConnection(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
+}
+
+future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+EventarcTracingConnection::DeleteChannelConnection(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::DeleteChannelConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteChannelConnection(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>

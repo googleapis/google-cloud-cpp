@@ -67,10 +67,30 @@ class MetricsScopesConnectionImpl
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateMonitoredProject(
+      ExperimentalTag, NoAwaitTag,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request) override;
+
+  future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
+  CreateMonitoredProject(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
   DeleteMonitoredProject(
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
+      ExperimentalTag, NoAwaitTag,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request) override;
+
+  future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
+  DeleteMonitoredProject(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

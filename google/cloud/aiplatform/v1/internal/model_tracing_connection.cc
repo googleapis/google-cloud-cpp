@@ -42,6 +42,27 @@ ModelServiceTracingConnection::UploadModel(
   return internal::EndSpan(std::move(span), child_->UploadModel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingConnection::UploadModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::UploadModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelServiceConnection::UploadModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UploadModel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
+ModelServiceTracingConnection::UploadModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelServiceConnection::UploadModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UploadModel(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceTracingConnection::GetModel(
     google::cloud::aiplatform::v1::GetModelRequest const& request) {
@@ -94,6 +115,30 @@ ModelServiceTracingConnection::UpdateExplanationDataset(
                            child_->UpdateExplanationDataset(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingConnection::UpdateExplanationDataset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ModelServiceConnection::UpdateExplanationDataset");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateExplanationDataset(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
+}
+
+future<
+    StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+ModelServiceTracingConnection::UpdateExplanationDataset(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ModelServiceConnection::UpdateExplanationDataset");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateExplanationDataset(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ModelServiceTracingConnection::DeleteModel(
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
@@ -101,6 +146,27 @@ ModelServiceTracingConnection::DeleteModel(
       internal::MakeSpan("aiplatform_v1::ModelServiceConnection::DeleteModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingConnection::DeleteModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelServiceConnection::DeleteModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteModel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+ModelServiceTracingConnection::DeleteModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelServiceConnection::DeleteModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteModel(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -111,6 +177,28 @@ ModelServiceTracingConnection::DeleteModelVersion(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteModelVersion(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingConnection::DeleteModelVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ModelServiceConnection::DeleteModelVersion");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteModelVersion(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+ModelServiceTracingConnection::DeleteModelVersion(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::ModelServiceConnection::DeleteModelVersion");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteModelVersion(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Model>
@@ -131,6 +219,27 @@ ModelServiceTracingConnection::ExportModel(
   return internal::EndSpan(std::move(span), child_->ExportModel(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingConnection::ExportModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::ExportModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelServiceConnection::ExportModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ExportModel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
+ModelServiceTracingConnection::ExportModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelServiceConnection::ExportModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ExportModel(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
 ModelServiceTracingConnection::CopyModel(
     google::cloud::aiplatform::v1::CopyModelRequest const& request) {
@@ -138,6 +247,27 @@ ModelServiceTracingConnection::CopyModel(
       internal::MakeSpan("aiplatform_v1::ModelServiceConnection::CopyModel");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CopyModel(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ModelServiceTracingConnection::CopyModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CopyModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelServiceConnection::CopyModel");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CopyModel(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
+ModelServiceTracingConnection::CopyModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("aiplatform_v1::ModelServiceConnection::CopyModel");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CopyModel(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>

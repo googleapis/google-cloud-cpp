@@ -167,6 +167,61 @@ ReachabilityServiceConnectionImpl::CreateConnectivityTest(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceConnectionImpl::CreateConnectivityTest(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateConnectivityTest(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkmanagement::v1::
+                 CreateConnectivityTestRequest const& request) {
+        return stub_->CreateConnectivityTest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+ReachabilityServiceConnectionImpl::CreateConnectivityTest(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::networkmanagement::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateConnectivityTest",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::networkmanagement::v1::ConnectivityTest>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::networkmanagement::v1::ConnectivityTest>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
@@ -204,6 +259,61 @@ ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkmanagement::v1::ConnectivityTest>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateConnectivityTest(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkmanagement::v1::
+                 UpdateConnectivityTestRequest const& request) {
+        return stub_->UpdateConnectivityTest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::networkmanagement::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateConnectivityTest",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::networkmanagement::v1::ConnectivityTest>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::networkmanagement::v1::ConnectivityTest>,
       polling_policy(*current), __func__);
 }
 
@@ -247,6 +357,61 @@ ReachabilityServiceConnectionImpl::RerunConnectivityTest(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceConnectionImpl::RerunConnectivityTest(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RerunConnectivityTest(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkmanagement::v1::
+                 RerunConnectivityTestRequest const& request) {
+        return stub_->RerunConnectivityTest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+ReachabilityServiceConnectionImpl::RerunConnectivityTest(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::networkmanagement::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RerunConnectivityTest",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::networkmanagement::v1::ConnectivityTest>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::networkmanagement::v1::ConnectivityTest>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
@@ -284,6 +449,61 @@ ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkmanagement::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteConnectivityTest(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::networkmanagement::v1::
+                 DeleteConnectivityTestRequest const& request) {
+        return stub_->DeleteConnectivityTest(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
+ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::networkmanagement::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteConnectivityTest",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::networkmanagement::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::networkmanagement::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

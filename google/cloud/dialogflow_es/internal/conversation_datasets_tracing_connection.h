@@ -45,6 +45,16 @@ class ConversationDatasetsTracingConnection
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConversationDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
+  CreateConversationDataset(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(
       google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
@@ -61,11 +71,33 @@ class ConversationDatasetsTracingConnection
       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteConversationDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dialogflow::v2::
+                      DeleteConversationDatasetOperationMetadata>>
+  DeleteConversationDataset(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
   ImportConversationData(
       google::cloud::dialogflow::v2::ImportConversationDataRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> ImportConversationData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request) override;
+
+  future<StatusOr<
+      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+  ImportConversationData(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<dialogflow_es::ConversationDatasetsConnection> child_;

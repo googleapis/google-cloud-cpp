@@ -22,8 +22,10 @@
 #include "google/cloud/dataproc/v1/internal/job_controller_retry_traits.h"
 #include "google/cloud/dataproc/v1/job_controller_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,6 +194,14 @@ class JobControllerConnection {
   virtual future<StatusOr<google::cloud::dataproc::v1::Job>>
   SubmitJobAsOperation(
       google::cloud::dataproc::v1::SubmitJobRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataproc::v1::SubmitJobRequest const& request);
+
+  virtual future<StatusOr<google::cloud::dataproc::v1::Job>>
+  SubmitJobAsOperation(ExperimentalTag,
+                       google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dataproc::v1::Job> GetJob(
       google::cloud::dataproc::v1::GetJobRequest const& request);

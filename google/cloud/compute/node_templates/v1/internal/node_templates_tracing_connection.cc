@@ -59,6 +59,30 @@ NodeTemplatesTracingConnection::DeleteNodeTemplate(
                            child_->DeleteNodeTemplate(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeTemplatesTracingConnection::DeleteNodeTemplate(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_templates::v1::
+        DeleteNodeTemplateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::DeleteNodeTemplate");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteNodeTemplate(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeTemplatesTracingConnection::DeleteNodeTemplate(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::DeleteNodeTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteNodeTemplate(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
 NodeTemplatesTracingConnection::GetNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
@@ -88,6 +112,30 @@ NodeTemplatesTracingConnection::InsertNodeTemplate(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->InsertNodeTemplate(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeTemplatesTracingConnection::InsertNodeTemplate(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_templates::v1::
+        InsertNodeTemplateRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::InsertNodeTemplate");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->InsertNodeTemplate(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeTemplatesTracingConnection::InsertNodeTemplate(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_templates_v1::NodeTemplatesConnection::InsertNodeTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->InsertNodeTemplate(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>

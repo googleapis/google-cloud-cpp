@@ -48,6 +48,30 @@ RapidMigrationAssessmentTracingConnection::CreateCollector(
   return internal::EndSpan(std::move(span), child_->CreateCollector(request));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingConnection::CreateCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "CreateCollector");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateCollector(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentTracingConnection::CreateCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "CreateCollector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateCollector(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
 RapidMigrationAssessmentTracingConnection::CreateAnnotation(
     google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
@@ -57,6 +81,31 @@ RapidMigrationAssessmentTracingConnection::CreateAnnotation(
       "CreateAnnotation");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateAnnotation(request));
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingConnection::CreateAnnotation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "CreateAnnotation");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateAnnotation(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
+RapidMigrationAssessmentTracingConnection::CreateAnnotation(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "CreateAnnotation");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateAnnotation(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
@@ -106,6 +155,30 @@ RapidMigrationAssessmentTracingConnection::UpdateCollector(
   return internal::EndSpan(std::move(span), child_->UpdateCollector(request));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingConnection::UpdateCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "UpdateCollector");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateCollector(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentTracingConnection::UpdateCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "UpdateCollector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateCollector(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentTracingConnection::DeleteCollector(
     google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
@@ -115,6 +188,30 @@ RapidMigrationAssessmentTracingConnection::DeleteCollector(
       "DeleteCollector");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteCollector(request));
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingConnection::DeleteCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "DeleteCollector");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteCollector(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentTracingConnection::DeleteCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "DeleteCollector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteCollector(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -128,6 +225,30 @@ RapidMigrationAssessmentTracingConnection::ResumeCollector(
   return internal::EndSpan(std::move(span), child_->ResumeCollector(request));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingConnection::ResumeCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "ResumeCollector");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ResumeCollector(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentTracingConnection::ResumeCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "ResumeCollector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->ResumeCollector(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentTracingConnection::RegisterCollector(
     google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
@@ -139,6 +260,31 @@ RapidMigrationAssessmentTracingConnection::RegisterCollector(
   return internal::EndSpan(std::move(span), child_->RegisterCollector(request));
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingConnection::RegisterCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "RegisterCollector");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->RegisterCollector(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentTracingConnection::RegisterCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "RegisterCollector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->RegisterCollector(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentTracingConnection::PauseCollector(
     google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
@@ -148,6 +294,30 @@ RapidMigrationAssessmentTracingConnection::PauseCollector(
       "PauseCollector");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PauseCollector(request));
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentTracingConnection::PauseCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "PauseCollector");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->PauseCollector(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentTracingConnection::PauseCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "rapidmigrationassessment_v1::RapidMigrationAssessmentConnection::"
+      "PauseCollector");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->PauseCollector(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

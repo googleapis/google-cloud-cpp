@@ -108,6 +108,62 @@ ConversationModelsConnectionImpl::CreateConversationModel(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsConnectionImpl::CreateConversationModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateConversationModel(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+              request) {
+        return stub_->CreateConversationModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
+ConversationModelsConnectionImpl::CreateConversationModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dialogflow::v2::
+                   CreateConversationModelOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dialogflow::v2::ConversationModel>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateConversationModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::v2::ConversationModel>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::v2::ConversationModel>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsConnectionImpl::GetConversationModel(
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
@@ -202,6 +258,65 @@ ConversationModelsConnectionImpl::DeleteConversationModel(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ConversationModelsConnectionImpl::DeleteConversationModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteConversationModel(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+              request) {
+        return stub_->DeleteConversationModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+ConversationModelsConnectionImpl::DeleteConversationModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dialogflow::v2::
+                   DeleteConversationModelOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dialogflow::v2::
+                     DeleteConversationModelOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteConversationModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dialogflow::v2::
+              DeleteConversationModelOperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
 ConversationModelsConnectionImpl::DeployConversationModel(
@@ -242,6 +357,65 @@ ConversationModelsConnectionImpl::DeployConversationModel(
           google::cloud::dialogflow::v2::
               DeployConversationModelOperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsConnectionImpl::DeployConversationModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeployConversationModel(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+              request) {
+        return stub_->DeployConversationModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+ConversationModelsConnectionImpl::DeployConversationModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dialogflow::v2::
+                   DeployConversationModelOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dialogflow::v2::
+                     DeployConversationModelOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeployConversationModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dialogflow::v2::
+              DeployConversationModelOperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -286,6 +460,66 @@ ConversationModelsConnectionImpl::UndeployConversationModel(
           google::cloud::dialogflow::v2::
               UndeployConversationModelOperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsConnectionImpl::UndeployConversationModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UndeployConversationModel(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+              request) {
+        return stub_->UndeployConversationModel(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
+ConversationModelsConnectionImpl::UndeployConversationModel(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dialogflow::v2::
+                   UndeployConversationModelOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dialogflow::v2::
+                     UndeployConversationModelOperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UndeployConversationModel",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::v2::
+          UndeployConversationModelOperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dialogflow::v2::
+              UndeployConversationModelOperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -383,6 +617,63 @@ ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::ConversationModelEvaluation>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::
+        CreateConversationModelEvaluationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateConversationModelEvaluation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dialogflow::v2::
+                 CreateConversationModelEvaluationRequest const& request) {
+        return stub_->CreateConversationModelEvaluation(context, options,
+                                                        request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
+ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dialogflow::v2::
+                   CreateConversationModelEvaluationOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to "
+            "CreateConversationModelEvaluation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dialogflow::v2::ConversationModelEvaluation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dialogflow::v2::ConversationModelEvaluation>,
       polling_policy(*current), __func__);
 }
 

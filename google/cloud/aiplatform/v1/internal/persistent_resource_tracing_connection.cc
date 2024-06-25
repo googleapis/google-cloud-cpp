@@ -47,6 +47,31 @@ PersistentResourceServiceTracingConnection::CreatePersistentResource(
                            child_->CreatePersistentResource(request));
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceTracingConnection::CreatePersistentResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "CreatePersistentResource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreatePersistentResource(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+PersistentResourceServiceTracingConnection::CreatePersistentResource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "CreatePersistentResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreatePersistentResource(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::PersistentResource>
 PersistentResourceServiceTracingConnection::GetPersistentResource(
     google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
@@ -83,6 +108,31 @@ PersistentResourceServiceTracingConnection::DeletePersistentResource(
                            child_->DeletePersistentResource(request));
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceTracingConnection::DeletePersistentResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "DeletePersistentResource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeletePersistentResource(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+PersistentResourceServiceTracingConnection::DeletePersistentResource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "DeletePersistentResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeletePersistentResource(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceTracingConnection::UpdatePersistentResource(
     google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
@@ -95,6 +145,31 @@ PersistentResourceServiceTracingConnection::UpdatePersistentResource(
                            child_->UpdatePersistentResource(request));
 }
 
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceTracingConnection::UpdatePersistentResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "UpdatePersistentResource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdatePersistentResource(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+PersistentResourceServiceTracingConnection::UpdatePersistentResource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "UpdatePersistentResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdatePersistentResource(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
 PersistentResourceServiceTracingConnection::RebootPersistentResource(
     google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
@@ -105,6 +180,31 @@ PersistentResourceServiceTracingConnection::RebootPersistentResource(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RebootPersistentResource(request));
+}
+
+StatusOr<google::longrunning::Operation>
+PersistentResourceServiceTracingConnection::RebootPersistentResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "RebootPersistentResource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RebootPersistentResource(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+PersistentResourceServiceTracingConnection::RebootPersistentResource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::PersistentResourceServiceConnection::"
+      "RebootPersistentResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RebootPersistentResource(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

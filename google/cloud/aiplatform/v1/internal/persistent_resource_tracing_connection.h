@@ -46,6 +46,16 @@ class PersistentResourceServiceTracingConnection
       google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreatePersistentResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+  CreatePersistentResource(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::PersistentResource>
   GetPersistentResource(
       google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
@@ -61,15 +71,45 @@ class PersistentResourceServiceTracingConnection
       google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeletePersistentResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePersistentResource(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
   UpdatePersistentResource(
       google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdatePersistentResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+  UpdatePersistentResource(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
   RebootPersistentResource(
       google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> RebootPersistentResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+  RebootPersistentResource(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<aiplatform_v1::PersistentResourceServiceConnection> child_;

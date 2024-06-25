@@ -162,6 +162,61 @@ TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateOrchestrationCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::
+                 CreateOrchestrationClusterRequest const& request) {
+        return stub_->CreateOrchestrationCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
+TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::telcoautomation::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateOrchestrationCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::telcoautomation::v1::OrchestrationCluster>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::telcoautomation::v1::OrchestrationCluster>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
     google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
@@ -199,6 +254,61 @@ TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::telcoautomation::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteOrchestrationCluster(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::
+                 DeleteOrchestrationClusterRequest const& request) {
+        return stub_->DeleteOrchestrationCluster(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::telcoautomation::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteOrchestrationCluster",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::telcoautomation::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::telcoautomation::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -292,6 +402,60 @@ TelcoAutomationConnectionImpl::CreateEdgeSlm(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationConnectionImpl::CreateEdgeSlm(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateEdgeSlm(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&
+                 request) {
+        return stub_->CreateEdgeSlm(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
+TelcoAutomationConnectionImpl::CreateEdgeSlm(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::telcoautomation::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateEdgeSlm",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::telcoautomation::v1::EdgeSlm>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::telcoautomation::v1::EdgeSlm>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnectionImpl::DeleteEdgeSlm(
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
@@ -329,6 +493,60 @@ TelcoAutomationConnectionImpl::DeleteEdgeSlm(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::telcoautomation::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationConnectionImpl::DeleteEdgeSlm(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteEdgeSlm(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
+                 request) {
+        return stub_->DeleteEdgeSlm(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+TelcoAutomationConnectionImpl::DeleteEdgeSlm(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::telcoautomation::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteEdgeSlm",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::telcoautomation::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::telcoautomation::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

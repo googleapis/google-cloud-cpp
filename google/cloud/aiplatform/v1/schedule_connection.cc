@@ -52,6 +52,22 @@ ScheduleServiceConnection::DeleteSchedule(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+ScheduleServiceConnection::DeleteSchedule(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteScheduleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+ScheduleServiceConnection::DeleteSchedule(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceConnection::GetSchedule(
     google::cloud::aiplatform::v1::GetScheduleRequest const&) {

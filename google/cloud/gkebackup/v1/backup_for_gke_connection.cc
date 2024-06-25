@@ -46,6 +46,22 @@ BackupForGKEConnection::CreateBackupPlan(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnection::CreateBackupPlan(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::CreateBackupPlanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
+BackupForGKEConnection::CreateBackupPlan(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::BackupPlan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::gkebackup::v1::BackupPlan>
 BackupForGKEConnection::ListBackupPlans(
     google::cloud::gkebackup::v1::
@@ -68,6 +84,22 @@ BackupForGKEConnection::UpdateBackupPlan(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnection::UpdateBackupPlan(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::UpdateBackupPlanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
+BackupForGKEConnection::UpdateBackupPlan(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::BackupPlan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnection::DeleteBackupPlan(
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const&) {
@@ -76,9 +108,40 @@ BackupForGKEConnection::DeleteBackupPlan(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnection::DeleteBackupPlan(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::DeleteBackupPlanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+BackupForGKEConnection::DeleteBackupPlan(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKEConnection::CreateBackup(
     google::cloud::gkebackup::v1::CreateBackupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEConnection::CreateBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::CreateBackupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::Backup>>
+BackupForGKEConnection::CreateBackup(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::Backup>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -106,9 +169,39 @@ BackupForGKEConnection::UpdateBackup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEConnection::UpdateBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::UpdateBackupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::Backup>>
+BackupForGKEConnection::UpdateBackup(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnection::DeleteBackup(
     google::cloud::gkebackup::v1::DeleteBackupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEConnection::DeleteBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::DeleteBackupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+BackupForGKEConnection::DeleteBackup(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -136,6 +229,22 @@ BackupForGKEConnection::CreateRestorePlan(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnection::CreateRestorePlan(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::CreateRestorePlanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
+BackupForGKEConnection::CreateRestorePlan(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::RestorePlan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::gkebackup::v1::RestorePlan>
 BackupForGKEConnection::ListRestorePlans(
     google::cloud::gkebackup::v1::
@@ -158,6 +267,22 @@ BackupForGKEConnection::UpdateRestorePlan(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnection::UpdateRestorePlan(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::UpdateRestorePlanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
+BackupForGKEConnection::UpdateRestorePlan(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::RestorePlan>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnection::DeleteRestorePlan(
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const&) {
@@ -166,9 +291,40 @@ BackupForGKEConnection::DeleteRestorePlan(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+BackupForGKEConnection::DeleteRestorePlan(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::DeleteRestorePlanRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+BackupForGKEConnection::DeleteRestorePlan(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
 BackupForGKEConnection::CreateRestore(
     google::cloud::gkebackup::v1::CreateRestoreRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::Restore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEConnection::CreateRestore(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::CreateRestoreRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::Restore>>
+BackupForGKEConnection::CreateRestore(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::Restore>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -196,9 +352,39 @@ BackupForGKEConnection::UpdateRestore(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> BackupForGKEConnection::UpdateRestore(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::UpdateRestoreRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::Restore>>
+BackupForGKEConnection::UpdateRestore(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::Restore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnection::DeleteRestore(
     google::cloud::gkebackup::v1::DeleteRestoreRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> BackupForGKEConnection::DeleteRestore(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkebackup::v1::DeleteRestoreRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+BackupForGKEConnection::DeleteRestore(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

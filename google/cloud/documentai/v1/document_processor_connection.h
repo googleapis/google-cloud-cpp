@@ -22,8 +22,10 @@
 #include "google/cloud/documentai/v1/document_processor_connection_idempotency_policy.h"
 #include "google/cloud/documentai/v1/internal/document_processor_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -207,6 +209,14 @@ class DocumentProcessorServiceConnection {
   BatchProcessDocuments(
       google::cloud::documentai::v1::BatchProcessRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> BatchProcessDocuments(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::BatchProcessRequest const& request);
+
+  virtual future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
+  BatchProcessDocuments(ExperimentalTag,
+                        google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
   FetchProcessorTypes(
       google::cloud::documentai::v1::FetchProcessorTypesRequest const& request);
@@ -231,6 +241,16 @@ class DocumentProcessorServiceConnection {
       google::cloud::documentai::v1::TrainProcessorVersionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> TrainProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+  TrainProcessorVersion(ExperimentalTag,
+                        google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::documentai::v1::ProcessorVersion>
   GetProcessorVersion(
       google::cloud::documentai::v1::GetProcessorVersionRequest const& request);
@@ -245,17 +265,47 @@ class DocumentProcessorServiceConnection {
       google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
+  DeleteProcessorVersion(ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
   DeployProcessorVersion(
       google::cloud::documentai::v1::DeployProcessorVersionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeployProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
+  DeployProcessorVersion(ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
   UndeployProcessorVersion(
       google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
+  UndeployProcessorVersion(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
       google::cloud::documentai::v1::CreateProcessorRequest const& request);
@@ -265,15 +315,42 @@ class DocumentProcessorServiceConnection {
   DeleteProcessor(
       google::cloud::documentai::v1::DeleteProcessorRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteProcessor(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::DeleteProcessorRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
+  DeleteProcessor(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
   EnableProcessor(
       google::cloud::documentai::v1::EnableProcessorRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> EnableProcessor(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::EnableProcessorRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
+  EnableProcessor(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
   DisableProcessor(
       google::cloud::documentai::v1::DisableProcessorRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DisableProcessor(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::DisableProcessorRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
+  DisableProcessor(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
@@ -281,16 +358,45 @@ class DocumentProcessorServiceConnection {
       google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> SetDefaultProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
+  SetDefaultProcessorVersion(ExperimentalTag,
+                             google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(
       google::cloud::documentai::v1::ReviewDocumentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ReviewDocument(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::ReviewDocumentRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
+  ReviewDocument(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
   EvaluateProcessorVersion(
       google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+  EvaluateProcessorVersion(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
       google::cloud::documentai::v1::GetEvaluationRequest const& request);

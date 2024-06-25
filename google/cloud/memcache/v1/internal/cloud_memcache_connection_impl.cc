@@ -151,6 +151,58 @@ CloudMemcacheConnectionImpl::CreateInstance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnectionImpl::CreateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateInstance(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::CreateInstanceRequest const& request) {
+        return stub_->CreateInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnectionImpl::CreateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::memcache::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memcache::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memcache::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::UpdateInstance(
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
@@ -187,6 +239,58 @@ CloudMemcacheConnectionImpl::UpdateInstance(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::memcache::v1::Instance>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnectionImpl::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateInstance(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
+        return stub_->UpdateInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnectionImpl::UpdateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::memcache::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memcache::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memcache::v1::Instance>,
       polling_policy(*current), __func__);
 }
 
@@ -229,6 +333,58 @@ CloudMemcacheConnectionImpl::UpdateParameters(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnectionImpl::UpdateParameters(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateParameters(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::UpdateParametersRequest const& request) {
+        return stub_->UpdateParameters(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnectionImpl::UpdateParameters(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::memcache::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateParameters",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memcache::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memcache::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheConnectionImpl::DeleteInstance(
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
@@ -265,6 +421,59 @@ CloudMemcacheConnectionImpl::DeleteInstance(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::memcache::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnectionImpl::DeleteInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteInstance(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
+        return stub_->DeleteInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
+CloudMemcacheConnectionImpl::DeleteInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::memcache::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memcache::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::memcache::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -307,6 +516,58 @@ CloudMemcacheConnectionImpl::ApplyParameters(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnectionImpl::ApplyParameters(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ApplyParameters(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::memcache::v1::ApplyParametersRequest const& request) {
+        return stub_->ApplyParameters(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnectionImpl::ApplyParameters(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::memcache::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ApplyParameters",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memcache::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memcache::v1::Instance>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::RescheduleMaintenance(
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
@@ -344,6 +605,58 @@ CloudMemcacheConnectionImpl::RescheduleMaintenance(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::memcache::v1::Instance>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudMemcacheConnectionImpl::RescheduleMaintenance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RescheduleMaintenance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return stub_->RescheduleMaintenance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnectionImpl::RescheduleMaintenance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::memcache::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::memcache::v1::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RescheduleMaintenance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::memcache::v1::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memcache::v1::Instance>,
       polling_policy(*current), __func__);
 }
 

@@ -69,12 +69,38 @@ class MockAppConnectorsServiceConnection
            CreateAppConnectorRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAppConnector,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::beyondcorp::appconnectors::v1::
+                   CreateAppConnectorRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
+      CreateAppConnector,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
       UpdateAppConnector,
       (google::cloud::beyondcorp::appconnectors::v1::
            UpdateAppConnectorRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateAppConnector,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::beyondcorp::appconnectors::v1::
+                   UpdateAppConnectorRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
+      UpdateAppConnector,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
@@ -84,12 +110,39 @@ class MockAppConnectorsServiceConnection
                    DeleteAppConnectorRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteAppConnector,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::beyondcorp::appconnectors::v1::
+                   DeleteAppConnectorRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                                  AppConnectorOperationMetadata>>,
+              DeleteAppConnector,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
       ReportStatus,
       (google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ReportStatus,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
+      ReportStatus,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

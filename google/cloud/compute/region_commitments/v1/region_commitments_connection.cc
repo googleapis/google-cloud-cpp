@@ -62,6 +62,23 @@ RegionCommitmentsConnection::InsertCommitment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionCommitmentsConnection::InsertCommitment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_commitments::v1::
+        InsertCommitmentRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionCommitmentsConnection::InsertCommitment(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::Commitment>
 RegionCommitmentsConnection::ListRegionCommitments(
     google::cloud::cpp::compute::region_commitments::v1::
@@ -74,6 +91,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsConnection::UpdateCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
         UpdateCommitmentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionCommitmentsConnection::UpdateCommitment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_commitments::v1::
+        UpdateCommitmentRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionCommitmentsConnection::UpdateCommitment(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

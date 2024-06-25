@@ -22,8 +22,10 @@
 #include "google/cloud/composer/v1/environments_connection_idempotency_policy.h"
 #include "google/cloud/composer/v1/internal/environments_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -191,6 +193,16 @@ class EnvironmentsConnection {
   CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
                         CreateEnvironmentRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          CreateEnvironmentRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  CreateEnvironment(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual StatusOr<
       google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(google::cloud::orchestration::airflow::service::v1::
@@ -206,10 +218,30 @@ class EnvironmentsConnection {
   UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::
                         UpdateEnvironmentRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateEnvironmentRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
+  UpdateEnvironment(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
                         DeleteEnvironmentRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteEnvironmentRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
+  DeleteEnvironment(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
                        ExecuteAirflowCommandResponse>
@@ -291,15 +323,45 @@ class EnvironmentsConnection {
   SaveSnapshot(google::cloud::orchestration::airflow::service::v1::
                    SaveSnapshotRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> SaveSnapshot(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          SaveSnapshotRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
   LoadSnapshot(google::cloud::orchestration::airflow::service::v1::
                    LoadSnapshotRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> LoadSnapshot(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          LoadSnapshotRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                               DatabaseFailoverResponse>>
   DatabaseFailover(google::cloud::orchestration::airflow::service::v1::
                        DatabaseFailoverRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DatabaseFailover(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::orchestration::airflow::service::v1::
+          DatabaseFailoverRequest const& request);
+
+  virtual future<StatusOr<google::cloud::orchestration::airflow::service::v1::
+                              DatabaseFailoverResponse>>
+  DatabaseFailover(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::orchestration::airflow::service::v1::
                        FetchDatabasePropertiesResponse>

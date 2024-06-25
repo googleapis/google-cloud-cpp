@@ -53,6 +53,18 @@ class MockSpecialistPoolServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSpecialistPool,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
+              CreateSpecialistPool,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::SpecialistPool>,
       GetSpecialistPool,
@@ -72,10 +84,34 @@ class MockSpecialistPoolServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteSpecialistPool,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteSpecialistPool,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
               UpdateSpecialistPool,
               (google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateSpecialistPool,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
+              UpdateSpecialistPool,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 };
 

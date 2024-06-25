@@ -163,6 +163,61 @@ BareMetalSolutionConnectionImpl::UpdateInstance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
+                 request) {
+        return stub_->UpdateInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionConnectionImpl::UpdateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::Instance>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionConnectionImpl::RenameInstance(
     google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
@@ -219,6 +274,60 @@ BareMetalSolutionConnectionImpl::ResetInstance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::ResetInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResetInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
+                 request) {
+        return stub_->ResetInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
+BareMetalSolutionConnectionImpl::ResetInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResetInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::ResetInstanceResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::ResetInstanceResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
 BareMetalSolutionConnectionImpl::StartInstance(
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
@@ -259,6 +368,60 @@ BareMetalSolutionConnectionImpl::StartInstance(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::StartInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StartInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::StartInstanceRequest const&
+                 request) {
+        return stub_->StartInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
+BareMetalSolutionConnectionImpl::StartInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StartInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::StartInstanceResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::StartInstanceResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
 BareMetalSolutionConnectionImpl::StopInstance(
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
@@ -296,6 +459,60 @@ BareMetalSolutionConnectionImpl::StopInstance(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::StopInstanceResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::StopInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->StopInstance(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::StopInstanceRequest const&
+                 request) {
+        return stub_->StopInstance(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
+BareMetalSolutionConnectionImpl::StopInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to StopInstance",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::StopInstanceResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::StopInstanceResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -340,6 +557,65 @@ BareMetalSolutionConnectionImpl::EnableInteractiveSerialConsole(
           google::cloud::baremetalsolution::v2::
               EnableInteractiveSerialConsoleResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::EnableInteractiveSerialConsole(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::
+        EnableInteractiveSerialConsoleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EnableInteractiveSerialConsole(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::
+                 EnableInteractiveSerialConsoleRequest const& request) {
+        return stub_->EnableInteractiveSerialConsole(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::
+                    EnableInteractiveSerialConsoleResponse>>
+BareMetalSolutionConnectionImpl::EnableInteractiveSerialConsole(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::
+                     EnableInteractiveSerialConsoleResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to EnableInteractiveSerialConsole",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::
+          EnableInteractiveSerialConsoleResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::
+              EnableInteractiveSerialConsoleResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -388,6 +664,66 @@ BareMetalSolutionConnectionImpl::DisableInteractiveSerialConsole(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::DisableInteractiveSerialConsole(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::
+        DisableInteractiveSerialConsoleRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DisableInteractiveSerialConsole(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::
+                 DisableInteractiveSerialConsoleRequest const& request) {
+        return stub_->DisableInteractiveSerialConsole(context, options,
+                                                      request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::
+                    DisableInteractiveSerialConsoleResponse>>
+BareMetalSolutionConnectionImpl::DisableInteractiveSerialConsole(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::
+                     DisableInteractiveSerialConsoleResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DisableInteractiveSerialConsole",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::
+          DisableInteractiveSerialConsoleResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::
+              DisableInteractiveSerialConsoleResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
 BareMetalSolutionConnectionImpl::DetachLun(
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
@@ -424,6 +760,60 @@ BareMetalSolutionConnectionImpl::DetachLun(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::Instance>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::DetachLun(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DetachLun(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::DetachLunRequest const&
+                 request) {
+        return stub_->DetachLun(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
+BareMetalSolutionConnectionImpl::DetachLun(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::Instance>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DetachLun",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::Instance>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::Instance>,
       polling_policy(*current), __func__);
 }
 
@@ -583,6 +973,60 @@ BareMetalSolutionConnectionImpl::UpdateVolume(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::UpdateVolume(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateVolume(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
+                 request) {
+        return stub_->UpdateVolume(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+BareMetalSolutionConnectionImpl::UpdateVolume(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateVolume",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::Volume>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::Volume>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionConnectionImpl::RenameVolume(
     google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
@@ -638,6 +1082,60 @@ BareMetalSolutionConnectionImpl::EvictVolume(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::EvictVolume(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EvictVolume(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::EvictVolumeRequest const&
+                 request) {
+        return stub_->EvictVolume(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+BareMetalSolutionConnectionImpl::EvictVolume(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to EvictVolume",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::baremetalsolution::v2::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
 BareMetalSolutionConnectionImpl::ResizeVolume(
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
@@ -675,6 +1173,60 @@ BareMetalSolutionConnectionImpl::ResizeVolume(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::Volume>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::ResizeVolume(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResizeVolume(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
+                 request) {
+        return stub_->ResizeVolume(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>
+BareMetalSolutionConnectionImpl::ResizeVolume(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::Volume>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResizeVolume",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::Volume>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::Volume>,
       polling_policy(*current), __func__);
 }
 
@@ -786,6 +1338,60 @@ BareMetalSolutionConnectionImpl::UpdateNetwork(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::UpdateNetwork(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateNetwork(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
+                 request) {
+        return stub_->UpdateNetwork(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::Network>>
+BareMetalSolutionConnectionImpl::UpdateNetwork(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::Network>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateNetwork",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::Network>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::Network>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionConnectionImpl::CreateVolumeSnapshot(
     google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
@@ -839,6 +1445,61 @@ BareMetalSolutionConnectionImpl::RestoreVolumeSnapshot(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::VolumeSnapshot>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::RestoreVolumeSnapshot(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RestoreVolumeSnapshot(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::
+                 RestoreVolumeSnapshotRequest const& request) {
+        return stub_->RestoreVolumeSnapshot(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
+BareMetalSolutionConnectionImpl::RestoreVolumeSnapshot(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RestoreVolumeSnapshot",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::VolumeSnapshot>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::VolumeSnapshot>,
       polling_policy(*current), __func__);
 }
 
@@ -998,6 +1659,60 @@ BareMetalSolutionConnectionImpl::EvictLun(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::EvictLun(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EvictLun(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::EvictLunRequest const&
+                 request) {
+        return stub_->EvictLun(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+BareMetalSolutionConnectionImpl::EvictLun(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to EvictLun",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::baremetalsolution::v2::OperationMetadata>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionConnectionImpl::GetNfsShare(
     google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
@@ -1089,6 +1804,61 @@ BareMetalSolutionConnectionImpl::UpdateNfsShare(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::UpdateNfsShare(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateNfsShare(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
+                 request) {
+        return stub_->UpdateNfsShare(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+BareMetalSolutionConnectionImpl::UpdateNfsShare(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateNfsShare",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::NfsShare>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::NfsShare>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
 BareMetalSolutionConnectionImpl::CreateNfsShare(
     google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
@@ -1127,6 +1897,61 @@ BareMetalSolutionConnectionImpl::CreateNfsShare(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::baremetalsolution::v2::NfsShare>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::CreateNfsShare(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateNfsShare(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
+                 request) {
+        return stub_->CreateNfsShare(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
+BareMetalSolutionConnectionImpl::CreateNfsShare(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateNfsShare",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::NfsShare>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::baremetalsolution::v2::NfsShare>,
       polling_policy(*current), __func__);
 }
 
@@ -1184,6 +2009,61 @@ BareMetalSolutionConnectionImpl::DeleteNfsShare(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::baremetalsolution::v2::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+BareMetalSolutionConnectionImpl::DeleteNfsShare(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteNfsShare(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
+                 request) {
+        return stub_->DeleteNfsShare(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
+BareMetalSolutionConnectionImpl::DeleteNfsShare(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::baremetalsolution::v2::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteNfsShare",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::baremetalsolution::v2::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::baremetalsolution::v2::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

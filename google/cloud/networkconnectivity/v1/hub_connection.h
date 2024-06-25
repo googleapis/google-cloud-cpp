@@ -22,8 +22,10 @@
 #include "google/cloud/networkconnectivity/v1/hub_connection_idempotency_policy.h"
 #include "google/cloud/networkconnectivity/v1/internal/hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -195,14 +197,36 @@ class HubServiceConnection {
   CreateHub(
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateHub(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
+
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  CreateHub(ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
   UpdateHub(
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateHub(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
+
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  UpdateHub(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteHub(
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteHub(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteHub(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networkconnectivity::v1::Spoke>
   ListHubSpokes(
@@ -218,9 +242,25 @@ class HubServiceConnection {
   CreateSpoke(google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
                   request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateSpoke(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  CreateSpoke(ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
   UpdateSpoke(google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
                   request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateSpoke(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  UpdateSpoke(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
@@ -228,16 +268,45 @@ class HubServiceConnection {
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> RejectHubSpoke(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
   AcceptHubSpoke(
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> AcceptHubSpoke(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
                   request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteSpoke(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeleteSpoke(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
   GetRouteTable(

@@ -55,10 +55,30 @@ class TelcoAutomationTracingConnection
       google::cloud::telcoautomation::v1::
           CreateOrchestrationClusterRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::telcoautomation::v1::
+          CreateOrchestrationClusterRequest const& request) override;
+
+  future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
+  CreateOrchestrationCluster(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
   DeleteOrchestrationCluster(
       google::cloud::telcoautomation::v1::
           DeleteOrchestrationClusterRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::telcoautomation::v1::
+          DeleteOrchestrationClusterRequest const& request) override;
+
+  future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+  DeleteOrchestrationCluster(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::telcoautomation::v1::EdgeSlm> ListEdgeSlms(
       google::cloud::telcoautomation::v1::ListEdgeSlmsRequest request) override;
@@ -71,9 +91,27 @@ class TelcoAutomationTracingConnection
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateEdgeSlm(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>> CreateEdgeSlm(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
   DeleteEdgeSlm(google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
                     request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+  DeleteEdgeSlm(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::telcoautomation::v1::Blueprint> CreateBlueprint(
       google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request)

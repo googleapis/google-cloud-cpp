@@ -55,6 +55,23 @@ NodeTemplatesConnection::DeleteNodeTemplate(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeTemplatesConnection::DeleteNodeTemplate(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_templates::v1::
+        DeleteNodeTemplateRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeTemplatesConnection::DeleteNodeTemplate(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
 NodeTemplatesConnection::GetNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
@@ -73,6 +90,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesConnection::InsertNodeTemplate(
     google::cloud::cpp::compute::node_templates::v1::
         InsertNodeTemplateRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeTemplatesConnection::InsertNodeTemplate(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_templates::v1::
+        InsertNodeTemplateRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeTemplatesConnection::InsertNodeTemplate(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

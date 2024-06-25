@@ -148,6 +148,57 @@ ConfigServiceV2ConnectionImpl::CreateBucketAsync(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2ConnectionImpl::CreateBucketAsync(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::CreateBucketRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBucketAsync(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::CreateBucketRequest const& request) {
+        return stub_->CreateBucketAsync(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::logging::v2::LogBucket>>
+ConfigServiceV2ConnectionImpl::CreateBucketAsync(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::logging::v2::BucketMetadata>()) {
+    return make_ready_future<StatusOr<google::logging::v2::LogBucket>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateBucketAsync",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::logging::v2::LogBucket>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::logging::v2::LogBucket>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
     google::logging::v2::UpdateBucketRequest const& request) {
@@ -183,6 +234,57 @@ ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::LogBucket>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::UpdateBucketRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBucketAsync(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::UpdateBucketRequest const& request) {
+        return stub_->UpdateBucketAsync(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::logging::v2::LogBucket>>
+ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::logging::v2::BucketMetadata>()) {
+    return make_ready_future<StatusOr<google::logging::v2::LogBucket>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateBucketAsync",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::logging::v2::LogBucket>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::logging::v2::LogBucket>,
       polling_policy(*current), __func__);
 }
 
@@ -450,6 +552,56 @@ ConfigServiceV2ConnectionImpl::CreateLink(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2ConnectionImpl::CreateLink(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::CreateLinkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateLink(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::CreateLinkRequest const& request) {
+        return stub_->CreateLink(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::logging::v2::Link>>
+ConfigServiceV2ConnectionImpl::CreateLink(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::logging::v2::LinkMetadata>()) {
+    return make_ready_future<StatusOr<google::logging::v2::Link>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateLink",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::logging::v2::Link>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::logging::v2::Link>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::logging::v2::LinkMetadata>>
 ConfigServiceV2ConnectionImpl::DeleteLink(
     google::logging::v2::DeleteLinkRequest const& request) {
@@ -485,6 +637,56 @@ ConfigServiceV2ConnectionImpl::DeleteLink(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::logging::v2::LinkMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2ConnectionImpl::DeleteLink(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::DeleteLinkRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteLink(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::DeleteLinkRequest const& request) {
+        return stub_->DeleteLink(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::logging::v2::LinkMetadata>>
+ConfigServiceV2ConnectionImpl::DeleteLink(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::logging::v2::LinkMetadata>()) {
+    return make_ready_future<StatusOr<google::logging::v2::LinkMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteLink",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::logging::v2::LinkMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::logging::v2::LinkMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -712,6 +914,58 @@ ConfigServiceV2ConnectionImpl::CopyLogEntries(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::CopyLogEntriesResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2ConnectionImpl::CopyLogEntries(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::CopyLogEntriesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CopyLogEntries(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::logging::v2::CopyLogEntriesRequest const& request) {
+        return stub_->CopyLogEntries(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
+ConfigServiceV2ConnectionImpl::CopyLogEntries(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::logging::v2::CopyLogEntriesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::logging::v2::CopyLogEntriesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CopyLogEntries",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::logging::v2::CopyLogEntriesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::logging::v2::CopyLogEntriesResponse>,
       polling_policy(*current), __func__);
 }
 

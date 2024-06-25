@@ -62,6 +62,19 @@ class MockNodeTemplatesConnection
                    DeleteNodeTemplateRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteNodeTemplate,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::node_templates::v1::
+                   DeleteNodeTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteNodeTemplate,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>,
               GetNodeTemplate,
               (google::cloud::cpp::compute::node_templates::v1::
@@ -77,6 +90,19 @@ class MockNodeTemplatesConnection
               InsertNodeTemplate,
               (google::cloud::cpp::compute::node_templates::v1::
                    InsertNodeTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertNodeTemplate,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::node_templates::v1::
+                   InsertNodeTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertNodeTemplate,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

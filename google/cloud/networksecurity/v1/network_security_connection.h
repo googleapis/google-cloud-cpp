@@ -22,8 +22,10 @@
 #include "google/cloud/networksecurity/v1/internal/network_security_retry_traits.h"
 #include "google/cloud/networksecurity/v1/network_security_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -203,17 +205,47 @@ class NetworkSecurityConnection {
       google::cloud::networksecurity::v1::
           CreateAuthorizationPolicyRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          CreateAuthorizationPolicyRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
+  CreateAuthorizationPolicy(ExperimentalTag,
+                            google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
   UpdateAuthorizationPolicy(
       google::cloud::networksecurity::v1::
           UpdateAuthorizationPolicyRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          UpdateAuthorizationPolicyRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
+  UpdateAuthorizationPolicy(ExperimentalTag,
+                            google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteAuthorizationPolicy(
       google::cloud::networksecurity::v1::
           DeleteAuthorizationPolicyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networksecurity::v1::
+          DeleteAuthorizationPolicyRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteAuthorizationPolicy(ExperimentalTag,
+                            google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
   ListServerTlsPolicies(
@@ -229,16 +261,44 @@ class NetworkSecurityConnection {
       google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
+  CreateServerTlsPolicy(ExperimentalTag,
+                        google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
   UpdateServerTlsPolicy(
       google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
+  UpdateServerTlsPolicy(ExperimentalTag,
+                        google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteServerTlsPolicy(
       google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteServerTlsPolicy(ExperimentalTag,
+                        google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
   ListClientTlsPolicies(
@@ -254,16 +314,44 @@ class NetworkSecurityConnection {
       google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
+  CreateClientTlsPolicy(ExperimentalTag,
+                        google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
   UpdateClientTlsPolicy(
       google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
+  UpdateClientTlsPolicy(ExperimentalTag,
+                        google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteClientTlsPolicy(
       google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
+  DeleteClientTlsPolicy(ExperimentalTag,
+                        google::longrunning::Operation const& operation);
 };
 
 /**

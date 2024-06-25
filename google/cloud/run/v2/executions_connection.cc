@@ -59,9 +59,39 @@ ExecutionsConnection::DeleteExecution(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ExecutionsConnection::DeleteExecution(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::run::v2::DeleteExecutionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsConnection::DeleteExecution(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::run::v2::Execution>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsConnection::CancelExecution(
     google::cloud::run::v2::CancelExecutionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::run::v2::Execution>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ExecutionsConnection::CancelExecution(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::run::v2::CancelExecutionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsConnection::CancelExecution(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::run::v2::Execution>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -22,8 +22,10 @@
 #include "google/cloud/aiplatform/v1/internal/tensorboard_retry_traits.h"
 #include "google/cloud/aiplatform/v1/tensorboard_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -193,12 +195,28 @@ class TensorboardServiceConnection {
   CreateTensorboard(
       google::cloud::aiplatform::v1::CreateTensorboardRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateTensorboard(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
+  CreateTensorboard(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::Tensorboard> GetTensorboard(
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
   UpdateTensorboard(
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateTensorboard(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
+  UpdateTensorboard(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::aiplatform::v1::Tensorboard>
   ListTensorboards(
@@ -208,6 +226,15 @@ class TensorboardServiceConnection {
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTensorboard(
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTensorboard(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboard(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
   ReadTensorboardUsage(
@@ -243,6 +270,16 @@ class TensorboardServiceConnection {
       google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardExperiment(ExperimentalTag,
+                              google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
   CreateTensorboardRun(
       google::cloud::aiplatform::v1::CreateTensorboardRunRequest const&
@@ -272,6 +309,16 @@ class TensorboardServiceConnection {
   DeleteTensorboardRun(
       google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardRun(ExperimentalTag,
+                       google::longrunning::Operation const& operation);
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
@@ -303,6 +350,16 @@ class TensorboardServiceConnection {
   DeleteTensorboardTimeSeries(
       google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardTimeSeries(ExperimentalTag,
+                              google::longrunning::Operation const& operation);
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>

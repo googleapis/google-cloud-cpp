@@ -22,8 +22,10 @@
 #include "google/cloud/gkebackup/v1/backup_for_gke_connection_idempotency_policy.h"
 #include "google/cloud/gkebackup/v1/internal/backup_for_gke_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -189,6 +191,14 @@ class BackupForGKEConnection {
   CreateBackupPlan(
       google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateBackupPlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
+  CreateBackupPlan(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
       google::cloud::gkebackup::v1::ListBackupPlansRequest request);
 
@@ -199,12 +209,35 @@ class BackupForGKEConnection {
   UpdateBackupPlan(
       google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateBackupPlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
+  UpdateBackupPlan(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteBackupPlan(
       google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteBackupPlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteBackupPlan(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
       google::cloud::gkebackup::v1::CreateBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
       google::cloud::gkebackup::v1::ListBackupsRequest request);
@@ -215,9 +248,24 @@ class BackupForGKEConnection {
   virtual future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
       google::cloud::gkebackup::v1::UpdateBackupRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteBackup(
       google::cloud::gkebackup::v1::DeleteBackupRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteBackupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteBackup(ExperimentalTag,
+               google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::gkebackup::v1::VolumeBackup>
   ListVolumeBackups(
@@ -230,6 +278,14 @@ class BackupForGKEConnection {
   CreateRestorePlan(
       google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateRestorePlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
+  CreateRestorePlan(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::cloud::gkebackup::v1::RestorePlan>
   ListRestorePlans(
       google::cloud::gkebackup::v1::ListRestorePlansRequest request);
@@ -241,12 +297,35 @@ class BackupForGKEConnection {
   UpdateRestorePlan(
       google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateRestorePlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
+  UpdateRestorePlan(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteRestorePlan(
       google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteRestorePlan(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteRestorePlan(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
       google::cloud::gkebackup::v1::CreateRestoreRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateRestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateRestoreRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::gkebackup::v1::Restore> ListRestores(
       google::cloud::gkebackup::v1::ListRestoresRequest request);
@@ -257,9 +336,24 @@ class BackupForGKEConnection {
   virtual future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
       google::cloud::gkebackup::v1::UpdateRestoreRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateRestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateRestoreRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteRestore(
       google::cloud::gkebackup::v1::DeleteRestoreRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteRestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteRestoreRequest const& request);
+
+  virtual future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
+  DeleteRestore(ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::gkebackup::v1::VolumeRestore>
   ListVolumeRestores(

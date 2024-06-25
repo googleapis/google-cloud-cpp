@@ -55,6 +55,23 @@ TargetTcpProxiesConnection::DeleteTargetTcpProxy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesConnection::DeleteTargetTcpProxy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        DeleteTargetTcpProxyRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetTcpProxiesConnection::DeleteTargetTcpProxy(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
 TargetTcpProxiesConnection::GetTargetTcpProxy(
     google::cloud::cpp::compute::target_tcp_proxies::v1::
@@ -66,6 +83,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesConnection::InsertTargetTcpProxy(
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         InsertTargetTcpProxyRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesConnection::InsertTargetTcpProxy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        InsertTargetTcpProxyRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetTcpProxiesConnection::InsertTargetTcpProxy(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -88,10 +122,44 @@ TargetTcpProxiesConnection::SetBackendService(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesConnection::SetBackendService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        SetBackendServiceRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetTcpProxiesConnection::SetBackendService(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetTcpProxiesConnection::SetProxyHeader(
     google::cloud::cpp::compute::target_tcp_proxies::v1::
         SetProxyHeaderRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetTcpProxiesConnection::SetProxyHeader(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_tcp_proxies::v1::
+        SetProxyHeaderRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetTcpProxiesConnection::SetProxyHeader(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

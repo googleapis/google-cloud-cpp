@@ -57,6 +57,25 @@ PoliciesTracingConnection::CreatePolicy(
   return internal::EndSpan(std::move(span), child_->CreatePolicy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+PoliciesTracingConnection::CreatePolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::iam::v2::CreatePolicyRequest const& request) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::CreatePolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreatePolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::iam::v2::Policy>>
+PoliciesTracingConnection::CreatePolicy(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::CreatePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePolicy(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::iam::v2::Policy>>
 PoliciesTracingConnection::UpdatePolicy(
     google::iam::v2::UpdatePolicyRequest const& request) {
@@ -65,12 +84,50 @@ PoliciesTracingConnection::UpdatePolicy(
   return internal::EndSpan(std::move(span), child_->UpdatePolicy(request));
 }
 
+StatusOr<google::longrunning::Operation>
+PoliciesTracingConnection::UpdatePolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::iam::v2::UpdatePolicyRequest const& request) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::UpdatePolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdatePolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::iam::v2::Policy>>
+PoliciesTracingConnection::UpdatePolicy(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::UpdatePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePolicy(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::iam::v2::Policy>>
 PoliciesTracingConnection::DeletePolicy(
     google::iam::v2::DeletePolicyRequest const& request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::DeletePolicy");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeletePolicy(request));
+}
+
+StatusOr<google::longrunning::Operation>
+PoliciesTracingConnection::DeletePolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::iam::v2::DeletePolicyRequest const& request) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::DeletePolicy");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeletePolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::iam::v2::Policy>>
+PoliciesTracingConnection::DeletePolicy(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::DeletePolicy");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePolicy(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -22,8 +22,10 @@
 #include "google/cloud/networkservices/v1/dep_connection_idempotency_policy.h"
 #include "google/cloud/networkservices/v1/internal/dep_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -200,17 +202,47 @@ class DepServiceConnection {
       google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateLbTrafficExtension(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
+  CreateLbTrafficExtension(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
   UpdateLbTrafficExtension(
       google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateLbTrafficExtension(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
+  UpdateLbTrafficExtension(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbTrafficExtension(
       google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteLbTrafficExtension(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbTrafficExtension(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
   ListLbRouteExtensions(
@@ -226,16 +258,44 @@ class DepServiceConnection {
       google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateLbRouteExtension(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
+  CreateLbRouteExtension(ExperimentalTag,
+                         google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
   UpdateLbRouteExtension(
       google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateLbRouteExtension(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
+  UpdateLbRouteExtension(ExperimentalTag,
+                         google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
   DeleteLbRouteExtension(
       google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteLbRouteExtension(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
+  DeleteLbRouteExtension(ExperimentalTag,
+                         google::longrunning::Operation const& operation);
 };
 
 /**

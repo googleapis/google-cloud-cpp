@@ -45,10 +45,28 @@ class AwsClustersTracingConnection
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAwsCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  CreateAwsCluster(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateAwsCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
+  UpdateAwsCluster(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
       google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request)
@@ -62,6 +80,15 @@ class AwsClustersTracingConnection
   DeleteAwsCluster(
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteAwsCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsCluster(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
@@ -79,15 +106,43 @@ class AwsClustersTracingConnection
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAwsNodePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  CreateAwsNodePool(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  UpdateAwsNodePool(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
+  RollbackAwsNodePoolUpdate(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request)
@@ -101,6 +156,15 @@ class AwsClustersTracingConnection
   DeleteAwsNodePool(
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAwsNodePool(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
   GetAwsOpenIdConfig(

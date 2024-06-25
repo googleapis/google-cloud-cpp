@@ -46,9 +46,41 @@ OsConfigZonalServiceConnection::CreateOSPolicyAssignment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceConnection::CreateOSPolicyAssignment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+OsConfigZonalServiceConnection::CreateOSPolicyAssignment(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceConnection::UpdateOSPolicyAssignment(
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceConnection::UpdateOSPolicyAssignment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
+OsConfigZonalServiceConnection::UpdateOSPolicyAssignment(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -80,6 +112,23 @@ future<
     StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
 OsConfigZonalServiceConnection::DeleteOSPolicyAssignment(
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+OsConfigZonalServiceConnection::DeleteOSPolicyAssignment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<
+    StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
+OsConfigZonalServiceConnection::DeleteOSPolicyAssignment(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

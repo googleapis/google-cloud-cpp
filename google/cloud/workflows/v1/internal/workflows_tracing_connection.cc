@@ -62,6 +62,27 @@ WorkflowsTracingConnection::CreateWorkflow(
   return internal::EndSpan(std::move(span), child_->CreateWorkflow(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowsTracingConnection::CreateWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
+  auto span =
+      internal::MakeSpan("workflows_v1::WorkflowsConnection::CreateWorkflow");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workflows::v1::Workflow>>
+WorkflowsTracingConnection::CreateWorkflow(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("workflows_v1::WorkflowsConnection::CreateWorkflow");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateWorkflow(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsTracingConnection::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
@@ -71,6 +92,27 @@ WorkflowsTracingConnection::DeleteWorkflow(
   return internal::EndSpan(std::move(span), child_->DeleteWorkflow(request));
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowsTracingConnection::DeleteWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
+  auto span =
+      internal::MakeSpan("workflows_v1::WorkflowsConnection::DeleteWorkflow");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteWorkflow(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
+WorkflowsTracingConnection::DeleteWorkflow(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("workflows_v1::WorkflowsConnection::DeleteWorkflow");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteWorkflow(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsTracingConnection::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
@@ -78,6 +120,27 @@ WorkflowsTracingConnection::UpdateWorkflow(
       internal::MakeSpan("workflows_v1::WorkflowsConnection::UpdateWorkflow");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateWorkflow(request));
+}
+
+StatusOr<google::longrunning::Operation>
+WorkflowsTracingConnection::UpdateWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
+  auto span =
+      internal::MakeSpan("workflows_v1::WorkflowsConnection::UpdateWorkflow");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::workflows::v1::Workflow>>
+WorkflowsTracingConnection::UpdateWorkflow(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("workflows_v1::WorkflowsConnection::UpdateWorkflow");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateWorkflow(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

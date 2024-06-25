@@ -22,8 +22,10 @@
 #include "google/cloud/datacatalog/v1/data_catalog_connection_idempotency_policy.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -286,6 +288,15 @@ class DataCatalogConnection {
   ReconcileTags(
       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> ReconcileTags(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+  ReconcileTags(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       google::cloud::datacatalog::v1::StarEntryRequest const& request);
 
@@ -306,6 +317,15 @@ class DataCatalogConnection {
       StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
   ImportEntries(
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportEntries(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+  ImportEntries(ExperimentalTag,
+                google::longrunning::Operation const& operation);
 };
 
 /**

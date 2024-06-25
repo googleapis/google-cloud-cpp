@@ -60,6 +60,22 @@ DataprocMetastoreConnection::CreateService(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::CreateService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::CreateServiceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::Service>>
+DataprocMetastoreConnection::CreateService(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreConnection::UpdateService(
     google::cloud::metastore::v1::UpdateServiceRequest const&) {
@@ -68,9 +84,41 @@ DataprocMetastoreConnection::UpdateService(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::UpdateService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::UpdateServiceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::Service>>
+DataprocMetastoreConnection::UpdateService(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::Service>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreConnection::DeleteService(
     google::cloud::metastore::v1::DeleteServiceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::DeleteService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::DeleteServiceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+DataprocMetastoreConnection::DeleteService(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -98,9 +146,41 @@ DataprocMetastoreConnection::CreateMetadataImport(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::CreateMetadataImport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::CreateMetadataImportRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+DataprocMetastoreConnection::CreateMetadataImport(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::MetadataImport>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreConnection::UpdateMetadataImport(
     google::cloud::metastore::v1::UpdateMetadataImportRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::MetadataImport>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::UpdateMetadataImport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::UpdateMetadataImportRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+DataprocMetastoreConnection::UpdateMetadataImport(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::metastore::v1::MetadataImport>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -114,9 +194,41 @@ DataprocMetastoreConnection::ExportMetadata(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::ExportMetadata(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::ExportMetadataRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
+DataprocMetastoreConnection::ExportMetadata(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::MetadataExport>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::metastore::v1::Restore>>
 DataprocMetastoreConnection::RestoreService(
     google::cloud::metastore::v1::RestoreServiceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::Restore>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::RestoreService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::RestoreServiceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::Restore>>
+DataprocMetastoreConnection::RestoreService(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::metastore::v1::Restore>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -144,9 +256,41 @@ DataprocMetastoreConnection::CreateBackup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::CreateBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::CreateBackupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::Backup>>
+DataprocMetastoreConnection::CreateBackup(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreConnection::DeleteBackup(
     google::cloud::metastore::v1::DeleteBackupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::DeleteBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::DeleteBackupRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+DataprocMetastoreConnection::DeleteBackup(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::metastore::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -160,9 +304,41 @@ DataprocMetastoreConnection::QueryMetadata(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::QueryMetadata(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::QueryMetadataRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+DataprocMetastoreConnection::QueryMetadata(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
 DataprocMetastoreConnection::MoveTableToDatabase(
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::MoveTableToDatabase(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+DataprocMetastoreConnection::MoveTableToDatabase(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -172,6 +348,23 @@ future<StatusOr<
     google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
 DataprocMetastoreConnection::AlterMetadataResourceLocation(
     google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreConnection::AlterMetadataResourceLocation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+DataprocMetastoreConnection::AlterMetadataResourceLocation(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

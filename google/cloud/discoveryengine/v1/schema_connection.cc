@@ -60,6 +60,21 @@ SchemaServiceConnection::CreateSchema(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceConnection::CreateSchema(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
+SchemaServiceConnection::CreateSchema(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::Schema>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceConnection::UpdateSchema(
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const&) {
@@ -68,9 +83,39 @@ SchemaServiceConnection::UpdateSchema(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> SchemaServiceConnection::UpdateSchema(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
+SchemaServiceConnection::UpdateSchema(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::Schema>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
 SchemaServiceConnection::DeleteSchema(
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> SchemaServiceConnection::DeleteSchema(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
+SchemaServiceConnection::DeleteSchema(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

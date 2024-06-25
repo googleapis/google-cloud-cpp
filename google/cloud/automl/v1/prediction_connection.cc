@@ -51,6 +51,22 @@ PredictionServiceConnection::BatchPredict(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+PredictionServiceConnection::BatchPredict(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::BatchPredictRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
+PredictionServiceConnection::BatchPredict(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::BatchPredictResult>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

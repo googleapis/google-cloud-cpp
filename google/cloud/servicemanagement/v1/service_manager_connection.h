@@ -22,8 +22,10 @@
 #include "google/cloud/servicemanagement/v1/internal/service_manager_retry_traits.h"
 #include "google/cloud/servicemanagement/v1/service_manager_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -196,16 +198,43 @@ class ServiceManagerConnection {
   CreateService(
       google::api::servicemanagement::v1::CreateServiceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateService(
+      ExperimentalTag, NoAwaitTag,
+      google::api::servicemanagement::v1::CreateServiceRequest const& request);
+
+  virtual future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
+  CreateService(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
   DeleteService(
       google::api::servicemanagement::v1::DeleteServiceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteService(
+      ExperimentalTag, NoAwaitTag,
+      google::api::servicemanagement::v1::DeleteServiceRequest const& request);
+
+  virtual future<
+      StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
+  DeleteService(ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
   UndeleteService(
       google::api::servicemanagement::v1::UndeleteServiceRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UndeleteService(
+      ExperimentalTag, NoAwaitTag,
+      google::api::servicemanagement::v1::UndeleteServiceRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+  UndeleteService(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::api::Service> ListServiceConfigs(
       google::api::servicemanagement::v1::ListServiceConfigsRequest request);
@@ -224,6 +253,16 @@ class ServiceManagerConnection {
       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> SubmitConfigSource(
+      ExperimentalTag, NoAwaitTag,
+      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+  SubmitConfigSource(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::api::servicemanagement::v1::Rollout>
   ListServiceRollouts(
       google::api::servicemanagement::v1::ListServiceRolloutsRequest request);
@@ -237,6 +276,15 @@ class ServiceManagerConnection {
   CreateServiceRollout(
       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateServiceRollout(
+      ExperimentalTag, NoAwaitTag,
+      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+          request);
+
+  virtual future<StatusOr<google::api::servicemanagement::v1::Rollout>>
+  CreateServiceRollout(ExperimentalTag,
+                       google::longrunning::Operation const& operation);
 
   virtual StatusOr<
       google::api::servicemanagement::v1::GenerateConfigReportResponse>

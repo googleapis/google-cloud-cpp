@@ -22,8 +22,10 @@
 #include "google/cloud/workstations/v1/internal/workstations_retry_traits.h"
 #include "google/cloud/workstations/v1/workstations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,15 +201,42 @@ class WorkstationsConnection {
       google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+  CreateWorkstationCluster(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   UpdateWorkstationCluster(
       google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+  UpdateWorkstationCluster(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   DeleteWorkstationCluster(
       google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+  DeleteWorkstationCluster(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::workstations::v1::WorkstationConfig>
   GetWorkstationConfig(
@@ -228,15 +257,42 @@ class WorkstationsConnection {
       google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+  CreateWorkstationConfig(ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   UpdateWorkstationConfig(
       google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+  UpdateWorkstationConfig(ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(
       google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+  DeleteWorkstationConfig(ExperimentalTag,
+                          google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
       google::cloud::workstations::v1::GetWorkstationRequest const& request);
@@ -253,21 +309,61 @@ class WorkstationsConnection {
   CreateWorkstation(
       google::cloud::workstations::v1::CreateWorkstationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  CreateWorkstation(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
   UpdateWorkstation(
       google::cloud::workstations::v1::UpdateWorkstationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  UpdateWorkstation(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(
       google::cloud::workstations::v1::DeleteWorkstationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  DeleteWorkstation(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(
       google::cloud::workstations::v1::StartWorkstationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> StartWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::StartWorkstationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  StartWorkstation(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StopWorkstation(
       google::cloud::workstations::v1::StopWorkstationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> StopWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::StopWorkstationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  StopWorkstation(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(

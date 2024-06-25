@@ -119,6 +119,27 @@ MigrationCenterTracingConnection::CreateImportJob(
   return internal::EndSpan(std::move(span), child_->CreateImportJob(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::CreateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateImportJob");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateImportJob(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
+MigrationCenterTracingConnection::CreateImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateImportJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateImportJob(ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::migrationcenter::v1::ImportJob>
 MigrationCenterTracingConnection::ListImportJobs(
     google::cloud::migrationcenter::v1::ListImportJobsRequest request) {
@@ -149,6 +170,27 @@ MigrationCenterTracingConnection::DeleteImportJob(
   return internal::EndSpan(std::move(span), child_->DeleteImportJob(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::DeleteImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteImportJob");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteImportJob(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterTracingConnection::DeleteImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteImportJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteImportJob(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
 MigrationCenterTracingConnection::UpdateImportJob(
     google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
@@ -156,6 +198,27 @@ MigrationCenterTracingConnection::UpdateImportJob(
       "migrationcenter_v1::MigrationCenterConnection::UpdateImportJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateImportJob(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::UpdateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdateImportJob");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateImportJob(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
+MigrationCenterTracingConnection::UpdateImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdateImportJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateImportJob(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -168,6 +231,29 @@ MigrationCenterTracingConnection::ValidateImportJob(
   return internal::EndSpan(std::move(span), child_->ValidateImportJob(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::ValidateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::ValidateImportJob");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->ValidateImportJob(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterTracingConnection::ValidateImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::ValidateImportJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->ValidateImportJob(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterTracingConnection::RunImportJob(
     google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
@@ -175,6 +261,27 @@ MigrationCenterTracingConnection::RunImportJob(
       "migrationcenter_v1::MigrationCenterConnection::RunImportJob");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RunImportJob(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::RunImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::RunImportJob");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RunImportJob(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterTracingConnection::RunImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::RunImportJob");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RunImportJob(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
@@ -210,6 +317,29 @@ MigrationCenterTracingConnection::CreateImportDataFile(
                            child_->CreateImportDataFile(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::CreateImportDataFile(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateImportDataFile");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateImportDataFile(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>
+MigrationCenterTracingConnection::CreateImportDataFile(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateImportDataFile");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateImportDataFile(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterTracingConnection::DeleteImportDataFile(
     google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
@@ -219,6 +349,29 @@ MigrationCenterTracingConnection::DeleteImportDataFile(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteImportDataFile(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::DeleteImportDataFile(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteImportDataFile");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteImportDataFile(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterTracingConnection::DeleteImportDataFile(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteImportDataFile");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteImportDataFile(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::migrationcenter::v1::Group>
@@ -251,6 +404,27 @@ MigrationCenterTracingConnection::CreateGroup(
   return internal::EndSpan(std::move(span), child_->CreateGroup(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::CreateGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterTracingConnection::CreateGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateGroup(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
 MigrationCenterTracingConnection::UpdateGroup(
     google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
@@ -260,6 +434,27 @@ MigrationCenterTracingConnection::UpdateGroup(
   return internal::EndSpan(std::move(span), child_->UpdateGroup(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::UpdateGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdateGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterTracingConnection::UpdateGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdateGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateGroup(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterTracingConnection::DeleteGroup(
     google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
@@ -267,6 +462,27 @@ MigrationCenterTracingConnection::DeleteGroup(
       "migrationcenter_v1::MigrationCenterConnection::DeleteGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteGroup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::DeleteGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterTracingConnection::DeleteGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteGroup(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
@@ -279,6 +495,29 @@ MigrationCenterTracingConnection::AddAssetsToGroup(
   return internal::EndSpan(std::move(span), child_->AddAssetsToGroup(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::AddAssetsToGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::AddAssetsToGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->AddAssetsToGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterTracingConnection::AddAssetsToGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::AddAssetsToGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->AddAssetsToGroup(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
 MigrationCenterTracingConnection::RemoveAssetsFromGroup(
     google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
@@ -288,6 +527,29 @@ MigrationCenterTracingConnection::RemoveAssetsFromGroup(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RemoveAssetsFromGroup(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::RemoveAssetsFromGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::RemoveAssetsFromGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->RemoveAssetsFromGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterTracingConnection::RemoveAssetsFromGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::RemoveAssetsFromGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RemoveAssetsFromGroup(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::migrationcenter::v1::ErrorFrame>
@@ -341,6 +603,27 @@ MigrationCenterTracingConnection::CreateSource(
   return internal::EndSpan(std::move(span), child_->CreateSource(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::CreateSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateSource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateSource(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Source>>
+MigrationCenterTracingConnection::CreateSource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateSource(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Source>>
 MigrationCenterTracingConnection::UpdateSource(
     google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
@@ -350,6 +633,27 @@ MigrationCenterTracingConnection::UpdateSource(
   return internal::EndSpan(std::move(span), child_->UpdateSource(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::UpdateSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdateSource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateSource(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Source>>
+MigrationCenterTracingConnection::UpdateSource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdateSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateSource(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterTracingConnection::DeleteSource(
     google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
@@ -357,6 +661,27 @@ MigrationCenterTracingConnection::DeleteSource(
       "migrationcenter_v1::MigrationCenterConnection::DeleteSource");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteSource(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::DeleteSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteSource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteSource(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterTracingConnection::DeleteSource(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteSource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteSource(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::migrationcenter::v1::PreferenceSet>
@@ -392,6 +717,29 @@ MigrationCenterTracingConnection::CreatePreferenceSet(
                            child_->CreatePreferenceSet(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::CreatePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreatePreferenceSet");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreatePreferenceSet(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
+MigrationCenterTracingConnection::CreatePreferenceSet(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreatePreferenceSet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreatePreferenceSet(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
 MigrationCenterTracingConnection::UpdatePreferenceSet(
     google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
@@ -403,6 +751,29 @@ MigrationCenterTracingConnection::UpdatePreferenceSet(
                            child_->UpdatePreferenceSet(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::UpdatePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdatePreferenceSet");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->UpdatePreferenceSet(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
+MigrationCenterTracingConnection::UpdatePreferenceSet(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdatePreferenceSet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdatePreferenceSet(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterTracingConnection::DeletePreferenceSet(
     google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
@@ -412,6 +783,29 @@ MigrationCenterTracingConnection::DeletePreferenceSet(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePreferenceSet(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::DeletePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeletePreferenceSet");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeletePreferenceSet(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterTracingConnection::DeletePreferenceSet(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeletePreferenceSet");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeletePreferenceSet(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Settings>
@@ -432,6 +826,27 @@ MigrationCenterTracingConnection::UpdateSettings(
   return internal::EndSpan(std::move(span), child_->UpdateSettings(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::UpdateSettings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdateSettings");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateSettings(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Settings>>
+MigrationCenterTracingConnection::UpdateSettings(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::UpdateSettings");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateSettings(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
 MigrationCenterTracingConnection::CreateReportConfig(
     google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
@@ -441,6 +856,29 @@ MigrationCenterTracingConnection::CreateReportConfig(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->CreateReportConfig(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::CreateReportConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateReportConfig");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateReportConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
+MigrationCenterTracingConnection::CreateReportConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateReportConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateReportConfig(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
@@ -475,6 +913,29 @@ MigrationCenterTracingConnection::DeleteReportConfig(
                            child_->DeleteReportConfig(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::DeleteReportConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteReportConfig");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteReportConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterTracingConnection::DeleteReportConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteReportConfig");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteReportConfig(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Report>>
 MigrationCenterTracingConnection::CreateReport(
     google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
@@ -482,6 +943,27 @@ MigrationCenterTracingConnection::CreateReport(
       "migrationcenter_v1::MigrationCenterConnection::CreateReport");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateReport(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::CreateReport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateReport");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateReport(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Report>>
+MigrationCenterTracingConnection::CreateReport(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::CreateReport");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateReport(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Report>
@@ -512,6 +994,27 @@ MigrationCenterTracingConnection::DeleteReport(
       "migrationcenter_v1::MigrationCenterConnection::DeleteReport");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteReport(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterTracingConnection::DeleteReport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteReport");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteReport(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterTracingConnection::DeleteReport(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "migrationcenter_v1::MigrationCenterConnection::DeleteReport");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteReport(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

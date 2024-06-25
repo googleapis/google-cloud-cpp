@@ -69,6 +69,31 @@ TelcoAutomationTracingConnection::CreateOrchestrationCluster(
                            child_->CreateOrchestrationCluster(request));
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationTracingConnection::CreateOrchestrationCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "telcoautomation_v1::TelcoAutomationConnection::"
+      "CreateOrchestrationCluster");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateOrchestrationCluster(ExperimentalTag{}, NoAwaitTag{},
+                                                request));
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
+TelcoAutomationTracingConnection::CreateOrchestrationCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "telcoautomation_v1::TelcoAutomationConnection::"
+      "CreateOrchestrationCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateOrchestrationCluster(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationTracingConnection::DeleteOrchestrationCluster(
     google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
@@ -79,6 +104,31 @@ TelcoAutomationTracingConnection::DeleteOrchestrationCluster(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteOrchestrationCluster(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationTracingConnection::DeleteOrchestrationCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "telcoautomation_v1::TelcoAutomationConnection::"
+      "DeleteOrchestrationCluster");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteOrchestrationCluster(ExperimentalTag{}, NoAwaitTag{},
+                                                request));
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+TelcoAutomationTracingConnection::DeleteOrchestrationCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "telcoautomation_v1::TelcoAutomationConnection::"
+      "DeleteOrchestrationCluster");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteOrchestrationCluster(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>
@@ -111,6 +161,27 @@ TelcoAutomationTracingConnection::CreateEdgeSlm(
   return internal::EndSpan(std::move(span), child_->CreateEdgeSlm(request));
 }
 
+StatusOr<google::longrunning::Operation>
+TelcoAutomationTracingConnection::CreateEdgeSlm(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
+  auto span = internal::MakeSpan(
+      "telcoautomation_v1::TelcoAutomationConnection::CreateEdgeSlm");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateEdgeSlm(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
+TelcoAutomationTracingConnection::CreateEdgeSlm(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "telcoautomation_v1::TelcoAutomationConnection::CreateEdgeSlm");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateEdgeSlm(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationTracingConnection::DeleteEdgeSlm(
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
@@ -118,6 +189,27 @@ TelcoAutomationTracingConnection::DeleteEdgeSlm(
       "telcoautomation_v1::TelcoAutomationConnection::DeleteEdgeSlm");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEdgeSlm(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TelcoAutomationTracingConnection::DeleteEdgeSlm(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
+  auto span = internal::MakeSpan(
+      "telcoautomation_v1::TelcoAutomationConnection::DeleteEdgeSlm");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteEdgeSlm(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
+TelcoAutomationTracingConnection::DeleteEdgeSlm(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "telcoautomation_v1::TelcoAutomationConnection::DeleteEdgeSlm");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteEdgeSlm(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>

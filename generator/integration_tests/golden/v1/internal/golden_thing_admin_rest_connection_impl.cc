@@ -104,6 +104,49 @@ GoldenThingAdminRestConnectionImpl::CreateDatabase(google::test::admin::database
 
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestConnectionImpl::CreateDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDatabase(request),
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+        return stub_->CreateDatabase(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminRestConnectionImpl::CreateDatabase(ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::test::admin::database::v1::CreateDatabaseMetadata>()) {
+    return make_ready_future<StatusOr<google::test::admin::database::v1::Database>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateDatabase",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::test::admin::database::v1::Database>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::test::admin::database::v1::Database>,
+    polling_policy(*current), __func__);
+
+}
+
 StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminRestConnectionImpl::GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -145,6 +188,49 @@ GoldenThingAdminRestConnectionImpl::UpdateDatabaseDdl(google::test::admin::datab
     &google::cloud::internal::ExtractLongRunningResultMetadata<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>,
     retry_policy(*current), backoff_policy(*current),
     idempotency_policy(*current)->UpdateDatabaseDdl(request),
+    polling_policy(*current), __func__);
+
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestConnectionImpl::UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDatabaseDdl(request),
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+        return stub_->UpdateDatabaseDdl(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
+GoldenThingAdminRestConnectionImpl::UpdateDatabaseDdl(ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::test::admin::database::v1::UpdateDatabaseDdlMetadata>()) {
+    return make_ready_future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>(
+        internal::InvalidArgumentError("operation does not correspond to UpdateDatabaseDdl",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultMetadata<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>,
     polling_policy(*current), __func__);
 
 }
@@ -246,6 +332,49 @@ GoldenThingAdminRestConnectionImpl::CreateBackup(google::test::admin::database::
 
 }
 
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestConnectionImpl::CreateBackup(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackup(request),
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::test::admin::database::v1::CreateBackupRequest const& request) {
+        return stub_->CreateBackup(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::test::admin::database::v1::Backup>>
+GoldenThingAdminRestConnectionImpl::CreateBackup(ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::test::admin::database::v1::CreateBackupMetadata>()) {
+    return make_ready_future<StatusOr<google::test::admin::database::v1::Backup>>(
+        internal::InvalidArgumentError("operation does not correspond to CreateBackup",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::test::admin::database::v1::Backup>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::test::admin::database::v1::Backup>,
+    polling_policy(*current), __func__);
+
+}
+
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminRestConnectionImpl::GetBackup(google::test::admin::database::v1::GetBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -342,6 +471,49 @@ GoldenThingAdminRestConnectionImpl::RestoreDatabase(google::test::admin::databas
     &google::cloud::internal::ExtractLongRunningResultResponse<google::test::admin::database::v1::Database>,
     retry_policy(*current), backoff_policy(*current),
     idempotency_policy(*current)->RestoreDatabase(request),
+    polling_policy(*current), __func__);
+
+}
+
+StatusOr<google::longrunning::Operation>
+GoldenThingAdminRestConnectionImpl::RestoreDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RestoreDatabase(request),
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+        return stub_->RestoreDatabase(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminRestConnectionImpl::RestoreDatabase(ExperimentalTag,
+    google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::test::admin::database::v1::RestoreDatabaseMetadata>()) {
+    return make_ready_future<StatusOr<google::test::admin::database::v1::Database>>(
+        internal::InvalidArgumentError("operation does not correspond to RestoreDatabase",
+                                       GCP_ERROR_INFO().WithMetadata("operation", operation.metadata().DebugString())));
+  }
+  return rest_internal::AsyncRestAwaitLongRunningOperation<google::test::admin::database::v1::Database>(
+    background_->cq(), current, operation,
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::GetOperationRequest const& request) {
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    [stub = stub_](CompletionQueue& cq,
+                   std::unique_ptr<rest_internal::RestContext> context,
+                   google::cloud::internal::ImmutableOptions options,
+                   google::longrunning::CancelOperationRequest const& request) {
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
+    },
+    &google::cloud::internal::ExtractLongRunningResultResponse<google::test::admin::database::v1::Database>,
     polling_policy(*current), __func__);
 
 }

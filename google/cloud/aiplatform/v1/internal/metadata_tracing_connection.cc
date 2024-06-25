@@ -43,6 +43,28 @@ MetadataServiceTracingConnection::CreateMetadataStore(
                            child_->CreateMetadataStore(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceTracingConnection::CreateMetadataStore(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::CreateMetadataStore");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateMetadataStore(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
+MetadataServiceTracingConnection::CreateMetadataStore(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::CreateMetadataStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateMetadataStore(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
 MetadataServiceTracingConnection::GetMetadataStore(
     google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request) {
@@ -73,6 +95,29 @@ MetadataServiceTracingConnection::DeleteMetadataStore(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteMetadataStore(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceTracingConnection::DeleteMetadataStore(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::DeleteMetadataStore");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteMetadataStore(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+MetadataServiceTracingConnection::DeleteMetadataStore(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::DeleteMetadataStore");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteMetadataStore(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
@@ -122,6 +167,27 @@ MetadataServiceTracingConnection::DeleteArtifact(
   return internal::EndSpan(std::move(span), child_->DeleteArtifact(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceTracingConnection::DeleteArtifact(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::DeleteArtifact");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteArtifact(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+MetadataServiceTracingConnection::DeleteArtifact(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::DeleteArtifact");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteArtifact(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
 MetadataServiceTracingConnection::PurgeArtifacts(
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
@@ -129,6 +195,27 @@ MetadataServiceTracingConnection::PurgeArtifacts(
       "aiplatform_v1::MetadataServiceConnection::PurgeArtifacts");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeArtifacts(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceTracingConnection::PurgeArtifacts(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::PurgeArtifacts");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->PurgeArtifacts(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
+MetadataServiceTracingConnection::PurgeArtifacts(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::PurgeArtifacts");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->PurgeArtifacts(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
@@ -178,6 +265,27 @@ MetadataServiceTracingConnection::DeleteContext(
   return internal::EndSpan(std::move(span), child_->DeleteContext(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceTracingConnection::DeleteContext(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::DeleteContext");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteContext(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+MetadataServiceTracingConnection::DeleteContext(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::DeleteContext");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteContext(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
 MetadataServiceTracingConnection::PurgeContexts(
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
@@ -185,6 +293,27 @@ MetadataServiceTracingConnection::PurgeContexts(
       "aiplatform_v1::MetadataServiceConnection::PurgeContexts");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeContexts(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceTracingConnection::PurgeContexts(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::PurgeContexts");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->PurgeContexts(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
+MetadataServiceTracingConnection::PurgeContexts(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::PurgeContexts");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PurgeContexts(ExperimentalTag{}, operation));
 }
 
 StatusOr<
@@ -276,6 +405,27 @@ MetadataServiceTracingConnection::DeleteExecution(
   return internal::EndSpan(std::move(span), child_->DeleteExecution(request));
 }
 
+StatusOr<google::longrunning::Operation>
+MetadataServiceTracingConnection::DeleteExecution(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::DeleteExecution");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteExecution(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+MetadataServiceTracingConnection::DeleteExecution(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::DeleteExecution");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteExecution(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
 MetadataServiceTracingConnection::PurgeExecutions(
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
@@ -283,6 +433,27 @@ MetadataServiceTracingConnection::PurgeExecutions(
       "aiplatform_v1::MetadataServiceConnection::PurgeExecutions");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->PurgeExecutions(request));
+}
+
+StatusOr<google::longrunning::Operation>
+MetadataServiceTracingConnection::PurgeExecutions(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::PurgeExecutions");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->PurgeExecutions(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
+MetadataServiceTracingConnection::PurgeExecutions(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::MetadataServiceConnection::PurgeExecutions");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->PurgeExecutions(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>

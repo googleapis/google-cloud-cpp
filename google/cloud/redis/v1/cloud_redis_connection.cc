@@ -65,9 +65,39 @@ CloudRedisConnection::CreateInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisConnection::CreateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::redis::v1::CreateInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnection::CreateInstance(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::UpdateInstance(
     google::cloud::redis::v1::UpdateInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisConnection::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::redis::v1::UpdateInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnection::UpdateInstance(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::redis::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -81,9 +111,39 @@ CloudRedisConnection::UpgradeInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisConnection::UpgradeInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::redis::v1::UpgradeInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnection::UpgradeInstance(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::ImportInstance(
     google::cloud::redis::v1::ImportInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisConnection::ImportInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::redis::v1::ImportInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnection::ImportInstance(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::redis::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,9 +157,39 @@ CloudRedisConnection::ExportInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisConnection::ExportInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::redis::v1::ExportInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnection::ExportInstance(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::FailoverInstance(
     google::cloud::redis::v1::FailoverInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> CloudRedisConnection::FailoverInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::redis::v1::FailoverInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnection::FailoverInstance(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::redis::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -113,9 +203,40 @@ CloudRedisConnection::DeleteInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> CloudRedisConnection::DeleteInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::redis::v1::DeleteInstanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
+CloudRedisConnection::DeleteInstance(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnection::RescheduleMaintenance(
     google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudRedisConnection::RescheduleMaintenance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnection::RescheduleMaintenance(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::redis::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -46,6 +46,21 @@ ModelServiceConnection::CreateModel(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ModelServiceConnection::CreateModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::CreateModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::retail::v2::Model>>
+ModelServiceConnection::CreateModel(ExperimentalTag,
+                                    google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::retail::v2::Model>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::retail::v2::Model> ModelServiceConnection::GetModel(
     google::cloud::retail::v2::GetModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -82,6 +97,21 @@ StatusOr<google::cloud::retail::v2::Model> ModelServiceConnection::UpdateModel(
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
 ModelServiceConnection::TuneModel(
     google::cloud::retail::v2::TuneModelRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::retail::v2::TuneModelResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ModelServiceConnection::TuneModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::TuneModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
+ModelServiceConnection::TuneModel(ExperimentalTag,
+                                  google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::TuneModelResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

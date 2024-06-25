@@ -52,6 +52,16 @@ class PacketMirroringsTracingConnection
       google::cloud::cpp::compute::packet_mirrorings::v1::
           DeletePacketMirroringRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirroring(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          DeletePacketMirroringRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeletePacketMirroring(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::PacketMirroring> GetPacketMirroring(
       google::cloud::cpp::compute::packet_mirrorings::v1::
           GetPacketMirroringRequest const& request) override;
@@ -61,6 +71,16 @@ class PacketMirroringsTracingConnection
       google::cloud::cpp::compute::packet_mirrorings::v1::
           InsertPacketMirroringRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirroring(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          InsertPacketMirroringRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertPacketMirroring(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
   ListPacketMirrorings(google::cloud::cpp::compute::packet_mirrorings::v1::
                            ListPacketMirroringsRequest request) override;
@@ -68,6 +88,16 @@ class PacketMirroringsTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPacketMirroring(google::cloud::cpp::compute::packet_mirrorings::v1::
                            PatchPacketMirroringRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirroring(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::packet_mirrorings::v1::
+          PatchPacketMirroringRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchPacketMirroring(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::packet_mirrorings::v1::

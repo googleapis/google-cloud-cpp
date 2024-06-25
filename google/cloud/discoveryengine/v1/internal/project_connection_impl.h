@@ -56,6 +56,15 @@ class ProjectServiceConnectionImpl
       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ProvisionProject(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::Project>>
+  ProvisionProject(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<discoveryengine_v1_internal::ProjectServiceStub> stub_;

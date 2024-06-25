@@ -22,8 +22,10 @@
 #include "google/cloud/compute/target_ssl_proxies/v1/internal/target_ssl_proxies_retry_traits.h"
 #include "google/cloud/compute/target_ssl_proxies/v1/target_ssl_proxies_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -190,6 +192,16 @@ class TargetSslProxiesConnection {
   DeleteTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
                            DeleteTargetSslProxyRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteTargetSslProxy(ExperimentalTag, NoAwaitTag,
+                       google::cloud::cpp::compute::target_ssl_proxies::v1::
+                           DeleteTargetSslProxyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetSslProxy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
   GetTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
                         GetTargetSslProxyRequest const& request);
@@ -197,6 +209,16 @@ class TargetSslProxiesConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetSslProxy(google::cloud::cpp::compute::target_ssl_proxies::v1::
                            InsertTargetSslProxyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertTargetSslProxy(ExperimentalTag, NoAwaitTag,
+                       google::cloud::cpp::compute::target_ssl_proxies::v1::
+                           InsertTargetSslProxyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetSslProxy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
   ListTargetSslProxies(google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -206,21 +228,69 @@ class TargetSslProxiesConnection {
   SetBackendService(google::cloud::cpp::compute::target_ssl_proxies::v1::
                         SetBackendServiceRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetBackendService(ExperimentalTag, NoAwaitTag,
+                    google::cloud::cpp::compute::target_ssl_proxies::v1::
+                        SetBackendServiceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetBackendService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCertificateMap(google::cloud::cpp::compute::target_ssl_proxies::v1::
                         SetCertificateMapRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetCertificateMap(ExperimentalTag, NoAwaitTag,
+                    google::cloud::cpp::compute::target_ssl_proxies::v1::
+                        SetCertificateMapRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetCertificateMap(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetProxyHeader(google::cloud::cpp::compute::target_ssl_proxies::v1::
                      SetProxyHeaderRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::
+          SetProxyHeaderRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetProxyHeader(ExperimentalTag,
+                 google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslCertificates(google::cloud::cpp::compute::target_ssl_proxies::v1::
                          SetSslCertificatesRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSslCertificates(ExperimentalTag, NoAwaitTag,
+                     google::cloud::cpp::compute::target_ssl_proxies::v1::
+                         SetSslCertificatesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSslCertificates(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslPolicy(google::cloud::cpp::compute::target_ssl_proxies::v1::
                    SetSslPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_ssl_proxies::v1::
+          SetSslPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSslPolicy(ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

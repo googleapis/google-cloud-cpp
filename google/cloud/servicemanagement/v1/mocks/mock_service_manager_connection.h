@@ -64,9 +64,33 @@ class MockServiceManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateService,
+      (ExperimentalTag, NoAwaitTag,
+       google::api::servicemanagement::v1::CreateServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::api::servicemanagement::v1::ManagedService>>,
+      CreateService,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>,
       DeleteService,
       (google::api::servicemanagement::v1::DeleteServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteService,
+      (ExperimentalTag, NoAwaitTag,
+       google::api::servicemanagement::v1::DeleteServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>,
+      DeleteService,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<
@@ -74,6 +98,19 @@ class MockServiceManagerConnection
               UndeleteService,
               (google::api::servicemanagement::v1::UndeleteServiceRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeleteService,
+              (ExperimentalTag, NoAwaitTag,
+               google::api::servicemanagement::v1::UndeleteServiceRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::api::servicemanagement::v1::UndeleteServiceResponse>>,
+              UndeleteService,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -102,6 +139,20 @@ class MockServiceManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, SubmitConfigSource,
+      (ExperimentalTag, NoAwaitTag,
+       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::api::servicemanagement::v1::SubmitConfigSourceResponse>>,
+      SubmitConfigSource,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       (StreamRange<google::api::servicemanagement::v1::Rollout>),
       ListServiceRollouts,
       (google::api::servicemanagement::v1::ListServiceRolloutsRequest request),
@@ -119,6 +170,19 @@ class MockServiceManagerConnection
       (google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateServiceRollout,
+      (ExperimentalTag, NoAwaitTag,
+       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::api::servicemanagement::v1::Rollout>>,
+              CreateServiceRollout,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<

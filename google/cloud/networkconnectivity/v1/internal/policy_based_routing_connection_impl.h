@@ -69,10 +69,30 @@ class PolicyBasedRoutingServiceConnectionImpl
       google::cloud::networkconnectivity::v1::
           CreatePolicyBasedRouteRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          CreatePolicyBasedRouteRequest const& request) override;
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
+  CreatePolicyBasedRoute(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeletePolicyBasedRoute(
       google::cloud::networkconnectivity::v1::
           DeletePolicyBasedRouteRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkconnectivity::v1::
+          DeletePolicyBasedRouteRequest const& request) override;
+
+  future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+  DeletePolicyBasedRoute(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

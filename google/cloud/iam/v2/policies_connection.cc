@@ -56,14 +56,50 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnection::CreatePolicy(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> PoliciesConnection::CreatePolicy(
+    ExperimentalTag, NoAwaitTag, google::iam::v2::CreatePolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::iam::v2::Policy>> PoliciesConnection::CreatePolicy(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<google::iam::v2::Policy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnection::UpdatePolicy(
     google::iam::v2::UpdatePolicyRequest const&) {
   return google::cloud::make_ready_future<StatusOr<google::iam::v2::Policy>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> PoliciesConnection::UpdatePolicy(
+    ExperimentalTag, NoAwaitTag, google::iam::v2::UpdatePolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::iam::v2::Policy>> PoliciesConnection::UpdatePolicy(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<google::iam::v2::Policy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnection::DeletePolicy(
     google::iam::v2::DeletePolicyRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<google::iam::v2::Policy>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> PoliciesConnection::DeletePolicy(
+    ExperimentalTag, NoAwaitTag, google::iam::v2::DeletePolicyRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::iam::v2::Policy>> PoliciesConnection::DeletePolicy(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<google::iam::v2::Policy>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }

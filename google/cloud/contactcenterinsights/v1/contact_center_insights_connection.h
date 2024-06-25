@@ -22,8 +22,10 @@
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection_idempotency_policy.h"
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -203,6 +205,16 @@ class ContactCenterInsightsConnection {
       google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UploadConversation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
+  UploadConversation(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   UpdateConversation(
       google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
@@ -227,6 +239,15 @@ class ContactCenterInsightsConnection {
       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateAnalysis(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
+  CreateAnalysis(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
   GetAnalysis(
       google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
@@ -245,15 +266,45 @@ class ContactCenterInsightsConnection {
   BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::
                                BulkAnalyzeConversationsRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> BulkAnalyzeConversations(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkAnalyzeConversationsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
+                              BulkAnalyzeConversationsResponse>>
+  BulkAnalyzeConversations(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
                               BulkDeleteConversationsResponse>>
   BulkDeleteConversations(google::cloud::contactcenterinsights::v1::
                               BulkDeleteConversationsRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> BulkDeleteConversations(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          BulkDeleteConversationsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
+                              BulkDeleteConversationsResponse>>
+  BulkDeleteConversations(ExperimentalTag,
+                          google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
   IngestConversations(google::cloud::contactcenterinsights::v1::
                           IngestConversationsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> IngestConversations(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::
+          IngestConversationsRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+  IngestConversations(ExperimentalTag,
+                      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
@@ -261,10 +312,29 @@ class ContactCenterInsightsConnection {
       google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> ExportInsightsData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+  ExportInsightsData(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
   CreateIssueModel(
       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateIssueModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
+  CreateIssueModel(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
   UpdateIssueModel(
@@ -288,17 +358,47 @@ class ContactCenterInsightsConnection {
       google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteIssueModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+  DeleteIssueModel(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
   DeployIssueModel(
       google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeployIssueModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+  DeployIssueModel(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
   UndeployIssueModel(
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> UndeployIssueModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+  UndeployIssueModel(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
       google::cloud::contactcenterinsights::v1::GetIssueRequest const& request);

@@ -64,6 +64,16 @@ class ServiceAttachmentsRestConnectionImpl
       google::cloud::cpp::compute::service_attachments::v1::
           DeleteServiceAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::service_attachments::v1::
+          DeleteServiceAttachmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteServiceAttachment(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
   GetServiceAttachment(google::cloud::cpp::compute::service_attachments::v1::
                            GetServiceAttachmentRequest const& request) override;
@@ -77,6 +87,16 @@ class ServiceAttachmentsRestConnectionImpl
       google::cloud::cpp::compute::service_attachments::v1::
           InsertServiceAttachmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::service_attachments::v1::
+          InsertServiceAttachmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertServiceAttachment(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
   ListServiceAttachments(google::cloud::cpp::compute::service_attachments::v1::
                              ListServiceAttachmentsRequest request) override;
@@ -85,6 +105,16 @@ class ServiceAttachmentsRestConnectionImpl
   PatchServiceAttachment(
       google::cloud::cpp::compute::service_attachments::v1::
           PatchServiceAttachmentRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::service_attachments::v1::
+          PatchServiceAttachmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchServiceAttachment(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::service_attachments::v1::

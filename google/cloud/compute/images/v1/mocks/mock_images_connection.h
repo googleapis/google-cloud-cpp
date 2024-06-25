@@ -52,10 +52,35 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteImage,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteImage,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Deprecate,
               (google::cloud::cpp::compute::images::v1::DeprecateRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, Deprecate,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::images::v1::DeprecateRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Deprecate,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -82,6 +107,19 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertImage,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::images::v1::InsertImageRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertImage,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::Image>), ListImages,
       (google::cloud::cpp::compute::images::v1::ListImagesRequest request),
       (override));
@@ -90,6 +128,18 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
               PatchImage,
               (google::cloud::cpp::compute::images::v1::PatchImageRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchImage,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::images::v1::PatchImageRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchImage,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -102,6 +152,18 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
               SetLabels,
               (google::cloud::cpp::compute::images::v1::SetLabelsRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::images::v1::SetLabelsRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetLabels,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

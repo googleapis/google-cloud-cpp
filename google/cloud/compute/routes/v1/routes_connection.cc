@@ -44,6 +44,22 @@ RoutesConnection::DeleteRoute(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutesConnection::DeleteRoute(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutesConnection::DeleteRoute(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Route> RoutesConnection::GetRoute(
     google::cloud::cpp::compute::routes::v1::GetRouteRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -52,6 +68,22 @@ StatusOr<google::cloud::cpp::compute::v1::Route> RoutesConnection::GetRoute(
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesConnection::InsertRoute(
     google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RoutesConnection::InsertRoute(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RoutesConnection::InsertRoute(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

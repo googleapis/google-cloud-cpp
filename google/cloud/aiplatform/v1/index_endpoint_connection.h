@@ -22,8 +22,10 @@
 #include "google/cloud/aiplatform/v1/index_endpoint_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/index_endpoint_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -194,6 +196,14 @@ class IndexEndpointServiceConnection {
   CreateIndexEndpoint(
       google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
+  CreateIndexEndpoint(ExperimentalTag,
+                      google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
   GetIndexEndpoint(
       google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request);
@@ -211,17 +221,50 @@ class IndexEndpointServiceConnection {
   DeleteIndexEndpoint(
       google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteIndexEndpoint(ExperimentalTag,
+                      google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
   DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeployIndex(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeployIndexRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
+  DeployIndex(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
   UndeployIndex(
       google::cloud::aiplatform::v1::UndeployIndexRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UndeployIndex(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UndeployIndexRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
+  UndeployIndex(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
   MutateDeployedIndex(
       google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> MutateDeployedIndex(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
+  MutateDeployedIndex(ExperimentalTag,
+                      google::longrunning::Operation const& operation);
 };
 
 /**

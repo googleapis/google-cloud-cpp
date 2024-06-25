@@ -52,43 +52,124 @@ class DataMigrationServiceTracingConnection
       google::cloud::clouddms::v1::CreateMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateMigrationJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::CreateMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  CreateMigrationJob(ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   UpdateMigrationJob(
       google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateMigrationJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  UpdateMigrationJob(ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteMigrationJob(
       google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteMigrationJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+  DeleteMigrationJob(ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> StartMigrationJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::StartMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> StopMigrationJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::StopMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   ResumeMigrationJob(
       google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ResumeMigrationJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  ResumeMigrationJob(ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   PromoteMigrationJob(
       google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> PromoteMigrationJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  PromoteMigrationJob(ExperimentalTag,
+                      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   VerifyMigrationJob(
       google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> VerifyMigrationJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  VerifyMigrationJob(ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   RestartMigrationJob(
       google::cloud::clouddms::v1::RestartMigrationJobRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> RestartMigrationJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::RestartMigrationJobRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
+  RestartMigrationJob(ExperimentalTag,
+                      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::clouddms::v1::SshScript> GenerateSshScript(
       google::cloud::clouddms::v1::GenerateSshScriptRequest const& request)
@@ -112,20 +193,60 @@ class DataMigrationServiceTracingConnection
       google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
+  CreateConnectionProfile(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
   UpdateConnectionProfile(
       google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
+  UpdateConnectionProfile(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteConnectionProfile(
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+  DeleteConnectionProfile(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
   CreatePrivateConnection(
       google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
+  CreatePrivateConnection(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::clouddms::v1::PrivateConnection> GetPrivateConnection(
       google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request)
@@ -140,6 +261,16 @@ class DataMigrationServiceTracingConnection
   DeletePrivateConnection(
       google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+  DeletePrivateConnection(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
   GetConversionWorkspace(
@@ -156,15 +287,45 @@ class DataMigrationServiceTracingConnection
       google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateConversionWorkspace(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  CreateConversionWorkspace(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   UpdateConversionWorkspace(
       google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateConversionWorkspace(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  UpdateConversionWorkspace(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteConversionWorkspace(
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteConversionWorkspace(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
+  DeleteConversionWorkspace(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
       google::cloud::clouddms::v1::CreateMappingRuleRequest const& request)
@@ -186,30 +347,89 @@ class DataMigrationServiceTracingConnection
       google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> SeedConversionWorkspace(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  SeedConversionWorkspace(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   ImportMappingRules(
       google::cloud::clouddms::v1::ImportMappingRulesRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> ImportMappingRules(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::ImportMappingRulesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  ImportMappingRules(ExperimentalTag,
+                     google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   ConvertConversionWorkspace(
       google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ConvertConversionWorkspace(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  ConvertConversionWorkspace(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   CommitConversionWorkspace(
       google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> CommitConversionWorkspace(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  CommitConversionWorkspace(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   RollbackConversionWorkspace(
       google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> RollbackConversionWorkspace(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  RollbackConversionWorkspace(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   ApplyConversionWorkspace(
       google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> ApplyConversionWorkspace(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
+  ApplyConversionWorkspace(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::clouddms::v1::DatabaseEntity>
   DescribeDatabaseEntities(

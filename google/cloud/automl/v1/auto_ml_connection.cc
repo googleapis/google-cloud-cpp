@@ -46,6 +46,21 @@ AutoMlConnection::CreateDataset(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlConnection::CreateDataset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::CreateDatasetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::Dataset>>
+AutoMlConnection::CreateDataset(ExperimentalTag,
+                                google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::Dataset>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlConnection::GetDataset(
     google::cloud::automl::v1::GetDatasetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -71,6 +86,21 @@ AutoMlConnection::DeleteDataset(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlConnection::DeleteDataset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::DeleteDatasetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlConnection::DeleteDataset(ExperimentalTag,
+                                google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnection::ImportData(
     google::cloud::automl::v1::ImportDataRequest const&) {
@@ -79,9 +109,39 @@ AutoMlConnection::ImportData(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlConnection::ImportData(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::ImportDataRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlConnection::ImportData(ExperimentalTag,
+                             google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnection::ExportData(
     google::cloud::automl::v1::ExportDataRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> AutoMlConnection::ExportData(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::ExportDataRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlConnection::ExportData(ExperimentalTag,
+                             google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::automl::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -96,6 +156,21 @@ AutoMlConnection::GetAnnotationSpec(
 future<StatusOr<google::cloud::automl::v1::Model>>
 AutoMlConnection::CreateModel(
     google::cloud::automl::v1::CreateModelRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::Model>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> AutoMlConnection::CreateModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::CreateModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::Model>>
+AutoMlConnection::CreateModel(ExperimentalTag,
+                              google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::automl::v1::Model>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -121,6 +196,21 @@ AutoMlConnection::DeleteModel(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlConnection::DeleteModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::DeleteModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlConnection::DeleteModel(ExperimentalTag,
+                              google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::automl::v1::Model> AutoMlConnection::UpdateModel(
     google::cloud::automl::v1::UpdateModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -134,6 +224,21 @@ AutoMlConnection::DeployModel(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlConnection::DeployModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::DeployModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlConnection::DeployModel(ExperimentalTag,
+                              google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnection::UndeployModel(
     google::cloud::automl::v1::UndeployModelRequest const&) {
@@ -142,9 +247,39 @@ AutoMlConnection::UndeployModel(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> AutoMlConnection::UndeployModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::UndeployModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlConnection::UndeployModel(ExperimentalTag,
+                                google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnection::ExportModel(
     google::cloud::automl::v1::ExportModelRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::automl::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> AutoMlConnection::ExportModel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::automl::v1::ExportModelRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
+AutoMlConnection::ExportModel(ExperimentalTag,
+                              google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::automl::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

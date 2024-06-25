@@ -51,6 +51,17 @@ class MockAutokeyConnection : public kms_v1::AutokeyConnection {
               (google::cloud::kms::v1::CreateKeyHandleRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateKeyHandle,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::kms::v1::CreateKeyHandleRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::kms::v1::KeyHandle>>,
+              CreateKeyHandle,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::kms::v1::KeyHandle>, GetKeyHandle,
               (google::cloud::kms::v1::GetKeyHandleRequest const& request),
               (override));

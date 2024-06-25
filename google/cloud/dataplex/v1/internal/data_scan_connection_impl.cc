@@ -105,6 +105,58 @@ DataScanServiceConnectionImpl::CreateDataScan(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataScanServiceConnectionImpl::CreateDataScan(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateDataScan(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
+        return stub_->CreateDataScan(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataScan>>
+DataScanServiceConnectionImpl::CreateDataScan(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataplex::v1::DataScan>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateDataScan",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataplex::v1::DataScan>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataplex::v1::DataScan>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::DataScan>>
 DataScanServiceConnectionImpl::UpdateDataScan(
     google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
@@ -144,6 +196,58 @@ DataScanServiceConnectionImpl::UpdateDataScan(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataScanServiceConnectionImpl::UpdateDataScan(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateDataScan(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
+        return stub_->UpdateDataScan(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::DataScan>>
+DataScanServiceConnectionImpl::UpdateDataScan(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::dataplex::v1::DataScan>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateDataScan",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataplex::v1::DataScan>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::dataplex::v1::DataScan>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataScanServiceConnectionImpl::DeleteDataScan(
     google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
@@ -180,6 +284,59 @@ DataScanServiceConnectionImpl::DeleteDataScan(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::dataplex::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataScanServiceConnectionImpl::DeleteDataScan(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteDataScan(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
+        return stub_->DeleteDataScan(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataScanServiceConnectionImpl::DeleteDataScan(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteDataScan",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataplex::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataplex::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

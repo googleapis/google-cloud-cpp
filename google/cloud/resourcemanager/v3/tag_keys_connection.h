@@ -22,8 +22,10 @@
 #include "google/cloud/resourcemanager/v3/internal/tag_keys_retry_traits.h"
 #include "google/cloud/resourcemanager/v3/tag_keys_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -197,13 +199,37 @@ class TagKeysConnection {
   CreateTagKey(
       google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateTagKey(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+  CreateTagKey(ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
   UpdateTagKey(
       google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateTagKey(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+  UpdateTagKey(ExperimentalTag,
+               google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
   DeleteTagKey(
       google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteTagKey(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
+  DeleteTagKey(ExperimentalTag,
+               google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);

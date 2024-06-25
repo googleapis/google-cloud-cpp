@@ -51,6 +51,16 @@ class ForwardingRulesTracingConnection
   DeleteForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
                            DeleteForwardingRuleRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRule(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          DeleteForwardingRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteForwardingRule(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::ForwardingRule> GetForwardingRule(
       google::cloud::cpp::compute::forwarding_rules::v1::
           GetForwardingRuleRequest const& request) override;
@@ -58,6 +68,16 @@ class ForwardingRulesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
                            InsertForwardingRuleRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRule(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          InsertForwardingRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertForwardingRule(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::ForwardingRule>
   ListForwardingRules(google::cloud::cpp::compute::forwarding_rules::v1::
@@ -67,13 +87,41 @@ class ForwardingRulesTracingConnection
   PatchForwardingRule(google::cloud::cpp::compute::forwarding_rules::v1::
                           PatchForwardingRuleRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRule(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::forwarding_rules::v1::
+          PatchForwardingRuleRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchForwardingRule(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
       google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   std::shared_ptr<compute_forwarding_rules_v1::ForwardingRulesConnection>

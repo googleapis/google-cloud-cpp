@@ -69,10 +69,34 @@ class MockProjectsConnection : public resourcemanager_v3::ProjectsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateProject,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::CreateProjectRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
+              CreateProject,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       UpdateProject,
       (google::cloud::resourcemanager::v3::UpdateProjectRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateProject,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
+              UpdateProject,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
@@ -81,15 +105,51 @@ class MockProjectsConnection : public resourcemanager_v3::ProjectsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, MoveProject,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::MoveProjectRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
+              MoveProject,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       DeleteProject,
       (google::cloud::resourcemanager::v3::DeleteProjectRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteProject,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
+              DeleteProject,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
               UndeleteProject,
               (google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeleteProject,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
+              UndeleteProject,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,

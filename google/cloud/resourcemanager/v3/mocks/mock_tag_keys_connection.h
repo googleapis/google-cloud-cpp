@@ -69,16 +69,52 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateTagKey,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
+              CreateTagKey,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
       UpdateTagKey,
       (google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateTagKey,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
+              UpdateTagKey,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
       DeleteTagKey,
       (google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteTagKey,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
+              DeleteTagKey,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),

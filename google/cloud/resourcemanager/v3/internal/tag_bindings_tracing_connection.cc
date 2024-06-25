@@ -55,6 +55,29 @@ TagBindingsTracingConnection::CreateTagBinding(
   return internal::EndSpan(std::move(span), child_->CreateTagBinding(request));
 }
 
+StatusOr<google::longrunning::Operation>
+TagBindingsTracingConnection::CreateTagBinding(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::TagBindingsConnection::CreateTagBinding");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateTagBinding(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
+TagBindingsTracingConnection::CreateTagBinding(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::TagBindingsConnection::CreateTagBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateTagBinding(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
 TagBindingsTracingConnection::DeleteTagBinding(
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
@@ -63,6 +86,29 @@ TagBindingsTracingConnection::DeleteTagBinding(
       "resourcemanager_v3::TagBindingsConnection::DeleteTagBinding");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteTagBinding(request));
+}
+
+StatusOr<google::longrunning::Operation>
+TagBindingsTracingConnection::DeleteTagBinding(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::TagBindingsConnection::DeleteTagBinding");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteTagBinding(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
+TagBindingsTracingConnection::DeleteTagBinding(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::TagBindingsConnection::DeleteTagBinding");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteTagBinding(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>

@@ -76,21 +76,68 @@ class EntityTypesConnectionImpl : public dialogflow_es::EntityTypesConnection {
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
+  BatchUpdateEntityTypes(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
       google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+          request) override;
+
+  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
       google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchCreateEntities(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request)
+      override;
+
+  future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
       google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BatchUpdateEntities(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request)
+      override;
+
+  future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
       google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> BatchDeleteEntities(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request)
+      override;
+
+  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

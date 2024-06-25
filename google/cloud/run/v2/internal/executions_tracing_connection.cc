@@ -61,6 +61,27 @@ ExecutionsTracingConnection::DeleteExecution(
   return internal::EndSpan(std::move(span), child_->DeleteExecution(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ExecutionsTracingConnection::DeleteExecution(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::run::v2::DeleteExecutionRequest const& request) {
+  auto span =
+      internal::MakeSpan("run_v2::ExecutionsConnection::DeleteExecution");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteExecution(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsTracingConnection::DeleteExecution(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("run_v2::ExecutionsConnection::DeleteExecution");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteExecution(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsTracingConnection::CancelExecution(
     google::cloud::run::v2::CancelExecutionRequest const& request) {
@@ -68,6 +89,27 @@ ExecutionsTracingConnection::CancelExecution(
       internal::MakeSpan("run_v2::ExecutionsConnection::CancelExecution");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CancelExecution(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ExecutionsTracingConnection::CancelExecution(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::run::v2::CancelExecutionRequest const& request) {
+  auto span =
+      internal::MakeSpan("run_v2::ExecutionsConnection::CancelExecution");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CancelExecution(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::run::v2::Execution>>
+ExecutionsTracingConnection::CancelExecution(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("run_v2::ExecutionsConnection::CancelExecution");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CancelExecution(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

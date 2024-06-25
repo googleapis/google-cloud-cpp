@@ -61,13 +61,40 @@ class WorkflowsConnectionImpl : public workflows_v1::WorkflowsConnection {
       google::cloud::workflows::v1::CreateWorkflowRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateWorkflow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workflows::v1::CreateWorkflowRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
   DeleteWorkflow(google::cloud::workflows::v1::DeleteWorkflowRequest const&
                      request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteWorkflow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workflows::v1::DeleteWorkflowRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
+  DeleteWorkflow(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateWorkflow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -59,6 +59,17 @@ class RegionNotificationEndpointsRestConnectionImpl
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           DeleteNotificationEndpointRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNotificationEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          DeleteNotificationEndpointRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNotificationEndpoint(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
   GetNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
@@ -68,6 +79,17 @@ class RegionNotificationEndpointsRestConnectionImpl
   InsertNotificationEndpoint(
       google::cloud::cpp::compute::region_notification_endpoints::v1::
           InsertNotificationEndpointRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNotificationEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_notification_endpoints::v1::
+          InsertNotificationEndpointRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNotificationEndpoint(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>
   ListRegionNotificationEndpoints(

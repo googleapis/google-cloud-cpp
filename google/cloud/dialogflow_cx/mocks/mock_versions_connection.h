@@ -63,6 +63,18 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateVersion,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>,
+              CreateVersion,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::cx::v3::Version>, UpdateVersion,
       (google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request),
       (override));
@@ -76,6 +88,17 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
       future<StatusOr<google::protobuf::Struct>>, LoadVersion,
       (google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, LoadVersion,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, LoadVersion,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>,

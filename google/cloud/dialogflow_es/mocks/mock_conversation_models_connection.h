@@ -54,6 +54,19 @@ class MockConversationModelsConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateConversationModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>,
+      CreateConversationModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::ConversationModel>,
               GetConversationModel,
               (google::cloud::dialogflow::v2::GetConversationModelRequest const&
@@ -75,6 +88,20 @@ class MockConversationModelsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteConversationModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
+                                  DeleteConversationModelOperationMetadata>>,
+              DeleteConversationModel,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           DeployConversationModelOperationMetadata>>,
       DeployConversationModel,
@@ -83,12 +110,40 @@ class MockConversationModelsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeployConversationModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
+                                  DeployConversationModelOperationMetadata>>,
+              DeployConversationModel,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           UndeployConversationModelOperationMetadata>>,
       UndeployConversationModel,
       (google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UndeployConversationModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
+                                  UndeployConversationModelOperationMetadata>>,
+              UndeployConversationModel,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>,
@@ -110,6 +165,20 @@ class MockConversationModelsConnection
       CreateConversationModelEvaluation,
       (google::cloud::dialogflow::v2::
            CreateConversationModelEvaluationRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              CreateConversationModelEvaluation,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::dialogflow::v2::
+                   CreateConversationModelEvaluationRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>,
+      CreateConversationModelEvaluation,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

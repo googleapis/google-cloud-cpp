@@ -73,6 +73,31 @@ AppConnectionsServiceTracingConnection::CreateAppConnection(
                            child_->CreateAppConnection(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceTracingConnection::CreateAppConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        CreateAppConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "CreateAppConnection");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateAppConnection(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+AppConnectionsServiceTracingConnection::CreateAppConnection(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "CreateAppConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateAppConnection(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
 AppConnectionsServiceTracingConnection::UpdateAppConnection(
     google::cloud::beyondcorp::appconnections::v1::
@@ -83,6 +108,31 @@ AppConnectionsServiceTracingConnection::UpdateAppConnection(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->UpdateAppConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceTracingConnection::UpdateAppConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        UpdateAppConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "UpdateAppConnection");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->UpdateAppConnection(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
+AppConnectionsServiceTracingConnection::UpdateAppConnection(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "UpdateAppConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateAppConnection(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
@@ -96,6 +146,32 @@ AppConnectionsServiceTracingConnection::DeleteAppConnection(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteAppConnection(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AppConnectionsServiceTracingConnection::DeleteAppConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::beyondcorp::appconnections::v1::
+        DeleteAppConnectionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "DeleteAppConnection");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteAppConnection(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
+                    AppConnectionOperationMetadata>>
+AppConnectionsServiceTracingConnection::DeleteAppConnection(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "beyondcorp_appconnections_v1::AppConnectionsServiceConnection::"
+      "DeleteAppConnection");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAppConnection(
+                                                ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::beyondcorp::appconnections::v1::

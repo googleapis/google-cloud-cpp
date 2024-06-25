@@ -46,6 +46,22 @@ SessionControllerConnection::CreateSession(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerConnection::CreateSession(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::CreateSessionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Session>>
+SessionControllerConnection::CreateSession(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataproc::v1::Session>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::dataproc::v1::Session>
 SessionControllerConnection::GetSession(
     google::cloud::dataproc::v1::GetSessionRequest const&) {
@@ -68,9 +84,41 @@ SessionControllerConnection::TerminateSession(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+SessionControllerConnection::TerminateSession(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::TerminateSessionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Session>>
+SessionControllerConnection::TerminateSession(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataproc::v1::Session>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerConnection::DeleteSession(
     google::cloud::dataproc::v1::DeleteSessionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataproc::v1::Session>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SessionControllerConnection::DeleteSession(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::DeleteSessionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Session>>
+SessionControllerConnection::DeleteSession(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataproc::v1::Session>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

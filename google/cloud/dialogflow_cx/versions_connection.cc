@@ -60,6 +60,21 @@ VersionsConnection::CreateVersion(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> VersionsConnection::CreateVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::CreateVersionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
+VersionsConnection::CreateVersion(ExperimentalTag,
+                                  google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dialogflow::cx::v3::Version>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsConnection::UpdateVersion(
     google::cloud::dialogflow::cx::v3::UpdateVersionRequest const&) {
@@ -73,6 +88,19 @@ Status VersionsConnection::DeleteVersion(
 
 future<StatusOr<google::protobuf::Struct>> VersionsConnection::LoadVersion(
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> VersionsConnection::LoadVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::protobuf::Struct>> VersionsConnection::LoadVersion(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }

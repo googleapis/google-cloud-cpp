@@ -63,15 +63,51 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateConnection,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::connectors::v1::CreateConnectionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::Connection>>,
+              CreateConnection,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::connectors::v1::Connection>>,
       UpdateConnection,
       (google::cloud::connectors::v1::UpdateConnectionRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateConnection,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::connectors::v1::UpdateConnectionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::connectors::v1::Connection>>,
+              UpdateConnection,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>,
       DeleteConnection,
       (google::cloud::connectors::v1::DeleteConnectionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteConnection,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::connectors::v1::DeleteConnectionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>,
+      DeleteConnection,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::connectors::v1::Provider>),
@@ -118,6 +154,19 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       RefreshConnectionSchemaMetadata,
       (google::cloud::connectors::v1::
            RefreshConnectionSchemaMetadataRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              RefreshConnectionSchemaMetadata,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::connectors::v1::
+                   RefreshConnectionSchemaMetadataRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>,
+      RefreshConnectionSchemaMetadata,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

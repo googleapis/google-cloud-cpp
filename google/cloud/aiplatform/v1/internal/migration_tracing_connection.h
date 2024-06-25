@@ -50,6 +50,16 @@ class MigrationServiceTracingConnection
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> BatchMigrateResources(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
+  BatchMigrateResources(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
  private:
   std::shared_ptr<aiplatform_v1::MigrationServiceConnection> child_;
 };

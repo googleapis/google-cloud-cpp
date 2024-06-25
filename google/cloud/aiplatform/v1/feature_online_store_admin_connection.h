@@ -22,8 +22,10 @@
 #include "google/cloud/aiplatform/v1/feature_online_store_admin_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -209,6 +211,15 @@ class FeatureOnlineStoreAdminServiceConnection {
       google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+  CreateFeatureOnlineStore(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
   GetFeatureOnlineStore(
       google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
@@ -223,15 +234,42 @@ class FeatureOnlineStoreAdminServiceConnection {
       google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
+  UpdateFeatureOnlineStore(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureOnlineStore(
       google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureOnlineStore(ExperimentalTag,
+                           google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
   CreateFeatureView(
       google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateFeatureView(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+  CreateFeatureView(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
       google::cloud::aiplatform::v1::GetFeatureViewRequest const& request);
@@ -244,10 +282,27 @@ class FeatureOnlineStoreAdminServiceConnection {
   UpdateFeatureView(
       google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateFeatureView(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
+  UpdateFeatureView(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureView(
       google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteFeatureView(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureView(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
   SyncFeatureView(

@@ -22,8 +22,10 @@
 #include "google/cloud/metastore/v1/dataproc_metastore_federation_connection_idempotency_policy.h"
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_federation_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -212,13 +214,37 @@ class DataprocMetastoreFederationConnection {
   CreateFederation(
       google::cloud::metastore::v1::CreateFederationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateFederation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::CreateFederationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
+  CreateFederation(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
   UpdateFederation(
       google::cloud::metastore::v1::UpdateFederationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateFederation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::UpdateFederationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::Federation>>
+  UpdateFederation(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteFederation(
       google::cloud::metastore::v1::DeleteFederationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteFederation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::metastore::v1::DeleteFederationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+  DeleteFederation(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 };
 
 /**

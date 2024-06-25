@@ -22,8 +22,10 @@
 #include "google/cloud/iam/v2/internal/policies_retry_traits.h"
 #include "google/cloud/iam/v2/policies_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -191,11 +193,32 @@ class PoliciesConnection {
   virtual future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
       google::iam::v2::CreatePolicyRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreatePolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::iam::v2::CreatePolicyRequest const& request);
+
+  virtual future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
       google::iam::v2::UpdatePolicyRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdatePolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::iam::v2::UpdatePolicyRequest const& request);
+
+  virtual future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       google::iam::v2::DeletePolicyRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeletePolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::iam::v2::DeletePolicyRequest const& request);
+
+  virtual future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 };
 
 /**

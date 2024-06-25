@@ -52,6 +52,18 @@ class MockSessionControllerConnection
       (google::cloud::dataproc::v1::CreateSessionRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateSession,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dataproc::v1::CreateSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
+              CreateSession,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Session>, GetSession,
               (google::cloud::dataproc::v1::GetSessionRequest const& request),
               (override));
@@ -66,9 +78,33 @@ class MockSessionControllerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, TerminateSession,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dataproc::v1::TerminateSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
+              TerminateSession,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::Session>>, DeleteSession,
       (google::cloud::dataproc::v1::DeleteSessionRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteSession,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dataproc::v1::DeleteSessionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
+              DeleteSession,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

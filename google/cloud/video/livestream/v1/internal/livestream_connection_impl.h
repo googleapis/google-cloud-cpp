@@ -56,6 +56,15 @@ class LivestreamServiceConnectionImpl
       google::cloud::video::livestream::v1::CreateChannelRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateChannel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
       google::cloud::video::livestream::v1::ListChannelsRequest request)
       override;
@@ -69,23 +78,70 @@ class LivestreamServiceConnectionImpl
       google::cloud::video::livestream::v1::DeleteChannelRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteChannel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteChannel(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
       google::cloud::video::livestream::v1::UpdateChannelRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateChannel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateChannelRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StartChannel(google::cloud::video::livestream::v1::StartChannelRequest const&
                    request) override;
 
+  StatusOr<google::longrunning::Operation> StartChannel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::StartChannelRequest const& request)
+      override;
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartChannel(ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
+
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StopChannel(google::cloud::video::livestream::v1::StopChannelRequest const&
                   request) override;
 
+  StatusOr<google::longrunning::Operation> StopChannel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::StopChannelRequest const& request)
+      override;
+
+  future<
+      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopChannel(ExperimentalTag,
+              google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
       google::cloud::video::livestream::v1::CreateInputRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateInput(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateInputRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
       google::cloud::video::livestream::v1::ListInputsRequest request) override;
@@ -98,9 +154,27 @@ class LivestreamServiceConnectionImpl
   DeleteInput(google::cloud::video::livestream::v1::DeleteInputRequest const&
                   request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteInput(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteInputRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteInput(ExperimentalTag,
+              google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::cloud::video::livestream::v1::UpdateInputRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateInput(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdateInputRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       google::cloud::video::livestream::v1::CreateEventRequest const& request)
@@ -121,9 +195,27 @@ class LivestreamServiceConnectionImpl
       google::cloud::video::livestream::v1::CreateAssetRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateAsset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateAssetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteAsset(google::cloud::video::livestream::v1::DeleteAssetRequest const&
                   request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteAsset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteAssetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteAsset(ExperimentalTag,
+              google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
       google::cloud::video::livestream::v1::GetAssetRequest const& request)
@@ -139,6 +231,15 @@ class LivestreamServiceConnectionImpl
   future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
       google::cloud::video::livestream::v1::UpdatePoolRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdatePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::UpdatePoolRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

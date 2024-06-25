@@ -22,8 +22,10 @@
 #include "google/cloud/apigateway/v1/api_gateway_connection_idempotency_policy.h"
 #include "google/cloud/apigateway/v1/internal/api_gateway_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -198,13 +200,37 @@ class ApiGatewayServiceConnection {
   CreateGateway(
       google::cloud::apigateway::v1::CreateGatewayRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::CreateGatewayRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+  CreateGateway(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::apigateway::v1::Gateway>>
   UpdateGateway(
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::UpdateGatewayRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+  UpdateGateway(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteGateway(
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::DeleteGatewayRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+  DeleteGateway(ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::apigateway::v1::Api> ListApis(
       google::cloud::apigateway::v1::ListApisRequest request);
@@ -215,11 +241,32 @@ class ApiGatewayServiceConnection {
   virtual future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
       google::cloud::apigateway::v1::CreateApiRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateApi(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::CreateApiRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
       google::cloud::apigateway::v1::UpdateApiRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateApi(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::UpdateApiRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteApi(google::cloud::apigateway::v1::DeleteApiRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteApi(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::DeleteApiRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+  DeleteApi(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
       google::cloud::apigateway::v1::ListApiConfigsRequest request);
@@ -231,13 +278,37 @@ class ApiGatewayServiceConnection {
   CreateApiConfig(
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateApiConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::CreateApiConfigRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+  CreateApiConfig(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
   UpdateApiConfig(
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateApiConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+  UpdateApiConfig(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteApiConfig(
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteApiConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request);
+
+  virtual future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+  DeleteApiConfig(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 };
 
 /**

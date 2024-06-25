@@ -48,6 +48,7 @@ using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::Return;
@@ -242,6 +243,44 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseCancel) {
   EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }
 
+TEST(GoldenThingAdminConnectionTest, CreateDatabaseStartAwait) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  google::longrunning::Operation expected_operation;
+  expected_operation.set_name("test-operation-name");
+  google::test::admin::database::v1::CreateDatabaseMetadata metadata;
+  expected_operation.mutable_metadata()->PackFrom(metadata);
+
+  EXPECT_CALL(*mock, CreateDatabase(_, _, _)).WillOnce([&] {
+    return make_status_or(expected_operation);
+  });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([expected_operation](
+                    CompletionQueue&, auto, auto,
+                    google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ(expected_operation.name(), r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        ::google::test::admin::database::v1::Database database;
+        database.set_name("test-database");
+        op.mutable_response()->PackFrom(database);
+        return make_ready_future(make_status_or(op));
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::CreateDatabaseRequest dbase;
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
+  // TODO(#14344): Remove experimental tag.
+  auto operation = conn->CreateDatabase(ExperimentalTag{}, NoAwaitTag{}, dbase);
+  ASSERT_STATUS_OK(operation);
+  EXPECT_THAT(operation->name(), Eq(expected_operation.name()));
+
+  auto database = conn->CreateDatabase(ExperimentalTag{}, *operation).get();
+  ASSERT_STATUS_OK(database);
+  EXPECT_EQ("test-database", database->name());
+}
+
 /// @test Verify that the successful case works.
 TEST(GoldenThingAdminConnectionTest, GetDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
@@ -376,6 +415,49 @@ TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlCancel) {
   g.set_value(Status{StatusCode::kCancelled, "cancelled"});
   auto db = fut.get();
   EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
+}
+
+TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlStartAwait) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  google::longrunning::Operation expected_operation;
+  expected_operation.set_name("test-operation-name");
+  google::test::admin::database::v1::UpdateDatabaseDdlMetadata metadata;
+  expected_operation.mutable_metadata()->PackFrom(metadata);
+
+  EXPECT_CALL(*mock, UpdateDatabaseDdl(_, _, _)).WillOnce([&] {
+    return make_status_or(expected_operation);
+  });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([expected_operation](
+                    CompletionQueue&, auto, auto,
+                    google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ(expected_operation.name(), r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata metadata;
+        metadata.set_database("test-database");
+        op.mutable_metadata()->PackFrom(metadata);
+        return make_ready_future(make_status_or(op));
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
+  request.set_database(
+      "projects/test-project/instances/test-instance/databases/test-database");
+  *request.add_statements() =
+      "ALTER TABLE Albums ADD COLUMN MarketingBudget INT64";
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
+  // TODO(#14344): Remove experimental tag.
+  auto operation =
+      conn->UpdateDatabaseDdl(ExperimentalTag{}, NoAwaitTag{}, request);
+  ASSERT_STATUS_OK(operation);
+  EXPECT_THAT(operation->name(), Eq(expected_operation.name()));
+
+  auto update = conn->UpdateDatabaseDdl(ExperimentalTag{}, *operation).get();
+  ASSERT_STATUS_OK(update);
+  EXPECT_EQ("test-database", update->database());
 }
 
 /// @test Verify that the successful case works.
@@ -759,6 +841,47 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupCancel) {
   EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
 }
 
+TEST(GoldenThingAdminConnectionTest, CreateBackupStartAwait) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  google::longrunning::Operation expected_operation;
+  expected_operation.set_name("test-operation-name");
+  google::test::admin::database::v1::CreateBackupMetadata metadata;
+  expected_operation.mutable_metadata()->PackFrom(metadata);
+
+  EXPECT_CALL(*mock, CreateBackup(_, _, _)).WillOnce([&] {
+    return make_status_or(expected_operation);
+  });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([expected_operation](
+                    CompletionQueue&, auto, auto,
+                    google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ(expected_operation.name(), r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        ::google::test::admin::database::v1::Backup backup;
+        backup.set_name("test-backup");
+        op.mutable_response()->PackFrom(backup);
+        return make_ready_future(make_status_or(op));
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::CreateBackupRequest request;
+  request.set_parent("projects/test-project/instances/test-instance");
+  request.set_backup_id("test-backup");
+  request.mutable_backup()->set_name("test-backup");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
+  // TODO(#14344): Remove experimental tag.
+  auto operation = conn->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+  ASSERT_STATUS_OK(operation);
+  EXPECT_THAT(operation->name(), Eq(expected_operation.name()));
+
+  auto backup = conn->CreateBackup(ExperimentalTag{}, *operation).get();
+  ASSERT_STATUS_OK(backup);
+  EXPECT_EQ("test-backup", backup->name());
+}
+
 /// @test Verify that the successful case works.
 TEST(GoldenThingAdminConnectionTest, GetBackupSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
@@ -1087,6 +1210,50 @@ TEST(GoldenThingAdminConnectionTest, RestoreBackupCancel) {
   g.set_value(Status{StatusCode::kCancelled, "cancelled"});
   auto db = fut.get();
   EXPECT_THAT(db, StatusIs(StatusCode::kCancelled));
+}
+
+TEST(GoldenThingAdminConnectionTest, RestoreDatabaseStartAwait) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  google::longrunning::Operation expected_operation;
+  expected_operation.set_name("test-operation-name");
+  google::test::admin::database::v1::RestoreDatabaseMetadata metadata;
+  expected_operation.mutable_metadata()->PackFrom(metadata);
+
+  EXPECT_CALL(*mock, RestoreDatabase(_, _, _)).WillOnce([&] {
+    return make_status_or(expected_operation);
+  });
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .WillOnce([expected_operation](
+                    CompletionQueue&, auto, auto,
+                    google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ(expected_operation.name(), r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        ::google::test::admin::database::v1::Database database;
+        database.set_name("test-database");
+        op.mutable_response()->PackFrom(database);
+        return make_ready_future(make_status_or(op));
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::RestoreDatabaseRequest request;
+  request.set_parent("projects/test-project/instances/test-instance");
+  request.set_database_id(
+      "projects/test-project/instances/test-instance/databases/test-database");
+  request.set_backup(
+      "projects/test-project/instances/test-instance/backups/test-backup");
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(Options{}, conn->options()));
+  // TODO(#14344): Remove experimental tag.
+  auto operation =
+      conn->RestoreDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
+  ASSERT_STATUS_OK(operation);
+  EXPECT_THAT(operation->name(), Eq(expected_operation.name()));
+
+  auto database = conn->RestoreDatabase(ExperimentalTag{}, *operation).get();
+  ASSERT_STATUS_OK(database);
+  EXPECT_EQ("test-database", database->name());
 }
 
 /// @test Verify that we can list database operations in multiple pages.

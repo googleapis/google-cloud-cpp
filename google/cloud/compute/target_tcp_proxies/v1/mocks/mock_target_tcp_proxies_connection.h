@@ -61,6 +61,19 @@ class MockTargetTcpProxiesConnection
                    DeleteTargetTcpProxyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteTargetTcpProxy,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   DeleteTargetTcpProxyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteTargetTcpProxy,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>,
               GetTargetTcpProxy,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
@@ -71,6 +84,19 @@ class MockTargetTcpProxiesConnection
               InsertTargetTcpProxy,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    InsertTargetTcpProxyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertTargetTcpProxy,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   InsertTargetTcpProxyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertTargetTcpProxy,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>),
@@ -85,10 +111,36 @@ class MockTargetTcpProxiesConnection
                    SetBackendServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              SetBackendService,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   SetBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetBackendService,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetProxyHeader,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
                    SetProxyHeaderRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              SetProxyHeader,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::target_tcp_proxies::v1::
+                   SetProxyHeaderRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetProxyHeader,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

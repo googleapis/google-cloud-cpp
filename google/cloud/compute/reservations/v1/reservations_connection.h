@@ -22,8 +22,10 @@
 #include "google/cloud/compute/reservations/v1/internal/reservations_retry_traits.h"
 #include "google/cloud/compute/reservations/v1/reservations_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -193,6 +195,16 @@ class ReservationsConnection {
   DeleteReservation(google::cloud::cpp::compute::reservations::v1::
                         DeleteReservationRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteReservation(ExperimentalTag, NoAwaitTag,
+                    google::cloud::cpp::compute::reservations::v1::
+                        DeleteReservationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteReservation(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Reservation> GetReservation(
       google::cloud::cpp::compute::reservations::v1::
           GetReservationRequest const& request);
@@ -205,6 +217,16 @@ class ReservationsConnection {
   InsertReservation(google::cloud::cpp::compute::reservations::v1::
                         InsertReservationRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertReservation(ExperimentalTag, NoAwaitTag,
+                    google::cloud::cpp::compute::reservations::v1::
+                        InsertReservationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertReservation(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::Reservation>
   ListReservations(
       google::cloud::cpp::compute::reservations::v1::ListReservationsRequest
@@ -213,6 +235,15 @@ class ReservationsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
@@ -225,6 +256,16 @@ class ReservationsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateReservation(google::cloud::cpp::compute::reservations::v1::
                         UpdateReservationRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateReservation(ExperimentalTag, NoAwaitTag,
+                    google::cloud::cpp::compute::reservations::v1::
+                        UpdateReservationRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateReservation(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

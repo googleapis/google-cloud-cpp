@@ -132,6 +132,57 @@ DomainsConnectionImpl::RegisterDomain(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> DomainsConnectionImpl::RegisterDomain(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::domains::v1::RegisterDomainRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RegisterDomain(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::RegisterDomainRequest const& request) {
+        return stub_->RegisterDomain(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsConnectionImpl::RegisterDomain(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::domains::v1::Registration>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RegisterDomain",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::domains::v1::Registration>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::domains::v1::Registration>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
 DomainsConnectionImpl::RetrieveTransferParameters(
     google::cloud::domains::v1::RetrieveTransferParametersRequest const&
@@ -185,6 +236,57 @@ DomainsConnectionImpl::TransferDomain(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::domains::v1::Registration>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> DomainsConnectionImpl::TransferDomain(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::domains::v1::TransferDomainRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->TransferDomain(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::TransferDomainRequest const& request) {
+        return stub_->TransferDomain(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsConnectionImpl::TransferDomain(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::domains::v1::Registration>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to TransferDomain",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::domains::v1::Registration>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::domains::v1::Registration>,
       polling_policy(*current), __func__);
 }
 
@@ -277,6 +379,59 @@ DomainsConnectionImpl::UpdateRegistration(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainsConnectionImpl::UpdateRegistration(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateRegistration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::UpdateRegistrationRequest const&
+                 request) {
+        return stub_->UpdateRegistration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsConnectionImpl::UpdateRegistration(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::domains::v1::Registration>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateRegistration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::domains::v1::Registration>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::domains::v1::Registration>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::ConfigureManagementSettings(
     google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
@@ -318,6 +473,61 @@ DomainsConnectionImpl::ConfigureManagementSettings(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainsConnectionImpl::ConfigureManagementSettings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ConfigureManagementSettings(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+              request) {
+        return stub_->ConfigureManagementSettings(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsConnectionImpl::ConfigureManagementSettings(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::domains::v1::Registration>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ConfigureManagementSettings",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::domains::v1::Registration>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::domains::v1::Registration>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::ConfigureDnsSettings(
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
@@ -355,6 +565,59 @@ DomainsConnectionImpl::ConfigureDnsSettings(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::domains::v1::Registration>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DomainsConnectionImpl::ConfigureDnsSettings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ConfigureDnsSettings(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::ConfigureDnsSettingsRequest const&
+                 request) {
+        return stub_->ConfigureDnsSettings(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsConnectionImpl::ConfigureDnsSettings(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::domains::v1::Registration>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ConfigureDnsSettings",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::domains::v1::Registration>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::domains::v1::Registration>,
       polling_policy(*current), __func__);
 }
 
@@ -399,6 +662,60 @@ DomainsConnectionImpl::ConfigureContactSettings(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainsConnectionImpl::ConfigureContactSettings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ConfigureContactSettings(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+                 request) {
+        return stub_->ConfigureContactSettings(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsConnectionImpl::ConfigureContactSettings(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::domains::v1::Registration>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ConfigureContactSettings",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::domains::v1::Registration>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::domains::v1::Registration>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::ExportRegistration(
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
@@ -439,6 +756,59 @@ DomainsConnectionImpl::ExportRegistration(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainsConnectionImpl::ExportRegistration(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::domains::v1::ExportRegistrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ExportRegistration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::ExportRegistrationRequest const&
+                 request) {
+        return stub_->ExportRegistration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::domains::v1::Registration>>
+DomainsConnectionImpl::ExportRegistration(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::domains::v1::Registration>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ExportRegistration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::domains::v1::Registration>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::domains::v1::Registration>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
 DomainsConnectionImpl::DeleteRegistration(
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
@@ -476,6 +846,59 @@ DomainsConnectionImpl::DeleteRegistration(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::domains::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DomainsConnectionImpl::DeleteRegistration(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRegistration(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::domains::v1::DeleteRegistrationRequest const&
+                 request) {
+        return stub_->DeleteRegistration(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
+DomainsConnectionImpl::DeleteRegistration(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::domains::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteRegistration",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::domains::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::domains::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

@@ -59,11 +59,35 @@ class PoliciesConnectionImpl : public iam_v2::PoliciesConnection {
   future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
       google::iam::v2::CreatePolicyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreatePolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::iam::v2::CreatePolicyRequest const& request) override;
+
+  future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdatePolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::iam::v2::UpdatePolicyRequest const& request) override;
+
+  future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       google::iam::v2::DeletePolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeletePolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::iam::v2::DeletePolicyRequest const& request) override;
+
+  future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

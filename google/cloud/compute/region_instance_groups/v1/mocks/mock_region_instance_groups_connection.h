@@ -72,6 +72,19 @@ class MockRegionInstanceGroupsConnection
               (google::cloud::cpp::compute::region_instance_groups::v1::
                    SetNamedPortsRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              SetNamedPorts,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_groups::v1::
+                   SetNamedPortsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetNamedPorts,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -147,6 +147,61 @@ MetricsScopesConnectionImpl::CreateMonitoredProject(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+MetricsScopesConnectionImpl::CreateMonitoredProject(
+    ExperimentalTag, NoAwaitTag,
+    google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateMonitoredProject(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::metricsscope::v1::
+                 CreateMonitoredProjectRequest const& request) {
+        return stub_->CreateMonitoredProject(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
+MetricsScopesConnectionImpl::CreateMonitoredProject(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::monitoring::metricsscope::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateMonitoredProject",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::monitoring::metricsscope::v1::MonitoredProject>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::monitoring::metricsscope::v1::MonitoredProject>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesConnectionImpl::DeleteMonitoredProject(
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
@@ -184,6 +239,61 @@ MetricsScopesConnectionImpl::DeleteMonitoredProject(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::monitoring::metricsscope::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+MetricsScopesConnectionImpl::DeleteMonitoredProject(
+    ExperimentalTag, NoAwaitTag,
+    google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteMonitoredProject(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::monitoring::metricsscope::v1::
+                 DeleteMonitoredProjectRequest const& request) {
+        return stub_->DeleteMonitoredProject(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
+MetricsScopesConnectionImpl::DeleteMonitoredProject(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::monitoring::metricsscope::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteMonitoredProject",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::monitoring::metricsscope::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::monitoring::metricsscope::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

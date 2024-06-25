@@ -50,21 +50,66 @@ class CloudFilestoreManagerTracingConnection
       google::cloud::filestore::v1::CreateInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::CreateInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::filestore::v1::Instance>> CreateInstance(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
       google::cloud::filestore::v1::UpdateInstanceRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::UpdateInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::filestore::v1::Instance>> RestoreInstance(
       google::cloud::filestore::v1::RestoreInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RestoreInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::RestoreInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::filestore::v1::Instance>> RestoreInstance(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::filestore::v1::Instance>> RevertInstance(
       google::cloud::filestore::v1::RevertInstanceRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> RevertInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::RevertInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::filestore::v1::Instance>> RevertInstance(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
       google::cloud::filestore::v1::DeleteInstanceRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::DeleteInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::filestore::v1::Snapshot> ListSnapshots(
       google::cloud::filestore::v1::ListSnapshotsRequest request) override;
@@ -76,13 +121,40 @@ class CloudFilestoreManagerTracingConnection
       google::cloud::filestore::v1::CreateSnapshotRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSnapshot(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::filestore::v1::Snapshot>> CreateSnapshot(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteSnapshot(
       google::cloud::filestore::v1::DeleteSnapshotRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteSnapshot(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::common::OperationMetadata>> DeleteSnapshot(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::filestore::v1::Snapshot>> UpdateSnapshot(
       google::cloud::filestore::v1::UpdateSnapshotRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateSnapshot(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::filestore::v1::Snapshot>> UpdateSnapshot(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
       google::cloud::filestore::v1::ListBackupsRequest request) override;
@@ -94,13 +166,40 @@ class CloudFilestoreManagerTracingConnection
       google::cloud::filestore::v1::CreateBackupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::CreateBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
       google::cloud::filestore::v1::DeleteBackupRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::DeleteBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
       google::cloud::filestore::v1::UpdateBackupRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::filestore::v1::UpdateBackupRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<filestore_v1::CloudFilestoreManagerConnection> child_;

@@ -51,6 +51,21 @@ JobServiceConnection::BatchCreateJobs(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> JobServiceConnection::BatchCreateJobs(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::talent::v4::BatchCreateJobsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
+JobServiceConnection::BatchCreateJobs(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::talent::v4::Job> JobServiceConnection::GetJob(
     google::cloud::talent::v4::GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -69,6 +84,21 @@ JobServiceConnection::BatchUpdateJobs(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> JobServiceConnection::BatchUpdateJobs(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::talent::v4::BatchUpdateJobsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
+JobServiceConnection::BatchUpdateJobs(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 Status JobServiceConnection::DeleteJob(
     google::cloud::talent::v4::DeleteJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -77,6 +107,21 @@ Status JobServiceConnection::DeleteJob(
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
 JobServiceConnection::BatchDeleteJobs(
     google::cloud::talent::v4::BatchDeleteJobsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> JobServiceConnection::BatchDeleteJobs(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::talent::v4::BatchDeleteJobsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
+JobServiceConnection::BatchDeleteJobs(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

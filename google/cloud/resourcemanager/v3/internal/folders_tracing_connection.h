@@ -54,21 +54,66 @@ class FoldersTracingConnection : public resourcemanager_v3::FoldersConnection {
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateFolder(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UpdateFolder(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> MoveFolder(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DeleteFolder(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> UndeleteFolder(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request) override;

@@ -56,11 +56,35 @@ class ApplicationsConnectionImpl : public appengine_v1::ApplicationsConnection {
   future<StatusOr<google::appengine::v1::Application>> CreateApplication(
       google::appengine::v1::CreateApplicationRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateApplication(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::CreateApplicationRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Application>> CreateApplication(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
       google::appengine::v1::UpdateApplicationRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UpdateApplication(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::UpdateApplicationRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
       google::appengine::v1::RepairApplicationRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RepairApplication(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::RepairApplicationRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Application>> RepairApplication(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -42,6 +42,27 @@ CloudBuildTracingConnection::CreateBuild(
   return internal::EndSpan(std::move(span), child_->CreateBuild(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudBuildTracingConnection::CreateBuild(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
+  auto span =
+      internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::CreateBuild");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateBuild(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildTracingConnection::CreateBuild(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::CreateBuild");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBuild(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildTracingConnection::GetBuild(
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
@@ -80,6 +101,27 @@ CloudBuildTracingConnection::RetryBuild(
   return internal::EndSpan(std::move(span), child_->RetryBuild(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudBuildTracingConnection::RetryBuild(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
+  auto span =
+      internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::RetryBuild");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RetryBuild(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildTracingConnection::RetryBuild(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::RetryBuild");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RetryBuild(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildTracingConnection::ApproveBuild(
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
@@ -87,6 +129,27 @@ CloudBuildTracingConnection::ApproveBuild(
       internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::ApproveBuild");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->ApproveBuild(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudBuildTracingConnection::ApproveBuild(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
+  auto span =
+      internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::ApproveBuild");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->ApproveBuild(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildTracingConnection::ApproveBuild(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::ApproveBuild");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ApproveBuild(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
@@ -148,6 +211,27 @@ CloudBuildTracingConnection::RunBuildTrigger(
   return internal::EndSpan(std::move(span), child_->RunBuildTrigger(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudBuildTracingConnection::RunBuildTrigger(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::RunBuildTrigger");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RunBuildTrigger(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::Build>>
+CloudBuildTracingConnection::RunBuildTrigger(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::RunBuildTrigger");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->RunBuildTrigger(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildTracingConnection::ReceiveTriggerWebhook(
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
@@ -165,6 +249,28 @@ CloudBuildTracingConnection::CreateWorkerPool(
       "cloudbuild_v1::CloudBuildConnection::CreateWorkerPool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateWorkerPool(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudBuildTracingConnection::CreateWorkerPool(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::CreateWorkerPool");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateWorkerPool(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
+CloudBuildTracingConnection::CreateWorkerPool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::CreateWorkerPool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateWorkerPool(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
@@ -186,6 +292,29 @@ CloudBuildTracingConnection::DeleteWorkerPool(
   return internal::EndSpan(std::move(span), child_->DeleteWorkerPool(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudBuildTracingConnection::DeleteWorkerPool(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::DeleteWorkerPool");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteWorkerPool(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
+CloudBuildTracingConnection::DeleteWorkerPool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::DeleteWorkerPool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteWorkerPool(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildTracingConnection::UpdateWorkerPool(
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
@@ -193,6 +322,28 @@ CloudBuildTracingConnection::UpdateWorkerPool(
       "cloudbuild_v1::CloudBuildConnection::UpdateWorkerPool");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateWorkerPool(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudBuildTracingConnection::UpdateWorkerPool(
+    ExperimentalTag, NoAwaitTag,
+    google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::UpdateWorkerPool");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->UpdateWorkerPool(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
+CloudBuildTracingConnection::UpdateWorkerPool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::UpdateWorkerPool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateWorkerPool(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>

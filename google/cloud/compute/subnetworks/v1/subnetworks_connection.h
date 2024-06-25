@@ -22,8 +22,10 @@
 #include "google/cloud/compute/subnetworks/v1/internal/subnetworks_retry_traits.h"
 #include "google/cloud/compute/subnetworks/v1/subnetworks_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,9 +194,28 @@ class SubnetworksConnection {
   DeleteSubnetwork(google::cloud::cpp::compute::subnetworks::v1::
                        DeleteSubnetworkRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSubnetwork(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::subnetworks::v1::
+          DeleteSubnetworkRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSubnetwork(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   ExpandIpCidrRange(google::cloud::cpp::compute::subnetworks::v1::
                         ExpandIpCidrRangeRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  ExpandIpCidrRange(ExperimentalTag, NoAwaitTag,
+                    google::cloud::cpp::compute::subnetworks::v1::
+                        ExpandIpCidrRangeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ExpandIpCidrRange(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Subnetwork> GetSubnetwork(
       google::cloud::cpp::compute::subnetworks::v1::GetSubnetworkRequest const&
@@ -207,6 +228,15 @@ class SubnetworksConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSubnetwork(google::cloud::cpp::compute::subnetworks::v1::
                        InsertSubnetworkRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSubnetwork(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::subnetworks::v1::
+          InsertSubnetworkRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSubnetwork(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Subnetwork>
   ListSubnetworks(
@@ -221,6 +251,15 @@ class SubnetworksConnection {
   PatchSubnetwork(google::cloud::cpp::compute::subnetworks::v1::
                       PatchSubnetworkRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSubnetwork(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::subnetworks::v1::
+          PatchSubnetworkRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchSubnetwork(ExperimentalTag,
+                  google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
           request);
@@ -228,6 +267,16 @@ class SubnetworksConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetPrivateIpGoogleAccess(google::cloud::cpp::compute::subnetworks::v1::
                                SetPrivateIpGoogleAccessRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetPrivateIpGoogleAccess(ExperimentalTag, NoAwaitTag,
+                           google::cloud::cpp::compute::subnetworks::v1::
+                               SetPrivateIpGoogleAccessRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetPrivateIpGoogleAccess(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::subnetworks::v1::

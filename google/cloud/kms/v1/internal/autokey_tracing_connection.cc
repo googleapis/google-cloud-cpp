@@ -40,6 +40,25 @@ AutokeyTracingConnection::CreateKeyHandle(
   return internal::EndSpan(std::move(span), child_->CreateKeyHandle(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AutokeyTracingConnection::CreateKeyHandle(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
+  auto span = internal::MakeSpan("kms_v1::AutokeyConnection::CreateKeyHandle");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateKeyHandle(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::kms::v1::KeyHandle>>
+AutokeyTracingConnection::CreateKeyHandle(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("kms_v1::AutokeyConnection::CreateKeyHandle");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateKeyHandle(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::kms::v1::KeyHandle>
 AutokeyTracingConnection::GetKeyHandle(
     google::cloud::kms::v1::GetKeyHandleRequest const& request) {

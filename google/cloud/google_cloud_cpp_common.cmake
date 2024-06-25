@@ -154,6 +154,7 @@ add_library(
     location.h
     log.cc
     log.h
+    no_await_tag.h
     opentelemetry_options.h
     optional.h
     options.cc

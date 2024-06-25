@@ -59,9 +59,41 @@ ConfigServiceV2Connection::CreateBucketAsync(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Connection::CreateBucketAsync(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::CreateBucketRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::logging::v2::LogBucket>>
+ConfigServiceV2Connection::CreateBucketAsync(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::logging::v2::LogBucket>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2Connection::UpdateBucketAsync(
     google::logging::v2::UpdateBucketRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::logging::v2::LogBucket>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Connection::UpdateBucketAsync(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::UpdateBucketRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::logging::v2::LogBucket>>
+ConfigServiceV2Connection::UpdateBucketAsync(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::logging::v2::LogBucket>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -150,9 +182,38 @@ ConfigServiceV2Connection::CreateLink(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ConfigServiceV2Connection::CreateLink(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::CreateLinkRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::logging::v2::Link>>
+ConfigServiceV2Connection::CreateLink(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<google::logging::v2::Link>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::logging::v2::LinkMetadata>>
 ConfigServiceV2Connection::DeleteLink(
     google::logging::v2::DeleteLinkRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::logging::v2::LinkMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Connection::DeleteLink(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::DeleteLinkRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::logging::v2::LinkMetadata>>
+ConfigServiceV2Connection::DeleteLink(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::logging::v2::LinkMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -227,6 +288,22 @@ ConfigServiceV2Connection::UpdateSettings(
 future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
 ConfigServiceV2Connection::CopyLogEntries(
     google::logging::v2::CopyLogEntriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::logging::v2::CopyLogEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Connection::CopyLogEntries(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::CopyLogEntriesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
+ConfigServiceV2Connection::CopyLogEntries(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::logging::v2::CopyLogEntriesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

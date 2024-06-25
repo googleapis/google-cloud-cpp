@@ -57,6 +57,14 @@ class PredictionServiceConnectionImpl
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> BatchPredict(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::BatchPredictRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<automl_v1_internal::PredictionServiceStub> stub_;

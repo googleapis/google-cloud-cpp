@@ -71,9 +71,39 @@ GkeHubConnection::CreateMembership(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> GkeHubConnection::CreateMembership(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::CreateMembershipRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Membership>>
+GkeHubConnection::CreateMembership(ExperimentalTag,
+                                   google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Membership>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnection::CreateFeature(
     google::cloud::gkehub::v1::CreateFeatureRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Feature>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::CreateFeature(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::CreateFeatureRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Feature>>
+GkeHubConnection::CreateFeature(ExperimentalTag,
+                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkehub::v1::Feature>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,9 +117,39 @@ GkeHubConnection::DeleteMembership(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> GkeHubConnection::DeleteMembership(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteMembershipRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteMembership(ExperimentalTag,
+                                   google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubConnection::DeleteFeature(
     google::cloud::gkehub::v1::DeleteFeatureRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::DeleteFeature(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteFeatureRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubConnection::DeleteFeature(ExperimentalTag,
+                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkehub::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -103,9 +163,39 @@ GkeHubConnection::UpdateMembership(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> GkeHubConnection::UpdateMembership(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateMembershipRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Membership>>
+GkeHubConnection::UpdateMembership(ExperimentalTag,
+                                   google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Membership>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnection::UpdateFeature(
     google::cloud::gkehub::v1::UpdateFeatureRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::gkehub::v1::Feature>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubConnection::UpdateFeature(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateFeatureRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Feature>>
+GkeHubConnection::UpdateFeature(ExperimentalTag,
+                                google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::gkehub::v1::Feature>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -59,6 +59,16 @@ class ManagedIdentitiesServiceConnectionImpl
       google::cloud::managedidentities::v1::
           CreateMicrosoftAdDomainRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::managedidentities::v1::
+          CreateMicrosoftAdDomainRequest const& request) override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  CreateMicrosoftAdDomain(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
   ResetAdminPassword(
       google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
@@ -76,26 +86,80 @@ class ManagedIdentitiesServiceConnectionImpl
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateDomain(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
   DeleteDomain(google::cloud::managedidentities::v1::DeleteDomainRequest const&
                    request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteDomain(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
+  DeleteDomain(ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
       google::cloud::managedidentities::v1::AttachTrustRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> AttachTrust(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   ReconfigureTrust(
       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> ReconfigureTrust(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>>
+  ReconfigureTrust(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
       google::cloud::managedidentities::v1::DetachTrustRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> DetachTrust(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
       google::cloud::managedidentities::v1::ValidateTrustRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> ValidateTrust(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::managedidentities::v1::ValidateTrustRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

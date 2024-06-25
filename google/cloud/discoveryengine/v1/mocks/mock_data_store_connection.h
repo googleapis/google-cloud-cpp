@@ -53,6 +53,18 @@ class MockDataStoreServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateDataStore,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>,
+              CreateDataStore,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::discoveryengine::v1::DataStore>, GetDataStore,
       (google::cloud::discoveryengine::v1::GetDataStoreRequest const& request),
@@ -69,6 +81,19 @@ class MockDataStoreServiceConnection
               DeleteDataStore,
               (google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteDataStore,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>,
+              DeleteDataStore,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::discoveryengine::v1::DataStore>,

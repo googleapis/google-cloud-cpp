@@ -55,6 +55,15 @@ class RegionInstancesRestConnectionImpl
       google::cloud::cpp::compute::region_instances::v1::
           BulkInsertRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_instances::v1::
+          BulkInsertRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
  private:
   static std::unique_ptr<
       compute_region_instances_v1::RegionInstancesRetryPolicy>

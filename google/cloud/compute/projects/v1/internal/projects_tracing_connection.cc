@@ -43,6 +43,29 @@ ProjectsTracingConnection::DisableXpnHost(
   return internal::EndSpan(std::move(span), child_->DisableXpnHost(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::DisableXpnHost(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::DisableXpnHost");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DisableXpnHost(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::DisableXpnHost(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::DisableXpnHost");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DisableXpnHost(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsTracingConnection::DisableXpnResource(
     google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
@@ -52,6 +75,30 @@ ProjectsTracingConnection::DisableXpnResource(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DisableXpnResource(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::DisableXpnResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::DisableXpnResourceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::DisableXpnResource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DisableXpnResource(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::DisableXpnResource(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::DisableXpnResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DisableXpnResource(
+                                                ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -64,6 +111,29 @@ ProjectsTracingConnection::EnableXpnHost(
   return internal::EndSpan(std::move(span), child_->EnableXpnHost(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::EnableXpnHost(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::EnableXpnHost");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->EnableXpnHost(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::EnableXpnHost(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::EnableXpnHost");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->EnableXpnHost(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsTracingConnection::EnableXpnResource(
     google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
@@ -72,6 +142,30 @@ ProjectsTracingConnection::EnableXpnResource(
       "compute_projects_v1::ProjectsConnection::EnableXpnResource");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->EnableXpnResource(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::EnableXpnResource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::EnableXpnResource");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->EnableXpnResource(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::EnableXpnResource(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::EnableXpnResource");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->EnableXpnResource(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Project>
@@ -124,6 +218,28 @@ ProjectsTracingConnection::MoveDisk(
   return internal::EndSpan(std::move(span), child_->MoveDisk(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::MoveDisk(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request) {
+  auto span =
+      internal::MakeSpan("compute_projects_v1::ProjectsConnection::MoveDisk");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->MoveDisk(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::MoveDisk(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("compute_projects_v1::ProjectsConnection::MoveDisk");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->MoveDisk(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsTracingConnection::MoveInstance(
     google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
@@ -134,6 +250,29 @@ ProjectsTracingConnection::MoveInstance(
   return internal::EndSpan(std::move(span), child_->MoveInstance(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::MoveInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::MoveInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->MoveInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::MoveInstance(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::MoveInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->MoveInstance(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsTracingConnection::SetCloudArmorTier(
     google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
@@ -142,6 +281,30 @@ ProjectsTracingConnection::SetCloudArmorTier(
       "compute_projects_v1::ProjectsConnection::SetCloudArmorTier");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->SetCloudArmorTier(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::SetCloudArmorTier(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetCloudArmorTier");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->SetCloudArmorTier(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::SetCloudArmorTier(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetCloudArmorTier");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->SetCloudArmorTier(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -155,6 +318,30 @@ ProjectsTracingConnection::SetCommonInstanceMetadata(
                            child_->SetCommonInstanceMetadata(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::SetCommonInstanceMetadata(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::
+        SetCommonInstanceMetadataRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetCommonInstanceMetadata");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetCommonInstanceMetadata(ExperimentalTag{}, NoAwaitTag{},
+                                               request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::SetCommonInstanceMetadata(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetCommonInstanceMetadata");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SetCommonInstanceMetadata(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsTracingConnection::SetDefaultNetworkTier(
     google::cloud::cpp::compute::projects::v1::
@@ -166,6 +353,30 @@ ProjectsTracingConnection::SetDefaultNetworkTier(
                            child_->SetDefaultNetworkTier(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::SetDefaultNetworkTier(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::
+        SetDefaultNetworkTierRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetDefaultNetworkTier");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->SetDefaultNetworkTier(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::SetDefaultNetworkTier(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetDefaultNetworkTier");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SetDefaultNetworkTier(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ProjectsTracingConnection::SetUsageExportBucket(
     google::cloud::cpp::compute::projects::v1::
@@ -175,6 +386,30 @@ ProjectsTracingConnection::SetUsageExportBucket(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SetUsageExportBucket(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ProjectsTracingConnection::SetUsageExportBucket(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::projects::v1::
+        SetUsageExportBucketRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetUsageExportBucket");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->SetUsageExportBucket(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ProjectsTracingConnection::SetUsageExportBucket(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_projects_v1::ProjectsConnection::SetUsageExportBucket");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SetUsageExportBucket(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

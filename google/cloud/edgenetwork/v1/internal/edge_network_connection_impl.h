@@ -76,9 +76,27 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateNetwork(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Network>> CreateNetwork(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteNetwork(google::cloud::edgenetwork::v1::DeleteNetworkRequest const&
                     request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNetwork(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteNetwork(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::edgenetwork::v1::Subnet> ListSubnets(
       google::cloud::edgenetwork::v1::ListSubnetsRequest request) override;
@@ -90,13 +108,40 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateSubnet(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> CreateSubnet(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateSubnet(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Subnet>> UpdateSubnet(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteSubnet(google::cloud::edgenetwork::v1::DeleteSubnetRequest const&
                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteSubnet(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteSubnet(ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::edgenetwork::v1::Interconnect> ListInterconnects(
       google::cloud::edgenetwork::v1::ListInterconnectsRequest request)
@@ -126,10 +171,30 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
       google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
+  CreateInterconnectAttachment(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteInterconnectAttachment(
       google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteInterconnectAttachment(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::edgenetwork::v1::Router> ListRouters(
       google::cloud::edgenetwork::v1::ListRoutersRequest request) override;
@@ -145,13 +210,40 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
       google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateRouter(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> CreateRouter(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateRouter(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::Router>> UpdateRouter(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
   DeleteRouter(google::cloud::edgenetwork::v1::DeleteRouterRequest const&
                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteRouter(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::edgenetwork::v1::DeleteRouterRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
+  DeleteRouter(ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

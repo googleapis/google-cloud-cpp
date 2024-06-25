@@ -63,6 +63,32 @@ ServiceAttachmentsTracingConnection::DeleteServiceAttachment(
                            child_->DeleteServiceAttachment(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsTracingConnection::DeleteServiceAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::service_attachments::v1::
+        DeleteServiceAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "DeleteServiceAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteServiceAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ServiceAttachmentsTracingConnection::DeleteServiceAttachment(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "DeleteServiceAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteServiceAttachment(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::ServiceAttachment>
 ServiceAttachmentsTracingConnection::GetServiceAttachment(
     google::cloud::cpp::compute::service_attachments::v1::
@@ -97,6 +123,32 @@ ServiceAttachmentsTracingConnection::InsertServiceAttachment(
                            child_->InsertServiceAttachment(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsTracingConnection::InsertServiceAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::service_attachments::v1::
+        InsertServiceAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "InsertServiceAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertServiceAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ServiceAttachmentsTracingConnection::InsertServiceAttachment(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "InsertServiceAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->InsertServiceAttachment(
+                                                ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::ServiceAttachment>
 ServiceAttachmentsTracingConnection::ListServiceAttachments(
     google::cloud::cpp::compute::service_attachments::v1::
@@ -121,6 +173,32 @@ ServiceAttachmentsTracingConnection::PatchServiceAttachment(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchServiceAttachment(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ServiceAttachmentsTracingConnection::PatchServiceAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::service_attachments::v1::
+        PatchServiceAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "PatchServiceAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->PatchServiceAttachment(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ServiceAttachmentsTracingConnection::PatchServiceAttachment(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_service_attachments_v1::ServiceAttachmentsConnection::"
+      "PatchServiceAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PatchServiceAttachment(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

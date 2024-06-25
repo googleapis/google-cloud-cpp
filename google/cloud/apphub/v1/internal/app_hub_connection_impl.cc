@@ -156,6 +156,60 @@ AppHubConnectionImpl::CreateServiceProjectAttachment(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubConnectionImpl::CreateServiceProjectAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateServiceProjectAttachment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::
+                 CreateServiceProjectAttachmentRequest const& request) {
+        return stub_->CreateServiceProjectAttachment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
+AppHubConnectionImpl::CreateServiceProjectAttachment(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateServiceProjectAttachment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::ServiceProjectAttachment>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::ServiceProjectAttachment>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
 AppHubConnectionImpl::GetServiceProjectAttachment(
     google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
@@ -211,6 +265,60 @@ AppHubConnectionImpl::DeleteServiceProjectAttachment(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apphub::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AppHubConnectionImpl::DeleteServiceProjectAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteServiceProjectAttachment(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::
+                 DeleteServiceProjectAttachmentRequest const& request) {
+        return stub_->DeleteServiceProjectAttachment(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+AppHubConnectionImpl::DeleteServiceProjectAttachment(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteServiceProjectAttachment",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apphub::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -369,6 +477,56 @@ AppHubConnectionImpl::CreateService(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> AppHubConnectionImpl::CreateService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::CreateServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateService(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::CreateServiceRequest const& request) {
+        return stub_->CreateService(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Service>>
+AppHubConnectionImpl::CreateService(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apphub::v1::Service>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateService",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::Service>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Service>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::apphub::v1::Service> AppHubConnectionImpl::GetService(
     google::cloud::apphub::v1::GetServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -421,6 +579,56 @@ AppHubConnectionImpl::UpdateService(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> AppHubConnectionImpl::UpdateService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateService(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::UpdateServiceRequest const& request) {
+        return stub_->UpdateService(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Service>>
+AppHubConnectionImpl::UpdateService(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apphub::v1::Service>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateService",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::Service>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Service>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnectionImpl::DeleteService(
     google::cloud::apphub::v1::DeleteServiceRequest const& request) {
@@ -457,6 +665,57 @@ AppHubConnectionImpl::DeleteService(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apphub::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> AppHubConnectionImpl::DeleteService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteService(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::DeleteServiceRequest const& request) {
+        return stub_->DeleteService(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+AppHubConnectionImpl::DeleteService(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteService",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apphub::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -599,6 +858,56 @@ AppHubConnectionImpl::CreateWorkload(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> AppHubConnectionImpl::CreateWorkload(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkload(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
+        return stub_->CreateWorkload(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Workload>>
+AppHubConnectionImpl::CreateWorkload(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apphub::v1::Workload>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateWorkload",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::Workload>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Workload>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::apphub::v1::Workload> AppHubConnectionImpl::GetWorkload(
     google::cloud::apphub::v1::GetWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -651,6 +960,56 @@ AppHubConnectionImpl::UpdateWorkload(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> AppHubConnectionImpl::UpdateWorkload(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateWorkload(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
+        return stub_->UpdateWorkload(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Workload>>
+AppHubConnectionImpl::UpdateWorkload(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apphub::v1::Workload>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateWorkload",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::Workload>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Workload>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnectionImpl::DeleteWorkload(
     google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
@@ -687,6 +1046,57 @@ AppHubConnectionImpl::DeleteWorkload(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apphub::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> AppHubConnectionImpl::DeleteWorkload(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteWorkload(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
+        return stub_->DeleteWorkload(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+AppHubConnectionImpl::DeleteWorkload(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteWorkload",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apphub::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -763,6 +1173,58 @@ AppHubConnectionImpl::CreateApplication(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubConnectionImpl::CreateApplication(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateApplication(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::CreateApplicationRequest const& request) {
+        return stub_->CreateApplication(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Application>>
+AppHubConnectionImpl::CreateApplication(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apphub::v1::Application>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateApplication",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::Application>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Application>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::apphub::v1::Application>
 AppHubConnectionImpl::GetApplication(
     google::cloud::apphub::v1::GetApplicationRequest const& request) {
@@ -816,6 +1278,58 @@ AppHubConnectionImpl::UpdateApplication(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AppHubConnectionImpl::UpdateApplication(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateApplication(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
+        return stub_->UpdateApplication(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::Application>>
+AppHubConnectionImpl::UpdateApplication(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apphub::v1::Application>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateApplication",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::Application>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apphub::v1::Application>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnectionImpl::DeleteApplication(
     google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
@@ -852,6 +1366,59 @@ AppHubConnectionImpl::DeleteApplication(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apphub::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AppHubConnectionImpl::DeleteApplication(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteApplication(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
+        return stub_->DeleteApplication(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+AppHubConnectionImpl::DeleteApplication(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apphub::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteApplication",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apphub::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apphub::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

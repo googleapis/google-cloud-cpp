@@ -43,6 +43,29 @@ NodeGroupsTracingConnection::AddNodes(
   return internal::EndSpan(std::move(span), child_->AddNodes(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeGroupsTracingConnection::AddNodes(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::AddNodes");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->AddNodes(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::AddNodes(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::AddNodes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddNodes(ExperimentalTag{}, operation));
+}
+
 StreamRange<std::pair<std::string,
                       google::cloud::cpp::compute::v1::NodeGroupsScopedList>>
 NodeGroupsTracingConnection::AggregatedListNodeGroups(
@@ -67,6 +90,29 @@ NodeGroupsTracingConnection::DeleteNodeGroup(
   return internal::EndSpan(std::move(span), child_->DeleteNodeGroup(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeGroupsTracingConnection::DeleteNodeGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::DeleteNodeGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteNodeGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::DeleteNodeGroup(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::DeleteNodeGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteNodeGroup(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsTracingConnection::DeleteNodes(
     google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
@@ -75,6 +121,29 @@ NodeGroupsTracingConnection::DeleteNodes(
       "compute_node_groups_v1::NodeGroupsConnection::DeleteNodes");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteNodes(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeGroupsTracingConnection::DeleteNodes(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::DeleteNodes");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteNodes(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::DeleteNodes(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::DeleteNodes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNodes(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
@@ -105,6 +174,29 @@ NodeGroupsTracingConnection::InsertNodeGroup(
       "compute_node_groups_v1::NodeGroupsConnection::InsertNodeGroup");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->InsertNodeGroup(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeGroupsTracingConnection::InsertNodeGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::InsertNodeGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertNodeGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::InsertNodeGroup(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::InsertNodeGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->InsertNodeGroup(ExperimentalTag{}, operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
@@ -142,6 +234,29 @@ NodeGroupsTracingConnection::PatchNodeGroup(
   return internal::EndSpan(std::move(span), child_->PatchNodeGroup(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeGroupsTracingConnection::PatchNodeGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::PatchNodeGroup");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->PatchNodeGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::PatchNodeGroup(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::PatchNodeGroup");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->PatchNodeGroup(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsTracingConnection::PerformMaintenance(
     google::cloud::cpp::compute::node_groups::v1::
@@ -151,6 +266,30 @@ NodeGroupsTracingConnection::PerformMaintenance(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PerformMaintenance(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeGroupsTracingConnection::PerformMaintenance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_groups::v1::
+        PerformMaintenanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::PerformMaintenance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->PerformMaintenance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::PerformMaintenance(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::PerformMaintenance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PerformMaintenance(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -173,6 +312,29 @@ NodeGroupsTracingConnection::SetNodeTemplate(
   return internal::EndSpan(std::move(span), child_->SetNodeTemplate(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeGroupsTracingConnection::SetNodeTemplate(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::SetNodeTemplate");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->SetNodeTemplate(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::SetNodeTemplate(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::SetNodeTemplate");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->SetNodeTemplate(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsTracingConnection::SimulateMaintenanceEvent(
     google::cloud::cpp::compute::node_groups::v1::
@@ -182,6 +344,30 @@ NodeGroupsTracingConnection::SimulateMaintenanceEvent(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->SimulateMaintenanceEvent(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NodeGroupsTracingConnection::SimulateMaintenanceEvent(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::node_groups::v1::
+        SimulateMaintenanceEventRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::SimulateMaintenanceEvent");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->SimulateMaintenanceEvent(ExperimentalTag{}, NoAwaitTag{},
+                                              request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NodeGroupsTracingConnection::SimulateMaintenanceEvent(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_node_groups_v1::NodeGroupsConnection::SimulateMaintenanceEvent");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SimulateMaintenanceEvent(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

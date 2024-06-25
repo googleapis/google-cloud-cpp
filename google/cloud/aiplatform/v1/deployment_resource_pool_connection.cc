@@ -47,6 +47,22 @@ DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceConnection::GetDeploymentResourcePool(
     google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&) {
@@ -64,6 +80,22 @@ DeploymentResourcePoolServiceConnection::ListDeploymentResourcePools(
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

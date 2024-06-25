@@ -22,8 +22,10 @@
 #include "google/cloud/artifactregistry/v1/artifact_registry_connection_idempotency_policy.h"
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -230,11 +232,31 @@ class ArtifactRegistryConnection {
       google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> ImportAptArtifacts(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
   ImportYumArtifacts(
       google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportYumArtifacts(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::Repository>
   ListRepositories(
@@ -250,6 +272,15 @@ class ArtifactRegistryConnection {
       google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateRepository(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request);
+
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
+  CreateRepository(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::devtools::artifactregistry::v1::Repository>
   UpdateRepository(
       google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
@@ -260,6 +291,16 @@ class ArtifactRegistryConnection {
   DeleteRepository(
       google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteRepository(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteRepository(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::Package>
   ListPackages(
@@ -274,6 +315,16 @@ class ArtifactRegistryConnection {
       google::devtools::artifactregistry::v1::DeletePackageRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeletePackage(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeletePackage(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual StreamRange<google::devtools::artifactregistry::v1::Version>
   ListVersions(
       google::devtools::artifactregistry::v1::ListVersionsRequest request);
@@ -287,11 +338,31 @@ class ArtifactRegistryConnection {
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteVersion(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<
       google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
   BatchDeleteVersions(
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchDeleteVersions(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
+  BatchDeleteVersions(ExperimentalTag,
+                      google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
       google::devtools::artifactregistry::v1::ListFilesRequest request);

@@ -49,8 +49,24 @@ class ConfigServiceV2TracingConnection
   future<StatusOr<google::logging::v2::LogBucket>> CreateBucketAsync(
       google::logging::v2::CreateBucketRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateBucketAsync(
+      ExperimentalTag, NoAwaitTag,
+      google::logging::v2::CreateBucketRequest const& request) override;
+
+  future<StatusOr<google::logging::v2::LogBucket>> CreateBucketAsync(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
       google::logging::v2::UpdateBucketRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateBucketAsync(
+      ExperimentalTag, NoAwaitTag,
+      google::logging::v2::UpdateBucketRequest const& request) override;
+
+  future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::logging::v2::LogBucket> CreateBucket(
       google::logging::v2::CreateBucketRequest const& request) override;
@@ -97,8 +113,24 @@ class ConfigServiceV2TracingConnection
   future<StatusOr<google::logging::v2::Link>> CreateLink(
       google::logging::v2::CreateLinkRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateLink(
+      ExperimentalTag, NoAwaitTag,
+      google::logging::v2::CreateLinkRequest const& request) override;
+
+  future<StatusOr<google::logging::v2::Link>> CreateLink(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
       google::logging::v2::DeleteLinkRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteLink(
+      ExperimentalTag, NoAwaitTag,
+      google::logging::v2::DeleteLinkRequest const& request) override;
+
+  future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::logging::v2::Link> ListLinks(
       google::logging::v2::ListLinksRequest request) override;
@@ -135,6 +167,14 @@ class ConfigServiceV2TracingConnection
 
   future<StatusOr<google::logging::v2::CopyLogEntriesResponse>> CopyLogEntries(
       google::logging::v2::CopyLogEntriesRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CopyLogEntries(
+      ExperimentalTag, NoAwaitTag,
+      google::logging::v2::CopyLogEntriesRequest const& request) override;
+
+  future<StatusOr<google::logging::v2::CopyLogEntriesResponse>> CopyLogEntries(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<logging_v2::ConfigServiceV2Connection> child_;

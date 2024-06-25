@@ -51,6 +51,22 @@ CompletionServiceConnection::ImportCompletionData(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+CompletionServiceConnection::ImportCompletionData(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::retail::v2::ImportCompletionDataRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
+CompletionServiceConnection::ImportCompletionData(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

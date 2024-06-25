@@ -71,6 +71,21 @@ StorageControlConnection::RenameFolder(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> StorageControlConnection::RenameFolder(
+    ExperimentalTag, NoAwaitTag,
+    google::storage::control::v2::RenameFolderRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::storage::control::v2::Folder>>
+StorageControlConnection::RenameFolder(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::storage::control::v2::Folder>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlConnection::GetStorageLayout(
     google::storage::control::v2::GetStorageLayoutRequest const&) {

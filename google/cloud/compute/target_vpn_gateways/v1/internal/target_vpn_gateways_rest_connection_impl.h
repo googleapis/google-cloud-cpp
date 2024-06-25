@@ -64,6 +64,16 @@ class TargetVpnGatewaysRestConnectionImpl
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           DeleteTargetVpnGatewayRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetVpnGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          DeleteTargetVpnGatewayRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetVpnGateway(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
   GetTargetVpnGateway(google::cloud::cpp::compute::target_vpn_gateways::v1::
                           GetTargetVpnGatewayRequest const& request) override;
@@ -73,6 +83,16 @@ class TargetVpnGatewaysRestConnectionImpl
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           InsertTargetVpnGatewayRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetVpnGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          InsertTargetVpnGatewayRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetVpnGateway(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::TargetVpnGateway>
   ListTargetVpnGateways(google::cloud::cpp::compute::target_vpn_gateways::v1::
                             ListTargetVpnGatewaysRequest request) override;
@@ -80,6 +100,15 @@ class TargetVpnGatewaysRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::target_vpn_gateways::v1::
           SetLabelsRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_vpn_gateways::v1::
+          SetLabelsRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<

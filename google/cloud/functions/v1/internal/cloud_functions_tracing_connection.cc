@@ -63,6 +63,27 @@ CloudFunctionsServiceTracingConnection::CreateFunction(
   return internal::EndSpan(std::move(span), child_->CreateFunction(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingConnection::CreateFunction(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::functions::v1::CreateFunctionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::CreateFunction");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateFunction(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::functions::v1::CloudFunction>>
+CloudFunctionsServiceTracingConnection::CreateFunction(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::CreateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateFunction(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceTracingConnection::UpdateFunction(
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
@@ -72,6 +93,27 @@ CloudFunctionsServiceTracingConnection::UpdateFunction(
   return internal::EndSpan(std::move(span), child_->UpdateFunction(request));
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingConnection::UpdateFunction(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::functions::v1::UpdateFunctionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::UpdateFunction");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateFunction(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::functions::v1::CloudFunction>>
+CloudFunctionsServiceTracingConnection::UpdateFunction(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::UpdateFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateFunction(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
 CloudFunctionsServiceTracingConnection::DeleteFunction(
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
@@ -79,6 +121,27 @@ CloudFunctionsServiceTracingConnection::DeleteFunction(
       "functions_v1::CloudFunctionsServiceConnection::DeleteFunction");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFunction(request));
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFunctionsServiceTracingConnection::DeleteFunction(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::functions::v1::DeleteFunctionRequest const& request) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::DeleteFunction");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteFunction(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
+CloudFunctionsServiceTracingConnection::DeleteFunction(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::DeleteFunction");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteFunction(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>

@@ -46,6 +46,22 @@ SecurityCenterConnection::BulkMuteFindings(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+SecurityCenterConnection::BulkMuteFindings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
+SecurityCenterConnection::BulkMuteFindings(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterConnection::CreateSecurityHealthAnalyticsCustomModule(
     google::cloud::securitycenter::v1::
@@ -236,6 +252,22 @@ SecurityCenterConnection::ListSources(
 future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
 SecurityCenterConnection::RunAssetDiscovery(
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+SecurityCenterConnection::RunAssetDiscovery(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
+SecurityCenterConnection::RunAssetDiscovery(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

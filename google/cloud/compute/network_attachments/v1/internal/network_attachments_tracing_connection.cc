@@ -63,6 +63,32 @@ NetworkAttachmentsTracingConnection::DeleteNetworkAttachment(
                            child_->DeleteNetworkAttachment(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkAttachmentsTracingConnection::DeleteNetworkAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::network_attachments::v1::
+        DeleteNetworkAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "DeleteNetworkAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteNetworkAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsTracingConnection::DeleteNetworkAttachment(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "DeleteNetworkAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteNetworkAttachment(
+                                                ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
 NetworkAttachmentsTracingConnection::GetNetworkAttachment(
     google::cloud::cpp::compute::network_attachments::v1::
@@ -97,6 +123,32 @@ NetworkAttachmentsTracingConnection::InsertNetworkAttachment(
                            child_->InsertNetworkAttachment(request));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkAttachmentsTracingConnection::InsertNetworkAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::network_attachments::v1::
+        InsertNetworkAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "InsertNetworkAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->InsertNetworkAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                             request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsTracingConnection::InsertNetworkAttachment(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "InsertNetworkAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->InsertNetworkAttachment(
+                                                ExperimentalTag{}, operation));
+}
+
 StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
 NetworkAttachmentsTracingConnection::ListNetworkAttachments(
     google::cloud::cpp::compute::network_attachments::v1::
@@ -121,6 +173,32 @@ NetworkAttachmentsTracingConnection::PatchNetworkAttachment(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->PatchNetworkAttachment(request));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkAttachmentsTracingConnection::PatchNetworkAttachment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::network_attachments::v1::
+        PatchNetworkAttachmentRequest const& request) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "PatchNetworkAttachment");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->PatchNetworkAttachment(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkAttachmentsTracingConnection::PatchNetworkAttachment(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "compute_network_attachments_v1::NetworkAttachmentsConnection::"
+      "PatchNetworkAttachment");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->PatchNetworkAttachment(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

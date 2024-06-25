@@ -66,10 +66,30 @@ class WorkflowTemplateServiceConnectionImpl
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+  InstantiateWorkflowTemplate(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateInlineWorkflowTemplate(
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dataproc::v1::
+          InstantiateInlineWorkflowTemplateRequest const& request) override;
+
+  future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+  InstantiateInlineWorkflowTemplate(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   UpdateWorkflowTemplate(

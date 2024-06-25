@@ -60,6 +60,21 @@ ConnectorsConnection::CreateConnection(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ConnectorsConnection::CreateConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::connectors::v1::CreateConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::connectors::v1::Connection>>
+ConnectorsConnection::CreateConnection(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::connectors::v1::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsConnection::UpdateConnection(
     google::cloud::connectors::v1::UpdateConnectionRequest const&) {
@@ -68,9 +83,39 @@ ConnectorsConnection::UpdateConnection(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> ConnectorsConnection::UpdateConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::connectors::v1::UpdateConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::connectors::v1::Connection>>
+ConnectorsConnection::UpdateConnection(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::connectors::v1::Connection>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
 ConnectorsConnection::DeleteConnection(
     google::cloud::connectors::v1::DeleteConnectionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::connectors::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> ConnectorsConnection::DeleteConnection(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::connectors::v1::DeleteConnectionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
+ConnectorsConnection::DeleteConnection(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::connectors::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -128,6 +173,23 @@ future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
 ConnectorsConnection::RefreshConnectionSchemaMetadata(
     google::cloud::connectors::v1::
         RefreshConnectionSchemaMetadataRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+ConnectorsConnection::RefreshConnectionSchemaMetadata(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::connectors::v1::
+        RefreshConnectionSchemaMetadataRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+ConnectorsConnection::RefreshConnectionSchemaMetadata(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

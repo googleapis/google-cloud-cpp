@@ -51,6 +51,16 @@ class TargetInstancesTracingConnection
   DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::
                            DeleteTargetInstanceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_instances::v1::
+          DeleteTargetInstanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetInstance(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TargetInstance> GetTargetInstance(
       google::cloud::cpp::compute::target_instances::v1::
           GetTargetInstanceRequest const& request) override;
@@ -59,6 +69,16 @@ class TargetInstancesTracingConnection
   InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::
                            InsertTargetInstanceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_instances::v1::
+          InsertTargetInstanceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetInstance(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
   ListTargetInstances(google::cloud::cpp::compute::target_instances::v1::
                           ListTargetInstancesRequest request) override;
@@ -66,6 +86,16 @@ class TargetInstancesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::
                         SetSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_instances::v1::
+          SetSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   std::shared_ptr<compute_target_instances_v1::TargetInstancesConnection>

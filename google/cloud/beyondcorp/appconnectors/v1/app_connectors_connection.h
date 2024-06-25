@@ -22,8 +22,10 @@
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection_idempotency_policy.h"
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -205,21 +207,61 @@ class AppConnectorsServiceConnection {
   CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                          CreateAppConnectorRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateAppConnector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::
+          CreateAppConnectorRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  CreateAppConnector(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   UpdateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                          UpdateAppConnectorRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateAppConnector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::
+          UpdateAppConnectorRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  UpdateAppConnector(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                               AppConnectorOperationMetadata>>
   DeleteAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                          DeleteAppConnectorRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteAppConnector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::
+          DeleteAppConnectorRequest const& request);
+
+  virtual future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                              AppConnectorOperationMetadata>>
+  DeleteAppConnector(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   ReportStatus(
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> ReportStatus(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  ReportStatus(ExperimentalTag,
+               google::longrunning::Operation const& operation);
 };
 
 /**

@@ -22,8 +22,10 @@
 #include "google/cloud/compute/target_pools/v1/internal/target_pools_retry_traits.h"
 #include "google/cloud/compute/target_pools/v1/target_pools_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -187,10 +189,28 @@ class TargetPoolsConnection {
   AddHealthCheck(google::cloud::cpp::compute::target_pools::v1::
                      AddHealthCheckRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddHealthCheck(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_pools::v1::
+          AddHealthCheckRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddHealthCheck(ExperimentalTag,
+                 google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddInstance(
       google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddInstance(ExperimentalTag,
+              google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::TargetPoolsScopedList>>
@@ -200,6 +220,15 @@ class TargetPoolsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetPool(google::cloud::cpp::compute::target_pools::v1::
                        DeleteTargetPoolRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetPool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_pools::v1::
+          DeleteTargetPoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetPool(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetPool> GetTargetPool(
       google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
@@ -214,6 +243,15 @@ class TargetPoolsConnection {
   InsertTargetPool(google::cloud::cpp::compute::target_pools::v1::
                        InsertTargetPoolRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetPool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_pools::v1::
+          InsertTargetPoolRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetPool(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetPool>
   ListTargetPools(
       google::cloud::cpp::compute::target_pools::v1::ListTargetPoolsRequest
@@ -223,18 +261,56 @@ class TargetPoolsConnection {
   RemoveHealthCheck(google::cloud::cpp::compute::target_pools::v1::
                         RemoveHealthCheckRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RemoveHealthCheck(ExperimentalTag, NoAwaitTag,
+                    google::cloud::cpp::compute::target_pools::v1::
+                        RemoveHealthCheckRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveHealthCheck(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveInstance(google::cloud::cpp::compute::target_pools::v1::
                      RemoveInstanceRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_pools::v1::
+          RemoveInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveInstance(ExperimentalTag,
+                 google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetBackup(
       google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetBackup(ExperimentalTag,
+            google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(google::cloud::cpp::compute::target_pools::v1::
                         SetSecurityPolicyRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetSecurityPolicy(ExperimentalTag, NoAwaitTag,
+                    google::cloud::cpp::compute::target_pools::v1::
+                        SetSecurityPolicyRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

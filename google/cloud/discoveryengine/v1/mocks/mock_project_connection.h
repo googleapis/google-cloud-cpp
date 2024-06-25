@@ -53,6 +53,19 @@ class MockProjectServiceConnection
       (google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ProvisionProject,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Project>>,
+              ProvisionProject,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

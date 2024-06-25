@@ -22,8 +22,10 @@
 #include "google/cloud/compute/autoscalers/v1/autoscalers_connection_idempotency_policy.h"
 #include "google/cloud/compute/autoscalers/v1/internal/autoscalers_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,6 +194,15 @@ class AutoscalersConnection {
   DeleteAutoscaler(google::cloud::cpp::compute::autoscalers::v1::
                        DeleteAutoscalerRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::autoscalers::v1::
+          DeleteAutoscalerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAutoscaler(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
       google::cloud::cpp::compute::autoscalers::v1::GetAutoscalerRequest const&
           request);
@@ -199,6 +210,15 @@ class AutoscalersConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertAutoscaler(google::cloud::cpp::compute::autoscalers::v1::
                        InsertAutoscalerRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::autoscalers::v1::
+          InsertAutoscalerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertAutoscaler(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
   ListAutoscalers(
@@ -209,9 +229,27 @@ class AutoscalersConnection {
   PatchAutoscaler(google::cloud::cpp::compute::autoscalers::v1::
                       PatchAutoscalerRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::autoscalers::v1::
+          PatchAutoscalerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchAutoscaler(ExperimentalTag,
+                  google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateAutoscaler(google::cloud::cpp::compute::autoscalers::v1::
                        UpdateAutoscalerRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::autoscalers::v1::
+          UpdateAutoscalerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateAutoscaler(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

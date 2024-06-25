@@ -66,6 +66,15 @@ class RegionCommitmentsRestConnectionImpl
       google::cloud::cpp::compute::region_commitments::v1::
           InsertCommitmentRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_commitments::v1::
+          InsertCommitmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::Commitment>
   ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
                             ListRegionCommitmentsRequest request) override;
@@ -73,6 +82,15 @@ class RegionCommitmentsRestConnectionImpl
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
       google::cloud::cpp::compute::region_commitments::v1::
           UpdateCommitmentRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_commitments::v1::
+          UpdateCommitmentRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<

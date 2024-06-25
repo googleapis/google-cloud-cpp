@@ -23,8 +23,10 @@
 #include "google/cloud/compute/instance_group_managers/v1/instance_group_managers_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_group_managers/v1/internal/instance_group_managers_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -198,6 +200,15 @@ class InstanceGroupManagersConnection {
   AbandonInstances(google::cloud::cpp::compute::instance_group_managers::v1::
                        AbandonInstancesRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AbandonInstances(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          AbandonInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AbandonInstances(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<std::pair<
       std::string,
       google::cloud::cpp::compute::v1::InstanceGroupManagersScopedList>>
@@ -210,23 +221,74 @@ class InstanceGroupManagersConnection {
       google::cloud::cpp::compute::instance_group_managers::v1::
           ApplyUpdatesToInstancesRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  ApplyUpdatesToInstances(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          ApplyUpdatesToInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  ApplyUpdatesToInstances(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   CreateInstances(google::cloud::cpp::compute::instance_group_managers::v1::
                       CreateInstancesRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> CreateInstances(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          CreateInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  CreateInstances(ExperimentalTag,
+                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroupManager(
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeleteInstanceGroupManagerRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceGroupManager(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          DeleteInstanceGroupManagerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstanceGroupManager(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstances(google::cloud::cpp::compute::instance_group_managers::v1::
                       DeleteInstancesRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          DeleteInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstances(ExperimentalTag,
+                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePerInstanceConfigs(
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeletePerInstanceConfigsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePerInstanceConfigs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          DeletePerInstanceConfigsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeletePerInstanceConfigs(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
   GetInstanceGroupManager(
@@ -237,6 +299,17 @@ class InstanceGroupManagersConnection {
   InsertInstanceGroupManager(
       google::cloud::cpp::compute::instance_group_managers::v1::
           InsertInstanceGroupManagerRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceGroupManager(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          InsertInstanceGroupManagerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInstanceGroupManager(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
   ListInstanceGroupManagers(
@@ -262,31 +335,102 @@ class InstanceGroupManagersConnection {
       google::cloud::cpp::compute::instance_group_managers::v1::
           PatchInstanceGroupManagerRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInstanceGroupManager(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          PatchInstanceGroupManagerRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchInstanceGroupManager(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPerInstanceConfigs(
       google::cloud::cpp::compute::instance_group_managers::v1::
           PatchPerInstanceConfigsRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPerInstanceConfigs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          PatchPerInstanceConfigsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchPerInstanceConfigs(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RecreateInstances(google::cloud::cpp::compute::instance_group_managers::v1::
                         RecreateInstancesRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  RecreateInstances(ExperimentalTag, NoAwaitTag,
+                    google::cloud::cpp::compute::instance_group_managers::v1::
+                        RecreateInstancesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RecreateInstances(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       google::cloud::cpp::compute::instance_group_managers::v1::
           ResizeRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          ResizeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetInstanceTemplate(google::cloud::cpp::compute::instance_group_managers::v1::
                           SetInstanceTemplateRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetInstanceTemplate(ExperimentalTag, NoAwaitTag,
+                      google::cloud::cpp::compute::instance_group_managers::v1::
+                          SetInstanceTemplateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetInstanceTemplate(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetTargetPools(google::cloud::cpp::compute::instance_group_managers::v1::
                      SetTargetPoolsRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetTargetPools(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          SetTargetPoolsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetTargetPools(ExperimentalTag,
+                 google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdatePerInstanceConfigs(
       google::cloud::cpp::compute::instance_group_managers::v1::
           UpdatePerInstanceConfigsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdatePerInstanceConfigs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::instance_group_managers::v1::
+          UpdatePerInstanceConfigsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdatePerInstanceConfigs(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -73,6 +73,31 @@ PolicyBasedRoutingServiceTracingConnection::CreatePolicyBasedRoute(
                            child_->CreatePolicyBasedRoute(request));
 }
 
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceTracingConnection::CreatePolicyBasedRoute(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::PolicyBasedRoutingServiceConnection::"
+      "CreatePolicyBasedRoute");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreatePolicyBasedRoute(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
+PolicyBasedRoutingServiceTracingConnection::CreatePolicyBasedRoute(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::PolicyBasedRoutingServiceConnection::"
+      "CreatePolicyBasedRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->CreatePolicyBasedRoute(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 PolicyBasedRoutingServiceTracingConnection::DeletePolicyBasedRoute(
     google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
@@ -83,6 +108,31 @@ PolicyBasedRoutingServiceTracingConnection::DeletePolicyBasedRoute(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeletePolicyBasedRoute(request));
+}
+
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceTracingConnection::DeletePolicyBasedRoute(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::PolicyBasedRoutingServiceConnection::"
+      "DeletePolicyBasedRoute");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeletePolicyBasedRoute(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+PolicyBasedRoutingServiceTracingConnection::DeletePolicyBasedRoute(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::PolicyBasedRoutingServiceConnection::"
+      "DeletePolicyBasedRoute");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeletePolicyBasedRoute(
+                                                ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

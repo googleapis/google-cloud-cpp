@@ -22,8 +22,10 @@
 #include "google/cloud/compute/vpn_gateways/v1/internal/vpn_gateways_retry_traits.h"
 #include "google/cloud/compute/vpn_gateways/v1/vpn_gateways_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,6 +194,15 @@ class VpnGatewaysConnection {
   DeleteVpnGateway(google::cloud::cpp::compute::vpn_gateways::v1::
                        DeleteVpnGatewayRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::vpn_gateways::v1::
+          DeleteVpnGatewayRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteVpnGateway(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateway(
       google::cloud::cpp::compute::vpn_gateways::v1::GetVpnGatewayRequest const&
           request);
@@ -206,6 +217,15 @@ class VpnGatewaysConnection {
   InsertVpnGateway(google::cloud::cpp::compute::vpn_gateways::v1::
                        InsertVpnGatewayRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::vpn_gateways::v1::
+          InsertVpnGatewayRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertVpnGateway(ExperimentalTag,
+                   google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StreamRange<google::cloud::cpp::compute::v1::VpnGateway>
   ListVpnGateways(
       google::cloud::cpp::compute::vpn_gateways::v1::ListVpnGatewaysRequest
@@ -215,6 +235,15 @@ class VpnGatewaysConnection {
   SetLabels(
       google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetLabels(ExperimentalTag,
+            google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::vpn_gateways::v1::

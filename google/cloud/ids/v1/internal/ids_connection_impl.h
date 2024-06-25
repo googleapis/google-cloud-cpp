@@ -59,8 +59,24 @@ class IDSConnectionImpl : public ids_v1::IDSConnection {
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::ids::v1::CreateEndpointRequest const& request) override;
+
+  future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
+
+  future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

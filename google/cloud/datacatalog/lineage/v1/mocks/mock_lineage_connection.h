@@ -85,6 +85,20 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteProcess,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,
+      DeleteProcess,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::datacatalog::lineage::v1::Run>, CreateRun,
               (google::cloud::datacatalog::lineage::v1::CreateRunRequest const&
                    request),
@@ -111,6 +125,19 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       DeleteRun,
       (google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteRun,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,
+      DeleteRun,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

@@ -22,8 +22,10 @@
 #include "google/cloud/aiplatform/v1/internal/metadata_retry_traits.h"
 #include "google/cloud/aiplatform/v1/metadata_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -191,6 +193,14 @@ class MetadataServiceConnection {
   CreateMetadataStore(
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateMetadataStore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
+  CreateMetadataStore(ExperimentalTag,
+                      google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::MetadataStore>
   GetMetadataStore(
       google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request);
@@ -203,6 +213,15 @@ class MetadataServiceConnection {
       google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
   DeleteMetadataStore(
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteMetadataStore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+  DeleteMetadataStore(ExperimentalTag,
+                      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Artifact> CreateArtifact(
       google::cloud::aiplatform::v1::CreateArtifactRequest const& request);
@@ -221,10 +240,28 @@ class MetadataServiceConnection {
   DeleteArtifact(
       google::cloud::aiplatform::v1::DeleteArtifactRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteArtifact(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteArtifact(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
   PurgeArtifacts(
       google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> PurgeArtifacts(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
+  PurgeArtifacts(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Context> CreateContext(
       google::cloud::aiplatform::v1::CreateContextRequest const& request);
@@ -243,9 +280,26 @@ class MetadataServiceConnection {
   DeleteContext(
       google::cloud::aiplatform::v1::DeleteContextRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteContext(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteContext(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
   PurgeContexts(
       google::cloud::aiplatform::v1::PurgeContextsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> PurgeContexts(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
+  PurgeContexts(ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
@@ -284,10 +338,28 @@ class MetadataServiceConnection {
   DeleteExecution(
       google::cloud::aiplatform::v1::DeleteExecutionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteExecution(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteExecution(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
   PurgeExecutions(
       google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> PurgeExecutions(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
+  PurgeExecutions(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
   AddExecutionEvents(

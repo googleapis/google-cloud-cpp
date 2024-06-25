@@ -22,8 +22,10 @@
 #include "google/cloud/cloudbuild/v2/internal/repository_manager_retry_traits.h"
 #include "google/cloud/cloudbuild/v2/repository_manager_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -191,6 +193,14 @@ class RepositoryManagerConnection {
   CreateConnection(
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::cloudbuild::v2::CreateConnectionRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
+  CreateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
       google::devtools::cloudbuild::v2::GetConnectionRequest const& request);
 
@@ -202,19 +212,53 @@ class RepositoryManagerConnection {
   UpdateConnection(
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
+  UpdateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteConnection(
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
+  DeleteConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
   CreateRepository(
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateRepository(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
+  CreateRepository(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
   BatchCreateRepositories(
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> BatchCreateRepositories(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
+  BatchCreateRepositories(ExperimentalTag,
+                          google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
       google::devtools::cloudbuild::v2::GetRepositoryRequest const& request);
@@ -226,6 +270,14 @@ class RepositoryManagerConnection {
   virtual future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteRepository(
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteRepository(
+      ExperimentalTag, NoAwaitTag,
+      google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request);
+
+  virtual future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
+  DeleteRepository(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StatusOr<
       google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>

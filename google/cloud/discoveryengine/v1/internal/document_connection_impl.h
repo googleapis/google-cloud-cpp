@@ -77,10 +77,28 @@ class DocumentServiceConnectionImpl
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> ImportDocuments(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
+  ImportDocuments(ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
   PurgeDocuments(
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> PurgeDocuments(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
+  PurgeDocuments(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

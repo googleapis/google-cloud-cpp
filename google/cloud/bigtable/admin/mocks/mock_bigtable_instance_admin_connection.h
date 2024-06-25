@@ -52,6 +52,18 @@ class MockBigtableInstanceAdminConnection
       (google::bigtable::admin::v2::CreateInstanceRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::bigtable::admin::v2::CreateInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Instance>>,
+              CreateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Instance>, GetInstance,
               (google::bigtable::admin::v2::GetInstanceRequest const& request),
               (override));
@@ -72,6 +84,18 @@ class MockBigtableInstanceAdminConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, PartialUpdateInstance,
+              (ExperimentalTag, NoAwaitTag,
+               google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Instance>>,
+              PartialUpdateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       Status, DeleteInstance,
       (google::bigtable::admin::v2::DeleteInstanceRequest const& request),
@@ -81,6 +105,18 @@ class MockBigtableInstanceAdminConnection
       future<StatusOr<google::bigtable::admin::v2::Cluster>>, CreateCluster,
       (google::bigtable::admin::v2::CreateClusterRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::bigtable::admin::v2::CreateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Cluster>>,
+              CreateCluster,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(StatusOr<google::bigtable::admin::v2::Cluster>, GetCluster,
               (google::bigtable::admin::v2::GetClusterRequest const& request),
@@ -96,11 +132,34 @@ class MockBigtableInstanceAdminConnection
               (google::bigtable::admin::v2::Cluster const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateCluster,
+              (ExperimentalTag, NoAwaitTag,
+               google::bigtable::admin::v2::Cluster const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Cluster>>,
+              UpdateCluster,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::Cluster>>,
       PartialUpdateCluster,
       (google::bigtable::admin::v2::PartialUpdateClusterRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, PartialUpdateCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Cluster>>,
+              PartialUpdateCluster,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       Status, DeleteCluster,
@@ -127,6 +186,18 @@ class MockBigtableInstanceAdminConnection
       UpdateAppProfile,
       (google::bigtable::admin::v2::UpdateAppProfileRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAppProfile,
+      (ExperimentalTag, NoAwaitTag,
+       google::bigtable::admin::v2::UpdateAppProfileRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::AppProfile>>,
+              UpdateAppProfile,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       Status, DeleteAppProfile,

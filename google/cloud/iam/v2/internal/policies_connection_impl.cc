@@ -143,6 +143,55 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::CreatePolicy(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesConnectionImpl::CreatePolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::iam::v2::CreatePolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreatePolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v2::CreatePolicyRequest const& request) {
+        return stub_->CreatePolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::CreatePolicy(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::iam::v2::PolicyOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::iam::v2::Policy>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreatePolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::iam::v2::Policy>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::iam::v2::Policy>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::UpdatePolicy(
     google::iam::v2::UpdatePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -180,6 +229,55 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::UpdatePolicy(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> PoliciesConnectionImpl::UpdatePolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::iam::v2::UpdatePolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdatePolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v2::UpdatePolicyRequest const& request) {
+        return stub_->UpdatePolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::UpdatePolicy(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::iam::v2::PolicyOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::iam::v2::Policy>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdatePolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::iam::v2::Policy>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::iam::v2::Policy>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::DeletePolicy(
     google::iam::v2::DeletePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -214,6 +312,55 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::DeletePolicy(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::iam::v2::Policy>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> PoliciesConnectionImpl::DeletePolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::iam::v2::DeletePolicyRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeletePolicy(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::iam::v2::DeletePolicyRequest const& request) {
+        return stub_->DeletePolicy(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::DeletePolicy(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::iam::v2::PolicyOperationMetadata>()) {
+    return make_ready_future<StatusOr<google::iam::v2::Policy>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeletePolicy",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::iam::v2::Policy>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::iam::v2::Policy>,
       polling_policy(*current), __func__);
 }
 

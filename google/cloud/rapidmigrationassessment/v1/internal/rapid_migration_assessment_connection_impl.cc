@@ -119,6 +119,61 @@ RapidMigrationAssessmentConnectionImpl::CreateCollector(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnectionImpl::CreateCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateCollector(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 CreateCollectorRequest const& request) {
+        return stub_->CreateCollector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnectionImpl::CreateCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::rapidmigrationassessment::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateCollector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::rapidmigrationassessment::v1::Collector>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::rapidmigrationassessment::v1::Collector>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
 RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
     google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
@@ -156,6 +211,61 @@ RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Annotation>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateAnnotation(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 CreateAnnotationRequest const& request) {
+        return stub_->CreateAnnotation(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
+RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::rapidmigrationassessment::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateAnnotation",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::rapidmigrationassessment::v1::Annotation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::rapidmigrationassessment::v1::Annotation>,
       polling_policy(*current), __func__);
 }
 
@@ -268,6 +378,61 @@ RapidMigrationAssessmentConnectionImpl::UpdateCollector(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnectionImpl::UpdateCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateCollector(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 UpdateCollectorRequest const& request) {
+        return stub_->UpdateCollector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnectionImpl::UpdateCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::rapidmigrationassessment::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateCollector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::rapidmigrationassessment::v1::Collector>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::rapidmigrationassessment::v1::Collector>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnectionImpl::DeleteCollector(
     google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
@@ -305,6 +470,61 @@ RapidMigrationAssessmentConnectionImpl::DeleteCollector(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Collector>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnectionImpl::DeleteCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteCollector(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 DeleteCollectorRequest const& request) {
+        return stub_->DeleteCollector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnectionImpl::DeleteCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::rapidmigrationassessment::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteCollector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::rapidmigrationassessment::v1::Collector>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::rapidmigrationassessment::v1::Collector>,
       polling_policy(*current), __func__);
 }
 
@@ -348,6 +568,61 @@ RapidMigrationAssessmentConnectionImpl::ResumeCollector(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnectionImpl::ResumeCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ResumeCollector(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 ResumeCollectorRequest const& request) {
+        return stub_->ResumeCollector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnectionImpl::ResumeCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::rapidmigrationassessment::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ResumeCollector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::rapidmigrationassessment::v1::Collector>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::rapidmigrationassessment::v1::Collector>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnectionImpl::RegisterCollector(
     google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
@@ -388,6 +663,61 @@ RapidMigrationAssessmentConnectionImpl::RegisterCollector(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnectionImpl::RegisterCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RegisterCollector(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 RegisterCollectorRequest const& request) {
+        return stub_->RegisterCollector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnectionImpl::RegisterCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::rapidmigrationassessment::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RegisterCollector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::rapidmigrationassessment::v1::Collector>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::rapidmigrationassessment::v1::Collector>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentConnectionImpl::PauseCollector(
     google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
@@ -425,6 +755,61 @@ RapidMigrationAssessmentConnectionImpl::PauseCollector(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Collector>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+RapidMigrationAssessmentConnectionImpl::PauseCollector(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->PauseCollector(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::rapidmigrationassessment::v1::
+                 PauseCollectorRequest const& request) {
+        return stub_->PauseCollector(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+RapidMigrationAssessmentConnectionImpl::PauseCollector(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::rapidmigrationassessment::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to PauseCollector",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::rapidmigrationassessment::v1::Collector>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::rapidmigrationassessment::v1::Collector>,
       polling_policy(*current), __func__);
 }
 

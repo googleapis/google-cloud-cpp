@@ -46,6 +46,21 @@ DataplexServiceConnection::CreateLake(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::CreateLake(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::CreateLakeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Lake>>
+DataplexServiceConnection::CreateLake(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Lake>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Lake>>
 DataplexServiceConnection::UpdateLake(
     google::cloud::dataplex::v1::UpdateLakeRequest const&) {
@@ -54,9 +69,39 @@ DataplexServiceConnection::UpdateLake(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::UpdateLake(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateLakeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Lake>>
+DataplexServiceConnection::UpdateLake(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Lake>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnection::DeleteLake(
     google::cloud::dataplex::v1::DeleteLakeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::DeleteLake(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteLakeRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceConnection::DeleteLake(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -91,6 +136,21 @@ DataplexServiceConnection::CreateZone(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::CreateZone(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::CreateZoneRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Zone>>
+DataplexServiceConnection::CreateZone(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Zone>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
 DataplexServiceConnection::UpdateZone(
     google::cloud::dataplex::v1::UpdateZoneRequest const&) {
@@ -99,9 +159,39 @@ DataplexServiceConnection::UpdateZone(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::UpdateZone(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateZoneRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Zone>>
+DataplexServiceConnection::UpdateZone(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Zone>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnection::DeleteZone(
     google::cloud::dataplex::v1::DeleteZoneRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::DeleteZone(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteZoneRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceConnection::DeleteZone(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -136,6 +226,21 @@ DataplexServiceConnection::CreateAsset(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::CreateAsset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::CreateAssetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Asset>>
+DataplexServiceConnection::CreateAsset(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Asset>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
 DataplexServiceConnection::UpdateAsset(
     google::cloud::dataplex::v1::UpdateAssetRequest const&) {
@@ -144,9 +249,39 @@ DataplexServiceConnection::UpdateAsset(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::UpdateAsset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateAssetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Asset>>
+DataplexServiceConnection::UpdateAsset(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Asset>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnection::DeleteAsset(
     google::cloud::dataplex::v1::DeleteAssetRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::DeleteAsset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteAssetRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceConnection::DeleteAsset(ExperimentalTag,
+                                       google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -182,6 +317,21 @@ DataplexServiceConnection::CreateTask(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::CreateTask(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::CreateTaskRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Task>>
+DataplexServiceConnection::CreateTask(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Task>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Task>>
 DataplexServiceConnection::UpdateTask(
     google::cloud::dataplex::v1::UpdateTaskRequest const&) {
@@ -190,9 +340,39 @@ DataplexServiceConnection::UpdateTask(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::UpdateTask(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateTaskRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Task>>
+DataplexServiceConnection::UpdateTask(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Task>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnection::DeleteTask(
     google::cloud::dataplex::v1::DeleteTaskRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DataplexServiceConnection::DeleteTask(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteTaskRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceConnection::DeleteTask(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -243,6 +423,22 @@ DataplexServiceConnection::CreateEnvironment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceConnection::CreateEnvironment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::CreateEnvironmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Environment>>
+DataplexServiceConnection::CreateEnvironment(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Environment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
 DataplexServiceConnection::UpdateEnvironment(
     google::cloud::dataplex::v1::UpdateEnvironmentRequest const&) {
@@ -251,9 +447,41 @@ DataplexServiceConnection::UpdateEnvironment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DataplexServiceConnection::UpdateEnvironment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::UpdateEnvironmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::Environment>>
+DataplexServiceConnection::UpdateEnvironment(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::Environment>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataplexServiceConnection::DeleteEnvironment(
     google::cloud::dataplex::v1::DeleteEnvironmentRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DataplexServiceConnection::DeleteEnvironment(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataplex::v1::DeleteEnvironmentRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+DataplexServiceConnection::DeleteEnvironment(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

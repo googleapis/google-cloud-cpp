@@ -74,6 +74,19 @@ class MockPipelineServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteTrainingPipeline,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteTrainingPipeline,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       Status, CancelTrainingPipeline,
       (google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
            request),
@@ -101,11 +114,37 @@ class MockPipelineServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeletePipelineJob,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeletePipelineJob,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
       BatchDeletePipelineJobs,
       (google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchDeletePipelineJobs,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
+      BatchDeletePipelineJobs,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -119,6 +158,20 @@ class MockPipelineServiceConnection
       BatchCancelPipelineJobs,
       (google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchCancelPipelineJobs,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>,
+      BatchCancelPipelineJobs,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 };
 

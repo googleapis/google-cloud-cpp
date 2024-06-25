@@ -22,8 +22,10 @@
 #include "google/cloud/channel/v1/cloud_channel_reports_connection_idempotency_policy.h"
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -205,6 +207,14 @@ class CloudChannelReportsServiceConnection {
 
   virtual future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
   RunReportJob(google::cloud::channel::v1::RunReportJobRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RunReportJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::RunReportJobRequest const& request);
+
+  virtual future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
+  RunReportJob(ExperimentalTag,
+               google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::channel::v1::Row> FetchReportResults(
       google::cloud::channel::v1::FetchReportResultsRequest request);

@@ -77,9 +77,41 @@ DocumentServiceConnection::ImportDocuments(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+DocumentServiceConnection::ImportDocuments(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportDocumentsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
+DocumentServiceConnection::ImportDocuments(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
 DocumentServiceConnection::PurgeDocuments(
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+DocumentServiceConnection::PurgeDocuments(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
+DocumentServiceConnection::PurgeDocuments(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

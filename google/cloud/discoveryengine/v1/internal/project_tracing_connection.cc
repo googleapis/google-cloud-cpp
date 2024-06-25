@@ -42,6 +42,29 @@ ProjectServiceTracingConnection::ProvisionProject(
   return internal::EndSpan(std::move(span), child_->ProvisionProject(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ProjectServiceTracingConnection::ProvisionProject(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ProjectServiceConnection::ProvisionProject");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->ProvisionProject(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Project>>
+ProjectServiceTracingConnection::ProvisionProject(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::ProjectServiceConnection::ProvisionProject");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->ProvisionProject(ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<discoveryengine_v1::ProjectServiceConnection>

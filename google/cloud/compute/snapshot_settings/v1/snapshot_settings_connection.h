@@ -22,8 +22,10 @@
 #include "google/cloud/compute/snapshot_settings/v1/internal/snapshot_settings_retry_traits.h"
 #include "google/cloud/compute/snapshot_settings/v1/snapshot_settings_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,6 +194,16 @@ class SnapshotSettingsConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSnapshotSettings(google::cloud::cpp::compute::snapshot_settings::v1::
                             PatchSnapshotSettingsRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchSnapshotSettings(ExperimentalTag, NoAwaitTag,
+                        google::cloud::cpp::compute::snapshot_settings::v1::
+                            PatchSnapshotSettingsRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchSnapshotSettings(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -48,8 +48,24 @@ class InstancesTracingConnection : public appengine_v1::InstancesConnection {
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
       google::appengine::v1::DeleteInstanceRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::DeleteInstanceRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
       google::appengine::v1::DebugInstanceRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> DebugInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::DebugInstanceRequest const& request) override;
+
+  future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<appengine_v1::InstancesConnection> child_;

@@ -56,9 +56,27 @@ class EngineServiceConnectionImpl
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateEngine(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
   DeleteEngine(google::cloud::discoveryengine::v1::DeleteEngineRequest const&
                    request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteEngine(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
+  DeleteEngine(ExperimentalTag,
+               google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(
       google::cloud::discoveryengine::v1::UpdateEngineRequest const& request)

@@ -48,6 +48,30 @@ ConsumerProcurementServiceTracingConnection::PlaceOrder(
   return internal::EndSpan(std::move(span), child_->PlaceOrder(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ConsumerProcurementServiceTracingConnection::PlaceOrder(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
+      "PlaceOrder");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->PlaceOrder(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
+ConsumerProcurementServiceTracingConnection::PlaceOrder(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "commerce_consumer_procurement_v1::ConsumerProcurementServiceConnection::"
+      "PlaceOrder");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PlaceOrder(ExperimentalTag{}, operation));
+}
+
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 ConsumerProcurementServiceTracingConnection::GetOrder(
     google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&

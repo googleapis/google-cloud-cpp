@@ -585,6 +585,60 @@ DataCatalogConnectionImpl::ReconcileTags(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+DataCatalogConnectionImpl::ReconcileTags(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReconcileTags(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+        return stub_->ReconcileTags(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+DataCatalogConnectionImpl::ReconcileTags(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datacatalog::v1::
+                   ReconcileTagsMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ReconcileTags",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datacatalog::v1::ReconcileTagsResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datacatalog::v1::ReconcileTagsResponse>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogConnectionImpl::StarEntry(
     google::cloud::datacatalog::v1::StarEntryRequest const& request) {
@@ -690,6 +744,60 @@ DataCatalogConnectionImpl::ImportEntries(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datacatalog::v1::ImportEntriesResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+DataCatalogConnectionImpl::ImportEntries(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ImportEntries(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+        return stub_->ImportEntries(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+DataCatalogConnectionImpl::ImportEntries(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::datacatalog::v1::
+                   ImportEntriesMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to ImportEntries",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::datacatalog::v1::ImportEntriesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datacatalog::v1::ImportEntriesResponse>,
       polling_policy(*current), __func__);
 }
 

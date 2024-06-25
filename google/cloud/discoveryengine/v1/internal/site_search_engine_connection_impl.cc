@@ -131,6 +131,61 @@ SiteSearchEngineServiceConnectionImpl::CreateTargetSite(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::CreateTargetSite(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateTargetSite(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+                 request) {
+        return stub_->CreateTargetSite(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+SiteSearchEngineServiceConnectionImpl::CreateTargetSite(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   CreateTargetSiteMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateTargetSite",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::TargetSite>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::TargetSite>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
 SiteSearchEngineServiceConnectionImpl::BatchCreateTargetSites(
@@ -169,6 +224,62 @@ SiteSearchEngineServiceConnectionImpl::BatchCreateTargetSites(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::BatchCreateTargetSites(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchCreateTargetSites(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 BatchCreateTargetSitesRequest const& request) {
+        return stub_->BatchCreateTargetSites(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+SiteSearchEngineServiceConnectionImpl::BatchCreateTargetSites(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   BatchCreateTargetSiteMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchCreateTargetSites",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -228,6 +339,61 @@ SiteSearchEngineServiceConnectionImpl::UpdateTargetSite(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::UpdateTargetSite(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateTargetSite(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+                 request) {
+        return stub_->UpdateTargetSite(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+SiteSearchEngineServiceConnectionImpl::UpdateTargetSite(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   UpdateTargetSiteMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::TargetSite>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateTargetSite",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::TargetSite>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::TargetSite>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
 SiteSearchEngineServiceConnectionImpl::DeleteTargetSite(
     google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
@@ -266,6 +432,61 @@ SiteSearchEngineServiceConnectionImpl::DeleteTargetSite(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::DeleteTargetSite(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteTargetSite(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+                 request) {
+        return stub_->DeleteTargetSite(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
+SiteSearchEngineServiceConnectionImpl::DeleteTargetSite(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   DeleteTargetSiteMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteTargetSite",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -345,6 +566,62 @@ SiteSearchEngineServiceConnectionImpl::EnableAdvancedSiteSearch(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::EnableAdvancedSiteSearch(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->EnableAdvancedSiteSearch(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 EnableAdvancedSiteSearchRequest const& request) {
+        return stub_->EnableAdvancedSiteSearch(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+SiteSearchEngineServiceConnectionImpl::EnableAdvancedSiteSearch(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   EnableAdvancedSiteSearchMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to EnableAdvancedSiteSearch",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceConnectionImpl::DisableAdvancedSiteSearch(
@@ -384,6 +661,63 @@ SiteSearchEngineServiceConnectionImpl::DisableAdvancedSiteSearch(
           google::cloud::discoveryengine::v1::
               DisableAdvancedSiteSearchResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::DisableAdvancedSiteSearch(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DisableAdvancedSiteSearch(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 DisableAdvancedSiteSearchRequest const& request) {
+        return stub_->DisableAdvancedSiteSearch(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+SiteSearchEngineServiceConnectionImpl::DisableAdvancedSiteSearch(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   DisableAdvancedSiteSearchMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DisableAdvancedSiteSearch",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::
+              DisableAdvancedSiteSearchResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -427,6 +761,60 @@ SiteSearchEngineServiceConnectionImpl::RecrawlUris(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::RecrawlUris(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RecrawlUris(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::RecrawlUrisRequest const&
+                 request) {
+        return stub_->RecrawlUris(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
+SiteSearchEngineServiceConnectionImpl::RecrawlUris(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   RecrawlUrisMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RecrawlUris",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::RecrawlUrisResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::RecrawlUrisResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
 SiteSearchEngineServiceConnectionImpl::BatchVerifyTargetSites(
@@ -465,6 +853,62 @@ SiteSearchEngineServiceConnectionImpl::BatchVerifyTargetSites(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceConnectionImpl::BatchVerifyTargetSites(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->BatchVerifyTargetSites(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::
+                 BatchVerifyTargetSitesRequest const& request) {
+        return stub_->BatchVerifyTargetSites(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+SiteSearchEngineServiceConnectionImpl::BatchVerifyTargetSites(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   BatchVerifyTargetSitesMetadata>()) {
+    return make_ready_future<StatusOr<
+        google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to BatchVerifyTargetSites",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>,
       polling_policy(*current), __func__);
 }
 

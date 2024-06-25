@@ -154,6 +154,58 @@ ApiGatewayServiceConnectionImpl::CreateGateway(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceConnectionImpl::CreateGateway(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateGateway(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
+        return stub_->CreateGateway(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+ApiGatewayServiceConnectionImpl::CreateGateway(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apigateway::v1::Gateway>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateGateway",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apigateway::v1::Gateway>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apigateway::v1::Gateway>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceConnectionImpl::UpdateGateway(
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
@@ -193,6 +245,58 @@ ApiGatewayServiceConnectionImpl::UpdateGateway(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceConnectionImpl::UpdateGateway(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateGateway(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
+        return stub_->UpdateGateway(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apigateway::v1::Gateway>>
+ApiGatewayServiceConnectionImpl::UpdateGateway(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apigateway::v1::Gateway>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateGateway",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apigateway::v1::Gateway>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apigateway::v1::Gateway>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteGateway(
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
@@ -229,6 +333,59 @@ ApiGatewayServiceConnectionImpl::DeleteGateway(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apigateway::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceConnectionImpl::DeleteGateway(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteGateway(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
+        return stub_->DeleteGateway(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+ApiGatewayServiceConnectionImpl::DeleteGateway(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apigateway::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteGateway",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apigateway::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apigateway::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -317,6 +474,57 @@ ApiGatewayServiceConnectionImpl::CreateApi(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceConnectionImpl::CreateApi(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apigateway::v1::CreateApiRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateApi(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::CreateApiRequest const& request) {
+        return stub_->CreateApi(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apigateway::v1::Api>>
+ApiGatewayServiceConnectionImpl::CreateApi(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apigateway::v1::Api>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateApi",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apigateway::v1::Api>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apigateway::v1::Api>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceConnectionImpl::UpdateApi(
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
@@ -355,6 +563,57 @@ ApiGatewayServiceConnectionImpl::UpdateApi(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceConnectionImpl::UpdateApi(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateApi(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::UpdateApiRequest const& request) {
+        return stub_->UpdateApi(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apigateway::v1::Api>>
+ApiGatewayServiceConnectionImpl::UpdateApi(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::apigateway::v1::Api>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateApi",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apigateway::v1::Api>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apigateway::v1::Api>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteApi(
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
@@ -390,6 +649,58 @@ ApiGatewayServiceConnectionImpl::DeleteApi(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apigateway::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceConnectionImpl::DeleteApi(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteApi(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::DeleteApiRequest const& request) {
+        return stub_->DeleteApi(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+ApiGatewayServiceConnectionImpl::DeleteApi(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apigateway::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteApi",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apigateway::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apigateway::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 
@@ -482,6 +793,59 @@ ApiGatewayServiceConnectionImpl::CreateApiConfig(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceConnectionImpl::CreateApiConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateApiConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::CreateApiConfigRequest const&
+                 request) {
+        return stub_->CreateApiConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+ApiGatewayServiceConnectionImpl::CreateApiConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apigateway::v1::ApiConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateApiConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apigateway::v1::ApiConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apigateway::v1::ApiConfig>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceConnectionImpl::UpdateApiConfig(
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
@@ -522,6 +886,59 @@ ApiGatewayServiceConnectionImpl::UpdateApiConfig(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceConnectionImpl::UpdateApiConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateApiConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::UpdateApiConfigRequest const&
+                 request) {
+        return stub_->UpdateApiConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
+ApiGatewayServiceConnectionImpl::UpdateApiConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apigateway::v1::ApiConfig>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateApiConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apigateway::v1::ApiConfig>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::apigateway::v1::ApiConfig>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteApiConfig(
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
@@ -559,6 +976,59 @@ ApiGatewayServiceConnectionImpl::DeleteApiConfig(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apigateway::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+ApiGatewayServiceConnectionImpl::DeleteApiConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteApiConfig(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::apigateway::v1::DeleteApiConfigRequest const&
+                 request) {
+        return stub_->DeleteApiConfig(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+ApiGatewayServiceConnectionImpl::DeleteApiConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::apigateway::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::apigateway::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteApiConfig",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::apigateway::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::apigateway::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

@@ -46,9 +46,39 @@ EngineServiceConnection::CreateEngine(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> EngineServiceConnection::CreateEngine(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateEngineRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
+EngineServiceConnection::CreateEngine(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::Engine>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
 EngineServiceConnection::DeleteEngine(
     google::cloud::discoveryengine::v1::DeleteEngineRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> EngineServiceConnection::DeleteEngine(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteEngineRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
+EngineServiceConnection::DeleteEngine(ExperimentalTag,
+                                      google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

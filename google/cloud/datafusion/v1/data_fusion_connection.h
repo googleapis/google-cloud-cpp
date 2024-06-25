@@ -22,8 +22,10 @@
 #include "google/cloud/datafusion/v1/data_fusion_connection_idempotency_policy.h"
 #include "google/cloud/datafusion/v1/internal/data_fusion_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -198,17 +200,49 @@ class DataFusionConnection {
   CreateInstance(
       google::cloud::datafusion::v1::CreateInstanceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datafusion::v1::CreateInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
+  CreateInstance(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
   DeleteInstance(
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datafusion::v1::DeleteInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
+  DeleteInstance(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
   UpdateInstance(
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datafusion::v1::UpdateInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
+  UpdateInstance(ExperimentalTag,
+                 google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
   RestartInstance(
       google::cloud::datafusion::v1::RestartInstanceRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RestartInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datafusion::v1::RestartInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::datafusion::v1::Instance>>
+  RestartInstance(ExperimentalTag,
+                  google::longrunning::Operation const& operation);
 };
 
 /**

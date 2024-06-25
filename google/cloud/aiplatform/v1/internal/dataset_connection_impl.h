@@ -56,6 +56,15 @@ class DatasetServiceConnectionImpl
       google::cloud::aiplatform::v1::CreateDatasetRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDatasetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
       google::cloud::aiplatform::v1::GetDatasetRequest const& request) override;
 
@@ -70,18 +79,53 @@ class DatasetServiceConnectionImpl
   DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const&
                     request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDataset(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
   ImportData(
       google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ImportData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
+  ImportData(ExperimentalTag,
+             google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
   ExportData(
       google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> ExportData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
+  ExportData(ExperimentalTag,
+             google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
   CreateDatasetVersion(
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> CreateDatasetVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  CreateDatasetVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
       google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request)
@@ -91,6 +135,16 @@ class DatasetServiceConnectionImpl
   DeleteDatasetVersion(
       google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDatasetVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
       google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request)
@@ -105,6 +159,16 @@ class DatasetServiceConnectionImpl
       google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  RestoreDatasetVersion(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
       google::cloud::aiplatform::v1::ListDataItemsRequest request) override;
 
@@ -117,6 +181,15 @@ class DatasetServiceConnectionImpl
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const&
                        request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteSavedQuery(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSavedQuery(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
       google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request)

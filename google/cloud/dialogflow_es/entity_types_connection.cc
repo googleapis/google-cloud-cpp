@@ -77,9 +77,40 @@ EntityTypesConnection::BatchUpdateEntityTypes(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesConnection::BatchUpdateEntityTypes(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
+EntityTypesConnection::BatchUpdateEntityTypes(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnection::BatchDeleteEntityTypes(
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesConnection::BatchDeleteEntityTypes(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesConnection::BatchDeleteEntityTypes(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
@@ -91,6 +122,21 @@ EntityTypesConnection::BatchCreateEntities(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesConnection::BatchCreateEntities(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesConnection::BatchCreateEntities(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnection::BatchUpdateEntities(
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&) {
@@ -98,9 +144,39 @@ EntityTypesConnection::BatchUpdateEntities(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+EntityTypesConnection::BatchUpdateEntities(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesConnection::BatchUpdateEntities(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnection::BatchDeleteEntities(
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation>
+EntityTypesConnection::BatchDeleteEntities(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::protobuf::Struct>>
+EntityTypesConnection::BatchDeleteEntities(
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }

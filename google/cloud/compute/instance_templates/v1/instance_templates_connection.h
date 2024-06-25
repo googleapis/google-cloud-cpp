@@ -22,8 +22,10 @@
 #include "google/cloud/compute/instance_templates/v1/instance_templates_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_templates/v1/internal/instance_templates_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -197,6 +199,16 @@ class InstanceTemplatesConnection {
   DeleteInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
                              DeleteInstanceTemplateRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInstanceTemplate(ExperimentalTag, NoAwaitTag,
+                         google::cloud::cpp::compute::instance_templates::v1::
+                             DeleteInstanceTemplateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInstanceTemplate(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
   GetInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
                           GetInstanceTemplateRequest const& request);
@@ -208,6 +220,16 @@ class InstanceTemplatesConnection {
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceTemplate(google::cloud::cpp::compute::instance_templates::v1::
                              InsertInstanceTemplateRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInstanceTemplate(ExperimentalTag, NoAwaitTag,
+                         google::cloud::cpp::compute::instance_templates::v1::
+                             InsertInstanceTemplateRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInstanceTemplate(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>
   ListInstanceTemplates(google::cloud::cpp::compute::instance_templates::v1::

@@ -108,7 +108,23 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
     "\n  MOCK_METHOD(future<Status>,\n",
     "\n  MOCK_METHOD(future<StatusOr<$longrunning_deduced_response_type$>>,\n"},
    {"  $method_name$,\n"
-    "  ($request_type$ const& request), (override));\n",}
+    "  ($request_type$ const& request), (override));\n\n",},
+                 // clang-format on
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "  MOCK_METHOD(Status,\n",
+    "  MOCK_METHOD(StatusOr<$longrunning_operation_type$>,\n"},
+                 // TODO(#14344): Remove experimental tag.
+   {"  $method_name$, (ExperimentalTag, NoAwaitTag,\n"
+    "    $request_type$ const& request), (override));\n\n"},
+                 // clang-format on
+                 {IsResponseTypeEmpty,
+                  // clang-format off
+    "  MOCK_METHOD(future<Status>,\n",
+    "  MOCK_METHOD(future<StatusOr<$longrunning_deduced_response_type$>>,\n"},
+                 // TODO(#14344): Remove experimental tag.
+   {"  $method_name$, (ExperimentalTag,\n"
+    "    $longrunning_operation_type$ const& operation), (override));\n"}
                  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),

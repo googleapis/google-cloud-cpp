@@ -49,6 +49,16 @@ class RegionHealthCheckServicesTracingConnection
       google::cloud::cpp::compute::region_health_check_services::v1::
           DeleteHealthCheckServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthCheckService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          DeleteHealthCheckServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteHealthCheckService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::HealthCheckService>
   GetHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
@@ -59,6 +69,16 @@ class RegionHealthCheckServicesTracingConnection
       google::cloud::cpp::compute::region_health_check_services::v1::
           InsertHealthCheckServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthCheckService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          InsertHealthCheckServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertHealthCheckService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::HealthCheckService>
   ListRegionHealthCheckServices(
       google::cloud::cpp::compute::region_health_check_services::v1::
@@ -68,6 +88,16 @@ class RegionHealthCheckServicesTracingConnection
   PatchHealthCheckService(
       google::cloud::cpp::compute::region_health_check_services::v1::
           PatchHealthCheckServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheckService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_health_check_services::v1::
+          PatchHealthCheckServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchHealthCheckService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   std::shared_ptr<compute_region_health_check_services_v1::

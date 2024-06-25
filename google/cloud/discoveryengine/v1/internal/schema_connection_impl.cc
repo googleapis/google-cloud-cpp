@@ -156,6 +156,60 @@ SchemaServiceConnectionImpl::CreateSchema(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+SchemaServiceConnectionImpl::CreateSchema(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateSchema(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateSchemaRequest const&
+                 request) {
+        return stub_->CreateSchema(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
+SchemaServiceConnectionImpl::CreateSchema(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   CreateSchemaMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::Schema>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateSchema",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::Schema>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::Schema>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceConnectionImpl::UpdateSchema(
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
@@ -196,6 +250,60 @@ SchemaServiceConnectionImpl::UpdateSchema(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+SchemaServiceConnectionImpl::UpdateSchema(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateSchema(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::UpdateSchemaRequest const&
+                 request) {
+        return stub_->UpdateSchema(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
+SchemaServiceConnectionImpl::UpdateSchema(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   UpdateSchemaMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::Schema>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to UpdateSchema",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::Schema>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::discoveryengine::v1::Schema>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
 SchemaServiceConnectionImpl::DeleteSchema(
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
@@ -233,6 +341,60 @@ SchemaServiceConnectionImpl::DeleteSchema(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::discoveryengine::v1::DeleteSchemaMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+SchemaServiceConnectionImpl::DeleteSchema(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSchema(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteSchemaRequest const&
+                 request) {
+        return stub_->DeleteSchema(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
+SchemaServiceConnectionImpl::DeleteSchema(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::discoveryengine::v1::
+                   DeleteSchemaMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteSchema",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::discoveryengine::v1::DeleteSchemaMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::discoveryengine::v1::DeleteSchemaMetadata>,
       polling_policy(*current), __func__);
 }
 

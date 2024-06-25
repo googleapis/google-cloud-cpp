@@ -52,6 +52,22 @@ RequestIdServiceConnection::RenameFoo(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+RequestIdServiceConnection::RenameFoo(
+    ExperimentalTag, NoAwaitTag,
+    google::test::requestid::v1::RenameFooRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::test::requestid::v1::Foo>>
+RequestIdServiceConnection::RenameFoo(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+    StatusOr<google::test::requestid::v1::Foo>>(
+    Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::test::requestid::v1::Foo> RequestIdServiceConnection::ListFoos(
     google::test::requestid::v1::ListFoosRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<

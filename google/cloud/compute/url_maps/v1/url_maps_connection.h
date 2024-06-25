@@ -22,8 +22,10 @@
 #include "google/cloud/compute/url_maps/v1/internal/url_maps_retry_traits.h"
 #include "google/cloud/compute/url_maps/v1/url_maps_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,6 +194,15 @@ class UrlMapsConnection {
       google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteUrlMap(ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMap> GetUrlMap(
       google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
           request);
@@ -201,10 +212,28 @@ class UrlMapsConnection {
       google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertUrlMap(ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InvalidateCache(
       google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InvalidateCache(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InvalidateCache(ExperimentalTag,
+                  google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::UrlMap> ListUrlMaps(
       google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest request);
@@ -214,10 +243,28 @@ class UrlMapsConnection {
       google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
           request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchUrlMap(ExperimentalTag,
+              google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateUrlMap(
       google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
           request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateUrlMap(ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>
   Validate(google::cloud::cpp::compute::url_maps::v1::ValidateRequest const&

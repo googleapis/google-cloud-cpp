@@ -41,6 +41,27 @@ PipelineServiceTracingConnection::RunPipeline(
   return internal::EndSpan(std::move(span), child_->RunPipeline(request));
 }
 
+StatusOr<google::longrunning::Operation>
+PipelineServiceTracingConnection::RunPipeline(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::PipelineServiceConnection::RunPipeline");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RunPipeline(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
+PipelineServiceTracingConnection::RunPipeline(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "contentwarehouse_v1::PipelineServiceConnection::RunPipeline");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RunPipeline(ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<contentwarehouse_v1::PipelineServiceConnection>

@@ -22,8 +22,10 @@
 #include "google/cloud/connectors/v1/connectors_connection_idempotency_policy.h"
 #include "google/cloud/connectors/v1/internal/connectors_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -195,13 +197,37 @@ class ConnectorsConnection {
   CreateConnection(
       google::cloud::connectors::v1::CreateConnectionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::connectors::v1::CreateConnectionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
+  CreateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
   UpdateConnection(
       google::cloud::connectors::v1::UpdateConnectionRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::connectors::v1::UpdateConnectionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::connectors::v1::Connection>>
+  UpdateConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
   DeleteConnection(
       google::cloud::connectors::v1::DeleteConnectionRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::connectors::v1::DeleteConnectionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
+  DeleteConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::connectors::v1::Provider> ListProviders(
       google::cloud::connectors::v1::ListProvidersRequest request);
@@ -233,6 +259,17 @@ class ConnectorsConnection {
   RefreshConnectionSchemaMetadata(
       google::cloud::connectors::v1::
           RefreshConnectionSchemaMetadataRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation>
+  RefreshConnectionSchemaMetadata(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+  RefreshConnectionSchemaMetadata(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
   ListRuntimeEntitySchemas(

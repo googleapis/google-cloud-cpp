@@ -89,12 +89,40 @@ class MockCertificateAuthorityServiceConnection
            ActivateCertificateAuthorityRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              ActivateCertificateAuthority,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   ActivateCertificateAuthorityRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      ActivateCertificateAuthority,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       CreateCertificateAuthority,
       (google::cloud::security::privateca::v1::
            CreateCertificateAuthorityRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              CreateCertificateAuthority,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   CreateCertificateAuthorityRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      CreateCertificateAuthority,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -105,12 +133,40 @@ class MockCertificateAuthorityServiceConnection
            DisableCertificateAuthorityRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              DisableCertificateAuthority,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   DisableCertificateAuthorityRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      DisableCertificateAuthority,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       EnableCertificateAuthority,
       (google::cloud::security::privateca::v1::
            EnableCertificateAuthorityRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              EnableCertificateAuthority,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   EnableCertificateAuthorityRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      EnableCertificateAuthority,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::security::privateca::v1::
@@ -143,12 +199,40 @@ class MockCertificateAuthorityServiceConnection
            UndeleteCertificateAuthorityRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              UndeleteCertificateAuthority,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   UndeleteCertificateAuthorityRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      UndeleteCertificateAuthority,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       DeleteCertificateAuthority,
       (google::cloud::security::privateca::v1::
            DeleteCertificateAuthorityRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              DeleteCertificateAuthority,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   DeleteCertificateAuthorityRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      DeleteCertificateAuthority,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -159,6 +243,20 @@ class MockCertificateAuthorityServiceConnection
            UpdateCertificateAuthorityRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              UpdateCertificateAuthority,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   UpdateCertificateAuthorityRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::security::privateca::v1::CertificateAuthority>>,
+      UpdateCertificateAuthority,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
       CreateCaPool,
@@ -167,11 +265,37 @@ class MockCertificateAuthorityServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCaPool,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::security::privateca::v1::CreateCaPoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
+              CreateCaPool,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
       UpdateCaPool,
       (google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCaPool,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
+              UpdateCaPool,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::security::privateca::v1::CaPool>, GetCaPool,
@@ -190,6 +314,20 @@ class MockCertificateAuthorityServiceConnection
       DeleteCaPool,
       (google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCaPool,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
+      DeleteCaPool,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -223,11 +361,39 @@ class MockCertificateAuthorityServiceConnection
            UpdateCertificateRevocationListRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              UpdateCertificateRevocationList,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   UpdateCertificateRevocationListRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::security::privateca::v1::CertificateRevocationList>>,
+      UpdateCertificateRevocationList,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(future<StatusOr<
                   google::cloud::security::privateca::v1::CertificateTemplate>>,
               CreateCertificateTemplate,
               (google::cloud::security::privateca::v1::
                    CreateCertificateTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              CreateCertificateTemplate,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   CreateCertificateTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::security::privateca::v1::CertificateTemplate>>,
+              CreateCertificateTemplate,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -236,6 +402,20 @@ class MockCertificateAuthorityServiceConnection
       DeleteCertificateTemplate,
       (google::cloud::security::privateca::v1::
            DeleteCertificateTemplateRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              DeleteCertificateTemplate,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   DeleteCertificateTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
+      DeleteCertificateTemplate,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -258,6 +438,20 @@ class MockCertificateAuthorityServiceConnection
               UpdateCertificateTemplate,
               (google::cloud::security::privateca::v1::
                    UpdateCertificateTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              UpdateCertificateTemplate,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::security::privateca::v1::
+                   UpdateCertificateTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::security::privateca::v1::CertificateTemplate>>,
+              UpdateCertificateTemplate,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 };
 

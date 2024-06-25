@@ -55,6 +55,19 @@ class MockAttachedClustersConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAttachedCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
+      CreateAttachedCluster,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       UpdateAttachedCluster,
       (google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
@@ -62,10 +75,36 @@ class MockAttachedClustersConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAttachedCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
+      UpdateAttachedCluster,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       ImportAttachedCluster,
       (google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportAttachedCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
+      ImportAttachedCluster,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -86,6 +125,19 @@ class MockAttachedClustersConnection
       DeleteAttachedCluster,
       (google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteAttachedCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
+      DeleteAttachedCluster,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

@@ -23,8 +23,10 @@
 #include "google/cloud/compute/network_edge_security_services/v1/internal/network_edge_security_services_retry_traits.h"
 #include "google/cloud/compute/network_edge_security_services/v1/network_edge_security_services_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -216,6 +218,17 @@ class NetworkEdgeSecurityServicesConnection {
       google::cloud::cpp::compute::network_edge_security_services::v1::
           DeleteNetworkEdgeSecurityServiceRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteNetworkEdgeSecurityService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          DeleteNetworkEdgeSecurityServiceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkEdgeSecurityService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
   GetNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
@@ -226,10 +239,32 @@ class NetworkEdgeSecurityServicesConnection {
       google::cloud::cpp::compute::network_edge_security_services::v1::
           InsertNetworkEdgeSecurityServiceRequest const& request);
 
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertNetworkEdgeSecurityService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          InsertNetworkEdgeSecurityServiceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNetworkEdgeSecurityService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkEdgeSecurityService(
       google::cloud::cpp::compute::network_edge_security_services::v1::
           PatchNetworkEdgeSecurityServiceRequest const& request);
+
+  virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchNetworkEdgeSecurityService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::network_edge_security_services::v1::
+          PatchNetworkEdgeSecurityServiceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNetworkEdgeSecurityService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -73,6 +73,27 @@ DataFusionTracingConnection::CreateInstance(
   return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataFusionTracingConnection::CreateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpan("datafusion_v1::DataFusionConnection::CreateInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::datafusion::v1::Instance>>
+DataFusionTracingConnection::CreateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("datafusion_v1::DataFusionConnection::CreateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateInstance(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
 DataFusionTracingConnection::DeleteInstance(
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
@@ -80,6 +101,27 @@ DataFusionTracingConnection::DeleteInstance(
       internal::MakeSpan("datafusion_v1::DataFusionConnection::DeleteInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataFusionTracingConnection::DeleteInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpan("datafusion_v1::DataFusionConnection::DeleteInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
+DataFusionTracingConnection::DeleteInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("datafusion_v1::DataFusionConnection::DeleteInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteInstance(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
@@ -91,6 +133,27 @@ DataFusionTracingConnection::UpdateInstance(
   return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
+StatusOr<google::longrunning::Operation>
+DataFusionTracingConnection::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
+  auto span =
+      internal::MakeSpan("datafusion_v1::DataFusionConnection::UpdateInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::datafusion::v1::Instance>>
+DataFusionTracingConnection::UpdateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("datafusion_v1::DataFusionConnection::UpdateInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateInstance(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionTracingConnection::RestartInstance(
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
@@ -98,6 +161,27 @@ DataFusionTracingConnection::RestartInstance(
       "datafusion_v1::DataFusionConnection::RestartInstance");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->RestartInstance(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DataFusionTracingConnection::RestartInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "datafusion_v1::DataFusionConnection::RestartInstance");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->RestartInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::datafusion::v1::Instance>>
+DataFusionTracingConnection::RestartInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "datafusion_v1::DataFusionConnection::RestartInstance");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->RestartInstance(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

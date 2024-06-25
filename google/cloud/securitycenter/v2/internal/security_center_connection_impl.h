@@ -63,6 +63,15 @@ class SecurityCenterConnectionImpl
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
+  BulkMuteFindings(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::securitycenter::v2::BigQueryExport>
   CreateBigQueryExport(
       google::cloud::securitycenter::v2::CreateBigQueryExportRequest const&

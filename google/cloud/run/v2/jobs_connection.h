@@ -22,8 +22,10 @@
 #include "google/cloud/run/v2/internal/jobs_retry_traits.h"
 #include "google/cloud/run/v2/jobs_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -184,6 +186,13 @@ class JobsConnection {
   virtual future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
       google::cloud::run::v2::CreateJobRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::CreateJobRequest const& request);
+
+  virtual future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::run::v2::Job> GetJob(
       google::cloud::run::v2::GetJobRequest const& request);
 
@@ -193,11 +202,32 @@ class JobsConnection {
   virtual future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
       google::cloud::run::v2::UpdateJobRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::UpdateJobRequest const& request);
+
+  virtual future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
       google::cloud::run::v2::DeleteJobRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::DeleteJobRequest const& request);
+
+  virtual future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
+      ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::cloud::run::v2::RunJobRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RunJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::run::v2::RunJobRequest const& request);
+
+  virtual future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);

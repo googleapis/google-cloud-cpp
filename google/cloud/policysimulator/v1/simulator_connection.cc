@@ -52,6 +52,21 @@ SimulatorConnection::CreateReplay(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> SimulatorConnection::CreateReplay(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::policysimulator::v1::CreateReplayRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::policysimulator::v1::Replay>>
+SimulatorConnection::CreateReplay(ExperimentalTag,
+                                  google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::policysimulator::v1::Replay>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::policysimulator::v1::ReplayResult>
 SimulatorConnection::ListReplayResults(
     google::cloud::policysimulator::v1::

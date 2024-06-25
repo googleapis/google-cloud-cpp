@@ -54,18 +54,56 @@ class ProjectsRestConnectionImpl
       google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DisableXpnResource(google::cloud::cpp::compute::projects::v1::
                          DisableXpnResourceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::
+          DisableXpnResourceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DisableXpnResource(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
       google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   EnableXpnResource(
       google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  EnableXpnResource(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Project> GetProject(
       google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
@@ -88,28 +126,87 @@ class ProjectsRestConnectionImpl
       google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
       override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
       google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
           request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCloudArmorTier(
       google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
           request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetCloudArmorTier(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCommonInstanceMetadata(
       google::cloud::cpp::compute::projects::v1::
           SetCommonInstanceMetadataRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetCommonInstanceMetadata(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::
+          SetCommonInstanceMetadataRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetCommonInstanceMetadata(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDefaultNetworkTier(
       google::cloud::cpp::compute::projects::v1::
           SetDefaultNetworkTierRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::
+          SetDefaultNetworkTierRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetDefaultNetworkTier(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::
                            SetUsageExportBucketRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::
+          SetUsageExportBucketRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetUsageExportBucket(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   static std::unique_ptr<compute_projects_v1::ProjectsRetryPolicy> retry_policy(

@@ -237,6 +237,59 @@ StorageTransferServiceConnectionImpl::RunTransferJob(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+StorageTransferServiceConnectionImpl::RunTransferJob(
+    ExperimentalTag, NoAwaitTag,
+    google::storagetransfer::v1::RunTransferJobRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RunTransferJob(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::storagetransfer::v1::RunTransferJobRequest const& request) {
+        return stub_->RunTransferJob(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::storagetransfer::v1::TransferOperation>>
+StorageTransferServiceConnectionImpl::RunTransferJob(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::storagetransfer::v1::TransferOperation>()) {
+    return make_ready_future<
+        StatusOr<google::storagetransfer::v1::TransferOperation>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RunTransferJob",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::storagetransfer::v1::TransferOperation>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::storagetransfer::v1::TransferOperation>,
+      polling_policy(*current), __func__);
+}
+
 Status StorageTransferServiceConnectionImpl::DeleteTransferJob(
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

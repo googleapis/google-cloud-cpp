@@ -45,6 +45,21 @@ AutokeyConnection::CreateKeyHandle(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> AutokeyConnection::CreateKeyHandle(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::kms::v1::CreateKeyHandleRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::kms::v1::KeyHandle>>
+AutokeyConnection::CreateKeyHandle(ExperimentalTag,
+                                   google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::kms::v1::KeyHandle>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyConnection::GetKeyHandle(
     google::cloud::kms::v1::GetKeyHandleRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

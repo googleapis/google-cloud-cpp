@@ -58,12 +58,48 @@ IDSTracingConnection::CreateEndpoint(
   return internal::EndSpan(std::move(span), child_->CreateEndpoint(request));
 }
 
+StatusOr<google::longrunning::Operation> IDSTracingConnection::CreateEndpoint(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateEndpoint(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::ids::v1::Endpoint>>
+IDSTracingConnection::CreateEndpoint(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateEndpoint(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSTracingConnection::DeleteEndpoint(
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
   auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteEndpoint(request));
+}
+
+StatusOr<google::longrunning::Operation> IDSTracingConnection::DeleteEndpoint(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteEndpoint(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
+IDSTracingConnection::DeleteEndpoint(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteEndpoint(ExperimentalTag{}, operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

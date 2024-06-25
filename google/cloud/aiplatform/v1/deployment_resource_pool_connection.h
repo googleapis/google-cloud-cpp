@@ -22,8 +22,10 @@
 #include "google/cloud/aiplatform/v1/deployment_resource_pool_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/deployment_resource_pool_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -210,6 +212,16 @@ class DeploymentResourcePoolServiceConnection {
       google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
           request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  CreateDeploymentResourcePool(ExperimentalTag,
+                               google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
   GetDeploymentResourcePool(
       google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
@@ -225,6 +237,16 @@ class DeploymentResourcePoolServiceConnection {
   DeleteDeploymentResourcePool(
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
           request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDeploymentResourcePool(ExperimentalTag,
+                               google::longrunning::Operation const& operation);
 };
 
 /**

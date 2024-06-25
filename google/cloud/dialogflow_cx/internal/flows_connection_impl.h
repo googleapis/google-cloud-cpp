@@ -72,6 +72,15 @@ class FlowsConnectionImpl : public dialogflow_cx::FlowsConnection {
       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> TrainFlow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request)
+      override;
+
+  future<StatusOr<google::protobuf::Struct>> TrainFlow(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   ValidateFlow(google::cloud::dialogflow::cx::v3::ValidateFlowRequest const&
                    request) override;
@@ -85,9 +94,27 @@ class FlowsConnectionImpl : public dialogflow_cx::FlowsConnection {
   ImportFlow(google::cloud::dialogflow::cx::v3::ImportFlowRequest const&
                  request) override;
 
+  StatusOr<google::longrunning::Operation> ImportFlow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
+  ImportFlow(ExperimentalTag,
+             google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
   ExportFlow(google::cloud::dialogflow::cx::v3::ExportFlowRequest const&
                  request) override;
+
+  StatusOr<google::longrunning::Operation> ExportFlow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
+  ExportFlow(ExperimentalTag,
+             google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

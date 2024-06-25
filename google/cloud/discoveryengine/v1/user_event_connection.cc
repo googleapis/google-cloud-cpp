@@ -56,6 +56,22 @@ UserEventServiceConnection::ImportUserEvents(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceConnection::ImportUserEvents(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
+UserEventServiceConnection::ImportUserEvents(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

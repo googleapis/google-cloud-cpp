@@ -371,6 +371,63 @@ AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->SubscribeDataExchange(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 SubscribeDataExchangeRequest const& request) {
+        return stub_->SubscribeDataExchange(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::bigquery::analyticshub::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::bigquery::analyticshub::
+                                          v1::SubscribeDataExchangeResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to SubscribeDataExchange",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::bigquery::analyticshub::v1::
+              SubscribeDataExchangeResponse>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
 AnalyticsHubServiceConnectionImpl::RefreshSubscription(
@@ -410,6 +467,63 @@ AnalyticsHubServiceConnectionImpl::RefreshSubscription(
           google::cloud::bigquery::analyticshub::v1::
               RefreshSubscriptionResponse>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceConnectionImpl::RefreshSubscription(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->RefreshSubscription(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 RefreshSubscriptionRequest const& request) {
+        return stub_->RefreshSubscription(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceConnectionImpl::RefreshSubscription(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::bigquery::analyticshub::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::bigquery::analyticshub::
+                                          v1::RefreshSubscriptionResponse>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to RefreshSubscription",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::bigquery::analyticshub::v1::
+              RefreshSubscriptionResponse>,
       polling_policy(*current), __func__);
 }
 
@@ -559,6 +673,61 @@ AnalyticsHubServiceConnectionImpl::DeleteSubscription(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::bigquery::analyticshub::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceConnectionImpl::DeleteSubscription(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteSubscription(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::bigquery::analyticshub::v1::
+                 DeleteSubscriptionRequest const& request) {
+        return stub_->DeleteSubscription(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+AnalyticsHubServiceConnectionImpl::DeleteSubscription(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::bigquery::analyticshub::v1::
+                   OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteSubscription",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::bigquery::analyticshub::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::bigquery::analyticshub::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

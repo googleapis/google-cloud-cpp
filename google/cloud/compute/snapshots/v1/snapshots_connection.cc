@@ -44,6 +44,22 @@ SnapshotsConnection::DeleteSnapshot(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsConnection::DeleteSnapshot(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsConnection::DeleteSnapshot(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
 SnapshotsConnection::GetSnapshot(
     google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&) {
@@ -59,6 +75,22 @@ SnapshotsConnection::GetIamPolicy(
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsConnection::InsertSnapshot(
     google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsConnection::InsertSnapshot(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsConnection::InsertSnapshot(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -81,6 +113,22 @@ SnapshotsConnection::SetIamPolicy(
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsConnection::SetLabels(
     google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::cpp::compute::v1::Operation>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+SnapshotsConnection::SetLabels(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&) {
+  return StatusOr<google::cloud::cpp::compute::v1::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+SnapshotsConnection::SetLabels(
+    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

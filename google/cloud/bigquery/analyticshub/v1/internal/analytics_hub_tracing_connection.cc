@@ -180,6 +180,32 @@ AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
                            child_->SubscribeDataExchange(request));
 }
 
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::
+        SubscribeDataExchangeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "SubscribeDataExchange");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->SubscribeDataExchange(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
+AnalyticsHubServiceTracingConnection::SubscribeDataExchange(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "SubscribeDataExchange");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->SubscribeDataExchange(
+                                                ExperimentalTag{}, operation));
+}
+
 future<StatusOr<
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
 AnalyticsHubServiceTracingConnection::RefreshSubscription(
@@ -191,6 +217,32 @@ AnalyticsHubServiceTracingConnection::RefreshSubscription(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->RefreshSubscription(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceTracingConnection::RefreshSubscription(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "RefreshSubscription");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->RefreshSubscription(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<
+    google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
+AnalyticsHubServiceTracingConnection::RefreshSubscription(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "RefreshSubscription");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->RefreshSubscription(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -253,6 +305,31 @@ AnalyticsHubServiceTracingConnection::DeleteSubscription(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->DeleteSubscription(request));
+}
+
+StatusOr<google::longrunning::Operation>
+AnalyticsHubServiceTracingConnection::DeleteSubscription(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "DeleteSubscription");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteSubscription(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
+AnalyticsHubServiceTracingConnection::DeleteSubscription(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "bigquery_analyticshub_v1::AnalyticsHubServiceConnection::"
+      "DeleteSubscription");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteSubscription(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::iam::v1::Policy>

@@ -55,16 +55,55 @@ class MockGlobalNetworkEndpointGroupsConnection
                    AttachNetworkEndpointsRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              AttachNetworkEndpoints,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+                   AttachNetworkEndpointsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AttachNetworkEndpoints,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetworkEndpointGroup,
               (google::cloud::cpp::compute::global_network_endpoint_groups::v1::
                    DeleteNetworkEndpointGroupRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteNetworkEndpointGroup,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+                   DeleteNetworkEndpointGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteNetworkEndpointGroup,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DetachNetworkEndpoints,
               (google::cloud::cpp::compute::global_network_endpoint_groups::v1::
                    DetachNetworkEndpointsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DetachNetworkEndpoints,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+                   DetachNetworkEndpointsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DetachNetworkEndpoints,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>,
@@ -77,6 +116,19 @@ class MockGlobalNetworkEndpointGroupsConnection
               InsertNetworkEndpointGroup,
               (google::cloud::cpp::compute::global_network_endpoint_groups::v1::
                    InsertNetworkEndpointGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertNetworkEndpointGroup,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::global_network_endpoint_groups::v1::
+                   InsertNetworkEndpointGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertNetworkEndpointGroup,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

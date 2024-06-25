@@ -22,8 +22,10 @@
 #include "google/cloud/appengine/v1/applications_connection_idempotency_policy.h"
 #include "google/cloud/appengine/v1/internal/applications_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,13 +194,37 @@ class ApplicationsConnection {
   CreateApplication(
       google::appengine::v1::CreateApplicationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateApplication(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::CreateApplicationRequest const& request);
+
+  virtual future<StatusOr<google::appengine::v1::Application>>
+  CreateApplication(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::appengine::v1::Application>>
   UpdateApplication(
       google::appengine::v1::UpdateApplicationRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateApplication(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::UpdateApplicationRequest const& request);
+
+  virtual future<StatusOr<google::appengine::v1::Application>>
+  UpdateApplication(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::appengine::v1::Application>>
   RepairApplication(
       google::appengine::v1::RepairApplicationRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> RepairApplication(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::RepairApplicationRequest const& request);
+
+  virtual future<StatusOr<google::appengine::v1::Application>>
+  RepairApplication(ExperimentalTag,
+                    google::longrunning::Operation const& operation);
 };
 
 /**

@@ -45,6 +45,15 @@ class BackendServicesTracingConnection
       google::cloud::cpp::compute::backend_services::v1::
           AddSignedUrlKeyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          AddSignedUrlKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<std::pair<
       std::string, google::cloud::cpp::compute::v1::BackendServicesScopedList>>
   AggregatedListBackendServices(
@@ -55,9 +64,29 @@ class BackendServicesTracingConnection
   DeleteBackendService(google::cloud::cpp::compute::backend_services::v1::
                            DeleteBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          DeleteBackendServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteBackendService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSignedUrlKey(google::cloud::cpp::compute::backend_services::v1::
                          DeleteSignedUrlKeyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          DeleteSignedUrlKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSignedUrlKey(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
       google::cloud::cpp::compute::backend_services::v1::
@@ -76,6 +105,16 @@ class BackendServicesTracingConnection
   InsertBackendService(google::cloud::cpp::compute::backend_services::v1::
                            InsertBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          InsertBackendServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertBackendService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
   ListBackendServices(google::cloud::cpp::compute::backend_services::v1::
                           ListBackendServicesRequest request) override;
@@ -88,10 +127,30 @@ class BackendServicesTracingConnection
   PatchBackendService(google::cloud::cpp::compute::backend_services::v1::
                           PatchBackendServiceRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          PatchBackendServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchBackendService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(
       google::cloud::cpp::compute::backend_services::v1::
           SetEdgeSecurityPolicyRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          SetEdgeSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetEdgeSecurityPolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::backend_services::v1::
@@ -101,6 +160,16 @@ class BackendServicesTracingConnection
   SetSecurityPolicy(google::cloud::cpp::compute::backend_services::v1::
                         SetSecurityPolicyRequest const& request) override;
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          SetSecurityPolicyRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
+
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
   TestIamPermissions(google::cloud::cpp::compute::backend_services::v1::
                          TestIamPermissionsRequest const& request) override;
@@ -108,6 +177,16 @@ class BackendServicesTracingConnection
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateBackendService(google::cloud::cpp::compute::backend_services::v1::
                            UpdateBackendServiceRequest const& request) override;
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::backend_services::v1::
+          UpdateBackendServiceRequest const& request) override;
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateBackendService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:
   std::shared_ptr<compute_backend_services_v1::BackendServicesConnection>

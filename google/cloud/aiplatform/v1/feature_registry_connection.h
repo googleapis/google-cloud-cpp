@@ -22,8 +22,10 @@
 #include "google/cloud/aiplatform/v1/feature_registry_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/feature_registry_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -196,6 +198,14 @@ class FeatureRegistryServiceConnection {
   CreateFeatureGroup(
       google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> CreateFeatureGroup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
+  CreateFeatureGroup(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
       google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request);
 
@@ -207,14 +217,39 @@ class FeatureRegistryServiceConnection {
   UpdateFeatureGroup(
       google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
+  UpdateFeatureGroup(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureGroup(
       google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeatureGroup(ExperimentalTag,
+                     google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
   CreateFeature(
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(ExperimentalTag,
+                google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
       google::cloud::aiplatform::v1::GetFeatureRequest const& request);
@@ -226,10 +261,27 @@ class FeatureRegistryServiceConnection {
   UpdateFeature(
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
 
+  virtual StatusOr<google::longrunning::Operation> UpdateFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request);
+
+  virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  UpdateFeature(ExperimentalTag,
+                google::longrunning::Operation const& operation);
+
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeature(
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeature(ExperimentalTag,
+                google::longrunning::Operation const& operation);
 };
 
 /**

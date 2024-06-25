@@ -104,9 +104,26 @@ class ProductSearchTracingConnection
   ImportProductSets(google::cloud::vision::v1::ImportProductSetsRequest const&
                         request) override;
 
+  StatusOr<google::longrunning::Operation> ImportProductSets(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::vision::v1::ImportProductSetsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
+  ImportProductSets(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(
       google::cloud::vision::v1::PurgeProductsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> PurgeProducts(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::vision::v1::PurgeProductsRequest const& request) override;
+
+  future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
+  PurgeProducts(ExperimentalTag,
+                google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<vision_v1::ProductSearchConnection> child_;

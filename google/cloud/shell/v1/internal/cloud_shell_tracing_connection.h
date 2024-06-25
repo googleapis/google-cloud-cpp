@@ -47,17 +47,52 @@ class CloudShellServiceTracingConnection
   StartEnvironment(google::cloud::shell::v1::StartEnvironmentRequest const&
                        request) override;
 
+  StatusOr<google::longrunning::Operation> StartEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::shell::v1::StartEnvironmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
+  StartEnvironment(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
   AuthorizeEnvironment(
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
+  AuthorizeEnvironment(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> AddPublicKey(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
   RemovePublicKey(
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> RemovePublicKey(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
+
+  future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
+  RemovePublicKey(ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<shell_v1::CloudShellServiceConnection> child_;

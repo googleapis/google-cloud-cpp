@@ -209,6 +209,21 @@ DataCatalogConnection::ReconcileTags(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation> DataCatalogConnection::ReconcileTags(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+DataCatalogConnection::ReconcileTags(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogConnection::StarEntry(
     google::cloud::datacatalog::v1::StarEntryRequest const&) {
@@ -240,6 +255,21 @@ DataCatalogConnection::TestIamPermissions(
 future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
 DataCatalogConnection::ImportEntries(
     google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::longrunning::Operation> DataCatalogConnection::ImportEntries(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+DataCatalogConnection::ImportEntries(ExperimentalTag,
+                                     google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -139,6 +139,61 @@ WorkflowTemplateServiceConnectionImpl::InstantiateWorkflowTemplate(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceConnectionImpl::InstantiateWorkflowTemplate(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InstantiateWorkflowTemplate(request),
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+              request) {
+        return stub_->InstantiateWorkflowTemplate(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+WorkflowTemplateServiceConnectionImpl::InstantiateWorkflowTemplate(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::WorkflowMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to InstantiateWorkflowTemplate",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::WorkflowMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataproc::v1::WorkflowMetadata>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceConnectionImpl::InstantiateInlineWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
@@ -178,6 +233,62 @@ WorkflowTemplateServiceConnectionImpl::InstantiateInlineWorkflowTemplate(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::dataproc::v1::WorkflowMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation>
+WorkflowTemplateServiceConnectionImpl::InstantiateInlineWorkflowTemplate(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->InstantiateInlineWorkflowTemplate(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::dataproc::v1::
+                 InstantiateInlineWorkflowTemplateRequest const& request) {
+        return stub_->InstantiateInlineWorkflowTemplate(context, options,
+                                                        request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+WorkflowTemplateServiceConnectionImpl::InstantiateInlineWorkflowTemplate(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::dataproc::v1::WorkflowMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to "
+            "InstantiateInlineWorkflowTemplate",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::dataproc::v1::WorkflowMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::dataproc::v1::WorkflowMetadata>,
       polling_policy(*current), __func__);
 }
 

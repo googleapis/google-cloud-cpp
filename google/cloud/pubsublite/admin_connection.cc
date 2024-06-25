@@ -120,6 +120,22 @@ AdminServiceConnection::SeekSubscription(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::longrunning::Operation>
+AdminServiceConnection::SeekSubscription(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::pubsublite::v1::SeekSubscriptionRequest const&) {
+  return StatusOr<google::longrunning::Operation>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
+AdminServiceConnection::SeekSubscription(
+    ExperimentalTag, google::longrunning::Operation const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceConnection::CreateReservation(
     google::cloud::pubsublite::v1::CreateReservationRequest const&) {

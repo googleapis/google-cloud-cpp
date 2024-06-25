@@ -61,6 +61,29 @@ UserEventServiceTracingConnection::ImportUserEvents(
   return internal::EndSpan(std::move(span), child_->ImportUserEvents(request));
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceTracingConnection::ImportUserEvents(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::UserEventServiceConnection::ImportUserEvents");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->ImportUserEvents(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
+UserEventServiceTracingConnection::ImportUserEvents(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "discoveryengine_v1::UserEventServiceConnection::ImportUserEvents");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->ImportUserEvents(ExperimentalTag{}, operation));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<discoveryengine_v1::UserEventServiceConnection>

@@ -70,16 +70,52 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateTagValue,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::resourcemanager::v3::CreateTagValueRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
+              CreateTagValue,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
               UpdateTagValue,
               (google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateTagValue,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
+              UpdateTagValue,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
               DeleteTagValue,
               (google::cloud::resourcemanager::v3::DeleteTagValueRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteTagValue,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::resourcemanager::v3::DeleteTagValueRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
+              DeleteTagValue,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,

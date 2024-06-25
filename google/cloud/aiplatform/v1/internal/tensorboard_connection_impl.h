@@ -62,6 +62,15 @@ class TensorboardServiceConnectionImpl
       google::cloud::aiplatform::v1::CreateTensorboardRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> CreateTensorboard(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateTensorboardRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
+  CreateTensorboard(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::Tensorboard> GetTensorboard(
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request)
       override;
@@ -71,6 +80,15 @@ class TensorboardServiceConnectionImpl
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request)
       override;
 
+  StatusOr<google::longrunning::Operation> UpdateTensorboard(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
+  UpdateTensorboard(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
+
   StreamRange<google::cloud::aiplatform::v1::Tensorboard> ListTensorboards(
       google::cloud::aiplatform::v1::ListTensorboardsRequest request) override;
 
@@ -78,6 +96,15 @@ class TensorboardServiceConnectionImpl
   DeleteTensorboard(
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteTensorboard(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboard(ExperimentalTag,
+                    google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
   ReadTensorboardUsage(
@@ -114,6 +141,16 @@ class TensorboardServiceConnectionImpl
       google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardExperiment(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::aiplatform::v1::TensorboardRun> CreateTensorboardRun(
       google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request)
       override;
@@ -139,6 +176,16 @@ class TensorboardServiceConnectionImpl
   DeleteTensorboardRun(
       google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request)
       override;
+
+  StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardRun(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
@@ -170,6 +217,16 @@ class TensorboardServiceConnectionImpl
   DeleteTensorboardTimeSeries(
       google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTensorboardTimeSeries(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>

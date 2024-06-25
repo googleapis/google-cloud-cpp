@@ -46,11 +46,27 @@ class GoldenThingAdminTracingConnection
   future<StatusOr<google::test::admin::database::v1::Database>>
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation>
+  CreateDatabase(ExperimentalTag, NoAwaitTag,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
+
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  CreateDatabase(ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
+
+  future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   Status
   DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) override;
@@ -70,6 +86,14 @@ class GoldenThingAdminTracingConnection
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation>
+  CreateBackup(ExperimentalTag, NoAwaitTag,
+      google::test::admin::database::v1::CreateBackupRequest const& request) override;
+
+  future<StatusOr<google::test::admin::database::v1::Backup>>
+  CreateBackup(ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(google::test::admin::database::v1::GetBackupRequest const& request) override;
 
@@ -85,6 +109,14 @@ class GoldenThingAdminTracingConnection
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation>
+  RestoreDatabase(ExperimentalTag, NoAwaitTag,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
+
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  RestoreDatabase(ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request) override;
 
@@ -93,6 +125,14 @@ class GoldenThingAdminTracingConnection
 
   future<StatusOr<google::test::admin::database::v1::Database>>
   LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation>
+  LongRunningWithoutRouting(ExperimentalTag, NoAwaitTag,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
+
+  future<StatusOr<google::test::admin::database::v1::Database>>
+  LongRunningWithoutRouting(ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) override;

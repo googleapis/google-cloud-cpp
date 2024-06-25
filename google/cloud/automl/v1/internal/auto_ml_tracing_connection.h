@@ -42,6 +42,14 @@ class AutoMlTracingConnection : public automl_v1::AutoMlConnection {
   future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
       google::cloud::automl::v1::CreateDatasetRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::CreateDatasetRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
       google::cloud::automl::v1::GetDatasetRequest const& request) override;
 
@@ -54,11 +62,35 @@ class AutoMlTracingConnection : public automl_v1::AutoMlConnection {
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       google::cloud::automl::v1::ImportDataRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> ImportData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::ImportDataRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       google::cloud::automl::v1::ExportDataRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ExportData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::ExportDataRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
       google::cloud::automl::v1::GetAnnotationSpecRequest const& request)
@@ -66,6 +98,14 @@ class AutoMlTracingConnection : public automl_v1::AutoMlConnection {
 
   future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       google::cloud::automl::v1::CreateModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> CreateModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::CreateModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::automl::v1::Model> GetModel(
       google::cloud::automl::v1::GetModelRequest const& request) override;
@@ -76,17 +116,49 @@ class AutoMlTracingConnection : public automl_v1::AutoMlConnection {
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       google::cloud::automl::v1::DeleteModelRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::DeleteModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   StatusOr<google::cloud::automl::v1::Model> UpdateModel(
       google::cloud::automl::v1::UpdateModelRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       google::cloud::automl::v1::DeployModelRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> DeployModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::DeployModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       google::cloud::automl::v1::UndeployModelRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::UndeployModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       google::cloud::automl::v1::ExportModelRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ExportModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::ExportModelRequest const& request) override;
+
+  future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
       google::cloud::automl::v1::GetModelEvaluationRequest const& request)

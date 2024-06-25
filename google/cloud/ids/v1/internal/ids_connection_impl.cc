@@ -144,6 +144,56 @@ IDSConnectionImpl::CreateEndpoint(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation> IDSConnectionImpl::CreateEndpoint(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::ids::v1::CreateEndpointRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateEndpoint(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::ids::v1::CreateEndpointRequest const& request) {
+        return stub_->CreateEndpoint(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::ids::v1::Endpoint>>
+IDSConnectionImpl::CreateEndpoint(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::ids::v1::OperationMetadata>()) {
+    return make_ready_future<StatusOr<google::cloud::ids::v1::Endpoint>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateEndpoint",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::ids::v1::Endpoint>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::ids::v1::Endpoint>,
+      polling_policy(*current), __func__);
+}
+
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSConnectionImpl::DeleteEndpoint(
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
@@ -180,6 +230,57 @@ IDSConnectionImpl::DeleteEndpoint(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::ids::v1::OperationMetadata>,
       retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
+}
+
+StatusOr<google::longrunning::Operation> IDSConnectionImpl::DeleteEndpoint(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteEndpoint(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::ids::v1::DeleteEndpointRequest const& request) {
+        return stub_->DeleteEndpoint(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
+IDSConnectionImpl::DeleteEndpoint(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::ids::v1::OperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::ids::v1::OperationMetadata>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteEndpoint",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::ids::v1::OperationMetadata>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::ids::v1::OperationMetadata>,
       polling_policy(*current), __func__);
 }
 

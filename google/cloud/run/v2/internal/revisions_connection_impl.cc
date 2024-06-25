@@ -148,6 +148,56 @@ RevisionsConnectionImpl::DeleteRevision(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+RevisionsConnectionImpl::DeleteRevision(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::run::v2::DeleteRevisionRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteRevision(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::run::v2::DeleteRevisionRequest const& request) {
+        return stub_->DeleteRevision(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::run::v2::Revision>>
+RevisionsConnectionImpl::DeleteRevision(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata().Is<typename google::cloud::run::v2::Revision>()) {
+    return make_ready_future<StatusOr<google::cloud::run::v2::Revision>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to DeleteRevision",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::run::v2::Revision>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::run::v2::Revision>,
+      polling_policy(*current), __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_v2_internal
 }  // namespace cloud

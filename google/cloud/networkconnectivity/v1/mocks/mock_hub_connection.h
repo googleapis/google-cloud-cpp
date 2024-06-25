@@ -63,15 +63,52 @@ class MockHubServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateHub,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::CreateHubRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>,
+              CreateHub,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>, UpdateHub,
       (google::cloud::networkconnectivity::v1::UpdateHubRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateHub,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>,
+              UpdateHub,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
       DeleteHub,
       (google::cloud::networkconnectivity::v1::DeleteHubRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteHub,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      DeleteHub,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -96,10 +133,34 @@ class MockHubServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSpoke,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
+              CreateSpoke,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
               UpdateSpoke,
               (google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateSpoke,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
+              UpdateSpoke,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -111,6 +172,20 @@ class MockHubServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RejectHubSpoke,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>,
+      RejectHubSpoke,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
       AcceptHubSpoke,
@@ -119,11 +194,38 @@ class MockHubServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, AcceptHubSpoke,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
+      AcceptHubSpoke,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
       DeleteSpoke,
       (google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteSpoke,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      DeleteSpoke,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

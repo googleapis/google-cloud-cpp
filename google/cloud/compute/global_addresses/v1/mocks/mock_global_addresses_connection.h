@@ -53,6 +53,19 @@ class MockGlobalAddressesConnection
                    DeleteAddressRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteAddress,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::global_addresses::v1::
+                   DeleteAddressRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteAddress,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Address>, GetAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
                    GetAddressRequest const& request),
@@ -62,6 +75,19 @@ class MockGlobalAddressesConnection
               InsertAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
                    InsertAddressRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertAddress,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::global_addresses::v1::
+                   InsertAddressRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertAddress,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Address>),
@@ -76,10 +102,35 @@ class MockGlobalAddressesConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, Move,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Move,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::global_addresses::v1::
                    SetLabelsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::global_addresses::v1::
+                   SetLabelsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetLabels,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

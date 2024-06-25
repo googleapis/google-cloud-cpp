@@ -22,8 +22,10 @@
 #include "google/cloud/webrisk/v1/internal/web_risk_retry_traits.h"
 #include "google/cloud/webrisk/v1/web_risk_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -199,6 +201,13 @@ class WebRiskServiceConnection {
 
   virtual future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
       google::cloud::webrisk::v1::SubmitUriRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> SubmitUri(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::webrisk::v1::SubmitUriRequest const& request);
+
+  virtual future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
+      ExperimentalTag, google::longrunning::Operation const& operation);
 };
 
 /**

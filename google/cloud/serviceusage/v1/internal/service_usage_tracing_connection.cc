@@ -42,6 +42,27 @@ ServiceUsageTracingConnection::EnableService(
   return internal::EndSpan(std::move(span), child_->EnableService(request));
 }
 
+StatusOr<google::longrunning::Operation>
+ServiceUsageTracingConnection::EnableService(
+    ExperimentalTag, NoAwaitTag,
+    google::api::serviceusage::v1::EnableServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::EnableService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->EnableService(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
+ServiceUsageTracingConnection::EnableService(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::EnableService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->EnableService(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
 ServiceUsageTracingConnection::DisableService(
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
@@ -49,6 +70,27 @@ ServiceUsageTracingConnection::DisableService(
       "serviceusage_v1::ServiceUsageConnection::DisableService");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DisableService(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceUsageTracingConnection::DisableService(
+    ExperimentalTag, NoAwaitTag,
+    google::api::serviceusage::v1::DisableServiceRequest const& request) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::DisableService");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DisableService(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
+ServiceUsageTracingConnection::DisableService(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::DisableService");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DisableService(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
@@ -79,6 +121,28 @@ ServiceUsageTracingConnection::BatchEnableServices(
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span),
                            child_->BatchEnableServices(request));
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceUsageTracingConnection::BatchEnableServices(
+    ExperimentalTag, NoAwaitTag,
+    google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::BatchEnableServices");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->BatchEnableServices(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
+ServiceUsageTracingConnection::BatchEnableServices(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "serviceusage_v1::ServiceUsageConnection::BatchEnableServices");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->BatchEnableServices(
+                                                ExperimentalTag{}, operation));
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>

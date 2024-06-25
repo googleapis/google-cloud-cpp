@@ -113,6 +113,60 @@ AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
       polling_policy(*current), __func__);
 }
 
+StatusOr<google::longrunning::Operation>
+AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateWorkload(request),
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
+                 request) {
+        return stub_->CreateWorkload(context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
+AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  if (!operation.metadata()
+           .Is<typename google::cloud::assuredworkloads::v1::
+                   CreateWorkloadOperationMetadata>()) {
+    return make_ready_future<
+        StatusOr<google::cloud::assuredworkloads::v1::Workload>>(
+        internal::InvalidArgumentError(
+            "operation does not correspond to CreateWorkload",
+            GCP_ERROR_INFO().WithMetadata("operation",
+                                          operation.metadata().DebugString())));
+  }
+
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<
+      google::cloud::assuredworkloads::v1::Workload>(
+      background_->cq(), current, operation,
+      [stub = stub_](google::cloud::CompletionQueue& cq,
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::assuredworkloads::v1::Workload>,
+      polling_policy(*current), __func__);
+}
+
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceConnectionImpl::UpdateWorkload(
     google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {

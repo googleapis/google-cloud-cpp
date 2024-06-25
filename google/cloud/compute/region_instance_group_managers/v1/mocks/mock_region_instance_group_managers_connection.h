@@ -55,10 +55,36 @@ class MockRegionInstanceGroupManagersConnection
                    AbandonInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              AbandonInstances,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   AbandonInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AbandonInstances,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               ApplyUpdatesToInstances,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    ApplyUpdatesToInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              ApplyUpdatesToInstances,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   ApplyUpdatesToInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              ApplyUpdatesToInstances,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -67,10 +93,36 @@ class MockRegionInstanceGroupManagersConnection
                    CreateInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              CreateInstances,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   CreateInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              CreateInstances,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    DeleteInstanceGroupManagerRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteInstanceGroupManager,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   DeleteInstanceGroupManagerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteInstanceGroupManager,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -79,10 +131,36 @@ class MockRegionInstanceGroupManagersConnection
                    DeleteInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeleteInstances,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   DeleteInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteInstances,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    DeletePerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              DeletePerInstanceConfigs,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   DeletePerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeletePerInstanceConfigs,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>,
@@ -95,6 +173,19 @@ class MockRegionInstanceGroupManagersConnection
               InsertInstanceGroupManager,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    InsertInstanceGroupManagerRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              InsertInstanceGroupManager,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   InsertInstanceGroupManagerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertInstanceGroupManager,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -130,10 +221,36 @@ class MockRegionInstanceGroupManagersConnection
                    PatchInstanceGroupManagerRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PatchInstanceGroupManager,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   PatchInstanceGroupManagerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchInstanceGroupManager,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    PatchPerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              PatchPerInstanceConfigs,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   PatchPerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchPerInstanceConfigs,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -142,10 +259,35 @@ class MockRegionInstanceGroupManagersConnection
                    RecreateInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              RecreateInstances,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   RecreateInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              RecreateInstances,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    ResizeRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   ResizeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Resize,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -154,16 +296,55 @@ class MockRegionInstanceGroupManagersConnection
                    SetInstanceTemplateRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              SetInstanceTemplate,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   SetInstanceTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetInstanceTemplate,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetTargetPools,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    SetTargetPoolsRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              SetTargetPools,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   SetTargetPoolsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetTargetPools,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdatePerInstanceConfigs,
               (google::cloud::cpp::compute::region_instance_group_managers::v1::
                    UpdatePerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              UpdatePerInstanceConfigs,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::cpp::compute::region_instance_group_managers::v1::
+                   UpdatePerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              UpdatePerInstanceConfigs,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

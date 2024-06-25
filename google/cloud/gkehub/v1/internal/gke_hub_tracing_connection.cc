@@ -79,12 +79,52 @@ GkeHubTracingConnection::CreateMembership(
   return internal::EndSpan(std::move(span), child_->CreateMembership(request));
 }
 
+StatusOr<google::longrunning::Operation>
+GkeHubTracingConnection::CreateMembership(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
+  auto span =
+      internal::MakeSpan("gkehub_v1::GkeHubConnection::CreateMembership");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->CreateMembership(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Membership>>
+GkeHubTracingConnection::CreateMembership(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("gkehub_v1::GkeHubConnection::CreateMembership");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->CreateMembership(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubTracingConnection::CreateFeature(
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
   auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::CreateFeature");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->CreateFeature(request));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubTracingConnection::CreateFeature(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
+  auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::CreateFeature");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateFeature(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Feature>>
+GkeHubTracingConnection::CreateFeature(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::CreateFeature");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateFeature(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
@@ -96,12 +136,52 @@ GkeHubTracingConnection::DeleteMembership(
   return internal::EndSpan(std::move(span), child_->DeleteMembership(request));
 }
 
+StatusOr<google::longrunning::Operation>
+GkeHubTracingConnection::DeleteMembership(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
+  auto span =
+      internal::MakeSpan("gkehub_v1::GkeHubConnection::DeleteMembership");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->DeleteMembership(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubTracingConnection::DeleteMembership(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("gkehub_v1::GkeHubConnection::DeleteMembership");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->DeleteMembership(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubTracingConnection::DeleteFeature(
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
   auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::DeleteFeature");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->DeleteFeature(request));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubTracingConnection::DeleteFeature(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
+  auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::DeleteFeature");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteFeature(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+GkeHubTracingConnection::DeleteFeature(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::DeleteFeature");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteFeature(ExperimentalTag{}, operation));
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
@@ -113,12 +193,52 @@ GkeHubTracingConnection::UpdateMembership(
   return internal::EndSpan(std::move(span), child_->UpdateMembership(request));
 }
 
+StatusOr<google::longrunning::Operation>
+GkeHubTracingConnection::UpdateMembership(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
+  auto span =
+      internal::MakeSpan("gkehub_v1::GkeHubConnection::UpdateMembership");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span,
+      child_->UpdateMembership(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Membership>>
+GkeHubTracingConnection::UpdateMembership(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span =
+      internal::MakeSpan("gkehub_v1::GkeHubConnection::UpdateMembership");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span), child_->UpdateMembership(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubTracingConnection::UpdateFeature(
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
   auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::UpdateFeature");
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->UpdateFeature(request));
+}
+
+StatusOr<google::longrunning::Operation> GkeHubTracingConnection::UpdateFeature(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
+  auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::UpdateFeature");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateFeature(ExperimentalTag{}, NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::gkehub::v1::Feature>>
+GkeHubTracingConnection::UpdateFeature(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::UpdateFeature");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateFeature(ExperimentalTag{}, operation));
 }
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>

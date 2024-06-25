@@ -51,13 +51,40 @@ class UserEventServiceTracingConnection
   PurgeUserEvents(google::cloud::retail::v2::PurgeUserEventsRequest const&
                       request) override;
 
+  StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::retail::v2::PurgeUserEventsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
+  PurgeUserEvents(ExperimentalTag,
+                  google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
   ImportUserEvents(google::cloud::retail::v2::ImportUserEventsRequest const&
                        request) override;
 
+  StatusOr<google::longrunning::Operation> ImportUserEvents(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::retail::v2::ImportUserEventsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
+  ImportUserEvents(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
   RejoinUserEvents(google::cloud::retail::v2::RejoinUserEventsRequest const&
                        request) override;
+
+  StatusOr<google::longrunning::Operation> RejoinUserEvents(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::retail::v2::RejoinUserEventsRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
+  RejoinUserEvents(ExperimentalTag,
+                   google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<retail_v2::UserEventServiceConnection> child_;

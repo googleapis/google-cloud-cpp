@@ -65,10 +65,30 @@ class InstanceAdminRestConnectionImpl
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  CreateInstanceConfig(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
   UpdateInstanceConfig(
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   Status DeleteInstanceConfig(
       google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
@@ -96,10 +116,28 @@ class InstanceAdminRestConnectionImpl
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  CreateInstance(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  UpdateInstance(ExperimentalTag,
+                 google::longrunning::Operation const& operation) override;
 
   Status DeleteInstance(
       google::spanner::admin::instance::v1::DeleteInstanceRequest const&
@@ -124,6 +162,16 @@ class InstanceAdminRestConnectionImpl
       google::spanner::admin::instance::v1::
           CreateInstancePartitionRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  CreateInstancePartition(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   Status DeleteInstancePartition(
       google::spanner::admin::instance::v1::
           DeleteInstancePartitionRequest const& request) override;
@@ -132,6 +180,16 @@ class InstanceAdminRestConnectionImpl
   UpdateInstancePartition(
       google::spanner::admin::instance::v1::
           UpdateInstancePartitionRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      ExperimentalTag, NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request) override;
+
+  future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+  UpdateInstancePartition(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
 
   StreamRange<google::longrunning::Operation> ListInstancePartitionOperations(
       google::spanner::admin::instance::v1::
