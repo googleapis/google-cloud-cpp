@@ -118,7 +118,6 @@ RequestIdServiceConnectionImpl::RenameFoo(google::test::requestid::v1::RenameFoo
     polling_policy(*current), __func__);
 }
 
-
 StatusOr<google::longrunning::Operation>
 RequestIdServiceConnectionImpl::RenameFoo(google::cloud::ExperimentalTag,
       google::cloud::NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request) {
@@ -133,7 +132,6 @@ RequestIdServiceConnectionImpl::RenameFoo(google::cloud::ExperimentalTag,
       },
       *current, request, __func__);
 }
-
 
 future<StatusOr<google::test::requestid::v1::Foo>>
 RequestIdServiceConnectionImpl::RenameFoo(google::cloud::ExperimentalTag,

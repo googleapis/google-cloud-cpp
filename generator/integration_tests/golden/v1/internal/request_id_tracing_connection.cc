@@ -53,7 +53,7 @@ RequestIdServiceTracingConnection::RenameFoo(google::cloud::ExperimentalTag,
     google::cloud::NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::RequestIdServiceConnection::RenameFoo");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RenameFoo(
       google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
 }

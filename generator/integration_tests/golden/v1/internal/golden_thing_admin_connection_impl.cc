@@ -126,7 +126,6 @@ GoldenThingAdminConnectionImpl::CreateDatabase(google::test::admin::database::v1
     polling_policy(*current), __func__);
 }
 
-
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::CreateDatabase(google::cloud::ExperimentalTag,
       google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
@@ -141,7 +140,6 @@ GoldenThingAdminConnectionImpl::CreateDatabase(google::cloud::ExperimentalTag,
       },
       *current, request, __func__);
 }
-
 
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnectionImpl::CreateDatabase(google::cloud::ExperimentalTag,
@@ -220,7 +218,6 @@ GoldenThingAdminConnectionImpl::UpdateDatabaseDdl(google::test::admin::database:
     polling_policy(*current), __func__);
 }
 
-
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::UpdateDatabaseDdl(google::cloud::ExperimentalTag,
       google::cloud::NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
@@ -235,7 +232,6 @@ GoldenThingAdminConnectionImpl::UpdateDatabaseDdl(google::cloud::ExperimentalTag
       },
       *current, request, __func__);
 }
-
 
 future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
 GoldenThingAdminConnectionImpl::UpdateDatabaseDdl(google::cloud::ExperimentalTag,
@@ -366,7 +362,6 @@ GoldenThingAdminConnectionImpl::CreateBackup(google::test::admin::database::v1::
     polling_policy(*current), __func__);
 }
 
-
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::CreateBackup(google::cloud::ExperimentalTag,
       google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request) {
@@ -381,7 +376,6 @@ GoldenThingAdminConnectionImpl::CreateBackup(google::cloud::ExperimentalTag,
       },
       *current, request, __func__);
 }
-
 
 future<StatusOr<google::test::admin::database::v1::Backup>>
 GoldenThingAdminConnectionImpl::CreateBackup(google::cloud::ExperimentalTag,
@@ -514,7 +508,6 @@ GoldenThingAdminConnectionImpl::RestoreDatabase(google::test::admin::database::v
     polling_policy(*current), __func__);
 }
 
-
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::RestoreDatabase(google::cloud::ExperimentalTag,
       google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
@@ -529,7 +522,6 @@ GoldenThingAdminConnectionImpl::RestoreDatabase(google::cloud::ExperimentalTag,
       },
       *current, request, __func__);
 }
-
 
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnectionImpl::RestoreDatabase(google::cloud::ExperimentalTag,
@@ -651,7 +643,6 @@ GoldenThingAdminConnectionImpl::LongRunningWithoutRouting(google::test::admin::d
     polling_policy(*current), __func__);
 }
 
-
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::LongRunningWithoutRouting(google::cloud::ExperimentalTag,
       google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
@@ -666,7 +657,6 @@ GoldenThingAdminConnectionImpl::LongRunningWithoutRouting(google::cloud::Experim
       },
       *current, request, __func__);
 }
-
 
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnectionImpl::LongRunningWithoutRouting(google::cloud::ExperimentalTag,

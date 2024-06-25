@@ -21,7 +21,6 @@
 
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection_idempotency_policy.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"

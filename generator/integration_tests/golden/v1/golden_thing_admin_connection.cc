@@ -52,17 +52,17 @@ GoldenThingAdminConnection::CreateDatabase(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  StatusOr<google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnection::CreateDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::test::admin::database::v1::CreateDatabaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  future<StatusOr<google::test::admin::database::v1::Database>>
+future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnection::CreateDatabase(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
     StatusOr<google::test::admin::database::v1::Database>>(
     Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,17 +82,17 @@ GoldenThingAdminConnection::UpdateDatabaseDdl(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  StatusOr<google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnection::UpdateDatabaseDdl(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::test::admin::database::v1::UpdateDatabaseDdlRequest const&) {
   return StatusOr<google::longrunning::Operation>(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
+future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
 GoldenThingAdminConnection::UpdateDatabaseDdl(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
     StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>(
     Status(StatusCode::kUnimplemented, "not implemented"));
@@ -136,17 +136,17 @@ GoldenThingAdminConnection::CreateBackup(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  StatusOr<google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnection::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::test::admin::database::v1::CreateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  future<StatusOr<google::test::admin::database::v1::Backup>>
+future<StatusOr<google::test::admin::database::v1::Backup>>
 GoldenThingAdminConnection::CreateBackup(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
     StatusOr<google::test::admin::database::v1::Backup>>(
     Status(StatusCode::kUnimplemented, "not implemented"));
@@ -184,17 +184,17 @@ GoldenThingAdminConnection::RestoreDatabase(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  StatusOr<google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnection::RestoreDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::test::admin::database::v1::RestoreDatabaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  future<StatusOr<google::test::admin::database::v1::Database>>
+future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnection::RestoreDatabase(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
     StatusOr<google::test::admin::database::v1::Database>>(
     Status(StatusCode::kUnimplemented, "not implemented"));
@@ -220,17 +220,17 @@ GoldenThingAdminConnection::LongRunningWithoutRouting(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  StatusOr<google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnection::LongRunningWithoutRouting(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::test::admin::database::v1::RestoreDatabaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-  future<StatusOr<google::test::admin::database::v1::Database>>
+future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminConnection::LongRunningWithoutRouting(
-    google::cloud::ExperimentalTag, google::longrunning::Operation const&) {
+    ExperimentalTag, google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
     StatusOr<google::test::admin::database::v1::Database>>(
     Status(StatusCode::kUnimplemented, "not implemented"));

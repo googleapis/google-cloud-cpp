@@ -21,11 +21,11 @@
 
 #include "generator/integration_tests/golden/v1/golden_thing_admin_connection_idempotency_policy.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_retry_traits.h"
-#include "google/cloud/await_tag.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -190,10 +190,10 @@ class GoldenThingAdminConnection {
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  CreateDatabase(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request);
+  CreateDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request);
 
   virtual future<StatusOr<google::test::admin::database::v1::Database>>
-  CreateDatabase(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation);
+  CreateDatabase(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
@@ -202,10 +202,10 @@ class GoldenThingAdminConnection {
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  UpdateDatabaseDdl(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
+  UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
 
   virtual future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation);
+  UpdateDatabaseDdl(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual Status
   DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
@@ -226,10 +226,10 @@ class GoldenThingAdminConnection {
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  CreateBackup(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request);
+  CreateBackup(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request);
 
   virtual future<StatusOr<google::test::admin::database::v1::Backup>>
-  CreateBackup(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation);
+  CreateBackup(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(google::test::admin::database::v1::GetBackupRequest const& request);
@@ -247,10 +247,10 @@ class GoldenThingAdminConnection {
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  RestoreDatabase(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request);
+  RestoreDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request);
 
   virtual future<StatusOr<google::test::admin::database::v1::Database>>
-  RestoreDatabase(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation);
+  RestoreDatabase(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request);
@@ -262,10 +262,10 @@ class GoldenThingAdminConnection {
   LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  LongRunningWithoutRouting(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request);
+  LongRunningWithoutRouting(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request);
 
   virtual future<StatusOr<google::test::admin::database::v1::Database>>
-  LongRunningWithoutRouting(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation);
+  LongRunningWithoutRouting(ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);

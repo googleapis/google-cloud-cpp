@@ -55,7 +55,7 @@ GoldenThingAdminTracingConnection::CreateDatabase(google::cloud::ExperimentalTag
     google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::CreateDatabase");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateDatabase(
       google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
 }
@@ -90,7 +90,7 @@ GoldenThingAdminTracingConnection::UpdateDatabaseDdl(google::cloud::Experimental
     google::cloud::NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::UpdateDatabaseDdl");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->UpdateDatabaseDdl(
       google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
 }
@@ -153,7 +153,7 @@ GoldenThingAdminTracingConnection::CreateBackup(google::cloud::ExperimentalTag,
     google::cloud::NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::CreateBackup");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->CreateBackup(
       google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
 }
@@ -211,7 +211,7 @@ GoldenThingAdminTracingConnection::RestoreDatabase(google::cloud::ExperimentalTa
     google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::RestoreDatabase");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->RestoreDatabase(
       google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
 }
@@ -257,7 +257,7 @@ GoldenThingAdminTracingConnection::LongRunningWithoutRouting(google::cloud::Expe
     google::cloud::NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   auto span = internal::MakeSpan(
       "golden_v1::GoldenThingAdminConnection::LongRunningWithoutRouting");
-  internal::OTelScope scope(span);
+  opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(*span, child_->LongRunningWithoutRouting(
       google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
 }
