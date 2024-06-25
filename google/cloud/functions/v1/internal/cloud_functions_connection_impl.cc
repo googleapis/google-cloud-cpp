@@ -157,7 +157,7 @@ CloudFunctionsServiceConnectionImpl::CreateFunction(
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceConnectionImpl::CreateFunction(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -249,7 +249,7 @@ CloudFunctionsServiceConnectionImpl::UpdateFunction(
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceConnectionImpl::UpdateFunction(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -341,7 +341,7 @@ CloudFunctionsServiceConnectionImpl::DeleteFunction(
 
 StatusOr<google::longrunning::Operation>
 CloudFunctionsServiceConnectionImpl::DeleteFunction(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

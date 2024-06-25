@@ -62,7 +62,7 @@ class DatabaseAdminConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateDatabase(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) override;
 
@@ -80,7 +80,7 @@ class DatabaseAdminConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDatabase(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request) override;
 
@@ -95,7 +95,7 @@ class DatabaseAdminConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) override;
 
@@ -127,7 +127,7 @@ class DatabaseAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
@@ -140,7 +140,7 @@ class DatabaseAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CopyBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::CopyBackupRequest const& request)
       override;
 
@@ -170,7 +170,7 @@ class DatabaseAdminConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> RestoreDatabase(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request) override;
 

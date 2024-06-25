@@ -132,7 +132,7 @@ CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::ImportSuggestionDenyListEntries(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::
         ImportSuggestionDenyListEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -236,7 +236,7 @@ CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::PurgeSuggestionDenyListEntries(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::
         PurgeSuggestionDenyListEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

@@ -109,7 +109,7 @@ RepositoryManagerConnectionImpl::CreateConnection(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerConnectionImpl::CreateConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -253,7 +253,7 @@ RepositoryManagerConnectionImpl::UpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerConnectionImpl::UpdateConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -347,7 +347,7 @@ RepositoryManagerConnectionImpl::DeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerConnectionImpl::DeleteConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -441,7 +441,7 @@ RepositoryManagerConnectionImpl::CreateRepository(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerConnectionImpl::CreateRepository(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -536,7 +536,7 @@ RepositoryManagerConnectionImpl::BatchCreateRepositories(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerConnectionImpl::BatchCreateRepositories(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -682,7 +682,7 @@ RepositoryManagerConnectionImpl::DeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 RepositoryManagerConnectionImpl::DeleteRepository(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

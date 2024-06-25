@@ -62,7 +62,7 @@ class WorkflowsConnectionImpl : public workflows_v1::WorkflowsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateWorkflow(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::CreateWorkflowRequest const& request)
       override;
 
@@ -75,7 +75,7 @@ class WorkflowsConnectionImpl : public workflows_v1::WorkflowsConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request)
       override;
 
@@ -88,7 +88,7 @@ class WorkflowsConnectionImpl : public workflows_v1::WorkflowsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request)
       override;
 

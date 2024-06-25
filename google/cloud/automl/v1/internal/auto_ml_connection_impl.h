@@ -54,7 +54,7 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::CreateDatasetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDataset(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::CreateDatasetRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
@@ -74,7 +74,7 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDataset(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::DeleteDatasetRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
@@ -85,7 +85,7 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::ImportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportData(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::ImportDataRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
@@ -96,7 +96,7 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportData(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::ExportDataRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
@@ -111,7 +111,7 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::CreateModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::CreateModelRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
@@ -128,7 +128,7 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::DeleteModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::DeleteModelRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
@@ -142,7 +142,7 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::DeployModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeployModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::DeployModelRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
@@ -153,7 +153,7 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::UndeployModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UndeployModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::UndeployModelRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
@@ -164,7 +164,7 @@ class AutoMlConnectionImpl : public automl_v1::AutoMlConnection {
       google::cloud::automl::v1::ExportModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::ExportModelRequest const& request) override;
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(

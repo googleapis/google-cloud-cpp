@@ -111,7 +111,7 @@ AttachedClustersConnectionImpl::CreateAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersConnectionImpl::CreateAttachedCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -208,7 +208,7 @@ AttachedClustersConnectionImpl::UpdateAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersConnectionImpl::UpdateAttachedCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -305,7 +305,7 @@ AttachedClustersConnectionImpl::ImportAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersConnectionImpl::ImportAttachedCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -454,7 +454,7 @@ AttachedClustersConnectionImpl::DeleteAttachedCluster(
 
 StatusOr<google::longrunning::Operation>
 AttachedClustersConnectionImpl::DeleteAttachedCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

@@ -61,7 +61,7 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateDeployment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::CreateDeploymentRequest const& request)
       override;
 
@@ -74,7 +74,7 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDeployment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::UpdateDeploymentRequest const& request)
       override;
 
@@ -87,7 +87,7 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteDeployment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::DeleteDeploymentRequest const& request)
       override;
 
@@ -127,7 +127,7 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
       google::cloud::config::v1::LockDeploymentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> LockDeployment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::LockDeploymentRequest const& request) override;
 
   future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
@@ -139,7 +139,7 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UnlockDeployment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::UnlockDeploymentRequest const& request)
       override;
 
@@ -154,7 +154,7 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
       google::cloud::config::v1::CreatePreviewRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePreview(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::CreatePreviewRequest const& request) override;
 
   future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
@@ -171,7 +171,7 @@ class ConfigConnectionImpl : public config_v1::ConfigConnection {
       google::cloud::config::v1::DeletePreviewRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePreview(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::DeletePreviewRequest const& request) override;
 
   future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(

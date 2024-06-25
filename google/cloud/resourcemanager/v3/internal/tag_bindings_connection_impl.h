@@ -62,7 +62,7 @@ class TagBindingsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateTagBinding(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
           request) override;
 
@@ -76,7 +76,7 @@ class TagBindingsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
           request) override;
 

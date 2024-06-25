@@ -109,7 +109,7 @@ DataTaxonomyServiceConnectionImpl::CreateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::CreateDataTaxonomy(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -202,7 +202,7 @@ DataTaxonomyServiceConnectionImpl::UpdateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::UpdateDataTaxonomy(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -295,7 +295,7 @@ DataTaxonomyServiceConnectionImpl::DeleteDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::DeleteDataTaxonomy(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -438,7 +438,7 @@ DataTaxonomyServiceConnectionImpl::CreateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::CreateDataAttributeBinding(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -534,7 +534,7 @@ DataTaxonomyServiceConnectionImpl::UpdateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::UpdateDataAttributeBinding(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -630,7 +630,7 @@ DataTaxonomyServiceConnectionImpl::DeleteDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::DeleteDataAttributeBinding(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -777,7 +777,7 @@ DataTaxonomyServiceConnectionImpl::CreateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::CreateDataAttribute(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -870,7 +870,7 @@ DataTaxonomyServiceConnectionImpl::UpdateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::UpdateDataAttribute(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -963,7 +963,7 @@ DataTaxonomyServiceConnectionImpl::DeleteDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnectionImpl::DeleteDataAttribute(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -67,7 +67,7 @@ class ProjectsConnectionImpl : public resourcemanager_v3::ProjectsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class ProjectsConnectionImpl : public resourcemanager_v3::ProjectsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
       override;
 
@@ -93,7 +93,7 @@ class ProjectsConnectionImpl : public resourcemanager_v3::ProjectsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> MoveProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
       override;
 
@@ -106,7 +106,7 @@ class ProjectsConnectionImpl : public resourcemanager_v3::ProjectsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
       override;
 
@@ -119,7 +119,7 @@ class ProjectsConnectionImpl : public resourcemanager_v3::ProjectsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UndeleteProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
       override;
 

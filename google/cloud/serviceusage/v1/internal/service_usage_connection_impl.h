@@ -57,7 +57,7 @@ class ServiceUsageConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> EnableService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::serviceusage::v1::EnableServiceRequest const& request)
       override;
 
@@ -70,7 +70,7 @@ class ServiceUsageConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DisableService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::serviceusage::v1::DisableServiceRequest const& request)
       override;
 
@@ -90,7 +90,7 @@ class ServiceUsageConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> BatchEnableServices(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request)
       override;
 

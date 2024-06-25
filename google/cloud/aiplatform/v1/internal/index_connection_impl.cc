@@ -105,7 +105,7 @@ IndexServiceConnectionImpl::CreateIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexServiceConnectionImpl::CreateIndex(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -244,7 +244,7 @@ IndexServiceConnectionImpl::UpdateIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexServiceConnectionImpl::UpdateIndex(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -335,7 +335,7 @@ IndexServiceConnectionImpl::DeleteIndex(
 
 StatusOr<google::longrunning::Operation>
 IndexServiceConnectionImpl::DeleteIndex(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

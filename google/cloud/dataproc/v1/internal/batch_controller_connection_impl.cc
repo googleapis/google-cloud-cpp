@@ -107,7 +107,7 @@ BatchControllerConnectionImpl::CreateBatch(
 
 StatusOr<google::longrunning::Operation>
 BatchControllerConnectionImpl::CreateBatch(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

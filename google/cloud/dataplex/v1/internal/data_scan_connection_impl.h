@@ -57,7 +57,7 @@ class DataScanServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateDataScan(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataScanRequest const& request)
       override;
 
@@ -70,7 +70,7 @@ class DataScanServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDataScan(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataScanRequest const& request)
       override;
 
@@ -83,7 +83,7 @@ class DataScanServiceConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDataScan(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataScanRequest const& request)
       override;
 

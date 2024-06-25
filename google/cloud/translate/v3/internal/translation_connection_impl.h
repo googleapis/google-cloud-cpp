@@ -76,7 +76,7 @@ class TranslationServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> BatchTranslateText(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::BatchTranslateTextRequest const& request)
       override;
 
@@ -91,7 +91,7 @@ class TranslationServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchTranslateDocument(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request) override;
 
@@ -106,7 +106,7 @@ class TranslationServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateGlossary(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::CreateGlossaryRequest const& request)
       override;
 
@@ -126,7 +126,7 @@ class TranslationServiceConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteGlossary(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::DeleteGlossaryRequest const& request)
       override;
 

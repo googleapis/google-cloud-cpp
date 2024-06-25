@@ -158,7 +158,7 @@ EdgeContainerConnectionImpl::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::CreateCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -252,7 +252,7 @@ EdgeContainerConnectionImpl::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::UpdateCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -346,7 +346,7 @@ EdgeContainerConnectionImpl::UpgradeCluster(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::UpgradeCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -440,7 +440,7 @@ EdgeContainerConnectionImpl::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::DeleteCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -615,7 +615,7 @@ EdgeContainerConnectionImpl::CreateNodePool(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::CreateNodePool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -709,7 +709,7 @@ EdgeContainerConnectionImpl::UpdateNodePool(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::UpdateNodePool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -803,7 +803,7 @@ EdgeContainerConnectionImpl::DeleteNodePool(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::DeleteNodePool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -997,7 +997,7 @@ EdgeContainerConnectionImpl::CreateVpnConnection(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::CreateVpnConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1093,7 +1093,7 @@ EdgeContainerConnectionImpl::DeleteVpnConnection(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerConnectionImpl::DeleteVpnConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

@@ -66,7 +66,7 @@ class EnvironmentsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
           request) override;
 
@@ -80,7 +80,7 @@ class EnvironmentsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
           request) override;
 
@@ -103,7 +103,7 @@ class EnvironmentsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> RunContinuousTest(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
           request) override;
 
@@ -121,7 +121,7 @@ class EnvironmentsConnectionImpl
                  request) override;
 
   StatusOr<google::longrunning::Operation> DeployFlow(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request)
       override;
 

@@ -54,7 +54,7 @@ class ServicesConnectionImpl : public run_v2::ServicesConnection {
       google::cloud::run::v2::CreateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::CreateServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
@@ -71,7 +71,7 @@ class ServicesConnectionImpl : public run_v2::ServicesConnection {
       google::cloud::run::v2::UpdateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::UpdateServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
@@ -82,7 +82,7 @@ class ServicesConnectionImpl : public run_v2::ServicesConnection {
       google::cloud::run::v2::DeleteServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(

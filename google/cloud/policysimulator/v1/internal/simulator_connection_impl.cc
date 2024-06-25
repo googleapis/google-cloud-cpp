@@ -122,7 +122,7 @@ SimulatorConnectionImpl::CreateReplay(
 }
 
 StatusOr<google::longrunning::Operation> SimulatorConnectionImpl::CreateReplay(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

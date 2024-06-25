@@ -57,7 +57,7 @@ class EngineServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEngine(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request)
       override;
 
@@ -70,7 +70,7 @@ class EngineServiceConnectionImpl
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEngine(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request)
       override;
 

@@ -57,7 +57,7 @@ class ApplicationsConnectionImpl : public appengine_v1::ApplicationsConnection {
       google::appengine::v1::CreateApplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateApplication(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::CreateApplicationRequest const& request) override;
 
   future<StatusOr<google::appengine::v1::Application>> CreateApplication(
@@ -68,7 +68,7 @@ class ApplicationsConnectionImpl : public appengine_v1::ApplicationsConnection {
       google::appengine::v1::UpdateApplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateApplication(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateApplicationRequest const& request) override;
 
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
@@ -79,7 +79,7 @@ class ApplicationsConnectionImpl : public appengine_v1::ApplicationsConnection {
       google::appengine::v1::RepairApplicationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RepairApplication(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::RepairApplicationRequest const& request) override;
 
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(

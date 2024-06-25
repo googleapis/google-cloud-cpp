@@ -55,7 +55,7 @@ class AssetServiceConnectionImpl : public asset_v1::AssetServiceConnection {
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportAssets(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
 
   future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
@@ -104,7 +104,7 @@ class AssetServiceConnectionImpl : public asset_v1::AssetServiceConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
           request) override;
 

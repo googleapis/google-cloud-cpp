@@ -60,7 +60,7 @@ class RequestIdServiceConnectionImpl
   RenameFoo(google::test::requestid::v1::RenameFooRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  RenameFoo(ExperimentalTag, NoAwaitlTag,
+  RenameFoo(ExperimentalTag, NoAwaitTag,
       google::test::requestid::v1::RenameFooRequest const& request) override;
 
   future<StatusOr<google::test::requestid::v1::Foo>>

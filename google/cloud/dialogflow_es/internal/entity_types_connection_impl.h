@@ -77,7 +77,7 @@ class EntityTypesConnectionImpl : public dialogflow_es::EntityTypesConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
           request) override;
 
@@ -92,7 +92,7 @@ class EntityTypesConnectionImpl : public dialogflow_es::EntityTypesConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
           request) override;
 
@@ -105,7 +105,7 @@ class EntityTypesConnectionImpl : public dialogflow_es::EntityTypesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> BatchCreateEntities(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request)
       override;
 
@@ -118,7 +118,7 @@ class EntityTypesConnectionImpl : public dialogflow_es::EntityTypesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> BatchUpdateEntities(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request)
       override;
 
@@ -131,7 +131,7 @@ class EntityTypesConnectionImpl : public dialogflow_es::EntityTypesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> BatchDeleteEntities(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request)
       override;
 

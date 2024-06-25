@@ -56,7 +56,7 @@ class BatchControllerConnectionImpl
       google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBatch(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(

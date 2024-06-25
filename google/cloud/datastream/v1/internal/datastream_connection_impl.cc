@@ -158,7 +158,7 @@ DatastreamConnectionImpl::CreateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::CreateConnectionProfile(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -254,7 +254,7 @@ DatastreamConnectionImpl::UpdateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::UpdateConnectionProfile(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -350,7 +350,7 @@ DatastreamConnectionImpl::DeleteConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::DeleteConnectionProfile(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -508,7 +508,7 @@ DatastreamConnectionImpl::CreateStream(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::CreateStream(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::CreateStreamRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -598,7 +598,7 @@ DatastreamConnectionImpl::UpdateStream(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::UpdateStream(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -688,7 +688,7 @@ DatastreamConnectionImpl::DeleteStream(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::DeleteStream(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -908,7 +908,7 @@ DatastreamConnectionImpl::CreatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::CreatePrivateConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1055,7 +1055,7 @@ DatastreamConnectionImpl::DeletePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::DeletePrivateConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1148,7 +1148,7 @@ DatastreamConnectionImpl::CreateRoute(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::CreateRoute(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1285,7 +1285,7 @@ DatastreamConnectionImpl::DeleteRoute(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::DeleteRoute(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datastream::v1::DeleteRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

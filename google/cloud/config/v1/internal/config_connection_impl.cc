@@ -150,7 +150,7 @@ ConfigConnectionImpl::CreateDeployment(
 }
 
 StatusOr<google::longrunning::Operation> ConfigConnectionImpl::CreateDeployment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::CreateDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -240,7 +240,7 @@ ConfigConnectionImpl::UpdateDeployment(
 }
 
 StatusOr<google::longrunning::Operation> ConfigConnectionImpl::UpdateDeployment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::UpdateDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -330,7 +330,7 @@ ConfigConnectionImpl::DeleteDeployment(
 }
 
 StatusOr<google::longrunning::Operation> ConfigConnectionImpl::DeleteDeployment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::DeleteDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -572,7 +572,7 @@ ConfigConnectionImpl::LockDeployment(
 }
 
 StatusOr<google::longrunning::Operation> ConfigConnectionImpl::LockDeployment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::LockDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -661,7 +661,7 @@ ConfigConnectionImpl::UnlockDeployment(
 }
 
 StatusOr<google::longrunning::Operation> ConfigConnectionImpl::UnlockDeployment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::UnlockDeploymentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -765,7 +765,7 @@ ConfigConnectionImpl::CreatePreview(
 }
 
 StatusOr<google::longrunning::Operation> ConfigConnectionImpl::CreatePreview(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::CreatePreviewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -901,7 +901,7 @@ ConfigConnectionImpl::DeletePreview(
 }
 
 StatusOr<google::longrunning::Operation> ConfigConnectionImpl::DeletePreview(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::config::v1::DeletePreviewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

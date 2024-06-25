@@ -144,7 +144,7 @@ TagBindingsConnectionImpl::CreateTagBinding(
 
 StatusOr<google::longrunning::Operation>
 TagBindingsConnectionImpl::CreateTagBinding(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -240,7 +240,7 @@ TagBindingsConnectionImpl::DeleteTagBinding(
 
 StatusOr<google::longrunning::Operation>
 TagBindingsConnectionImpl::DeleteTagBinding(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

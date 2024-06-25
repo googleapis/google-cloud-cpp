@@ -63,7 +63,7 @@ class DomainMappingsConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateDomainMapping(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::CreateDomainMappingRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class DomainMappingsConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDomainMapping(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateDomainMappingRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class DomainMappingsConnectionImpl
                           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDomainMapping(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DeleteDomainMappingRequest const& request)
       override;
 

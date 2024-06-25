@@ -108,7 +108,7 @@ VpcAccessServiceConnectionImpl::CreateConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceConnectionImpl::CreateConnector(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -247,7 +247,7 @@ VpcAccessServiceConnectionImpl::DeleteConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceConnectionImpl::DeleteConnector(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

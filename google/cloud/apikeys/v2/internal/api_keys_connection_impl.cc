@@ -101,7 +101,7 @@ ApiKeysConnectionImpl::CreateKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::CreateKey(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -246,7 +246,7 @@ ApiKeysConnectionImpl::UpdateKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::UpdateKey(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -333,7 +333,7 @@ ApiKeysConnectionImpl::DeleteKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::DeleteKey(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -421,7 +421,7 @@ ApiKeysConnectionImpl::UndeleteKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::UndeleteKey(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

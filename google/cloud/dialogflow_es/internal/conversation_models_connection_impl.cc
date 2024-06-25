@@ -110,7 +110,7 @@ ConversationModelsConnectionImpl::CreateConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::CreateConversationModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -260,7 +260,7 @@ ConversationModelsConnectionImpl::DeleteConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::DeleteConversationModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -362,7 +362,7 @@ ConversationModelsConnectionImpl::DeployConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::DeployConversationModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::DeployConversationModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -465,7 +465,7 @@ ConversationModelsConnectionImpl::UndeployConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::UndeployConversationModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -622,7 +622,7 @@ ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::
         CreateConversationModelEvaluationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

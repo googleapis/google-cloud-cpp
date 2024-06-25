@@ -118,7 +118,7 @@ DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -268,7 +268,7 @@ DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

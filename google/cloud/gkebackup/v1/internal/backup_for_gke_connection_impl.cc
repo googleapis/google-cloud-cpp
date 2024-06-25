@@ -106,7 +106,7 @@ BackupForGKEConnectionImpl::CreateBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::CreateBackupPlan(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -248,7 +248,7 @@ BackupForGKEConnectionImpl::UpdateBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::UpdateBackupPlan(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -341,7 +341,7 @@ BackupForGKEConnectionImpl::DeleteBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::DeleteBackupPlan(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -433,7 +433,7 @@ BackupForGKEConnectionImpl::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::CreateBackup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -571,7 +571,7 @@ BackupForGKEConnectionImpl::UpdateBackup(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::UpdateBackup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -661,7 +661,7 @@ BackupForGKEConnectionImpl::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::DeleteBackup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -802,7 +802,7 @@ BackupForGKEConnectionImpl::CreateRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::CreateRestorePlan(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -944,7 +944,7 @@ BackupForGKEConnectionImpl::UpdateRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::UpdateRestorePlan(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1037,7 +1037,7 @@ BackupForGKEConnectionImpl::DeleteRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::DeleteRestorePlan(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1129,7 +1129,7 @@ BackupForGKEConnectionImpl::CreateRestore(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::CreateRestore(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1268,7 +1268,7 @@ BackupForGKEConnectionImpl::UpdateRestore(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::UpdateRestore(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1359,7 +1359,7 @@ BackupForGKEConnectionImpl::DeleteRestore(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::DeleteRestore(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

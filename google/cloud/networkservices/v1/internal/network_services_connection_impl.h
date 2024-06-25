@@ -68,7 +68,7 @@ class NetworkServicesConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateEndpointPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
           request) override;
 
@@ -83,7 +83,7 @@ class NetworkServicesConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEndpointPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
           request) override;
 
@@ -98,7 +98,7 @@ class NetworkServicesConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEndpointPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
           request) override;
 
@@ -119,7 +119,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateGateway(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::CreateGatewayRequest const& request)
       override;
 
@@ -132,7 +132,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateGateway(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::UpdateGatewayRequest const& request)
       override;
 
@@ -145,7 +145,7 @@ class NetworkServicesConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteGateway(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::DeleteGatewayRequest const& request)
       override;
 
@@ -167,7 +167,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateGrpcRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request)
       override;
 
@@ -181,7 +181,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateGrpcRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request)
       override;
 
@@ -195,7 +195,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteGrpcRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request)
       override;
 
@@ -217,7 +217,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateHttpRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::CreateHttpRouteRequest const& request)
       override;
 
@@ -231,7 +231,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateHttpRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request)
       override;
 
@@ -245,7 +245,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteHttpRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request)
       override;
 
@@ -266,7 +266,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateTcpRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::CreateTcpRouteRequest const& request)
       override;
 
@@ -279,7 +279,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTcpRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request)
       override;
 
@@ -293,7 +293,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTcpRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request)
       override;
 
@@ -314,7 +314,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateTlsRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::CreateTlsRouteRequest const& request)
       override;
 
@@ -327,7 +327,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTlsRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request)
       override;
 
@@ -341,7 +341,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTlsRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request)
       override;
 
@@ -365,7 +365,7 @@ class NetworkServicesConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateServiceBinding(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::CreateServiceBindingRequest const&
           request) override;
 
@@ -380,7 +380,7 @@ class NetworkServicesConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteServiceBinding(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
           request) override;
 
@@ -401,7 +401,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateMesh(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::CreateMeshRequest const& request)
       override;
 
@@ -414,7 +414,7 @@ class NetworkServicesConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateMesh(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::UpdateMeshRequest const& request)
       override;
 
@@ -427,7 +427,7 @@ class NetworkServicesConnectionImpl
                  request) override;
 
   StatusOr<google::longrunning::Operation> DeleteMesh(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkservices::v1::DeleteMeshRequest const& request)
       override;
 

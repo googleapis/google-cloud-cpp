@@ -110,7 +110,7 @@ DataStoreServiceConnectionImpl::CreateDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceConnectionImpl::CreateDataStore(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -254,7 +254,7 @@ DataStoreServiceConnectionImpl::DeleteDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceConnectionImpl::DeleteDataStore(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

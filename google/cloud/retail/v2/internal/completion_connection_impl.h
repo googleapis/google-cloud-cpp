@@ -60,7 +60,7 @@ class CompletionServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ImportCompletionData(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::ImportCompletionDataRequest const& request)
       override;
 

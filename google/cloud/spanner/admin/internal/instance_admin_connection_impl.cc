@@ -159,7 +159,7 @@ InstanceAdminConnectionImpl::CreateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::CreateInstanceConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -254,7 +254,7 @@ InstanceAdminConnectionImpl::UpdateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::UpdateInstanceConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -490,7 +490,7 @@ InstanceAdminConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::CreateInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -586,7 +586,7 @@ InstanceAdminConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::UpdateInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -752,7 +752,7 @@ InstanceAdminConnectionImpl::CreateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::CreateInstancePartition(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -862,7 +862,7 @@ InstanceAdminConnectionImpl::UpdateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::UpdateInstancePartition(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

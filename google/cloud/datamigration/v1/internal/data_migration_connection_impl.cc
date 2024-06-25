@@ -163,7 +163,7 @@ DataMigrationServiceConnectionImpl::CreateMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CreateMigrationJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -256,7 +256,7 @@ DataMigrationServiceConnectionImpl::UpdateMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::UpdateMigrationJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -349,7 +349,7 @@ DataMigrationServiceConnectionImpl::DeleteMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::DeleteMigrationJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -442,7 +442,7 @@ DataMigrationServiceConnectionImpl::StartMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::StartMigrationJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -534,7 +534,7 @@ DataMigrationServiceConnectionImpl::StopMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::StopMigrationJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -627,7 +627,7 @@ DataMigrationServiceConnectionImpl::ResumeMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::ResumeMigrationJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -720,7 +720,7 @@ DataMigrationServiceConnectionImpl::PromoteMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::PromoteMigrationJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -813,7 +813,7 @@ DataMigrationServiceConnectionImpl::VerifyMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::VerifyMigrationJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -906,7 +906,7 @@ DataMigrationServiceConnectionImpl::RestartMigrationJob(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::RestartMigrationJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1081,7 +1081,7 @@ DataMigrationServiceConnectionImpl::CreateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CreateConnectionProfile(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1176,7 +1176,7 @@ DataMigrationServiceConnectionImpl::UpdateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::UpdateConnectionProfile(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1271,7 +1271,7 @@ DataMigrationServiceConnectionImpl::DeleteConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::DeleteConnectionProfile(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1366,7 +1366,7 @@ DataMigrationServiceConnectionImpl::CreatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CreatePrivateConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1512,7 +1512,7 @@ DataMigrationServiceConnectionImpl::DeletePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::DeletePrivateConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1659,7 +1659,7 @@ DataMigrationServiceConnectionImpl::CreateConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CreateConversionWorkspace(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1755,7 +1755,7 @@ DataMigrationServiceConnectionImpl::UpdateConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::UpdateConversionWorkspace(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1851,7 +1851,7 @@ DataMigrationServiceConnectionImpl::DeleteConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::DeleteConversionWorkspace(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2026,7 +2026,7 @@ DataMigrationServiceConnectionImpl::SeedConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::SeedConversionWorkspace(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2120,7 +2120,7 @@ DataMigrationServiceConnectionImpl::ImportMappingRules(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::ImportMappingRules(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::ImportMappingRulesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2214,7 +2214,7 @@ DataMigrationServiceConnectionImpl::ConvertConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::ConvertConversionWorkspace(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2310,7 +2310,7 @@ DataMigrationServiceConnectionImpl::CommitConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::CommitConversionWorkspace(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2406,7 +2406,7 @@ DataMigrationServiceConnectionImpl::RollbackConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::RollbackConversionWorkspace(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2502,7 +2502,7 @@ DataMigrationServiceConnectionImpl::ApplyConversionWorkspace(
 
 StatusOr<google::longrunning::Operation>
 DataMigrationServiceConnectionImpl::ApplyConversionWorkspace(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

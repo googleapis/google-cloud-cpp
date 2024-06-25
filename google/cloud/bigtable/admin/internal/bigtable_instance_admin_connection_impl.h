@@ -57,7 +57,7 @@ class BigtableInstanceAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateInstanceRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class BigtableInstanceAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> PartialUpdateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request)
       override;
 
@@ -97,7 +97,7 @@ class BigtableInstanceAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateClusterRequest const& request)
       override;
 
@@ -115,7 +115,7 @@ class BigtableInstanceAdminConnectionImpl
       google::bigtable::admin::v2::Cluster const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::Cluster const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
@@ -127,7 +127,7 @@ class BigtableInstanceAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> PartialUpdateCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
       override;
 
@@ -154,7 +154,7 @@ class BigtableInstanceAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateAppProfile(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request)
       override;
 

@@ -109,7 +109,7 @@ EngineServiceConnectionImpl::CreateEngine(
 
 StatusOr<google::longrunning::Operation>
 EngineServiceConnectionImpl::CreateEngine(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateEngineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -203,7 +203,7 @@ EngineServiceConnectionImpl::DeleteEngine(
 
 StatusOr<google::longrunning::Operation>
 EngineServiceConnectionImpl::DeleteEngine(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteEngineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

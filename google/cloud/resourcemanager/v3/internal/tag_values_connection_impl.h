@@ -68,7 +68,7 @@ class TagValuesConnectionImpl : public resourcemanager_v3::TagValuesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateTagValue(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagValueRequest const& request)
       override;
 
@@ -81,7 +81,7 @@ class TagValuesConnectionImpl : public resourcemanager_v3::TagValuesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTagValue(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request)
       override;
 
@@ -94,7 +94,7 @@ class TagValuesConnectionImpl : public resourcemanager_v3::TagValuesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTagValue(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request)
       override;
 

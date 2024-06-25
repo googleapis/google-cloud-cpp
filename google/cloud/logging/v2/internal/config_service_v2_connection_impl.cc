@@ -150,7 +150,7 @@ ConfigServiceV2ConnectionImpl::CreateBucketAsync(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::CreateBucketAsync(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::CreateBucketRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -239,7 +239,7 @@ ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::UpdateBucketRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -554,7 +554,7 @@ ConfigServiceV2ConnectionImpl::CreateLink(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::CreateLink(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::CreateLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -642,7 +642,7 @@ ConfigServiceV2ConnectionImpl::DeleteLink(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::DeleteLink(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::DeleteLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -919,7 +919,7 @@ ConfigServiceV2ConnectionImpl::CopyLogEntries(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::CopyLogEntries(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::CopyLogEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

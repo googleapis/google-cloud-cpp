@@ -429,7 +429,7 @@ ProductSearchConnectionImpl::ImportProductSets(
 
 StatusOr<google::longrunning::Operation>
 ProductSearchConnectionImpl::ImportProductSets(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -521,7 +521,7 @@ ProductSearchConnectionImpl::PurgeProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductSearchConnectionImpl::PurgeProducts(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -57,7 +57,7 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                         CreateEnvironmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           CreateEnvironmentRequest const& request) override;
 
@@ -80,7 +80,7 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                         UpdateEnvironmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           UpdateEnvironmentRequest const& request) override;
 
@@ -95,7 +95,7 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                         DeleteEnvironmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request) override;
 
@@ -188,7 +188,7 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                    SaveSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SaveSnapshot(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           SaveSnapshotRequest const& request) override;
 
@@ -203,7 +203,7 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                    LoadSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> LoadSnapshot(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           LoadSnapshotRequest const& request) override;
 
@@ -218,7 +218,7 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                        DatabaseFailoverRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DatabaseFailover(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           DatabaseFailoverRequest const& request) override;
 

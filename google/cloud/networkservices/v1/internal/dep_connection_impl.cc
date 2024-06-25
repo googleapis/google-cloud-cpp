@@ -162,7 +162,7 @@ DepServiceConnectionImpl::CreateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::CreateLbTrafficExtension(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -257,7 +257,7 @@ DepServiceConnectionImpl::UpdateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::UpdateLbTrafficExtension(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -352,7 +352,7 @@ DepServiceConnectionImpl::DeleteLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::DeleteLbTrafficExtension(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -499,7 +499,7 @@ DepServiceConnectionImpl::CreateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::CreateLbRouteExtension(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -594,7 +594,7 @@ DepServiceConnectionImpl::UpdateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::UpdateLbRouteExtension(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -689,7 +689,7 @@ DepServiceConnectionImpl::DeleteLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceConnectionImpl::DeleteLbRouteExtension(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

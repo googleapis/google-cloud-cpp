@@ -63,7 +63,7 @@ class DocumentsConnectionImpl : public dialogflow_es::DocumentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateDocument(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class DocumentsConnectionImpl : public dialogflow_es::DocumentsConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> ImportDocuments(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class DocumentsConnectionImpl : public dialogflow_es::DocumentsConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDocument(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request)
       override;
 
@@ -102,7 +102,7 @@ class DocumentsConnectionImpl : public dialogflow_es::DocumentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDocument(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request)
       override;
 
@@ -115,7 +115,7 @@ class DocumentsConnectionImpl : public dialogflow_es::DocumentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ReloadDocument(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request)
       override;
 
@@ -128,7 +128,7 @@ class DocumentsConnectionImpl : public dialogflow_es::DocumentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ExportDocument(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request)
       override;
 

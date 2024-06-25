@@ -72,7 +72,7 @@ class PipelineServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
           request) override;
 
@@ -102,7 +102,7 @@ class PipelineServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeletePipelineJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request)
       override;
 
@@ -117,7 +117,7 @@ class PipelineServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
           request) override;
 
@@ -138,7 +138,7 @@ class PipelineServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
           request) override;
 

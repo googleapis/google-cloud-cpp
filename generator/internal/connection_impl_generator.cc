@@ -284,7 +284,7 @@ std::string ConnectionImplGenerator::MethodDeclaration(
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(ExperimentalTag, NoAwaitlTag,
+  $method_name$(ExperimentalTag, NoAwaitTag,
       $request_type$ const& request) override;
 
   future<Status>
@@ -298,7 +298,7 @@ std::string ConnectionImplGenerator::MethodDeclaration(
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(ExperimentalTag, NoAwaitlTag,
+  $method_name$(ExperimentalTag, NoAwaitTag,
       $request_type$ const& request) override;
 
   future<StatusOr<$longrunning_deduced_response_type$>>
@@ -491,7 +491,7 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
     std::string start_function =
         absl::StrCat("StatusOr<$longrunning_operation_type$>", R"""(
 $connection_class_name$Impl::$method_name$(ExperimentalTag,
-      NoAwaitlTag, $request_type$ const& request) {
+      NoAwaitTag, $request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();)""",
                      R"""(
   return google::cloud::internal::RetryLoop(

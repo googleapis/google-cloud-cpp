@@ -63,7 +63,7 @@ class ManagedNotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class ManagedNotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::UpdateRuntimeRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class ManagedNotebookServiceConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request)
       override;
 
@@ -102,7 +102,7 @@ class ManagedNotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> StartRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::StartRuntimeRequest const& request)
       override;
 
@@ -114,7 +114,7 @@ class ManagedNotebookServiceConnectionImpl
       google::cloud::notebooks::v1::StopRuntimeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StopRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::StopRuntimeRequest const& request) override;
 
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
@@ -126,7 +126,7 @@ class ManagedNotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> SwitchRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request)
       override;
 
@@ -139,7 +139,7 @@ class ManagedNotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ResetRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request)
       override;
 
@@ -152,7 +152,7 @@ class ManagedNotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpgradeRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request)
       override;
 
@@ -165,7 +165,7 @@ class ManagedNotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ReportRuntimeEvent(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
       override;
 
@@ -183,7 +183,7 @@ class ManagedNotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DiagnoseRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request)
       override;
 

@@ -123,7 +123,7 @@ ScheduleServiceConnectionImpl::DeleteSchedule(
 
 StatusOr<google::longrunning::Operation>
 ScheduleServiceConnectionImpl::DeleteSchedule(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

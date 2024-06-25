@@ -107,7 +107,7 @@ TagHoldsConnectionImpl::CreateTagHold(
 }
 
 StatusOr<google::longrunning::Operation> TagHoldsConnectionImpl::CreateTagHold(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -200,7 +200,7 @@ TagHoldsConnectionImpl::DeleteTagHold(
 }
 
 StatusOr<google::longrunning::Operation> TagHoldsConnectionImpl::DeleteTagHold(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

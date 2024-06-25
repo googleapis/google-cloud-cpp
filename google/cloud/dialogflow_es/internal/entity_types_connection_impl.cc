@@ -200,7 +200,7 @@ EntityTypesConnectionImpl::BatchUpdateEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchUpdateEntityTypes(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -294,7 +294,7 @@ EntityTypesConnectionImpl::BatchDeleteEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchDeleteEntityTypes(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -386,7 +386,7 @@ EntityTypesConnectionImpl::BatchCreateEntities(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchCreateEntities(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -477,7 +477,7 @@ EntityTypesConnectionImpl::BatchUpdateEntities(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchUpdateEntities(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -568,7 +568,7 @@ EntityTypesConnectionImpl::BatchDeleteEntities(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::BatchDeleteEntities(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

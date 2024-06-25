@@ -587,7 +587,7 @@ DataCatalogConnectionImpl::ReconcileTags(
 
 StatusOr<google::longrunning::Operation>
 DataCatalogConnectionImpl::ReconcileTags(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -749,7 +749,7 @@ DataCatalogConnectionImpl::ImportEntries(
 
 StatusOr<google::longrunning::Operation>
 DataCatalogConnectionImpl::ImportEntries(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

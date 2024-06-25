@@ -64,7 +64,7 @@ class SiteSearchEngineServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateTargetSite(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
           request) override;
 
@@ -79,7 +79,7 @@ class SiteSearchEngineServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
           request) override;
 
@@ -99,7 +99,7 @@ class SiteSearchEngineServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTargetSite(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
           request) override;
 
@@ -113,7 +113,7 @@ class SiteSearchEngineServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTargetSite(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
           request) override;
 
@@ -132,7 +132,7 @@ class SiteSearchEngineServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
           request) override;
 
@@ -149,7 +149,7 @@ class SiteSearchEngineServiceConnectionImpl
           DisableAdvancedSiteSearchRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           DisableAdvancedSiteSearchRequest const& request) override;
 
@@ -164,7 +164,7 @@ class SiteSearchEngineServiceConnectionImpl
                   request) override;
 
   StatusOr<google::longrunning::Operation> RecrawlUris(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request)
       override;
 
@@ -179,7 +179,7 @@ class SiteSearchEngineServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
           request) override;
 

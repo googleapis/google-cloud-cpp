@@ -107,7 +107,7 @@ EnvironmentsConnectionImpl::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::CreateEnvironment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -258,7 +258,7 @@ EnvironmentsConnectionImpl::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::UpdateEnvironment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -356,7 +356,7 @@ EnvironmentsConnectionImpl::DeleteEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::DeleteEnvironment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -760,7 +760,7 @@ EnvironmentsConnectionImpl::SaveSnapshot(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::SaveSnapshot(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -859,7 +859,7 @@ EnvironmentsConnectionImpl::LoadSnapshot(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::LoadSnapshot(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -959,7 +959,7 @@ EnvironmentsConnectionImpl::DatabaseFailover(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::DatabaseFailover(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         DatabaseFailoverRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

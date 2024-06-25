@@ -57,7 +57,7 @@ class VpcAccessServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateConnector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
       override;
 
@@ -77,7 +77,7 @@ class VpcAccessServiceConnectionImpl
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
       override;
 

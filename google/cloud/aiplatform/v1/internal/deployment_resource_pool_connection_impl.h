@@ -59,7 +59,7 @@ class DeploymentResourcePoolServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
           request) override;
 
@@ -84,7 +84,7 @@ class DeploymentResourcePoolServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
           request) override;
 

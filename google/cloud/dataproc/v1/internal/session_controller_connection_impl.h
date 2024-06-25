@@ -57,7 +57,7 @@ class SessionControllerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateSession(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateSessionRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class SessionControllerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> TerminateSession(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::TerminateSessionRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class SessionControllerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteSession(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::DeleteSessionRequest const& request)
       override;
 

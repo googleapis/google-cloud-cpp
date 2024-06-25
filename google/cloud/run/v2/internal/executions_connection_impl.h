@@ -60,7 +60,7 @@ class ExecutionsConnectionImpl : public run_v2::ExecutionsConnection {
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteExecution(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::DeleteExecutionRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
@@ -71,7 +71,7 @@ class ExecutionsConnectionImpl : public run_v2::ExecutionsConnection {
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CancelExecution(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::CancelExecutionRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(

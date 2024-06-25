@@ -83,7 +83,7 @@ class CertificateAuthorityServiceConnectionImpl
           ActivateCertificateAuthorityRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ActivateCertificateAuthority(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           ActivateCertificateAuthorityRequest const& request) override;
 
@@ -98,7 +98,7 @@ class CertificateAuthorityServiceConnectionImpl
           CreateCertificateAuthorityRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCertificateAuthority(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           CreateCertificateAuthorityRequest const& request) override;
 
@@ -113,7 +113,7 @@ class CertificateAuthorityServiceConnectionImpl
           DisableCertificateAuthorityRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DisableCertificateAuthority(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           DisableCertificateAuthorityRequest const& request) override;
 
@@ -128,7 +128,7 @@ class CertificateAuthorityServiceConnectionImpl
           EnableCertificateAuthorityRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> EnableCertificateAuthority(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           EnableCertificateAuthorityRequest const& request) override;
 
@@ -159,7 +159,7 @@ class CertificateAuthorityServiceConnectionImpl
           UndeleteCertificateAuthorityRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UndeleteCertificateAuthority(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UndeleteCertificateAuthorityRequest const& request) override;
 
@@ -174,7 +174,7 @@ class CertificateAuthorityServiceConnectionImpl
           DeleteCertificateAuthorityRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCertificateAuthority(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           DeleteCertificateAuthorityRequest const& request) override;
 
@@ -189,7 +189,7 @@ class CertificateAuthorityServiceConnectionImpl
           UpdateCertificateAuthorityRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCertificateAuthority(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateAuthorityRequest const& request) override;
 
@@ -203,7 +203,7 @@ class CertificateAuthorityServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateCaPool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::CreateCaPoolRequest const&
           request) override;
 
@@ -216,7 +216,7 @@ class CertificateAuthorityServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCaPool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
           request) override;
 
@@ -238,7 +238,7 @@ class CertificateAuthorityServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCaPool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
           request) override;
 
@@ -268,7 +268,7 @@ class CertificateAuthorityServiceConnectionImpl
           UpdateCertificateRevocationListRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCertificateRevocationList(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateRevocationListRequest const& request) override;
 
@@ -284,7 +284,7 @@ class CertificateAuthorityServiceConnectionImpl
           CreateCertificateTemplateRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCertificateTemplate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           CreateCertificateTemplateRequest const& request) override;
 
@@ -299,7 +299,7 @@ class CertificateAuthorityServiceConnectionImpl
           DeleteCertificateTemplateRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCertificateTemplate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           DeleteCertificateTemplateRequest const& request) override;
 
@@ -324,7 +324,7 @@ class CertificateAuthorityServiceConnectionImpl
           UpdateCertificateTemplateRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCertificateTemplate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateTemplateRequest const& request) override;
 

@@ -127,7 +127,7 @@ DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::BatchProcessRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -338,7 +338,7 @@ DocumentProcessorServiceConnectionImpl::TrainProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::TrainProcessorVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::TrainProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -486,7 +486,7 @@ DocumentProcessorServiceConnectionImpl::DeleteProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::DeleteProcessorVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -582,7 +582,7 @@ DocumentProcessorServiceConnectionImpl::DeployProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::DeployProcessorVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::DeployProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -679,7 +679,7 @@ DocumentProcessorServiceConnectionImpl::UndeployProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::UndeployProcessorVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -791,7 +791,7 @@ DocumentProcessorServiceConnectionImpl::DeleteProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::DeleteProcessor(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -885,7 +885,7 @@ DocumentProcessorServiceConnectionImpl::EnableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::EnableProcessor(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::EnableProcessorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -979,7 +979,7 @@ DocumentProcessorServiceConnectionImpl::DisableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::DisableProcessor(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::DisableProcessorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1074,7 +1074,7 @@ DocumentProcessorServiceConnectionImpl::SetDefaultProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::SetDefaultProcessorVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1169,7 +1169,7 @@ DocumentProcessorServiceConnectionImpl::ReviewDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::ReviewDocument(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1265,7 +1265,7 @@ DocumentProcessorServiceConnectionImpl::EvaluateProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceConnectionImpl::EvaluateProcessorVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

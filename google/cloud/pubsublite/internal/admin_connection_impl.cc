@@ -338,7 +338,7 @@ AdminServiceConnectionImpl::SeekSubscription(
 
 StatusOr<google::longrunning::Operation>
 AdminServiceConnectionImpl::SeekSubscription(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

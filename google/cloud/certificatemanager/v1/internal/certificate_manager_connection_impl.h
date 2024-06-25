@@ -68,7 +68,7 @@ class CertificateManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateCertificate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateCertificateRequest const&
           request) override;
 
@@ -82,7 +82,7 @@ class CertificateManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCertificate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
           request) override;
 
@@ -96,7 +96,7 @@ class CertificateManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCertificate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
           request) override;
 
@@ -120,7 +120,7 @@ class CertificateManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateCertificateMap(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
           request) override;
 
@@ -135,7 +135,7 @@ class CertificateManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCertificateMap(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
           request) override;
 
@@ -150,7 +150,7 @@ class CertificateManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCertificateMap(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
           request) override;
 
@@ -175,7 +175,7 @@ class CertificateManagerConnectionImpl
           CreateCertificateMapEntryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCertificateMapEntry(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateCertificateMapEntryRequest const& request) override;
 
@@ -190,7 +190,7 @@ class CertificateManagerConnectionImpl
           UpdateCertificateMapEntryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCertificateMapEntry(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           UpdateCertificateMapEntryRequest const& request) override;
 
@@ -205,7 +205,7 @@ class CertificateManagerConnectionImpl
           DeleteCertificateMapEntryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCertificateMapEntry(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteCertificateMapEntryRequest const& request) override;
 
@@ -230,7 +230,7 @@ class CertificateManagerConnectionImpl
           CreateDnsAuthorizationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDnsAuthorization(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateDnsAuthorizationRequest const& request) override;
 
@@ -245,7 +245,7 @@ class CertificateManagerConnectionImpl
           UpdateDnsAuthorizationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDnsAuthorization(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           UpdateDnsAuthorizationRequest const& request) override;
 
@@ -260,7 +260,7 @@ class CertificateManagerConnectionImpl
           DeleteDnsAuthorizationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDnsAuthorization(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteDnsAuthorizationRequest const& request) override;
 
@@ -286,7 +286,7 @@ class CertificateManagerConnectionImpl
           CreateCertificateIssuanceConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateCertificateIssuanceConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateCertificateIssuanceConfigRequest const& request) override;
 
@@ -302,7 +302,7 @@ class CertificateManagerConnectionImpl
           DeleteCertificateIssuanceConfigRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCertificateIssuanceConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request) override;
 
@@ -326,7 +326,7 @@ class CertificateManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateTrustConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
           request) override;
 
@@ -340,7 +340,7 @@ class CertificateManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTrustConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
           request) override;
 
@@ -354,7 +354,7 @@ class CertificateManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTrustConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
           request) override;
 

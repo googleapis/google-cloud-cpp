@@ -77,7 +77,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateNetwork(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request)
       override;
 
@@ -90,7 +90,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNetwork(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request)
       override;
 
@@ -109,7 +109,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateSubnet(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request)
       override;
 
@@ -122,7 +122,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSubnet(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request)
       override;
 
@@ -135,7 +135,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSubnet(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request)
       override;
 
@@ -172,7 +172,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateInterconnectAttachment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
           request) override;
 
@@ -187,7 +187,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInterconnectAttachment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
           request) override;
 
@@ -211,7 +211,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateRouter(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::CreateRouterRequest const& request)
       override;
 
@@ -224,7 +224,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateRouter(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request)
       override;
 
@@ -237,7 +237,7 @@ class EdgeNetworkConnectionImpl : public edgenetwork_v1::EdgeNetworkConnection {
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRouter(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgenetwork::v1::DeleteRouterRequest const& request)
       override;
 

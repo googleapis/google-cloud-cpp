@@ -165,7 +165,7 @@ BareMetalSolutionConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::UpdateInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -276,7 +276,7 @@ BareMetalSolutionConnectionImpl::ResetInstance(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::ResetInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -370,7 +370,7 @@ BareMetalSolutionConnectionImpl::StartInstance(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::StartInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -464,7 +464,7 @@ BareMetalSolutionConnectionImpl::StopInstance(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::StopInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -562,7 +562,7 @@ BareMetalSolutionConnectionImpl::EnableInteractiveSerialConsole(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::EnableInteractiveSerialConsole(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::
         EnableInteractiveSerialConsoleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -666,7 +666,7 @@ BareMetalSolutionConnectionImpl::DisableInteractiveSerialConsole(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::DisableInteractiveSerialConsole(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::
         DisableInteractiveSerialConsoleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -765,7 +765,7 @@ BareMetalSolutionConnectionImpl::DetachLun(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::DetachLun(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -975,7 +975,7 @@ BareMetalSolutionConnectionImpl::UpdateVolume(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::UpdateVolume(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1084,7 +1084,7 @@ BareMetalSolutionConnectionImpl::EvictVolume(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::EvictVolume(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1178,7 +1178,7 @@ BareMetalSolutionConnectionImpl::ResizeVolume(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::ResizeVolume(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1340,7 +1340,7 @@ BareMetalSolutionConnectionImpl::UpdateNetwork(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::UpdateNetwork(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1450,7 +1450,7 @@ BareMetalSolutionConnectionImpl::RestoreVolumeSnapshot(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::RestoreVolumeSnapshot(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1661,7 +1661,7 @@ BareMetalSolutionConnectionImpl::EvictLun(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::EvictLun(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::EvictLunRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1806,7 +1806,7 @@ BareMetalSolutionConnectionImpl::UpdateNfsShare(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::UpdateNfsShare(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1902,7 +1902,7 @@ BareMetalSolutionConnectionImpl::CreateNfsShare(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::CreateNfsShare(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2014,7 +2014,7 @@ BareMetalSolutionConnectionImpl::DeleteNfsShare(
 
 StatusOr<google::longrunning::Operation>
 BareMetalSolutionConnectionImpl::DeleteNfsShare(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

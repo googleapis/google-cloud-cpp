@@ -65,7 +65,7 @@ class DataprocMetastoreFederationConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateFederation(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateFederationRequest const& request)
       override;
 
@@ -78,7 +78,7 @@ class DataprocMetastoreFederationConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFederation(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateFederationRequest const& request)
       override;
 
@@ -91,7 +91,7 @@ class DataprocMetastoreFederationConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFederation(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteFederationRequest const& request)
       override;
 

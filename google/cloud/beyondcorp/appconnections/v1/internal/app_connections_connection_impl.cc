@@ -174,7 +174,7 @@ AppConnectionsServiceConnectionImpl::CreateAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnectionImpl::CreateAppConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::beyondcorp::appconnections::v1::
         CreateAppConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -269,7 +269,7 @@ AppConnectionsServiceConnectionImpl::UpdateAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnectionImpl::UpdateAppConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::beyondcorp::appconnections::v1::
         UpdateAppConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -367,7 +367,7 @@ AppConnectionsServiceConnectionImpl::DeleteAppConnection(
 
 StatusOr<google::longrunning::Operation>
 AppConnectionsServiceConnectionImpl::DeleteAppConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::beyondcorp::appconnections::v1::
         DeleteAppConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

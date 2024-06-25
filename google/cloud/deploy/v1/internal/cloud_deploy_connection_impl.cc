@@ -155,7 +155,7 @@ CloudDeployConnectionImpl::CreateDeliveryPipeline(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateDeliveryPipeline(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -248,7 +248,7 @@ CloudDeployConnectionImpl::UpdateDeliveryPipeline(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::UpdateDeliveryPipeline(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -341,7 +341,7 @@ CloudDeployConnectionImpl::DeleteDeliveryPipeline(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::DeleteDeliveryPipeline(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -495,7 +495,7 @@ CloudDeployConnectionImpl::CreateTarget(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateTarget(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::CreateTargetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -585,7 +585,7 @@ CloudDeployConnectionImpl::UpdateTarget(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::UpdateTarget(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::UpdateTargetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -675,7 +675,7 @@ CloudDeployConnectionImpl::DeleteTarget(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::DeleteTarget(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::DeleteTargetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -818,7 +818,7 @@ CloudDeployConnectionImpl::CreateCustomTargetType(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateCustomTargetType(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -911,7 +911,7 @@ CloudDeployConnectionImpl::UpdateCustomTargetType(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::UpdateCustomTargetType(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1004,7 +1004,7 @@ CloudDeployConnectionImpl::DeleteCustomTargetType(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::DeleteCustomTargetType(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1144,7 +1144,7 @@ CloudDeployConnectionImpl::CreateRelease(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateRelease(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::CreateReleaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1338,7 +1338,7 @@ CloudDeployConnectionImpl::CreateRollout(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateRollout(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::CreateRolloutRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1532,7 +1532,7 @@ CloudDeployConnectionImpl::CreateAutomation(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateAutomation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::CreateAutomationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1623,7 +1623,7 @@ CloudDeployConnectionImpl::UpdateAutomation(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::UpdateAutomation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1714,7 +1714,7 @@ CloudDeployConnectionImpl::DeleteAutomation(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::DeleteAutomation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

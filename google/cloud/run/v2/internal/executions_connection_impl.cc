@@ -151,7 +151,7 @@ ExecutionsConnectionImpl::DeleteExecution(
 
 StatusOr<google::longrunning::Operation>
 ExecutionsConnectionImpl::DeleteExecution(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::DeleteExecutionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -240,7 +240,7 @@ ExecutionsConnectionImpl::CancelExecution(
 
 StatusOr<google::longrunning::Operation>
 ExecutionsConnectionImpl::CancelExecution(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::CancelExecutionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

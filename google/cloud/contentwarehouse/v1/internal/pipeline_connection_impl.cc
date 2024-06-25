@@ -109,7 +109,7 @@ PipelineServiceConnectionImpl::RunPipeline(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::RunPipeline(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

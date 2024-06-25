@@ -59,7 +59,7 @@ class PersistentResourceServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreatePersistentResource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
           request) override;
 
@@ -84,7 +84,7 @@ class PersistentResourceServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeletePersistentResource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
           request) override;
 
@@ -99,7 +99,7 @@ class PersistentResourceServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePersistentResource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
           request) override;
 
@@ -114,7 +114,7 @@ class PersistentResourceServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> RebootPersistentResource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
           request) override;
 

@@ -57,7 +57,7 @@ class ProjectServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ProvisionProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
           request) override;
 

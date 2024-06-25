@@ -100,7 +100,7 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
                        request) override;
 
   StatusOr<google::longrunning::Operation> SeekSubscription(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request)
       override;
 

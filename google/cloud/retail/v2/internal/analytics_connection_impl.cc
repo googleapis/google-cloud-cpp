@@ -105,7 +105,7 @@ AnalyticsServiceConnectionImpl::ExportAnalyticsMetrics(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsServiceConnectionImpl::ExportAnalyticsMetrics(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

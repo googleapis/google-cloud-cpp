@@ -61,7 +61,7 @@ class ConsumerProcurementServiceConnectionImpl
                  PlaceOrderRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PlaceOrder(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::commerce::consumer::procurement::v1::
           PlaceOrderRequest const& request) override;
 

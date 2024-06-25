@@ -82,7 +82,7 @@ class ConversationProfilesConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request) override;
 
@@ -97,7 +97,7 @@ class ConversationProfilesConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request) override;
 

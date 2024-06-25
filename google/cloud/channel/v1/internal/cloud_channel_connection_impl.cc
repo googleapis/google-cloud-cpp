@@ -229,7 +229,7 @@ CloudChannelServiceConnectionImpl::ProvisionCloudIdentity(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::ProvisionCloudIdentity(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -440,7 +440,7 @@ CloudChannelServiceConnectionImpl::CreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::CreateEntitlement(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -531,7 +531,7 @@ CloudChannelServiceConnectionImpl::ChangeParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::ChangeParameters(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -623,7 +623,7 @@ CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -714,7 +714,7 @@ CloudChannelServiceConnectionImpl::ChangeOffer(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::ChangeOffer(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -804,7 +804,7 @@ CloudChannelServiceConnectionImpl::StartPaidService(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::StartPaidService(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -896,7 +896,7 @@ CloudChannelServiceConnectionImpl::SuspendEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::SuspendEntitlement(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -987,7 +987,7 @@ CloudChannelServiceConnectionImpl::CancelEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::CancelEntitlement(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1080,7 +1080,7 @@ CloudChannelServiceConnectionImpl::ActivateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::ActivateEntitlement(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1172,7 +1172,7 @@ CloudChannelServiceConnectionImpl::TransferEntitlements(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::TransferEntitlements(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1266,7 +1266,7 @@ CloudChannelServiceConnectionImpl::TransferEntitlementsToGoogle(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceConnectionImpl::TransferEntitlementsToGoogle(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

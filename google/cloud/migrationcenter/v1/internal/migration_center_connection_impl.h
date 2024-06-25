@@ -92,7 +92,7 @@ class MigrationCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateImportJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateImportJobRequest const& request)
       override;
 
@@ -114,7 +114,7 @@ class MigrationCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteImportJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request)
       override;
 
@@ -128,7 +128,7 @@ class MigrationCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateImportJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request)
       override;
 
@@ -142,7 +142,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ValidateImportJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
           request) override;
 
@@ -155,7 +155,7 @@ class MigrationCenterConnectionImpl
                    request) override;
 
   StatusOr<google::longrunning::Operation> RunImportJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::RunImportJobRequest const& request)
       override;
 
@@ -179,7 +179,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateImportDataFile(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
           request) override;
 
@@ -194,7 +194,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteImportDataFile(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
           request) override;
 
@@ -215,7 +215,7 @@ class MigrationCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateGroupRequest const& request)
       override;
 
@@ -228,7 +228,7 @@ class MigrationCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateGroupRequest const& request)
       override;
 
@@ -241,7 +241,7 @@ class MigrationCenterConnectionImpl
                   request) override;
 
   StatusOr<google::longrunning::Operation> DeleteGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteGroupRequest const& request)
       override;
 
@@ -254,7 +254,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> AddAssetsToGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
           request) override;
 
@@ -268,7 +268,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> RemoveAssetsFromGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
           request) override;
 
@@ -297,7 +297,7 @@ class MigrationCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateSource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateSourceRequest const& request)
       override;
 
@@ -310,7 +310,7 @@ class MigrationCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateSourceRequest const& request)
       override;
 
@@ -323,7 +323,7 @@ class MigrationCenterConnectionImpl
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteSourceRequest const& request)
       override;
 
@@ -346,7 +346,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreatePreferenceSet(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
           request) override;
 
@@ -360,7 +360,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePreferenceSet(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
           request) override;
 
@@ -374,7 +374,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeletePreferenceSet(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
           request) override;
 
@@ -391,7 +391,7 @@ class MigrationCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSettings(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request)
       override;
 
@@ -405,7 +405,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateReportConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
           request) override;
 
@@ -427,7 +427,7 @@ class MigrationCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteReportConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
           request) override;
 
@@ -440,7 +440,7 @@ class MigrationCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateReport(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateReportRequest const& request)
       override;
 
@@ -460,7 +460,7 @@ class MigrationCenterConnectionImpl
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteReport(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteReportRequest const& request)
       override;
 

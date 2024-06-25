@@ -68,7 +68,7 @@ class TelcoAutomationConnectionImpl
           CreateOrchestrationClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::telcoautomation::v1::
           CreateOrchestrationClusterRequest const& request) override;
 
@@ -83,7 +83,7 @@ class TelcoAutomationConnectionImpl
           DeleteOrchestrationClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::telcoautomation::v1::
           DeleteOrchestrationClusterRequest const& request) override;
 
@@ -104,7 +104,7 @@ class TelcoAutomationConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEdgeSlm(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request)
       override;
 
@@ -117,7 +117,7 @@ class TelcoAutomationConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request)
       override;
 

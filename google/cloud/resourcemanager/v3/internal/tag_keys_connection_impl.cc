@@ -171,7 +171,7 @@ TagKeysConnectionImpl::CreateTagKey(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysConnectionImpl::CreateTagKey(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -264,7 +264,7 @@ TagKeysConnectionImpl::UpdateTagKey(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysConnectionImpl::UpdateTagKey(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -357,7 +357,7 @@ TagKeysConnectionImpl::DeleteTagKey(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysConnectionImpl::DeleteTagKey(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

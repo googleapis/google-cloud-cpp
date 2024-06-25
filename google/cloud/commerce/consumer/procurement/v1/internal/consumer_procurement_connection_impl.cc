@@ -123,7 +123,7 @@ ConsumerProcurementServiceConnectionImpl::PlaceOrder(
 
 StatusOr<google::longrunning::Operation>
 ConsumerProcurementServiceConnectionImpl::PlaceOrder(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

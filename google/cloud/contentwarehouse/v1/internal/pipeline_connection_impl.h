@@ -56,7 +56,7 @@ class PipelineServiceConnectionImpl
                   request) override;
 
   StatusOr<google::longrunning::Operation> RunPipeline(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request)
       override;
 

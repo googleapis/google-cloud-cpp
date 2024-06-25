@@ -68,7 +68,7 @@ class MetricsScopesConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request) override;
 
@@ -83,7 +83,7 @@ class MetricsScopesConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request) override;
 

@@ -153,7 +153,7 @@ CloudMemcacheConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::CreateInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -244,7 +244,7 @@ CloudMemcacheConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::UpdateInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -335,7 +335,7 @@ CloudMemcacheConnectionImpl::UpdateParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::UpdateParameters(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -426,7 +426,7 @@ CloudMemcacheConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::DeleteInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -518,7 +518,7 @@ CloudMemcacheConnectionImpl::ApplyParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::ApplyParameters(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -610,7 +610,7 @@ CloudMemcacheConnectionImpl::RescheduleMaintenance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheConnectionImpl::RescheduleMaintenance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

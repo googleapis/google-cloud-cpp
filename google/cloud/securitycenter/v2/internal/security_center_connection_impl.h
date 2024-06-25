@@ -64,7 +64,7 @@ class SecurityCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request)
       override;
 

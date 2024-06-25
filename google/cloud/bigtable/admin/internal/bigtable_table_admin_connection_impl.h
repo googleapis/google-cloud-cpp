@@ -65,7 +65,7 @@ class BigtableTableAdminConnectionImpl
       google::bigtable::admin::v2::UpdateTableRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTable(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::UpdateTableRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
@@ -80,7 +80,7 @@ class BigtableTableAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UndeleteTable(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::UndeleteTableRequest const& request)
       override;
 
@@ -94,7 +94,7 @@ class BigtableTableAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
       override;
 
@@ -116,7 +116,7 @@ class BigtableTableAdminConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
       override;
 
@@ -149,7 +149,7 @@ class BigtableTableAdminConnectionImpl
       google::bigtable::admin::v2::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateBackupRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
@@ -172,7 +172,7 @@ class BigtableTableAdminConnectionImpl
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RestoreTable(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
@@ -183,7 +183,7 @@ class BigtableTableAdminConnectionImpl
       google::bigtable::admin::v2::CopyBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CopyBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CopyBackupRequest const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(

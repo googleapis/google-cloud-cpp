@@ -177,7 +177,7 @@ PipelineServiceConnectionImpl::DeleteTrainingPipeline(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::DeleteTrainingPipeline(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -351,7 +351,7 @@ PipelineServiceConnectionImpl::DeletePipelineJob(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::DeletePipelineJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -446,7 +446,7 @@ PipelineServiceConnectionImpl::BatchDeletePipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::BatchDeletePipelineJobs(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -557,7 +557,7 @@ PipelineServiceConnectionImpl::BatchCancelPipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::BatchCancelPipelineJobs(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

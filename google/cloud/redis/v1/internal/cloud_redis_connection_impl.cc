@@ -166,7 +166,7 @@ CloudRedisConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisConnectionImpl::CreateInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -256,7 +256,7 @@ CloudRedisConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisConnectionImpl::UpdateInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -346,7 +346,7 @@ CloudRedisConnectionImpl::UpgradeInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisConnectionImpl::UpgradeInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -436,7 +436,7 @@ CloudRedisConnectionImpl::ImportInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisConnectionImpl::ImportInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -526,7 +526,7 @@ CloudRedisConnectionImpl::ExportInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisConnectionImpl::ExportInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -616,7 +616,7 @@ CloudRedisConnectionImpl::FailoverInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisConnectionImpl::FailoverInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -706,7 +706,7 @@ CloudRedisConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisConnectionImpl::DeleteInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -798,7 +798,7 @@ CloudRedisConnectionImpl::RescheduleMaintenance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisConnectionImpl::RescheduleMaintenance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

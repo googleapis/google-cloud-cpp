@@ -56,7 +56,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateBackupPlan(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateBackupPlan(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackupPlan(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request)
       override;
 
@@ -102,7 +102,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::CreateBackupRequest const& request)
       override;
 
@@ -121,7 +121,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::UpdateBackupRequest const& request)
       override;
 
@@ -134,7 +134,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::DeleteBackupRequest const& request)
       override;
 
@@ -154,7 +154,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateRestorePlan(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request)
       override;
 
@@ -174,7 +174,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateRestorePlan(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request)
       override;
 
@@ -188,7 +188,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteRestorePlan(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request)
       override;
 
@@ -201,7 +201,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateRestore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::CreateRestoreRequest const& request)
       override;
 
@@ -220,7 +220,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateRestore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::UpdateRestoreRequest const& request)
       override;
 
@@ -233,7 +233,7 @@ class BackupForGKEConnectionImpl : public gkebackup_v1::BackupForGKEConnection {
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRestore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::DeleteRestoreRequest const& request)
       override;
 

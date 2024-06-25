@@ -79,7 +79,7 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteProcess(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request) override;
 
@@ -108,7 +108,7 @@ class LineageConnectionImpl : public datacatalog_lineage_v1::LineageConnection {
                 request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRun(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request)
       override;
 

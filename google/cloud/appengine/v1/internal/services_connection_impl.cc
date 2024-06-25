@@ -147,7 +147,7 @@ ServicesConnectionImpl::UpdateService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesConnectionImpl::UpdateService(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::UpdateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -236,7 +236,7 @@ ServicesConnectionImpl::DeleteService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesConnectionImpl::DeleteService(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

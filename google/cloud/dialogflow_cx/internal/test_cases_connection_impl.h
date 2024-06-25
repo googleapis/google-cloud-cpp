@@ -75,7 +75,7 @@ class TestCasesConnectionImpl : public dialogflow_cx::TestCasesConnection {
                   request) override;
 
   StatusOr<google::longrunning::Operation> RunTestCase(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class TestCasesConnectionImpl : public dialogflow_cx::TestCasesConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchRunTestCases(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request) override;
 
@@ -108,7 +108,7 @@ class TestCasesConnectionImpl : public dialogflow_cx::TestCasesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ImportTestCases(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request)
       override;
 
@@ -122,7 +122,7 @@ class TestCasesConnectionImpl : public dialogflow_cx::TestCasesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ExportTestCases(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request)
       override;
 

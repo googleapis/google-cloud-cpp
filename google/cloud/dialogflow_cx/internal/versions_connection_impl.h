@@ -63,7 +63,7 @@ class VersionsConnectionImpl : public dialogflow_cx::VersionsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request)
       override;
 
@@ -84,7 +84,7 @@ class VersionsConnectionImpl : public dialogflow_cx::VersionsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> LoadVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request)
       override;
 

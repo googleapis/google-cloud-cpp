@@ -58,7 +58,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateStoragePool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateStoragePoolRequest const& request)
       override;
 
@@ -74,7 +74,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateStoragePool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateStoragePoolRequest const& request)
       override;
 
@@ -87,7 +87,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
                         request) override;
 
   StatusOr<google::longrunning::Operation> DeleteStoragePool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request)
       override;
 
@@ -105,7 +105,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::CreateVolumeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateVolume(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateVolumeRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
@@ -116,7 +116,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::UpdateVolumeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateVolume(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateVolumeRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
@@ -127,7 +127,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::DeleteVolumeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVolume(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteVolumeRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
@@ -138,7 +138,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RevertVolume(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
@@ -155,7 +155,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::CreateSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateSnapshot(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateSnapshotRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::Snapshot>> CreateSnapshot(
@@ -166,7 +166,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::DeleteSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteSnapshotRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
@@ -177,7 +177,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::UpdateSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateSnapshotRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::Snapshot>> UpdateSnapshot(
@@ -197,7 +197,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateActiveDirectory(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request)
       override;
 
@@ -212,7 +212,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateActiveDirectory(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request)
       override;
 
@@ -227,7 +227,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteActiveDirectory(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request)
       override;
 
@@ -244,7 +244,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateKmsConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateKmsConfigRequest const& request)
       override;
 
@@ -260,7 +260,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateKmsConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateKmsConfigRequest const& request)
       override;
 
@@ -272,7 +272,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::EncryptVolumesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> EncryptVolumes(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::EncryptVolumesRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::KmsConfig>> EncryptVolumes(
@@ -288,7 +288,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteKmsConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteKmsConfigRequest const& request)
       override;
 
@@ -307,7 +307,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateReplication(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateReplicationRequest const& request)
       override;
 
@@ -320,7 +320,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
                         request) override;
 
   StatusOr<google::longrunning::Operation> DeleteReplication(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteReplicationRequest const& request)
       override;
 
@@ -333,7 +333,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateReplication(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateReplicationRequest const& request)
       override;
 
@@ -346,7 +346,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> StopReplication(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::StopReplicationRequest const& request)
       override;
 
@@ -359,7 +359,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ResumeReplication(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::ResumeReplicationRequest const& request)
       override;
 
@@ -373,7 +373,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> ReverseReplicationDirection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request) override;
 
@@ -387,7 +387,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateBackupVault(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateBackupVaultRequest const& request)
       override;
 
@@ -406,7 +406,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateBackupVault(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateBackupVaultRequest const& request)
       override;
 
@@ -419,7 +419,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
                         request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackupVault(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteBackupVaultRequest const& request)
       override;
 
@@ -431,7 +431,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateBackupRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
@@ -448,7 +448,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::DeleteBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteBackupRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
@@ -459,7 +459,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       google::cloud::netapp::v1::UpdateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateBackupRequest const& request) override;
 
   future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
@@ -471,7 +471,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateBackupPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateBackupPolicyRequest const& request)
       override;
 
@@ -491,7 +491,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateBackupPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request)
       override;
 
@@ -504,7 +504,7 @@ class NetAppConnectionImpl : public netapp_v1::NetAppConnection {
                          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBackupPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request)
       override;
 

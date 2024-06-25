@@ -117,7 +117,7 @@ SpeechConnectionImpl::LongRunningRecognize(
 
 StatusOr<google::longrunning::Operation>
 SpeechConnectionImpl::LongRunningRecognize(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

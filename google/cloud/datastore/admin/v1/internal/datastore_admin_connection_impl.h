@@ -57,7 +57,7 @@ class DatastoreAdminConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> ExportEntities(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::ExportEntitiesRequest const& request)
       override;
 
@@ -70,7 +70,7 @@ class DatastoreAdminConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> ImportEntities(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::ImportEntitiesRequest const& request)
       override;
 
@@ -82,7 +82,7 @@ class DatastoreAdminConnectionImpl
       google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateIndex(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::CreateIndexRequest const& request) override;
 
   future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
@@ -93,7 +93,7 @@ class DatastoreAdminConnectionImpl
       google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteIndex(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
   future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(

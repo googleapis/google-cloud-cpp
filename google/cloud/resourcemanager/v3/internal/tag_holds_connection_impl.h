@@ -56,7 +56,7 @@ class TagHoldsConnectionImpl : public resourcemanager_v3::TagHoldsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateTagHold(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request)
       override;
 
@@ -69,7 +69,7 @@ class TagHoldsConnectionImpl : public resourcemanager_v3::TagHoldsConnection {
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTagHold(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request)
       override;
 

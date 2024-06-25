@@ -101,7 +101,7 @@ AutokeyConnectionImpl::CreateKeyHandle(
 }
 
 StatusOr<google::longrunning::Operation> AutokeyConnectionImpl::CreateKeyHandle(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::kms::v1::CreateKeyHandleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -167,7 +167,7 @@ DataprocMetastoreFederationConnectionImpl::CreateFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationConnectionImpl::CreateFederation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::CreateFederationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -260,7 +260,7 @@ DataprocMetastoreFederationConnectionImpl::UpdateFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationConnectionImpl::UpdateFederation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -353,7 +353,7 @@ DataprocMetastoreFederationConnectionImpl::DeleteFederation(
 
 StatusOr<google::longrunning::Operation>
 DataprocMetastoreFederationConnectionImpl::DeleteFederation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

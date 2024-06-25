@@ -58,7 +58,7 @@ class ConversationModelsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateConversationModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request) override;
 
@@ -84,7 +84,7 @@ class ConversationModelsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
           request) override;
 
@@ -101,7 +101,7 @@ class ConversationModelsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeployConversationModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
           request) override;
 
@@ -118,7 +118,7 @@ class ConversationModelsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UndeployConversationModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
           request) override;
 
@@ -144,7 +144,7 @@ class ConversationModelsConnectionImpl
           CreateConversationModelEvaluationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::
           CreateConversationModelEvaluationRequest const& request) override;
 

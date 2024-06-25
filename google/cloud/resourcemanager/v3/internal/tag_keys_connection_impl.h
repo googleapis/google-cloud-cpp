@@ -67,7 +67,7 @@ class TagKeysConnectionImpl : public resourcemanager_v3::TagKeysConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateTagKey(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class TagKeysConnectionImpl : public resourcemanager_v3::TagKeysConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTagKey(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request)
       override;
 
@@ -93,7 +93,7 @@ class TagKeysConnectionImpl : public resourcemanager_v3::TagKeysConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTagKey(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request)
       override;
 

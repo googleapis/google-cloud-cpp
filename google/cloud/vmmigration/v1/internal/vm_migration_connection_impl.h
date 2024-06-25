@@ -62,7 +62,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateSource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateSourceRequest const& request)
       override;
 
@@ -75,7 +75,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpdateSourceRequest const& request)
       override;
 
@@ -88,7 +88,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteSourceRequest const& request)
       override;
 
@@ -116,7 +116,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateUtilizationReport(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
           request) override;
 
@@ -131,7 +131,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteUtilizationReport(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
           request) override;
 
@@ -156,7 +156,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateDatacenterConnector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
           request) override;
 
@@ -171,7 +171,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDatacenterConnector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
           request) override;
 
@@ -186,7 +186,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpgradeAppliance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request)
       override;
 
@@ -200,7 +200,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateMigratingVm(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request)
       override;
 
@@ -221,7 +221,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateMigratingVm(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request)
       override;
 
@@ -235,7 +235,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteMigratingVm(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request)
       override;
 
@@ -248,7 +248,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> StartMigration(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::StartMigrationRequest const& request)
       override;
 
@@ -261,7 +261,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> ResumeMigration(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::ResumeMigrationRequest const& request)
       override;
 
@@ -274,7 +274,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> PauseMigration(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::PauseMigrationRequest const& request)
       override;
 
@@ -288,7 +288,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> FinalizeMigration(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request)
       override;
 
@@ -301,7 +301,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateCloneJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateCloneJobRequest const& request)
       override;
 
@@ -314,7 +314,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> CancelCloneJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CancelCloneJobRequest const& request)
       override;
 
@@ -334,7 +334,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateCutoverJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request)
       override;
 
@@ -348,7 +348,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CancelCutoverJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request)
       override;
 
@@ -374,7 +374,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateGroupRequest const& request)
       override;
 
@@ -387,7 +387,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpdateGroupRequest const& request)
       override;
 
@@ -400,7 +400,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteGroupRequest const& request)
       override;
 
@@ -414,7 +414,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> AddGroupMigration(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request)
       override;
 
@@ -428,7 +428,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> RemoveGroupMigration(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
           request) override;
 
@@ -451,7 +451,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateTargetProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request)
       override;
 
@@ -465,7 +465,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTargetProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request)
       override;
 
@@ -479,7 +479,7 @@ class VmMigrationConnectionImpl : public vmmigration_v1::VmMigrationConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTargetProject(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request)
       override;
 

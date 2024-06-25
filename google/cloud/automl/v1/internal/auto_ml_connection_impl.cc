@@ -102,7 +102,7 @@ AutoMlConnectionImpl::CreateDataset(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::CreateDataset(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -252,7 +252,7 @@ AutoMlConnectionImpl::DeleteDataset(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::DeleteDataset(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -342,7 +342,7 @@ AutoMlConnectionImpl::ImportData(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::ImportData(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::ImportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -432,7 +432,7 @@ AutoMlConnectionImpl::ExportData(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::ExportData(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::ExportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -537,7 +537,7 @@ AutoMlConnectionImpl::CreateModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::CreateModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::CreateModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -671,7 +671,7 @@ AutoMlConnectionImpl::DeleteModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::DeleteModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::DeleteModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -774,7 +774,7 @@ AutoMlConnectionImpl::DeployModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::DeployModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::DeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -864,7 +864,7 @@ AutoMlConnectionImpl::UndeployModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::UndeployModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::UndeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -954,7 +954,7 @@ AutoMlConnectionImpl::ExportModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlConnectionImpl::ExportModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::ExportModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

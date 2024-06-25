@@ -113,7 +113,7 @@ class AnalyticsHubServiceConnectionImpl
           SubscribeDataExchangeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SubscribeDataExchange(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           SubscribeDataExchangeRequest const& request) override;
 
@@ -129,7 +129,7 @@ class AnalyticsHubServiceConnectionImpl
                           RefreshSubscriptionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RefreshSubscription(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           RefreshSubscriptionRequest const& request) override;
 
@@ -163,7 +163,7 @@ class AnalyticsHubServiceConnectionImpl
                          DeleteSubscriptionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSubscription(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           DeleteSubscriptionRequest const& request) override;
 

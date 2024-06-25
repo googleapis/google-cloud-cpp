@@ -66,7 +66,7 @@ class BackupDRConnectionImpl : public backupdr_v1::BackupDRConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateManagementServer(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
       override;
 
@@ -81,7 +81,7 @@ class BackupDRConnectionImpl : public backupdr_v1::BackupDRConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteManagementServer(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
       override;
 

@@ -60,7 +60,7 @@ class TpuConnectionImpl : public tpu_v2::TpuConnection {
       google::cloud::tpu::v2::CreateNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateNode(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::CreateNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
@@ -71,7 +71,7 @@ class TpuConnectionImpl : public tpu_v2::TpuConnection {
       google::cloud::tpu::v2::DeleteNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNode(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::DeleteNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
@@ -82,7 +82,7 @@ class TpuConnectionImpl : public tpu_v2::TpuConnection {
       google::cloud::tpu::v2::StopNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StopNode(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::StopNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
@@ -93,7 +93,7 @@ class TpuConnectionImpl : public tpu_v2::TpuConnection {
       google::cloud::tpu::v2::StartNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StartNode(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::StartNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
@@ -104,7 +104,7 @@ class TpuConnectionImpl : public tpu_v2::TpuConnection {
       google::cloud::tpu::v2::UpdateNodeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateNode(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::UpdateNodeRequest const& request) override;
 
   future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(

@@ -69,7 +69,7 @@ class AppConnectionsServiceConnectionImpl
                           CreateAppConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAppConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnections::v1::
           CreateAppConnectionRequest const& request) override;
 
@@ -82,7 +82,7 @@ class AppConnectionsServiceConnectionImpl
                           UpdateAppConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAppConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnections::v1::
           UpdateAppConnectionRequest const& request) override;
 
@@ -96,7 +96,7 @@ class AppConnectionsServiceConnectionImpl
                           DeleteAppConnectionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAppConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnections::v1::
           DeleteAppConnectionRequest const& request) override;
 

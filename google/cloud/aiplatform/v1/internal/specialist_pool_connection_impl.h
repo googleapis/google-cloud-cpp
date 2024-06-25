@@ -58,7 +58,7 @@ class SpecialistPoolServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request)
       override;
 
@@ -81,7 +81,7 @@ class SpecialistPoolServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request)
       override;
 
@@ -96,7 +96,7 @@ class SpecialistPoolServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request)
       override;
 

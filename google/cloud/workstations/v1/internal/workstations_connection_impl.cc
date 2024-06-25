@@ -161,7 +161,7 @@ WorkstationsConnectionImpl::CreateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::CreateWorkstationCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -255,7 +255,7 @@ WorkstationsConnectionImpl::UpdateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::UpdateWorkstationCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -349,7 +349,7 @@ WorkstationsConnectionImpl::DeleteWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::DeleteWorkstationCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -535,7 +535,7 @@ WorkstationsConnectionImpl::CreateWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::CreateWorkstationConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -631,7 +631,7 @@ WorkstationsConnectionImpl::UpdateWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::UpdateWorkstationConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -727,7 +727,7 @@ WorkstationsConnectionImpl::DeleteWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::DeleteWorkstationConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -908,7 +908,7 @@ WorkstationsConnectionImpl::CreateWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::CreateWorkstation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1001,7 +1001,7 @@ WorkstationsConnectionImpl::UpdateWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::UpdateWorkstation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1094,7 +1094,7 @@ WorkstationsConnectionImpl::DeleteWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::DeleteWorkstation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1187,7 +1187,7 @@ WorkstationsConnectionImpl::StartWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::StartWorkstation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1280,7 +1280,7 @@ WorkstationsConnectionImpl::StopWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsConnectionImpl::StopWorkstation(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -61,7 +61,7 @@ class RapidMigrationAssessmentConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateCollector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
           request) override;
 
@@ -74,7 +74,7 @@ class RapidMigrationAssessmentConnectionImpl
                        CreateAnnotationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAnnotation(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           CreateAnnotationRequest const& request) override;
 
@@ -102,7 +102,7 @@ class RapidMigrationAssessmentConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCollector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
           request) override;
 
@@ -116,7 +116,7 @@ class RapidMigrationAssessmentConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCollector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
           request) override;
 
@@ -130,7 +130,7 @@ class RapidMigrationAssessmentConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ResumeCollector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
           request) override;
 
@@ -143,7 +143,7 @@ class RapidMigrationAssessmentConnectionImpl
                         RegisterCollectorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RegisterCollector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           RegisterCollectorRequest const& request) override;
 
@@ -157,7 +157,7 @@ class RapidMigrationAssessmentConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> PauseCollector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request) override;
 

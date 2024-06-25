@@ -69,7 +69,7 @@ class ReachabilityServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateConnectivityTest(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
           request) override;
 
@@ -84,7 +84,7 @@ class ReachabilityServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
           request) override;
 
@@ -99,7 +99,7 @@ class ReachabilityServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> RerunConnectivityTest(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
           request) override;
 
@@ -114,7 +114,7 @@ class ReachabilityServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request) override;
 

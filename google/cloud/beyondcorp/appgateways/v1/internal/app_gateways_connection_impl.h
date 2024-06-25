@@ -70,7 +70,7 @@ class AppGatewaysServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateAppGateway(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
           request) override;
 
@@ -85,7 +85,7 @@ class AppGatewaysServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAppGateway(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
           request) override;
 

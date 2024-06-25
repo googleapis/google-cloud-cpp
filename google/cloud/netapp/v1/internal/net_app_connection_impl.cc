@@ -137,7 +137,7 @@ NetAppConnectionImpl::CreateStoragePool(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::CreateStoragePool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -242,7 +242,7 @@ NetAppConnectionImpl::UpdateStoragePool(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::UpdateStoragePool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -333,7 +333,7 @@ NetAppConnectionImpl::DeleteStoragePool(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::DeleteStoragePool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -471,7 +471,7 @@ NetAppConnectionImpl::CreateVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::CreateVolume(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -560,7 +560,7 @@ NetAppConnectionImpl::UpdateVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::UpdateVolume(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -649,7 +649,7 @@ NetAppConnectionImpl::DeleteVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::DeleteVolume(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -739,7 +739,7 @@ NetAppConnectionImpl::RevertVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::RevertVolume(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::RevertVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -875,7 +875,7 @@ NetAppConnectionImpl::CreateSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::CreateSnapshot(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -964,7 +964,7 @@ NetAppConnectionImpl::DeleteSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::DeleteSnapshot(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1054,7 +1054,7 @@ NetAppConnectionImpl::UpdateSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::UpdateSnapshot(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1196,7 +1196,7 @@ NetAppConnectionImpl::CreateActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::CreateActiveDirectory(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1289,7 +1289,7 @@ NetAppConnectionImpl::UpdateActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::UpdateActiveDirectory(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1382,7 +1382,7 @@ NetAppConnectionImpl::DeleteActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::DeleteActiveDirectory(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1507,7 +1507,7 @@ NetAppConnectionImpl::CreateKmsConfig(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::CreateKmsConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1610,7 +1610,7 @@ NetAppConnectionImpl::UpdateKmsConfig(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::UpdateKmsConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1699,7 +1699,7 @@ NetAppConnectionImpl::EncryptVolumes(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::EncryptVolumes(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1802,7 +1802,7 @@ NetAppConnectionImpl::DeleteKmsConfig(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::DeleteKmsConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1941,7 +1941,7 @@ NetAppConnectionImpl::CreateReplication(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::CreateReplication(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2032,7 +2032,7 @@ NetAppConnectionImpl::DeleteReplication(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::DeleteReplication(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2124,7 +2124,7 @@ NetAppConnectionImpl::UpdateReplication(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::UpdateReplication(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2214,7 +2214,7 @@ NetAppConnectionImpl::StopReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::StopReplication(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::StopReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2304,7 +2304,7 @@ NetAppConnectionImpl::ResumeReplication(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::ResumeReplication(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2397,7 +2397,7 @@ NetAppConnectionImpl::ReverseReplicationDirection(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::ReverseReplicationDirection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2490,7 +2490,7 @@ NetAppConnectionImpl::CreateBackupVault(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::CreateBackupVault(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2629,7 +2629,7 @@ NetAppConnectionImpl::UpdateBackupVault(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::UpdateBackupVault(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2720,7 +2720,7 @@ NetAppConnectionImpl::DeleteBackupVault(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::DeleteBackupVault(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2811,7 +2811,7 @@ NetAppConnectionImpl::CreateBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::CreateBackup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2947,7 +2947,7 @@ NetAppConnectionImpl::DeleteBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::DeleteBackup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -3037,7 +3037,7 @@ NetAppConnectionImpl::UpdateBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppConnectionImpl::UpdateBackup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -3127,7 +3127,7 @@ NetAppConnectionImpl::CreateBackupPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::CreateBackupPolicy(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -3266,7 +3266,7 @@ NetAppConnectionImpl::UpdateBackupPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::UpdateBackupPolicy(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -3357,7 +3357,7 @@ NetAppConnectionImpl::DeleteBackupPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetAppConnectionImpl::DeleteBackupPolicy(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

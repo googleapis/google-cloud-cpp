@@ -197,7 +197,7 @@ GkeHubConnectionImpl::CreateMembership(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::CreateMembership(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -287,7 +287,7 @@ GkeHubConnectionImpl::CreateFeature(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::CreateFeature(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -376,7 +376,7 @@ GkeHubConnectionImpl::DeleteMembership(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::DeleteMembership(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -467,7 +467,7 @@ GkeHubConnectionImpl::DeleteFeature(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::DeleteFeature(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -557,7 +557,7 @@ GkeHubConnectionImpl::UpdateMembership(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::UpdateMembership(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -647,7 +647,7 @@ GkeHubConnectionImpl::UpdateFeature(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::UpdateFeature(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

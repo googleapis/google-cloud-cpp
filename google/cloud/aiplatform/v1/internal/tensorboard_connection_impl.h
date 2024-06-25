@@ -63,7 +63,7 @@ class TensorboardServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateTensorboard(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateTensorboardRequest const& request)
       override;
 
@@ -81,7 +81,7 @@ class TensorboardServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTensorboard(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request)
       override;
 
@@ -98,7 +98,7 @@ class TensorboardServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTensorboard(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
       override;
 
@@ -142,7 +142,7 @@ class TensorboardServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
           request) override;
 
@@ -178,7 +178,7 @@ class TensorboardServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request)
       override;
 
@@ -219,7 +219,7 @@ class TensorboardServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
           request) override;
 

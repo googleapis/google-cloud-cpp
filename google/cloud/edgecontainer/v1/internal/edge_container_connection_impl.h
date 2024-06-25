@@ -64,7 +64,7 @@ class EdgeContainerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateClusterRequest const& request)
       override;
 
@@ -77,7 +77,7 @@ class EdgeContainerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request)
       override;
 
@@ -90,7 +90,7 @@ class EdgeContainerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpgradeCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request)
       override;
 
@@ -103,7 +103,7 @@ class EdgeContainerConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteClusterRequest const& request)
       override;
 
@@ -133,7 +133,7 @@ class EdgeContainerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateNodePool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request)
       override;
 
@@ -146,7 +146,7 @@ class EdgeContainerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateNodePool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request)
       override;
 
@@ -159,7 +159,7 @@ class EdgeContainerConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNodePool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request)
       override;
 
@@ -188,7 +188,7 @@ class EdgeContainerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateVpnConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
           request) override;
 
@@ -202,7 +202,7 @@ class EdgeContainerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVpnConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request) override;
 

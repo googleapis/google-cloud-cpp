@@ -157,7 +157,7 @@ ManagedKafkaConnectionImpl::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaConnectionImpl::CreateCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -250,7 +250,7 @@ ManagedKafkaConnectionImpl::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaConnectionImpl::UpdateCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -343,7 +343,7 @@ ManagedKafkaConnectionImpl::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaConnectionImpl::DeleteCluster(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -201,7 +201,7 @@ EntityTypesConnectionImpl::ExportEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::ExportEntityTypes(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -297,7 +297,7 @@ EntityTypesConnectionImpl::ImportEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::ImportEntityTypes(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

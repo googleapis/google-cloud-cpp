@@ -60,7 +60,7 @@ class ManagedIdentitiesServiceConnectionImpl
           CreateMicrosoftAdDomainRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::
           CreateMicrosoftAdDomainRequest const& request) override;
 
@@ -87,7 +87,7 @@ class ManagedIdentitiesServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDomain(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request)
       override;
 
@@ -100,7 +100,7 @@ class ManagedIdentitiesServiceConnectionImpl
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDomain(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::DeleteDomainRequest const& request)
       override;
 
@@ -113,7 +113,7 @@ class ManagedIdentitiesServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> AttachTrust(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::AttachTrustRequest const& request)
       override;
 
@@ -127,7 +127,7 @@ class ManagedIdentitiesServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ReconfigureTrust(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
           request) override;
 
@@ -140,7 +140,7 @@ class ManagedIdentitiesServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DetachTrust(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::DetachTrustRequest const& request)
       override;
 
@@ -153,7 +153,7 @@ class ManagedIdentitiesServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ValidateTrust(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::ValidateTrustRequest const& request)
       override;
 

@@ -64,7 +64,7 @@ class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
       google::cloud::redis::v1::CreateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::CreateInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
@@ -75,7 +75,7 @@ class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
       google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::UpdateInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
@@ -86,7 +86,7 @@ class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
       google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpgradeInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::UpgradeInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
@@ -97,7 +97,7 @@ class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
       google::cloud::redis::v1::ImportInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::ImportInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
@@ -108,7 +108,7 @@ class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
       google::cloud::redis::v1::ExportInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::ExportInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
@@ -120,7 +120,7 @@ class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
       override;
 
   StatusOr<google::longrunning::Operation> FailoverInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::FailoverInstanceRequest const& request)
       override;
 
@@ -132,7 +132,7 @@ class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::DeleteInstanceRequest const& request) override;
 
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
@@ -144,7 +144,7 @@ class CloudRedisConnectionImpl : public redis_v1::CloudRedisConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request)
       override;
 

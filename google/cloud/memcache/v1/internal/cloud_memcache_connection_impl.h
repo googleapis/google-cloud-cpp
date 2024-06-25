@@ -63,7 +63,7 @@ class CloudMemcacheConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::memcache::v1::CreateInstanceRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class CloudMemcacheConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::memcache::v1::UpdateInstanceRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class CloudMemcacheConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateParameters(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::memcache::v1::UpdateParametersRequest const& request)
       override;
 
@@ -102,7 +102,7 @@ class CloudMemcacheConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::memcache::v1::DeleteInstanceRequest const& request)
       override;
 
@@ -115,7 +115,7 @@ class CloudMemcacheConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ApplyParameters(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::memcache::v1::ApplyParametersRequest const& request)
       override;
 
@@ -128,7 +128,7 @@ class CloudMemcacheConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
       override;
 

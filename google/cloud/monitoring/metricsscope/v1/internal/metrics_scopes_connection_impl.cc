@@ -149,7 +149,7 @@ MetricsScopesConnectionImpl::CreateMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesConnectionImpl::CreateMonitoredProject(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -244,7 +244,7 @@ MetricsScopesConnectionImpl::DeleteMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesConnectionImpl::DeleteMonitoredProject(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

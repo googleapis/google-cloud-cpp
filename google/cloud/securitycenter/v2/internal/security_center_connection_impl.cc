@@ -127,7 +127,7 @@ SecurityCenterConnectionImpl::BulkMuteFindings(
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterConnectionImpl::BulkMuteFindings(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

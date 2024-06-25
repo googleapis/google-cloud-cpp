@@ -67,7 +67,7 @@ class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> TrainAgent(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::TrainAgentRequest const& request) override;
 
   future<StatusOr<google::protobuf::Struct>> TrainAgent(
@@ -79,7 +79,7 @@ class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ExportAgent(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ExportAgentRequest const& request)
       override;
 
@@ -92,7 +92,7 @@ class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ImportAgent(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ImportAgentRequest const& request)
       override;
 
@@ -105,7 +105,7 @@ class AgentsConnectionImpl : public dialogflow_es::AgentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RestoreAgent(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request)
       override;
 

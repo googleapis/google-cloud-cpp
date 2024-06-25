@@ -128,7 +128,7 @@ GoldenThingAdminConnectionImpl::CreateDatabase(google::test::admin::database::v1
 
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::CreateDatabase(ExperimentalTag,
-      NoAwaitlTag, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+      NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -220,7 +220,7 @@ GoldenThingAdminConnectionImpl::UpdateDatabaseDdl(google::test::admin::database:
 
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::UpdateDatabaseDdl(ExperimentalTag,
-      NoAwaitlTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+      NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -364,7 +364,7 @@ GoldenThingAdminConnectionImpl::CreateBackup(google::test::admin::database::v1::
 
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::CreateBackup(ExperimentalTag,
-      NoAwaitlTag, google::test::admin::database::v1::CreateBackupRequest const& request) {
+      NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -510,7 +510,7 @@ GoldenThingAdminConnectionImpl::RestoreDatabase(google::test::admin::database::v
 
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::RestoreDatabase(ExperimentalTag,
-      NoAwaitlTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+      NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -645,7 +645,7 @@ GoldenThingAdminConnectionImpl::LongRunningWithoutRouting(google::test::admin::d
 
 StatusOr<google::longrunning::Operation>
 GoldenThingAdminConnectionImpl::LongRunningWithoutRouting(ExperimentalTag,
-      NoAwaitlTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+      NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

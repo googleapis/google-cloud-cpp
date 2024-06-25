@@ -63,7 +63,7 @@ class DataprocMetastoreConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateServiceRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class DataprocMetastoreConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateServiceRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class DataprocMetastoreConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteServiceRequest const& request)
       override;
 
@@ -111,7 +111,7 @@ class DataprocMetastoreConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateMetadataImport(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateMetadataImportRequest const& request)
       override;
 
@@ -126,7 +126,7 @@ class DataprocMetastoreConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateMetadataImport(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateMetadataImportRequest const& request)
       override;
 
@@ -140,7 +140,7 @@ class DataprocMetastoreConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ExportMetadata(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::ExportMetadataRequest const& request)
       override;
 
@@ -153,7 +153,7 @@ class DataprocMetastoreConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RestoreService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::RestoreServiceRequest const& request)
       override;
 
@@ -172,7 +172,7 @@ class DataprocMetastoreConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateBackupRequest const& request)
       override;
 
@@ -185,7 +185,7 @@ class DataprocMetastoreConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteBackupRequest const& request)
       override;
 
@@ -198,7 +198,7 @@ class DataprocMetastoreConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> QueryMetadata(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::QueryMetadataRequest const& request)
       override;
 
@@ -212,7 +212,7 @@ class DataprocMetastoreConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> MoveTableToDatabase(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request)
       override;
 
@@ -227,7 +227,7 @@ class DataprocMetastoreConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> AlterMetadataResourceLocation(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
           request) override;
 

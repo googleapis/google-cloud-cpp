@@ -104,7 +104,7 @@ CloudBuildConnectionImpl::CreateBuild(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildConnectionImpl::CreateBuild(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -258,7 +258,7 @@ CloudBuildConnectionImpl::RetryBuild(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildConnectionImpl::RetryBuild(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -350,7 +350,7 @@ CloudBuildConnectionImpl::ApproveBuild(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildConnectionImpl::ApproveBuild(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -539,7 +539,7 @@ CloudBuildConnectionImpl::RunBuildTrigger(
 
 StatusOr<google::longrunning::Operation>
 CloudBuildConnectionImpl::RunBuildTrigger(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -649,7 +649,7 @@ CloudBuildConnectionImpl::CreateWorkerPool(
 
 StatusOr<google::longrunning::Operation>
 CloudBuildConnectionImpl::CreateWorkerPool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -759,7 +759,7 @@ CloudBuildConnectionImpl::DeleteWorkerPool(
 
 StatusOr<google::longrunning::Operation>
 CloudBuildConnectionImpl::DeleteWorkerPool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -854,7 +854,7 @@ CloudBuildConnectionImpl::UpdateWorkerPool(
 
 StatusOr<google::longrunning::Operation>
 CloudBuildConnectionImpl::UpdateWorkerPool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

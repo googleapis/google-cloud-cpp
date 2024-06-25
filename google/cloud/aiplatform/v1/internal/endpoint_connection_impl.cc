@@ -108,7 +108,7 @@ EndpointServiceConnectionImpl::CreateEndpoint(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::CreateEndpoint(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -263,7 +263,7 @@ EndpointServiceConnectionImpl::DeleteEndpoint(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::DeleteEndpoint(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -356,7 +356,7 @@ EndpointServiceConnectionImpl::DeployModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::DeployModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -448,7 +448,7 @@ EndpointServiceConnectionImpl::UndeployModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::UndeployModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -542,7 +542,7 @@ EndpointServiceConnectionImpl::MutateDeployedModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnectionImpl::MutateDeployedModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

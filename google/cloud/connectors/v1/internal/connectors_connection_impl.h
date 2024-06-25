@@ -63,7 +63,7 @@ class ConnectorsConnectionImpl : public connectors_v1::ConnectorsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::CreateConnectionRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class ConnectorsConnectionImpl : public connectors_v1::ConnectorsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::UpdateConnectionRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class ConnectorsConnectionImpl : public connectors_v1::ConnectorsConnection {
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::DeleteConnectionRequest const& request)
       override;
 
@@ -131,7 +131,7 @@ class ConnectorsConnectionImpl : public connectors_v1::ConnectorsConnection {
           RefreshConnectionSchemaMetadataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::
           RefreshConnectionSchemaMetadataRequest const& request) override;
 

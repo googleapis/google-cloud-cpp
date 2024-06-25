@@ -83,7 +83,7 @@ class CloudChannelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ProvisionCloudIdentity(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request)
       override;
 
@@ -111,7 +111,7 @@ class CloudChannelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEntitlement(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::CreateEntitlementRequest const& request)
       override;
 
@@ -124,7 +124,7 @@ class CloudChannelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ChangeParameters(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ChangeParametersRequest const& request)
       override;
 
@@ -138,7 +138,7 @@ class CloudChannelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ChangeRenewalSettings(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request)
       override;
 
@@ -151,7 +151,7 @@ class CloudChannelServiceConnectionImpl
       google::cloud::channel::v1::ChangeOfferRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ChangeOffer(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ChangeOfferRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
@@ -163,7 +163,7 @@ class CloudChannelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> StartPaidService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::StartPaidServiceRequest const& request)
       override;
 
@@ -176,7 +176,7 @@ class CloudChannelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> SuspendEntitlement(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::SuspendEntitlementRequest const& request)
       override;
 
@@ -189,7 +189,7 @@ class CloudChannelServiceConnectionImpl
                         request) override;
 
   StatusOr<google::longrunning::Operation> CancelEntitlement(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::CancelEntitlementRequest const& request)
       override;
 
@@ -202,7 +202,7 @@ class CloudChannelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ActivateEntitlement(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ActivateEntitlementRequest const& request)
       override;
 
@@ -216,7 +216,7 @@ class CloudChannelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> TransferEntitlements(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::TransferEntitlementsRequest const& request)
       override;
 
@@ -231,7 +231,7 @@ class CloudChannelServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> TransferEntitlementsToGoogle(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
           request) override;
 

@@ -58,7 +58,7 @@ class OsConfigZonalServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
           request) override;
 
@@ -73,7 +73,7 @@ class OsConfigZonalServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request) override;
 
@@ -104,7 +104,7 @@ class OsConfigZonalServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request) override;
 

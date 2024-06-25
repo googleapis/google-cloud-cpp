@@ -54,7 +54,7 @@ class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateKey(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
@@ -74,7 +74,7 @@ class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateKey(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
@@ -85,7 +85,7 @@ class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteKey(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
@@ -96,7 +96,7 @@ class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UndeleteKey(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(

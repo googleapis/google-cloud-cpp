@@ -66,7 +66,7 @@ class ImageAnnotatorConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
       override;
 
@@ -81,7 +81,7 @@ class ImageAnnotatorConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
       override;
 

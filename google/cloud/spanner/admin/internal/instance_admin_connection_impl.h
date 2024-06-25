@@ -68,7 +68,7 @@ class InstanceAdminConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstanceConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request) override;
 
@@ -83,7 +83,7 @@ class InstanceAdminConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request) override;
 
@@ -119,7 +119,7 @@ class InstanceAdminConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request) override;
 
@@ -133,7 +133,7 @@ class InstanceAdminConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request) override;
 
@@ -165,7 +165,7 @@ class InstanceAdminConnectionImpl
           CreateInstancePartitionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateInstancePartition(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::
           CreateInstancePartitionRequest const& request) override;
 
@@ -184,7 +184,7 @@ class InstanceAdminConnectionImpl
           UpdateInstancePartitionRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateInstancePartition(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::
           UpdateInstancePartitionRequest const& request) override;
 

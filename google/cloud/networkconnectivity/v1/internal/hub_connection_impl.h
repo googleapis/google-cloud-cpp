@@ -64,7 +64,7 @@ class HubServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateHub(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request)
       override;
 
@@ -77,7 +77,7 @@ class HubServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateHub(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request)
       override;
 
@@ -90,7 +90,7 @@ class HubServiceConnectionImpl
                 request) override;
 
   StatusOr<google::longrunning::Operation> DeleteHub(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request)
       override;
 
@@ -115,7 +115,7 @@ class HubServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateSpoke(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request)
       override;
 
@@ -128,7 +128,7 @@ class HubServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSpoke(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request)
       override;
 
@@ -143,7 +143,7 @@ class HubServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> RejectHubSpoke(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request) override;
 
@@ -159,7 +159,7 @@ class HubServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> AcceptHubSpoke(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request) override;
 
@@ -173,7 +173,7 @@ class HubServiceConnectionImpl
                   request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSpoke(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request)
       override;
 

@@ -133,7 +133,7 @@ UserEventServiceConnectionImpl::PurgeUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnectionImpl::PurgeUserEvents(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -224,7 +224,7 @@ UserEventServiceConnectionImpl::ImportUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnectionImpl::ImportUserEvents(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -316,7 +316,7 @@ UserEventServiceConnectionImpl::RejoinUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnectionImpl::RejoinUserEvents(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

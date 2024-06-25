@@ -63,7 +63,7 @@ class MigrationServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request) override;
 

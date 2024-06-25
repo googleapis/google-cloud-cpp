@@ -105,7 +105,7 @@ ModelServiceConnectionImpl::UploadModel(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::UploadModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UploadModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -297,7 +297,7 @@ ModelServiceConnectionImpl::UpdateExplanationDataset(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::UpdateExplanationDataset(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -393,7 +393,7 @@ ModelServiceConnectionImpl::DeleteModel(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::DeleteModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -486,7 +486,7 @@ ModelServiceConnectionImpl::DeleteModelVersion(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::DeleteModelVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -594,7 +594,7 @@ ModelServiceConnectionImpl::ExportModel(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::ExportModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::ExportModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -684,7 +684,7 @@ ModelServiceConnectionImpl::CopyModel(
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceConnectionImpl::CopyModel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CopyModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -59,7 +59,7 @@ class GoldenThingAdminConnectionImpl
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  CreateDatabase(ExperimentalTag, NoAwaitlTag,
+  CreateDatabase(ExperimentalTag, NoAwaitTag,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>
@@ -73,7 +73,7 @@ class GoldenThingAdminConnectionImpl
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  UpdateDatabaseDdl(ExperimentalTag, NoAwaitlTag,
+  UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
@@ -99,7 +99,7 @@ class GoldenThingAdminConnectionImpl
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  CreateBackup(ExperimentalTag, NoAwaitlTag,
+  CreateBackup(ExperimentalTag, NoAwaitTag,
       google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Backup>>
@@ -122,7 +122,7 @@ class GoldenThingAdminConnectionImpl
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  RestoreDatabase(ExperimentalTag, NoAwaitlTag,
+  RestoreDatabase(ExperimentalTag, NoAwaitTag,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>
@@ -139,7 +139,7 @@ class GoldenThingAdminConnectionImpl
   LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  LongRunningWithoutRouting(ExperimentalTag, NoAwaitlTag,
+  LongRunningWithoutRouting(ExperimentalTag, NoAwaitTag,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>

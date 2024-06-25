@@ -116,7 +116,7 @@ class ProductSearchConnectionImpl : public vision_v1::ProductSearchConnection {
                         request) override;
 
   StatusOr<google::longrunning::Operation> ImportProductSets(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::ImportProductSetsRequest const& request)
       override;
 
@@ -129,7 +129,7 @@ class ProductSearchConnectionImpl : public vision_v1::ProductSearchConnection {
       google::cloud::vision::v1::PurgeProductsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::PurgeProductsRequest const& request) override;
 
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>

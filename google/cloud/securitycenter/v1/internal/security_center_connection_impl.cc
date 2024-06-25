@@ -109,7 +109,7 @@ SecurityCenterConnectionImpl::BulkMuteFindings(
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterConnectionImpl::BulkMuteFindings(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -842,7 +842,7 @@ SecurityCenterConnectionImpl::RunAssetDiscovery(
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterConnectionImpl::RunAssetDiscovery(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

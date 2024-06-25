@@ -59,7 +59,7 @@ class CloudShellServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> StartEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::shell::v1::StartEnvironmentRequest const& request)
       override;
 
@@ -73,7 +73,7 @@ class CloudShellServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request)
       override;
 
@@ -86,7 +86,7 @@ class CloudShellServiceConnectionImpl
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> AddPublicKey(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::shell::v1::AddPublicKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
@@ -98,7 +98,7 @@ class CloudShellServiceConnectionImpl
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RemovePublicKey(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>

@@ -115,7 +115,7 @@ ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -277,7 +277,7 @@ ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -370,7 +370,7 @@ ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -463,7 +463,7 @@ ManagedIdentitiesServiceConnectionImpl::AttachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::AttachTrust(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -557,7 +557,7 @@ ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -652,7 +652,7 @@ ManagedIdentitiesServiceConnectionImpl::DetachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::DetachTrust(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -745,7 +745,7 @@ ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

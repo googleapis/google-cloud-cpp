@@ -192,7 +192,7 @@ ProjectsConnectionImpl::CreateProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::CreateProject(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -285,7 +285,7 @@ ProjectsConnectionImpl::UpdateProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::UpdateProject(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -378,7 +378,7 @@ ProjectsConnectionImpl::MoveProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::MoveProject(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -471,7 +471,7 @@ ProjectsConnectionImpl::DeleteProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::DeleteProject(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -565,7 +565,7 @@ ProjectsConnectionImpl::UndeleteProject(
 
 StatusOr<google::longrunning::Operation>
 ProjectsConnectionImpl::UndeleteProject(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

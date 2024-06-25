@@ -62,7 +62,7 @@ class DocumentProcessorServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> BatchProcessDocuments(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::BatchProcessRequest const& request)
       override;
 
@@ -97,7 +97,7 @@ class DocumentProcessorServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> TrainProcessorVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::TrainProcessorVersionRequest const&
           request) override;
 
@@ -122,7 +122,7 @@ class DocumentProcessorServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
           request) override;
 
@@ -139,7 +139,7 @@ class DocumentProcessorServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeployProcessorVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::DeployProcessorVersionRequest const&
           request) override;
 
@@ -156,7 +156,7 @@ class DocumentProcessorServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
           request) override;
 
@@ -175,7 +175,7 @@ class DocumentProcessorServiceConnectionImpl
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteProcessor(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::DeleteProcessorRequest const& request)
       override;
 
@@ -188,7 +188,7 @@ class DocumentProcessorServiceConnectionImpl
                       request) override;
 
   StatusOr<google::longrunning::Operation> EnableProcessor(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::EnableProcessorRequest const& request)
       override;
 
@@ -201,7 +201,7 @@ class DocumentProcessorServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> DisableProcessor(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::DisableProcessorRequest const& request)
       override;
 
@@ -216,7 +216,7 @@ class DocumentProcessorServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> SetDefaultProcessorVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
           request) override;
 
@@ -231,7 +231,7 @@ class DocumentProcessorServiceConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> ReviewDocument(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::ReviewDocumentRequest const& request)
       override;
 
@@ -246,7 +246,7 @@ class DocumentProcessorServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
           request) override;
 

@@ -218,7 +218,7 @@ CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -313,7 +313,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -408,7 +408,7 @@ CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -503,7 +503,7 @@ CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -672,7 +672,7 @@ CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -767,7 +767,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -862,7 +862,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -958,7 +958,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::CreateCaPool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1054,7 +1054,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1200,7 +1200,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1371,7 +1371,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1468,7 +1468,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1563,7 +1563,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1713,7 +1713,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

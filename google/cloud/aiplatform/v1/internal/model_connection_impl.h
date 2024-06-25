@@ -57,7 +57,7 @@ class ModelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UploadModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UploadModelRequest const& request)
       override;
 
@@ -85,7 +85,7 @@ class ModelServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
           request) override;
 
@@ -100,7 +100,7 @@ class ModelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteModelRequest const& request)
       override;
 
@@ -114,7 +114,7 @@ class ModelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteModelVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request)
       override;
 
@@ -131,7 +131,7 @@ class ModelServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ExportModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::ExportModelRequest const& request)
       override;
 
@@ -143,7 +143,7 @@ class ModelServiceConnectionImpl
       google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CopyModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CopyModelRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(

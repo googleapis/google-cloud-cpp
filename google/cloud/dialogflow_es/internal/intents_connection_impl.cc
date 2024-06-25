@@ -196,7 +196,7 @@ IntentsConnectionImpl::BatchUpdateIntents(
 
 StatusOr<google::longrunning::Operation>
 IntentsConnectionImpl::BatchUpdateIntents(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -288,7 +288,7 @@ IntentsConnectionImpl::BatchDeleteIntents(
 
 StatusOr<google::longrunning::Operation>
 IntentsConnectionImpl::BatchDeleteIntents(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

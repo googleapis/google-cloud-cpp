@@ -150,7 +150,7 @@ InstancesConnectionImpl::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 InstancesConnectionImpl::DeleteInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -240,7 +240,7 @@ InstancesConnectionImpl::DebugInstance(
 }
 
 StatusOr<google::longrunning::Operation> InstancesConnectionImpl::DebugInstance(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DebugInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

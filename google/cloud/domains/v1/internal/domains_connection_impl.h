@@ -63,7 +63,7 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RegisterDomain(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::RegisterDomainRequest const& request)
       override;
 
@@ -81,7 +81,7 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> TransferDomain(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::TransferDomainRequest const& request)
       override;
 
@@ -101,7 +101,7 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateRegistration(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::UpdateRegistrationRequest const& request)
       override;
 
@@ -115,7 +115,7 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request) override;
 
@@ -130,7 +130,7 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request)
       override;
 
@@ -145,7 +145,7 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> ConfigureContactSettings(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
           request) override;
 
@@ -159,7 +159,7 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ExportRegistration(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::ExportRegistrationRequest const& request)
       override;
 
@@ -173,7 +173,7 @@ class DomainsConnectionImpl : public domains_v1::DomainsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteRegistration(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::DeleteRegistrationRequest const& request)
       override;
 

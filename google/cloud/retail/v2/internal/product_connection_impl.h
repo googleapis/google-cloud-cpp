@@ -72,7 +72,7 @@ class ProductServiceConnectionImpl
       google::cloud::retail::v2::PurgeProductsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::PurgeProductsRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
@@ -84,7 +84,7 @@ class ProductServiceConnectionImpl
       google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportProducts(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
@@ -96,7 +96,7 @@ class ProductServiceConnectionImpl
       google::cloud::retail::v2::SetInventoryRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SetInventory(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::SetInventoryRequest const& request) override;
 
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
@@ -109,7 +109,7 @@ class ProductServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request)
       override;
 
@@ -124,7 +124,7 @@ class ProductServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
       override;
 
@@ -139,7 +139,7 @@ class ProductServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> AddLocalInventories(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::AddLocalInventoriesRequest const& request)
       override;
 
@@ -153,7 +153,7 @@ class ProductServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RemoveLocalInventories(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request)
       override;
 

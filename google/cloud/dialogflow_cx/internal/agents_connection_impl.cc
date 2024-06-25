@@ -196,7 +196,7 @@ AgentsConnectionImpl::ExportAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsConnectionImpl::ExportAgent(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -286,7 +286,7 @@ future<StatusOr<google::protobuf::Struct>> AgentsConnectionImpl::RestoreAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsConnectionImpl::RestoreAgent(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -157,7 +157,7 @@ ManagedNotebookServiceConnectionImpl::CreateRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::CreateRuntime(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -248,7 +248,7 @@ ManagedNotebookServiceConnectionImpl::UpdateRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::UpdateRuntime(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -339,7 +339,7 @@ ManagedNotebookServiceConnectionImpl::DeleteRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::DeleteRuntime(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -431,7 +431,7 @@ ManagedNotebookServiceConnectionImpl::StartRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::StartRuntime(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -521,7 +521,7 @@ ManagedNotebookServiceConnectionImpl::StopRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::StopRuntime(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -611,7 +611,7 @@ ManagedNotebookServiceConnectionImpl::SwitchRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::SwitchRuntime(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -702,7 +702,7 @@ ManagedNotebookServiceConnectionImpl::ResetRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::ResetRuntime(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -792,7 +792,7 @@ ManagedNotebookServiceConnectionImpl::UpgradeRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::UpgradeRuntime(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -884,7 +884,7 @@ ManagedNotebookServiceConnectionImpl::ReportRuntimeEvent(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::ReportRuntimeEvent(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -991,7 +991,7 @@ ManagedNotebookServiceConnectionImpl::DiagnoseRuntime(
 
 StatusOr<google::longrunning::Operation>
 ManagedNotebookServiceConnectionImpl::DiagnoseRuntime(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

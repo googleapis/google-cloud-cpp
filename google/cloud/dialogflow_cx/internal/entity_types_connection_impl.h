@@ -77,7 +77,7 @@ class EntityTypesConnectionImpl : public dialogflow_cx::EntityTypesConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> ExportEntityTypes(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
           request) override;
 
@@ -91,7 +91,7 @@ class EntityTypesConnectionImpl : public dialogflow_cx::EntityTypesConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> ImportEntityTypes(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
           request) override;
 

@@ -59,7 +59,7 @@ class SpeechConnectionImpl : public speech_v1::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> LongRunningRecognize(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v1::LongRunningRecognizeRequest const& request)
       override;
 

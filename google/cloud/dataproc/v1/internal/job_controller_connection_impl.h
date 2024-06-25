@@ -59,7 +59,7 @@ class JobControllerConnectionImpl
       google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(

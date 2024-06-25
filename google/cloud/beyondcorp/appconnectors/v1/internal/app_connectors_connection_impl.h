@@ -68,7 +68,7 @@ class AppConnectorsServiceConnectionImpl
                          CreateAppConnectorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAppConnector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           CreateAppConnectorRequest const& request) override;
 
@@ -81,7 +81,7 @@ class AppConnectorsServiceConnectionImpl
                          UpdateAppConnectorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAppConnector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           UpdateAppConnectorRequest const& request) override;
 
@@ -95,7 +95,7 @@ class AppConnectorsServiceConnectionImpl
                          DeleteAppConnectorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAppConnector(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           DeleteAppConnectorRequest const& request) override;
 
@@ -110,7 +110,7 @@ class AppConnectorsServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ReportStatus(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request) override;
 

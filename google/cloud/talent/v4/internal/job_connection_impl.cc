@@ -116,7 +116,7 @@ JobServiceConnectionImpl::BatchCreateJobs(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::BatchCreateJobs(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -233,7 +233,7 @@ JobServiceConnectionImpl::BatchUpdateJobs(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::BatchUpdateJobs(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -337,7 +337,7 @@ JobServiceConnectionImpl::BatchDeleteJobs(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::BatchDeleteJobs(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

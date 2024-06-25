@@ -63,7 +63,7 @@ class FunctionServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateFunction(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v2::CreateFunctionRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class FunctionServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFunction(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v2::UpdateFunctionRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class FunctionServiceConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFunction(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v2::DeleteFunctionRequest const& request)
       override;
 

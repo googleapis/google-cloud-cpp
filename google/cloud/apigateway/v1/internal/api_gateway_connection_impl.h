@@ -63,7 +63,7 @@ class ApiGatewayServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateGateway(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::CreateGatewayRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class ApiGatewayServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateGateway(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class ApiGatewayServiceConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteGateway(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request)
       override;
 
@@ -107,7 +107,7 @@ class ApiGatewayServiceConnectionImpl
       google::cloud::apigateway::v1::CreateApiRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateApi(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::CreateApiRequest const& request) override;
 
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
@@ -118,7 +118,7 @@ class ApiGatewayServiceConnectionImpl
       google::cloud::apigateway::v1::UpdateApiRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateApi(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::UpdateApiRequest const& request) override;
 
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
@@ -129,7 +129,7 @@ class ApiGatewayServiceConnectionImpl
       google::cloud::apigateway::v1::DeleteApiRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteApi(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::DeleteApiRequest const& request) override;
 
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
@@ -148,7 +148,7 @@ class ApiGatewayServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateApiConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request)
       override;
 
@@ -161,7 +161,7 @@ class ApiGatewayServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateApiConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request)
       override;
 
@@ -174,7 +174,7 @@ class ApiGatewayServiceConnectionImpl
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteApiConfig(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request)
       override;
 

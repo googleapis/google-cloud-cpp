@@ -161,7 +161,7 @@ WebRiskServiceConnectionImpl::SubmitUri(
 
 StatusOr<google::longrunning::Operation>
 WebRiskServiceConnectionImpl::SubmitUri(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::webrisk::v1::SubmitUriRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

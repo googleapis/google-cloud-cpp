@@ -59,7 +59,7 @@ class AssuredWorkloadsServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request)
       override;
 

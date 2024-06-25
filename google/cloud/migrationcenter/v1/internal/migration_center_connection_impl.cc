@@ -251,7 +251,7 @@ MigrationCenterConnectionImpl::CreateImportJob(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::CreateImportJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -395,7 +395,7 @@ MigrationCenterConnectionImpl::DeleteImportJob(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::DeleteImportJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -489,7 +489,7 @@ MigrationCenterConnectionImpl::UpdateImportJob(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::UpdateImportJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -584,7 +584,7 @@ MigrationCenterConnectionImpl::ValidateImportJob(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::ValidateImportJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -679,7 +679,7 @@ MigrationCenterConnectionImpl::RunImportJob(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::RunImportJob(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -825,7 +825,7 @@ MigrationCenterConnectionImpl::CreateImportDataFile(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::CreateImportDataFile(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -922,7 +922,7 @@ MigrationCenterConnectionImpl::DeleteImportDataFile(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::DeleteImportDataFile(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1067,7 +1067,7 @@ MigrationCenterConnectionImpl::CreateGroup(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::CreateGroup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1161,7 +1161,7 @@ MigrationCenterConnectionImpl::UpdateGroup(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::UpdateGroup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1255,7 +1255,7 @@ MigrationCenterConnectionImpl::DeleteGroup(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::DeleteGroup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1350,7 +1350,7 @@ MigrationCenterConnectionImpl::AddAssetsToGroup(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::AddAssetsToGroup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1445,7 +1445,7 @@ MigrationCenterConnectionImpl::RemoveAssetsFromGroup(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::RemoveAssetsFromGroup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1638,7 +1638,7 @@ MigrationCenterConnectionImpl::CreateSource(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::CreateSource(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1732,7 +1732,7 @@ MigrationCenterConnectionImpl::UpdateSource(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::UpdateSource(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1826,7 +1826,7 @@ MigrationCenterConnectionImpl::DeleteSource(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::DeleteSource(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1972,7 +1972,7 @@ MigrationCenterConnectionImpl::CreatePreferenceSet(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::CreatePreferenceSet(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2069,7 +2069,7 @@ MigrationCenterConnectionImpl::UpdatePreferenceSet(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::UpdatePreferenceSet(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2166,7 +2166,7 @@ MigrationCenterConnectionImpl::DeletePreferenceSet(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::DeletePreferenceSet(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2277,7 +2277,7 @@ MigrationCenterConnectionImpl::UpdateSettings(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::UpdateSettings(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2372,7 +2372,7 @@ MigrationCenterConnectionImpl::CreateReportConfig(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::CreateReportConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2519,7 +2519,7 @@ MigrationCenterConnectionImpl::DeleteReportConfig(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::DeleteReportConfig(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -2615,7 +2615,7 @@ MigrationCenterConnectionImpl::CreateReport(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::CreateReport(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -2758,7 +2758,7 @@ MigrationCenterConnectionImpl::DeleteReport(
 
 StatusOr<google::longrunning::Operation>
 MigrationCenterConnectionImpl::DeleteReport(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -141,7 +141,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::CreateNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::CreateNode(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v1::CreateNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -227,7 +227,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::DeleteNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::DeleteNode(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v1::DeleteNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -314,7 +314,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::ReimageNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::ReimageNode(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v1::ReimageNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -399,7 +399,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::StopNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::StopNode(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v1::StopNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -484,7 +484,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::StartNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::StartNode(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v1::StartNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -96,7 +96,7 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ImportAptArtifacts(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
           request) override;
 
@@ -112,7 +112,7 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ImportYumArtifacts(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
           request) override;
 
@@ -136,7 +136,7 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateRepository(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
           request) override;
 
@@ -154,7 +154,7 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
           request) override;
 
@@ -176,7 +176,7 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeletePackage(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::DeletePackageRequest const&
           request) override;
 
@@ -198,7 +198,7 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request) override;
 
@@ -213,7 +213,7 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchDeleteVersions(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request) override;
 

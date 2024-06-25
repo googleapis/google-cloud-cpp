@@ -160,7 +160,7 @@ class DataCatalogConnectionImpl : public datacatalog_v1::DataCatalogConnection {
                     request) override;
 
   StatusOr<google::longrunning::Operation> ReconcileTags(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
       override;
 
@@ -189,7 +189,7 @@ class DataCatalogConnectionImpl : public datacatalog_v1::DataCatalogConnection {
                     request) override;
 
   StatusOr<google::longrunning::Operation> ImportEntries(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
       override;
 

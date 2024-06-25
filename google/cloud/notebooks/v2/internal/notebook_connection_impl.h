@@ -63,7 +63,7 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v2::CreateInstanceRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v2::UpdateInstanceRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class NotebookServiceConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v2::DeleteInstanceRequest const& request)
       override;
 
@@ -102,7 +102,7 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> StartInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v2::StartInstanceRequest const& request)
       override;
 
@@ -115,7 +115,7 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> StopInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v2::StopInstanceRequest const& request)
       override;
 
@@ -128,7 +128,7 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ResetInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v2::ResetInstanceRequest const& request)
       override;
 
@@ -146,7 +146,7 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpgradeInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v2::UpgradeInstanceRequest const& request)
       override;
 
@@ -159,7 +159,7 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RollbackInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v2::RollbackInstanceRequest const& request)
       override;
 
@@ -172,7 +172,7 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DiagnoseInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request)
       override;
 

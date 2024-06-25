@@ -86,7 +86,7 @@ class StorageTransferServiceConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> RunTransferJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::storagetransfer::v1::RunTransferJobRequest const& request)
       override;
 

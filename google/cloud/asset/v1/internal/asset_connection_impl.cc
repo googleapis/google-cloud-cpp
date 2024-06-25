@@ -103,7 +103,7 @@ AssetServiceConnectionImpl::ExportAssets(
 
 StatusOr<google::longrunning::Operation>
 AssetServiceConnectionImpl::ExportAssets(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -392,7 +392,7 @@ AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
 
 StatusOr<google::longrunning::Operation>
 AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

@@ -64,7 +64,7 @@ class CloudRedisClusterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request)
       override;
 
@@ -77,7 +77,7 @@ class CloudRedisClusterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request)
       override;
 
@@ -90,7 +90,7 @@ class CloudRedisClusterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request)
       override;
 

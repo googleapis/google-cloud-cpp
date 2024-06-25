@@ -73,7 +73,7 @@ class FlowsConnectionImpl : public dialogflow_cx::FlowsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> TrainFlow(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request)
       override;
 
@@ -95,7 +95,7 @@ class FlowsConnectionImpl : public dialogflow_cx::FlowsConnection {
                  request) override;
 
   StatusOr<google::longrunning::Operation> ImportFlow(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request)
       override;
 
@@ -108,7 +108,7 @@ class FlowsConnectionImpl : public dialogflow_cx::FlowsConnection {
                  request) override;
 
   StatusOr<google::longrunning::Operation> ExportFlow(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request)
       override;
 

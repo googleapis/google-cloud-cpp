@@ -64,7 +64,7 @@ class ServiceManagerConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::CreateServiceRequest const& request)
       override;
 
@@ -77,7 +77,7 @@ class ServiceManagerConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::DeleteServiceRequest const& request)
       override;
 
@@ -91,7 +91,7 @@ class ServiceManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UndeleteService(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
       override;
 
@@ -118,7 +118,7 @@ class ServiceManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
           request) override;
 
@@ -141,7 +141,7 @@ class ServiceManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
           request) override;
 

@@ -204,7 +204,7 @@ DocumentServiceConnectionImpl::ImportDocuments(
 
 StatusOr<google::longrunning::Operation>
 DocumentServiceConnectionImpl::ImportDocuments(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -298,7 +298,7 @@ DocumentServiceConnectionImpl::PurgeDocuments(
 
 StatusOr<google::longrunning::Operation>
 DocumentServiceConnectionImpl::PurgeDocuments(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

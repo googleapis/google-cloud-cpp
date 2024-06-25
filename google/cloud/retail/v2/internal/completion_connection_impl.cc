@@ -121,7 +121,7 @@ CompletionServiceConnectionImpl::ImportCompletionData(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceConnectionImpl::ImportCompletionData(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

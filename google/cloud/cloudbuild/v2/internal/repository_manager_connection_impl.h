@@ -58,7 +58,7 @@ class RepositoryManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class RepositoryManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
       override;
 
@@ -94,7 +94,7 @@ class RepositoryManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
       override;
 
@@ -108,7 +108,7 @@ class RepositoryManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateRepository(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
       override;
 
@@ -123,7 +123,7 @@ class RepositoryManagerConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchCreateRepositories(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request) override;
 
@@ -147,7 +147,7 @@ class RepositoryManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
       override;
 

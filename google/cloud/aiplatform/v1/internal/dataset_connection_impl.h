@@ -57,7 +57,7 @@ class DatasetServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateDataset(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateDatasetRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class DatasetServiceConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDataset(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDatasetRequest const& request)
       override;
 
@@ -93,7 +93,7 @@ class DatasetServiceConnectionImpl
       google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportData(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::ImportDataRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
@@ -105,7 +105,7 @@ class DatasetServiceConnectionImpl
       google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportData(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::ExportDataRequest const& request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
@@ -118,7 +118,7 @@ class DatasetServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateDatasetVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request)
       override;
 
@@ -137,7 +137,7 @@ class DatasetServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request)
       override;
 
@@ -160,7 +160,7 @@ class DatasetServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
           request) override;
 
@@ -183,7 +183,7 @@ class DatasetServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSavedQuery(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request)
       override;
 

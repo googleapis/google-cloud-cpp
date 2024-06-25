@@ -60,7 +60,7 @@ class PoliciesConnectionImpl : public iam_v2::PoliciesConnection {
       google::iam::v2::CreatePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::iam::v2::CreatePolicyRequest const& request) override;
 
   future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
@@ -71,7 +71,7 @@ class PoliciesConnectionImpl : public iam_v2::PoliciesConnection {
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdatePolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::iam::v2::UpdatePolicyRequest const& request) override;
 
   future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
@@ -82,7 +82,7 @@ class PoliciesConnectionImpl : public iam_v2::PoliciesConnection {
       google::iam::v2::DeletePolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::iam::v2::DeletePolicyRequest const& request) override;
 
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(

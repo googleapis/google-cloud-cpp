@@ -63,7 +63,7 @@ class UserEventServiceConnectionImpl
                       request) override;
 
   StatusOr<google::longrunning::Operation> PurgeUserEvents(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::PurgeUserEventsRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class UserEventServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> ImportUserEvents(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::ImportUserEventsRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class UserEventServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> RejoinUserEvents(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::RejoinUserEventsRequest const& request)
       override;
 

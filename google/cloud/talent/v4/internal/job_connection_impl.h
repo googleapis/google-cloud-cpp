@@ -59,7 +59,7 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> BatchCreateJobs(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchCreateJobsRequest const& request)
       override;
 
@@ -78,7 +78,7 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> BatchUpdateJobs(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request)
       override;
 
@@ -94,7 +94,7 @@ class JobServiceConnectionImpl : public talent_v4::JobServiceConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> BatchDeleteJobs(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request)
       override;
 

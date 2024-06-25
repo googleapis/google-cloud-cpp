@@ -56,7 +56,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::CreateLakeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateLake(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateLakeRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
@@ -67,7 +67,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::UpdateLakeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateLake(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateLakeRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
@@ -78,7 +78,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::DeleteLakeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteLake(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteLakeRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
@@ -98,7 +98,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::CreateZoneRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateZone(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateZoneRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
@@ -109,7 +109,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::UpdateZoneRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateZone(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateZoneRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
@@ -120,7 +120,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::DeleteZoneRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteZone(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteZoneRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
@@ -140,7 +140,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::CreateAssetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAsset(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateAssetRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
@@ -151,7 +151,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::UpdateAssetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAsset(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateAssetRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
@@ -162,7 +162,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::DeleteAssetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAsset(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteAssetRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
@@ -182,7 +182,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::CreateTaskRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateTask(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateTaskRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
@@ -193,7 +193,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::UpdateTaskRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTask(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateTaskRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
@@ -204,7 +204,7 @@ class DataplexServiceConnectionImpl
       google::cloud::dataplex::v1::DeleteTaskRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTask(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteTaskRequest const& request) override;
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
@@ -234,7 +234,7 @@ class DataplexServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request)
       override;
 
@@ -247,7 +247,7 @@ class DataplexServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request)
       override;
 
@@ -260,7 +260,7 @@ class DataplexServiceConnectionImpl
                         request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request)
       override;
 

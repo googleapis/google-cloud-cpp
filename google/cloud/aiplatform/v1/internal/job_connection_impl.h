@@ -67,7 +67,7 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCustomJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request)
       override;
 
@@ -99,7 +99,7 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteDataLabelingJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
           request) override;
 
@@ -133,7 +133,7 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteHyperparameterTuningJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
           request) override;
 
@@ -161,7 +161,7 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNasJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request)
       override;
 
@@ -201,7 +201,7 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteBatchPredictionJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
           request) override;
 
@@ -241,7 +241,7 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
           UpdateModelDeploymentMonitoringJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateModelDeploymentMonitoringJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::
           UpdateModelDeploymentMonitoringJobRequest const& request) override;
 
@@ -256,7 +256,7 @@ class JobServiceConnectionImpl : public aiplatform_v1::JobServiceConnection {
           DeleteModelDeploymentMonitoringJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteModelDeploymentMonitoringJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::
           DeleteModelDeploymentMonitoringJobRequest const& request) override;
 

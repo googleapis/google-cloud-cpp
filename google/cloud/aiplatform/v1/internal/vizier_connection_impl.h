@@ -74,7 +74,7 @@ class VizierServiceConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> SuggestTrials(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request)
       override;
 
@@ -110,7 +110,7 @@ class VizierServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
           request) override;
 

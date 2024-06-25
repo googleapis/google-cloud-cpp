@@ -58,7 +58,7 @@ class FeatureRegistryServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateFeatureGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request)
       override;
 
@@ -79,7 +79,7 @@ class FeatureRegistryServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request)
       override;
 
@@ -93,7 +93,7 @@ class FeatureRegistryServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request)
       override;
 
@@ -106,7 +106,7 @@ class FeatureRegistryServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateFeature(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
       override;
 
@@ -125,7 +125,7 @@ class FeatureRegistryServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFeature(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
       override;
 
@@ -138,7 +138,7 @@ class FeatureRegistryServiceConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFeature(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
       override;
 

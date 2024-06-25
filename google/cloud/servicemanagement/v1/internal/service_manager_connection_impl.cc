@@ -160,7 +160,7 @@ ServiceManagerConnectionImpl::CreateService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::CreateService(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -254,7 +254,7 @@ ServiceManagerConnectionImpl::DeleteService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::DeleteService(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -348,7 +348,7 @@ ServiceManagerConnectionImpl::UndeleteService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::UndeleteService(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -509,7 +509,7 @@ ServiceManagerConnectionImpl::SubmitConfigSource(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::SubmitConfigSource(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -657,7 +657,7 @@ ServiceManagerConnectionImpl::CreateServiceRollout(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::CreateServiceRollout(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

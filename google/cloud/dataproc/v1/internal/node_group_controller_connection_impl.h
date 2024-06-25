@@ -56,7 +56,7 @@ class NodeGroupControllerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateNodeGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request)
       override;
 
@@ -69,7 +69,7 @@ class NodeGroupControllerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ResizeNodeGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request)
       override;
 

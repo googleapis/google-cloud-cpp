@@ -70,7 +70,7 @@ class PolicyBasedRoutingServiceConnectionImpl
           CreatePolicyBasedRouteRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::
           CreatePolicyBasedRouteRequest const& request) override;
 
@@ -85,7 +85,7 @@ class PolicyBasedRoutingServiceConnectionImpl
           DeletePolicyBasedRouteRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::
           DeletePolicyBasedRouteRequest const& request) override;
 

@@ -120,7 +120,7 @@ RequestIdServiceConnectionImpl::RenameFoo(google::test::requestid::v1::RenameFoo
 
 StatusOr<google::longrunning::Operation>
 RequestIdServiceConnectionImpl::RenameFoo(ExperimentalTag,
-      NoAwaitlTag, google::test::requestid::v1::RenameFooRequest const& request) {
+      NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

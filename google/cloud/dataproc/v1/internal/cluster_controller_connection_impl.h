@@ -57,7 +57,7 @@ class ClusterControllerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateClusterRequest const& request)
       override;
 
@@ -70,7 +70,7 @@ class ClusterControllerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::UpdateClusterRequest const& request)
       override;
 
@@ -82,7 +82,7 @@ class ClusterControllerConnectionImpl
       google::cloud::dataproc::v1::StopClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StopCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::StopClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
@@ -93,7 +93,7 @@ class ClusterControllerConnectionImpl
       google::cloud::dataproc::v1::StartClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StartCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::StartClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
@@ -105,7 +105,7 @@ class ClusterControllerConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::DeleteClusterRequest const& request)
       override;
 
@@ -124,7 +124,7 @@ class ClusterControllerConnectionImpl
                       request) override;
 
   StatusOr<google::longrunning::Operation> DiagnoseCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request)
       override;
 

@@ -63,7 +63,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::CreateInstanceRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::UpdateInstanceRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RestoreInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::RestoreInstanceRequest const& request)
       override;
 
@@ -102,7 +102,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RevertInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::RevertInstanceRequest const& request)
       override;
 
@@ -115,7 +115,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::DeleteInstanceRequest const& request)
       override;
 
@@ -134,7 +134,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateSnapshot(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::CreateSnapshotRequest const& request)
       override;
 
@@ -147,7 +147,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::DeleteSnapshotRequest const& request)
       override;
 
@@ -160,7 +160,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::UpdateSnapshotRequest const& request)
       override;
 
@@ -179,7 +179,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::CreateBackupRequest const& request)
       override;
 
@@ -192,7 +192,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::DeleteBackupRequest const& request)
       override;
 
@@ -205,7 +205,7 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::UpdateBackupRequest const& request)
       override;
 

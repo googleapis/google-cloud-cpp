@@ -150,7 +150,7 @@ EventarcConnectionImpl::CreateTrigger(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnectionImpl::CreateTrigger(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -239,7 +239,7 @@ EventarcConnectionImpl::UpdateTrigger(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnectionImpl::UpdateTrigger(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -328,7 +328,7 @@ EventarcConnectionImpl::DeleteTrigger(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnectionImpl::DeleteTrigger(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -465,7 +465,7 @@ EventarcConnectionImpl::CreateChannel(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnectionImpl::CreateChannel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -554,7 +554,7 @@ EventarcConnectionImpl::UpdateChannel(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnectionImpl::UpdateChannel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -643,7 +643,7 @@ EventarcConnectionImpl::DeleteChannel(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnectionImpl::DeleteChannel(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -833,7 +833,7 @@ EventarcConnectionImpl::CreateChannelConnection(
 
 StatusOr<google::longrunning::Operation>
 EventarcConnectionImpl::CreateChannelConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -928,7 +928,7 @@ EventarcConnectionImpl::DeleteChannelConnection(
 
 StatusOr<google::longrunning::Operation>
 EventarcConnectionImpl::DeleteChannelConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

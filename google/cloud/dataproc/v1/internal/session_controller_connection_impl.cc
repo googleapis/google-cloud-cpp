@@ -108,7 +108,7 @@ SessionControllerConnectionImpl::CreateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnectionImpl::CreateSession(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::CreateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -247,7 +247,7 @@ SessionControllerConnectionImpl::TerminateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnectionImpl::TerminateSession(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::TerminateSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -339,7 +339,7 @@ SessionControllerConnectionImpl::DeleteSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerConnectionImpl::DeleteSession(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::DeleteSessionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

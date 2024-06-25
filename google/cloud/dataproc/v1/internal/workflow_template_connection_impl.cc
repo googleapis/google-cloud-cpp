@@ -141,7 +141,7 @@ WorkflowTemplateServiceConnectionImpl::InstantiateWorkflowTemplate(
 
 StatusOr<google::longrunning::Operation>
 WorkflowTemplateServiceConnectionImpl::InstantiateWorkflowTemplate(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -238,7 +238,7 @@ WorkflowTemplateServiceConnectionImpl::InstantiateInlineWorkflowTemplate(
 
 StatusOr<google::longrunning::Operation>
 WorkflowTemplateServiceConnectionImpl::InstantiateInlineWorkflowTemplate(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

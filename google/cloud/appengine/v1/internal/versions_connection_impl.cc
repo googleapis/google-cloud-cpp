@@ -147,7 +147,7 @@ VersionsConnectionImpl::CreateVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnectionImpl::CreateVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::CreateVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -236,7 +236,7 @@ VersionsConnectionImpl::UpdateVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnectionImpl::UpdateVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::UpdateVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -325,7 +325,7 @@ VersionsConnectionImpl::DeleteVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnectionImpl::DeleteVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

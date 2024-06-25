@@ -155,7 +155,7 @@ DomainMappingsConnectionImpl::CreateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnectionImpl::CreateDomainMapping(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::CreateDomainMappingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -245,7 +245,7 @@ DomainMappingsConnectionImpl::UpdateDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnectionImpl::UpdateDomainMapping(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -335,7 +335,7 @@ DomainMappingsConnectionImpl::DeleteDomainMapping(
 
 StatusOr<google::longrunning::Operation>
 DomainMappingsConnectionImpl::DeleteDomainMapping(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

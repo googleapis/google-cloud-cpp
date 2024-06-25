@@ -135,7 +135,7 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -228,7 +228,7 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

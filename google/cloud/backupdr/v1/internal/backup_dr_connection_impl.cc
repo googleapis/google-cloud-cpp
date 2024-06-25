@@ -155,7 +155,7 @@ BackupDRConnectionImpl::CreateManagementServer(
 
 StatusOr<google::longrunning::Operation>
 BackupDRConnectionImpl::CreateManagementServer(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -248,7 +248,7 @@ BackupDRConnectionImpl::DeleteManagementServer(
 
 StatusOr<google::longrunning::Operation>
 BackupDRConnectionImpl::DeleteManagementServer(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

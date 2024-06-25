@@ -62,7 +62,7 @@ class CompletionServiceConnectionImpl
           ImportSuggestionDenyListEntriesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           ImportSuggestionDenyListEntriesRequest const& request) override;
 
@@ -79,7 +79,7 @@ class CompletionServiceConnectionImpl
           PurgeSuggestionDenyListEntriesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request) override;
 

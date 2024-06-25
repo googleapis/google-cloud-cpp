@@ -153,7 +153,7 @@ DocumentsConnectionImpl::CreateDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::CreateDocument(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -246,7 +246,7 @@ DocumentsConnectionImpl::ImportDocuments(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::ImportDocuments(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -339,7 +339,7 @@ DocumentsConnectionImpl::DeleteDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::DeleteDocument(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -432,7 +432,7 @@ DocumentsConnectionImpl::UpdateDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::UpdateDocument(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -524,7 +524,7 @@ DocumentsConnectionImpl::ReloadDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::ReloadDocument(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -616,7 +616,7 @@ DocumentsConnectionImpl::ExportDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::ExportDocument(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

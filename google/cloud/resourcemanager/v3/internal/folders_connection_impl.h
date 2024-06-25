@@ -67,7 +67,7 @@ class FoldersConnectionImpl : public resourcemanager_v3::FoldersConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateFolder(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class FoldersConnectionImpl : public resourcemanager_v3::FoldersConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFolder(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request)
       override;
 
@@ -93,7 +93,7 @@ class FoldersConnectionImpl : public resourcemanager_v3::FoldersConnection {
       override;
 
   StatusOr<google::longrunning::Operation> MoveFolder(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request)
       override;
 
@@ -106,7 +106,7 @@ class FoldersConnectionImpl : public resourcemanager_v3::FoldersConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteFolder(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request)
       override;
 
@@ -119,7 +119,7 @@ class FoldersConnectionImpl : public resourcemanager_v3::FoldersConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UndeleteFolder(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request)
       override;
 

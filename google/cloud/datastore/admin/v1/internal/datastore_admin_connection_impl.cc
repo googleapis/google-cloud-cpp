@@ -109,7 +109,7 @@ DatastoreAdminConnectionImpl::ExportEntities(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminConnectionImpl::ExportEntities(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -202,7 +202,7 @@ DatastoreAdminConnectionImpl::ImportEntities(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminConnectionImpl::ImportEntities(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -295,7 +295,7 @@ DatastoreAdminConnectionImpl::CreateIndex(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminConnectionImpl::CreateIndex(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::CreateIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -386,7 +386,7 @@ DatastoreAdminConnectionImpl::DeleteIndex(
 
 StatusOr<google::longrunning::Operation>
 DatastoreAdminConnectionImpl::DeleteIndex(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

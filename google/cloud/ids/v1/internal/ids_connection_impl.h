@@ -60,7 +60,7 @@ class IDSConnectionImpl : public ids_v1::IDSConnection {
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::ids::v1::CreateEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
@@ -71,7 +71,7 @@ class IDSConnectionImpl : public ids_v1::IDSConnection {
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(

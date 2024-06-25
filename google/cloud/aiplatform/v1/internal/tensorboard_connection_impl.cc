@@ -115,7 +115,7 @@ TensorboardServiceConnectionImpl::CreateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::CreateTensorboard(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -224,7 +224,7 @@ TensorboardServiceConnectionImpl::UpdateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::UpdateTensorboard(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -352,7 +352,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::DeleteTensorboard(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -562,7 +562,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboardExperiment(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::DeleteTensorboardExperiment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -753,7 +753,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboardRun(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::DeleteTensorboardRun(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -950,7 +950,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboardTimeSeries(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::DeleteTensorboardTimeSeries(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

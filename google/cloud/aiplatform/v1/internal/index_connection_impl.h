@@ -57,7 +57,7 @@ class IndexServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateIndex(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateIndexRequest const& request)
       override;
 
@@ -76,7 +76,7 @@ class IndexServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateIndex(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateIndexRequest const& request)
       override;
 
@@ -89,7 +89,7 @@ class IndexServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteIndex(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteIndexRequest const& request)
       override;
 

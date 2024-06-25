@@ -58,7 +58,7 @@ class DataStoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateDataStore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class DataStoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteDataStore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request)
       override;
 

@@ -57,7 +57,7 @@ class CloudChannelReportsServiceConnectionImpl
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunReportJob(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::RunReportJobRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>

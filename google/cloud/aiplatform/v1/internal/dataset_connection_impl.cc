@@ -107,7 +107,7 @@ DatasetServiceConnectionImpl::CreateDataset(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnectionImpl::CreateDataset(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -262,7 +262,7 @@ DatasetServiceConnectionImpl::DeleteDataset(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnectionImpl::DeleteDataset(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -355,7 +355,7 @@ DatasetServiceConnectionImpl::ImportData(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnectionImpl::ImportData(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::ImportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -447,7 +447,7 @@ DatasetServiceConnectionImpl::ExportData(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnectionImpl::ExportData(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::ExportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -540,7 +540,7 @@ DatasetServiceConnectionImpl::CreateDatasetVersion(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnectionImpl::CreateDatasetVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -649,7 +649,7 @@ DatasetServiceConnectionImpl::DeleteDatasetVersion(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnectionImpl::DeleteDatasetVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -794,7 +794,7 @@ DatasetServiceConnectionImpl::RestoreDatasetVersion(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnectionImpl::RestoreDatasetVersion(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -991,7 +991,7 @@ DatasetServiceConnectionImpl::DeleteSavedQuery(
 
 StatusOr<google::longrunning::Operation>
 DatasetServiceConnectionImpl::DeleteSavedQuery(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

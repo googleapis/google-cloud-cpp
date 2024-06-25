@@ -67,7 +67,7 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datafusion::v1::CreateInstanceRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request)
       override;
 
@@ -93,7 +93,7 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request)
       override;
 
@@ -106,7 +106,7 @@ class DataFusionConnectionImpl : public datafusion_v1::DataFusionConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RestartInstance(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datafusion::v1::RestartInstanceRequest const& request)
       override;
 

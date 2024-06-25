@@ -156,7 +156,7 @@ EnvironmentsConnectionImpl::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::CreateEnvironment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -250,7 +250,7 @@ EnvironmentsConnectionImpl::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::UpdateEnvironment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -397,7 +397,7 @@ EnvironmentsConnectionImpl::RunContinuousTest(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::RunContinuousTest(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -528,7 +528,7 @@ EnvironmentsConnectionImpl::DeployFlow(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsConnectionImpl::DeployFlow(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

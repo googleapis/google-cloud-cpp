@@ -58,7 +58,7 @@ class FeaturestoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateFeaturestore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request)
       override;
 
@@ -79,7 +79,7 @@ class FeaturestoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFeaturestore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request)
       override;
 
@@ -93,7 +93,7 @@ class FeaturestoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteFeaturestore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request)
       override;
 
@@ -106,7 +106,7 @@ class FeaturestoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEntityType(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request)
       override;
 
@@ -130,7 +130,7 @@ class FeaturestoreServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEntityType(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request)
       override;
 
@@ -143,7 +143,7 @@ class FeaturestoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateFeature(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request)
       override;
 
@@ -157,7 +157,7 @@ class FeaturestoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> BatchCreateFeatures(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request)
       override;
 
@@ -180,7 +180,7 @@ class FeaturestoreServiceConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFeature(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request)
       override;
 
@@ -194,7 +194,7 @@ class FeaturestoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ImportFeatureValues(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request)
       override;
 
@@ -209,7 +209,7 @@ class FeaturestoreServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchReadFeatureValues(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
           request) override;
 
@@ -225,7 +225,7 @@ class FeaturestoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ExportFeatureValues(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request)
       override;
 
@@ -239,7 +239,7 @@ class FeaturestoreServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteFeatureValues(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request)
       override;
 

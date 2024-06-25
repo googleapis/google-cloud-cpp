@@ -67,7 +67,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateConnectionProfile(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreateConnectionProfileRequest const&
           request) override;
 
@@ -82,7 +82,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
           request) override;
 
@@ -97,7 +97,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
           request) override;
 
@@ -122,7 +122,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateStream(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreateStreamRequest const& request)
       override;
 
@@ -135,7 +135,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateStream(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::UpdateStreamRequest const& request)
       override;
 
@@ -148,7 +148,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteStream(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeleteStreamRequest const& request)
       override;
 
@@ -184,7 +184,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
           request) override;
 
@@ -209,7 +209,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
           request) override;
 
@@ -223,7 +223,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreateRouteRequest const& request)
       override;
 
@@ -242,7 +242,7 @@ class DatastreamConnectionImpl : public datastream_v1::DatastreamConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteRoute(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeleteRouteRequest const& request)
       override;
 

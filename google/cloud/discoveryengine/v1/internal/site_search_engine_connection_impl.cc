@@ -133,7 +133,7 @@ SiteSearchEngineServiceConnectionImpl::CreateTargetSite(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnectionImpl::CreateTargetSite(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -229,7 +229,7 @@ SiteSearchEngineServiceConnectionImpl::BatchCreateTargetSites(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnectionImpl::BatchCreateTargetSites(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -341,7 +341,7 @@ SiteSearchEngineServiceConnectionImpl::UpdateTargetSite(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnectionImpl::UpdateTargetSite(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -437,7 +437,7 @@ SiteSearchEngineServiceConnectionImpl::DeleteTargetSite(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnectionImpl::DeleteTargetSite(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -568,7 +568,7 @@ SiteSearchEngineServiceConnectionImpl::EnableAdvancedSiteSearch(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnectionImpl::EnableAdvancedSiteSearch(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -666,7 +666,7 @@ SiteSearchEngineServiceConnectionImpl::DisableAdvancedSiteSearch(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnectionImpl::DisableAdvancedSiteSearch(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -763,7 +763,7 @@ SiteSearchEngineServiceConnectionImpl::RecrawlUris(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnectionImpl::RecrawlUris(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -858,7 +858,7 @@ SiteSearchEngineServiceConnectionImpl::BatchVerifyTargetSites(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceConnectionImpl::BatchVerifyTargetSites(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

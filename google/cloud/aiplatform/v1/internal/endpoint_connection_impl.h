@@ -57,7 +57,7 @@ class EndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateEndpointRequest const& request)
       override;
 
@@ -81,7 +81,7 @@ class EndpointServiceConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request)
       override;
 
@@ -94,7 +94,7 @@ class EndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeployModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeployModelRequest const& request)
       override;
 
@@ -107,7 +107,7 @@ class EndpointServiceConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> UndeployModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UndeployModelRequest const& request)
       override;
 
@@ -121,7 +121,7 @@ class EndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> MutateDeployedModel(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request)
       override;
 

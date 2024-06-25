@@ -68,7 +68,7 @@ class NetworkSecurityConnectionImpl
           CreateAuthorizationPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::
           CreateAuthorizationPolicyRequest const& request) override;
 
@@ -83,7 +83,7 @@ class NetworkSecurityConnectionImpl
           UpdateAuthorizationPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::
           UpdateAuthorizationPolicyRequest const& request) override;
 
@@ -98,7 +98,7 @@ class NetworkSecurityConnectionImpl
           DeleteAuthorizationPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::
           DeleteAuthorizationPolicyRequest const& request) override;
 
@@ -123,7 +123,7 @@ class NetworkSecurityConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
           request) override;
 
@@ -138,7 +138,7 @@ class NetworkSecurityConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
           request) override;
 
@@ -153,7 +153,7 @@ class NetworkSecurityConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
           request) override;
 
@@ -178,7 +178,7 @@ class NetworkSecurityConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
           request) override;
 
@@ -193,7 +193,7 @@ class NetworkSecurityConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
           request) override;
 
@@ -208,7 +208,7 @@ class NetworkSecurityConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
           request) override;
 

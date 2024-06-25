@@ -64,7 +64,7 @@ class SchemaServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateSchema(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
       override;
 
@@ -77,7 +77,7 @@ class SchemaServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSchema(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
       override;
 
@@ -90,7 +90,7 @@ class SchemaServiceConnectionImpl
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSchema(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
       override;
 

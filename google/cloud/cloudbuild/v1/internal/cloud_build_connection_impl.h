@@ -56,7 +56,7 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateBuild(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RetryBuild(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request)
       override;
 
@@ -93,7 +93,7 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ApproveBuild(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request)
       override;
 
@@ -126,7 +126,7 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RunBuildTrigger(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request)
       override;
 
@@ -145,7 +145,7 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateWorkerPool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request)
       override;
 
@@ -164,7 +164,7 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkerPool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request)
       override;
 
@@ -179,7 +179,7 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkerPool(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request)
       override;
 

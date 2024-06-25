@@ -58,7 +58,7 @@ class SecurityCenterConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
       override;
 
@@ -196,7 +196,7 @@ class SecurityCenterConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> RunAssetDiscovery(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request) override;
 

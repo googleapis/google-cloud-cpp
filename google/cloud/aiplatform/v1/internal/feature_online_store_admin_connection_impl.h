@@ -60,7 +60,7 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
           request) override;
 
@@ -85,7 +85,7 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
           request) override;
 
@@ -100,7 +100,7 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
           request) override;
 
@@ -115,7 +115,7 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateFeatureView(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request)
       override;
 
@@ -136,7 +136,7 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateFeatureView(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request)
       override;
 
@@ -150,7 +150,7 @@ class FeatureOnlineStoreAdminServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteFeatureView(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request)
       override;
 

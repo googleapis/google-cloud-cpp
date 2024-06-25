@@ -78,7 +78,7 @@ class DocumentServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ImportDocuments(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request)
       override;
 
@@ -92,7 +92,7 @@ class DocumentServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> PurgeDocuments(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request)
       override;
 

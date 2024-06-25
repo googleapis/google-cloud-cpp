@@ -107,7 +107,7 @@ DataScanServiceConnectionImpl::CreateDataScan(
 
 StatusOr<google::longrunning::Operation>
 DataScanServiceConnectionImpl::CreateDataScan(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataScanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -198,7 +198,7 @@ DataScanServiceConnectionImpl::UpdateDataScan(
 
 StatusOr<google::longrunning::Operation>
 DataScanServiceConnectionImpl::UpdateDataScan(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataScanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -289,7 +289,7 @@ DataScanServiceConnectionImpl::DeleteDataScan(
 
 StatusOr<google::longrunning::Operation>
 DataScanServiceConnectionImpl::DeleteDataScan(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataScanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

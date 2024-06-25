@@ -75,7 +75,7 @@ class IntentsConnectionImpl : public dialogflow_cx::IntentsConnection {
                     request) override;
 
   StatusOr<google::longrunning::Operation> ImportIntents(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request)
       override;
 
@@ -88,7 +88,7 @@ class IntentsConnectionImpl : public dialogflow_cx::IntentsConnection {
                     request) override;
 
   StatusOr<google::longrunning::Operation> ExportIntents(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request)
       override;
 

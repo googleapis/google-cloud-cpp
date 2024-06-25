@@ -57,7 +57,7 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEntryType(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request)
       override;
 
@@ -70,7 +70,7 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateEntryType(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request)
       override;
 
@@ -83,7 +83,7 @@ class CatalogServiceConnectionImpl
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEntryType(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request)
       override;
 
@@ -102,7 +102,7 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateAspectType(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request)
       override;
 
@@ -115,7 +115,7 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateAspectType(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request)
       override;
 
@@ -128,7 +128,7 @@ class CatalogServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAspectType(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request)
       override;
 
@@ -148,7 +148,7 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateEntryGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request)
       override;
 
@@ -161,7 +161,7 @@ class CatalogServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateEntryGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request)
       override;
 
@@ -174,7 +174,7 @@ class CatalogServiceConnectionImpl
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEntryGroup(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request)
       override;
 

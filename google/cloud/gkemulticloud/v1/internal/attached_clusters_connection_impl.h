@@ -58,7 +58,7 @@ class AttachedClustersConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateAttachedCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request) override;
 
@@ -73,7 +73,7 @@ class AttachedClustersConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request) override;
 
@@ -88,7 +88,7 @@ class AttachedClustersConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ImportAttachedCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request) override;
 
@@ -113,7 +113,7 @@ class AttachedClustersConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request) override;
 

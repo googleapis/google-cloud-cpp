@@ -143,7 +143,7 @@ DatabaseAdminConnectionImpl::CreateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnectionImpl::CreateDatabase(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -254,7 +254,7 @@ DatabaseAdminConnectionImpl::UpdateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnectionImpl::UpdateDatabase(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -351,7 +351,7 @@ DatabaseAdminConnectionImpl::UpdateDatabaseDdl(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnectionImpl::UpdateDatabaseDdl(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -518,7 +518,7 @@ DatabaseAdminConnectionImpl::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnectionImpl::CreateBackup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -612,7 +612,7 @@ DatabaseAdminConnectionImpl::CopyBackup(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnectionImpl::CopyBackup(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -786,7 +786,7 @@ DatabaseAdminConnectionImpl::RestoreDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminConnectionImpl::RestoreDatabase(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

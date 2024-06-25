@@ -58,7 +58,7 @@ class IndexEndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request)
       override;
 
@@ -84,7 +84,7 @@ class IndexEndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request)
       override;
 
@@ -97,7 +97,7 @@ class IndexEndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeployIndex(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeployIndexRequest const& request)
       override;
 
@@ -110,7 +110,7 @@ class IndexEndpointServiceConnectionImpl
                     request) override;
 
   StatusOr<google::longrunning::Operation> UndeployIndex(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UndeployIndexRequest const& request)
       override;
 
@@ -124,7 +124,7 @@ class IndexEndpointServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> MutateDeployedIndex(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request)
       override;
 

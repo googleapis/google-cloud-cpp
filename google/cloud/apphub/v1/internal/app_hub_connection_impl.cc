@@ -158,7 +158,7 @@ AppHubConnectionImpl::CreateServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::CreateServiceProjectAttachment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -270,7 +270,7 @@ AppHubConnectionImpl::DeleteServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::DeleteServiceProjectAttachment(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -478,7 +478,7 @@ AppHubConnectionImpl::CreateService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::CreateService(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::CreateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -580,7 +580,7 @@ AppHubConnectionImpl::UpdateService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::UpdateService(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::UpdateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -669,7 +669,7 @@ AppHubConnectionImpl::DeleteService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::DeleteService(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -859,7 +859,7 @@ AppHubConnectionImpl::CreateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::CreateWorkload(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::CreateWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -961,7 +961,7 @@ AppHubConnectionImpl::UpdateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::UpdateWorkload(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::UpdateWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1050,7 +1050,7 @@ AppHubConnectionImpl::DeleteWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnectionImpl::DeleteWorkload(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::DeleteWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1175,7 +1175,7 @@ AppHubConnectionImpl::CreateApplication(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::CreateApplication(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::CreateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1280,7 +1280,7 @@ AppHubConnectionImpl::UpdateApplication(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::UpdateApplication(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::UpdateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1371,7 +1371,7 @@ AppHubConnectionImpl::DeleteApplication(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnectionImpl::DeleteApplication(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::apphub::v1::DeleteApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

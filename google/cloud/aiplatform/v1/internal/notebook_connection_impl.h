@@ -58,7 +58,7 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
           request) override;
 
@@ -83,7 +83,7 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request) override;
 
@@ -103,7 +103,7 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
           request) override;
 
@@ -127,7 +127,7 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
           request) override;
 
@@ -143,7 +143,7 @@ class NotebookServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
           request) override;
 
@@ -159,7 +159,7 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> StartNotebookRuntime(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request)
       override;
 

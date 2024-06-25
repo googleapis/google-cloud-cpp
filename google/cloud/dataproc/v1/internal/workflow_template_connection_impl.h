@@ -67,7 +67,7 @@ class WorkflowTemplateServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request) override;
 
@@ -82,7 +82,7 @@ class WorkflowTemplateServiceConnectionImpl
           InstantiateInlineWorkflowTemplateRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
-      ExperimentalTag, NoAwaitlTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request) override;
 

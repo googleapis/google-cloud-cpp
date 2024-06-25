@@ -198,7 +198,7 @@ StorageControlConnectionImpl::RenameFolder(
 
 StatusOr<google::longrunning::Operation>
 StorageControlConnectionImpl::RenameFolder(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::storage::control::v2::RenameFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

@@ -210,7 +210,7 @@ LineageConnectionImpl::DeleteProcess(
 }
 
 StatusOr<google::longrunning::Operation> LineageConnectionImpl::DeleteProcess(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -382,7 +382,7 @@ LineageConnectionImpl::DeleteRun(
 }
 
 StatusOr<google::longrunning::Operation> LineageConnectionImpl::DeleteRun(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(

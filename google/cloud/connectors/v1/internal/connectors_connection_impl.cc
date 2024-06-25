@@ -155,7 +155,7 @@ ConnectorsConnectionImpl::CreateConnection(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsConnectionImpl::CreateConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -248,7 +248,7 @@ ConnectorsConnectionImpl::UpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsConnectionImpl::UpdateConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -341,7 +341,7 @@ ConnectorsConnectionImpl::DeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsConnectionImpl::DeleteConnection(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -600,7 +600,7 @@ ConnectorsConnectionImpl::RefreshConnectionSchemaMetadata(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsConnectionImpl::RefreshConnectionSchemaMetadata(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();

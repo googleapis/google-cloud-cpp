@@ -191,7 +191,7 @@ future<StatusOr<google::protobuf::Struct>> FlowsConnectionImpl::TrainFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsConnectionImpl::TrainFlow(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -310,7 +310,7 @@ FlowsConnectionImpl::ImportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsConnectionImpl::ImportFlow(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -400,7 +400,7 @@ FlowsConnectionImpl::ExportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsConnectionImpl::ExportFlow(
-    ExperimentalTag, NoAwaitlTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
