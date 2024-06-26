@@ -44,6 +44,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::Eq;
 
 std::string const& ProjectId() {
   static std::string project_id =
@@ -254,6 +255,44 @@ TEST_F(InstanceAdminClientRestTest, InstanceCRUDOperations) {
     }
   }
 
+  EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
+}
+
+TEST_F(InstanceAdminClientRestTest, CreateInstanceStartAwait) {
+  if (!Emulator() && !RunSlowInstanceTests()) {
+    GTEST_SKIP() << "skipping slow instance tests; set "
+                 << "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance"
+                 << " to override";
+  }
+
+  std::string instance_id = spanner_testing::RandomInstanceName(generator_);
+  Instance in(ProjectId(), instance_id);
+  ASSERT_FALSE(in.project_id().empty());
+  ASSERT_FALSE(in.instance_id().empty());
+
+  auto config_name = spanner_testing::PickInstanceConfig(
+      in.project(), generator_,
+      [](google::spanner::admin::instance::v1::InstanceConfig const& config) {
+        return absl::StrContains(config.name(), "/regional-us-west");
+      });
+  ASSERT_FALSE(config_name.empty()) << "could not get an instance config";
+
+  auto operation =
+      client_.CreateInstance(ExperimentalTag{}, NoAwaitTag{},
+                             CreateInstanceRequestBuilder(in, config_name)
+                                 .SetDisplayName("test-display-name")
+                                 .SetNodeCount(1)
+                                 .SetLabels({{"label-key", "label-value"}})
+                                 .Build());
+  ASSERT_STATUS_OK(operation);
+  auto instance_config =
+      client_.CreateInstanceConfig(ExperimentalTag{}, *operation).get();
+  EXPECT_THAT(instance_config, StatusIs(StatusCode::kInvalidArgument));
+
+  auto instance = client_.CreateInstance(ExperimentalTag{}, *operation).get();
+  ASSERT_STATUS_OK(instance);
+  EXPECT_THAT(instance->name(), Eq(in.FullName()));
+  EXPECT_EQ(instance->display_name(), "test-display-name");
   EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
 }
 

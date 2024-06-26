@@ -89,8 +89,18 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
   disk.set_name(CreateRandomName("int-test-disk-"));
   disk.set_size_gb("10");
   (*disk.mutable_labels())["test"] = "test";
-  auto result = client.InsertDisk(project_id_, zone_, disk).get();
-  ASSERT_THAT(result, testing_util::IsOk());
+  auto start_result = client.InsertDisk(ExperimentalTag{}, NoAwaitTag{},
+                                        project_id_, zone_, disk);
+  ASSERT_THAT(start_result, testing_util::IsOk());
+
+  std::string operation_string;
+  EXPECT_TRUE(start_result->SerializeToString(&operation_string));
+
+  google::cloud::cpp::compute::v1::Operation operation;
+  EXPECT_TRUE(operation.ParseFromString(operation_string));
+
+  auto await_result = client.InsertDisk(ExperimentalTag{}, operation).get();
+  ASSERT_THAT(await_result, testing_util::IsOk());
 
   auto get_disk = client.GetDisk(project_id_, zone_, disk.name());
   ASSERT_THAT(get_disk, IsOk());
