@@ -142,11 +142,12 @@ void CustomTracerProvider(std::vector<std::string> const& argv) {
     auto processor =
         opentelemetry::sdk::trace::BatchSpanProcessorFactory::Create(
             std::move(exporter), options);
-    auto provider = opentelemetry::sdk::trace::TracerProviderFactory::Create(
-        std::move(processor));
 
-    // Set the global trace provider
-    opentelemetry::trace::Provider::SetTracerProvider(std::move(provider));
+    // Create a tracer provider and set it as the global trace provider
+    opentelemetry::trace::Provider::SetTracerProvider(
+        std::shared_ptr<opentelemetry::trace::TracerProvider>(
+            opentelemetry::sdk::trace::TracerProviderFactory::Create(
+                std::move(processor))));
 
     MyApplicationCode();
 

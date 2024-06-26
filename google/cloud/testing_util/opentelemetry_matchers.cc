@@ -25,6 +25,7 @@
 #include <opentelemetry/trace/provider.h>
 
 namespace {
+
 void AttributeFormatter(
     std::string* out,
     std::pair<std::string const,
@@ -189,10 +190,10 @@ SpanCatcher::SpanCatcher()
   auto processor =
       std::make_unique<opentelemetry::sdk::trace::SimpleSpanProcessor>(
           std::move(exporter));
-  std::shared_ptr<opentelemetry::trace::TracerProvider> provider =
-      opentelemetry::sdk::trace::TracerProviderFactory::Create(
-          std::move(processor));
-  opentelemetry::trace::Provider::SetTracerProvider(std::move(provider));
+  opentelemetry::trace::Provider::SetTracerProvider(
+      std::shared_ptr<opentelemetry::trace::TracerProvider>(
+          opentelemetry::sdk::trace::TracerProviderFactory::Create(
+              std::move(processor))));
 }
 
 SpanCatcher::~SpanCatcher() {
